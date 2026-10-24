@@ -237,6 +237,29 @@ sets remain the chosen provided-data definitions. These are count/definition
 audits, not evidence of target accuracy; no LB values or hidden targets were
 used.
 
+### 50 m same-name facility dedup sensitivity
+
+`scripts/audit_place_duplicates.py` compares raw selected facility rows with a 50 m same-name sensitivity in `reports/place-dedup.json`. It uses the configured fire/EMS/school category sets; normalizes only `names.primary` by Unicode NFC, casefold, and whitespace collapse; preserves punctuation; and leaves unnamed facilities untouched. Bbox centers are projected from EPSG:4326 to EPSG:5070. Within each normalized-name group, stable-order greedy clusters merge a row only when it lies within 50 m of a retained representative; cluster categories are unioned and assigned to that representative's tract. This avoids transitive chains whose endpoints are farther than 50 m. These are provided-data sensitivity results, not a target-accuracy test.
+
+| Region | Facility rows, raw → deduplicated | Facility rows removed | Fire zero share, raw → deduplicated | EMS zero share, raw → deduplicated | School POI rows, raw → deduplicated |
+|---|---:|---:|---:|---:|---:|
+| Maricopa AZ | 6,408 → 6,405 | 3 (0.047%) | 69.37% → 69.37% | 84.49% → 84.49% | 5,582 → 5,579 |
+| Northern CA | 3,316 → 3,315 | 1 (0.030%) | 53.47% → 53.47% | 76.31% → 76.31% | 2,773 → 2,772 |
+| Eastern OK | 5,881 → 5,876 | 5 (0.085%) | 54.19% → 54.19% | 72.48% → 72.48% | 4,836 → 4,831 |
+| South-Central TX | 30,146 → 30,119 | 27 (0.090%) | 63.72% → 63.72% | 76.98% → 76.98% | 26,247 → 26,220 |
+| **All regions** | **45,751 → 45,715** | **36 (0.079%)** | **62.82% → 62.82%** | **77.64% → 77.64%** | **39,438 → 39,402** |
+
+All 36 removed rows are school duplicates; no fire or EMS row is removed, so fire0/ems0 shares are unchanged. Keep raw Overture counts as the default: no evidence here shows dedup improves hidden-score accuracy, and leaderboard probing is prohibited. No candidate, estimator default, or submission was changed.
+
+Reproduce the sensitivity from the competition repository:
+
+```sh
+OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 NUMEXPR_NUM_THREADS=1 \
+  /home/martin/hddProjects/langywrap/uv run --with-requirements requirements.txt \
+  python scripts/audit_place_duplicates.py \
+  --workspace "$COMPETITION_WORKSPACE" --out reports/place-dedup.json
+```
+
 Reproduce the audit from the competition repository:
 
 ```sh
