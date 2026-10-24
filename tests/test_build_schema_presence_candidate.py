@@ -99,8 +99,25 @@ class SchemaPresenceCandidateTests(unittest.TestCase):
             delta = float(row["candidate_adjustment"])
             self.assertTrue(math.isfinite(score) and 0 <= score <= 1)
             self.assertTrue(math.isfinite(delta) and abs(delta) <= MAX_ADJUSTMENT + 1e-12)
+        ordered_ids = [row["GEOID"] for row in rows]
+        ordered_hash = hashlib.sha256(json.dumps(ordered_ids, sort_keys=True, separators=(",", ":"),
+                                       ensure_ascii=False, allow_nan=False).encode()).hexdigest()
+        self.assertEqual(ordered_hash, report["candidate_output"]["ordered_official_geoid_sha256"])
+        self.assertEqual(perturb["fields_tested"], 44)
         for region in CONFIG["scope"]["official_regions_order"]:
             self.assertEqual(set(report["field_coverage_matrix_by_region_and_theme"][region]), set(THEMES))
+            for theme in THEMES:
+                theme_report = report["input_metadata_by_region"][region]["themes"][theme]
+                attributes = report["field_coverage_matrix_by_region_and_theme"][region][theme]
+                expected_fields = set(CONFIG["field_registry"][theme]["modeled_optional_fields"])
+                self.assertEqual(set(attributes), expected_fields)
+                self.assertTrue(theme_report["top_level_schema_registry_match"])
+                for status in attributes.values():
+                    self.assertTrue(status["schema_available"])
+                    self.assertGreaterEqual(status["presence_rate_official_tract_assigned"], 0)
+                    self.assertLessEqual(status["presence_rate_official_tract_assigned"], 1)
+                    counts = status["status_counts_official_tract_assigned_rows"]
+                    self.assertEqual(sum(counts.values()), theme_report["assignment"]["assigned_to_official_tracts"])
         self.assertTrue(all(value is False for value in report["restrictions"].values()))
 
 
