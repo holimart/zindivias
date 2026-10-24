@@ -1,0 +1,873 @@
+{
+  "analysis_only_not_a_submission_artifact": true,
+  "candidate_columns": [
+    "GEOID",
+    "region",
+    "adjustment_defined",
+    "source_freshness_adjustment",
+    "buildings_present",
+    "buildings_features",
+    "buildings_entries",
+    "buildings_parsed_share",
+    "buildings_metadata_gap_share",
+    "buildings_stale_share",
+    "buildings_age_days_p50",
+    "buildings_age_days_p90",
+    "buildings_uncertainty",
+    "roads_present",
+    "roads_features",
+    "roads_entries",
+    "roads_parsed_share",
+    "roads_metadata_gap_share",
+    "roads_stale_share",
+    "roads_age_days_p50",
+    "roads_age_days_p90",
+    "roads_uncertainty",
+    "pois_present",
+    "pois_features",
+    "pois_entries",
+    "pois_parsed_share",
+    "pois_metadata_gap_share",
+    "pois_stale_share",
+    "pois_age_days_p50",
+    "pois_age_days_p90",
+    "pois_uncertainty",
+    "entries_total",
+    "entries_parsed_utc",
+    "entries_naive_tz",
+    "entries_missing",
+    "entries_malformed",
+    "themes_present"
+  ],
+  "candidate_csv": "reports/candidates/source_freshness_candidate.csv",
+  "candidate_csv_sha256": "3c5cf30a8867676405bc6cdc2689e17d910c314e5e8db39606d5560b1e19cecf",
+  "candidate_id": "SRCFRRESH_INTENT_SCREEN_V1",
+  "candidate_rows": 9379,
+  "config": {
+    "path": "config/source-freshness-preregistered.json",
+    "sha256": "e1b78219a53149a197f5383cef097ee3470dc07e25f616689569641548ab0cb2"
+  },
+  "frozen_bounds": {
+    "adjustment_max": 0.05,
+    "adjustment_min": 0.0,
+    "max_adjustment_rationale": "The row asks for a small, fixed uncertainty adjustment. Five points of the [0, 1] gap scale is the declared ceiling, chosen before looking at any distribution and never tuned against a score.",
+    "stale_cutoff_days": 730,
+    "theme_uncertainty_clip": [
+      0,
+      1
+    ]
+  },
+  "input_hashes_by_region": {
+    "eastern-ok": {
+      "acs": {
+        "acs_row_groups": 1,
+        "acs_rows": 1192,
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "extra_acs_geometries_excluded": 0,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-census-acs-housing.parquet",
+        "tract_index_built_from_official_ids_only": true
+      },
+      "feature_cache": {
+        "columns_read": [
+          "GEOID",
+          "overture_building_osm_source_share",
+          "overture_building_microsoft_source_share",
+          "overture_building_esri_source_share",
+          "overture_building_other_source_share",
+          "overture_building_no_dataset_source_share",
+          "overture_building_ms_only_source_share",
+          "overture_building_ms_osm_source_share",
+          "overture_building_osm_only_source_share",
+          "overture_building_esri_only_source_share",
+          "overture_building_other_or_mixed_source_share",
+          "overture_poi_meta_source_share",
+          "overture_poi_microsoft_source_share",
+          "overture_poi_other_upstream_source_share",
+          "overture_poi_meta_not_microsoft_source_share",
+          "overture_poi_microsoft_not_meta_source_share",
+          "overture_poi_meta_and_microsoft_source_share",
+          "overture_poi_other_without_meta_microsoft_source_share",
+          "overture_poi_no_upstream_source_share",
+          "overture_poi_sources_missing_share"
+        ],
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/eastern-ok-overture-tract-summary.parquet",
+        "row_order_matches_official_sample": true,
+        "sha256": "e5a06316c316f61bf25b80b48e89c1e7f0b1461a0b8cec5831aae24e0cf83fa6"
+      },
+      "layers": {
+        "buildings": {
+          "assigned_rows_with_null_sources_list": 0,
+          "assigned_to_official_sample": 2551694,
+          "columns_read": [
+            "bbox",
+            "sources"
+          ],
+          "dataset_entry_counts": {
+            "Esri Community Maps": 356307,
+            "Microsoft ML Buildings": 2246412,
+            "OpenStreetMap": 425523
+          },
+          "dataset_parsed_counts": {
+            "Esri Community Maps": 356307,
+            "Microsoft ML Buildings": 2246412,
+            "OpenStreetMap": 425523
+          },
+          "examples_without_designator": [],
+          "full_object_downloaded": false,
+          "geometry_column_read": false,
+          "object_bytes": 298882068,
+          "primary_timestamps_without_explicit_designator": 0,
+          "provenance_class_feature_counts": {
+            "esri_only": 157759,
+            "microsoft_only": 1769864,
+            "microsoft_osm": 278000,
+            "osm_only": 147523,
+            "other_or_mixed": 198548
+          },
+          "row_groups": 60,
+          "rows": 2551694,
+          "selected_column_compressed_bytes": 76822949,
+          "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-buildings.parquet",
+          "sources_struct_fields": [
+            "property",
+            "dataset",
+            "license",
+            "record_id",
+            "update_time",
+            "confidence",
+            "between",
+            "provider",
+            "resource",
+            "version"
+          ],
+          "unassigned_rows_outside_official_sample": 0
+        },
+        "pois": {
+          "assigned_rows_with_null_sources_list": 0,
+          "assigned_to_official_sample": 207369,
+          "columns_read": [
+            "bbox",
+            "sources"
+          ],
+          "dataset_entry_counts": {
+            "AllThePlaces": 3556,
+            "BrightQuery": 23601,
+            "DAC": 1513,
+            "Foursquare": 13985,
+            "Microsoft": 31847,
+            "Overture": 207369,
+            "Overture-signals": 125821,
+            "PinMeTo": 28,
+            "RenderSEO": 20,
+            "meta": 132819
+          },
+          "dataset_parsed_counts": {
+            "AllThePlaces": 3556,
+            "BrightQuery": 23601,
+            "DAC": 1513,
+            "Microsoft": 31847,
+            "Overture": 207369,
+            "Overture-signals": 125821,
+            "PinMeTo": 28,
+            "RenderSEO": 20,
+            "meta": 132819
+          },
+          "examples_without_designator": [],
+          "full_object_downloaded": false,
+          "geometry_column_read": false,
+          "object_bytes": 28848614,
+          "primary_timestamps_without_explicit_designator": 0,
+          "provenance_class_feature_counts": {
+            "meta_not_microsoft": 132819,
+            "microsoft_not_meta": 31847,
+            "other_without_meta_microsoft": 42703
+          },
+          "row_groups": 6,
+          "rows": 207369,
+          "selected_column_compressed_bytes": 11456387,
+          "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-pois.parquet",
+          "sources_struct_fields": [
+            "property",
+            "dataset",
+            "license",
+            "record_id",
+            "update_time",
+            "confidence",
+            "between",
+            "provider",
+            "resource",
+            "version"
+          ],
+          "unassigned_rows_outside_official_sample": 0
+        },
+        "roads": {
+          "assigned_rows_with_null_sources_list": 0,
+          "assigned_to_official_sample": 520423,
+          "columns_read": [
+            "bbox",
+            "sources"
+          ],
+          "dataset_entry_counts": {
+            "OpenStreetMap": 683401,
+            "TomTom": 294
+          },
+          "dataset_parsed_counts": {
+            "OpenStreetMap": 598985
+          },
+          "examples_without_designator": [],
+          "full_object_downloaded": false,
+          "geometry_column_read": false,
+          "object_bytes": 82239229,
+          "primary_timestamps_without_explicit_designator": 0,
+          "provenance_class_feature_counts": {
+            "osm_only": 520129,
+            "tomtom_only": 294
+          },
+          "row_groups": 16,
+          "rows": 520550,
+          "selected_column_compressed_bytes": 14446131,
+          "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-roads.parquet",
+          "sources_struct_fields": [
+            "property",
+            "dataset",
+            "license",
+            "record_id",
+            "update_time",
+            "confidence",
+            "between",
+            "provider",
+            "resource",
+            "version"
+          ],
+          "unassigned_rows_outside_official_sample": 127
+        }
+      },
+      "official_sample": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/eastern-ok-sample-submission.csv",
+        "rows": 1192,
+        "score_placeholder_columns_read": false,
+        "sha256": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4"
+      }
+    },
+    "maricopa-az": {
+      "acs": {
+        "acs_row_groups": 1,
+        "acs_rows": 1593,
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "extra_acs_geometries_excluded": 0,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-census-acs-housing.parquet",
+        "tract_index_built_from_official_ids_only": true
+      },
+      "feature_cache": {
+        "columns_read": [
+          "GEOID",
+          "overture_building_osm_source_share",
+          "overture_building_microsoft_source_share",
+          "overture_building_esri_source_share",
+          "overture_building_other_source_share",
+          "overture_building_no_dataset_source_share",
+          "overture_building_ms_only_source_share",
+          "overture_building_ms_osm_source_share",
+          "overture_building_osm_only_source_share",
+          "overture_building_esri_only_source_share",
+          "overture_building_other_or_mixed_source_share",
+          "overture_poi_meta_source_share",
+          "overture_poi_microsoft_source_share",
+          "overture_poi_other_upstream_source_share",
+          "overture_poi_meta_not_microsoft_source_share",
+          "overture_poi_microsoft_not_meta_source_share",
+          "overture_poi_meta_and_microsoft_source_share",
+          "overture_poi_other_without_meta_microsoft_source_share",
+          "overture_poi_no_upstream_source_share",
+          "overture_poi_sources_missing_share"
+        ],
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/maricopa-az-overture-tract-summary.parquet",
+        "row_order_matches_official_sample": true,
+        "sha256": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22"
+      },
+      "layers": {
+        "buildings": {
+          "assigned_rows_with_null_sources_list": 0,
+          "assigned_to_official_sample": 2908224,
+          "columns_read": [
+            "bbox",
+            "sources"
+          ],
+          "dataset_entry_counts": {
+            "Esri Community Maps": 137716,
+            "Google Open Buildings": 37216,
+            "Microsoft ML Buildings": 1299748,
+            "OpenStreetMap": 2317273,
+            "USGS Lidar": 1166483
+          },
+          "dataset_parsed_counts": {
+            "Esri Community Maps": 137716,
+            "Google Open Buildings": 37216,
+            "Microsoft ML Buildings": 1299748,
+            "OpenStreetMap": 2317273
+          },
+          "examples_without_designator": [],
+          "full_object_downloaded": false,
+          "geometry_column_read": false,
+          "object_bytes": 324720762,
+          "primary_timestamps_without_explicit_designator": 0,
+          "provenance_class_feature_counts": {
+            "esri_only": 95292,
+            "microsoft_only": 379255,
+            "microsoft_osm": 847958,
+            "osm_only": 347823,
+            "other_or_mixed": 1237896
+          },
+          "row_groups": 65,
+          "rows": 2908224,
+          "selected_column_compressed_bytes": 83378418,
+          "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-buildings.parquet",
+          "sources_struct_fields": [
+            "property",
+            "dataset",
+            "license",
+            "record_id",
+            "update_time",
+            "confidence",
+            "between",
+            "provider",
+            "resource",
+            "version"
+          ],
+          "unassigned_rows_outside_official_sample": 0
+        },
+        "pois": {
+          "assigned_rows_with_null_sources_list": 0,
+          "assigned_to_official_sample": 300046,
+          "columns_read": [
+            "bbox",
+            "sources"
+          ],
+          "dataset_entry_counts": {
+            "AllThePlaces": 4295,
+            "BrightQuery": 50288,
+            "DAC": 1911,
+            "Foursquare": 24120,
+            "Microsoft": 54746,
+            "Overture": 300046,
+            "Overture-signals": 176931,
+            "PinMeTo": 123,
+            "RenderSEO": 10,
+            "meta": 164553
+          },
+          "dataset_parsed_counts": {
+            "AllThePlaces": 4295,
+            "BrightQuery": 50288,
+            "DAC": 1911,
+            "Microsoft": 54746,
+            "Overture": 300046,
+            "Overture-signals": 176931,
+            "PinMeTo": 123,
+            "RenderSEO": 10,
+            "meta": 164553
+          },
+          "examples_without_designator": [],
+          "full_object_downloaded": false,
+          "geometry_column_read": false,
+          "object_bytes": 40987154,
+          "primary_timestamps_without_explicit_designator": 0,
+          "provenance_class_feature_counts": {
+            "meta_not_microsoft": 164553,
+            "microsoft_not_meta": 54746,
+            "other_without_meta_microsoft": 80747
+          },
+          "row_groups": 9,
+          "rows": 300046,
+          "selected_column_compressed_bytes": 15926362,
+          "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-pois.parquet",
+          "sources_struct_fields": [
+            "property",
+            "dataset",
+            "license",
+            "record_id",
+            "update_time",
+            "confidence",
+            "between",
+            "provider",
+            "resource",
+            "version"
+          ],
+          "unassigned_rows_outside_official_sample": 0
+        },
+        "roads": {
+          "assigned_rows_with_null_sources_list": 0,
+          "assigned_to_official_sample": 494401,
+          "columns_read": [
+            "bbox",
+            "sources"
+          ],
+          "dataset_entry_counts": {
+            "OpenStreetMap": 616437,
+            "TomTom": 257
+          },
+          "dataset_parsed_counts": {
+            "OpenStreetMap": 595766
+          },
+          "examples_without_designator": [],
+          "full_object_downloaded": false,
+          "geometry_column_read": false,
+          "object_bytes": 80052206,
+          "primary_timestamps_without_explicit_designator": 0,
+          "provenance_class_feature_counts": {
+            "osm_only": 494144,
+            "tomtom_only": 257
+          },
+          "row_groups": 17,
+          "rows": 494492,
+          "selected_column_compressed_bytes": 12826494,
+          "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-roads.parquet",
+          "sources_struct_fields": [
+            "property",
+            "dataset",
+            "license",
+            "record_id",
+            "update_time",
+            "confidence",
+            "between",
+            "provider",
+            "resource",
+            "version"
+          ],
+          "unassigned_rows_outside_official_sample": 91
+        }
+      },
+      "official_sample": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/maricopa-az-sample-submission.csv",
+        "rows": 1593,
+        "score_placeholder_columns_read": false,
+        "sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31"
+      }
+    },
+    "northern-ca": {
+      "acs": {
+        "acs_row_groups": 1,
+        "acs_rows": 591,
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "extra_acs_geometries_excluded": 0,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-census-acs-housing.parquet",
+        "tract_index_built_from_official_ids_only": true
+      },
+      "feature_cache": {
+        "columns_read": [
+          "GEOID",
+          "overture_building_osm_source_share",
+          "overture_building_microsoft_source_share",
+          "overture_building_esri_source_share",
+          "overture_building_other_source_share",
+          "overture_building_no_dataset_source_share",
+          "overture_building_ms_only_source_share",
+          "overture_building_ms_osm_source_share",
+          "overture_building_osm_only_source_share",
+          "overture_building_esri_only_source_share",
+          "overture_building_other_or_mixed_source_share",
+          "overture_poi_meta_source_share",
+          "overture_poi_microsoft_source_share",
+          "overture_poi_other_upstream_source_share",
+          "overture_poi_meta_not_microsoft_source_share",
+          "overture_poi_microsoft_not_meta_source_share",
+          "overture_poi_meta_and_microsoft_source_share",
+          "overture_poi_other_without_meta_microsoft_source_share",
+          "overture_poi_no_upstream_source_share",
+          "overture_poi_sources_missing_share"
+        ],
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/northern-ca-overture-tract-summary.parquet",
+        "row_order_matches_official_sample": true,
+        "sha256": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c"
+      },
+      "layers": {
+        "buildings": {
+          "assigned_rows_with_null_sources_list": 0,
+          "assigned_to_official_sample": 1164723,
+          "columns_read": [
+            "bbox",
+            "sources"
+          ],
+          "dataset_entry_counts": {
+            "Esri Community Maps": 30168,
+            "Microsoft ML Buildings": 1042980,
+            "OpenStreetMap": 542513
+          },
+          "dataset_parsed_counts": {
+            "Esri Community Maps": 30168,
+            "Microsoft ML Buildings": 1042980,
+            "OpenStreetMap": 542513
+          },
+          "examples_without_designator": [],
+          "full_object_downloaded": false,
+          "geometry_column_read": false,
+          "object_bytes": 130554079,
+          "primary_timestamps_without_explicit_designator": 0,
+          "provenance_class_feature_counts": {
+            "esri_only": 15948,
+            "microsoft_only": 592042,
+            "microsoft_osm": 436718,
+            "osm_only": 105795,
+            "other_or_mixed": 14220
+          },
+          "row_groups": 26,
+          "rows": 1164724,
+          "selected_column_compressed_bytes": 32491967,
+          "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-buildings.parquet",
+          "sources_struct_fields": [
+            "property",
+            "dataset",
+            "license",
+            "record_id",
+            "update_time",
+            "confidence",
+            "between",
+            "provider",
+            "resource",
+            "version"
+          ],
+          "unassigned_rows_outside_official_sample": 1
+        },
+        "pois": {
+          "assigned_rows_with_null_sources_list": 0,
+          "assigned_to_official_sample": 116897,
+          "columns_read": [
+            "bbox",
+            "sources"
+          ],
+          "dataset_entry_counts": {
+            "AllThePlaces": 1639,
+            "BrightQuery": 17695,
+            "DAC": 535,
+            "Foursquare": 8992,
+            "Microsoft": 18427,
+            "Overture": 116897,
+            "Overture-signals": 70280,
+            "PinMeTo": 7,
+            "RenderSEO": 1,
+            "meta": 69601
+          },
+          "dataset_parsed_counts": {
+            "AllThePlaces": 1639,
+            "BrightQuery": 17695,
+            "DAC": 535,
+            "Microsoft": 18426,
+            "Overture": 116897,
+            "Overture-signals": 70280,
+            "PinMeTo": 7,
+            "RenderSEO": 1,
+            "meta": 69601
+          },
+          "examples_without_designator": [],
+          "full_object_downloaded": false,
+          "geometry_column_read": false,
+          "object_bytes": 16168720,
+          "primary_timestamps_without_explicit_designator": 0,
+          "provenance_class_feature_counts": {
+            "meta_not_microsoft": 69601,
+            "microsoft_not_meta": 18427,
+            "other_without_meta_microsoft": 28869
+          },
+          "row_groups": 4,
+          "rows": 116897,
+          "selected_column_compressed_bytes": 6354994,
+          "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-pois.parquet",
+          "sources_struct_fields": [
+            "property",
+            "dataset",
+            "license",
+            "record_id",
+            "update_time",
+            "confidence",
+            "between",
+            "provider",
+            "resource",
+            "version"
+          ],
+          "unassigned_rows_outside_official_sample": 0
+        },
+        "roads": {
+          "assigned_rows_with_null_sources_list": 0,
+          "assigned_to_official_sample": 191509,
+          "columns_read": [
+            "bbox",
+            "sources"
+          ],
+          "dataset_entry_counts": {
+            "OpenStreetMap": 230919,
+            "TomTom": 96
+          },
+          "dataset_parsed_counts": {
+            "OpenStreetMap": 215964
+          },
+          "examples_without_designator": [],
+          "full_object_downloaded": false,
+          "geometry_column_read": false,
+          "object_bytes": 43515963,
+          "primary_timestamps_without_explicit_designator": 0,
+          "provenance_class_feature_counts": {
+            "osm_only": 191413,
+            "tomtom_only": 96
+          },
+          "row_groups": 9,
+          "rows": 191836,
+          "selected_column_compressed_bytes": 5038359,
+          "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-roads.parquet",
+          "sources_struct_fields": [
+            "property",
+            "dataset",
+            "license",
+            "record_id",
+            "update_time",
+            "confidence",
+            "between",
+            "provider",
+            "resource",
+            "version"
+          ],
+          "unassigned_rows_outside_official_sample": 327
+        }
+      },
+      "official_sample": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/northern-ca-sample-submission.csv",
+        "rows": 591,
+        "score_placeholder_columns_read": false,
+        "sha256": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902"
+      }
+    },
+    "south-central-tx": {
+      "acs": {
+        "acs_row_groups": 1,
+        "acs_rows": 6010,
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "extra_acs_geometries_excluded": 7,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-census-acs-housing.parquet",
+        "tract_index_built_from_official_ids_only": true
+      },
+      "feature_cache": {
+        "columns_read": [
+          "GEOID",
+          "overture_building_osm_source_share",
+          "overture_building_microsoft_source_share",
+          "overture_building_esri_source_share",
+          "overture_building_other_source_share",
+          "overture_building_no_dataset_source_share",
+          "overture_building_ms_only_source_share",
+          "overture_building_ms_osm_source_share",
+          "overture_building_osm_only_source_share",
+          "overture_building_esri_only_source_share",
+          "overture_building_other_or_mixed_source_share",
+          "overture_poi_meta_source_share",
+          "overture_poi_microsoft_source_share",
+          "overture_poi_other_upstream_source_share",
+          "overture_poi_meta_not_microsoft_source_share",
+          "overture_poi_microsoft_not_meta_source_share",
+          "overture_poi_meta_and_microsoft_source_share",
+          "overture_poi_other_without_meta_microsoft_source_share",
+          "overture_poi_no_upstream_source_share",
+          "overture_poi_sources_missing_share"
+        ],
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/south-central-tx-overture-tract-summary.parquet",
+        "row_order_matches_official_sample": true,
+        "sha256": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746"
+      },
+      "layers": {
+        "buildings": {
+          "assigned_rows_with_null_sources_list": 0,
+          "assigned_to_official_sample": 11463800,
+          "columns_read": [
+            "bbox",
+            "sources"
+          ],
+          "dataset_entry_counts": {
+            "Esri Community Maps": 278591,
+            "Google Open Buildings": 254872,
+            "Microsoft ML Buildings": 8243296,
+            "OpenStreetMap": 5846474,
+            "USGS Lidar": 976523
+          },
+          "dataset_parsed_counts": {
+            "Esri Community Maps": 278591,
+            "Google Open Buildings": 254872,
+            "Microsoft ML Buildings": 8243296,
+            "OpenStreetMap": 5846474
+          },
+          "examples_without_designator": [],
+          "full_object_downloaded": false,
+          "geometry_column_read": false,
+          "object_bytes": 1269949045,
+          "primary_timestamps_without_explicit_designator": 0,
+          "provenance_class_feature_counts": {
+            "esri_only": 211496,
+            "microsoft_only": 4965415,
+            "microsoft_osm": 3080961,
+            "osm_only": 1932480,
+            "other_or_mixed": 1273448
+          },
+          "row_groups": 255,
+          "rows": 11463801,
+          "selected_column_compressed_bytes": 322754989,
+          "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-buildings.parquet",
+          "sources_struct_fields": [
+            "property",
+            "dataset",
+            "license",
+            "record_id",
+            "update_time",
+            "confidence",
+            "between",
+            "provider",
+            "resource",
+            "version"
+          ],
+          "unassigned_rows_outside_official_sample": 1
+        },
+        "pois": {
+          "assigned_rows_with_null_sources_list": 0,
+          "assigned_to_official_sample": 1300331,
+          "columns_read": [
+            "bbox",
+            "sources"
+          ],
+          "dataset_entry_counts": {
+            "AllThePlaces": 21068,
+            "BrightQuery": 172148,
+            "DAC": 7263,
+            "Foursquare": 92173,
+            "Microsoft": 211635,
+            "Overture": 1300331,
+            "Overture-signals": 761831,
+            "PinMeTo": 935,
+            "RenderSEO": 132,
+            "meta": 794977
+          },
+          "dataset_parsed_counts": {
+            "AllThePlaces": 21068,
+            "BrightQuery": 172148,
+            "DAC": 7263,
+            "Microsoft": 211628,
+            "Overture": 1300331,
+            "Overture-signals": 761831,
+            "PinMeTo": 935,
+            "RenderSEO": 132,
+            "meta": 794977
+          },
+          "examples_without_designator": [],
+          "full_object_downloaded": false,
+          "geometry_column_read": false,
+          "object_bytes": 179937096,
+          "primary_timestamps_without_explicit_designator": 0,
+          "provenance_class_feature_counts": {
+            "meta_not_microsoft": 794977,
+            "microsoft_not_meta": 211635,
+            "other_without_meta_microsoft": 293719
+          },
+          "row_groups": 36,
+          "rows": 1300334,
+          "selected_column_compressed_bytes": 70182698,
+          "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-pois.parquet",
+          "sources_struct_fields": [
+            "property",
+            "dataset",
+            "license",
+            "record_id",
+            "update_time",
+            "confidence",
+            "between",
+            "provider",
+            "resource",
+            "version"
+          ],
+          "unassigned_rows_outside_official_sample": 3
+        },
+        "roads": {
+          "assigned_rows_with_null_sources_list": 0,
+          "assigned_to_official_sample": 1936744,
+          "columns_read": [
+            "bbox",
+            "sources"
+          ],
+          "dataset_entry_counts": {
+            "OpenStreetMap": 2417667,
+            "TomTom": 1968
+          },
+          "dataset_parsed_counts": {
+            "OpenStreetMap": 2182484
+          },
+          "examples_without_designator": [],
+          "full_object_downloaded": false,
+          "geometry_column_read": false,
+          "object_bytes": 299751270,
+          "primary_timestamps_without_explicit_designator": 0,
+          "provenance_class_feature_counts": {
+            "osm_only": 1934776,
+            "tomtom_only": 1968
+          },
+          "row_groups": 60,
+          "rows": 1937009,
+          "selected_column_compressed_bytes": 52906400,
+          "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-roads.parquet",
+          "sources_struct_fields": [
+            "property",
+            "dataset",
+            "license",
+            "record_id",
+            "update_time",
+            "confidence",
+            "between",
+            "provider",
+            "resource",
+            "version"
+          ],
+          "unassigned_rows_outside_official_sample": 265
+        }
+      },
+      "official_sample": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/south-central-tx-sample-submission.csv",
+        "rows": 6003,
+        "score_placeholder_columns_read": false,
+        "sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e"
+      }
+    }
+  },
+  "reference_epoch_seconds": 1786736767.0,
+  "reference_epoch_utc": "2026-08-14T19:46:07+00:00",
+  "scope": {
+    "regions": [
+      "maricopa-az",
+      "northern-ca",
+      "eastern-ok",
+      "south-central-tx"
+    ],
+    "scored_population": "Official scored GEOIDs only (samples/<region>-sample-submission.csv, GEOID column read), in authoritative sample order. Template-only eastern-WA rows are out of scope because this candidate is analysis-only and is never uploaded.",
+    "themes": [
+      "buildings",
+      "roads",
+      "pois"
+    ]
+  },
+  "upload_performed": false
+}

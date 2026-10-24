@@ -1,0 +1,2281 @@
+{
+  "backlog_item": "bias-model-source-freshness-candidate",
+  "preregistration": {
+    "config_path": "config/source-freshness-preregistered.json",
+    "config_sha256": "e1b78219a53149a197f5383cef097ee3470dc07e25f616689569641548ab0cb2",
+    "preregistered_on": "2026-10-25",
+    "intent": "Intent screen only. Measures whether provided Overture sources[].update_time / sources[].version metadata is usable as a source-update recency (data-vintage) signal, and whether a small fixed stale / metadata-gap uncertainty term adds information beyond the frozen source-mixture proportions. No target, no label, no leaderboard value, no accuracy claim, no upload.",
+    "reference_epoch_policy": "The reference epoch is the maximum explicitly-UTC parseable update_time over the source entries of features assigned to the official scored GEOIDs of the four regions and three themes. It is derived from the provided metadata itself: no external clock, no wall-clock read and no external timestamp source enters the computation, so repeated runs are deterministic.",
+    "theme_uncertainty_formula": "clip(weights.stale * stale_share + weights.metadata_gap * metadata_gap_share, 0, 1)",
+    "adjustment_formula": "clip(max_adjustment * weighted_mean_theme_uncertainty, 0, 1)",
+    "frozen_constants": {
+      "theme_weights": {
+        "buildings": 0.4,
+        "roads": 0.3,
+        "pois": 0.3
+      },
+      "weights": {
+        "stale": 0.6,
+        "metadata_gap": 0.4
+      },
+      "max_adjustment": 0.05,
+      "stale_cutoff_days": 730,
+      "fixed_cutoff_days": [
+        182,
+        365,
+        730,
+        1095,
+        1825
+      ],
+      "undefined_placeholder": 0.0
+    },
+    "constants_fixed_before_seeing_data": true,
+    "band_or_bound_changed_after_seeing_data": false
+  },
+  "measure_before": {
+    "prior_report": "reports/building-source-mix.json",
+    "prior_report_sha256": "005577618f825ed117d8204f5fe57b1c31f1ae2b629a9629ada52497057b04dd",
+    "frozen_source_mix_columns": [
+      "overture_building_osm_source_share",
+      "overture_building_microsoft_source_share",
+      "overture_building_esri_source_share",
+      "overture_building_other_source_share",
+      "overture_building_no_dataset_source_share",
+      "overture_building_ms_only_source_share",
+      "overture_building_ms_osm_source_share",
+      "overture_building_osm_only_source_share",
+      "overture_building_esri_only_source_share",
+      "overture_building_other_or_mixed_source_share",
+      "overture_poi_meta_source_share",
+      "overture_poi_microsoft_source_share",
+      "overture_poi_other_upstream_source_share",
+      "overture_poi_meta_not_microsoft_source_share",
+      "overture_poi_microsoft_not_meta_source_share",
+      "overture_poi_meta_and_microsoft_source_share",
+      "overture_poi_other_without_meta_microsoft_source_share",
+      "overture_poi_no_upstream_source_share",
+      "overture_poi_sources_missing_share"
+    ],
+    "frozen_source_mix_coverage_by_region": {
+      "maricopa-az": {
+        "tracts": 1593,
+        "column_finite_share_min": 1.0,
+        "column_finite_share_max": 1.0,
+        "tracts_with_any_nonzero_mixture_share": 1593
+      },
+      "northern-ca": {
+        "tracts": 591,
+        "column_finite_share_min": 1.0,
+        "column_finite_share_max": 1.0,
+        "tracts_with_any_nonzero_mixture_share": 591
+      },
+      "eastern-ok": {
+        "tracts": 1192,
+        "column_finite_share_min": 1.0,
+        "column_finite_share_max": 1.0,
+        "tracts_with_any_nonzero_mixture_share": 1192
+      },
+      "south-central-tx": {
+        "tracts": 6003,
+        "column_finite_share_min": 0.9996668332500417,
+        "column_finite_share_max": 0.9996668332500417,
+        "tracts_with_any_nonzero_mixture_share": 6001
+      }
+    },
+    "feature_schema": {
+      "sources_struct_fields": [
+        "property",
+        "dataset",
+        "license",
+        "record_id",
+        "update_time",
+        "confidence",
+        "between",
+        "provider",
+        "resource",
+        "version"
+      ],
+      "columns_read_from_overture": [
+        "bbox",
+        "sources"
+      ],
+      "note": "sources is a list of structs; only dataset, update_time and version are read from it."
+    }
+  },
+  "reference_epoch": {
+    "policy": "The reference epoch is the maximum explicitly-UTC parseable update_time over the source entries of features assigned to the official scored GEOIDs of the four regions and three themes. It is derived from the provided metadata itself: no external clock, no wall-clock read and no external timestamp source enters the computation, so repeated runs are deterministic.",
+    "value_utc": "2026-08-14T19:46:07+00:00",
+    "seconds": 1786736767.0,
+    "external_clock_read": false
+  },
+  "regions": {
+    "maricopa-az": {
+      "region": "maricopa-az",
+      "official_tracts": 1593,
+      "official_sample": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/maricopa-az-sample-submission.csv",
+        "sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+        "rows": 1593,
+        "columns_read": [
+          "GEOID"
+        ],
+        "score_placeholder_columns_read": false
+      },
+      "acs": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-census-acs-housing.parquet",
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "acs_rows": 1593,
+        "acs_row_groups": 1,
+        "tract_index_built_from_official_ids_only": true,
+        "extra_acs_geometries_excluded": 0
+      },
+      "feature_cache": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/maricopa-az-overture-tract-summary.parquet",
+        "sha256": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22",
+        "columns_read": [
+          "GEOID",
+          "overture_building_osm_source_share",
+          "overture_building_microsoft_source_share",
+          "overture_building_esri_source_share",
+          "overture_building_other_source_share",
+          "overture_building_no_dataset_source_share",
+          "overture_building_ms_only_source_share",
+          "overture_building_ms_osm_source_share",
+          "overture_building_osm_only_source_share",
+          "overture_building_esri_only_source_share",
+          "overture_building_other_or_mixed_source_share",
+          "overture_poi_meta_source_share",
+          "overture_poi_microsoft_source_share",
+          "overture_poi_other_upstream_source_share",
+          "overture_poi_meta_not_microsoft_source_share",
+          "overture_poi_microsoft_not_meta_source_share",
+          "overture_poi_meta_and_microsoft_source_share",
+          "overture_poi_other_without_meta_microsoft_source_share",
+          "overture_poi_no_upstream_source_share",
+          "overture_poi_sources_missing_share"
+        ],
+        "row_order_matches_official_sample": true
+      },
+      "themes": {
+        "buildings": {
+          "input": {
+            "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-buildings.parquet",
+            "object_bytes": 324720762,
+            "rows": 2908224,
+            "row_groups": 65,
+            "columns_read": [
+              "bbox",
+              "sources"
+            ],
+            "selected_column_compressed_bytes": 83378418,
+            "sources_struct_fields": [
+              "property",
+              "dataset",
+              "license",
+              "record_id",
+              "update_time",
+              "confidence",
+              "between",
+              "provider",
+              "resource",
+              "version"
+            ],
+            "full_object_downloaded": false,
+            "geometry_column_read": false,
+            "assigned_to_official_sample": 2908224,
+            "unassigned_rows_outside_official_sample": 0,
+            "assigned_rows_with_null_sources_list": 0,
+            "dataset_entry_counts": {
+              "Esri Community Maps": 137716,
+              "Google Open Buildings": 37216,
+              "Microsoft ML Buildings": 1299748,
+              "OpenStreetMap": 2317273,
+              "USGS Lidar": 1166483
+            },
+            "dataset_parsed_counts": {
+              "Esri Community Maps": 137716,
+              "Google Open Buildings": 37216,
+              "Microsoft ML Buildings": 1299748,
+              "OpenStreetMap": 2317273
+            },
+            "provenance_class_feature_counts": {
+              "esri_only": 95292,
+              "microsoft_only": 379255,
+              "microsoft_osm": 847958,
+              "osm_only": 347823,
+              "other_or_mixed": 1237896
+            },
+            "primary_timestamps_without_explicit_designator": 0,
+            "examples_without_designator": []
+          },
+          "features_assigned": 2908224,
+          "entries": 4958436,
+          "entries_by_timestamp_status": {
+            "parsed_utc_z": 3791953,
+            "parsed_utc_offset": 0,
+            "naive_no_timezone": 0,
+            "missing_null": 1166483,
+            "missing_empty": 0,
+            "malformed": 0
+          },
+          "timestamp_status_shares": {
+            "parsed_utc_z": 0.7647477954742181,
+            "parsed_utc_offset": 0.0,
+            "naive_no_timezone": 0.0,
+            "missing_null": 0.2352522045257819,
+            "missing_empty": 0.0,
+            "malformed": 0.0
+          },
+          "entries_by_version_status": {
+            "iso_date": 1474680,
+            "datetime_utc": 2317273,
+            "numeric": 0,
+            "missing_null": 1166483,
+            "other": 0
+          },
+          "version_status_shares": {
+            "iso_date": 0.29740829568033145,
+            "datetime_utc": 0.4673394997938866,
+            "numeric": 0.0,
+            "missing_null": 0.2352522045257819,
+            "other": 0.0
+          },
+          "tracts_with_feature": 1593,
+          "tracts_with_explicit_utc_time": 1593,
+          "tracts_without_any_source_entry": 0,
+          "entry_age_days": {
+            "p10": 790.6591666666667,
+            "p50": 1368.8236921296295,
+            "p90": 2887.338689814814,
+            "min": 12.880335648148149,
+            "max": 9722.82369212963
+          },
+          "provenance_class_feature_counts": {
+            "esri_only": 95292,
+            "microsoft_only": 379255,
+            "microsoft_osm": 847958,
+            "osm_only": 347823,
+            "other_or_mixed": 1237896
+          }
+        },
+        "roads": {
+          "input": {
+            "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-roads.parquet",
+            "object_bytes": 80052206,
+            "rows": 494492,
+            "row_groups": 17,
+            "columns_read": [
+              "bbox",
+              "sources"
+            ],
+            "selected_column_compressed_bytes": 12826494,
+            "sources_struct_fields": [
+              "property",
+              "dataset",
+              "license",
+              "record_id",
+              "update_time",
+              "confidence",
+              "between",
+              "provider",
+              "resource",
+              "version"
+            ],
+            "full_object_downloaded": false,
+            "geometry_column_read": false,
+            "assigned_to_official_sample": 494401,
+            "unassigned_rows_outside_official_sample": 91,
+            "assigned_rows_with_null_sources_list": 0,
+            "dataset_entry_counts": {
+              "OpenStreetMap": 616437,
+              "TomTom": 257
+            },
+            "dataset_parsed_counts": {
+              "OpenStreetMap": 595766
+            },
+            "provenance_class_feature_counts": {
+              "osm_only": 494144,
+              "tomtom_only": 257
+            },
+            "primary_timestamps_without_explicit_designator": 0,
+            "examples_without_designator": []
+          },
+          "features_assigned": 494401,
+          "entries": 616694,
+          "entries_by_timestamp_status": {
+            "parsed_utc_z": 595766,
+            "parsed_utc_offset": 0,
+            "naive_no_timezone": 0,
+            "missing_null": 20928,
+            "missing_empty": 0,
+            "malformed": 0
+          },
+          "timestamp_status_shares": {
+            "parsed_utc_z": 0.966064206883803,
+            "parsed_utc_offset": 0.0,
+            "naive_no_timezone": 0.0,
+            "missing_null": 0.03393579311619701,
+            "missing_empty": 0.0,
+            "malformed": 0.0
+          },
+          "entries_by_version_status": {
+            "iso_date": 616437,
+            "datetime_utc": 0,
+            "numeric": 257,
+            "missing_null": 0,
+            "other": 0
+          },
+          "version_status_shares": {
+            "iso_date": 0.9995832617148862,
+            "datetime_utc": 0.0,
+            "numeric": 0.00041673828511384903,
+            "missing_null": 0.0,
+            "other": 0.0
+          },
+          "tracts_with_feature": 1592,
+          "tracts_with_explicit_utc_time": 1592,
+          "tracts_without_any_source_entry": 0,
+          "entry_age_days": {
+            "p10": 103.15415509259259,
+            "p50": 584.0352430555556,
+            "p90": 1630.0558449074074,
+            "min": 13.030844907407408,
+            "max": 6208.203796296296
+          },
+          "provenance_class_feature_counts": {
+            "osm_only": 494144,
+            "tomtom_only": 257
+          }
+        },
+        "pois": {
+          "input": {
+            "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-pois.parquet",
+            "object_bytes": 40987154,
+            "rows": 300046,
+            "row_groups": 9,
+            "columns_read": [
+              "bbox",
+              "sources"
+            ],
+            "selected_column_compressed_bytes": 15926362,
+            "sources_struct_fields": [
+              "property",
+              "dataset",
+              "license",
+              "record_id",
+              "update_time",
+              "confidence",
+              "between",
+              "provider",
+              "resource",
+              "version"
+            ],
+            "full_object_downloaded": false,
+            "geometry_column_read": false,
+            "assigned_to_official_sample": 300046,
+            "unassigned_rows_outside_official_sample": 0,
+            "assigned_rows_with_null_sources_list": 0,
+            "dataset_entry_counts": {
+              "AllThePlaces": 4295,
+              "BrightQuery": 50288,
+              "DAC": 1911,
+              "Foursquare": 24120,
+              "Microsoft": 54746,
+              "Overture": 300046,
+              "Overture-signals": 176931,
+              "PinMeTo": 123,
+              "RenderSEO": 10,
+              "meta": 164553
+            },
+            "dataset_parsed_counts": {
+              "AllThePlaces": 4295,
+              "BrightQuery": 50288,
+              "DAC": 1911,
+              "Microsoft": 54746,
+              "Overture": 300046,
+              "Overture-signals": 176931,
+              "PinMeTo": 123,
+              "RenderSEO": 10,
+              "meta": 164553
+            },
+            "provenance_class_feature_counts": {
+              "meta_not_microsoft": 164553,
+              "microsoft_not_meta": 54746,
+              "other_without_meta_microsoft": 80747
+            },
+            "primary_timestamps_without_explicit_designator": 0,
+            "examples_without_designator": []
+          },
+          "features_assigned": 300046,
+          "entries": 777023,
+          "entries_by_timestamp_status": {
+            "parsed_utc_z": 752903,
+            "parsed_utc_offset": 0,
+            "naive_no_timezone": 24120,
+            "missing_null": 0,
+            "missing_empty": 0,
+            "malformed": 0
+          },
+          "timestamp_status_shares": {
+            "parsed_utc_z": 0.968958447819434,
+            "parsed_utc_offset": 0.0,
+            "naive_no_timezone": 0.031041552180566083,
+            "missing_null": 0.0,
+            "missing_empty": 0.0,
+            "malformed": 0.0
+          },
+          "entries_by_version_status": {
+            "iso_date": 777023,
+            "datetime_utc": 0,
+            "numeric": 0,
+            "missing_null": 0,
+            "other": 0
+          },
+          "version_status_shares": {
+            "iso_date": 1.0,
+            "datetime_utc": 0.0,
+            "numeric": 0.0,
+            "missing_null": 0.0,
+            "other": 0.0
+          },
+          "tracts_with_feature": 1593,
+          "tracts_with_explicit_utc_time": 1593,
+          "tracts_without_any_source_entry": 0,
+          "entry_age_days": {
+            "p10": 0.0,
+            "p50": 3.869247685185185,
+            "p90": 4.82369212962963,
+            "min": 0.0,
+            "max": 6869.141491087962
+          },
+          "provenance_class_feature_counts": {
+            "meta_not_microsoft": 164553,
+            "microsoft_not_meta": 54746,
+            "other_without_meta_microsoft": 80747
+          }
+        }
+      }
+    },
+    "northern-ca": {
+      "region": "northern-ca",
+      "official_tracts": 591,
+      "official_sample": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/northern-ca-sample-submission.csv",
+        "sha256": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+        "rows": 591,
+        "columns_read": [
+          "GEOID"
+        ],
+        "score_placeholder_columns_read": false
+      },
+      "acs": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-census-acs-housing.parquet",
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "acs_rows": 591,
+        "acs_row_groups": 1,
+        "tract_index_built_from_official_ids_only": true,
+        "extra_acs_geometries_excluded": 0
+      },
+      "feature_cache": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/northern-ca-overture-tract-summary.parquet",
+        "sha256": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c",
+        "columns_read": [
+          "GEOID",
+          "overture_building_osm_source_share",
+          "overture_building_microsoft_source_share",
+          "overture_building_esri_source_share",
+          "overture_building_other_source_share",
+          "overture_building_no_dataset_source_share",
+          "overture_building_ms_only_source_share",
+          "overture_building_ms_osm_source_share",
+          "overture_building_osm_only_source_share",
+          "overture_building_esri_only_source_share",
+          "overture_building_other_or_mixed_source_share",
+          "overture_poi_meta_source_share",
+          "overture_poi_microsoft_source_share",
+          "overture_poi_other_upstream_source_share",
+          "overture_poi_meta_not_microsoft_source_share",
+          "overture_poi_microsoft_not_meta_source_share",
+          "overture_poi_meta_and_microsoft_source_share",
+          "overture_poi_other_without_meta_microsoft_source_share",
+          "overture_poi_no_upstream_source_share",
+          "overture_poi_sources_missing_share"
+        ],
+        "row_order_matches_official_sample": true
+      },
+      "themes": {
+        "buildings": {
+          "input": {
+            "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-buildings.parquet",
+            "object_bytes": 130554079,
+            "rows": 1164724,
+            "row_groups": 26,
+            "columns_read": [
+              "bbox",
+              "sources"
+            ],
+            "selected_column_compressed_bytes": 32491967,
+            "sources_struct_fields": [
+              "property",
+              "dataset",
+              "license",
+              "record_id",
+              "update_time",
+              "confidence",
+              "between",
+              "provider",
+              "resource",
+              "version"
+            ],
+            "full_object_downloaded": false,
+            "geometry_column_read": false,
+            "assigned_to_official_sample": 1164723,
+            "unassigned_rows_outside_official_sample": 1,
+            "assigned_rows_with_null_sources_list": 0,
+            "dataset_entry_counts": {
+              "Esri Community Maps": 30168,
+              "Microsoft ML Buildings": 1042980,
+              "OpenStreetMap": 542513
+            },
+            "dataset_parsed_counts": {
+              "Esri Community Maps": 30168,
+              "Microsoft ML Buildings": 1042980,
+              "OpenStreetMap": 542513
+            },
+            "provenance_class_feature_counts": {
+              "esri_only": 15948,
+              "microsoft_only": 592042,
+              "microsoft_osm": 436718,
+              "osm_only": 105795,
+              "other_or_mixed": 14220
+            },
+            "primary_timestamps_without_explicit_designator": 0,
+            "examples_without_designator": []
+          },
+          "features_assigned": 1164723,
+          "entries": 1615661,
+          "entries_by_timestamp_status": {
+            "parsed_utc_z": 1615661,
+            "parsed_utc_offset": 0,
+            "naive_no_timezone": 0,
+            "missing_null": 0,
+            "missing_empty": 0,
+            "malformed": 0
+          },
+          "timestamp_status_shares": {
+            "parsed_utc_z": 1.0,
+            "parsed_utc_offset": 0.0,
+            "naive_no_timezone": 0.0,
+            "missing_null": 0.0,
+            "missing_empty": 0.0,
+            "malformed": 0.0
+          },
+          "entries_by_version_status": {
+            "iso_date": 1073148,
+            "datetime_utc": 542513,
+            "numeric": 0,
+            "missing_null": 0,
+            "other": 0
+          },
+          "version_status_shares": {
+            "iso_date": 0.6642160700790575,
+            "datetime_utc": 0.3357839299209426,
+            "numeric": 0.0,
+            "missing_null": 0.0,
+            "other": 0.0
+          },
+          "tracts_with_feature": 591,
+          "tracts_with_explicit_utc_time": 591,
+          "tracts_without_any_source_entry": 0,
+          "entry_age_days": {
+            "p10": 609.5914814814815,
+            "p50": 1573.8236921296295,
+            "p90": 2611.8236921296298,
+            "min": 12.875659722222222,
+            "max": 9722.82369212963
+          },
+          "provenance_class_feature_counts": {
+            "esri_only": 15948,
+            "microsoft_only": 592042,
+            "microsoft_osm": 436718,
+            "osm_only": 105795,
+            "other_or_mixed": 14220
+          }
+        },
+        "roads": {
+          "input": {
+            "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-roads.parquet",
+            "object_bytes": 43515963,
+            "rows": 191836,
+            "row_groups": 9,
+            "columns_read": [
+              "bbox",
+              "sources"
+            ],
+            "selected_column_compressed_bytes": 5038359,
+            "sources_struct_fields": [
+              "property",
+              "dataset",
+              "license",
+              "record_id",
+              "update_time",
+              "confidence",
+              "between",
+              "provider",
+              "resource",
+              "version"
+            ],
+            "full_object_downloaded": false,
+            "geometry_column_read": false,
+            "assigned_to_official_sample": 191509,
+            "unassigned_rows_outside_official_sample": 327,
+            "assigned_rows_with_null_sources_list": 0,
+            "dataset_entry_counts": {
+              "OpenStreetMap": 230919,
+              "TomTom": 96
+            },
+            "dataset_parsed_counts": {
+              "OpenStreetMap": 215964
+            },
+            "provenance_class_feature_counts": {
+              "osm_only": 191413,
+              "tomtom_only": 96
+            },
+            "primary_timestamps_without_explicit_designator": 0,
+            "examples_without_designator": []
+          },
+          "features_assigned": 191509,
+          "entries": 231015,
+          "entries_by_timestamp_status": {
+            "parsed_utc_z": 215964,
+            "parsed_utc_offset": 0,
+            "naive_no_timezone": 0,
+            "missing_null": 15051,
+            "missing_empty": 0,
+            "malformed": 0
+          },
+          "timestamp_status_shares": {
+            "parsed_utc_z": 0.9348483864684112,
+            "parsed_utc_offset": 0.0,
+            "naive_no_timezone": 0.0,
+            "missing_null": 0.06515161353158885,
+            "missing_empty": 0.0,
+            "malformed": 0.0
+          },
+          "entries_by_version_status": {
+            "iso_date": 230919,
+            "datetime_utc": 0,
+            "numeric": 96,
+            "missing_null": 0,
+            "other": 0
+          },
+          "version_status_shares": {
+            "iso_date": 0.9995844425686644,
+            "datetime_utc": 0.0,
+            "numeric": 0.0004155574313356276,
+            "missing_null": 0.0,
+            "other": 0.0
+          },
+          "tracts_with_feature": 591,
+          "tracts_with_explicit_utc_time": 591,
+          "tracts_without_any_source_entry": 0,
+          "entry_age_days": {
+            "p10": 91.46239583333333,
+            "p50": 1197.1971643518518,
+            "p90": 4152.743923611111,
+            "min": 12.875659722222222,
+            "max": 6460.706481481481
+          },
+          "provenance_class_feature_counts": {
+            "osm_only": 191413,
+            "tomtom_only": 96
+          }
+        },
+        "pois": {
+          "input": {
+            "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-pois.parquet",
+            "object_bytes": 16168720,
+            "rows": 116897,
+            "row_groups": 4,
+            "columns_read": [
+              "bbox",
+              "sources"
+            ],
+            "selected_column_compressed_bytes": 6354994,
+            "sources_struct_fields": [
+              "property",
+              "dataset",
+              "license",
+              "record_id",
+              "update_time",
+              "confidence",
+              "between",
+              "provider",
+              "resource",
+              "version"
+            ],
+            "full_object_downloaded": false,
+            "geometry_column_read": false,
+            "assigned_to_official_sample": 116897,
+            "unassigned_rows_outside_official_sample": 0,
+            "assigned_rows_with_null_sources_list": 0,
+            "dataset_entry_counts": {
+              "AllThePlaces": 1639,
+              "BrightQuery": 17695,
+              "DAC": 535,
+              "Foursquare": 8992,
+              "Microsoft": 18427,
+              "Overture": 116897,
+              "Overture-signals": 70280,
+              "PinMeTo": 7,
+              "RenderSEO": 1,
+              "meta": 69601
+            },
+            "dataset_parsed_counts": {
+              "AllThePlaces": 1639,
+              "BrightQuery": 17695,
+              "DAC": 535,
+              "Microsoft": 18426,
+              "Overture": 116897,
+              "Overture-signals": 70280,
+              "PinMeTo": 7,
+              "RenderSEO": 1,
+              "meta": 69601
+            },
+            "provenance_class_feature_counts": {
+              "meta_not_microsoft": 69601,
+              "microsoft_not_meta": 18427,
+              "other_without_meta_microsoft": 28869
+            },
+            "primary_timestamps_without_explicit_designator": 0,
+            "examples_without_designator": []
+          },
+          "features_assigned": 116897,
+          "entries": 304074,
+          "entries_by_timestamp_status": {
+            "parsed_utc_z": 295081,
+            "parsed_utc_offset": 0,
+            "naive_no_timezone": 8992,
+            "missing_null": 1,
+            "missing_empty": 0,
+            "malformed": 0
+          },
+          "timestamp_status_shares": {
+            "parsed_utc_z": 0.9704249623446924,
+            "parsed_utc_offset": 0.0,
+            "naive_no_timezone": 0.02957174898215566,
+            "missing_null": 3.2886731519301223e-06,
+            "missing_empty": 0.0,
+            "malformed": 0.0
+          },
+          "entries_by_version_status": {
+            "iso_date": 304074,
+            "datetime_utc": 0,
+            "numeric": 0,
+            "missing_null": 0,
+            "other": 0
+          },
+          "version_status_shares": {
+            "iso_date": 1.0,
+            "datetime_utc": 0.0,
+            "numeric": 0.0,
+            "missing_null": 0.0,
+            "other": 0.0
+          },
+          "tracts_with_feature": 591,
+          "tracts_with_explicit_utc_time": 591,
+          "tracts_without_any_source_entry": 0,
+          "entry_age_days": {
+            "p10": 0.0,
+            "p50": 3.869247685185185,
+            "p90": 4.82369212962963,
+            "min": 0.0,
+            "max": 6871.737319791668
+          },
+          "provenance_class_feature_counts": {
+            "meta_not_microsoft": 69601,
+            "microsoft_not_meta": 18427,
+            "other_without_meta_microsoft": 28869
+          }
+        }
+      }
+    },
+    "eastern-ok": {
+      "region": "eastern-ok",
+      "official_tracts": 1192,
+      "official_sample": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/eastern-ok-sample-submission.csv",
+        "sha256": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+        "rows": 1192,
+        "columns_read": [
+          "GEOID"
+        ],
+        "score_placeholder_columns_read": false
+      },
+      "acs": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-census-acs-housing.parquet",
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "acs_rows": 1192,
+        "acs_row_groups": 1,
+        "tract_index_built_from_official_ids_only": true,
+        "extra_acs_geometries_excluded": 0
+      },
+      "feature_cache": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/eastern-ok-overture-tract-summary.parquet",
+        "sha256": "e5a06316c316f61bf25b80b48e89c1e7f0b1461a0b8cec5831aae24e0cf83fa6",
+        "columns_read": [
+          "GEOID",
+          "overture_building_osm_source_share",
+          "overture_building_microsoft_source_share",
+          "overture_building_esri_source_share",
+          "overture_building_other_source_share",
+          "overture_building_no_dataset_source_share",
+          "overture_building_ms_only_source_share",
+          "overture_building_ms_osm_source_share",
+          "overture_building_osm_only_source_share",
+          "overture_building_esri_only_source_share",
+          "overture_building_other_or_mixed_source_share",
+          "overture_poi_meta_source_share",
+          "overture_poi_microsoft_source_share",
+          "overture_poi_other_upstream_source_share",
+          "overture_poi_meta_not_microsoft_source_share",
+          "overture_poi_microsoft_not_meta_source_share",
+          "overture_poi_meta_and_microsoft_source_share",
+          "overture_poi_other_without_meta_microsoft_source_share",
+          "overture_poi_no_upstream_source_share",
+          "overture_poi_sources_missing_share"
+        ],
+        "row_order_matches_official_sample": true
+      },
+      "themes": {
+        "buildings": {
+          "input": {
+            "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-buildings.parquet",
+            "object_bytes": 298882068,
+            "rows": 2551694,
+            "row_groups": 60,
+            "columns_read": [
+              "bbox",
+              "sources"
+            ],
+            "selected_column_compressed_bytes": 76822949,
+            "sources_struct_fields": [
+              "property",
+              "dataset",
+              "license",
+              "record_id",
+              "update_time",
+              "confidence",
+              "between",
+              "provider",
+              "resource",
+              "version"
+            ],
+            "full_object_downloaded": false,
+            "geometry_column_read": false,
+            "assigned_to_official_sample": 2551694,
+            "unassigned_rows_outside_official_sample": 0,
+            "assigned_rows_with_null_sources_list": 0,
+            "dataset_entry_counts": {
+              "Esri Community Maps": 356307,
+              "Microsoft ML Buildings": 2246412,
+              "OpenStreetMap": 425523
+            },
+            "dataset_parsed_counts": {
+              "Esri Community Maps": 356307,
+              "Microsoft ML Buildings": 2246412,
+              "OpenStreetMap": 425523
+            },
+            "provenance_class_feature_counts": {
+              "esri_only": 157759,
+              "microsoft_only": 1769864,
+              "microsoft_osm": 278000,
+              "osm_only": 147523,
+              "other_or_mixed": 198548
+            },
+            "primary_timestamps_without_explicit_designator": 0,
+            "examples_without_designator": []
+          },
+          "features_assigned": 2551694,
+          "entries": 3028242,
+          "entries_by_timestamp_status": {
+            "parsed_utc_z": 3028242,
+            "parsed_utc_offset": 0,
+            "naive_no_timezone": 0,
+            "missing_null": 0,
+            "missing_empty": 0,
+            "malformed": 0
+          },
+          "timestamp_status_shares": {
+            "parsed_utc_z": 1.0,
+            "parsed_utc_offset": 0.0,
+            "naive_no_timezone": 0.0,
+            "missing_null": 0.0,
+            "missing_empty": 0.0,
+            "malformed": 0.0
+          },
+          "entries_by_version_status": {
+            "iso_date": 2602719,
+            "datetime_utc": 425523,
+            "numeric": 0,
+            "missing_null": 0,
+            "other": 0
+          },
+          "version_status_shares": {
+            "iso_date": 0.8594818379772818,
+            "datetime_utc": 0.14051816202271813,
+            "numeric": 0.0,
+            "missing_null": 0.0,
+            "other": 0.0
+          },
+          "tracts_with_feature": 1192,
+          "tracts_with_explicit_utc_time": 1192,
+          "tracts_without_any_source_entry": 0,
+          "entry_age_days": {
+            "p10": 368.82369212962965,
+            "p50": 1734.8236921296295,
+            "p90": 2703.8236921296298,
+            "min": 12.918958333333334,
+            "max": 9722.82369212963
+          },
+          "provenance_class_feature_counts": {
+            "esri_only": 157759,
+            "microsoft_only": 1769864,
+            "microsoft_osm": 278000,
+            "osm_only": 147523,
+            "other_or_mixed": 198548
+          }
+        },
+        "roads": {
+          "input": {
+            "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-roads.parquet",
+            "object_bytes": 82239229,
+            "rows": 520550,
+            "row_groups": 16,
+            "columns_read": [
+              "bbox",
+              "sources"
+            ],
+            "selected_column_compressed_bytes": 14446131,
+            "sources_struct_fields": [
+              "property",
+              "dataset",
+              "license",
+              "record_id",
+              "update_time",
+              "confidence",
+              "between",
+              "provider",
+              "resource",
+              "version"
+            ],
+            "full_object_downloaded": false,
+            "geometry_column_read": false,
+            "assigned_to_official_sample": 520423,
+            "unassigned_rows_outside_official_sample": 127,
+            "assigned_rows_with_null_sources_list": 0,
+            "dataset_entry_counts": {
+              "OpenStreetMap": 683401,
+              "TomTom": 294
+            },
+            "dataset_parsed_counts": {
+              "OpenStreetMap": 598985
+            },
+            "provenance_class_feature_counts": {
+              "osm_only": 520129,
+              "tomtom_only": 294
+            },
+            "primary_timestamps_without_explicit_designator": 0,
+            "examples_without_designator": []
+          },
+          "features_assigned": 520423,
+          "entries": 683695,
+          "entries_by_timestamp_status": {
+            "parsed_utc_z": 598985,
+            "parsed_utc_offset": 0,
+            "naive_no_timezone": 0,
+            "missing_null": 84710,
+            "missing_empty": 0,
+            "malformed": 0
+          },
+          "timestamp_status_shares": {
+            "parsed_utc_z": 0.8760997228296243,
+            "parsed_utc_offset": 0.0,
+            "naive_no_timezone": 0.0,
+            "missing_null": 0.12390027717037568,
+            "missing_empty": 0.0,
+            "malformed": 0.0
+          },
+          "entries_by_version_status": {
+            "iso_date": 683401,
+            "datetime_utc": 0,
+            "numeric": 294,
+            "missing_null": 0,
+            "other": 0
+          },
+          "version_status_shares": {
+            "iso_date": 0.9995699836915584,
+            "datetime_utc": 0.0,
+            "numeric": 0.0004300163084416297,
+            "missing_null": 0.0,
+            "other": 0.0
+          },
+          "tracts_with_feature": 1192,
+          "tracts_with_explicit_utc_time": 1192,
+          "tracts_without_any_source_entry": 0,
+          "entry_age_days": {
+            "p10": 176.20784722222223,
+            "p50": 1434.6200578703704,
+            "p90": 5973.316571759258,
+            "min": 12.824560185185184,
+            "max": 6420.870150462963
+          },
+          "provenance_class_feature_counts": {
+            "osm_only": 520129,
+            "tomtom_only": 294
+          }
+        },
+        "pois": {
+          "input": {
+            "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-pois.parquet",
+            "object_bytes": 28848614,
+            "rows": 207369,
+            "row_groups": 6,
+            "columns_read": [
+              "bbox",
+              "sources"
+            ],
+            "selected_column_compressed_bytes": 11456387,
+            "sources_struct_fields": [
+              "property",
+              "dataset",
+              "license",
+              "record_id",
+              "update_time",
+              "confidence",
+              "between",
+              "provider",
+              "resource",
+              "version"
+            ],
+            "full_object_downloaded": false,
+            "geometry_column_read": false,
+            "assigned_to_official_sample": 207369,
+            "unassigned_rows_outside_official_sample": 0,
+            "assigned_rows_with_null_sources_list": 0,
+            "dataset_entry_counts": {
+              "AllThePlaces": 3556,
+              "BrightQuery": 23601,
+              "DAC": 1513,
+              "Foursquare": 13985,
+              "Microsoft": 31847,
+              "Overture": 207369,
+              "Overture-signals": 125821,
+              "PinMeTo": 28,
+              "RenderSEO": 20,
+              "meta": 132819
+            },
+            "dataset_parsed_counts": {
+              "AllThePlaces": 3556,
+              "BrightQuery": 23601,
+              "DAC": 1513,
+              "Microsoft": 31847,
+              "Overture": 207369,
+              "Overture-signals": 125821,
+              "PinMeTo": 28,
+              "RenderSEO": 20,
+              "meta": 132819
+            },
+            "provenance_class_feature_counts": {
+              "meta_not_microsoft": 132819,
+              "microsoft_not_meta": 31847,
+              "other_without_meta_microsoft": 42703
+            },
+            "primary_timestamps_without_explicit_designator": 0,
+            "examples_without_designator": []
+          },
+          "features_assigned": 207369,
+          "entries": 540559,
+          "entries_by_timestamp_status": {
+            "parsed_utc_z": 526574,
+            "parsed_utc_offset": 0,
+            "naive_no_timezone": 13985,
+            "missing_null": 0,
+            "missing_empty": 0,
+            "malformed": 0
+          },
+          "timestamp_status_shares": {
+            "parsed_utc_z": 0.9741286335071657,
+            "parsed_utc_offset": 0.0,
+            "naive_no_timezone": 0.02587136649283427,
+            "missing_null": 0.0,
+            "missing_empty": 0.0,
+            "malformed": 0.0
+          },
+          "entries_by_version_status": {
+            "iso_date": 540559,
+            "datetime_utc": 0,
+            "numeric": 0,
+            "missing_null": 0,
+            "other": 0
+          },
+          "version_status_shares": {
+            "iso_date": 1.0,
+            "datetime_utc": 0.0,
+            "numeric": 0.0,
+            "missing_null": 0.0,
+            "other": 0.0
+          },
+          "tracts_with_feature": 1192,
+          "tracts_with_explicit_utc_time": 1192,
+          "tracts_without_any_source_entry": 0,
+          "entry_age_days": {
+            "p10": 0.0,
+            "p50": 3.869247685185185,
+            "p90": 4.82369212962963,
+            "min": 0.0,
+            "max": 6855.260200266203
+          },
+          "provenance_class_feature_counts": {
+            "meta_not_microsoft": 132819,
+            "microsoft_not_meta": 31847,
+            "other_without_meta_microsoft": 42703
+          }
+        }
+      }
+    },
+    "south-central-tx": {
+      "region": "south-central-tx",
+      "official_tracts": 6003,
+      "official_sample": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/south-central-tx-sample-submission.csv",
+        "sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e",
+        "rows": 6003,
+        "columns_read": [
+          "GEOID"
+        ],
+        "score_placeholder_columns_read": false
+      },
+      "acs": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-census-acs-housing.parquet",
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "acs_rows": 6010,
+        "acs_row_groups": 1,
+        "tract_index_built_from_official_ids_only": true,
+        "extra_acs_geometries_excluded": 7
+      },
+      "feature_cache": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/south-central-tx-overture-tract-summary.parquet",
+        "sha256": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746",
+        "columns_read": [
+          "GEOID",
+          "overture_building_osm_source_share",
+          "overture_building_microsoft_source_share",
+          "overture_building_esri_source_share",
+          "overture_building_other_source_share",
+          "overture_building_no_dataset_source_share",
+          "overture_building_ms_only_source_share",
+          "overture_building_ms_osm_source_share",
+          "overture_building_osm_only_source_share",
+          "overture_building_esri_only_source_share",
+          "overture_building_other_or_mixed_source_share",
+          "overture_poi_meta_source_share",
+          "overture_poi_microsoft_source_share",
+          "overture_poi_other_upstream_source_share",
+          "overture_poi_meta_not_microsoft_source_share",
+          "overture_poi_microsoft_not_meta_source_share",
+          "overture_poi_meta_and_microsoft_source_share",
+          "overture_poi_other_without_meta_microsoft_source_share",
+          "overture_poi_no_upstream_source_share",
+          "overture_poi_sources_missing_share"
+        ],
+        "row_order_matches_official_sample": true
+      },
+      "themes": {
+        "buildings": {
+          "input": {
+            "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-buildings.parquet",
+            "object_bytes": 1269949045,
+            "rows": 11463801,
+            "row_groups": 255,
+            "columns_read": [
+              "bbox",
+              "sources"
+            ],
+            "selected_column_compressed_bytes": 322754989,
+            "sources_struct_fields": [
+              "property",
+              "dataset",
+              "license",
+              "record_id",
+              "update_time",
+              "confidence",
+              "between",
+              "provider",
+              "resource",
+              "version"
+            ],
+            "full_object_downloaded": false,
+            "geometry_column_read": false,
+            "assigned_to_official_sample": 11463800,
+            "unassigned_rows_outside_official_sample": 1,
+            "assigned_rows_with_null_sources_list": 0,
+            "dataset_entry_counts": {
+              "Esri Community Maps": 278591,
+              "Google Open Buildings": 254872,
+              "Microsoft ML Buildings": 8243296,
+              "OpenStreetMap": 5846474,
+              "USGS Lidar": 976523
+            },
+            "dataset_parsed_counts": {
+              "Esri Community Maps": 278591,
+              "Google Open Buildings": 254872,
+              "Microsoft ML Buildings": 8243296,
+              "OpenStreetMap": 5846474
+            },
+            "provenance_class_feature_counts": {
+              "esri_only": 211496,
+              "microsoft_only": 4965415,
+              "microsoft_osm": 3080961,
+              "osm_only": 1932480,
+              "other_or_mixed": 1273448
+            },
+            "primary_timestamps_without_explicit_designator": 0,
+            "examples_without_designator": []
+          },
+          "features_assigned": 11463800,
+          "entries": 15599756,
+          "entries_by_timestamp_status": {
+            "parsed_utc_z": 14623233,
+            "parsed_utc_offset": 0,
+            "naive_no_timezone": 0,
+            "missing_null": 976523,
+            "missing_empty": 0,
+            "malformed": 0
+          },
+          "timestamp_status_shares": {
+            "parsed_utc_z": 0.9374013926884498,
+            "parsed_utc_offset": 0.0,
+            "naive_no_timezone": 0.0,
+            "missing_null": 0.06259860731155026,
+            "missing_empty": 0.0,
+            "malformed": 0.0
+          },
+          "entries_by_version_status": {
+            "iso_date": 8776759,
+            "datetime_utc": 5846474,
+            "numeric": 0,
+            "missing_null": 976523,
+            "other": 0
+          },
+          "version_status_shares": {
+            "iso_date": 0.562621556388446,
+            "datetime_utc": 0.37477983630000367,
+            "numeric": 0.0,
+            "missing_null": 0.06259860731155026,
+            "other": 0.0
+          },
+          "tracts_with_feature": 6001,
+          "tracts_with_explicit_utc_time": 6001,
+          "tracts_without_any_source_entry": 0,
+          "entry_age_days": {
+            "p10": 697.1632175925926,
+            "p50": 1608.8236921296295,
+            "p90": 3474.924791666667,
+            "min": 7.7477430555555555,
+            "max": 9722.82369212963
+          },
+          "provenance_class_feature_counts": {
+            "esri_only": 211496,
+            "microsoft_only": 4965415,
+            "microsoft_osm": 3080961,
+            "osm_only": 1932480,
+            "other_or_mixed": 1273448
+          }
+        },
+        "roads": {
+          "input": {
+            "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-roads.parquet",
+            "object_bytes": 299751270,
+            "rows": 1937009,
+            "row_groups": 60,
+            "columns_read": [
+              "bbox",
+              "sources"
+            ],
+            "selected_column_compressed_bytes": 52906400,
+            "sources_struct_fields": [
+              "property",
+              "dataset",
+              "license",
+              "record_id",
+              "update_time",
+              "confidence",
+              "between",
+              "provider",
+              "resource",
+              "version"
+            ],
+            "full_object_downloaded": false,
+            "geometry_column_read": false,
+            "assigned_to_official_sample": 1936744,
+            "unassigned_rows_outside_official_sample": 265,
+            "assigned_rows_with_null_sources_list": 0,
+            "dataset_entry_counts": {
+              "OpenStreetMap": 2417667,
+              "TomTom": 1968
+            },
+            "dataset_parsed_counts": {
+              "OpenStreetMap": 2182484
+            },
+            "provenance_class_feature_counts": {
+              "osm_only": 1934776,
+              "tomtom_only": 1968
+            },
+            "primary_timestamps_without_explicit_designator": 0,
+            "examples_without_designator": []
+          },
+          "features_assigned": 1936744,
+          "entries": 2419635,
+          "entries_by_timestamp_status": {
+            "parsed_utc_z": 2182484,
+            "parsed_utc_offset": 0,
+            "naive_no_timezone": 0,
+            "missing_null": 237151,
+            "missing_empty": 0,
+            "malformed": 0
+          },
+          "timestamp_status_shares": {
+            "parsed_utc_z": 0.9019889363478376,
+            "parsed_utc_offset": 0.0,
+            "naive_no_timezone": 0.0,
+            "missing_null": 0.09801106365216242,
+            "missing_empty": 0.0,
+            "malformed": 0.0
+          },
+          "entries_by_version_status": {
+            "iso_date": 2417667,
+            "datetime_utc": 0,
+            "numeric": 1968,
+            "missing_null": 0,
+            "other": 0
+          },
+          "version_status_shares": {
+            "iso_date": 0.9991866541854453,
+            "datetime_utc": 0.0,
+            "numeric": 0.0008133458145546746,
+            "missing_null": 0.0,
+            "other": 0.0
+          },
+          "tracts_with_feature": 5999,
+          "tracts_with_explicit_utc_time": 5999,
+          "tracts_without_any_source_entry": 0,
+          "entry_age_days": {
+            "p10": 136.22599537037038,
+            "p50": 898.8870833333333,
+            "p90": 4704.547083333333,
+            "min": 10.74136574074074,
+            "max": 6737.588969907408
+          },
+          "provenance_class_feature_counts": {
+            "osm_only": 1934776,
+            "tomtom_only": 1968
+          }
+        },
+        "pois": {
+          "input": {
+            "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-pois.parquet",
+            "object_bytes": 179937096,
+            "rows": 1300334,
+            "row_groups": 36,
+            "columns_read": [
+              "bbox",
+              "sources"
+            ],
+            "selected_column_compressed_bytes": 70182698,
+            "sources_struct_fields": [
+              "property",
+              "dataset",
+              "license",
+              "record_id",
+              "update_time",
+              "confidence",
+              "between",
+              "provider",
+              "resource",
+              "version"
+            ],
+            "full_object_downloaded": false,
+            "geometry_column_read": false,
+            "assigned_to_official_sample": 1300331,
+            "unassigned_rows_outside_official_sample": 3,
+            "assigned_rows_with_null_sources_list": 0,
+            "dataset_entry_counts": {
+              "AllThePlaces": 21068,
+              "BrightQuery": 172148,
+              "DAC": 7263,
+              "Foursquare": 92173,
+              "Microsoft": 211635,
+              "Overture": 1300331,
+              "Overture-signals": 761831,
+              "PinMeTo": 935,
+              "RenderSEO": 132,
+              "meta": 794977
+            },
+            "dataset_parsed_counts": {
+              "AllThePlaces": 21068,
+              "BrightQuery": 172148,
+              "DAC": 7263,
+              "Microsoft": 211628,
+              "Overture": 1300331,
+              "Overture-signals": 761831,
+              "PinMeTo": 935,
+              "RenderSEO": 132,
+              "meta": 794977
+            },
+            "provenance_class_feature_counts": {
+              "meta_not_microsoft": 794977,
+              "microsoft_not_meta": 211635,
+              "other_without_meta_microsoft": 293719
+            },
+            "primary_timestamps_without_explicit_designator": 0,
+            "examples_without_designator": []
+          },
+          "features_assigned": 1300331,
+          "entries": 3362493,
+          "entries_by_timestamp_status": {
+            "parsed_utc_z": 3270313,
+            "parsed_utc_offset": 0,
+            "naive_no_timezone": 92173,
+            "missing_null": 7,
+            "missing_empty": 0,
+            "malformed": 0
+          },
+          "timestamp_status_shares": {
+            "parsed_utc_z": 0.9725858165355289,
+            "parsed_utc_offset": 0.0,
+            "naive_no_timezone": 0.0274121016757507,
+            "missing_null": 2.081788720452355e-06,
+            "missing_empty": 0.0,
+            "malformed": 0.0
+          },
+          "entries_by_version_status": {
+            "iso_date": 3362493,
+            "datetime_utc": 0,
+            "numeric": 0,
+            "missing_null": 0,
+            "other": 0
+          },
+          "version_status_shares": {
+            "iso_date": 1.0,
+            "datetime_utc": 0.0,
+            "numeric": 0.0,
+            "missing_null": 0.0,
+            "other": 0.0
+          },
+          "tracts_with_feature": 6001,
+          "tracts_with_explicit_utc_time": 6001,
+          "tracts_without_any_source_entry": 0,
+          "entry_age_days": {
+            "p10": 0.0,
+            "p50": 3.869247685185185,
+            "p90": 4.82369212962963,
+            "min": 0.0,
+            "max": 6868.071566631946
+          },
+          "provenance_class_feature_counts": {
+            "meta_not_microsoft": 794977,
+            "microsoft_not_meta": 211635,
+            "other_without_meta_microsoft": 293719
+          }
+        }
+      }
+    }
+  },
+  "pooled": {
+    "entries": 34137283,
+    "features": 23156161,
+    "entries_by_timestamp_status": {
+      "parsed_utc_z": 31497159,
+      "parsed_utc_offset": 0,
+      "naive_no_timezone": 139270,
+      "missing_null": 2500854,
+      "missing_empty": 0,
+      "malformed": 0
+    },
+    "timestamp_status_shares": {
+      "parsed_utc_z": 0.9226615662412266,
+      "parsed_utc_offset": 0.0,
+      "naive_no_timezone": 0.004079703706941176,
+      "missing_null": 0.07325873005183219,
+      "missing_empty": 0.0,
+      "malformed": 0.0
+    },
+    "entries_by_version_status": {
+      "iso_date": 22859879,
+      "datetime_utc": 9131783,
+      "numeric": 2615,
+      "missing_null": 2143006,
+      "other": 0
+    },
+    "version_status_shares": {
+      "iso_date": 0.6696455309580437,
+      "datetime_utc": 0.2675017516771912,
+      "numeric": 7.660246423243466e-05,
+      "missing_null": 0.06277611490053266,
+      "other": 0.0
+    },
+    "naive_used_in_primary": false,
+    "primary_timestamps_without_explicit_designator": 0,
+    "explicit_timestamp_share": 0.9267412699481679,
+    "missing_or_malformed_timestamp_share": 0.07325873005183219,
+    "closed_set_accounting": {
+      "units": 34137283,
+      "accounted": 34137283,
+      "share": 1.0,
+      "required_share": 0.95,
+      "unit_definition": "one per assigned source entry plus one per assigned feature whose sources list is null or empty",
+      "entryless_features": 0
+    },
+    "by_theme": {
+      "buildings": {
+        "features": 18088441,
+        "entries": 25202095,
+        "entries_with_explicit_utc_time": 23059089,
+        "explicit_timestamp_share": 0.9149671485644348,
+        "missing_or_malformed_timestamp_share": 0.08503285143556517,
+        "parseable_share": 0.9149671485644348,
+        "share_of_all_entries": 0.7382572010783635,
+        "entries_by_timestamp_status": {
+          "parsed_utc_z": 23059089,
+          "parsed_utc_offset": 0,
+          "naive_no_timezone": 0,
+          "missing_null": 2143006,
+          "missing_empty": 0,
+          "malformed": 0
+        },
+        "timestamp_status_shares": {
+          "parsed_utc_z": 0.9149671485644348,
+          "parsed_utc_offset": 0.0,
+          "naive_no_timezone": 0.0,
+          "missing_null": 0.08503285143556517,
+          "missing_empty": 0.0,
+          "malformed": 0.0
+        },
+        "entries_by_version_status": {
+          "iso_date": 13927306,
+          "datetime_utc": 9131783,
+          "numeric": 0,
+          "missing_null": 2143006,
+          "other": 0
+        },
+        "version_status_shares": {
+          "iso_date": 0.5526249305861278,
+          "datetime_utc": 0.36234221797830696,
+          "numeric": 0.0,
+          "missing_null": 0.08503285143556517,
+          "other": 0.0
+        },
+        "vintage_shares": {
+          "182": 0.012359204650279116,
+          "365": 0.0337697642781985,
+          "730": 0.11026250863596562,
+          "1095": 0.2281247537576181,
+          "1825": 0.6130119884614695
+        }
+      },
+      "roads": {
+        "features": 3143077,
+        "entries": 3951039,
+        "entries_with_explicit_utc_time": 3593199,
+        "explicit_timestamp_share": 0.909431417913111,
+        "missing_or_malformed_timestamp_share": 0.09056858208688905,
+        "parseable_share": 0.909431417913111,
+        "share_of_all_entries": 0.11573970312751604,
+        "entries_by_timestamp_status": {
+          "parsed_utc_z": 3593199,
+          "parsed_utc_offset": 0,
+          "naive_no_timezone": 0,
+          "missing_null": 357840,
+          "missing_empty": 0,
+          "malformed": 0
+        },
+        "timestamp_status_shares": {
+          "parsed_utc_z": 0.909431417913111,
+          "parsed_utc_offset": 0.0,
+          "naive_no_timezone": 0.0,
+          "missing_null": 0.09056858208688905,
+          "missing_empty": 0.0,
+          "malformed": 0.0
+        },
+        "entries_by_version_status": {
+          "iso_date": 3948424,
+          "datetime_utc": 0,
+          "numeric": 2615,
+          "missing_null": 0,
+          "other": 0
+        },
+        "version_status_shares": {
+          "iso_date": 0.9993381487755499,
+          "datetime_utc": 0.0,
+          "numeric": 0.000661851224450075,
+          "missing_null": 0.0,
+          "other": 0.0
+        },
+        "vintage_shares": {
+          "182": 0.15073170175100237,
+          "365": 0.2784120779283307,
+          "730": 0.4562188178277908,
+          "1095": 0.5710883254726499,
+          "1825": 0.6972725418213687
+        }
+      },
+      "pois": {
+        "features": 1924643,
+        "entries": 4984149,
+        "entries_with_explicit_utc_time": 4844871,
+        "explicit_timestamp_share": 0.9999983949115486,
+        "missing_or_malformed_timestamp_share": 1.6050884514086557e-06,
+        "parseable_share": 0.9720558113330882,
+        "share_of_all_entries": 0.14600309579412046,
+        "entries_by_timestamp_status": {
+          "parsed_utc_z": 4844871,
+          "parsed_utc_offset": 0,
+          "naive_no_timezone": 139270,
+          "missing_null": 8,
+          "missing_empty": 0,
+          "malformed": 0
+        },
+        "timestamp_status_shares": {
+          "parsed_utc_z": 0.9720558113330882,
+          "parsed_utc_offset": 0.0,
+          "naive_no_timezone": 0.027942583578460436,
+          "missing_null": 1.6050884514086557e-06,
+          "missing_empty": 0.0,
+          "malformed": 0.0
+        },
+        "entries_by_version_status": {
+          "iso_date": 4984149,
+          "datetime_utc": 0,
+          "numeric": 0,
+          "missing_null": 0,
+          "other": 0
+        },
+        "version_status_shares": {
+          "iso_date": 1.0,
+          "datetime_utc": 0.0,
+          "numeric": 0.0,
+          "missing_null": 0.0,
+          "other": 0.0
+        },
+        "vintage_shares": {
+          "182": 0.9346428418837158,
+          "365": 0.9531492169760557,
+          "730": 0.9678515692161876,
+          "1095": 0.9723325966780126,
+          "1825": 0.9787812719884595
+        }
+      }
+    }
+  },
+  "candidate": {
+    "csv": "reports/candidates/source_freshness_candidate.csv",
+    "csv_sha256": "3c5cf30a8867676405bc6cdc2689e17d910c314e5e8db39606d5560b1e19cecf",
+    "rows": 9379,
+    "defined_tracts": 9377,
+    "undefined_tracts": 2,
+    "undefined_placeholder": 0.0,
+    "adjustment_stats": {
+      "n": 9377,
+      "mean": 0.016802705705612365,
+      "sd": 0.0031552338086577713,
+      "min": 0.003050881141782875,
+      "p50": 0.017243367083960397,
+      "p95": 0.021102314611847185,
+      "max": 0.02482118287421097
+    },
+    "adjustment_min": 0.0,
+    "adjustment_max": 0.02482118287421097,
+    "per_region_adjustment": {
+      "maricopa-az": {
+        "n": 1593,
+        "mean": 0.017682391187456233,
+        "sd": 0.003184793002908591,
+        "min": 0.00606215659503812,
+        "p50": 0.017768148907103827,
+        "p95": 0.02254068812919137,
+        "max": 0.02482118287421097
+      },
+      "northern-ca": {
+        "n": 591,
+        "mean": 0.01650698863356157,
+        "sd": 0.003085650034149063,
+        "min": 0.006517120064835705,
+        "p50": 0.017100139876693315,
+        "p95": 0.020612277977060285,
+        "max": 0.02193097216320812
+      },
+      "eastern-ok": {
+        "n": 1192,
+        "mean": 0.016341708282935977,
+        "sd": 0.0037862711875693436,
+        "min": 0.005819923023422699,
+        "p50": 0.017457059161987695,
+        "p95": 0.020940772181211525,
+        "max": 0.022279071355742933
+      },
+      "south-central-tx": {
+        "n": 6003,
+        "mean": 0.016684320453808892,
+        "sd": 0.002983168996988727,
+        "min": 0.0,
+        "p50": 0.01710440390664752,
+        "p95": 0.020699791862655255,
+        "max": 0.024398847084561526
+      }
+    },
+    "independent_arithmetic_max_abs_difference": 6.938893903907228e-18,
+    "independent_arithmetic_tolerance": 1e-12
+  },
+  "beyond_source_mixture": {
+    "definition": "Ordinary least squares of the tract adjustment on the frozen source-mixture share columns (intercept included), restricted to tracts where the adjustment is defined, plus the same regression with per-theme log1p feature counts added and a counts-only control. Report R-squared, residual standard deviation, residual-to-total standard deviation ratio, and the largest absolute Pearson correlation with any single mixture share.",
+    "mixture_columns_used": [
+      "overture_building_osm_source_share",
+      "overture_building_microsoft_source_share",
+      "overture_building_esri_source_share",
+      "overture_building_other_source_share",
+      "overture_building_no_dataset_source_share",
+      "overture_building_ms_only_source_share",
+      "overture_building_ms_osm_source_share",
+      "overture_building_osm_only_source_share",
+      "overture_building_esri_only_source_share",
+      "overture_building_other_or_mixed_source_share",
+      "overture_poi_meta_source_share",
+      "overture_poi_microsoft_source_share",
+      "overture_poi_other_upstream_source_share",
+      "overture_poi_meta_not_microsoft_source_share",
+      "overture_poi_microsoft_not_meta_source_share",
+      "overture_poi_meta_and_microsoft_source_share",
+      "overture_poi_other_without_meta_microsoft_source_share",
+      "overture_poi_no_upstream_source_share",
+      "overture_poi_sources_missing_share"
+    ],
+    "adjustment_on_frozen_mixture": {
+      "n": 9377,
+      "r_squared": 0.24989296026580599,
+      "unexplained_sd": 0.0027327076178376626,
+      "residual_over_total_sd": 0.866087200998949,
+      "design_rank": 11,
+      "intercept": 0.008822008760257622,
+      "max_abs_pearson_r_with_single_regressor": 0.34619557439925297
+    },
+    "adjustment_on_frozen_mixture_and_theme_counts": {
+      "n": 9377,
+      "r_squared": 0.2984430108927233,
+      "unexplained_sd": 0.0026427922500205023,
+      "residual_over_total_sd": 0.8375899886622791,
+      "design_rank": 14,
+      "intercept": 0.007405873400794606,
+      "max_abs_pearson_r_with_single_regressor": 0.34619557439925297
+    },
+    "adjustment_on_theme_counts_only": {
+      "n": 9377,
+      "r_squared": 0.07911285825897696,
+      "unexplained_sd": 0.0030278527533979596,
+      "residual_over_total_sd": 0.9596286478325994,
+      "design_rank": 4,
+      "intercept": 0.014214414021386592,
+      "max_abs_pearson_r_with_single_regressor": 0.1902801362063992
+    },
+    "adopted": false
+  },
+  "sensitivity": {
+    "stale_cutoffs": {
+      "365": {
+        "stats": {
+          "n": 9379,
+          "mean": 0.019349212412590938,
+          "sd": 0.0027305479727660464,
+          "min": 0.0,
+          "p50": 0.019959058391958256,
+          "p95": 0.02285702071275332,
+          "max": 0.025760033342628004
+        },
+        "pearson_r_vs_primary": 0.712103997387438,
+        "spearman_r_vs_primary": 0.7122865744039473,
+        "max_absolute_delta": 0.015830119580993958,
+        "share_within_one_percent_of_primary": 0.1269858193837296,
+        "adopted": false
+      },
+      "730": {
+        "stats": {
+          "n": 9379,
+          "mean": 0.016799122657162505,
+          "sd": 0.0031644224628509126,
+          "min": 0.0,
+          "p50": 0.01724233541398645,
+          "p95": 0.02110203638530479,
+          "max": 0.02482118287421097
+        },
+        "pearson_r_vs_primary": 1.0,
+        "spearman_r_vs_primary": 1.0,
+        "max_absolute_delta": 0.0,
+        "share_within_one_percent_of_primary": 1.0,
+        "adopted": false
+      },
+      "1095": {
+        "stats": {
+          "n": 9379,
+          "mean": 0.014214032054725934,
+          "sd": 0.0041845920619187245,
+          "min": 0.0,
+          "p50": 0.014806467158396761,
+          "p95": 0.0199279207482475,
+          "max": 0.02398856403112247
+        },
+        "pearson_r_vs_primary": 0.6759955470616005,
+        "spearman_r_vs_primary": 0.6871182742340519,
+        "max_absolute_delta": 0.01854518959242027,
+        "share_within_one_percent_of_primary": 0.3294594306429257,
+        "adopted": false
+      },
+      "1825": {
+        "stats": {
+          "n": 9379,
+          "mean": 0.008452179885191079,
+          "sd": 0.004562251124545877,
+          "min": 0.0,
+          "p50": 0.007411700219254535,
+          "p95": 0.017054375246631188,
+          "max": 0.021923476535187413
+        },
+        "pearson_r_vs_primary": 0.3006357925570563,
+        "spearman_r_vs_primary": 0.2620937718627074,
+        "max_absolute_delta": 0.02059318853403229,
+        "share_within_one_percent_of_primary": 0.020044780893485447,
+        "adopted": false
+      }
+    },
+    "fixed_cutoff_days": [
+      365,
+      730,
+      1095,
+      1825
+    ],
+    "variants": {
+      "primary": {
+        "adopted": true,
+        "uses_only_explicit_utc_timestamps": true
+      },
+      "naive_as_utc": {
+        "adopted": false,
+        "note": "naive timestamps are counted in the status shares but never used as instants",
+        "used_in_primary": false
+      },
+      "version_date_fallback": {
+        "adopted": false,
+        "note": "sources[].version coverage and status shares are reported per theme and region; the calendar-date fallback is never used in the primary adjustment",
+        "used_in_primary": false
+      }
+    },
+    "adoption": "Every sensitivity variant is diagnostic only and carries adopted=false. No cutoff, weight, status policy or bound is changed as a result of this screen."
+  },
+  "measure_after": {
+    "parseable_timestamp_share_by_theme": {
+      "buildings": 0.9149671485644348,
+      "roads": 0.909431417913111,
+      "pois": 0.9720558113330882
+    },
+    "age_quantiles_days_by_theme_and_region": {
+      "buildings": {
+        "maricopa-az": {
+          "p10": 790.6591666666667,
+          "p50": 1368.8236921296295,
+          "p90": 2887.338689814814,
+          "min": 12.880335648148149,
+          "max": 9722.82369212963
+        },
+        "northern-ca": {
+          "p10": 609.5914814814815,
+          "p50": 1573.8236921296295,
+          "p90": 2611.8236921296298,
+          "min": 12.875659722222222,
+          "max": 9722.82369212963
+        },
+        "eastern-ok": {
+          "p10": 368.82369212962965,
+          "p50": 1734.8236921296295,
+          "p90": 2703.8236921296298,
+          "min": 12.918958333333334,
+          "max": 9722.82369212963
+        },
+        "south-central-tx": {
+          "p10": 697.1632175925926,
+          "p50": 1608.8236921296295,
+          "p90": 3474.924791666667,
+          "min": 7.7477430555555555,
+          "max": 9722.82369212963
+        }
+      },
+      "roads": {
+        "maricopa-az": {
+          "p10": 103.15415509259259,
+          "p50": 584.0352430555556,
+          "p90": 1630.0558449074074,
+          "min": 13.030844907407408,
+          "max": 6208.203796296296
+        },
+        "northern-ca": {
+          "p10": 91.46239583333333,
+          "p50": 1197.1971643518518,
+          "p90": 4152.743923611111,
+          "min": 12.875659722222222,
+          "max": 6460.706481481481
+        },
+        "eastern-ok": {
+          "p10": 176.20784722222223,
+          "p50": 1434.6200578703704,
+          "p90": 5973.316571759258,
+          "min": 12.824560185185184,
+          "max": 6420.870150462963
+        },
+        "south-central-tx": {
+          "p10": 136.22599537037038,
+          "p50": 898.8870833333333,
+          "p90": 4704.547083333333,
+          "min": 10.74136574074074,
+          "max": 6737.588969907408
+        }
+      },
+      "pois": {
+        "maricopa-az": {
+          "p10": 0.0,
+          "p50": 3.869247685185185,
+          "p90": 4.82369212962963,
+          "min": 0.0,
+          "max": 6869.141491087962
+        },
+        "northern-ca": {
+          "p10": 0.0,
+          "p50": 3.869247685185185,
+          "p90": 4.82369212962963,
+          "min": 0.0,
+          "max": 6871.737319791668
+        },
+        "eastern-ok": {
+          "p10": 0.0,
+          "p50": 3.869247685185185,
+          "p90": 4.82369212962963,
+          "min": 0.0,
+          "max": 6855.260200266203
+        },
+        "south-central-tx": {
+          "p10": 0.0,
+          "p50": 3.869247685185185,
+          "p90": 4.82369212962963,
+          "min": 0.0,
+          "max": 6868.071566631946
+        }
+      }
+    },
+    "tract_level_median_age_days_by_theme_and_region": {
+      "buildings": {
+        "maricopa-az": {
+          "n": 1593,
+          "mean": 1533.6506862488668,
+          "sd": 767.9325073551981,
+          "min": 145.88633101851852,
+          "p50": 1367.2631944444445,
+          "p95": 2369.8236921296298,
+          "max": 9722.82369212963
+        },
+        "northern-ca": {
+          "n": 591,
+          "mean": 1707.8863888693054,
+          "sd": 912.292071275329,
+          "min": 434.14136574074075,
+          "p50": 1573.8236921296295,
+          "p95": 2611.8236921296298,
+          "max": 9722.82369212963
+        },
+        "eastern-ok": {
+          "n": 1192,
+          "mean": 1804.1318757962033,
+          "sd": 1186.7462306242671,
+          "min": 195.15381944444445,
+          "p50": 1961.8236921296295,
+          "p95": 2703.8236921296298,
+          "max": 9722.82369212963
+        },
+        "south-central-tx": {
+          "n": 6001,
+          "mean": 1967.3834720505688,
+          "sd": 1471.7622651863123,
+          "min": 38.01613425925926,
+          "p50": 1603.8236921296295,
+          "p95": 3914.553599537037,
+          "max": 9722.82369212963
+        }
+      },
+      "roads": {
+        "maricopa-az": {
+          "n": 1592,
+          "mean": 596.614932998325,
+          "sd": 479.7377598739594,
+          "min": 20.970381944444444,
+          "p50": 575.5808506944445,
+          "p95": 1250.6034600694434,
+          "max": 5009.861689814815
+        },
+        "northern-ca": {
+          "n": 591,
+          "mean": 1223.192871094974,
+          "sd": 882.5531698291476,
+          "min": 22.97576388888889,
+          "p50": 1122.7750578703703,
+          "p95": 3158.9936631944447,
+          "max": 5984.235196759259
+        },
+        "eastern-ok": {
+          "n": 1192,
+          "mean": 1450.9306083768333,
+          "sd": 1092.0588719001682,
+          "min": 20.188483796296296,
+          "p50": 1299.9961689814816,
+          "p95": 3272.8316452546296,
+          "max": 6090.6935300925925
+        },
+        "south-central-tx": {
+          "n": 5999,
+          "mean": 1083.5705304529922,
+          "sd": 943.4048656994881,
+          "min": 13.64855324074074,
+          "p50": 778.6949421296297,
+          "p95": 2896.4101805555547,
+          "max": 6209.071724537037
+        }
+      },
+      "pois": {
+        "maricopa-az": {
+          "n": 1593,
+          "mean": 3.6662391671461885,
+          "sd": 0.6989300661339519,
+          "min": 0.0,
+          "p50": 3.869247685185185,
+          "p95": 3.869247685185185,
+          "max": 4.82369212962963
+        },
+        "northern-ca": {
+          "n": 591,
+          "mean": 3.711967380048722,
+          "sd": 0.6160777491080737,
+          "min": 1.2655570023148148,
+          "p50": 3.869247685185185,
+          "p95": 3.869247685185185,
+          "max": 3.869247685185185
+        },
+        "eastern-ok": {
+          "n": 1192,
+          "mean": 3.7942522781312134,
+          "sd": 0.4357766273973017,
+          "min": 1.2655570023148148,
+          "p50": 3.869247685185185,
+          "p95": 3.869247685185185,
+          "max": 4.82369212962963
+        },
+        "south-central-tx": {
+          "n": 6001,
+          "mean": 3.7668073923192575,
+          "sd": 0.5048177556149445,
+          "min": 1.2655570023148148,
+          "p50": 3.869247685185185,
+          "p95": 3.869247685185185,
+          "max": 4.82369212962963
+        }
+      }
+    },
+    "cumulative_vintage_at_fixed_cutoffs_by_theme": {
+      "buildings": {
+        "182": 0.012359204650279116,
+        "365": 0.0337697642781985,
+        "730": 0.11026250863596562,
+        "1095": 0.2281247537576181,
+        "1825": 0.6130119884614695
+      },
+      "roads": {
+        "182": 0.15073170175100237,
+        "365": 0.2784120779283307,
+        "730": 0.4562188178277908,
+        "1095": 0.5710883254726499,
+        "1825": 0.6972725418213687
+      },
+      "pois": {
+        "182": 0.9346428418837158,
+        "365": 0.9531492169760557,
+        "730": 0.9678515692161876,
+        "1095": 0.9723325966780126,
+        "1825": 0.9787812719884595
+      }
+    },
+    "data_vintage_sensitivity": {
+      "365": {
+        "stats": {
+          "n": 9379,
+          "mean": 0.019349212412590938,
+          "sd": 0.0027305479727660464,
+          "min": 0.0,
+          "p50": 0.019959058391958256,
+          "p95": 0.02285702071275332,
+          "max": 0.025760033342628004
+        },
+        "pearson_r_vs_primary": 0.712103997387438,
+        "spearman_r_vs_primary": 0.7122865744039473,
+        "max_absolute_delta": 0.015830119580993958,
+        "share_within_one_percent_of_primary": 0.1269858193837296,
+        "adopted": false
+      },
+      "730": {
+        "stats": {
+          "n": 9379,
+          "mean": 0.016799122657162505,
+          "sd": 0.0031644224628509126,
+          "min": 0.0,
+          "p50": 0.01724233541398645,
+          "p95": 0.02110203638530479,
+          "max": 0.02482118287421097
+        },
+        "pearson_r_vs_primary": 1.0,
+        "spearman_r_vs_primary": 1.0,
+        "max_absolute_delta": 0.0,
+        "share_within_one_percent_of_primary": 1.0,
+        "adopted": false
+      },
+      "1095": {
+        "stats": {
+          "n": 9379,
+          "mean": 0.014214032054725934,
+          "sd": 0.0041845920619187245,
+          "min": 0.0,
+          "p50": 0.014806467158396761,
+          "p95": 0.0199279207482475,
+          "max": 0.02398856403112247
+        },
+        "pearson_r_vs_primary": 0.6759955470616005,
+        "spearman_r_vs_primary": 0.6871182742340519,
+        "max_absolute_delta": 0.01854518959242027,
+        "share_within_one_percent_of_primary": 0.3294594306429257,
+        "adopted": false
+      },
+      "1825": {
+        "stats": {
+          "n": 9379,
+          "mean": 0.008452179885191079,
+          "sd": 0.004562251124545877,
+          "min": 0.0,
+          "p50": 0.007411700219254535,
+          "p95": 0.017054375246631188,
+          "max": 0.021923476535187413
+        },
+        "pearson_r_vs_primary": 0.3006357925570563,
+        "spearman_r_vs_primary": 0.2620937718627074,
+        "max_absolute_delta": 0.02059318853403229,
+        "share_within_one_percent_of_primary": 0.020044780893485447,
+        "adopted": false
+      }
+    },
+    "bounds_and_hash_audit": {
+      "adjustment_within_declared_bound": true,
+      "declared_bound": 0.05,
+      "candidate_csv_sha256": "3c5cf30a8867676405bc6cdc2689e17d910c314e5e8db39606d5560b1e19cecf",
+      "manifest_sha256": "a6c7d8075e78ee291b0b95daf57379b1d370514bc8cd9f44ff68da7b78399080"
+    }
+  },
+  "acceptance": {
+    "all_requested_regions_and_themes_scanned": true,
+    "every_entry_has_exactly_one_timestamp_status": true,
+    "every_entry_has_exactly_one_version_status": true,
+    "metadata_accounting_share_at_least_95_percent": true,
+    "no_timezone_ambiguity_in_primary": true,
+    "outputs_finite_in_unit_interval": true,
+    "adjustment_within_declared_bound": true,
+    "independent_arithmetic_agreement_within_tolerance": true,
+    "undefined_tracts_use_documented_placeholder": true,
+    "candidate_rows_equal_official_population": true,
+    "candidate_carries_exactly_the_official_geoids_in_order": true,
+    "no_region_mean_or_placeholder_imputation": true,
+    "age_quantiles_are_ordered": true,
+    "no_target_accuracy_claim": true,
+    "no_upload": true,
+    "all_passed": true
+  },
+  "prohibitions": {
+    "historical_osm_or_reference_edits_pulled": false,
+    "external_timestamp_source_used": false,
+    "removed_reference_layer_read": false,
+    "source_age_used_as_target_label": false,
+    "leaderboard_tuned_coefficient": false,
+    "leaderboard_probe_used": false,
+    "sample_score_placeholder_read": false,
+    "labels_read": false,
+    "upload_performed": false,
+    "target_moment_or_rmse_claimed": false
+  },
+  "reproducibility": {
+    "command": "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_source_freshness_candidate.py",
+    "git_commit": "29f0960d1e1c7139dad44bab5ff2f6413418aaee",
+    "script_sha256": "ba930ee108d11a3b37fd240b1f2af41d6d8c6e90cf7b78fbc26c986e3b1f2635",
+    "config_sha256": "e1b78219a53149a197f5383cef097ee3470dc07e25f616689569641548ab0cb2",
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "shapely": "2.2.0",
+    "timings": "wall-clock timings are printed to stdout and deliberately not embedded so that repeated runs are byte-identical"
+  },
+  "method": {
+    "population": "official scored GEOIDs only, authoritative sample order",
+    "assignment": "One contribution per Overture building/segment/POI row, assigned to at most one tract by bbox centre with the frozen assign_points rule (within first, then intersects; ties resolved by lowest tract index).",
+    "timestamp_status_set": [
+      "parsed_utc_z",
+      "parsed_utc_offset",
+      "naive_no_timezone",
+      "missing_null",
+      "missing_empty",
+      "malformed"
+    ],
+    "version_status_set": [
+      "iso_date",
+      "datetime_utc",
+      "numeric",
+      "missing_null",
+      "other"
+    ],
+    "primary_age_statuses": [
+      "parsed_utc_z",
+      "parsed_utc_offset"
+    ],
+    "naive_policy": "Counted and reported separately. Never assumed to be UTC and never used in the primary age distribution or the primary adjustment, because a wall-clock string without a designator cannot be placed on the UTC timeline without an assumption the provided metadata does not state.",
+    "version_fallback_policy": "sources[].version is frequently a bare calendar date. It is reported as its own coverage statistic and described as a fallback (read as UTC midnight of that calendar date), but it is never used in the primary age distribution or the primary adjustment.",
+    "theme_aggregation": "Over themes present in the tract (at least one assigned feature) renormalise the frozen theme weights and take the weighted mean of the per-theme theme_uncertainty.",
+    "stale_share_definition": "Among the tract-theme source entries with an explicitly-UTC parseable update_time, the share whose age in days exceeds stale_cutoff_days.",
+    "metadata_gap_share_definition": "Among all assigned tract-theme source entries, the share whose update_time status is not in primary_age_statuses (naive, null, empty or malformed).",
+    "undefined_rule": "A tract with no assigned feature in any theme is undefined and receives the deterministic placeholder stated by undefined_placeholder; undefined tracts are counted and never imputed from region means.",
+    "quantile_definition": "nearest rank on the per-tract sorted instant list with rank = max(1, ceil(percentile / 100 * n)); pooled entry quantiles use the equivalent reversed instant quantiles",
+    "beyond_mixture_method": "Ordinary least squares of the tract adjustment on the frozen source-mixture share columns (intercept included), restricted to tracts where the adjustment is defined, plus the same regression with per-theme log1p feature counts added and a counts-only control. Report R-squared, residual standard deviation, residual-to-total standard deviation ratio, and the largest absolute Pearson correlation with any single mixture share.",
+    "sources_of_record": {
+      "overture_schema_repository": "https://github.com/OvertureMaps/schema",
+      "overture_docs": "https://docs.overturemaps.org/schema/",
+      "road_completeness_paper": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0180698"
+    }
+  }
+}

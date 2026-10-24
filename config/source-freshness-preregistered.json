@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "backlog_item": "bias-model-source-freshness-candidate",
+  "preregistered_on": "2026-10-25",
+  "intent": "Intent screen only. Measures whether provided Overture sources[].update_time / sources[].version metadata is usable as a source-update recency (data-vintage) signal, and whether a small fixed stale / metadata-gap uncertainty term adds information beyond the frozen source-mixture proportions. No target, no label, no leaderboard value, no accuracy claim, no upload.",
+  "scope": {
+    "regions": ["maricopa-az", "northern-ca", "eastern-ok", "south-central-tx"],
+    "themes_in_order": ["buildings", "roads", "pois"],
+    "theme_layers": {
+      "buildings": "{region}-overture-buildings.parquet",
+      "roads": "{region}-overture-roads.parquet",
+      "pois": "{region}-overture-pois.parquet"
+    },
+    "theme_weights": {"buildings": 0.40, "roads": 0.30, "pois": 0.30},
+    "theme_weight_rationale": "Buildings carry the densest per-tract count evidence and the widest provenance spread (Microsoft ML Buildings, OSM, USGS Lidar, Esri, Google Open Buildings), so vintage is most informative there; roads and POIs are weighted equally and slightly lower because their upstream source sets are narrower.",
+    "scored_population": "Official scored GEOIDs only (samples/<region>-sample-submission.csv, GEOID column read), in authoritative sample order. Template-only eastern-WA rows are out of scope because this candidate is analysis-only and is never uploaded.",
+    "columns_read_from_overture": ["bbox", "sources"],
+    "columns_read_from_acs": ["GEOID", "geometry"]
+  },
+  "timestamp_rules": {
+    "statuses": ["parsed_utc_z", "parsed_utc_offset", "naive_no_timezone", "missing_null", "missing_empty", "malformed"],
+    "explicit_utc_designators": ["Z", "+00:00", "-00:00"],
+    "accepted_patterns": {
+      "parsed_utc_z": "YYYY-MM-DDThh:mm[:ss][.fraction]Z",
+      "parsed_utc_offset": "YYYY-MM-DDThh:mm[:ss][.fraction](+|-)hh[:]mm with any stated offset, converted to UTC with that stated offset"
+    },
+    "primary_age_statuses": ["parsed_utc_z", "parsed_utc_offset"],
+    "naive_no_timezone_policy": "Counted and reported separately. Never assumed to be UTC and never used in the primary age distribution or the primary adjustment, because a wall-clock string without a designator cannot be placed on the UTC timeline without an assumption the provided metadata does not state.",
+    "secondary_naive_variant": "Reported as a documented diagnostic only; not adopted.",
+    "reference_epoch_policy": "The reference epoch is the maximum explicitly-UTC parseable update_time over the source entries of features assigned to the official scored GEOIDs of the four regions and three themes. It is derived from the provided metadata itself: no external clock, no wall-clock read and no external timestamp source enters the computation, so repeated runs are deterministic.",
+    "age_unit": "days, computed as (reference_epoch_seconds - entry_seconds) / 86400",
+    "fixed_cutoff_days": [182, 365, 730, 1095, 1825],
+    "entry_quantile_percentiles": [10, 50, 90],
+    "tract_quantile_percentiles": [10, 50, 90],
+    "version_statuses": ["iso_date", "datetime_utc", "numeric", "missing_null", "other"],
+    "version_date_fallback_policy": "sources[].version is frequently a bare calendar date. It is reported as its own coverage statistic and described as a fallback (read as UTC midnight of that calendar date), but it is never used in the primary age distribution or the primary adjustment."
+  },
+  "adjustment": {
+    "stale_cutoff_days": 730,
+    "stale_rationale": "Two years is the frozen boundary between represented features whose own source metadata says the upstream edit is recent and features whose upstream edit predates the Overture release cycle the challenge shipped with.",
+    "weights": {"stale": 0.60, "metadata_gap": 0.40},
+    "weight_rationale": "Staleness is a direct completeness risk for a coverage-gap proxy (the PLOS road-completeness work ties completeness to edit recency), so it carries slightly more weight than unparseable or absent time metadata, which is absence of evidence rather than evidence of neglect.",
+    "max_adjustment": 0.05,
+    "max_adjustment_rationale": "The row asks for a small, fixed uncertainty adjustment. Five points of the [0, 1] gap scale is the declared ceiling, chosen before looking at any distribution and never tuned against a score.",
+    "theme_aggregation": "Over themes present in the tract (at least one assigned feature) renormalise the frozen theme weights and take the weighted mean of the per-theme theme_uncertainty.",
+    "theme_uncertainty_formula": "clip(weights.stale * stale_share + weights.metadata_gap * metadata_gap_share, 0, 1)",
+    "adjustment_formula": "clip(max_adjustment * weighted_mean_theme_uncertainty, 0, 1)",
+    "stale_share_definition": "Among the tract-theme source entries with an explicitly-UTC parseable update_time, the share whose age in days exceeds stale_cutoff_days.",
+    "metadata_gap_share_definition": "Among all assigned tract-theme source entries, the share whose update_time status is not in primary_age_statuses (naive, null, empty or malformed).",
+    "undefined_placeholder": 0.0,
+    "undefined_rule": "A tract with no assigned feature in any theme is undefined and receives the deterministic placeholder stated by undefined_placeholder; undefined tracts are counted and never imputed from region means.",
+    "deduplication": "One contribution per Overture building/segment/POI row, assigned to at most one tract by bbox centre with the frozen assign_points rule (within first, then intersects; ties resolved by lowest tract index).",
+    "clip": [0, 1]
+  },
+  "beyond_mixture_test": {
+    "frozen_mixture_columns": [
+      "overture_building_osm_source_share",
+      "overture_building_microsoft_source_share",
+      "overture_building_esri_source_share",
+      "overture_building_other_source_share",
+      "overture_building_no_dataset_source_share",
+      "overture_building_ms_only_source_share",
+      "overture_building_ms_osm_source_share",
+      "overture_building_osm_only_source_share",
+      "overture_building_esri_only_source_share",
+      "overture_building_other_or_mixed_source_share",
+      "overture_poi_meta_source_share",
+      "overture_poi_microsoft_source_share",
+      "overture_poi_other_upstream_source_share",
+      "overture_poi_meta_not_microsoft_source_share",
+      "overture_poi_microsoft_not_meta_source_share",
+      "overture_poi_meta_and_microsoft_source_share",
+      "overture_poi_other_without_meta_microsoft_source_share",
+      "overture_poi_no_upstream_source_share",
+      "overture_poi_sources_missing_share"
+    ],
+    "method": "Ordinary least squares of the tract adjustment on the frozen source-mixture share columns (intercept included), restricted to tracts where the adjustment is defined, plus the same regression with per-theme log1p feature counts added and a counts-only control. Report R-squared, residual standard deviation, residual-to-total standard deviation ratio, and the largest absolute Pearson correlation with any single mixture share.",
+    "reported_without_threshold": "The row declares no pass mark for this test, so it is reported as a measurement and not as a gate."
+  },
+  "sensitivity": {
+    "stale_cutoffs_days": [365, 730, 1095, 1825],
+    "variants": ["primary", "naive_as_utc", "version_date_fallback"],
+    "reported_per_variant": ["mean", "standard_deviation", "p50", "p95", "max", "pearson_r_vs_primary", "spearman_r_vs_primary", "max_absolute_delta"],
+    "adoption": "Every sensitivity variant is diagnostic only and carries adopted=false. No cutoff, weight, status policy or bound is changed as a result of this screen."
+  },
+  "acceptance": {
+    "metadata_accounting_share_min": 0.95,
+    "outputs_finite_in_unit_interval": true,
+    "no_timezone_ambiguity_in_primary": true,
+    "deterministic_rerun": true,
+    "no_target_accuracy_claim": true,
+    "every_entry_gets_exactly_one_timestamp_status": true,
+    "every_entry_gets_exactly_one_version_status": true,
+    "adjustment_within_declared_bound": true,
+    "independent_arithmetic_agreement_max_abs": 1e-12,
+    "no_upload": true
+  },
+  "prohibitions": {
+    "historical_osm_or_reference_edits_pulled": false,
+    "external_timestamp_source_used": false,
+    "removed_reference_layer_read": false,
+    "source_age_used_as_target_label": false,
+    "leaderboard_tuned_coefficient": false,
+    "leaderboard_probe_used": false,
+    "sample_score_placeholder_read": false,
+    "labels_read": false,
+    "upload_performed": false,
+    "target_moment_or_rmse_claimed": false
+  },
+  "sources_of_record": {
+    "overture_schema_repository": "https://github.com/OvertureMaps/schema",
+    "overture_docs": "https://docs.overturemaps.org/schema/",
+    "road_completeness_paper": "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0180698"
+  }
+}
