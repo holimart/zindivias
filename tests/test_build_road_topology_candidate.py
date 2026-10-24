@@ -66,7 +66,7 @@ class RoadTopologyCandidateTests(unittest.TestCase):
         self.assertEqual(report["candidate_id"], CONFIG["candidate_id"])
         self.assertEqual(report["candidate_rows"], 9379)
         self.assertEqual(hashlib.sha256(candidate_path.read_bytes()).hexdigest(), report["candidate_csv_sha256"])
-        self.assertEqual(hashlib.sha256(manifest_path.read_bytes()).hexdigest(), after["candidate_manifest_sha256"])
+        self.assertEqual(hashlib.sha256(manifest_path.read_bytes()).hexdigest(), report["candidate_manifest_sha256"])
         self.assertEqual(manifest["candidate_csv_sha256"], report["candidate_csv_sha256"])
         self.assertTrue(after["all_adjustments_within_cap"])
         self.assertLessEqual(after["maximum_absolute_adjustment"], MAX_ADJUSTMENT)
