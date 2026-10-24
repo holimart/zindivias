@@ -1,0 +1,1306 @@
+{
+  "analysis": "Provided-feature-only building morphology prior sensitivity; diagnostic candidate, not a submission",
+  "candidate_columns": [
+    "GEOID",
+    "region",
+    "building_defined",
+    "overture_building_count",
+    "building_area_q10_m2",
+    "building_area_median_m2",
+    "building_area_q90_m2",
+    "valid_geometry_count",
+    "morphology_support",
+    "support_structure_density",
+    "support_median_area",
+    "support_verticality",
+    "support_subtype",
+    "support_has_parts",
+    "support_population_context",
+    "building_gap_constant_0_01",
+    "building_gap_morph_beta_0.01",
+    "building_gap_morph_beta_0.02",
+    "building_gap_morph_beta_0.05"
+  ],
+  "candidate_csv": "reports/candidates/building_morphology.csv",
+  "candidate_csv_sha256": "ed0928651e1ddc0de89e6fd6544c30bd510456f6e9b72eea9d09277919194b75",
+  "candidate_id": "B_MORPH_V1",
+  "candidate_rows": 9379,
+  "code_commit_at_run": "0638fdbc0bc30fced726ff65e19fc38e11dbcb89",
+  "global_sensitivity_by_beta": {
+    "0.01": {
+      "all_official_tracts": {
+        "max": 0.01904553842245125,
+        "mean": 0.015223527402270011,
+        "median": 0.015076199367949055,
+        "min": 0.0,
+        "n": 9379,
+        "q10": 0.013664179941314285,
+        "q90": 0.017030331561142725,
+        "std": 0.001209540859946654
+      },
+      "bounded_to_preregistered_range": true,
+      "changed_vs_constant_baseline_share_all": 0.9997867576500693,
+      "changed_vs_constant_baseline_share_defined": 1.0,
+      "changed_vs_constant_baseline_tracts": 9377,
+      "defined_tracts_only": {
+        "max": 0.01904553842245125,
+        "mean": 0.015226774395423956,
+        "median": 0.015076409136983125,
+        "min": 0.012652448532073288,
+        "n": 9377,
+        "q10": 0.01366546309882307,
+        "q90": 0.01703036814073388,
+        "std": 0.0011890584079150323
+      },
+      "nonfinite_values": 0
+    },
+    "0.02": {
+      "all_official_tracts": {
+        "max": 0.0280910768449025,
+        "mean": 0.020449187228039328,
+        "median": 0.020152398735898108,
+        "min": 0.0,
+        "n": 9379,
+        "q10": 0.01732835988262857,
+        "q90": 0.024060663122285445,
+        "std": 0.0023965441838166217
+      },
+      "bounded_to_preregistered_range": true,
+      "changed_vs_constant_baseline_share_all": 0.9997867576500693,
+      "changed_vs_constant_baseline_share_defined": 1.0,
+      "changed_vs_constant_baseline_tracts": 9377,
+      "defined_tracts_only": {
+        "max": 0.0280910768449025,
+        "mean": 0.02045354879084791,
+        "median": 0.02015281827396625,
+        "min": 0.015304897064146577,
+        "n": 9377,
+        "q10": 0.01733092619764614,
+        "q90": 0.024060736281467758,
+        "std": 0.0023781168158300645
+      },
+      "nonfinite_values": 0
+    },
+    "0.05": {
+      "all_official_tracts": {
+        "max": 0.055227692112256255,
+        "mean": 0.036126166705347275,
+        "median": 0.03538099683974528,
+        "min": 0.0,
+        "n": 9379,
+        "q10": 0.028320899706571426,
+        "q90": 0.04515165780571361,
+        "std": 0.005968024966286917
+      },
+      "bounded_to_preregistered_range": true,
+      "changed_vs_constant_baseline_share_all": 0.9997867576500693,
+      "changed_vs_constant_baseline_share_defined": 1.0,
+      "changed_vs_constant_baseline_tracts": 9377,
+      "defined_tracts_only": {
+        "max": 0.055227692112256255,
+        "mean": 0.03613387197711977,
+        "median": 0.035382045684915625,
+        "min": 0.023262242660366445,
+        "n": 9377,
+        "q10": 0.028327315494115345,
+        "q90": 0.0451518407036694,
+        "std": 0.005945292039575163
+      },
+      "nonfinite_values": 0
+    }
+  },
+  "inputs": {
+    "eastern-ok": {
+      "acs_geometry": {
+        "read_columns": [
+          "GEOID",
+          "geometry"
+        ],
+        "rows": 1192,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-census-acs-housing.parquet"
+      },
+      "official_sample": {
+        "read_column": "GEOID only",
+        "rows": 1192,
+        "sha256": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4"
+      },
+      "overture_feature_cache": {
+        "read_columns": [
+          "GEOID",
+          "overture_buildings"
+        ],
+        "rows": 1192,
+        "sha256": "e5a06316c316f61bf25b80b48e89c1e7f0b1461a0b8cec5831aae24e0cf83fa6"
+      },
+      "strata": {
+        "read_columns": [
+          "GEOID",
+          "ALAND",
+          "pop_total"
+        ],
+        "rows": 1192,
+        "sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54"
+      }
+    },
+    "maricopa-az": {
+      "acs_geometry": {
+        "read_columns": [
+          "GEOID",
+          "geometry"
+        ],
+        "rows": 1593,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-census-acs-housing.parquet"
+      },
+      "official_sample": {
+        "read_column": "GEOID only",
+        "rows": 1593,
+        "sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31"
+      },
+      "overture_feature_cache": {
+        "read_columns": [
+          "GEOID",
+          "overture_buildings"
+        ],
+        "rows": 1593,
+        "sha256": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22"
+      },
+      "strata": {
+        "read_columns": [
+          "GEOID",
+          "ALAND",
+          "pop_total"
+        ],
+        "rows": 1593,
+        "sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd"
+      }
+    },
+    "northern-ca": {
+      "acs_geometry": {
+        "read_columns": [
+          "GEOID",
+          "geometry"
+        ],
+        "rows": 591,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-census-acs-housing.parquet"
+      },
+      "official_sample": {
+        "read_column": "GEOID only",
+        "rows": 591,
+        "sha256": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902"
+      },
+      "overture_feature_cache": {
+        "read_columns": [
+          "GEOID",
+          "overture_buildings"
+        ],
+        "rows": 591,
+        "sha256": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c"
+      },
+      "strata": {
+        "read_columns": [
+          "GEOID",
+          "ALAND",
+          "pop_total"
+        ],
+        "rows": 591,
+        "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243"
+      }
+    },
+    "south-central-tx": {
+      "acs_geometry": {
+        "read_columns": [
+          "GEOID",
+          "geometry"
+        ],
+        "rows": 6003,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-census-acs-housing.parquet"
+      },
+      "official_sample": {
+        "read_column": "GEOID only",
+        "rows": 6003,
+        "sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e"
+      },
+      "overture_feature_cache": {
+        "read_columns": [
+          "GEOID",
+          "overture_buildings"
+        ],
+        "rows": 6003,
+        "sha256": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746"
+      },
+      "strata": {
+        "read_columns": [
+          "GEOID",
+          "ALAND",
+          "pop_total"
+        ],
+        "rows": 6010,
+        "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354"
+      }
+    }
+  },
+  "limitations": [
+    "Morphology is an unvalidated built-form support proxy, not an observed reference-building count or completeness label.",
+    "Bbox-center assignment matches the existing Overture building-count feature; geometry area is projected to EPSG:5070 but may include parent/part overlap and source-level duplication.",
+    "The fixed coefficients are sensitivity assumptions, not estimated from hidden targets or leaderboard feedback; this screen cannot establish accuracy.",
+    "A zero Overture building count leaves this building component undefined, matching the existing v2 definedness convention; no absent-reference inference is made."
+  ],
+  "method": {
+    "allowed_inputs": [
+      "official sample GEOID only",
+      "provided Overture buildings bbox, geometry, subtype, has_parts, num_floors, height",
+      "provided strata ALAND and pop_total",
+      "provided ACS tract GEOID/geometry for spatial assignment",
+      "existing provided-feature overture_buildings count solely for count reconciliation"
+    ],
+    "candidate_id": "B_MORPH_V1",
+    "component_rule": {
+      "baseline": "0.01 if provided Overture building count > 0; otherwise undefined with numeric placeholder 0 and building_defined=0",
+      "baseline_gap_value": 0.01,
+      "clip_range": [
+        0.0,
+        0.1
+      ],
+      "coefficient_rationale": "fixed conservative perturbation envelope around the existing 0.01 near-zero baseline; no target or leaderboard fit",
+      "morphology_candidate": "0.01 + beta * (1 - morphology_support) when building_defined=1; otherwise numeric placeholder 0 and building_defined=0",
+      "primary_beta": 0.02,
+      "sensitivity_betas": [
+        0.01,
+        0.02,
+        0.05
+      ]
+    },
+    "forbidden_inputs": [
+      "sample score placeholders or hidden labels",
+      "MS, USFS, CarbonPlan, or other reference footprint counts or geometries",
+      "external imagery or external footprint data",
+      "ACS housing-unit counts as a denominator or floor",
+      "leaderboard or score-derived calibration"
+    ],
+    "morphology_support": {
+      "features": [
+        "structure_density = clip(log1p(building_count / max(ALAND_km2, 0.01)) / log1p(1000 buildings_per_km2), 0, 1)",
+        "median_area = clip(log1p(median valid projected footprint area_m2) / log1p(500 m2), 0, 1); zero if no valid geometry",
+        "verticality = mean over assigned buildings of clip(max(num_floors when positive else height_m/3 when positive else 0) / 4, 0, 1)",
+        "subtype_support = share of assigned buildings with non-null non-empty subtype",
+        "parts_support = share of assigned buildings with has_parts=true",
+        "population_context = clip(log1p(pop_total / max(ALAND_km2, 0.01)) / log1p(10000 people_per_km2), 0, 1)"
+      ],
+      "scales": {
+        "density_buildings_per_km2": 1000.0,
+        "median_area_m2": 500.0,
+        "metres_per_floor": 3.0,
+        "population_per_km2": 10000.0,
+        "vertical_floors": 4.0
+      },
+      "support_formula": "arithmetic mean of the six listed bounded features; all weights frozen equally",
+      "weights": {
+        "median_area": 0.16666666666666666,
+        "parts_support": 0.16666666666666666,
+        "population_context": 0.16666666666666666,
+        "structure_density": 0.16666666666666666,
+        "subtype_support": 0.16666666666666666,
+        "verticality": 0.16666666666666666
+      }
+    },
+    "purpose": "analysis-only feature-only building-component sensitivity; no candidate upload or accuracy claim",
+    "registered_utc": "2026-10-24",
+    "reporting": {
+      "acceptance": [
+        "exact ordered 9379 official GEOIDs",
+        "deterministic rerun and SHA-256",
+        "all component values finite and in [0,0.1]",
+        "no candidate upload",
+        "no accuracy claim"
+      ],
+      "summaries": [
+        "per-region area quantiles",
+        "attribute missingness",
+        "support-score distribution",
+        "component distributions",
+        "percent changed versus baseline for each beta"
+      ]
+    },
+    "spatial_assignment": {
+      "area_projection": "provided Overture building WKB geometries transformed from EPSG:4326 to EPSG:5070; area in square metres",
+      "building_assignment": "center of the provided building bbox, matching the existing Overture count aggregation; boundary ties resolve to lowest official tract index",
+      "land_area_floor_km2": 0.01
+    },
+    "status": "preregistered_before_morphology_scan"
+  },
+  "per_region": {
+    "eastern-ok": {
+      "attribute_missingness": {
+        "assigned_building_rows": 2551694,
+        "geometry_missing_or_invalid_assigned_rows": 0,
+        "geometry_missing_or_invalid_share": 0.0,
+        "has_parts_null_rows": 0,
+        "has_parts_null_share": 0.0,
+        "has_parts_true_rows": 184,
+        "height_null_rows": 759008,
+        "height_null_share": 0.2974525942373968,
+        "num_floors_null_rows": 2543021,
+        "num_floors_null_share": 0.996601081477638,
+        "subtype_null_or_empty_rows": 2404845,
+        "subtype_null_or_empty_share": 0.9424503878599864
+      },
+      "baseline_component": {
+        "max": 0.01,
+        "mean": 0.01,
+        "median": 0.01,
+        "min": 0.01,
+        "n": 1192,
+        "q10": 0.01,
+        "q90": 0.01,
+        "std": 0.0
+      },
+      "building_count_matches_existing_feature_cache": true,
+      "morphology_support_defined_tracts_only": {
+        "max": 0.6453591625952504,
+        "mean": 0.4000589764340439,
+        "median": 0.4255678216941575,
+        "min": 0.1618166775729378,
+        "n": 1192,
+        "q10": 0.253245354435803,
+        "q90": 0.5056137844187013,
+        "std": 0.09910079175956747
+      },
+      "morphology_support_terms_defined_tracts_only": {
+        "median_area": {
+          "max": 1.0,
+          "mean": 0.8343812825139661,
+          "median": 0.8237488440542119,
+          "min": 0.6379511074298658,
+          "n": 1192,
+          "q10": 0.7812127346008183,
+          "q90": 0.9044550379661028,
+          "std": 0.05215235418068512
+        },
+        "parts_support": {
+          "max": 0.18309859154929578,
+          "mean": 0.00042960189333886615,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 1192,
+          "q10": 0.0,
+          "q90": 0.0,
+          "std": 0.006169435938940105
+        },
+        "population_context": {
+          "max": 0.916398725631147,
+          "mean": 0.5628275515997357,
+          "median": 0.6291527732042599,
+          "min": 0.0,
+          "n": 1192,
+          "q10": 0.21441020042699063,
+          "q90": 0.8086789748234157,
+          "std": 0.22811381579259918
+        },
+        "structure_density": {
+          "max": 1.0,
+          "mean": 0.678417902926095,
+          "median": 0.7345777571456134,
+          "min": 0.10255791049571696,
+          "n": 1192,
+          "q10": 0.29955470268279555,
+          "q90": 0.9655467828590771,
+          "std": 0.2497566404218309
+        },
+        "subtype_support": {
+          "max": 0.8929618768328446,
+          "mean": 0.08124129312078535,
+          "median": 0.022681731104822085,
+          "min": 0.0,
+          "n": 1192,
+          "q10": 0.001483603106232097,
+          "q90": 0.23279905808477247,
+          "std": 0.14408098188513654
+        },
+        "verticality": {
+          "max": 0.604882287722762,
+          "mean": 0.2430562265503427,
+          "median": 0.24295699287069622,
+          "min": 0.060704532424012386,
+          "n": 1192,
+          "q10": 0.1586040769953722,
+          "q90": 0.32808253439768903,
+          "std": 0.06661831421968598
+        }
+      },
+      "official_tracts": 1192,
+      "raw_building_scan": {
+        "assigned_to_official_tracts": 2551694,
+        "columns_read": [
+          "bbox",
+          "geometry",
+          "subtype",
+          "has_parts",
+          "num_floors",
+          "height"
+        ],
+        "distribution_of_official_tract_median_area_m2": {
+          "max": 1289.6885641881797,
+          "mean": 189.6754135529943,
+          "median": 166.48973933867043,
+          "min": 51.76725071371188,
+          "n": 1192,
+          "q10": 127.57236359653191,
+          "q90": 275.61889229683857,
+          "std": 80.11620454255831
+        },
+        "invalid_or_missing_assigned_geometries": 0,
+        "object_bytes": 298882068,
+        "projected_building_area_m2_all_assigned": {
+          "max": 247877.30178782885,
+          "mean": 232.41712803443994,
+          "median": 172.6657035093029,
+          "min": 0.025068826976811776,
+          "n": 2551694,
+          "q10": 40.09436856289507,
+          "q90": 370.4621214447119,
+          "std": 732.6850794080432
+        },
+        "source_row_groups": 60,
+        "source_rows": 2551694,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-buildings.parquet",
+        "subtype_counts_top_20": {
+          "agricultural": 1889,
+          "civic": 1401,
+          "commercial": 13173,
+          "education": 2022,
+          "entertainment": 658,
+          "industrial": 5423,
+          "medical": 495,
+          "military": 934,
+          "outbuilding": 8964,
+          "religious": 2041,
+          "residential": 107899,
+          "service": 977,
+          "transportation": 973
+        },
+        "unassigned_bbox_centers": 0,
+        "valid_assigned_geometries": 2551694
+      },
+      "sensitivity_by_beta": {
+        "0.01": {
+          "all_official_tracts": {
+            "max": 0.018381833224270623,
+            "mean": 0.015999410235659563,
+            "median": 0.015744321783058426,
+            "min": 0.013546408374047497,
+            "n": 1192,
+            "q10": 0.01494386215581299,
+            "q90": 0.017467546455641973,
+            "std": 0.0009910079175956747
+          },
+          "bounded_to_preregistered_range": true,
+          "changed_vs_constant_baseline_share_all": 1.0,
+          "changed_vs_constant_baseline_share_defined": 1.0,
+          "changed_vs_constant_baseline_tracts": 1192,
+          "defined_tracts_only": {
+            "max": 0.018381833224270623,
+            "mean": 0.015999410235659563,
+            "median": 0.015744321783058426,
+            "min": 0.013546408374047497,
+            "n": 1192,
+            "q10": 0.01494386215581299,
+            "q90": 0.017467546455641973,
+            "std": 0.0009910079175956747
+          },
+          "nonfinite_values": 0
+        },
+        "0.02": {
+          "all_official_tracts": {
+            "max": 0.026763666448541244,
+            "mean": 0.02199882047131912,
+            "median": 0.02148864356611685,
+            "min": 0.017092816748094992,
+            "n": 1192,
+            "q10": 0.019887724311625977,
+            "q90": 0.02493509291128394,
+            "std": 0.0019820158351913494
+          },
+          "bounded_to_preregistered_range": true,
+          "changed_vs_constant_baseline_share_all": 1.0,
+          "changed_vs_constant_baseline_share_defined": 1.0,
+          "changed_vs_constant_baseline_tracts": 1192,
+          "defined_tracts_only": {
+            "max": 0.026763666448541244,
+            "mean": 0.02199882047131912,
+            "median": 0.02148864356611685,
+            "min": 0.017092816748094992,
+            "n": 1192,
+            "q10": 0.019887724311625977,
+            "q90": 0.02493509291128394,
+            "std": 0.0019820158351913494
+          },
+          "nonfinite_values": 0
+        },
+        "0.05": {
+          "all_official_tracts": {
+            "max": 0.051909166121353115,
+            "mean": 0.039997051178297806,
+            "median": 0.038721608915292124,
+            "min": 0.027732041870237478,
+            "n": 1192,
+            "q10": 0.03471931077906494,
+            "q90": 0.04733773227820986,
+            "std": 0.004955039587978375
+          },
+          "bounded_to_preregistered_range": true,
+          "changed_vs_constant_baseline_share_all": 1.0,
+          "changed_vs_constant_baseline_share_defined": 1.0,
+          "changed_vs_constant_baseline_tracts": 1192,
+          "defined_tracts_only": {
+            "max": 0.051909166121353115,
+            "mean": 0.039997051178297806,
+            "median": 0.038721608915292124,
+            "min": 0.027732041870237478,
+            "n": 1192,
+            "q10": 0.03471931077906494,
+            "q90": 0.04733773227820986,
+            "std": 0.004955039587978375
+          },
+          "nonfinite_values": 0
+        }
+      }
+    },
+    "maricopa-az": {
+      "attribute_missingness": {
+        "assigned_building_rows": 2908224,
+        "geometry_missing_or_invalid_assigned_rows": 0,
+        "geometry_missing_or_invalid_share": 0.0,
+        "has_parts_null_rows": 0,
+        "has_parts_null_share": 0.0,
+        "has_parts_true_rows": 381,
+        "height_null_rows": 562062,
+        "height_null_share": 0.1932664058889549,
+        "num_floors_null_rows": 2870722,
+        "num_floors_null_share": 0.9871048447437336,
+        "subtype_null_or_empty_rows": 1806768,
+        "subtype_null_or_empty_share": 0.6212616359675183
+      },
+      "baseline_component": {
+        "max": 0.01,
+        "mean": 0.009999999999999997,
+        "median": 0.01,
+        "min": 0.01,
+        "n": 1593,
+        "q10": 0.01,
+        "q90": 0.01,
+        "std": 3.469446951953614e-18
+      },
+      "building_count_matches_existing_feature_cache": true,
+      "morphology_support_defined_tracts_only": {
+        "max": 0.7048138468988945,
+        "mean": 0.5216547780664785,
+        "median": 0.5326420064450434,
+        "min": 0.09544615775487499,
+        "n": 1593,
+        "q10": 0.3310934539211906,
+        "q90": 0.659758555346501,
+        "std": 0.12313758803645077
+      },
+      "morphology_support_terms_defined_tracts_only": {
+        "median_area": {
+          "max": 1.0,
+          "mean": 0.8630350551403018,
+          "median": 0.8696324091286775,
+          "min": 0.5181114606840596,
+          "n": 1593,
+          "q10": 0.7949962295454703,
+          "q90": 0.9253521048885309,
+          "std": 0.05754781193354055
+        },
+        "parts_support": {
+          "max": 0.10989010989010989,
+          "mean": 0.00031976218582954665,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 1593,
+          "q10": 0.0,
+          "q90": 0.00031297160873924277,
+          "std": 0.003807226233963218
+        },
+        "population_context": {
+          "max": 1.0,
+          "mean": 0.6991709406829605,
+          "median": 0.7803025371375578,
+          "min": 0.0,
+          "n": 1593,
+          "q10": 0.3380139212543722,
+          "q90": 0.8683656590568162,
+          "std": 0.21577708660916073
+        },
+        "structure_density": {
+          "max": 1.0,
+          "mean": 0.8106643910331433,
+          "median": 0.901955003294038,
+          "min": 0.0020268155484307556,
+          "n": 1593,
+          "q10": 0.447100101556941,
+          "q90": 0.9876306745475479,
+          "std": 0.22853948171108843
+        },
+        "subtype_support": {
+          "max": 0.9973474801061007,
+          "mean": 0.41707023036572705,
+          "median": 0.2894736842105263,
+          "min": 0.0,
+          "n": 1593,
+          "q10": 0.010944315120106664,
+          "q90": 0.9535699720461067,
+          "std": 0.38036131677894913
+        },
+        "verticality": {
+          "max": 0.7123574283022026,
+          "mean": 0.3396682889909093,
+          "median": 0.36221176643750963,
+          "min": 0.0,
+          "n": 1593,
+          "q10": 0.1683701033235223,
+          "q90": 0.4754863993294116,
+          "std": 0.11660542039726464
+        }
+      },
+      "official_tracts": 1593,
+      "raw_building_scan": {
+        "assigned_to_official_tracts": 2908224,
+        "columns_read": [
+          "bbox",
+          "geometry",
+          "subtype",
+          "has_parts",
+          "num_floors",
+          "height"
+        ],
+        "distribution_of_official_tract_median_area_m2": {
+          "max": 2154.2413434751625,
+          "mean": 227.37511161344779,
+          "median": 221.77496586901964,
+          "min": 24.050527057535646,
+          "n": 1593,
+          "q10": 139.07506005514998,
+          "q90": 313.9928985271615,
+          "std": 92.24735428098658
+        },
+        "invalid_or_missing_assigned_geometries": 0,
+        "object_bytes": 324720762,
+        "projected_building_area_m2_all_assigned": {
+          "max": 204874.80106264286,
+          "mean": 276.0681700995015,
+          "median": 219.1702179375779,
+          "min": 0.07279797888329304,
+          "n": 2908224,
+          "q10": 55.728278348905185,
+          "q90": 417.94226999730023,
+          "std": 834.9014311332809
+        },
+        "source_row_groups": 65,
+        "source_rows": 2908224,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-buildings.parquet",
+        "subtype_counts_top_20": {
+          "agricultural": 3689,
+          "civic": 10647,
+          "commercial": 20880,
+          "education": 6434,
+          "entertainment": 507,
+          "industrial": 9638,
+          "medical": 985,
+          "military": 23,
+          "outbuilding": 102983,
+          "religious": 2829,
+          "residential": 941116,
+          "service": 606,
+          "transportation": 1119
+        },
+        "unassigned_bbox_centers": 0,
+        "valid_assigned_geometries": 2908224
+      },
+      "sensitivity_by_beta": {
+        "0.01": {
+          "all_official_tracts": {
+            "max": 0.01904553842245125,
+            "mean": 0.014783452219335217,
+            "median": 0.014673579935549566,
+            "min": 0.012951861531011055,
+            "n": 1593,
+            "q10": 0.01340241444653499,
+            "q90": 0.016689065460788095,
+            "std": 0.0012313758803645077
+          },
+          "bounded_to_preregistered_range": true,
+          "changed_vs_constant_baseline_share_all": 1.0,
+          "changed_vs_constant_baseline_share_defined": 1.0,
+          "changed_vs_constant_baseline_tracts": 1593,
+          "defined_tracts_only": {
+            "max": 0.01904553842245125,
+            "mean": 0.014783452219335217,
+            "median": 0.014673579935549566,
+            "min": 0.012951861531011055,
+            "n": 1593,
+            "q10": 0.01340241444653499,
+            "q90": 0.016689065460788095,
+            "std": 0.0012313758803645077
+          },
+          "nonfinite_values": 0
+        },
+        "0.02": {
+          "all_official_tracts": {
+            "max": 0.0280910768449025,
+            "mean": 0.01956690443867043,
+            "median": 0.019347159871099133,
+            "min": 0.01590372306202211,
+            "n": 1593,
+            "q10": 0.01680482889306998,
+            "q90": 0.023378130921576187,
+            "std": 0.0024627517607290154
+          },
+          "bounded_to_preregistered_range": true,
+          "changed_vs_constant_baseline_share_all": 1.0,
+          "changed_vs_constant_baseline_share_defined": 1.0,
+          "changed_vs_constant_baseline_tracts": 1593,
+          "defined_tracts_only": {
+            "max": 0.0280910768449025,
+            "mean": 0.01956690443867043,
+            "median": 0.019347159871099133,
+            "min": 0.01590372306202211,
+            "n": 1593,
+            "q10": 0.01680482889306998,
+            "q90": 0.023378130921576187,
+            "std": 0.0024627517607290154
+          },
+          "nonfinite_values": 0
+        },
+        "0.05": {
+          "all_official_tracts": {
+            "max": 0.055227692112256255,
+            "mean": 0.03391726109667607,
+            "median": 0.03336789967774783,
+            "min": 0.024759307655055275,
+            "n": 1593,
+            "q10": 0.02701207223267495,
+            "q90": 0.04344532730394047,
+            "std": 0.006156879401822539
+          },
+          "bounded_to_preregistered_range": true,
+          "changed_vs_constant_baseline_share_all": 1.0,
+          "changed_vs_constant_baseline_share_defined": 1.0,
+          "changed_vs_constant_baseline_tracts": 1593,
+          "defined_tracts_only": {
+            "max": 0.055227692112256255,
+            "mean": 0.03391726109667607,
+            "median": 0.03336789967774783,
+            "min": 0.024759307655055275,
+            "n": 1593,
+            "q10": 0.02701207223267495,
+            "q90": 0.04344532730394047,
+            "std": 0.006156879401822539
+          },
+          "nonfinite_values": 0
+        }
+      }
+    },
+    "northern-ca": {
+      "attribute_missingness": {
+        "assigned_building_rows": 1164723,
+        "geometry_missing_or_invalid_assigned_rows": 0,
+        "geometry_missing_or_invalid_share": 0.0,
+        "has_parts_null_rows": 0,
+        "has_parts_null_share": 0.0,
+        "has_parts_true_rows": 96,
+        "height_null_rows": 204021,
+        "height_null_share": 0.1751669710308803,
+        "num_floors_null_rows": 1146379,
+        "num_floors_null_share": 0.9842503324824873,
+        "subtype_null_or_empty_rows": 1028972,
+        "subtype_null_or_empty_share": 0.8834478240749088
+      },
+      "baseline_component": {
+        "max": 0.01,
+        "mean": 0.01,
+        "median": 0.01,
+        "min": 0.01,
+        "n": 591,
+        "q10": 0.01,
+        "q90": 0.01,
+        "std": 0.0
+      },
+      "building_count_matches_existing_feature_cache": true,
+      "morphology_support_defined_tracts_only": {
+        "max": 0.6617086549496403,
+        "mean": 0.4433894864080258,
+        "median": 0.48292218924178437,
+        "min": 0.17048559740416963,
+        "n": 591,
+        "q10": 0.27345174372218906,
+        "q90": 0.5440380573313631,
+        "std": 0.1049733900694217
+      },
+      "morphology_support_terms_defined_tracts_only": {
+        "median_area": {
+          "max": 1.0,
+          "mean": 0.8465059268984443,
+          "median": 0.8495019171154743,
+          "min": 0.7242763366633416,
+          "n": 591,
+          "q10": 0.7904043856868357,
+          "q90": 0.9014235327131633,
+          "std": 0.0431683415796597
+        },
+        "parts_support": {
+          "max": 0.032679738562091505,
+          "mean": 0.00024510319650522863,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 591,
+          "q10": 0.0,
+          "q90": 0.0,
+          "std": 0.002027625128072987
+        },
+        "population_context": {
+          "max": 0.9769995020032409,
+          "mean": 0.6381479736523955,
+          "median": 0.7375160950370746,
+          "min": 0.021240312933359075,
+          "n": 591,
+          "q10": 0.22765669137400124,
+          "q90": 0.8709155363473066,
+          "std": 0.24401504673338142
+        },
+        "structure_density": {
+          "max": 1.0,
+          "mean": 0.733669518879139,
+          "median": 0.8414177034573935,
+          "min": 0.049525914882224575,
+          "n": 591,
+          "q10": 0.2887569825933875,
+          "q90": 0.977644548703033,
+          "std": 0.2641855762411762
+        },
+        "subtype_support": {
+          "max": 0.943222143364088,
+          "mean": 0.12336113175245907,
+          "median": 0.0352233676975945,
+          "min": 0.0,
+          "n": 591,
+          "q10": 0.003878116343490305,
+          "q90": 0.3769742310889443,
+          "std": 0.19157500913845782
+        },
+        "verticality": {
+          "max": 0.6430311713275966,
+          "mean": 0.31840726406921166,
+          "median": 0.32307250055776326,
+          "min": 0.07740639737345088,
+          "n": 591,
+          "q10": 0.23563579889796057,
+          "q90": 0.39228565992294717,
+          "std": 0.06292092043783012
+        }
+      },
+      "official_tracts": 591,
+      "raw_building_scan": {
+        "assigned_to_official_tracts": 1164723,
+        "columns_read": [
+          "bbox",
+          "geometry",
+          "subtype",
+          "has_parts",
+          "num_floors",
+          "height"
+        ],
+        "distribution_of_official_tract_median_area_m2": {
+          "max": 617.6035852783043,
+          "mean": 199.22928541762127,
+          "median": 195.57003908866375,
+          "min": 89.24612801147819,
+          "n": 591,
+          "q10": 135.1330513691761,
+          "q90": 270.45463444424354,
+          "std": 55.94490216714642
+        },
+        "invalid_or_missing_assigned_geometries": 0,
+        "object_bytes": 130554079,
+        "projected_building_area_m2_all_assigned": {
+          "max": 173682.86526273345,
+          "mean": 240.79667297008962,
+          "median": 194.7673840055493,
+          "min": 0.00021707391057125845,
+          "n": 1164723,
+          "q10": 55.07264654333807,
+          "q90": 373.16890331552725,
+          "std": 604.7223232206921
+        },
+        "source_row_groups": 26,
+        "source_rows": 1164724,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-buildings.parquet",
+        "subtype_counts_top_20": {
+          "agricultural": 1723,
+          "civic": 1159,
+          "commercial": 5943,
+          "education": 2279,
+          "entertainment": 205,
+          "industrial": 1633,
+          "medical": 207,
+          "military": 198,
+          "outbuilding": 4059,
+          "religious": 594,
+          "residential": 116973,
+          "service": 131,
+          "transportation": 647
+        },
+        "unassigned_bbox_centers": 1,
+        "valid_assigned_geometries": 1164723
+      },
+      "sensitivity_by_beta": {
+        "0.01": {
+          "all_official_tracts": {
+            "max": 0.018295144025958304,
+            "mean": 0.015566105135919741,
+            "median": 0.015170778107582158,
+            "min": 0.013382913450503598,
+            "n": 591,
+            "q10": 0.01455961942668637,
+            "q90": 0.01726548256277811,
+            "std": 0.001049733900694217
+          },
+          "bounded_to_preregistered_range": true,
+          "changed_vs_constant_baseline_share_all": 1.0,
+          "changed_vs_constant_baseline_share_defined": 1.0,
+          "changed_vs_constant_baseline_tracts": 591,
+          "defined_tracts_only": {
+            "max": 0.018295144025958304,
+            "mean": 0.015566105135919741,
+            "median": 0.015170778107582158,
+            "min": 0.013382913450503598,
+            "n": 591,
+            "q10": 0.01455961942668637,
+            "q90": 0.01726548256277811,
+            "std": 0.001049733900694217
+          },
+          "nonfinite_values": 0
+        },
+        "0.02": {
+          "all_official_tracts": {
+            "max": 0.026590288051916607,
+            "mean": 0.021132210271839483,
+            "median": 0.020341556215164314,
+            "min": 0.016765826901007197,
+            "n": 591,
+            "q10": 0.019119238853372737,
+            "q90": 0.02453096512555622,
+            "std": 0.002099467801388434
+          },
+          "bounded_to_preregistered_range": true,
+          "changed_vs_constant_baseline_share_all": 1.0,
+          "changed_vs_constant_baseline_share_defined": 1.0,
+          "changed_vs_constant_baseline_tracts": 591,
+          "defined_tracts_only": {
+            "max": 0.026590288051916607,
+            "mean": 0.021132210271839483,
+            "median": 0.020341556215164314,
+            "min": 0.016765826901007197,
+            "n": 591,
+            "q10": 0.019119238853372737,
+            "q90": 0.02453096512555622,
+            "std": 0.002099467801388434
+          },
+          "nonfinite_values": 0
+        },
+        "0.05": {
+          "all_official_tracts": {
+            "max": 0.05147572012979152,
+            "mean": 0.037830525679598714,
+            "median": 0.035853890537910785,
+            "min": 0.026914567252517986,
+            "n": 591,
+            "q10": 0.03279809713343185,
+            "q90": 0.04632741281389055,
+            "std": 0.005248669503471086
+          },
+          "bounded_to_preregistered_range": true,
+          "changed_vs_constant_baseline_share_all": 1.0,
+          "changed_vs_constant_baseline_share_defined": 1.0,
+          "changed_vs_constant_baseline_tracts": 591,
+          "defined_tracts_only": {
+            "max": 0.05147572012979152,
+            "mean": 0.037830525679598714,
+            "median": 0.035853890537910785,
+            "min": 0.026914567252517986,
+            "n": 591,
+            "q10": 0.03279809713343185,
+            "q90": 0.04632741281389055,
+            "std": 0.005248669503471086
+          },
+          "nonfinite_values": 0
+        }
+      }
+    },
+    "south-central-tx": {
+      "attribute_missingness": {
+        "assigned_building_rows": 11463800,
+        "geometry_missing_or_invalid_assigned_rows": 0,
+        "geometry_missing_or_invalid_share": 0.0,
+        "has_parts_null_rows": 0,
+        "has_parts_null_share": 0.0,
+        "has_parts_true_rows": 1123,
+        "height_null_rows": 2959469,
+        "height_null_share": 0.2581577661857325,
+        "num_floors_null_rows": 11415884,
+        "num_floors_null_share": 0.9958202341282996,
+        "subtype_null_or_empty_rows": 9207523,
+        "subtype_null_or_empty_share": 0.8031824525898916
+      },
+      "baseline_component": {
+        "max": 0.01,
+        "mean": 0.009996668332500415,
+        "median": 0.01,
+        "min": 0.0,
+        "n": 6003,
+        "q10": 0.01,
+        "q90": 0.01,
+        "std": 0.00018249815064133563
+      },
+      "building_count_matches_existing_feature_cache": true,
+      "morphology_support_defined_tracts_only": {
+        "max": 0.7347551467926712,
+        "mean": 0.4842433097108039,
+        "median": 0.4955020480104408,
+        "min": 0.1476183851711276,
+        "n": 6001,
+        "q10": 0.3102800966739031,
+        "q90": 0.6349583288779871,
+        "std": 0.11472895607122684
+      },
+      "morphology_support_terms_defined_tracts_only": {
+        "median_area": {
+          "max": 1.0,
+          "mean": 0.855382190000988,
+          "median": 0.855042226222262,
+          "min": 0.6104076377378629,
+          "n": 6001,
+          "q10": 0.7913825171791599,
+          "q90": 0.9237826539000625,
+          "std": 0.05645373331618406
+        },
+        "parts_support": {
+          "max": 0.09876543209876543,
+          "mean": 0.0004060824966378468,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 6001,
+          "q10": 0.0,
+          "q90": 0.0,
+          "std": 0.004042116881452543
+        },
+        "population_context": {
+          "max": 1.0,
+          "mean": 0.6907337907204081,
+          "median": 0.7657792166374938,
+          "min": 0.0,
+          "n": 6001,
+          "q10": 0.35501615138512677,
+          "q90": 0.866887297120633,
+          "std": 0.20329881489686666
+        },
+        "structure_density": {
+          "max": 1.0,
+          "mean": 0.7834333031057289,
+          "median": 0.8551217111833521,
+          "min": 0.029874874852770843,
+          "n": 6001,
+          "q10": 0.4476271515533951,
+          "q90": 0.9750300542122705,
+          "std": 0.20423969827141278
+        },
+        "subtype_support": {
+          "max": 0.9982593559617058,
+          "mean": 0.25115147782757313,
+          "median": 0.045454545454545456,
+          "min": 0.0,
+          "n": 6001,
+          "q10": 0.002307692307692308,
+          "q90": 0.8585318424890618,
+          "std": 0.3364013793962011
+        },
+        "verticality": {
+          "max": 0.9418577691352269,
+          "mean": 0.32435301411348755,
+          "median": 0.3236291046563752,
+          "min": 0.0,
+          "n": 6001,
+          "q10": 0.16038174233778424,
+          "q90": 0.478737311513548,
+          "std": 0.13337113950692048
+        }
+      },
+      "official_tracts": 6003,
+      "raw_building_scan": {
+        "assigned_to_official_tracts": 11463800,
+        "columns_read": [
+          "bbox",
+          "geometry",
+          "subtype",
+          "has_parts",
+          "num_floors",
+          "height"
+        ],
+        "distribution_of_official_tract_median_area_m2": {
+          "max": 3503.306660090213,
+          "mean": 224.66611765662776,
+          "median": 202.45822885847934,
+          "min": 43.463287332710955,
+          "n": 6001,
+          "q10": 135.96335175276138,
+          "q90": 310.93439158377566,
+          "std": 143.49008481792882
+        },
+        "invalid_or_missing_assigned_geometries": 0,
+        "object_bytes": 1269949045,
+        "projected_building_area_m2_all_assigned": {
+          "max": 465228.3389494292,
+          "mean": 265.50334599364606,
+          "median": 199.00308485510504,
+          "min": 0.022485741732885423,
+          "n": 11463800,
+          "q10": 51.29126373634925,
+          "q90": 388.91337524208797,
+          "std": 906.501582528514
+        },
+        "source_row_groups": 255,
+        "source_rows": 11463801,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-buildings.parquet",
+        "subtype_counts_top_20": {
+          "agricultural": 4281,
+          "civic": 9640,
+          "commercial": 67713,
+          "education": 13506,
+          "entertainment": 2312,
+          "industrial": 9073,
+          "medical": 2226,
+          "military": 115,
+          "outbuilding": 45429,
+          "religious": 9506,
+          "residential": 2080666,
+          "service": 7054,
+          "transportation": 4756
+        },
+        "unassigned_bbox_centers": 1,
+        "valid_assigned_geometries": 11463800
+      },
+      "sensitivity_by_beta": {
+        "0.01": {
+          "all_official_tracts": {
+            "max": 0.018523816148288727,
+            "mean": 0.015152516905589646,
+            "median": 0.015044973201376061,
+            "min": 0.0,
+            "n": 6003,
+            "q10": 0.013649666776465275,
+            "q90": 0.016897162627236586,
+            "std": 0.0011799809181111257
+          },
+          "bounded_to_preregistered_range": true,
+          "changed_vs_constant_baseline_share_all": 0.9996668332500417,
+          "changed_vs_constant_baseline_share_defined": 1.0,
+          "changed_vs_constant_baseline_tracts": 6001,
+          "defined_tracts_only": {
+            "max": 0.018523816148288727,
+            "mean": 0.015157566902891962,
+            "median": 0.015044979519895592,
+            "min": 0.012652448532073288,
+            "n": 6001,
+            "q10": 0.01365041671122013,
+            "q90": 0.01689719903326097,
+            "std": 0.0011472895607122684
+          },
+          "nonfinite_values": 0
+        },
+        "0.02": {
+          "all_official_tracts": {
+            "max": 0.027047632296577452,
+            "mean": 0.020308365478678876,
+            "median": 0.020089946402752124,
+            "min": 0.0,
+            "n": 6003,
+            "q10": 0.017299333552930552,
+            "q90": 0.02379432525447317,
+            "std": 0.002323960595829464
+          },
+          "bounded_to_preregistered_range": true,
+          "changed_vs_constant_baseline_share_all": 0.9996668332500417,
+          "changed_vs_constant_baseline_share_defined": 1.0,
+          "changed_vs_constant_baseline_tracts": 6001,
+          "defined_tracts_only": {
+            "max": 0.027047632296577452,
+            "mean": 0.02031513380578392,
+            "median": 0.020089959039791182,
+            "min": 0.015304897064146577,
+            "n": 6001,
+            "q10": 0.017300833422440258,
+            "q90": 0.02379439806652194,
+            "std": 0.002294579121424537
+          },
+          "nonfinite_values": 0
+        },
+        "0.05": {
+          "all_official_tracts": {
+            "max": 0.05261908074144363,
+            "mean": 0.03577591119794657,
+            "median": 0.03522486600688031,
+            "min": 0.0,
+            "n": 6003,
+            "q10": 0.02824833388232638,
+            "q90": 0.044485813136182925,
+            "std": 0.0057725590038569365
+          },
+          "bounded_to_preregistered_range": true,
+          "changed_vs_constant_baseline_share_all": 0.9996668332500417,
+          "changed_vs_constant_baseline_share_defined": 1.0,
+          "changed_vs_constant_baseline_tracts": 6001,
+          "defined_tracts_only": {
+            "max": 0.05261908074144363,
+            "mean": 0.03578783451445981,
+            "median": 0.03522489759947796,
+            "min": 0.023262242660366445,
+            "n": 6001,
+            "q10": 0.02825208355610065,
+            "q90": 0.044485995166304845,
+            "std": 0.005736447803561342
+          },
+          "nonfinite_values": 0
+        }
+      }
+    }
+  },
+  "pre_registration": {
+    "commit": "a0201588f133bb1dc79871ccb0f292c1c822e56f",
+    "config": "config/building-morphology-preregistered.json",
+    "config_sha256": "85cc0b33d5a5eb0e2817d9be492a29236bc58bd6eb8b12c1e637e881330a4b5a",
+    "config_status": "preregistered_before_morphology_scan"
+  },
+  "restrictions": {
+    "ACS_housing_units_read_or_used_as_denominator": false,
+    "MS_USFS_CarbonPlan_or_other_reference_footprint_data_read": false,
+    "accuracy_claim": false,
+    "all_feature_coefficients_preregistered_before_morphology_scan": true,
+    "candidate_is_scored_or_promoted": false,
+    "external_imagery_or_footprint_data_used": false,
+    "leaderboard_or_score_feedback_used": false,
+    "score_placeholders_or_target_labels_read": false,
+    "upload_or_submission_made": false
+  },
+  "scope": {
+    "eastern_WA_template_rows_included": false,
+    "official_regions": [
+      "maricopa-az",
+      "northern-ca",
+      "eastern-ok",
+      "south-central-tx"
+    ],
+    "official_tracts": 9379,
+    "ordered_ID_coverage": "exact concatenation of the four official sample GEOID lists"
+  },
+  "script_sha256_at_run": "cdbd39940e238f73aa9262d051840b8020ba37423b2889eeed23273aeb3158f5"
+}

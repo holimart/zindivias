@@ -1,3 +1,6 @@
+import csv
+import hashlib
+import json
 import math
 import unittest
 from pathlib import Path
@@ -57,6 +60,24 @@ class BuildingMorphologyCandidateTests(unittest.TestCase):
                 verticality=float("nan"), subtype_share=1,
                 has_parts_share=0, population=1,
             )
+
+    def test_generated_candidate_is_exact_scope_finite_and_analysis_only(self):
+        report = json.loads((REPO / "reports/building-morphology-candidate.json").read_text(encoding="utf-8"))
+        candidate = REPO / report["candidate_csv"]
+        self.assertEqual(report["candidate_rows"], 9379)
+        self.assertEqual(hashlib.sha256(candidate.read_bytes()).hexdigest(), report["candidate_csv_sha256"])
+        self.assertFalse(report["restrictions"]["score_placeholders_or_target_labels_read"])
+        self.assertFalse(report["restrictions"]["upload_or_submission_made"])
+        self.assertEqual(report["global_sensitivity_by_beta"]["0.02"]["changed_vs_constant_baseline_tracts"], 9377)
+        self.assertTrue(report["global_sensitivity_by_beta"]["0.02"]["bounded_to_preregistered_range"])
+        with candidate.open("r", newline="", encoding="utf-8") as stream:
+            rows = list(csv.DictReader(stream))
+        self.assertEqual(len(rows), 9379)
+        for row in rows:
+            for field in ("building_gap_constant_0_01", "building_gap_morph_beta_0.01",
+                          "building_gap_morph_beta_0.02", "building_gap_morph_beta_0.05"):
+                value = float(row[field])
+                self.assertTrue(math.isfinite(value) and 0 <= value <= 0.1)
 
 
 if __name__ == "__main__":
