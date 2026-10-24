@@ -1,0 +1,133 @@
+{
+  "audit_id": "V2_DEFINED_MASK_AUDIT_V1",
+  "backlog_item": "bias-v2-defined-mask-audit",
+  "registered_utc": "2026-10-25",
+  "intent": "validation screen for the frozen model-only v2 composite masks and arithmetic; not a model promotion, not an accuracy claim, not an upload",
+  "scope": {
+    "official_regions_order": ["maricopa-az", "northern-ca", "eastern-ok", "south-central-tx"],
+    "official_scored_rows": 9379,
+    "expected_region_rows": {
+      "maricopa-az": 1593,
+      "northern-ca": 591,
+      "eastern-ok": 1192,
+      "south-central-tx": 6003
+    },
+    "scored_id_source": "$COMPETITION_WORKSPACE/samples/<region>-sample-submission.csv (GEOID column only)",
+    "candidate_score_csv": null,
+    "candidate_score_column": "coverage_gap_score",
+    "candidate_note": "The assembled model-only v2 candidate CSV is not generated yet (bias-est-v2-assembly-probe is open). Until it exists the audit compares the composite emitted by the repository's own frozen combiners against an independent recomputation. Passing --candidate PATH switches the same checks onto the generated candidate score column with no other change."
+  },
+  "frozen_inputs": {
+    "official_samples": {
+      "path_template": "samples/{region}-sample-submission.csv",
+      "columns_read": ["GEOID"],
+      "score_placeholders_read": false,
+      "sha256": {
+        "maricopa-az": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+        "northern-ca": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+        "eastern-ok": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+        "south-central-tx": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e"
+      }
+    },
+    "provided_strata": {
+      "path_template": "defined-flags-inputs/{region}-strata-tract-table.parquet",
+      "columns_read": ["GEOID", "pop_total", "pop_urban", "pct_urban", "ALAND"],
+      "role": "provided ACS strata covariates used only to recompute the frozen fixed-prior presence probability"
+    },
+    "transport_component": {
+      "path": "reports/candidates/road_topology_candidate.csv",
+      "sha256": "612c2080c3d470fbcdc0cd752cd26847da05a35bf5d245c0b1599134cc82fda7",
+      "gap_column": "route_reference_transport_gap",
+      "defined_column": "route_reference_transport_defined",
+      "input_columns": ["overture_route_km", "overture_named_road_km_5070"],
+      "implementation": "scripts/estimate_gaps.py estimate_transport_route_v2"
+    },
+    "building_component": {
+      "path": "reports/candidates/building_morphology.csv",
+      "sha256": "ed0928651e1ddc0de89e6fd6544c30bd510456f6e9b72eea9d09277919194b75",
+      "gap_column": "building_gap_constant_0_01",
+      "defined_column": "building_defined",
+      "input_columns": ["overture_building_count"],
+      "implementation": "scripts/estimator_v2_building.py estimate_building_component_v2"
+    },
+    "poi_component": {
+      "path": "reports/candidates/poi_confidence_weighted.csv",
+      "sha256": "28558424db768222ec7639986970af7a37b74228ef8f4e3190e5e58b6e19071c",
+      "gap_column": "v2_raw_poi_gap",
+      "defined_column": "v2_raw_poi_defined",
+      "facility_half_column": "v2_raw_facility_gap",
+      "establishments_half_column": "v2_raw_establishments_gap",
+      "family_gap_columns": ["v2_raw_fire_gap", "v2_raw_ems_gap", "v2_raw_schools_gap"],
+      "family_count_columns": ["raw_fire_count", "raw_ems_count", "raw_schools_count"],
+      "input_columns": ["all_overture_poi_count", "unclassified_category_count"],
+      "implementation": "scripts/estimator_v2_establishments.py and scripts/estimate_gaps.py v2 facility-miss functions"
+    }
+  },
+  "frozen_rules": {
+    "transport": {
+      "defined": "overture_route_km > 0",
+      "gap": "clip(1 - overture_named_road_km_5070 / overture_route_km, 0, 1)",
+      "undefined_placeholder": 0.0
+    },
+    "building": {
+      "defined": "overture_building_count > 0",
+      "gap": "0.01 (fixed residual prior BUILDING_GAP_V2) when defined",
+      "undefined_placeholder": 0.0
+    },
+    "facility_family": {
+      "presence_prior": {
+        "fire": {"intercept": -2.8, "log_density": 0.3, "urban_fraction": 0.7},
+        "ems": {"intercept": -3.2, "log_density": 0.25, "urban_fraction": 0.6},
+        "schools": {"intercept": -1.0, "log_density": 0.2, "urban_fraction": 0.35}
+      },
+      "urbanity": "pct_urban when finite, else pop_urban/pop_total for positive population, else neutral 0.5",
+      "density_index": "log1p((pop_total / max(ALAND km2, 0.01)) / 100)",
+      "probability": "sigmoid(intercept + log_density * density_index + urban_fraction * urbanity), logit clamped to [-30, 30]",
+      "defined": "probability > 0",
+      "gap": "probability * clip(1 - n / (n + 1), 0, 1) with n the Overture count after the fixed unclassified allocation",
+      "undefined_placeholder": 0.0
+    },
+    "establishments": {
+      "formula": "clip(1 - all_overture_poi_count / (cbp_k * pop_total), 0, 1)",
+      "cbp_k": 0.024,
+      "defined": "pop_total > 0 or all_overture_poi_count > 0",
+      "zero_population_positive_count_gap": 0.0,
+      "undefined_placeholder": 0.0
+    },
+    "poi": {
+      "facility_half": "mean of defined fire/EMS/schools gaps",
+      "combiner": "equal-weight mean of the defined facility and establishments halves",
+      "defined": "facility_half_defined or establishments_half_defined",
+      "undefined_placeholder": 0.0
+    },
+    "composite": {
+      "components": ["transport", "building", "poi"],
+      "rule": "arithmetic mean of the top-level components whose model-defined flag is 1; undefined components are excluded entirely",
+      "undefined_placeholder": 0.0,
+      "zero_defined_rule": null,
+      "zero_defined_rule_note": "No zero-defined fallback rule is registered. Acceptance requires zero such rows; a nonzero count fails the audit rather than silently emitting a placeholder."
+    }
+  },
+  "numeric_precision": {
+    "component_csv_writer_format": ".12g",
+    "policy": "each re-derived component value is counted as exact when format(value, '.12g') reproduces the artifact field (or the parsed field equals it bit for bit); every other row must fall within the registered serialization floor, which is the accumulated decimal-round-trip of the 12-significant-digit artifact fields and their inputs. The audit reports exact-match rows, last-digit near-miss rows, floor violations and the measured maximum residual per component."
+  },
+  "gates": {
+    "max_abs_composite_arithmetic_residual": 1e-12,
+    "max_abs_candidate_vs_recomputed_residual": 1e-12,
+    "max_abs_rederivation_numeric_residual": 1e-11,
+    "required_exact_official_id_coverage_share": 1.0,
+    "max_duplicate_or_missing_ids": 0,
+    "max_zero_defined_rows": 0,
+    "score_range": [0.0, 1.0]
+  },
+  "prohibitions": {
+    "labels_used": false,
+    "sample_score_placeholders_read": false,
+    "removed_reference_layers_or_equivalents_used": false,
+    "leaderboard_derived_parameters_used": false,
+    "test_score_tuning": false,
+    "upload_attempted": false,
+    "notes": "The audit reads only official sample GEOIDs, provided strata covariates, and already-frozen provided-feature component artifacts. config/calibration.json (the only LB-calibrated constant source) is never opened by this script; cbp_k and the presence priors are the model-derived constants frozen in this file."
+  }
+}
