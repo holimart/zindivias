@@ -285,6 +285,267 @@
         "region": "eastern-wa",
         "scored_target_claim": false
       }
+    },
+    {
+      "candidate_id": "P4",
+      "name": "phase-2 C1 algebra shrink",
+      "artifact": "reports/candidates/P4_c1_shrink_alpha.csv",
+      "sha256": "8b329802d882ea4bdff2bfd8c465c160d6ffd9269cfbe28dce8be9e702b07d37",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "pre_registered": true,
+      "description": "Phase-2 global-parameter public calibration probe; no per-tract parameters or label-based tuning.",
+      "phase": 2,
+      "parameters": {
+        "transform": "alpha * C1",
+        "alpha": 0.3288136427728255,
+        "predicted_public_rmse": 0.09143872513056803,
+        "prediction_basis": "phase-1 C1 moments; public composition assumed representative"
+      },
+      "eastern_wa_fill": {
+        "region": "eastern-wa",
+        "rows": 415,
+        "policy": "same alpha-scaled C1 pooled value",
+        "values": {
+          "transport_gap": 0.05556166667133917,
+          "building_gap": 0.05556166667133917,
+          "poi_gap": 0.05556166667133917,
+          "coverage_gap_score": 0.05556166667133917
+        },
+        "scored_target_claim": false
+      },
+      "column_checks": {
+        "unique_columns": true,
+        "all_rows_have_columns": true,
+        "finite_bounded_scores": true
+      },
+      "per_region_means": {
+        "maricopa-az": 0.064672498,
+        "northern-ca": 0.050584362,
+        "eastern-ok": 0.038583403,
+        "south-central-tx": 0.057005299,
+        "eastern-wa": 0.055561667
+      },
+      "defined_rates": {
+        "maricopa-az": {
+          "transport_defined": 0.634651601,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.953546767,
+          "ems_defined": 0.930320151,
+          "schools_defined": 0.990583804,
+          "cbp_defined": 1.0
+        },
+        "northern-ca": {
+          "transport_defined": 0.695431472,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.9357022,
+          "ems_defined": 0.861252115,
+          "schools_defined": 0.998307953,
+          "cbp_defined": 1.0
+        },
+        "eastern-ok": {
+          "transport_defined": 0.593120805,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.907718121,
+          "ems_defined": 0.805369128,
+          "schools_defined": 0.995805369,
+          "cbp_defined": 1.0
+        },
+        "south-central-tx": {
+          "transport_defined": 0.630518074,
+          "building_defined": 1.0,
+          "poi_defined": 0.999666833,
+          "fire_defined": 0.939696818,
+          "ems_defined": 0.903215059,
+          "schools_defined": 0.996668333,
+          "cbp_defined": 0.999666833
+        },
+        "eastern-wa": null
+      }
+    },
+    {
+      "candidate_id": "P5",
+      "name": "phase-2 regional mean plus centered residual",
+      "artifact": "reports/candidates/P5_region_shrink_residual.csv",
+      "sha256": "9d5ad1d05bedfe5da23a39d9a4f6902217c2711da8fa0b408d992f196bb93b4b",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "pre_registered": true,
+      "description": "Phase-2 global-parameter public calibration probe; no per-tract parameters or label-based tuning.",
+      "phase": 2,
+      "parameters": {
+        "transform": "alpha * per-region-mean(C2) + beta * (C2 - per-region-mean(C2))",
+        "alpha": 0.3288136427728255,
+        "beta": -0.04967993197091435,
+        "beta_unconstrained_optimum": -0.2181321596482996,
+        "beta_range_lower_bound": -0.062099914963642935,
+        "predicted_public_rmse": 0.08892196089959746,
+        "prediction_basis": "phase-1 C1/C2 moments; beta constrained to keep composite in [0,1]; public composition assumed representative"
+      },
+      "eastern_wa_fill": {
+        "region": "eastern-wa",
+        "rows": 415,
+        "policy": "unweighted four-region mean of each transformed field",
+        "values": {
+          "transport_gap": 0.03216978786825246,
+          "building_gap": 0.024146882754787234,
+          "poi_gap": 0.08450176281472876,
+          "coverage_gap_score": 0.05556166667133917
+        },
+        "scored_target_claim": false
+      },
+      "column_checks": {
+        "unique_columns": true,
+        "all_rows_have_columns": true,
+        "finite_bounded_scores": true
+      },
+      "per_region_means": {
+        "maricopa-az": 0.064672498,
+        "northern-ca": 0.050584362,
+        "eastern-ok": 0.038583403,
+        "south-central-tx": 0.057005299,
+        "eastern-wa": 0.055561667
+      },
+      "defined_rates": {
+        "maricopa-az": {
+          "transport_defined": 0.634651601,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.953546767,
+          "ems_defined": 0.930320151,
+          "schools_defined": 0.990583804,
+          "cbp_defined": 1.0
+        },
+        "northern-ca": {
+          "transport_defined": 0.695431472,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.9357022,
+          "ems_defined": 0.861252115,
+          "schools_defined": 0.998307953,
+          "cbp_defined": 1.0
+        },
+        "eastern-ok": {
+          "transport_defined": 0.593120805,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.907718121,
+          "ems_defined": 0.805369128,
+          "schools_defined": 0.995805369,
+          "cbp_defined": 1.0
+        },
+        "south-central-tx": {
+          "transport_defined": 0.630518074,
+          "building_defined": 1.0,
+          "poi_defined": 0.999666833,
+          "fire_defined": 0.939696818,
+          "ems_defined": 0.903215059,
+          "schools_defined": 0.996668333,
+          "cbp_defined": 0.999666833
+        },
+        "eastern-wa": null
+      }
+    },
+    {
+      "candidate_id": "P6",
+      "name": "phase-2 global constant",
+      "artifact": "reports/candidates/P6_global_constant.csv",
+      "sha256": "68851dd2fee88f229bee08466d342f14313fa75e84bf42867baf28995445f6b3",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "pre_registered": true,
+      "description": "Phase-2 global-parameter public calibration probe; no per-tract parameters or label-based tuning.",
+      "phase": 2,
+      "parameters": {
+        "transform": "constant c for all score columns",
+        "c": 0.05652688955988315,
+        "predicted_public_rmse": 0.0911398892136817,
+        "prediction_basis": "assume E[y] approximately c, where c=E[qy]/E[q] from phase-1 C1; probe measures global target-mean consistency"
+      },
+      "eastern_wa_fill": {
+        "region": "eastern-wa",
+        "rows": 415,
+        "policy": "same global constant c",
+        "values": {
+          "transport_gap": 0.05652688955988315,
+          "building_gap": 0.05652688955988315,
+          "poi_gap": 0.05652688955988315,
+          "coverage_gap_score": 0.05652688955988315
+        },
+        "scored_target_claim": false
+      },
+      "column_checks": {
+        "unique_columns": true,
+        "all_rows_have_columns": true,
+        "finite_bounded_scores": true
+      },
+      "per_region_means": {
+        "maricopa-az": 0.05652689,
+        "northern-ca": 0.05652689,
+        "eastern-ok": 0.05652689,
+        "south-central-tx": 0.05652689,
+        "eastern-wa": 0.05652689
+      },
+      "defined_rates": {
+        "maricopa-az": {
+          "transport_defined": 0.634651601,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.953546767,
+          "ems_defined": 0.930320151,
+          "schools_defined": 0.990583804,
+          "cbp_defined": 1.0
+        },
+        "northern-ca": {
+          "transport_defined": 0.695431472,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.9357022,
+          "ems_defined": 0.861252115,
+          "schools_defined": 0.998307953,
+          "cbp_defined": 1.0
+        },
+        "eastern-ok": {
+          "transport_defined": 0.593120805,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.907718121,
+          "ems_defined": 0.805369128,
+          "schools_defined": 0.995805369,
+          "cbp_defined": 1.0
+        },
+        "south-central-tx": {
+          "transport_defined": 0.630518074,
+          "building_defined": 1.0,
+          "poi_defined": 0.999666833,
+          "fire_defined": 0.939696818,
+          "ems_defined": 0.903215059,
+          "schools_defined": 0.996668333,
+          "cbp_defined": 0.999666833
+        },
+        "eastern-wa": null
+      }
     }
   ],
   "feature_source": "provided Overture buildings/roads/POIs plus provided ACS housing geometries and strata covariates",
@@ -309,5 +570,40 @@
     "extra_template_rows": 415,
     "extra_template_region": "eastern-wa",
     "interpretation": "Use the steward-confirmed 9,794-row Data-page template for platform processing. The authoritative four regional samples still define 9,379 scored IDs; the additional eastern-WA rows are template-only and filled with documented proxies, not target evidence."
+  },
+  "phase2_pre_registration": {
+    "max_probes": 4,
+    "registered_probes": [
+      "P4",
+      "P5",
+      "P6"
+    ],
+    "unused_slots": 1,
+    "frozen_before_upload": true,
+    "phase1_public_rmse_source": "reports/submissions.jsonl score_refresh entries from shared orchestrator --status",
+    "transformations": {
+      "P4": {
+        "transform": "alpha * C1",
+        "alpha": 0.3288136427728255,
+        "predicted_public_rmse": 0.09143872513056803,
+        "prediction_basis": "phase-1 C1 moments; public composition assumed representative"
+      },
+      "P5": {
+        "transform": "alpha * per-region-mean(C2) + beta * (C2 - per-region-mean(C2))",
+        "alpha": 0.3288136427728255,
+        "beta": -0.04967993197091435,
+        "beta_unconstrained_optimum": -0.2181321596482996,
+        "beta_range_lower_bound": -0.062099914963642935,
+        "predicted_public_rmse": 0.08892196089959746,
+        "prediction_basis": "phase-1 C1/C2 moments; beta constrained to keep composite in [0,1]; public composition assumed representative"
+      },
+      "P6": {
+        "transform": "constant c for all score columns",
+        "c": 0.05652688955988315,
+        "predicted_public_rmse": 0.0911398892136817,
+        "prediction_basis": "assume E[y] approximately c, where c=E[qy]/E[q] from phase-1 C1; probe measures global target-mean consistency"
+      }
+    },
+    "constraints": "No per-tract or per-GEOID fit; all parameters are global; no labels or removed references used."
   }
 }

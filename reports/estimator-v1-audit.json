@@ -1,0 +1,84 @@
+{
+  "method": "offline estimator-v1 sensitivity candidates for later explicit pre-registration; not uploaded or included in phase-2 probe manifest",
+  "no_labels_or_removed_references_used": true,
+  "sample_score_placeholders_read": false,
+  "official_rows": 9379,
+  "template_rows": 9794,
+  "eastern_wa_template_only_rows": 415,
+  "phase1_alpha_used_for_component_shrink": 0.3288136427728255,
+  "candidate_a": {
+    "path": "reports/estimator-v1/v1_shrink_building_poi_alpha.csv",
+    "sha256": "9649f519765869ece13a42e2a977b1910bf90a751eecaf73bb853977126ee0da",
+    "rows": 9794,
+    "unique_ids": 9794,
+    "ordered_template_ids": true,
+    "eastern_wa_fill": {
+      "rows": 415,
+      "policy": "unweighted four-region mean per score field",
+      "values": {
+        "transport_gap": 0.09682722322234288,
+        "building_gap": 0.02379956247728979,
+        "poi_gap": 0.08450176281472876,
+        "coverage_gap_score": 0.07722470374968142
+      },
+      "scored_target_claim": false
+    },
+    "formula": "shrink building_gap and poi_gap by phase-1 C1 alpha; keep transport_gap unchanged; recompute composite over v0 defined-component masks",
+    "interpretation": "global calibration sensitivity, not component-specific accuracy evidence"
+  },
+  "candidate_b": {
+    "path": "reports/estimator-v1/v1_denominator_scale_0_75.csv",
+    "sha256": "8abfc98fdcab5c90d463a7f723e49f0b8c633cd713b3ffc9f60fe279c3604623",
+    "rows": 9794,
+    "unique_ids": 9794,
+    "ordered_template_ids": true,
+    "eastern_wa_fill": {
+      "rows": 415,
+      "policy": "unweighted four-region mean per score field",
+      "values": {
+        "transport_gap": 0.013447850186190186,
+        "building_gap": 0.04463090652043153,
+        "poi_gap": 0.21187548278408877,
+        "coverage_gap_score": 0.126834846312749
+      },
+      "scored_target_claim": false
+    },
+    "formula": "recompute estimate_one with expected-reference denominator multiplier 0.75 (v0 uses 1.0; harmful phase-1 C3 used 1.25)",
+    "interpretation": "sign-fixed denominator-direction sensitivity, not target reconstruction"
+  },
+  "inputs": {
+    "gap_estimates_sha256": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852",
+    "estimate_gaps_script_sha256": "4cc854a03a65fa6f37dc3a79c424879f481915a5a9f3bfa270cfe58d20c03f0a",
+    "official_samples": {
+      "maricopa-az": {
+        "rows": 1593,
+        "sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31"
+      },
+      "northern-ca": {
+        "rows": 591,
+        "sha256": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902"
+      },
+      "eastern-ok": {
+        "rows": 1192,
+        "sha256": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4"
+      },
+      "south-central-tx": {
+        "rows": 6003,
+        "sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e"
+      }
+    },
+    "feature_cache_sha256": {
+      "maricopa-az": "54b83014db1a6f397091b649f4a317090fade8583715829f6e9137ca706f1e17",
+      "northern-ca": "0a9f7cebb26058a6f2e5ab8d6d70df6443ad62f558dcd65e742b161737cbeef2",
+      "eastern-ok": "338e4197146ca29a0823f731cfae0085345a3cdcbb6183b6cf4ec00e8f12fbf8",
+      "south-central-tx": "7252546e436c4febb066be0bf6d96539884c3327ffb7f119d309e963bb9eeafb"
+    },
+    "strata_input_sha256": {
+      "maricopa-az": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd",
+      "northern-ca": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+      "eastern-ok": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54",
+      "south-central-tx": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354"
+    }
+  },
+  "limits": "These are offline unregistered candidates for a later phase. No leaderboard score or accuracy is asserted. Only four official regions supplied estimator inputs; eastern-WA rows use pooled four-region field means solely to preserve template compatibility."
+}

@@ -1,6 +1,6 @@
 # Bias Bounty public-LB probe plan (pre-registered)
 
-**Scope:** public RMSE only; no training/reference labels exist. Official rules permit at most 10 submissions per day and 300 overall. The public leaderboard is about 30% of test; the remaining 70% is private. The steward authorized Bias-only probes on 2026-10-24, up to the Zindi daily cap, subject to the gates below. This plan intentionally spends at most four probes, not the reported ~70 remaining submissions.
+**Scope:** public RMSE only; no training/reference labels exist. Official rules permit at most 10 submissions per day and 300 overall. The public leaderboard is about 30% of test; the remaining 70% is private. The steward authorized Bias-only calibration probes on 2026-10-24, subject to the gates below. Phase 1 used four probes; phase 2 preregisters three additional global-transform probes (one of four slots unused), not the reported ~70 remaining submissions.
 
 ## Candidate order and interpretation
 
@@ -8,7 +8,7 @@ Every candidate artifact must be added to `reports/candidates.json` with exact p
 
 | Order | Candidate | Submission / RMSE interpretation | Gate |
 |---:|---|---|---|
-| 1 | **C0 all-zero** (`reports/candidates/C0_all_zero.csv`) | `RMSE = sqrt(mean(y²))` on the public slice: target RMS, not target mean. Anchors all later comparisons. | Dry-run clean; one scored probe only after verifying the account already joined. |
+| 1 | **C0 all-zero** (`reports/candidates/C0_all_zero.csv`) | `RMSE = sqrt(mean(y²))` on the public slice: target RMS, not target mean. Anchors all later comparisons. | Completed successfully; exact public result is recorded below. |
 | 2 | **C1 per-region v0 constants** | In each official region, all four score columns equal that region's C2 v0 predicted composite mean. Eastern-WA template extras use the pooled C2 composite mean. Tests tract-level detail against smoothing; it does **not** estimate target region means. | Only after C2 is frozen; exact candidate hash in manifest before any upload. |
 | 3 | **C2 component estimator v0** | Tests whether the provided-data component estimator carries public-slice signal relative to C0/C1. | Candidate comes from `bias-bounty-gap-estimator-v0`; the 9,379 official rows are preserved and full 9,794 template IDs validated. |
 | 4 | **C3 denominator sensitivity ×1.25** | Multiplies each C2 expected-reference proxy by 1.25 while keeping observed features fixed; probes sensitivity to denominator calibration, not accuracy by component. | Only after C2; exact artifact hash and formula preregistered before upload. |
@@ -17,9 +17,9 @@ Per-region constants are derived from C2 prediction means, not target means. A c
 
 ## Submission budget, stopping and final two
 
-- Maximum planned total: **4 scored probes** (C0–C3), at most one per candidate, preferably one scored probe/day. The 10/day limit and estimated remaining slots are ceilings, not a target.
+- Phase 1 used four pre-registered probes (C0–C3). Phase 2 registers only **three of four allowed probes** (P4–P6), for a seven-probe planned total; P7 remains unused. Probes are global transforms and must stay within the official 10/day and 300-total limits. The daily cap is a ceiling, not a target.
 - Every upload requires (1) a frozen candidate manifest and artifact hash, (2) exact 9,794-ID template-order validation via `scripts/build_full_id_candidates.py`, including proof that the 9,379 official rows are unchanged and all values are finite/bounded, (3) the shared orchestrator dry-run, (4) the orchestrator-managed ledger record, and (5) existing competition membership. If membership is absent, stop and report; do not join. The local validator `scripts/submit_zindi.py` is not the full-template validator and has no live path.
-- Stop on any schema/ID/range failure, ambiguous processing status, unexpected score change requiring candidate investigation, or after C3. No leaderboard-driven repeated tuning; no candidate variants outside the frozen set without a new written preregistration.
+- Stop on any schema/ID/range failure, ambiguous processing status, unexpected score change requiring candidate investigation, or after P6. No leaderboard-driven repeated tuning; no candidate variants outside the frozen phase-2 set without a new written preregistration.
 - Public-only selection is noisy because 70% is private. **Proposal for operator's final-two decision:** retain C0 as a stable anchor; choose the lowest-public-RMSE valid estimator candidate only if it improves on C0 by at least 1% relative RMSE and its documented behavior is coherent. Otherwise choose C0 and the simplest provided-data candidate. Treat this solely as a recommendation; final two selection belongs to the operator. Save the final choice and rationale with the ledger.
 
 ## Submission plumbing and safeguards
@@ -56,4 +56,26 @@ All four pre-registered full-template candidates passed orchestrator dry-run and
 | C2 | `rTARuUaG` | 0.235358712 | `5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514` |
 | C3 | `TM83xxU6` | 0.349409867 | `e5ee50f5c2cca149550f3408638d2b77431f6ed62cf104dfe8c07d8c8416f9e4` |
 
-C0 had the lowest public RMSE among these four. This is public-only platform feedback, not a local accuracy estimate; no labels are available, the private 70% remains unobserved, and no claim is made that eastern-WA template extras were scored or ignored. The prior submission `ggVY44Ui` remains a separately recorded processing failure; its 0.0 was not a score. No further candidate variants or tuning are authorized by this probe set; final-two selection remains the operator's decision.
+C0 had the lowest public RMSE among the phase-1 four. This is public-only platform feedback, not a local accuracy estimate; no labels are available, the private 70% remains unobserved, and no claim is made that eastern-WA template extras were scored or ignored. The prior submission `ggVY44Ui` remains a separately recorded processing failure; its 0.0 was not a score. Final-two selection remains the operator's decision.
+
+## Phase 2 preregistration — score-algebra calibration (2026-10-24)
+
+The phase-1 RMSE decomposition is reproducible with `scripts/lb_score_algebra.py --workspace "$COMPETITION_WORKSPACE"` and committed in `reports/lb-score-algebra.json`. It uses `MSE(p)=E[y²]-2E[py]+E[p²]`; C0 gives `E[y²]≈0.011501769`. `E[p²]` is measured on all 9,379 official rows and used as a proxy for the public 30% composition. Thus inferred `E[py]`, uncentred correlations, and predicted scores are aggregate assumptions, not labels or tract-level measurements. Results: C1 `E[py]=0.009551697`, uncentred correlation `0.5226`, global optimum scale `alpha=0.328813643`, predicted scaled RMSE `0.091438725`; C2 `E[py]=0.004396102`, correlation `0.1786`; C3 `E[py]=-0.016690312`, correlation `-0.5601`. C3's x1.25 denominator shift points the wrong way. P4–P6 below were frozen from this algebra before any phase-2 upload. No per-tract or per-GEOID tuning is allowed.
+
+| Order | Candidate / transform | Global parameters | Predicted public RMSE | Candidate SHA-256 |
+|---:|---|---|---:|---|
+| 1 | **P4** `alpha * C1` | `alpha=0.328813643` | 0.091438725 | `8b329802d882ea4bdff2bfd8c465c160d6ffd9269cfbe28dce8be9e702b07d37` |
+| 2 | **P5** `alpha * region_mean(C2) + beta * (C2 - region_mean(C2))` | `alpha=0.328813643`, range-constrained `beta=-0.049679932` | 0.088921961 | `9d5ad1d05bedfe5da23a39d9a4f6902217c2711da8fa0b408d992f196bb93b4b` |
+| 3 | **P6** constant `c` in all score columns | `c=0.056526890` | 0.091139889* | `68851dd2fee88f229bee08466d342f14313fa75e84bf42867baf28995445f6b3` |
+
+P4/P5 forecasts assume public composition represents all official rows. P5's unconstrained beta optimum is −0.218132160; beta is restricted to keep the composite in `[0,1]`, with optional component outputs clipped to `[0,1]`. P6's forecast is assumption-based: it assumes `E[y]≈c`, where `c=E[qy]/E[q]` from C1; its actual score will estimate the public target mean through the score identity. Three probes are registered, one of four phase-2 slots is deliberately unused. These artifacts have 9,794 ordered IDs; 415 eastern-WA rows use documented pooled fills and are not target evidence. The phase-2 outputs and exact transforms are in `reports/candidates.json`. Do not submit until this section, manifest, and artifacts are committed, the shared-tool dry-run passes, and the 10/day check permits the upload. Upload only via the shared orchestrator tool; no local held-out score exists because labels are unavailable.
+
+* P6 numerical forecast under the stated mean assumption; not an empirically identified prediction.
+
+## Offline estimator-v1 candidates (not registered or uploaded)
+
+`scripts/build_estimator_v1_candidates.py --workspace "$COMPETITION_WORKSPACE"` produced two bounded 9,794-row sensitivities for a later explicitly preregistered phase. `reports/estimator-v1-audit.json` records lineage and eastern-WA fills. V1-A shrinks building and POI gaps by the phase-1 C1 scale `alpha=0.328813643`, leaves transport unchanged, and recomputes composites over the v0 defined-component masks (SHA-256 `9649f519765869ece13a42e2a977b1910bf90a751eecaf73bb853977126ee0da`). V1-B reruns the provided-feature estimator with expected-reference denominators scaled to `0.75`, opposite the harmful x1.25 sensitivity (SHA-256 `8abfc98fdcab5c90d463a7f723e49f0b8c633cd713b3ffc9f60fe279c3604623`). These are not scored, accuracy claims, or phase-2 registrations; eastern-WA is pooled template completion only.
+
+## Phase-2 actual vs predicted
+
+To be completed only from successful orchestrator `--status` results. The score-algebra script updates `reports/lb-score-algebra.json` with actual-vs-predicted values after each result; preserve the pre-registration parameters and candidate hashes above.

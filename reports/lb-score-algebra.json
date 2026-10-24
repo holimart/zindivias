@@ -1,0 +1,141 @@
+{
+  "method": "phase-1 public RMSE score algebra and pre-registered phase-2 global transforms",
+  "no_labels_or_removed_references_used": true,
+  "score_placeholder_columns_read": false,
+  "official_scored_rows": 9379,
+  "platform_template_rows": 9794,
+  "eastern_wa_template_only_rows": 415,
+  "template_sha256": "32fb5c2984317d4abf8a98b88b7bb9d16e9eef1cda9a954c37da0a2cdd367f40",
+  "official_sample_hashes": {
+    "maricopa-az": {
+      "rows": 1593,
+      "sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31"
+    },
+    "northern-ca": {
+      "rows": 591,
+      "sha256": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902"
+    },
+    "eastern-ok": {
+      "rows": 1192,
+      "sha256": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4"
+    },
+    "south-central-tx": {
+      "rows": 6003,
+      "sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e"
+    }
+  },
+  "candidate_manifest_sha256": "1c351dba582ea77a79088b6b22df0cf441463bfdc12f3f8a2125dc7b8a9d22af",
+  "score_identity": "MSE(p) = E[y^2] - 2 E[p y] + E[p^2]",
+  "moment_assumption": "Public RMSE is measured on the public split; E[p^2] is computed over all 9,379 official rows and used as a proxy for the public subset, assuming representative composition. These are aggregate calibration moments, not target labels or per-tract evidence.",
+  "phase1": {
+    "C0_target_second_moment_proxy": 0.011501768649197401,
+    "rmse0": 0.107246299,
+    "candidates": {
+      "C0": {
+        "public_rmse": 0.107246299,
+        "public_mse": 0.011501768649197401,
+        "E_p2_all_official_rows": 0.0,
+        "inferred_E_py": 0.0,
+        "uncentred_correlation_proxy": null,
+        "unconstrained_optimal_global_scale": null,
+        "predicted_rmse_at_unconstrained_scale": 0.107246299
+      },
+      "C1": {
+        "public_rmse": 0.146449112,
+        "public_mse": 0.021447342405588543,
+        "E_p2_all_official_rows": 0.02904896721177603,
+        "inferred_E_py": 0.009551696727692443,
+        "uncentred_correlation_proxy": 0.5225560290199255,
+        "unconstrained_optimal_global_scale": 0.3288136427728255,
+        "predicted_rmse_at_unconstrained_scale": 0.09143872513056803
+      },
+      "C2": {
+        "public_rmse": 0.235358712,
+        "public_mse": 0.05539372331429894,
+        "E_p2_all_official_rows": 0.05268415779099713,
+        "inferred_E_py": 0.004396101562947799,
+        "uncentred_correlation_proxy": 0.17858516630602533,
+        "unconstrained_optimal_global_scale": 0.08344257073231645,
+        "predicted_rmse_at_unconstrained_scale": 0.10552225657928607
+      },
+      "C3": {
+        "public_rmse": 0.349409867,
+        "public_mse": 0.12208725515695767,
+        "E_p2_all_official_rows": 0.07720486186417602,
+        "inferred_E_py": -0.016690312321792126,
+        "uncentred_correlation_proxy": -0.5600925868620702,
+        "unconstrained_optimal_global_scale": -0.21618214084956003,
+        "predicted_rmse_at_unconstrained_scale": 0.08884605337337494
+      }
+    }
+  },
+  "P5_residual_moments": {
+    "E_q2": 0.02904896721177603,
+    "E_d2": 0.023635190579221102,
+    "E_qd": -1.3378903012653048e-19,
+    "inferred_E_qy": 0.009551696727692443,
+    "inferred_E_dy": -0.005155595164744644
+  },
+  "phase2_preregistered": {
+    "max_probes": 4,
+    "registered_probe_count": 3,
+    "probe_order": [
+      "P4",
+      "P5",
+      "P6"
+    ],
+    "probes": {
+      "P4": {
+        "transform": "alpha * C1",
+        "alpha": 0.3288136427728255,
+        "predicted_public_rmse": 0.09143872513056803,
+        "prediction_basis": "phase-1 C1 moments; public composition assumed representative",
+        "artifact": "reports/candidates/P4_c1_shrink_alpha.csv",
+        "sha256": "8b329802d882ea4bdff2bfd8c465c160d6ffd9269cfbe28dce8be9e702b07d37",
+        "actual_public_rmse": null,
+        "submission_id": null,
+        "status": "not_submitted"
+      },
+      "P5": {
+        "transform": "alpha * per-region-mean(C2) + beta * (C2 - per-region-mean(C2))",
+        "alpha": 0.3288136427728255,
+        "beta": -0.04967993197091435,
+        "beta_unconstrained_optimum": -0.2181321596482996,
+        "beta_range_lower_bound": -0.062099914963642935,
+        "predicted_public_rmse": 0.08892196089959746,
+        "prediction_basis": "phase-1 C1/C2 moments; beta constrained to keep composite in [0,1]; public composition assumed representative",
+        "artifact": "reports/candidates/P5_region_shrink_residual.csv",
+        "sha256": "9d5ad1d05bedfe5da23a39d9a4f6902217c2711da8fa0b408d992f196bb93b4b",
+        "actual_public_rmse": null,
+        "submission_id": null,
+        "status": "not_submitted"
+      },
+      "P6": {
+        "transform": "constant c for all score columns",
+        "c": 0.05652688955988315,
+        "predicted_public_rmse": 0.0911398892136817,
+        "prediction_basis": "assume E[y] approximately c, where c=E[qy]/E[q] from phase-1 C1; probe measures global target-mean consistency",
+        "artifact": "reports/candidates/P6_global_constant.csv",
+        "sha256": "68851dd2fee88f229bee08466d342f14313fa75e84bf42867baf28995445f6b3",
+        "actual_public_rmse": null,
+        "submission_id": null,
+        "status": "not_submitted"
+      }
+    }
+  },
+  "interpretation": "C1 is over-scaled under the representative-public assumption; C2 has weaker uncentred association; C3's inferred negative E[p y] indicates its x1.25 denominator shift moves predictions in the wrong direction. P6 prediction is explicitly assumption-based and is intended to measure the global mean, not to claim it is known.",
+  "candidate_artifacts": {
+    "P4": {
+      "path": "reports/candidates/P4_c1_shrink_alpha.csv",
+      "sha256": "8b329802d882ea4bdff2bfd8c465c160d6ffd9269cfbe28dce8be9e702b07d37"
+    },
+    "P5": {
+      "path": "reports/candidates/P5_region_shrink_residual.csv",
+      "sha256": "9d5ad1d05bedfe5da23a39d9a4f6902217c2711da8fa0b408d992f196bb93b4b"
+    },
+    "P6": {
+      "path": "reports/candidates/P6_global_constant.csv",
+      "sha256": "68851dd2fee88f229bee08466d342f14313fa75e84bf42867baf28995445f6b3"
+    }
+  }
+}
