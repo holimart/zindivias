@@ -1,0 +1,566 @@
+{
+  "schema_version": "1.0.0",
+  "audit_id": "v2-strata-descriptive-audit",
+  "backlog_item": "bias-v2-strata-descriptive-audit",
+  "title": "Feature-only descriptive distribution of the frozen v2 candidate across provided equity strata",
+  "intent": "Descriptive screen only. Reports how the frozen v2 predictions are distributed across strata that the organisers provided, so prediction patterns can be reviewed. This is not model promotion, not a validation score, and not an accuracy assessment; no organiser target is estimated or implied.",
+  "prohibitions": {
+    "sample_score_placeholder_values_read": false,
+    "labels_used": false,
+    "public_leaderboard_scores_used": false,
+    "removed_reference_layers_or_equivalent_copies_read": false,
+    "per_tract_tuning_performed": false,
+    "proxy_estimates_presented_as_organizer_targets": false,
+    "candidate_modified": false,
+    "upload_performed": false
+  },
+  "candidate": {
+    "id": "V2_model",
+    "artifact": "reports/candidates/V2_model.csv",
+    "score_column": "coverage_gap_score",
+    "component_gap_columns": {
+      "transport": "transport_gap",
+      "building": "building_gap",
+      "poi": "poi_gap"
+    },
+    "component_defined_columns": {
+      "transport": "route_reference_transport_defined",
+      "building": "building_defined",
+      "poi": "v2_raw_poi_defined"
+    },
+    "manifest": "reports/candidates.json",
+    "build_audit": "reports/estimator-v2-audit.json",
+    "template_only_fill": 0.0,
+    "official_scored_rows": 9379,
+    "template_only_rows": 415,
+    "template_only_region": "eastern-wa"
+  },
+  "frozen_pins": {
+    "mask_config": "config/v2-component-mask-audit-preregistered.json",
+    "mask_audit": "reports/v2-defined-mask-audit.json",
+    "provenance_config": "config/v2-input-provenance-preregistered.json",
+    "provenance_manifest": "reports/candidates/v2_input_provenance_manifest.json",
+    "prior_strata_reports": [
+      "reports/discovery-rural-svi-minority.json",
+      "reports/discovery-strata-confound.json",
+      "reports/discovery-ok-tribal-ems.json",
+      "reports/confidence-by-stratum.json"
+    ]
+  },
+  "quantiles": [0.05, 0.25, 0.5, 0.75, 0.95],
+  "quantile_method": "nearest-rank on the ascending sorted group values: index = max(0, ceil(q * n) - 1); deterministic and independent of interpolation",
+  "contrast_tolerance": 1e-12,
+  "arithmetic": {
+    "mean": "float64 sum divided by n, and independently an exact rational sum of the decimal strings divided by n",
+    "contrast": "max group mean minus min group mean over the stratum's present groups",
+    "reproduction": "abs(float contrast - exact rational contrast) must be <= contrast_tolerance for every stratum"
+  },
+  "missing_strata_policy": {
+    "declared": "Every stratum group is formed only from a non-null provided value. Nulls fall into the single explicit missing label; they are never zero-filled, region-mean filled, or dropped from the stratum total.",
+    "absent_column": "A stratum whose column is absent from the provided schema is reported with status not_available_in_provided_inputs, zero groups, and is never imputed.",
+    "derived_undefined": "Derived strata record an explicit undefined label for mathematically undefined operands (for example zero land area) instead of imputing a value."
+  },
+  "strata_family_provenance": {
+    "provided_input_file": "defined-flags-inputs/<region>-strata-tract-table.parquet (organiser-provided, hashed against the frozen input-provenance manifest)",
+    "documentation": "docs/data-inventory.md records the provided strata schema column-by-column for every region",
+    "note": "SVI, CVI, RUCA/RUCC, NCHS, tribal, USDM, USFS, MTBS, NIFC, FOD, GEHE, HWD/UHE, PMDI/SPI and CarbonPlan columns are organiser-provided equity/hazard strata inside that provided file. They are not the removed reference layers (TIGER roads, MS Buildings, USGS facilities, CBP establishments), which are absent from every provided file and are never read here. Because the frozen scored candidate may not read these strata columns, every column outside the permitted model-input subset is descriptive-only and its absence from every model-chain script is measured.",
+    "removed_reference_layers_read": false
+  },
+  "forbidden_source_scan": {
+    "prohibited_path_tokens": [
+      "submissions.jsonl",
+      "data/ledger",
+      "lb-score-algebra",
+      "lb-subset-moments",
+      "lb-calibration",
+      "standings.md",
+      "leaderboard-events",
+      "config/calibration.json",
+      "auth_token",
+      "storage_state",
+      "zindi_auth"
+    ],
+    "prohibited_uri_tokens": [
+      "tiger",
+      "ms-buildings",
+      "ms_buildings",
+      "usgs-facilities",
+      "cbp-establishments"
+    ],
+    "sample_file_tokens": [
+      "sample-submission",
+      "SampleSubmission"
+    ],
+    "placeholder_columns_source": "config/v2-input-provenance-preregistered.json:prohibited.score_placeholder_columns_in_provided_samples"
+  },
+  "model_input_separation": {
+    "note": "The scored v2 candidate may read only the permitted provided strata columns recorded in the frozen input-provenance audit. Columns beyond that subset are read by this descriptive audit only and must not appear in any model-chain script.",
+    "model_chain_scripts": [
+      "scripts/build_estimator_v2_candidates.py",
+      "scripts/audit_v2_component_masks.py",
+      "scripts/estimate_gaps.py",
+      "scripts/estimator_v2_building.py",
+      "scripts/estimator_v2_establishments.py",
+      "scripts/build_road_topology_candidate.py",
+      "scripts/build_poi_confidence_candidate.py",
+      "scripts/build_building_morphology_candidate.py"
+    ]
+  },
+  "strata": [
+    {
+      "stratum_id": "urban_rural.ur_class",
+      "family": "urban_rural",
+      "column": "ur_class",
+      "kind": "categorical",
+      "unit": "provided Census-derived urban/rural class label",
+      "missing_label": "class_missing_not_imputed",
+      "methodology": [
+        "docs/data-inventory.md (provided strata schema)",
+        "https://www.census.gov/programs-surveys/geography/guidance/geo-areas/urban-rural.html"
+      ]
+    },
+    {
+      "stratum_id": "urban_rural.pct_urban_band",
+      "family": "urban_rural",
+      "column": "pct_urban",
+      "kind": "bands",
+      "unit": "share of tract population in urban blocks (0-1, provided)",
+      "missing_label": "pct_urban_missing_not_imputed",
+      "bands": [
+        {"label": "0.0", "min": 0.0, "max": 0.0},
+        {"label": "(0.0,0.2]", "min": 0.0, "max": 0.2, "lower_exclusive": true},
+        {"label": "(0.2,0.5]", "min": 0.2, "max": 0.5, "lower_exclusive": true},
+        {"label": "(0.5,0.8]", "min": 0.5, "max": 0.8, "lower_exclusive": true},
+        {"label": "(0.8,1.0]", "min": 0.8, "max": 1.0, "lower_exclusive": true}
+      ],
+      "methodology": [
+        "docs/data-inventory.md (provided strata schema)",
+        "docs/lanes/comp-zindi-bias-bounty.md (documented rural rule pct_urban < 0.5 used by earlier strata discoveries; bands here are analyst-chosen fixed edges, not organiser bins)"
+      ]
+    },
+    {
+      "stratum_id": "urban_rural.rucc_2023_group",
+      "family": "urban_rural",
+      "column": "rucc_2023",
+      "kind": "bands",
+      "unit": "provided USDA ERS Rural-Urban Continuum Code 2023",
+      "missing_label": "rucc_missing_not_imputed",
+      "bands": [
+        {"label": "1-3_metro", "min": 1, "max": 3},
+        {"label": "4-6_nonmetro_urban_adjacent", "min": 4, "max": 6},
+        {"label": "7-9_nonmetro", "min": 7, "max": 9}
+      ],
+      "methodology": [
+        "docs/data-inventory.md (provided strata schema)",
+        "https://www.ers.usda.gov/data-products/urban-rural-continuum-codes/ (documented public code definitions for the 1-3 / 4-6 / 7-9 grouping)"
+      ]
+    },
+    {
+      "stratum_id": "urban_rural.rucc_metro",
+      "family": "urban_rural",
+      "column": "rucc_metro",
+      "kind": "binary",
+      "unit": "provided USDA ERS metro flag",
+      "true_label": "metro",
+      "false_label": "nonmetro",
+      "missing_label": "rucc_metro_missing_not_imputed",
+      "methodology": [
+        "docs/data-inventory.md (provided strata schema)",
+        "https://www.ers.usda.gov/data-products/urban-rural-continuum-codes/"
+      ]
+    },
+    {
+      "stratum_id": "urban_rural.nchs_2013_label",
+      "family": "urban_rural",
+      "column": "nchs_2013_label",
+      "kind": "categorical",
+      "unit": "provided NCHS 2013 Urban/Rural Classification label",
+      "missing_label": "nchs_label_missing_not_imputed",
+      "methodology": [
+        "docs/data-inventory.md (provided strata schema)",
+        "https://www.ers.usda.gov/data-products/urban-rural-continuum-codes/ (NCHS classification documented as a provided urban/rural reference)"
+      ]
+    },
+    {
+      "stratum_id": "population.pop_total_band",
+      "family": "population",
+      "column": "pop_total",
+      "kind": "bands",
+      "unit": "provided ACS tract total population",
+      "missing_label": "pop_total_missing_not_imputed",
+      "bands": [
+        {"label": "0", "min": 0, "max": 0},
+        {"label": "(0,1000)", "min": 0, "max": 1000, "lower_exclusive": true, "upper_exclusive": true},
+        {"label": "[1000,2500)", "min": 1000, "max": 2500, "upper_exclusive": true},
+        {"label": "[2500,5000)", "min": 2500, "max": 5000, "upper_exclusive": true},
+        {"label": "[5000,10000)", "min": 5000, "max": 10000, "upper_exclusive": true},
+        {"label": ">=10000", "min": 10000, "max": null}
+      ],
+      "methodology": [
+        "docs/data-inventory.md (provided strata schema; ACS population)"
+      ]
+    },
+    {
+      "stratum_id": "population.density_band",
+      "family": "population",
+      "column": "pop_total",
+      "kind": "derived_bands",
+      "transform": "population_density_per_km2",
+      "operands": ["pop_total", "ALAND"],
+      "unit": "provided population per square kilometre of ALAND",
+      "undefined_label": "density_undefined_land_area_zero",
+      "missing_label": "density_inputs_missing_not_imputed",
+      "bands": [
+        {"label": "[0,1)", "min": 0, "max": 1, "upper_exclusive": true},
+        {"label": "[1,10)", "min": 1, "max": 10, "upper_exclusive": true},
+        {"label": "[10,100)", "min": 10, "max": 100, "upper_exclusive": true},
+        {"label": "[100,1000)", "min": 100, "max": 1000, "upper_exclusive": true},
+        {"label": ">=1000", "min": 1000, "max": null}
+      ],
+      "methodology": [
+        "docs/data-inventory.md (provided ALAND and pop_total)",
+        "https://www2.census.gov/geo/pdfs/reference/GARM/Ch11GARM.pdf (ALAND is land area in square metres; density is population per km2)"
+      ]
+    },
+    {
+      "stratum_id": "tribal.tribal_any",
+      "family": "tribal",
+      "column": "tribal_any",
+      "kind": "binary",
+      "unit": "provided flag for any tribal land intersection",
+      "true_label": "tribal_land_intersection",
+      "false_label": "no_tribal_land_intersection",
+      "missing_label": "tribal_any_missing_not_imputed",
+      "methodology": [
+        "docs/data-inventory.md (provided strata schema)",
+        "https://www.census.gov/programs-surveys/geography/guidance/geo-areas/american-indian-alaska-native.html"
+      ]
+    },
+    {
+      "stratum_id": "tribal.tribal_pct_band",
+      "family": "tribal",
+      "column": "tribal_pct",
+      "kind": "bands",
+      "unit": "provided share of tract population on tribal land (0-1)",
+      "missing_label": "tribal_pct_missing_not_imputed",
+      "bands": [
+        {"label": "0.0", "min": 0.0, "max": 0.0},
+        {"label": "(0.0,0.05]", "min": 0.0, "max": 0.05, "lower_exclusive": true},
+        {"label": "(0.05,0.25]", "min": 0.05, "max": 0.25, "lower_exclusive": true},
+        {"label": "(0.25,0.5]", "min": 0.25, "max": 0.5, "lower_exclusive": true},
+        {"label": "(0.5,1.0]", "min": 0.5, "max": 1.0, "lower_exclusive": true}
+      ],
+      "methodology": [
+        "docs/data-inventory.md (provided strata schema)"
+      ]
+    },
+    {
+      "stratum_id": "tribal.aiannh_kind",
+      "family": "tribal",
+      "column": "aiannh_kind",
+      "kind": "categorical",
+      "unit": "provided AIANNH legal/statistical kind",
+      "null_label": "no_aiannh_intersection_recorded",
+      "missing_label": "aiannh_kind_missing_not_imputed",
+      "null_is_a_real_category": true,
+      "methodology": [
+        "docs/data-inventory.md (provided strata schema)",
+        "https://www.census.gov/programs-surveys/geography/guidance/geo-areas/american-indian-alaska-native.html"
+      ]
+    },
+    {
+      "stratum_id": "tribal.tribal_statistical",
+      "family": "tribal",
+      "column": "tribal_statistical",
+      "kind": "binary",
+      "unit": "provided flag for statistical (non-legal) tribal area intersection",
+      "true_label": "statistical_area",
+      "false_label": "no_statistical_area",
+      "missing_label": "tribal_statistical_missing_not_imputed",
+      "methodology": [
+        "docs/data-inventory.md (provided strata schema)"
+      ]
+    },
+    {
+      "stratum_id": "svi.svi_overall_band",
+      "family": "svi",
+      "column": "svi_overall",
+      "kind": "bands",
+      "unit": "provided SVI overall vulnerability percentile (0-1)",
+      "missing_label": "svi_overall_missing_not_imputed",
+      "bands": [
+        {"label": "[0,0.2)", "min": 0.0, "max": 0.2, "upper_exclusive": true},
+        {"label": "[0.2,0.4)", "min": 0.2, "max": 0.4, "upper_exclusive": true},
+        {"label": "[0.4,0.6)", "min": 0.4, "max": 0.6, "upper_exclusive": true},
+        {"label": "[0.6,0.8)", "min": 0.6, "max": 0.8, "upper_exclusive": true},
+        {"label": ">=0.8", "min": 0.8, "max": null}
+      ],
+      "coverage_column": "svi_covered",
+      "methodology": [
+        "docs/data-inventory.md (provided strata schema)",
+        "https://www.atsdr.cdc.gov/geographies-and-data/tsvi.html (CDC/ATSDR Social Vulnerability Index; bands here are analyst-chosen fixed edges on the provided 0-1 scale, not organiser bins)"
+      ]
+    },
+    {
+      "stratum_id": "svi.svi_minority_band",
+      "family": "svi",
+      "column": "svi_minority",
+      "kind": "bands",
+      "unit": "provided SVI minority/language theme percentile (0-1)",
+      "missing_label": "svi_minority_missing_not_imputed",
+      "bands": [
+        {"label": "[0,0.2)", "min": 0.0, "max": 0.2, "upper_exclusive": true},
+        {"label": "[0.2,0.4)", "min": 0.2, "max": 0.4, "upper_exclusive": true},
+        {"label": "[0.4,0.6)", "min": 0.4, "max": 0.6, "upper_exclusive": true},
+        {"label": "[0.6,0.8)", "min": 0.6, "max": 0.8, "upper_exclusive": true},
+        {"label": ">=0.8", "min": 0.8, "max": null}
+      ],
+      "coverage_column": "svi_covered",
+      "methodology": [
+        "docs/data-inventory.md (provided strata schema)",
+        "https://www.atsdr.cdc.gov/geographies-and-data/tsvi.html"
+      ]
+    },
+    {
+      "stratum_id": "svi.svi_housing_transport_band",
+      "family": "svi",
+      "column": "svi_housing_transport",
+      "kind": "bands",
+      "unit": "provided SVI housing/transport theme percentile (0-1)",
+      "missing_label": "svi_housing_transport_missing_not_imputed",
+      "bands": [
+        {"label": "[0,0.2)", "min": 0.0, "max": 0.2, "upper_exclusive": true},
+        {"label": "[0.2,0.4)", "min": 0.2, "max": 0.4, "upper_exclusive": true},
+        {"label": "[0.4,0.6)", "min": 0.4, "max": 0.6, "upper_exclusive": true},
+        {"label": "[0.6,0.8)", "min": 0.6, "max": 0.8, "upper_exclusive": true},
+        {"label": ">=0.8", "min": 0.8, "max": null}
+      ],
+      "coverage_column": "svi_covered",
+      "methodology": [
+        "docs/data-inventory.md (provided strata schema)",
+        "https://www.atsdr.cdc.gov/geographies-and-data/tsvi.html"
+      ]
+    },
+    {
+      "stratum_id": "cvi.cvi_overall_band",
+      "family": "cvi",
+      "column": "cvi_overall",
+      "kind": "bands",
+      "unit": "provided CVI overall vulnerability score (0-1)",
+      "missing_label": "cvi_overall_missing_not_imputed",
+      "bands": [
+        {"label": "[0,0.45)", "min": 0.0, "max": 0.45, "upper_exclusive": true},
+        {"label": "[0.45,0.52)", "min": 0.45, "max": 0.52, "upper_exclusive": true},
+        {"label": "[0.52,0.60)", "min": 0.52, "max": 0.60, "upper_exclusive": true},
+        {"label": ">=0.60", "min": 0.60, "max": null}
+      ],
+      "coverage_column": "cvi_covered",
+      "methodology": [
+        "docs/data-inventory.md (provided strata schema)",
+        "https://www.atsdr.cdc.gov/cvi/ (CDC Climate Vulnerability Index; bands here are analyst-chosen fixed edges, not organiser bins)"
+      ]
+    },
+    {
+      "stratum_id": "hazard_drought.usdm_summer_pct_d2plus_band",
+      "family": "hazard_drought",
+      "column": "usdm_summer_pct_d2plus",
+      "kind": "bands",
+      "unit": "provided USDM summer percent of tract area at D2 or worse",
+      "missing_label": "usdm_pct_d2plus_missing_not_imputed",
+      "bands": [
+        {"label": "[0,5)", "min": 0.0, "max": 5.0, "upper_exclusive": true},
+        {"label": "[5,15)", "min": 5.0, "max": 15.0, "upper_exclusive": true},
+        {"label": "[15,25)", "min": 15.0, "max": 25.0, "upper_exclusive": true},
+        {"label": "[25,35)", "min": 25.0, "max": 35.0, "upper_exclusive": true},
+        {"label": ">=35", "min": 35.0, "max": null}
+      ],
+      "coverage_column": "usdm_covered",
+      "methodology": [
+        "docs/data-inventory.md (provided strata schema)",
+        "https://droughtmonitor.unl.edu/About/AbouttheDataProtocol/DSCI.aspx (USDM DSCI and percent-area conventions)"
+      ]
+    },
+    {
+      "stratum_id": "hazard_drought.pmdi_mean_band",
+      "family": "hazard_drought",
+      "column": "pmdi_mean",
+      "kind": "bands",
+      "unit": "provided mean PDSI/PMDI moisture anomaly",
+      "missing_label": "pmdi_mean_missing_not_imputed",
+      "bands": [
+        {"label": "<=-1.5", "min": null, "max": -1.5},
+        {"label": "(-1.5,-0.8]", "min": -1.5, "max": -0.8, "lower_exclusive": true},
+        {"label": "(-0.8,0]", "min": -0.8, "max": 0.0, "lower_exclusive": true},
+        {"label": "(0,0.8]", "min": 0.0, "max": 0.8, "lower_exclusive": true},
+        {"label": "(0.8,1.2]", "min": 0.8, "max": 1.2, "lower_exclusive": true},
+        {"label": ">1.2", "min": 1.2, "max": null, "lower_exclusive": true}
+      ],
+      "coverage_column": "pmdi_covered",
+      "methodology": [
+        "docs/data-inventory.md (provided strata schema)",
+        "https://www.ncei.noaa.gov/access/monitoring/palmer/ (PDSI/PMDI class scale)"
+      ]
+    },
+    {
+      "stratum_id": "hazard_wildfire.usfs_flep8_band",
+      "family": "hazard_wildfire",
+      "column": "usfs_FLEP8_mean",
+      "kind": "bands",
+      "unit": "provided USFS wildfire exposure probability for the highest flame-length class",
+      "missing_label": "usfs_flep8_missing_not_imputed",
+      "bands": [
+        {"label": "0.0", "min": 0.0, "max": 0.0},
+        {"label": "(0.0,0.01]", "min": 0.0, "max": 0.01, "lower_exclusive": true},
+        {"label": "(0.01,0.05]", "min": 0.01, "max": 0.05, "lower_exclusive": true},
+        {"label": "(0.05,0.15]", "min": 0.05, "max": 0.15, "lower_exclusive": true},
+        {"label": ">0.15", "min": 0.15, "max": null, "lower_exclusive": true}
+      ],
+      "methodology": [
+        "docs/data-inventory.md (provided strata schema)",
+        "https://www.fs.usda.gov/research/geospatial/wildfirerisk/ (USFS Wildfire Risk to Public Lands exposure layers; the provided column name is treated as an ordinal hazard intensity)"
+      ]
+    },
+    {
+      "stratum_id": "hazard_wildfire.mtbs_wildfire_ever",
+      "family": "hazard_wildfire",
+      "column": "mtbs_wildfire_ever",
+      "kind": "binary",
+      "unit": "provided MTBS mapped wildfire ever intersecting the tract",
+      "true_label": "mtbs_wildfire_history",
+      "false_label": "no_mtbs_wildfire_history",
+      "missing_label": "mtbs_ever_missing_not_imputed",
+      "methodology": [
+        "docs/data-inventory.md (provided strata schema)",
+        "https://www.mtbs.gov/ (Monitoring Trends in Burn Severity)"
+      ]
+    },
+    {
+      "stratum_id": "hazard_wildfire.nifc_wildfire_ever",
+      "family": "hazard_wildfire",
+      "column": "nifc_wildfire_ever",
+      "kind": "binary",
+      "unit": "provided NIFC reported wildfire ever intersecting the tract",
+      "true_label": "nifc_wildfire_history",
+      "false_label": "no_nifc_wildfire_history",
+      "missing_label": "nifc_ever_missing_not_imputed",
+      "methodology": [
+        "docs/data-inventory.md (provided strata schema)",
+        "https://www.nifc.gov/fire-information/statistics/fire-sizes"
+      ]
+    },
+    {
+      "stratum_id": "hazard_wildfire.fod_human_share_band",
+      "family": "hazard_wildfire",
+      "column": "fod_human_share",
+      "kind": "bands",
+      "unit": "provided Fires On Demand human-caused ignition share",
+      "missing_label": "fod_human_share_missing_not_imputed",
+      "bands": [
+        {"label": "0.0", "min": 0.0, "max": 0.0},
+        {"label": "(0.0,0.5]", "min": 0.0, "max": 0.5, "lower_exclusive": true},
+        {"label": "(0.5,0.9]", "min": 0.5, "max": 0.9, "lower_exclusive": true},
+        {"label": "(0.9,1.0]", "min": 0.9, "max": 1.0, "lower_exclusive": true}
+      ],
+      "coverage_column": "fod_covered",
+      "methodology": [
+        "docs/data-inventory.md (provided strata schema)",
+        "https://firms.modaps.eosdis.nasa.gov/active_fire/ (active-fire ignition attribution context)"
+      ]
+    },
+    {
+      "stratum_id": "hazard_heat.gehe_wbgt30_days_band",
+      "family": "hazard_heat",
+      "column": "gehe_wbgt30_days_mean",
+      "kind": "bands",
+      "unit": "provided GEHE mean days above WBGT 30 C",
+      "missing_label": "gehe_wbgt30_missing_not_imputed",
+      "bands": [
+        {"label": "[0,1)", "min": 0.0, "max": 1.0, "upper_exclusive": true},
+        {"label": "[1,5)", "min": 1.0, "max": 5.0, "upper_exclusive": true},
+        {"label": "[5,15)", "min": 5.0, "max": 15.0, "upper_exclusive": true},
+        {"label": "[15,30)", "min": 15.0, "max": 30.0, "upper_exclusive": true},
+        {"label": ">=30", "min": 30.0, "max": null}
+      ],
+      "methodology": [
+        "docs/data-inventory.md (provided strata schema)",
+        "https://www.who.int/environmental_health_metrics/exposure/wet-bulb-globe-temperature-(wbgt)"
+      ]
+    },
+    {
+      "stratum_id": "hazard_heat.hwd_heatstress_mean_band",
+      "family": "hazard_heat",
+      "column": "hwd_heatstress_mean",
+      "kind": "bands",
+      "unit": "provided CDC Heat Wave Days heat-stress mean index",
+      "missing_label": "hwd_heatstress_missing_not_imputed",
+      "bands": [
+        {"label": "[0,5.5)", "min": 0.0, "max": 5.5, "upper_exclusive": true},
+        {"label": "[5.5,6.0)", "min": 5.5, "max": 6.0, "upper_exclusive": true},
+        {"label": "[6.0,6.5)", "min": 6.0, "max": 6.5, "upper_exclusive": true},
+        {"label": ">=6.5", "min": 6.5, "max": null}
+      ],
+      "coverage_column": "cdcw_covered",
+      "methodology": [
+        "docs/data-inventory.md (provided strata schema)",
+        "https://www.cdc.gov/nceh/climate/heat/index.html"
+      ]
+    },
+    {
+      "stratum_id": "hazard_heat.uhe_wbgtmax28_days_band",
+      "family": "hazard_heat",
+      "column": "uhe_wbgtmax28_days_per_yr",
+      "kind": "bands",
+      "unit": "provided Urban Heat Equities days per year above WBGTmax 28 C",
+      "missing_label": "uhe_wbgtmax28_missing_not_imputed",
+      "bands": [
+        {"label": "[0,30)", "min": 0.0, "max": 30.0, "upper_exclusive": true},
+        {"label": "[30,60)", "min": 30.0, "max": 60.0, "upper_exclusive": true},
+        {"label": "[60,90)", "min": 60.0, "max": 90.0, "upper_exclusive": true},
+        {"label": ">=90", "min": 90.0, "max": null}
+      ],
+      "methodology": [
+        "docs/data-inventory.md (provided strata schema)",
+        "https://www.who.int/environmental_health_metrics/exposure/wet-bulb-globe-temperature-(wbgt)"
+      ]
+    },
+    {
+      "stratum_id": "hazard_flood.carbonplan_rps_2011_band",
+      "family": "hazard_flood",
+      "column": "carbonplan_rps_2011_mean",
+      "kind": "bands",
+      "unit": "provided CarbonPlan relative probability of flood score (2011 baseline)",
+      "missing_label": "carbonplan_rps_missing_not_imputed",
+      "bands": [
+        {"label": "0.0", "min": 0.0, "max": 0.0},
+        {"label": "(0.0,0.01]", "min": 0.0, "max": 0.01, "lower_exclusive": true},
+        {"label": "(0.01,0.05]", "min": 0.01, "max": 0.05, "lower_exclusive": true},
+        {"label": "(0.05,0.2]", "min": 0.05, "max": 0.2, "lower_exclusive": true},
+        {"label": ">0.2", "min": 0.2, "max": null, "lower_exclusive": true}
+      ],
+      "coverage_column": "carbonplan_covered",
+      "methodology": [
+        "docs/data-inventory.md (provided strata schema)",
+        "https://carboneconomics.apache-subsite.website/ (CarbonPlan flood risk scoring context; provided column treated as an ordinal flood hazard)"
+      ]
+    }
+  ],
+  "acceptance": {
+    "candidate_artifact_sha_ties_to_manifest_and_build_audit": true,
+    "component_artifact_pins_verified": true,
+    "official_sample_hashes_verified": true,
+    "provided_strata_hashes_verified": true,
+    "all_official_geoids_accounted_exactly_once_per_stratum": true,
+    "every_official_tract_has_one_strata_row": true,
+    "candidate_scores_finite_and_in_unit_interval": true,
+    "all_group_contrasts_reproduced_within_tolerance": true,
+    "missing_strata_reported_never_imputed": true,
+    "excluded_rows_documented": true,
+    "definedness_matches_frozen_mask_audit": true,
+    "descriptive_only_columns_absent_from_model_chain": true,
+    "no_forbidden_source_read": true,
+    "no_accuracy_claim": true,
+    "no_upload": true,
+    "deterministic_serialization": true,
+    "all_passed": true
+  }
+}
