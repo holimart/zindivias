@@ -495,6 +495,16 @@ def summarize_groups(records: list[dict[str, Any]], v0_by_id: dict[str, dict[str
     return output
 
 
+def weighted_count_moments(rows: list[dict[str, Any]], suffix: str) -> dict[str, Any]:
+    result = {}
+    for family in FAMILIES:
+        values = [float(row[f"{family}_confidence_weighted_count_{suffix}"]) for row in rows]
+        nonzero = int(sum(value > 0 for value in values))
+        result[family] = {"distribution": summarize(values), "nonzero_rows": nonzero,
+                          "nonzero_fraction": float(nonzero / len(rows)) if rows else None}
+    return result
+
+
 def report_variant(rows: list[dict[str, Any]], threshold: float) -> dict[str, Any]:
     suffix = f"t{int(threshold * 100):03d}"
     score_key = f"poi_gap_{suffix}"
@@ -507,6 +517,7 @@ def report_variant(rows: list[dict[str, Any]], threshold: float) -> dict[str, An
             "within_region_output_dispersion": {"variance_population": float(np.var([row[score_key] for row in subset])),
                                                  "std_population": float(np.std([row[score_key] for row in subset]))},
             "delta_vs_v2_raw": summarize([row[f"poi_delta_vs_v2_raw_{suffix}"] for row in subset]),
+            "threshold_weighted_counts": weighted_count_moments(subset, suffix),
             "threshold_weighted_count_deltas_vs_raw": {
                 family: summarize([row[f"{family}_count_delta_vs_raw_{suffix}"] for row in subset])
                 for family in FAMILIES},
@@ -522,6 +533,7 @@ def report_variant(rows: list[dict[str, Any]], threshold: float) -> dict[str, An
             "within_region_output_dispersion": {"variance_population": float(np.var([row[score_key] for row in local])),
                                                  "std_population": float(np.std([row[score_key] for row in local]))},
             "delta_vs_v2_raw": summarize([row[f"poi_delta_vs_v2_raw_{suffix}"] for row in local]),
+            "threshold_weighted_counts": weighted_count_moments(local, suffix),
             "weighted_count_delta_vs_raw": {
                 family: summarize([row[f"{family}_count_delta_vs_raw_{suffix}"] for row in local])
                 for family in FAMILIES},
@@ -538,6 +550,7 @@ def report_variant(rows: list[dict[str, Any]], threshold: float) -> dict[str, An
                 "within_group_output_dispersion": {"variance_population": float(np.var([row[score_key] for row in group])),
                                                    "std_population": float(np.std([row[score_key] for row in group]))},
                 "delta_vs_v2_raw": summarize([row[f"poi_delta_vs_v2_raw_{suffix}"] for row in group]),
+                "threshold_weighted_counts": weighted_count_moments(group, suffix),
                 "weighted_count_delta_vs_raw": {
                     family: summarize([row[f"{family}_count_delta_vs_raw_{suffix}"] for row in group])
                     for family in FAMILIES},

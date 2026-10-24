@@ -46,6 +46,14 @@ class PoiConfidenceCandidateTests(unittest.TestCase):
         self.assertTrue(after["no_predictive_accuracy_measurement_possible"])
         self.assertFalse(after["target_rmse_computed"])
         self.assertEqual(set(after["threshold_candidates"]), set(CONFIG["scope"]["candidate_ids"]))
+        for candidate in after["threshold_candidates"].values():
+            self.assertIn("threshold_weighted_counts", candidate["all"])
+            self.assertTrue(candidate["all"]["within_region_output_dispersion"]["variance_population"] >= 0)
+            self.assertTrue(all(candidate["by_region"][region]["candidate_defined_fraction"] == 1.0
+                                for region in CONFIG["scope"]["official_regions_order"]))
+            self.assertTrue(all("distribution" in candidate["by_region"][region]["threshold_weighted_counts"][family]
+                                for region in CONFIG["scope"]["official_regions_order"]
+                                for family in ("fire", "ems", "schools")))
 
         with candidate_path.open("r", newline="", encoding="utf-8") as stream:
             reader = csv.DictReader(stream)
