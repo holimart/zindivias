@@ -156,8 +156,15 @@ def main() -> int:
         if not workspace:
             parser.error("set COMPETITION_WORKSPACE or pass --sample-dir")
         sample_dir = Path(workspace) / "defined-flags-inputs"
-    artifact = args.artifact or ROOT / "reports/candidates/C0_all_zero.csv"
     manifest = args.manifest.resolve()
+    if args.artifact is None:
+        registered = json.loads(manifest.read_text(encoding="utf-8"))
+        entries = {item["candidate_id"]: item for item in registered.get("candidate_set", [])}
+        if args.candidate not in entries:
+            parser.error(f"candidate is not registered: {args.candidate}")
+        artifact = ROOT / entries[args.candidate]["artifact"]
+    else:
+        artifact = args.artifact
     registration, validation = validate_candidate(
         artifact.resolve(), sample_dir.resolve(), manifest, args.candidate)
     try:

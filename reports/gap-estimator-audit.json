@@ -1,0 +1,662 @@
+{
+  "method": "deterministic provided-feature proxy estimator; no labels or removed reference layers",
+  "no_accuracy_claim": true,
+  "source_constraints": {
+    "provided_layers_used": [
+      "Overture roads",
+      "Overture buildings",
+      "Overture POIs",
+      "Census ACS tract geometries (housing-unit values not read)",
+      "strata ALAND/population/urbanity"
+    ],
+    "removed_or_external_layers_used": [],
+    "excluded_strata_fields": [
+      "USFS building counts",
+      "CarbonPlan building counts"
+    ],
+    "ACS_housing_use": "ACS files are used only for provided tract geometries; housing_units values are deliberately not read or used in any ratio/proxy, consistent with the official rules.",
+    "feature_aggregation": "Road class-filtered lines intersected with authoritative sample ACS tract polygons and length measured in EPSG:5070; building/POI bbox centers assigned to containing scored tracts; unmatched features excluded and counted. POIs lacking usable categories are counted separately and apportioned by each region's known in-sample category share, rather than treated as category-specific zeroes."
+  },
+  "formulas": {
+    "road_expected_km": "0.35 + 0.55*sqrt(ALAND_km2) + 0.0007*pop_total + 2*urban_fraction",
+    "building_expected": "max(0.5, 0.30*pop_total + 4*sqrt(ALAND_km2) + 5*urban_fraction)",
+    "fire_expected": "0.15 + pop_total/30000 + 0.45*urban_fraction",
+    "ems_expected": "0.15 + pop_total/40000 + 0.45*urban_fraction",
+    "schools_expected": "0.20 + pop_total/2500 + 0.20*urban_fraction",
+    "cbp_expected": "0.20 + pop_total/70 + 0.50*urban_fraction",
+    "gap": "1-min(1, observed/expected), clipped to [0,1]; undefined gaps written as 0 and excluded from component means",
+    "defined_flags": "transport: expected named-highway length proxy >= 6 km (observed Overture length alone is not equivalent to a TIGER denominator); building: observed buildings > 0 OR expected buildings >= 1; each POI type: observed category count > 0 OR expected type count >= 0.5; CBP: all observed POIs > 0 OR expected establishments >= 1",
+    "urbanity_missing": "Use observed pop_urban/pop_total when possible; for zero-pop missing pct_urban use neutral 0.5 prior and count it; no null-to-zero fill."
+  },
+  "rows": 9379,
+  "columns": [
+    "GEOID",
+    "coverage_gap_score",
+    "transport_gap",
+    "transport_defined",
+    "building_gap",
+    "building_defined",
+    "poi_gap",
+    "poi_defined",
+    "fire_gap",
+    "fire_defined",
+    "ems_gap",
+    "ems_defined",
+    "schools_gap",
+    "schools_defined",
+    "cbp_gap",
+    "cbp_defined"
+  ],
+  "official_rules_any_undefined_context": {
+    "maricopa-az": 0.55,
+    "northern-ca": 0.37,
+    "eastern-ok": 0.21,
+    "south-central-tx": 0.28
+  },
+  "rules_context_note": "Official rules' aggregate frequencies are shown for comparison. No per-tract labels or leaderboard scores were used; this screen is not accuracy measurement, and the observed rate differences remain a limitation.",
+  "composite_max_abs_error": 0.0,
+  "per_region": {
+    "maricopa-az": {
+      "rows": 1593,
+      "defined_rates": {
+        "transport_defined": 0.634652,
+        "building_defined": 1.0,
+        "poi_defined": 1.0,
+        "fire_defined": 0.953547,
+        "ems_defined": 0.93032,
+        "schools_defined": 0.990584,
+        "cbp_defined": 1.0
+      },
+      "rows_with_any_undefined_component": 582,
+      "fraction_with_any_undefined_component": 0.365348,
+      "rows_with_unclassified_poi_features": 1500,
+      "poi_uncategorized_type_imputations": 341.230606,
+      "official_rules_any_undefined_reference_fraction": 0.55,
+      "estimate_minus_rules_context": -0.184652,
+      "mean_scores": {
+        "transport_gap": 0.153598,
+        "building_gap": 0.04905,
+        "poi_gap": 0.312851,
+        "coverage_gap_score": 0.196684
+      }
+    },
+    "northern-ca": {
+      "rows": 591,
+      "defined_rates": {
+        "transport_defined": 0.695431,
+        "building_defined": 1.0,
+        "poi_defined": 1.0,
+        "fire_defined": 0.935702,
+        "ems_defined": 0.861252,
+        "schools_defined": 0.998308,
+        "cbp_defined": 1.0
+      },
+      "rows_with_any_undefined_component": 180,
+      "fraction_with_any_undefined_component": 0.304569,
+      "rows_with_unclassified_poi_features": 561,
+      "poi_uncategorized_type_imputations": 147.18377,
+      "official_rules_any_undefined_reference_fraction": 0.37,
+      "estimate_minus_rules_context": -0.065431,
+      "mean_scores": {
+        "transport_gap": 0.119173,
+        "building_gap": 0.046569,
+        "poi_gap": 0.233682,
+        "coverage_gap_score": 0.153839
+      }
+    },
+    "eastern-ok": {
+      "rows": 1192,
+      "defined_rates": {
+        "transport_defined": 0.593121,
+        "building_defined": 1.0,
+        "poi_defined": 1.0,
+        "fire_defined": 0.907718,
+        "ems_defined": 0.805369,
+        "schools_defined": 0.995805,
+        "cbp_defined": 1.0
+      },
+      "rows_with_any_undefined_component": 485,
+      "fraction_with_any_undefined_component": 0.406879,
+      "rows_with_unclassified_poi_features": 1126,
+      "poi_uncategorized_type_imputations": 263.650343,
+      "official_rules_any_undefined_reference_fraction": 0.21,
+      "estimate_minus_rules_context": 0.196879,
+      "mean_scores": {
+        "transport_gap": 0.070507,
+        "building_gap": 0.019221,
+        "poi_gap": 0.199346,
+        "coverage_gap_score": 0.117341
+      }
+    },
+    "south-central-tx": {
+      "rows": 6003,
+      "defined_rates": {
+        "transport_defined": 0.630518,
+        "building_defined": 1.0,
+        "poi_defined": 0.999667,
+        "fire_defined": 0.939697,
+        "ems_defined": 0.903215,
+        "schools_defined": 0.996668,
+        "cbp_defined": 0.999667
+      },
+      "rows_with_any_undefined_component": 2218,
+      "fraction_with_any_undefined_component": 0.369482,
+      "rows_with_unclassified_poi_features": 5719,
+      "poi_uncategorized_type_imputations": 2021.122107,
+      "official_rules_any_undefined_reference_fraction": 0.28,
+      "estimate_minus_rules_context": 0.089482,
+      "mean_scores": {
+        "transport_gap": 0.084789,
+        "building_gap": 0.091668,
+        "poi_gap": 0.255907,
+        "coverage_gap_score": 0.173367
+      }
+    }
+  },
+  "feature_aggregation": {
+    "maricopa-az": {
+      "region": "maricopa-az",
+      "tracts": 1593,
+      "acs_source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-census-acs-housing.parquet",
+      "acs_rows": 1593,
+      "acs_tracts_used": 1593,
+      "acs_extra_geometries_excluded": 0,
+      "acs_row_groups": 1,
+      "buildings": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-buildings.parquet",
+        "object_bytes": 324720762,
+        "input_rows": 2908224,
+        "row_groups": 65,
+        "unassigned_centers": 0,
+        "elapsed_seconds": 87.94
+      },
+      "pois": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-pois.parquet",
+        "object_bytes": 40987154,
+        "input_rows": 300046,
+        "row_groups": 9,
+        "classified_in_sample_rows": 285300,
+        "estimated_unclassified_type_shares": {
+          "fire": 0.002509638976515948,
+          "ems": 0.0010655450403084473,
+          "schools": 0.019565369786189977
+        },
+        "unassigned_centers": 0,
+        "selected_category_counts": {
+          "ambulance_and_ems_services": 304,
+          "charter_school": 26,
+          "elementary_school": 2081,
+          "fire_department": 573,
+          "fire_protection_service": 563,
+          "high_school": 937,
+          "middle_school": 500,
+          "montessori_school": 14,
+          "preschool": 1204,
+          "private_school": 558,
+          "public_school": 1485,
+          "religious_school": 230,
+          "school": 3488
+        },
+        "unclassified_category_rows": 14746,
+        "elapsed_seconds": 11.38
+      },
+      "roads": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-roads.parquet",
+        "object_bytes": 80052206,
+        "input_rows": 494492,
+        "row_groups": 17,
+        "named_class_rows": 57516,
+        "unassigned_features": 0,
+        "classes": [
+          "motorway",
+          "primary",
+          "secondary",
+          "trunk"
+        ],
+        "elapsed_seconds": 20.3
+      },
+      "feature_cache": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/maricopa-az-overture-tract-summary.parquet",
+      "feature_cache_sha256": "54b83014db1a6f397091b649f4a317090fade8583715829f6e9137ca706f1e17",
+      "aggregate_schema_version": 4,
+      "elapsed_seconds": 121.99,
+      "sample_rows": 1593,
+      "strata_rows": 1593,
+      "feature_summary_rows": 1593,
+      "neutral_urbanity_fallbacks": 11,
+      "feature_summary_unmatched_sample_ids": 0,
+      "source_hashes": {
+        "maricopa-az-sample-submission.csv": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+        "maricopa-az-strata-tract-table.parquet": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd"
+      }
+    },
+    "northern-ca": {
+      "region": "northern-ca",
+      "tracts": 591,
+      "acs_source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-census-acs-housing.parquet",
+      "acs_rows": 591,
+      "acs_tracts_used": 591,
+      "acs_extra_geometries_excluded": 0,
+      "acs_row_groups": 1,
+      "buildings": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-buildings.parquet",
+        "object_bytes": 130554079,
+        "input_rows": 1164724,
+        "row_groups": 26,
+        "unassigned_centers": 1,
+        "elapsed_seconds": 43.71
+      },
+      "pois": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-pois.parquet",
+        "object_bytes": 16168720,
+        "input_rows": 116897,
+        "row_groups": 4,
+        "classified_in_sample_rows": 112102,
+        "estimated_unclassified_type_shares": {
+          "fire": 0.004379939697775241,
+          "ems": 0.001578919198587001,
+          "schools": 0.02473640077786302
+        },
+        "unassigned_centers": 0,
+        "selected_category_counts": {
+          "ambulance_and_ems_services": 177,
+          "charter_school": 13,
+          "elementary_school": 1011,
+          "fire_department": 379,
+          "fire_protection_service": 385,
+          "high_school": 475,
+          "middle_school": 229,
+          "montessori_school": 6,
+          "preschool": 664,
+          "private_school": 218,
+          "public_school": 844,
+          "religious_school": 97,
+          "school": 1720
+        },
+        "unclassified_category_rows": 4795,
+        "elapsed_seconds": 4.94
+      },
+      "roads": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-roads.parquet",
+        "object_bytes": 43515963,
+        "input_rows": 191836,
+        "row_groups": 9,
+        "named_class_rows": 26050,
+        "unassigned_features": 0,
+        "classes": [
+          "motorway",
+          "primary",
+          "secondary",
+          "trunk"
+        ],
+        "elapsed_seconds": 13.14
+      },
+      "feature_cache": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/northern-ca-overture-tract-summary.parquet",
+      "feature_cache_sha256": "0a9f7cebb26058a6f2e5ab8d6d70df6443ad62f558dcd65e742b161737cbeef2",
+      "aggregate_schema_version": 4,
+      "elapsed_seconds": 64.15,
+      "sample_rows": 591,
+      "strata_rows": 591,
+      "feature_summary_rows": 591,
+      "neutral_urbanity_fallbacks": 0,
+      "feature_summary_unmatched_sample_ids": 0,
+      "source_hashes": {
+        "northern-ca-sample-submission.csv": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+        "northern-ca-strata-tract-table.parquet": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243"
+      }
+    },
+    "eastern-ok": {
+      "region": "eastern-ok",
+      "tracts": 1192,
+      "acs_source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-census-acs-housing.parquet",
+      "acs_rows": 1192,
+      "acs_tracts_used": 1192,
+      "acs_extra_geometries_excluded": 0,
+      "acs_row_groups": 1,
+      "buildings": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-buildings.parquet",
+        "object_bytes": 298882068,
+        "input_rows": 2551694,
+        "row_groups": 60,
+        "unassigned_centers": 0,
+        "elapsed_seconds": 57.29
+      },
+      "pois": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-pois.parquet",
+        "object_bytes": 28848614,
+        "input_rows": 207369,
+        "row_groups": 6,
+        "classified_in_sample_rows": 198875,
+        "estimated_unclassified_type_shares": {
+          "fire": 0.004354494028912634,
+          "ems": 0.0023683218101822755,
+          "schools": 0.024316781898177247
+        },
+        "unassigned_centers": 0,
+        "selected_category_counts": {
+          "ambulance_and_ems_services": 471,
+          "charter_school": 3,
+          "elementary_school": 1623,
+          "fire_department": 750,
+          "fire_protection_service": 720,
+          "high_school": 944,
+          "middle_school": 437,
+          "montessori_school": 2,
+          "preschool": 900,
+          "private_school": 272,
+          "public_school": 1689,
+          "religious_school": 172,
+          "school": 2966
+        },
+        "unclassified_category_rows": 8494,
+        "elapsed_seconds": 6.43
+      },
+      "roads": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-roads.parquet",
+        "object_bytes": 82239229,
+        "input_rows": 520550,
+        "row_groups": 16,
+        "named_class_rows": 59436,
+        "unassigned_features": 0,
+        "classes": [
+          "motorway",
+          "primary",
+          "secondary",
+          "trunk"
+        ],
+        "elapsed_seconds": 21.55
+      },
+      "feature_cache": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/eastern-ok-overture-tract-summary.parquet",
+      "feature_cache_sha256": "338e4197146ca29a0823f731cfae0085345a3cdcbb6183b6cf4ec00e8f12fbf8",
+      "aggregate_schema_version": 4,
+      "elapsed_seconds": 87.57,
+      "sample_rows": 1192,
+      "strata_rows": 1192,
+      "feature_summary_rows": 1192,
+      "neutral_urbanity_fallbacks": 1,
+      "feature_summary_unmatched_sample_ids": 0,
+      "source_hashes": {
+        "eastern-ok-sample-submission.csv": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+        "eastern-ok-strata-tract-table.parquet": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54"
+      }
+    },
+    "south-central-tx": {
+      "region": "south-central-tx",
+      "tracts": 6003,
+      "acs_source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-census-acs-housing.parquet",
+      "acs_rows": 6010,
+      "acs_tracts_used": 6003,
+      "acs_extra_geometries_excluded": 7,
+      "acs_row_groups": 1,
+      "buildings": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-buildings.parquet",
+        "object_bytes": 1269949045,
+        "input_rows": 11463801,
+        "row_groups": 255,
+        "unassigned_centers": 1,
+        "elapsed_seconds": 250.97
+      },
+      "pois": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-pois.parquet",
+        "object_bytes": 179937096,
+        "input_rows": 1300334,
+        "row_groups": 36,
+        "classified_in_sample_rows": 1221228,
+        "estimated_unclassified_type_shares": {
+          "fire": 0.0025949290386397955,
+          "ems": 0.001463281221852103,
+          "schools": 0.021492301191915024
+        },
+        "unassigned_centers": 3,
+        "selected_category_counts": {
+          "ambulance_and_ems_services": 1787,
+          "charter_school": 62,
+          "elementary_school": 8414,
+          "fire_department": 2561,
+          "fire_protection_service": 2589,
+          "high_school": 4327,
+          "middle_school": 2328,
+          "montessori_school": 110,
+          "preschool": 6487,
+          "private_school": 2481,
+          "public_school": 7369,
+          "religious_school": 1083,
+          "school": 15252
+        },
+        "unclassified_category_rows": 79103,
+        "elapsed_seconds": 37.33
+      },
+      "roads": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-roads.parquet",
+        "object_bytes": 299751270,
+        "input_rows": 1937009,
+        "row_groups": 60,
+        "named_class_rows": 353790,
+        "unassigned_features": 0,
+        "classes": [
+          "motorway",
+          "primary",
+          "secondary",
+          "trunk"
+        ],
+        "elapsed_seconds": 87.15
+      },
+      "feature_cache": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/south-central-tx-overture-tract-summary.parquet",
+      "feature_cache_sha256": "7252546e436c4febb066be0bf6d96539884c3327ffb7f119d309e963bb9eeafb",
+      "aggregate_schema_version": 4,
+      "elapsed_seconds": 378.02,
+      "sample_rows": 6003,
+      "strata_rows": 6010,
+      "feature_summary_rows": 6003,
+      "neutral_urbanity_fallbacks": 14,
+      "feature_summary_unmatched_sample_ids": 0,
+      "source_hashes": {
+        "south-central-tx-sample-submission.csv": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e",
+        "south-central-tx-strata-tract-table.parquet": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354"
+      }
+    }
+  },
+  "inputs": {
+    "maricopa-az-sample-submission.csv": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+    "maricopa-az-strata-tract-table.parquet": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd",
+    "maricopa-az-overture-tract-summary.parquet": "54b83014db1a6f397091b649f4a317090fade8583715829f6e9137ca706f1e17",
+    "northern-ca-sample-submission.csv": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+    "northern-ca-strata-tract-table.parquet": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+    "northern-ca-overture-tract-summary.parquet": "0a9f7cebb26058a6f2e5ab8d6d70df6443ad62f558dcd65e742b161737cbeef2",
+    "eastern-ok-sample-submission.csv": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+    "eastern-ok-strata-tract-table.parquet": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54",
+    "eastern-ok-overture-tract-summary.parquet": "338e4197146ca29a0823f731cfae0085345a3cdcbb6183b6cf4ec00e8f12fbf8",
+    "south-central-tx-sample-submission.csv": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e",
+    "south-central-tx-strata-tract-table.parquet": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354",
+    "south-central-tx-overture-tract-summary.parquet": "7252546e436c4febb066be0bf6d96539884c3327ffb7f119d309e963bb9eeafb"
+  },
+  "candidate_manifest": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/candidates.json",
+  "candidates": {
+    "C0": {
+      "artifact": "reports/candidates/C0_all_zero.csv",
+      "sha256": "7546520ee671aaaa10fabe3fd4f6edaa7b88a1a424c9957bac29dcf7a0810f73",
+      "rows": 9379,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "per_region_means": {
+        "maricopa-az": 0.0,
+        "northern-ca": 0.0,
+        "eastern-ok": 0.0,
+        "south-central-tx": 0.0
+      },
+      "defined_rates": null
+    },
+    "C1": {
+      "artifact": "reports/candidates/C1_region_constants.csv",
+      "sha256": "617b329b52c03dd12f5b06ab7d3dc880348e2cfdc45515347b76970e1df4c62e",
+      "rows": 9379,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "per_region_means": {
+        "maricopa-az": 0.196684352,
+        "northern-ca": 0.153838999,
+        "eastern-ok": 0.117341246,
+        "south-central-tx": 0.173366586
+      },
+      "defined_rates": {
+        "maricopa-az": {
+          "transport_defined": 0.634651601,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.953546767,
+          "ems_defined": 0.930320151,
+          "schools_defined": 0.990583804,
+          "cbp_defined": 1.0
+        },
+        "northern-ca": {
+          "transport_defined": 0.695431472,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.9357022,
+          "ems_defined": 0.861252115,
+          "schools_defined": 0.998307953,
+          "cbp_defined": 1.0
+        },
+        "eastern-ok": {
+          "transport_defined": 0.593120805,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.907718121,
+          "ems_defined": 0.805369128,
+          "schools_defined": 0.995805369,
+          "cbp_defined": 1.0
+        },
+        "south-central-tx": {
+          "transport_defined": 0.630518074,
+          "building_defined": 1.0,
+          "poi_defined": 0.999666833,
+          "fire_defined": 0.939696818,
+          "ems_defined": 0.903215059,
+          "schools_defined": 0.996668333,
+          "cbp_defined": 0.999666833
+        }
+      }
+    },
+    "C2": {
+      "artifact": "reports/candidates/C2_component_estimator_v0.csv",
+      "sha256": "0a2584b4a2d7c1c16bbce692accd9a47284669448b482a4b37a68cd68aff7d5c",
+      "rows": 9379,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "per_region_means": {
+        "maricopa-az": 0.196684352,
+        "northern-ca": 0.153838999,
+        "eastern-ok": 0.117341246,
+        "south-central-tx": 0.173366586
+      },
+      "defined_rates": {
+        "maricopa-az": {
+          "transport_defined": 0.634651601,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.953546767,
+          "ems_defined": 0.930320151,
+          "schools_defined": 0.990583804,
+          "cbp_defined": 1.0
+        },
+        "northern-ca": {
+          "transport_defined": 0.695431472,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.9357022,
+          "ems_defined": 0.861252115,
+          "schools_defined": 0.998307953,
+          "cbp_defined": 1.0
+        },
+        "eastern-ok": {
+          "transport_defined": 0.593120805,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.907718121,
+          "ems_defined": 0.805369128,
+          "schools_defined": 0.995805369,
+          "cbp_defined": 1.0
+        },
+        "south-central-tx": {
+          "transport_defined": 0.630518074,
+          "building_defined": 1.0,
+          "poi_defined": 0.999666833,
+          "fire_defined": 0.939696818,
+          "ems_defined": 0.903215059,
+          "schools_defined": 0.996668333,
+          "cbp_defined": 0.999666833
+        }
+      }
+    },
+    "C3": {
+      "artifact": "reports/candidates/C3_denominator_x125.csv",
+      "sha256": "589418abece58ad75ecf2fa1df9de84fb15a9e216b246bd5439d4f75ceb9795d",
+      "rows": 9379,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "per_region_means": {
+        "maricopa-az": 0.256571148,
+        "northern-ca": 0.203286274,
+        "eastern-ok": 0.154567665,
+        "south-central-tx": 0.215741529
+      },
+      "defined_rates": {
+        "maricopa-az": {
+          "transport_defined": 0.904582549,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.95480226,
+          "ems_defined": 0.935969868,
+          "schools_defined": 0.992467043,
+          "cbp_defined": 1.0
+        },
+        "northern-ca": {
+          "transport_defined": 0.923857868,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.949238579,
+          "ems_defined": 0.876480541,
+          "schools_defined": 0.998307953,
+          "cbp_defined": 1.0
+        },
+        "eastern-ok": {
+          "transport_defined": 0.853187919,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.921979866,
+          "ems_defined": 0.825503356,
+          "schools_defined": 0.999161074,
+          "cbp_defined": 1.0
+        },
+        "south-central-tx": {
+          "transport_defined": 0.885057471,
+          "building_defined": 1.0,
+          "poi_defined": 0.999666833,
+          "fire_defined": 0.950857904,
+          "ems_defined": 0.914542729,
+          "schools_defined": 0.998001,
+          "cbp_defined": 0.999666833
+        }
+      }
+    }
+  }
+}

@@ -22,24 +22,216 @@
         "coverage_gap_score"
       ],
       "pre_registered": true,
-      "description": "All score columns are zero; measures the public-subset RMS target score and is the baseline reference."
-    }
-  ],
-  "future_pre_registered_candidates": [
+      "description": "All score fields zero; target-RMS baseline.",
+      "column_checks": {
+        "unique_columns": true,
+        "all_rows_have_columns": true,
+        "finite_bounded_scores": true
+      },
+      "per_region_means": {
+        "maricopa-az": 0.0,
+        "northern-ca": 0.0,
+        "eastern-ok": 0.0,
+        "south-central-tx": 0.0
+      },
+      "defined_rates": null
+    },
     {
       "candidate_id": "C1",
-      "name": "global neutral constant",
-      "definition": "All score fields 0.5; tests calibration around the bounded score midpoint."
+      "name": "per-region v0 mean constants",
+      "artifact": "reports/candidates/C1_region_constants.csv",
+      "sha256": "617b329b52c03dd12f5b06ab7d3dc880348e2cfdc45515347b76970e1df4c62e",
+      "rows": 9379,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "pre_registered": true,
+      "description": "Within each region all four official score columns equal that region's C2 coverage-score prediction mean.",
+      "column_checks": {
+        "unique_columns": true,
+        "all_rows_have_columns": true,
+        "finite_bounded_scores": true
+      },
+      "per_region_means": {
+        "maricopa-az": 0.196684352,
+        "northern-ca": 0.153838999,
+        "eastern-ok": 0.117341246,
+        "south-central-tx": 0.173366586
+      },
+      "defined_rates": {
+        "maricopa-az": {
+          "transport_defined": 0.634651601,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.953546767,
+          "ems_defined": 0.930320151,
+          "schools_defined": 0.990583804,
+          "cbp_defined": 1.0
+        },
+        "northern-ca": {
+          "transport_defined": 0.695431472,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.9357022,
+          "ems_defined": 0.861252115,
+          "schools_defined": 0.998307953,
+          "cbp_defined": 1.0
+        },
+        "eastern-ok": {
+          "transport_defined": 0.593120805,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.907718121,
+          "ems_defined": 0.805369128,
+          "schools_defined": 0.995805369,
+          "cbp_defined": 1.0
+        },
+        "south-central-tx": {
+          "transport_defined": 0.630518074,
+          "building_defined": 1.0,
+          "poi_defined": 0.999666833,
+          "fire_defined": 0.939696818,
+          "ems_defined": 0.903215059,
+          "schools_defined": 0.996668333,
+          "cbp_defined": 0.999666833
+        }
+      }
     },
     {
       "candidate_id": "C2",
-      "name": "provided-data estimator v0",
-      "definition": "The first accepted deterministic scripts/estimate_gaps.py output, with component fields and defined flags."
+      "name": "component estimator v0",
+      "artifact": "reports/candidates/C2_component_estimator_v0.csv",
+      "sha256": "0a2584b4a2d7c1c16bbce692accd9a47284669448b482a4b37a68cd68aff7d5c",
+      "rows": 9379,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "pre_registered": true,
+      "description": "Official five score columns projected from the full component estimator output.",
+      "column_checks": {
+        "unique_columns": true,
+        "all_rows_have_columns": true,
+        "finite_bounded_scores": true
+      },
+      "per_region_means": {
+        "maricopa-az": 0.196684352,
+        "northern-ca": 0.153838999,
+        "eastern-ok": 0.117341246,
+        "south-central-tx": 0.173366586
+      },
+      "defined_rates": {
+        "maricopa-az": {
+          "transport_defined": 0.634651601,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.953546767,
+          "ems_defined": 0.930320151,
+          "schools_defined": 0.990583804,
+          "cbp_defined": 1.0
+        },
+        "northern-ca": {
+          "transport_defined": 0.695431472,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.9357022,
+          "ems_defined": 0.861252115,
+          "schools_defined": 0.998307953,
+          "cbp_defined": 1.0
+        },
+        "eastern-ok": {
+          "transport_defined": 0.593120805,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.907718121,
+          "ems_defined": 0.805369128,
+          "schools_defined": 0.995805369,
+          "cbp_defined": 1.0
+        },
+        "south-central-tx": {
+          "transport_defined": 0.630518074,
+          "building_defined": 1.0,
+          "poi_defined": 0.999666833,
+          "fire_defined": 0.939696818,
+          "ems_defined": 0.903215059,
+          "schools_defined": 0.996668333,
+          "cbp_defined": 0.999666833
+        }
+      }
     },
     {
       "candidate_id": "C3",
-      "name": "region-centred estimator v0",
-      "definition": "C2 predictions shifted by each region's own prediction mean to the pooled prediction mean; clipped to [0,1]. This tests whether region-level calibration helps in aggregate, not per-region truth."
+      "name": "denominator sensitivity x1.25",
+      "artifact": "reports/candidates/C3_denominator_x125.csv",
+      "sha256": "589418abece58ad75ecf2fa1df9de84fb15a9e216b246bd5439d4f75ceb9795d",
+      "rows": 9379,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "pre_registered": true,
+      "description": "Same v0 covariates and observed counts; multiply all expected-reference proxies by 1.25.",
+      "column_checks": {
+        "unique_columns": true,
+        "all_rows_have_columns": true,
+        "finite_bounded_scores": true
+      },
+      "per_region_means": {
+        "maricopa-az": 0.256571148,
+        "northern-ca": 0.203286274,
+        "eastern-ok": 0.154567665,
+        "south-central-tx": 0.215741529
+      },
+      "defined_rates": {
+        "maricopa-az": {
+          "transport_defined": 0.904582549,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.95480226,
+          "ems_defined": 0.935969868,
+          "schools_defined": 0.992467043,
+          "cbp_defined": 1.0
+        },
+        "northern-ca": {
+          "transport_defined": 0.923857868,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.949238579,
+          "ems_defined": 0.876480541,
+          "schools_defined": 0.998307953,
+          "cbp_defined": 1.0
+        },
+        "eastern-ok": {
+          "transport_defined": 0.853187919,
+          "building_defined": 1.0,
+          "poi_defined": 1.0,
+          "fire_defined": 0.921979866,
+          "ems_defined": 0.825503356,
+          "schools_defined": 0.999161074,
+          "cbp_defined": 1.0
+        },
+        "south-central-tx": {
+          "transport_defined": 0.885057471,
+          "building_defined": 1.0,
+          "poi_defined": 0.999666833,
+          "fire_defined": 0.950857904,
+          "ems_defined": 0.914542729,
+          "schools_defined": 0.998001,
+          "cbp_defined": 0.999666833
+        }
+      }
     }
-  ]
+  ],
+  "feature_source": "provided Overture buildings/roads/POIs plus provided ACS housing geometries and strata covariates",
+  "estimator_version": "v0"
 }
