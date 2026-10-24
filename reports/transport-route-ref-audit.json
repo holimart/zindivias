@@ -1,0 +1,2410 @@
+{
+  "acceptance": {
+    "all_four_region_length_ratios_in_0_6_to_1_7": false,
+    "at_least_three_regions_match_disclosed_any_undefined_within_0_10": true,
+    "failed_region_rules": {
+      "any_undefined": [],
+      "ratio": [
+        "maricopa-az"
+      ]
+    },
+    "ratio_failure_diagnostics": {
+      "maricopa-az": {
+        "L_named_km": 22113.71284793831,
+        "L_route_km": 11466.55456309551,
+        "acceptance_range": [
+          0.6,
+          1.7
+        ],
+        "diagnosis": "Named-class length exceeds the allowed-network route denominator. The listed network filter was applied as specified; excluded scenic/business, missing-network, county-name, and unsupported non-route systems were not added merely to force the ratio into band.",
+        "ratio": 1.928540323621719
+      }
+    },
+    "regions_with_v2_any_undefined_within_0_10": [
+      "maricopa-az",
+      "northern-ca",
+      "eastern-ok",
+      "south-central-tx"
+    ]
+  },
+  "analysis": "Overture route-reference transport v2 audit",
+  "data_use": {
+    "external_road_datasets_read": false,
+    "labels_or_sample_score_placeholders_read": false,
+    "leaderboard_feedback_or_calibration_used": false,
+    "only_overture_roads_and_provided_acs_geometry_read": true,
+    "organizer_disclosed_statistics_used_only_as_aggregate_validation_context": true,
+    "per_geoid_report_or_candidate_written": false,
+    "removed_tiger_or_other_road_reference_data_read": false,
+    "tract_level_route_features_written_only_to_authorized_workspace_cache": true
+  },
+  "inputs": {
+    "eastern-ok": {
+      "feature_cache": {
+        "aggregate_schema_version": 7,
+        "base_sha256_before_route_extension": "ea0a37ff31f584c0939f5e935fe25c2c3d2086c7fb65d86f115dfbf2b3c196bb",
+        "path": "gap-estimator/features/eastern-ok-overture-tract-summary.parquet",
+        "route_schema_version": 1,
+        "rows": 1192,
+        "sha256_after_route_extension": "e5a06316c316f61bf25b80b48e89c1e7f0b1461a0b8cec5831aae24e0cf83fa6"
+      },
+      "official_sample": {
+        "GEOID_only_read": true,
+        "rows": 1192,
+        "score_placeholders_used": false,
+        "sha256": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4"
+      },
+      "overture_roads": {
+        "columns_read": [
+          "class",
+          "routes",
+          "geometry"
+        ],
+        "object_bytes": 82239229,
+        "row_groups": 16,
+        "rows": 520550,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-roads.parquet"
+      },
+      "provided_acs_geometry": {
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "extra_geometries_excluded": 0,
+        "object_bytes": 3650879,
+        "official_geometries_used": 1192,
+        "source_rows": 1192,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-census-acs-housing.parquet"
+      },
+      "v0_gap_estimates_sha256": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852"
+    },
+    "maricopa-az": {
+      "feature_cache": {
+        "aggregate_schema_version": 7,
+        "base_sha256_before_route_extension": "e3bad28882ef49ff3ed911c37524e1dc35e2ee28c38d8075539776d3a499fd58",
+        "path": "gap-estimator/features/maricopa-az-overture-tract-summary.parquet",
+        "route_schema_version": 1,
+        "rows": 1593,
+        "sha256_after_route_extension": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22"
+      },
+      "official_sample": {
+        "GEOID_only_read": true,
+        "rows": 1593,
+        "score_placeholders_used": false,
+        "sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31"
+      },
+      "overture_roads": {
+        "columns_read": [
+          "class",
+          "routes",
+          "geometry"
+        ],
+        "object_bytes": 80052206,
+        "row_groups": 17,
+        "rows": 494492,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-roads.parquet"
+      },
+      "provided_acs_geometry": {
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "extra_geometries_excluded": 0,
+        "object_bytes": 3457173,
+        "official_geometries_used": 1593,
+        "source_rows": 1593,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-census-acs-housing.parquet"
+      },
+      "v0_gap_estimates_sha256": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852"
+    },
+    "northern-ca": {
+      "feature_cache": {
+        "aggregate_schema_version": 7,
+        "base_sha256_before_route_extension": "3f3e22ee3b18ca931a3bd4d1bc0dc22a38ad5998eb803d0fd739b24680792785",
+        "path": "gap-estimator/features/northern-ca-overture-tract-summary.parquet",
+        "route_schema_version": 1,
+        "rows": 591,
+        "sha256_after_route_extension": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c"
+      },
+      "official_sample": {
+        "GEOID_only_read": true,
+        "rows": 591,
+        "score_placeholders_used": false,
+        "sha256": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902"
+      },
+      "overture_roads": {
+        "columns_read": [
+          "class",
+          "routes",
+          "geometry"
+        ],
+        "object_bytes": 43515963,
+        "row_groups": 9,
+        "rows": 191836,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-roads.parquet"
+      },
+      "provided_acs_geometry": {
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "extra_geometries_excluded": 0,
+        "object_bytes": 3037540,
+        "official_geometries_used": 591,
+        "source_rows": 591,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-census-acs-housing.parquet"
+      },
+      "v0_gap_estimates_sha256": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852"
+    },
+    "south-central-tx": {
+      "feature_cache": {
+        "aggregate_schema_version": 7,
+        "base_sha256_before_route_extension": "c25eedbbe904255fc8331268ff503a72ed76d39662c4637defec156e5d1482a3",
+        "path": "gap-estimator/features/south-central-tx-overture-tract-summary.parquet",
+        "route_schema_version": 1,
+        "rows": 6003,
+        "sha256_after_route_extension": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746"
+      },
+      "official_sample": {
+        "GEOID_only_read": true,
+        "rows": 6003,
+        "score_placeholders_used": false,
+        "sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e"
+      },
+      "overture_roads": {
+        "columns_read": [
+          "class",
+          "routes",
+          "geometry"
+        ],
+        "object_bytes": 299751270,
+        "row_groups": 60,
+        "rows": 1937009,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-roads.parquet"
+      },
+      "provided_acs_geometry": {
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "extra_geometries_excluded": 7,
+        "object_bytes": 13758433,
+        "official_geometries_used": 6003,
+        "source_rows": 6010,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-census-acs-housing.parquet"
+      },
+      "v0_gap_estimates_sha256": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852"
+    }
+  },
+  "limitations": [
+    "Network-family km can overlap when one Overture segment carries multiple eligible route networks; L_route itself counts each segment only once.",
+    "The any-undefined comparison holds v0 building/POI defined flags fixed and replaces only the transport flag; it is not a full v2 composite.",
+    "Disclosed any-undefined percentages are organizer aggregate context, not labels and not per-tract calibration targets."
+  ],
+  "method": {
+    "L_named": "sum of lengths for Overture classes motorway, trunk, primary, secondary, clipped with official sample tract geometry in EPSG:5070",
+    "L_route": "deduplicated Overture road segments with at least one included routes[].network; all families clipped with official sample tract geometry in EPSG:5070",
+    "aggregate_cache_schema_note": "The existing source-mix cache already used aggregate schema v5; route fields increment this repository to v6 (base) or v7 (with source mix), with route_schema_version=1.",
+    "legacy_road_length_preserved": "overture_road_km remains the original v0 calculation; new named L_named is emitted as overture_named_road_km_5070",
+    "route_network_filter": {
+      "dropped": [
+        ":Historic",
+        ":Business",
+        ":BUS",
+        "US:NHT",
+        "US:NFSR/NFRS",
+        ":Scenic",
+        "US:NHS",
+        "non-US/malformed networks",
+        "unsupported US network families"
+      ],
+      "families": {
+        "county": "US:<state>:CR*",
+        "fm_rm": "US:<state>:FM/RM*",
+        "interstate": "US:I*",
+        "state": "US:<state> and recognized SR/loop/spur/beltway variants",
+        "us": "US:US*"
+      },
+      "kept": [
+        "US:I*",
+        "US:US*",
+        "US:<valid state>",
+        "US:<state>:SR/LOOP/SPUR/BELTWAY/FUTURE/ALT/BYPASS variants",
+        "US:<state>:FM/RM*",
+        "US:<state>:CR*"
+      ],
+      "one_segment_counted_once_in_L_route": true,
+      "per_family_lengths_can_overlap": true,
+      "ref_presence_count_reported": true,
+      "reference_value_required": false
+    },
+    "sensitivity_cache_fields": [
+      "overture_route_core_km",
+      "overture_route_plus_fm_rm_km",
+      "overture_route_km"
+    ],
+    "transport_defined_v2": "L_route > 0; when zero, numeric placeholder gap=0 with defined=0",
+    "transport_gap_v2": "clip(1 - L_named/L_route, 0, 1)"
+  },
+  "regions": {
+    "eastern-ok": {
+      "L_named_km_sum_epsg5070": 27944.02776408843,
+      "L_route_distribution_km": {
+        "bins_km": {
+          "(0,1]": 68,
+          "(1,5]": 252,
+          "(5,20]": 246,
+          ">20": 340,
+          "zero": 286
+        },
+        "positive_count": 906,
+        "quantiles_km": {
+          "max": 242.16244374329955,
+          "min": 0.0,
+          "p10": 0.0,
+          "p25": 0.18129845289505753,
+          "p50": 4.701426344779664,
+          "p75": 25.099571976300354,
+          "p90": 65.12398800781254,
+          "p95": 87.26847312677644,
+          "p99": 157.33028272964083
+        },
+        "tracts": 1192,
+        "zero_count": 286,
+        "zero_share": 0.23993288590604026
+      },
+      "L_route_km_sum_epsg5070": 24071.910964743845,
+      "disclosed_any_component_undefined_share": 0.21,
+      "disclosed_ratio_band_context": [
+        0.71,
+        1.59
+      ],
+      "dropped_network_entry_counts_by_reason": {
+        "excluded_historic_business_or_scenic": 3964,
+        "missing_network": 29,
+        "non_us_or_malformed": 10,
+        "unsupported_us_network": 27701
+      },
+      "legacy_named_vs_metric_named_km_sum": {
+        "legacy_4326_clip_then_5070": 27945.29779837265,
+        "named_5070_clip": 27944.02776408843
+      },
+      "official_tracts": 1192,
+      "ratio_acceptance_0_6_to_1_7": true,
+      "route_eligible_segment_rows_in_source_layer": 34763,
+      "route_km_by_family_sum": {
+        "county": 0.0,
+        "fm_rm": 1.2794946049364488,
+        "interstate": 3119.4753311485197,
+        "state": 14579.862638493858,
+        "us": 9274.653811613374
+      },
+      "route_km_total_deduplicated": 24071.910964743845,
+      "route_network_frequency": {
+        "<missing>": {
+          "drop_reason": "missing_network",
+          "entries_with_ref": 4,
+          "family": null,
+          "route_entries": 29,
+          "segments": 29
+        },
+        "LCN": {
+          "drop_reason": "non_us_or_malformed",
+          "entries_with_ref": 0,
+          "family": null,
+          "route_entries": 10,
+          "segments": 10
+        },
+        "US:AR": {
+          "drop_reason": null,
+          "entries_with_ref": 13,
+          "family": "state",
+          "route_entries": 13,
+          "segments": 13
+        },
+        "US:AR:WASHINGTON": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 3,
+          "family": null,
+          "route_entries": 3,
+          "segments": 3
+        },
+        "US:BIA:CHOCTAW": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 14,
+          "family": null,
+          "route_entries": 14,
+          "segments": 14
+        },
+        "US:BYWAY": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 0,
+          "family": null,
+          "route_entries": 324,
+          "segments": 324
+        },
+        "US:I": {
+          "drop_reason": null,
+          "entries_with_ref": 1621,
+          "family": "interstate",
+          "route_entries": 1640,
+          "segments": 1600
+        },
+        "US:I:BUSINESS:LOOP": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 454,
+          "family": null,
+          "route_entries": 454,
+          "segments": 454
+        },
+        "US:KS": {
+          "drop_reason": null,
+          "entries_with_ref": 3,
+          "family": "state",
+          "route_entries": 3,
+          "segments": 3
+        },
+        "US:KS:COWLEY": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 1,
+          "family": null,
+          "route_entries": 1,
+          "segments": 1
+        },
+        "US:KS:TURNPIKE": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 0,
+          "family": null,
+          "route_entries": 2,
+          "segments": 2
+        },
+        "US:MO": {
+          "drop_reason": null,
+          "entries_with_ref": 2,
+          "family": "state",
+          "route_entries": 2,
+          "segments": 2
+        },
+        "US:MO:SUPPLEMENTAL": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 2,
+          "family": null,
+          "route_entries": 2,
+          "segments": 2
+        },
+        "US:NHS HIGH PRIORITY CORRIDORS": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 0,
+          "family": null,
+          "route_entries": 211,
+          "segments": 211
+        },
+        "US:NHT": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 0,
+          "family": null,
+          "route_entries": 107,
+          "segments": 106
+        },
+        "US:OK": {
+          "drop_reason": null,
+          "entries_with_ref": 27700,
+          "family": "state",
+          "route_entries": 27827,
+          "segments": 22796
+        },
+        "US:OK:ADAIR": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 320,
+          "family": null,
+          "route_entries": 320,
+          "segments": 320
+        },
+        "US:OK:ALFALFA": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 988,
+          "family": null,
+          "route_entries": 988,
+          "segments": 976
+        },
+        "US:OK:ATOKA": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 105,
+          "family": null,
+          "route_entries": 105,
+          "segments": 105
+        },
+        "US:OK:BECKHAM": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 138,
+          "family": null,
+          "route_entries": 138,
+          "segments": 138
+        },
+        "US:OK:BLAINE": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 993,
+          "family": null,
+          "route_entries": 993,
+          "segments": 986
+        },
+        "US:OK:BRYAN": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 274,
+          "family": null,
+          "route_entries": 274,
+          "segments": 274
+        },
+        "US:OK:BUSINESS": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 36,
+          "family": null,
+          "route_entries": 36,
+          "segments": 36
+        },
+        "US:OK:CADDO": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 1024,
+          "family": null,
+          "route_entries": 1024,
+          "segments": 1018
+        },
+        "US:OK:CANADIAN": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 67,
+          "family": null,
+          "route_entries": 67,
+          "segments": 67
+        },
+        "US:OK:CARTER": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 78,
+          "family": null,
+          "route_entries": 78,
+          "segments": 78
+        },
+        "US:OK:CHEROKEE": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 132,
+          "family": null,
+          "route_entries": 132,
+          "segments": 131
+        },
+        "US:OK:CHOCTAW": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 120,
+          "family": null,
+          "route_entries": 120,
+          "segments": 119
+        },
+        "US:OK:COAL": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 42,
+          "family": null,
+          "route_entries": 42,
+          "segments": 42
+        },
+        "US:OK:COMANCHE": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 32,
+          "family": null,
+          "route_entries": 32,
+          "segments": 32
+        },
+        "US:OK:COTTON": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 131,
+          "family": null,
+          "route_entries": 131,
+          "segments": 131
+        },
+        "US:OK:CRAIG": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 194,
+          "family": null,
+          "route_entries": 194,
+          "segments": 192
+        },
+        "US:OK:CREEK": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 224,
+          "family": null,
+          "route_entries": 224,
+          "segments": 224
+        },
+        "US:OK:CUSTER": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 1033,
+          "family": null,
+          "route_entries": 1033,
+          "segments": 1031
+        },
+        "US:OK:DELAWARE": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 283,
+          "family": null,
+          "route_entries": 283,
+          "segments": 283
+        },
+        "US:OK:DEWEY": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 966,
+          "family": null,
+          "route_entries": 966,
+          "segments": 965
+        },
+        "US:OK:ELLIS": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 230,
+          "family": null,
+          "route_entries": 230,
+          "segments": 230
+        },
+        "US:OK:GARFIELD": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 1169,
+          "family": null,
+          "route_entries": 1169,
+          "segments": 1166
+        },
+        "US:OK:GARVIN": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 267,
+          "family": null,
+          "route_entries": 267,
+          "segments": 265
+        },
+        "US:OK:GRADY": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 493,
+          "family": null,
+          "route_entries": 493,
+          "segments": 492
+        },
+        "US:OK:GRANT": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 887,
+          "family": null,
+          "route_entries": 887,
+          "segments": 882
+        },
+        "US:OK:GREER": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 473,
+          "family": null,
+          "route_entries": 473,
+          "segments": 472
+        },
+        "US:OK:HARMON": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 5,
+          "family": null,
+          "route_entries": 5,
+          "segments": 5
+        },
+        "US:OK:HARPER": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 168,
+          "family": null,
+          "route_entries": 168,
+          "segments": 168
+        },
+        "US:OK:HASKELL": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 127,
+          "family": null,
+          "route_entries": 127,
+          "segments": 124
+        },
+        "US:OK:HUGHES": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 22,
+          "family": null,
+          "route_entries": 22,
+          "segments": 22
+        },
+        "US:OK:JACKSON": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 608,
+          "family": null,
+          "route_entries": 608,
+          "segments": 607
+        },
+        "US:OK:JEFFERSON": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 50,
+          "family": null,
+          "route_entries": 50,
+          "segments": 49
+        },
+        "US:OK:KAY": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 183,
+          "family": null,
+          "route_entries": 183,
+          "segments": 183
+        },
+        "US:OK:KINGFISHER": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 977,
+          "family": null,
+          "route_entries": 977,
+          "segments": 976
+        },
+        "US:OK:KIOWA": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 924,
+          "family": null,
+          "route_entries": 924,
+          "segments": 921
+        },
+        "US:OK:LATIMER": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 10,
+          "family": null,
+          "route_entries": 10,
+          "segments": 10
+        },
+        "US:OK:LEFLORE": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 192,
+          "family": null,
+          "route_entries": 192,
+          "segments": 191
+        },
+        "US:OK:LINCOLN": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 848,
+          "family": null,
+          "route_entries": 848,
+          "segments": 845
+        },
+        "US:OK:LOGAN": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 256,
+          "family": null,
+          "route_entries": 256,
+          "segments": 254
+        },
+        "US:OK:LOOP": {
+          "drop_reason": null,
+          "entries_with_ref": 14,
+          "family": "state",
+          "route_entries": 14,
+          "segments": 14
+        },
+        "US:OK:LOVE": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 135,
+          "family": null,
+          "route_entries": 135,
+          "segments": 134
+        },
+        "US:OK:MAJOR": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 633,
+          "family": null,
+          "route_entries": 633,
+          "segments": 632
+        },
+        "US:OK:MARSHALL": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 8,
+          "family": null,
+          "route_entries": 8,
+          "segments": 8
+        },
+        "US:OK:MAYES": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 465,
+          "family": null,
+          "route_entries": 465,
+          "segments": 461
+        },
+        "US:OK:MCCLAIN": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 34,
+          "family": null,
+          "route_entries": 34,
+          "segments": 34
+        },
+        "US:OK:MCCURTAIN": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 121,
+          "family": null,
+          "route_entries": 121,
+          "segments": 121
+        },
+        "US:OK:MCINTOSH": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 485,
+          "family": null,
+          "route_entries": 485,
+          "segments": 483
+        },
+        "US:OK:MUSKOGEE": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 578,
+          "family": null,
+          "route_entries": 578,
+          "segments": 575
+        },
+        "US:OK:NOBLE": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 718,
+          "family": null,
+          "route_entries": 718,
+          "segments": 718
+        },
+        "US:OK:NOWATA": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 7,
+          "family": null,
+          "route_entries": 7,
+          "segments": 7
+        },
+        "US:OK:OKFUSKEE": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 211,
+          "family": null,
+          "route_entries": 211,
+          "segments": 210
+        },
+        "US:OK:OKMULGEE": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 186,
+          "family": null,
+          "route_entries": 186,
+          "segments": 183
+        },
+        "US:OK:OSAGE": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 253,
+          "family": null,
+          "route_entries": 253,
+          "segments": 251
+        },
+        "US:OK:OTTAWA": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 289,
+          "family": null,
+          "route_entries": 289,
+          "segments": 288
+        },
+        "US:OK:PAWNEE": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 165,
+          "family": null,
+          "route_entries": 165,
+          "segments": 165
+        },
+        "US:OK:PAYNE": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 529,
+          "family": null,
+          "route_entries": 529,
+          "segments": 524
+        },
+        "US:OK:PITTSBURG": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 192,
+          "family": null,
+          "route_entries": 192,
+          "segments": 190
+        },
+        "US:OK:PONTOTOC": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 406,
+          "family": null,
+          "route_entries": 406,
+          "segments": 405
+        },
+        "US:OK:POTTAWATOMIE": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 185,
+          "family": null,
+          "route_entries": 185,
+          "segments": 184
+        },
+        "US:OK:PUSHMATAHA": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 116,
+          "family": null,
+          "route_entries": 116,
+          "segments": 115
+        },
+        "US:OK:ROGERMILLS": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 17,
+          "family": null,
+          "route_entries": 17,
+          "segments": 17
+        },
+        "US:OK:ROGERS": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 1081,
+          "family": null,
+          "route_entries": 1081,
+          "segments": 1074
+        },
+        "US:OK:ROGER_MILLS": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 287,
+          "family": null,
+          "route_entries": 287,
+          "segments": 286
+        },
+        "US:OK:SEMINOLE": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 348,
+          "family": null,
+          "route_entries": 351,
+          "segments": 350
+        },
+        "US:OK:SEQUOYAH": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 280,
+          "family": null,
+          "route_entries": 280,
+          "segments": 279
+        },
+        "US:OK:SPUR": {
+          "drop_reason": null,
+          "entries_with_ref": 38,
+          "family": "state",
+          "route_entries": 38,
+          "segments": 35
+        },
+        "US:OK:STEPHENS": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 176,
+          "family": null,
+          "route_entries": 176,
+          "segments": 175
+        },
+        "US:OK:TILLMAN": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 323,
+          "family": null,
+          "route_entries": 323,
+          "segments": 319
+        },
+        "US:OK:TRUCK": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 27,
+          "family": null,
+          "route_entries": 27,
+          "segments": 27
+        },
+        "US:OK:TULSA:TULSA": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 46,
+          "family": null,
+          "route_entries": 46,
+          "segments": 46
+        },
+        "US:OK:TURNPIKE": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 12,
+          "family": null,
+          "route_entries": 487,
+          "segments": 483
+        },
+        "US:OK:WAGONER": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 178,
+          "family": null,
+          "route_entries": 178,
+          "segments": 178
+        },
+        "US:OK:WASHINGTON": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 52,
+          "family": null,
+          "route_entries": 52,
+          "segments": 52
+        },
+        "US:OK:WASHITA": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 2351,
+          "family": null,
+          "route_entries": 2351,
+          "segments": 2335
+        },
+        "US:OK:WOODS": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 333,
+          "family": null,
+          "route_entries": 333,
+          "segments": 333
+        },
+        "US:OK:WOODWARD": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 406,
+          "family": null,
+          "route_entries": 406,
+          "segments": 405
+        },
+        "US:TX": {
+          "drop_reason": null,
+          "entries_with_ref": 8,
+          "family": "state",
+          "route_entries": 8,
+          "segments": 7
+        },
+        "US:TX:FM": {
+          "drop_reason": null,
+          "entries_with_ref": 2,
+          "family": "fm_rm",
+          "route_entries": 2,
+          "segments": 2
+        },
+        "US:US": {
+          "drop_reason": null,
+          "entries_with_ref": 21397,
+          "family": "us",
+          "route_entries": 21397,
+          "segments": 14853
+        },
+        "US:US:ALTERNATE": {
+          "drop_reason": null,
+          "entries_with_ref": 235,
+          "family": "us",
+          "route_entries": 235,
+          "segments": 235
+        },
+        "US:US:BUSINESS": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 937,
+          "family": null,
+          "route_entries": 937,
+          "segments": 783
+        },
+        "US:US:BYPASS": {
+          "drop_reason": null,
+          "entries_with_ref": 63,
+          "family": "us",
+          "route_entries": 63,
+          "segments": 63
+        },
+        "US:US:HISTORIC": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 2430,
+          "family": null,
+          "route_entries": 2430,
+          "segments": 2429
+        },
+        "US:US:SPUR": {
+          "drop_reason": null,
+          "entries_with_ref": 21,
+          "family": "us",
+          "route_entries": 21,
+          "segments": 21
+        }
+      },
+      "route_transport_undefined_count": 286,
+      "route_transport_undefined_share": 0.23993288590604026,
+      "sum_L_named_over_sum_L_route": 1.160856228033402,
+      "transport_v2_gap_mean_defined": 0.0055239336559926855,
+      "unassigned_route_features": 0,
+      "v0_any_component_undefined_share": 0.40687919463087246,
+      "v0_named_road_zero_share": 0.02348993288590604,
+      "v2_any_component_undefined_share": 0.23993288590604026,
+      "v2_any_undefined_abs_error": 0.029932885906040263,
+      "v2_any_undefined_within_0_10": true
+    },
+    "maricopa-az": {
+      "L_named_km_sum_epsg5070": 22113.71284793831,
+      "L_route_distribution_km": {
+        "bins_km": {
+          "(0,1]": 105,
+          "(1,5]": 304,
+          "(5,20]": 162,
+          ">20": 121,
+          "zero": 901
+        },
+        "positive_count": 692,
+        "quantiles_km": {
+          "max": 461.75830446530716,
+          "min": 0.0,
+          "p10": 0.0,
+          "p25": 0.0,
+          "p50": 0.0,
+          "p75": 3.2355755084717366,
+          "p90": 11.627636602582596,
+          "p95": 39.609676226593244,
+          "p99": 139.0167365058206
+        },
+        "tracts": 1593,
+        "zero_count": 901,
+        "zero_share": 0.5655994978028877
+      },
+      "L_route_km_sum_epsg5070": 11466.55456309551,
+      "disclosed_any_component_undefined_share": 0.55,
+      "disclosed_ratio_band_context": [
+        0.71,
+        1.59
+      ],
+      "dropped_network_entry_counts_by_reason": {
+        "excluded_historic_business_or_scenic": 4756,
+        "excluded_non_route_highway_system": 1424,
+        "missing_network": 2013,
+        "non_us_or_malformed": 5,
+        "unsupported_us_network": 906
+      },
+      "legacy_named_vs_metric_named_km_sum": {
+        "legacy_4326_clip_then_5070": 22113.783824226484,
+        "named_5070_clip": 22113.71284793831
+      },
+      "official_tracts": 1593,
+      "ratio_acceptance_0_6_to_1_7": false,
+      "route_eligible_segment_rows_in_source_layer": 10152,
+      "route_km_by_family_sum": {
+        "county": 0.0,
+        "fm_rm": 0.0,
+        "interstate": 3660.9628796968664,
+        "state": 5977.664089182896,
+        "us": 2823.3245318471713
+      },
+      "route_km_total_deduplicated": 11466.55456309551,
+      "route_network_frequency": {
+        "<missing>": {
+          "drop_reason": "missing_network",
+          "entries_with_ref": 165,
+          "family": null,
+          "route_entries": 2013,
+          "segments": 1872
+        },
+        "MX:MX": {
+          "drop_reason": "non_us_or_malformed",
+          "entries_with_ref": 5,
+          "family": null,
+          "route_entries": 5,
+          "segments": 5
+        },
+        "US:AZ": {
+          "drop_reason": null,
+          "entries_with_ref": 6011,
+          "family": "state",
+          "route_entries": 6011,
+          "segments": 5840
+        },
+        "US:AZ:APACHE": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 70,
+          "family": null,
+          "route_entries": 70,
+          "segments": 70
+        },
+        "US:AZ:BUSINESS": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 111,
+          "family": null,
+          "route_entries": 332,
+          "segments": 331
+        },
+        "US:AZ:COCONINO": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 103,
+          "family": null,
+          "route_entries": 103,
+          "segments": 103
+        },
+        "US:AZ:FUTURE": {
+          "drop_reason": null,
+          "entries_with_ref": 29,
+          "family": "state",
+          "route_entries": 29,
+          "segments": 29
+        },
+        "US:AZ:LOOP": {
+          "drop_reason": null,
+          "entries_with_ref": 567,
+          "family": "state",
+          "route_entries": 567,
+          "segments": 564
+        },
+        "US:AZ:MARICOPA": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 130,
+          "family": null,
+          "route_entries": 130,
+          "segments": 130
+        },
+        "US:AZ:MOHAVE": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 107,
+          "family": null,
+          "route_entries": 107,
+          "segments": 104
+        },
+        "US:AZ:SCENIC": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 424,
+          "family": null,
+          "route_entries": 556,
+          "segments": 553
+        },
+        "US:AZ:SPUR": {
+          "drop_reason": null,
+          "entries_with_ref": 3,
+          "family": "state",
+          "route_entries": 32,
+          "segments": 32
+        },
+        "US:AZ:TRUCK": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 30,
+          "family": null,
+          "route_entries": 30,
+          "segments": 30
+        },
+        "US:AZ:YAVAPAI": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 45,
+          "family": null,
+          "route_entries": 45,
+          "segments": 45
+        },
+        "US:BIA": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 398,
+          "family": null,
+          "route_entries": 398,
+          "segments": 393
+        },
+        "US:I": {
+          "drop_reason": null,
+          "entries_with_ref": 1328,
+          "family": "interstate",
+          "route_entries": 1328,
+          "segments": 1324
+        },
+        "US:I:BUSINESS:LOOP": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 569,
+          "family": null,
+          "route_entries": 569,
+          "segments": 569
+        },
+        "US:I:BUSINESS:SPUR": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 5,
+          "family": null,
+          "route_entries": 5,
+          "segments": 5
+        },
+        "US:I:EXPRESS": {
+          "drop_reason": null,
+          "entries_with_ref": 3,
+          "family": "interstate",
+          "route_entries": 3,
+          "segments": 3
+        },
+        "US:I:FUTURE": {
+          "drop_reason": null,
+          "entries_with_ref": 200,
+          "family": "interstate",
+          "route_entries": 200,
+          "segments": 195
+        },
+        "US:NFRS:COCONINO:FR": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 80,
+          "family": null,
+          "route_entries": 81,
+          "segments": 81
+        },
+        "US:NFSR:COCONINO:NF": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 41,
+          "family": null,
+          "route_entries": 41,
+          "segments": 41
+        },
+        "US:NFSR:CORONADO:FR": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 21,
+          "family": null,
+          "route_entries": 21,
+          "segments": 21
+        },
+        "US:NFSR:KAIBAB:FR": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 40,
+          "family": null,
+          "route_entries": 40,
+          "segments": 40
+        },
+        "US:NFSR:TONTO:FR": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 5,
+          "family": null,
+          "route_entries": 5,
+          "segments": 5
+        },
+        "US:NHS:HPC": {
+          "drop_reason": "excluded_non_route_highway_system",
+          "entries_with_ref": 0,
+          "family": null,
+          "route_entries": 814,
+          "segments": 814
+        },
+        "US:NHS:STRAHNET": {
+          "drop_reason": "excluded_non_route_highway_system",
+          "entries_with_ref": 0,
+          "family": null,
+          "route_entries": 610,
+          "segments": 610
+        },
+        "US:NHT": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 0,
+          "family": null,
+          "route_entries": 453,
+          "segments": 453
+        },
+        "US:NM": {
+          "drop_reason": null,
+          "entries_with_ref": 200,
+          "family": "state",
+          "route_entries": 200,
+          "segments": 199
+        },
+        "US:NM:FRONTAGE": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 7,
+          "family": null,
+          "route_entries": 7,
+          "segments": 7
+        },
+        "US:NM:HIDALGO": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 11,
+          "family": null,
+          "route_entries": 11,
+          "segments": 11
+        },
+        "US:NSFR:CORONADO:FR": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 5,
+          "family": null,
+          "route_entries": 5,
+          "segments": 5
+        },
+        "US:US": {
+          "drop_reason": null,
+          "entries_with_ref": 2786,
+          "family": "us",
+          "route_entries": 2887,
+          "segments": 2402
+        },
+        "US:US:BUSINESS": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 26,
+          "family": null,
+          "route_entries": 26,
+          "segments": 26
+        },
+        "US:US:HISTORIC": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 2627,
+          "family": null,
+          "route_entries": 2627,
+          "segments": 2621
+        },
+        "US:US:OLD": {
+          "drop_reason": null,
+          "entries_with_ref": 56,
+          "family": "us",
+          "route_entries": 56,
+          "segments": 56
+        },
+        "US:US:SPUR": {
+          "drop_reason": null,
+          "entries_with_ref": 6,
+          "family": "us",
+          "route_entries": 6,
+          "segments": 6
+        },
+        "US:US:TEMPORARY": {
+          "drop_reason": null,
+          "entries_with_ref": 21,
+          "family": "us",
+          "route_entries": 21,
+          "segments": 21
+        }
+      },
+      "route_transport_undefined_count": 901,
+      "route_transport_undefined_share": 0.5655994978028877,
+      "sum_L_named_over_sum_L_route": 1.928540323621719,
+      "transport_v2_gap_mean_defined": 0.003782990323819334,
+      "unassigned_route_features": 0,
+      "v0_any_component_undefined_share": 0.3653483992467043,
+      "v0_named_road_zero_share": 0.02071563088512241,
+      "v2_any_component_undefined_share": 0.5655994978028877,
+      "v2_any_undefined_abs_error": 0.015599497802887607,
+      "v2_any_undefined_within_0_10": true
+    },
+    "northern-ca": {
+      "L_named_km_sum_epsg5070": 12203.647742818603,
+      "L_route_distribution_km": {
+        "bins_km": {
+          "(0,1]": 41,
+          "(1,5]": 153,
+          "(5,20]": 118,
+          ">20": 97,
+          "zero": 182
+        },
+        "positive_count": 409,
+        "quantiles_km": {
+          "max": 259.185646828354,
+          "min": 0.0,
+          "p10": 0.0,
+          "p25": 0.0,
+          "p50": 2.2392144749179193,
+          "p75": 9.193244825516658,
+          "p90": 38.786875868604774,
+          "p95": 72.43112054472212,
+          "p99": 186.3555436580354
+        },
+        "tracts": 591,
+        "zero_count": 182,
+        "zero_share": 0.3079526226734349
+      },
+      "L_route_km_sum_epsg5070": 8116.742873591476,
+      "disclosed_any_component_undefined_share": 0.37,
+      "disclosed_ratio_band_context": [
+        0.71,
+        1.59
+      ],
+      "dropped_network_entry_counts_by_reason": {
+        "excluded_historic_business_or_scenic": 3453,
+        "missing_network": 298,
+        "unsupported_us_network": 549
+      },
+      "legacy_named_vs_metric_named_km_sum": {
+        "legacy_4326_clip_then_5070": 12204.608773055963,
+        "named_5070_clip": 12203.647742818603
+      },
+      "official_tracts": 591,
+      "ratio_acceptance_0_6_to_1_7": true,
+      "route_eligible_segment_rows_in_source_layer": 9374,
+      "route_km_by_family_sum": {
+        "county": 1219.5059792079887,
+        "fm_rm": 0.0,
+        "interstate": 1351.7436668630835,
+        "state": 4817.556541094929,
+        "us": 846.4883562885342
+      },
+      "route_km_total_deduplicated": 8116.742873591476,
+      "route_network_frequency": {
+        "<missing>": {
+          "drop_reason": "missing_network",
+          "entries_with_ref": 0,
+          "family": null,
+          "route_entries": 298,
+          "segments": 257
+        },
+        "US:AB:NSB": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 0,
+          "family": null,
+          "route_entries": 362,
+          "segments": 362
+        },
+        "US:BIA": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 6,
+          "family": null,
+          "route_entries": 6,
+          "segments": 6
+        },
+        "US:CA": {
+          "drop_reason": null,
+          "entries_with_ref": 5934,
+          "family": "state",
+          "route_entries": 6055,
+          "segments": 5712
+        },
+        "US:CA:CR": {
+          "drop_reason": null,
+          "entries_with_ref": 2180,
+          "family": "county",
+          "route_entries": 2190,
+          "segments": 2184
+        },
+        "US:CA:CR:SCENIC": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 0,
+          "family": null,
+          "route_entries": 3,
+          "segments": 3
+        },
+        "US:CA:HUMBOLDT": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 78,
+          "family": null,
+          "route_entries": 78,
+          "segments": 78
+        },
+        "US:CA:MENDOCINO": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 6,
+          "family": null,
+          "route_entries": 6,
+          "segments": 6
+        },
+        "US:CA:NEVADA": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 6,
+          "family": null,
+          "route_entries": 6,
+          "segments": 6
+        },
+        "US:CA:SCENIC": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 0,
+          "family": null,
+          "route_entries": 17,
+          "segments": 17
+        },
+        "US:CA:SIERRA": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 8,
+          "family": null,
+          "route_entries": 8,
+          "segments": 8
+        },
+        "US:CA:SISKIYOU": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 58,
+          "family": null,
+          "route_entries": 58,
+          "segments": 57
+        },
+        "US:CA:TRINITY": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 126,
+          "family": null,
+          "route_entries": 126,
+          "segments": 126
+        },
+        "US:I": {
+          "drop_reason": null,
+          "entries_with_ref": 835,
+          "family": "interstate",
+          "route_entries": 861,
+          "segments": 857
+        },
+        "US:I:BUSINESS:LOOP": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 447,
+          "family": null,
+          "route_entries": 447,
+          "segments": 446
+        },
+        "US:NFSF:KLAMATH:NF": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 21,
+          "family": null,
+          "route_entries": 21,
+          "segments": 21
+        },
+        "US:NFSR:HUMBOLDT-TOIYABE:NF": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 5,
+          "family": null,
+          "route_entries": 5,
+          "segments": 5
+        },
+        "US:NFSR:KLAMATH:NF": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 25,
+          "family": null,
+          "route_entries": 25,
+          "segments": 25
+        },
+        "US:NFSR:MENDOCINO:NF": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 53,
+          "family": null,
+          "route_entries": 53,
+          "segments": 50
+        },
+        "US:NFSR:MODOC:FR": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 3,
+          "family": null,
+          "route_entries": 3,
+          "segments": 3
+        },
+        "US:NFSR:SHASTA-TRINITY:NF": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 19,
+          "family": null,
+          "route_entries": 19,
+          "segments": 19
+        },
+        "US:NFSR:SIX RIVERS:NF": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 27,
+          "family": null,
+          "route_entries": 27,
+          "segments": 27
+        },
+        "US:NFSR:TAHOE:43:NFR": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 1,
+          "family": null,
+          "route_entries": 1,
+          "segments": 1
+        },
+        "US:NFSR:TAHOE:96:NFH": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 10,
+          "family": null,
+          "route_entries": 10,
+          "segments": 10
+        },
+        "US:NFSR:TAHOE:NF": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 1,
+          "family": null,
+          "route_entries": 1,
+          "segments": 1
+        },
+        "US:NFSR:TAHOE:NFH": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 8,
+          "family": null,
+          "route_entries": 8,
+          "segments": 8
+        },
+        "US:NFSR:TAHOE:NFR": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 4,
+          "family": null,
+          "route_entries": 5,
+          "segments": 5
+        },
+        "US:NFSR:TRINITY:NF": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 65,
+          "family": null,
+          "route_entries": 65,
+          "segments": 65
+        },
+        "US:NHS HIGH PRIORITY CORRIDORS": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 0,
+          "family": null,
+          "route_entries": 236,
+          "segments": 236
+        },
+        "US:NHT": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 0,
+          "family": null,
+          "route_entries": 1427,
+          "segments": 1287
+        },
+        "US:NV:WASHOE": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 1,
+          "family": null,
+          "route_entries": 1,
+          "segments": 1
+        },
+        "US:OR:NAMED": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 0,
+          "family": null,
+          "route_entries": 3,
+          "segments": 3
+        },
+        "US:US": {
+          "drop_reason": null,
+          "entries_with_ref": 1024,
+          "family": "us",
+          "route_entries": 1024,
+          "segments": 753
+        },
+        "US:US:HISTORIC": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 975,
+          "family": null,
+          "route_entries": 975,
+          "segments": 907
+        },
+        "US:US:OLD": {
+          "drop_reason": null,
+          "entries_with_ref": 27,
+          "family": "us",
+          "route_entries": 27,
+          "segments": 27
+        }
+      },
+      "route_transport_undefined_count": 182,
+      "route_transport_undefined_share": 0.3079526226734349,
+      "sum_L_named_over_sum_L_route": 1.503515379614183,
+      "transport_v2_gap_mean_defined": 0.00684559360515558,
+      "unassigned_route_features": 0,
+      "v0_any_component_undefined_share": 0.30456852791878175,
+      "v0_named_road_zero_share": 0.011844331641285956,
+      "v2_any_component_undefined_share": 0.3079526226734349,
+      "v2_any_undefined_abs_error": 0.06204737732656512,
+      "v2_any_undefined_within_0_10": true
+    },
+    "south-central-tx": {
+      "L_named_km_sum_epsg5070": 118176.3816858997,
+      "L_route_distribution_km": {
+        "bins_km": {
+          "(0,1]": 630,
+          "(1,5]": 1932,
+          "(5,20]": 1178,
+          ">20": 988,
+          "zero": 1275
+        },
+        "positive_count": 4728,
+        "quantiles_km": {
+          "max": 578.4184068400216,
+          "min": 0.0,
+          "p10": 0.0,
+          "p25": 0.4018653304105746,
+          "p50": 2.7281361202225933,
+          "p75": 9.130334019495166,
+          "p90": 43.62745128780351,
+          "p95": 92.74547441225141,
+          "p99": 236.59466621658913
+        },
+        "tracts": 6003,
+        "zero_count": 1275,
+        "zero_share": 0.21239380309845077
+      },
+      "L_route_km_sum_epsg5070": 99894.08394454684,
+      "disclosed_any_component_undefined_share": 0.28,
+      "disclosed_ratio_band_context": [
+        0.71,
+        1.59
+      ],
+      "dropped_network_entry_counts_by_reason": {
+        "excluded_historic_business_or_scenic": 9947,
+        "missing_network": 14736,
+        "non_us_or_malformed": 4212,
+        "unsupported_us_network": 17919
+      },
+      "legacy_named_vs_metric_named_km_sum": {
+        "legacy_4326_clip_then_5070": 118198.88335270663,
+        "named_5070_clip": 118176.3816858997
+      },
+      "official_tracts": 6003,
+      "ratio_acceptance_0_6_to_1_7": true,
+      "route_eligible_segment_rows_in_source_layer": 165977,
+      "route_km_by_family_sum": {
+        "county": 0.0,
+        "fm_rm": 51254.03170019502,
+        "interstate": 9276.806947001807,
+        "state": 24101.024383730743,
+        "us": 21032.33566193845
+      },
+      "route_km_total_deduplicated": 99894.08394454684,
+      "route_network_frequency": {
+        "<missing>": {
+          "drop_reason": "missing_network",
+          "entries_with_ref": 1765,
+          "family": null,
+          "route_entries": 14736,
+          "segments": 14054
+        },
+        "MX:MEX": {
+          "drop_reason": "non_us_or_malformed",
+          "entries_with_ref": 1,
+          "family": null,
+          "route_entries": 1,
+          "segments": 1
+        },
+        "MX:MX": {
+          "drop_reason": "non_us_or_malformed",
+          "entries_with_ref": 2,
+          "family": null,
+          "route_entries": 2,
+          "segments": 2
+        },
+        "MX:TAM": {
+          "drop_reason": "non_us_or_malformed",
+          "entries_with_ref": 1,
+          "family": null,
+          "route_entries": 1,
+          "segments": 1
+        },
+        "TEXAS TRUNK SYSTEM": {
+          "drop_reason": "non_us_or_malformed",
+          "entries_with_ref": 0,
+          "family": null,
+          "route_entries": 4208,
+          "segments": 4010
+        },
+        "US:AUTO TRAIL": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 93,
+          "family": null,
+          "route_entries": 93,
+          "segments": 93
+        },
+        "US:I": {
+          "drop_reason": null,
+          "entries_with_ref": 6801,
+          "family": "interstate",
+          "route_entries": 6813,
+          "segments": 6775
+        },
+        "US:I:BUSINESS:LOOP": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 943,
+          "family": null,
+          "route_entries": 943,
+          "segments": 943
+        },
+        "US:I:BUSINESS:SPUR": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 68,
+          "family": null,
+          "route_entries": 68,
+          "segments": 68
+        },
+        "US:I:EXPRESS": {
+          "drop_reason": null,
+          "entries_with_ref": 19,
+          "family": "interstate",
+          "route_entries": 19,
+          "segments": 19
+        },
+        "US:I:EXPRESS:TOLL": {
+          "drop_reason": null,
+          "entries_with_ref": 97,
+          "family": "interstate",
+          "route_entries": 97,
+          "segments": 97
+        },
+        "US:I:FUTURE": {
+          "drop_reason": null,
+          "entries_with_ref": 1567,
+          "family": "interstate",
+          "route_entries": 1567,
+          "segments": 1211
+        },
+        "US:I:TOLL": {
+          "drop_reason": null,
+          "entries_with_ref": 22,
+          "family": "interstate",
+          "route_entries": 22,
+          "segments": 22
+        },
+        "US:NHS HIGH PRIORITY CORRIDORS": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 0,
+          "family": null,
+          "route_entries": 2322,
+          "segments": 2272
+        },
+        "US:NHT": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 0,
+          "family": null,
+          "route_entries": 15,
+          "segments": 15
+        },
+        "US:OK": {
+          "drop_reason": null,
+          "entries_with_ref": 5,
+          "family": "state",
+          "route_entries": 5,
+          "segments": 5
+        },
+        "US:TX": {
+          "drop_reason": null,
+          "entries_with_ref": 42410,
+          "family": "state",
+          "route_entries": 43986,
+          "segments": 41555
+        },
+        "US:TX:ANDERSON": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 416,
+          "family": null,
+          "route_entries": 416,
+          "segments": 414
+        },
+        "US:TX:BELTWAY": {
+          "drop_reason": null,
+          "entries_with_ref": 1080,
+          "family": "state",
+          "route_entries": 1080,
+          "segments": 1080
+        },
+        "US:TX:BLANCO": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 244,
+          "family": null,
+          "route_entries": 244,
+          "segments": 244
+        },
+        "US:TX:BRAZORIA": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 1605,
+          "family": null,
+          "route_entries": 1605,
+          "segments": 1603
+        },
+        "US:TX:BROOKS": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 215,
+          "family": null,
+          "route_entries": 215,
+          "segments": 213
+        },
+        "US:TX:BROWN": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 391,
+          "family": null,
+          "route_entries": 391,
+          "segments": 391
+        },
+        "US:TX:BURLESON": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 80,
+          "family": null,
+          "route_entries": 80,
+          "segments": 80
+        },
+        "US:TX:BURNET": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 855,
+          "family": null,
+          "route_entries": 855,
+          "segments": 855
+        },
+        "US:TX:BUSINESS": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 2038,
+          "family": null,
+          "route_entries": 2038,
+          "segments": 2031
+        },
+        "US:TX:CALDWELL": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 922,
+          "family": null,
+          "route_entries": 922,
+          "segments": 920
+        },
+        "US:TX:CCOL": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 0,
+          "family": null,
+          "route_entries": 61,
+          "segments": 61
+        },
+        "US:TX:COLLIN": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 40,
+          "family": null,
+          "route_entries": 40,
+          "segments": 40
+        },
+        "US:TX:COLORADO": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 302,
+          "family": null,
+          "route_entries": 302,
+          "segments": 302
+        },
+        "US:TX:CONNECTOR": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 2,
+          "family": null,
+          "route_entries": 2,
+          "segments": 2
+        },
+        "US:TX:COOKE": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 14,
+          "family": null,
+          "route_entries": 14,
+          "segments": 14
+        },
+        "US:TX:CORYELL": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 5,
+          "family": null,
+          "route_entries": 5,
+          "segments": 5
+        },
+        "US:TX:CTRMA": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 96,
+          "family": null,
+          "route_entries": 96,
+          "segments": 96
+        },
+        "US:TX:CTRMA:EXPRESS": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 11,
+          "family": null,
+          "route_entries": 11,
+          "segments": 11
+        },
+        "US:TX:EXPRESS:TOLL": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 53,
+          "family": null,
+          "route_entries": 53,
+          "segments": 44
+        },
+        "US:TX:FANNIN": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 8,
+          "family": null,
+          "route_entries": 8,
+          "segments": 8
+        },
+        "US:TX:FM": {
+          "drop_reason": null,
+          "entries_with_ref": 77833,
+          "family": "fm_rm",
+          "route_entries": 77833,
+          "segments": 77392
+        },
+        "US:TX:FM:BUSINESS": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 121,
+          "family": null,
+          "route_entries": 123,
+          "segments": 123
+        },
+        "US:TX:FM:SPUR": {
+          "drop_reason": null,
+          "entries_with_ref": 9,
+          "family": "fm_rm",
+          "route_entries": 9,
+          "segments": 9
+        },
+        "US:TX:FORT_BEND:FBCTRA": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 24,
+          "family": null,
+          "route_entries": 47,
+          "segments": 47
+        },
+        "US:TX:GONZALES": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 59,
+          "family": null,
+          "route_entries": 59,
+          "segments": 59
+        },
+        "US:TX:GREGG": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 28,
+          "family": null,
+          "route_entries": 28,
+          "segments": 28
+        },
+        "US:TX:GREGG:PR": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 1,
+          "family": null,
+          "route_entries": 1,
+          "segments": 1
+        },
+        "US:TX:GUADALUPE": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 0,
+          "family": null,
+          "route_entries": 895,
+          "segments": 894
+        },
+        "US:TX:HARRIS:HCTRA": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 0,
+          "family": null,
+          "route_entries": 296,
+          "segments": 296
+        },
+        "US:TX:HAYS": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 30,
+          "family": null,
+          "route_entries": 30,
+          "segments": 30
+        },
+        "US:TX:HISTORIC": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 196,
+          "family": null,
+          "route_entries": 196,
+          "segments": 196
+        },
+        "US:TX:JACKSON": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 110,
+          "family": null,
+          "route_entries": 110,
+          "segments": 110
+        },
+        "US:TX:JIM_WELLS": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 744,
+          "family": null,
+          "route_entries": 744,
+          "segments": 738
+        },
+        "US:TX:KENT": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 253,
+          "family": null,
+          "route_entries": 253,
+          "segments": 251
+        },
+        "US:TX:KLEBERG": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 359,
+          "family": null,
+          "route_entries": 359,
+          "segments": 348
+        },
+        "US:TX:KNOX": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 2,
+          "family": null,
+          "route_entries": 2,
+          "segments": 2
+        },
+        "US:TX:LAMAR": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 1,
+          "family": null,
+          "route_entries": 1,
+          "segments": 1
+        },
+        "US:TX:LAVACA": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 292,
+          "family": null,
+          "route_entries": 292,
+          "segments": 292
+        },
+        "US:TX:LIBERTY": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 501,
+          "family": null,
+          "route_entries": 501,
+          "segments": 408
+        },
+        "US:TX:LOOP": {
+          "drop_reason": null,
+          "entries_with_ref": 6125,
+          "family": "state",
+          "route_entries": 6125,
+          "segments": 6022
+        },
+        "US:TX:LOOP:EXPRESS:TOLL": {
+          "drop_reason": null,
+          "entries_with_ref": 8,
+          "family": "state",
+          "route_entries": 8,
+          "segments": 8
+        },
+        "US:TX:MILAM": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 40,
+          "family": null,
+          "route_entries": 40,
+          "segments": 40
+        },
+        "US:TX:MITCHELL": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 509,
+          "family": null,
+          "route_entries": 509,
+          "segments": 506
+        },
+        "US:TX:MONTGOMERY:MCTRA": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 12,
+          "family": null,
+          "route_entries": 12,
+          "segments": 12
+        },
+        "US:TX:NACOGDOCHES": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 4,
+          "family": null,
+          "route_entries": 4,
+          "segments": 4
+        },
+        "US:TX:NASA": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 77,
+          "family": null,
+          "route_entries": 77,
+          "segments": 77
+        },
+        "US:TX:NOLAN": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 637,
+          "family": null,
+          "route_entries": 637,
+          "segments": 637
+        },
+        "US:TX:NTTA": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 535,
+          "family": null,
+          "route_entries": 606,
+          "segments": 606
+        },
+        "US:TX:PA": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 82,
+          "family": null,
+          "route_entries": 82,
+          "segments": 82
+        },
+        "US:TX:PARK": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 766,
+          "family": null,
+          "route_entries": 766,
+          "segments": 766
+        },
+        "US:TX:RECREATIONAL": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 56,
+          "family": null,
+          "route_entries": 56,
+          "segments": 56
+        },
+        "US:TX:RM": {
+          "drop_reason": null,
+          "entries_with_ref": 4356,
+          "family": "fm_rm",
+          "route_entries": 4356,
+          "segments": 4339
+        },
+        "US:TX:RUNNELS": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 0,
+          "family": null,
+          "route_entries": 5,
+          "segments": 5
+        },
+        "US:TX:RUSK": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 1,
+          "family": null,
+          "route_entries": 1,
+          "segments": 1
+        },
+        "US:TX:SAN_PATRICIO": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 18,
+          "family": null,
+          "route_entries": 18,
+          "segments": 16
+        },
+        "US:TX:SCHLEICHER": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 103,
+          "family": null,
+          "route_entries": 103,
+          "segments": 103
+        },
+        "US:TX:SCURRY": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 669,
+          "family": null,
+          "route_entries": 669,
+          "segments": 667
+        },
+        "US:TX:SMITH": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 38,
+          "family": null,
+          "route_entries": 38,
+          "segments": 38
+        },
+        "US:TX:SMITH:PR": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 1,
+          "family": null,
+          "route_entries": 1,
+          "segments": 1
+        },
+        "US:TX:SOMERVELL": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 215,
+          "family": null,
+          "route_entries": 215,
+          "segments": 215
+        },
+        "US:TX:SOMERVELL:LOOP": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 7,
+          "family": null,
+          "route_entries": 7,
+          "segments": 7
+        },
+        "US:TX:SOMERVELL:SPUR": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 3,
+          "family": null,
+          "route_entries": 3,
+          "segments": 3
+        },
+        "US:TX:SPUR": {
+          "drop_reason": null,
+          "entries_with_ref": 3080,
+          "family": "state",
+          "route_entries": 3200,
+          "segments": 3199
+        },
+        "US:TX:STONEWALL": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 619,
+          "family": null,
+          "route_entries": 619,
+          "segments": 619
+        },
+        "US:TX:SUTTON": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 165,
+          "family": null,
+          "route_entries": 165,
+          "segments": 164
+        },
+        "US:TX:THC:TEXAS FOREST TRAIL": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 0,
+          "family": null,
+          "route_entries": 1446,
+          "segments": 1446
+        },
+        "US:TX:TOLL": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 587,
+          "family": null,
+          "route_entries": 587,
+          "segments": 517
+        },
+        "US:TX:TRUNK": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 486,
+          "family": null,
+          "route_entries": 486,
+          "segments": 486
+        },
+        "US:TX:UVALDE": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 224,
+          "family": null,
+          "route_entries": 224,
+          "segments": 223
+        },
+        "US:TX:VAN_ZANDT": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 85,
+          "family": null,
+          "route_entries": 85,
+          "segments": 84
+        },
+        "US:TX:WILSON": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 82,
+          "family": null,
+          "route_entries": 82,
+          "segments": 81
+        },
+        "US:TX:WOOD": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 462,
+          "family": null,
+          "route_entries": 462,
+          "segments": 461
+        },
+        "US:TX:WOOD:PR": {
+          "drop_reason": "unsupported_us_network",
+          "entries_with_ref": 7,
+          "family": null,
+          "route_entries": 7,
+          "segments": 7
+        },
+        "US:US": {
+          "drop_reason": null,
+          "entries_with_ref": 36700,
+          "family": "us",
+          "route_entries": 36700,
+          "segments": 32155
+        },
+        "US:US:ALTERNATE": {
+          "drop_reason": null,
+          "entries_with_ref": 1738,
+          "family": "us",
+          "route_entries": 1738,
+          "segments": 1324
+        },
+        "US:US:BUSINESS": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 5059,
+          "family": null,
+          "route_entries": 5075,
+          "segments": 4856
+        },
+        "US:US:BUSINESS:ALTERNATE": {
+          "drop_reason": "excluded_historic_business_or_scenic",
+          "entries_with_ref": 43,
+          "family": null,
+          "route_entries": 43,
+          "segments": 43
+        },
+        "US:US:EXPRESS": {
+          "drop_reason": null,
+          "entries_with_ref": 11,
+          "family": "us",
+          "route_entries": 11,
+          "segments": 11
+        },
+        "US:US:SPUR": {
+          "drop_reason": null,
+          "entries_with_ref": 5,
+          "family": "us",
+          "route_entries": 5,
+          "segments": 5
+        },
+        "US:US:TRUCK": {
+          "drop_reason": null,
+          "entries_with_ref": 23,
+          "family": "us",
+          "route_entries": 23,
+          "segments": 23
+        }
+      },
+      "route_transport_undefined_count": 1275,
+      "route_transport_undefined_share": 0.21239380309845077,
+      "sum_L_named_over_sum_L_route": 1.1830168216117956,
+      "transport_v2_gap_mean_defined": 0.04289031411226795,
+      "unassigned_route_features": 0,
+      "v0_any_component_undefined_share": 0.3694819257038148,
+      "v0_named_road_zero_share": 0.010661335998667334,
+      "v2_any_component_undefined_share": 0.21239380309845077,
+      "v2_any_undefined_abs_error": 0.06760619690154926,
+      "v2_any_undefined_within_0_10": true
+    }
+  },
+  "rows": 9379,
+  "v0_estimates": {
+    "path": "reports/gap-estimates.csv",
+    "sha256": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852"
+  }
+}

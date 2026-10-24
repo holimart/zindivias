@@ -269,6 +269,44 @@ def test_facility_miss_poi_component_is_bounded_and_expected():
         result["facility_types"]["ems"]["reference_presence_probability"] / 2.0)
 
 
+@pytest.mark.parametrize(("network", "expected"), [
+    ("US:I", "interstate"),
+    ("US:I:Business", None),
+    ("US:US", "us"),
+    ("US:US:Historic", None),
+    ("US:CA", "state"),
+    ("US:CA:SR", "state"),
+    ("US:TX:LOOP", "state"),
+    ("US:TX:SPUR", "state"),
+    ("US:OK:ADAIR", None),
+    ("US:AZ:MARICOPA", None),
+    ("US:TX:FM", "fm_rm"),
+    ("US:TX:RM", "fm_rm"),
+    ("US:CA:CR", "county"),
+    ("US:NHT", None),
+    ("US:NFSR", None),
+    ("CA:1", None),
+    ("US:XX", None),
+    (None, None),
+])
+def test_route_network_filter(network, expected):
+    family, reason = estimator.classify_route_network(network)
+    assert family == expected
+    assert (reason == "kept") == (expected is not None)
+
+
+def test_transport_route_v2_definedness_and_clipping():
+    assert estimator.estimate_transport_route_v2({
+        "overture_named_road_km_5070": 0.0, "overture_route_km": 0.0,
+    }) == {"transport_gap": 0.0, "transport_defined": 0}
+    assert estimator.estimate_transport_route_v2({
+        "overture_named_road_km_5070": 2.0, "overture_route_km": 1.0,
+    }) == {"transport_gap": 0.0, "transport_defined": 1}
+    assert estimator.estimate_transport_route_v2({
+        "overture_named_road_km_5070": 0.5, "overture_route_km": 1.0,
+    }) == {"transport_gap": pytest.approx(0.5), "transport_defined": 1}
+
+
 def test_facility_miss_uses_provided_unclassified_type_share():
     features = {
         "overture_poi_all": 2.0,

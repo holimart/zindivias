@@ -29,6 +29,14 @@ from estimator_v2_establishments import estimate_establishments_component_v2
 REGIONS = ("maricopa-az", "northern-ca", "eastern-ok", "south-central-tx")
 BUCKET = "us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge"
 ROAD_CLASSES = {"motorway", "trunk", "primary", "secondary"}
+ROUTE_STATE_CODES = set("AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA ME MD MA MI MN MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY DC PR".split())
+ROUTE_FAMILIES = ("interstate", "us", "state", "county", "fm_rm")
+ROUTE_SPECIAL_NETWORK_TOKENS = {
+    "HISTORIC", "BUSINESS", "BUS", "NHT", "NFSR", "NFRS", "SCENIC", "THC", "NSB",
+}
+ROUTE_STATE_VARIANT_TOKENS = {
+    "LOOP", "SPUR", "BELTWAY", "FUTURE", "ALTERNATE", "ALT", "BYPASS", "BYP",
+}
 POI_CATEGORY_CONFIG = Path(__file__).resolve().parents[1] / "config/poi-category-definitions.json"
 with POI_CATEGORY_CONFIG.open("r", encoding="utf-8") as _stream:
     _poi_category_definitions = json.load(_stream)["selected_sets"]
@@ -130,6 +138,54 @@ def assign_points(tree, x: np.ndarray, y: np.ndarray) -> tuple[np.ndarray, int]:
 def rowgroups(parquet_file, columns):
     for idx in range(parquet_file.metadata.num_row_groups):
         yield idx, parquet_file.read_row_group(idx, columns=columns)
+
+
+def classify_route_network(network: object) -> tuple[str | None, str]:
+    """Map an Overture routes[].network value to a kept family or drop reason."""
+    if not isinstance(network, str) or not network.strip():
+        return None, "missing_network"
+    value = network.strip().upper()
+    parts = value.split(":")
+    if len(parts) < 2 or parts[0] != "US":
+        return None, "non_us_or_malformed"
+    if any(token in ROUTE_SPECIAL_NETWORK_TOKENS for token in parts[1:]):
+        return None, "excluded_historic_business_or_scenic"
+    if parts[1] == "I":
+        return "interstate", "kept"
+    if parts[1] == "US":
+        return "us", "kept"
+    if parts[1] in {"NHS", "NFRS"}:
+        return None, "excluded_non_route_highway_system"
+    if parts[1] not in ROUTE_STATE_CODES:
+        return None, "unsupported_us_network"
+    if len(parts) == 2:
+        return "state", "kept"
+    route_class = parts[2]
+    if route_class in {"FM", "RM", "FM/RM", "FM-RM"}:
+        return "fm_rm", "kept"
+    if route_class == "SR" or route_class in ROUTE_STATE_VARIANT_TOKENS:
+        return "state", "kept"
+    if route_class == "CR":
+        return "county", "kept"
+    # County-name network namespaces (for example US:OK:ADAIR) are not
+    # equivalent to numbered CR routes and are deliberately not inferred as
+    # highways without an explicit route-class token.
+    return None, "unsupported_us_network"
+
+
+def estimate_transport_route_v2(features: dict) -> dict[str, int | float]:
+    """Estimate route-reference transport gap, excluding undefined route tracts."""
+    try:
+        named = float(features["overture_named_road_km_5070"])
+        route = float(features["overture_route_km"])
+    except (KeyError, TypeError, ValueError) as exc:
+        raise ValueError("route transport requires finite named and route lengths") from exc
+    if not math.isfinite(named) or named < 0 or not math.isfinite(route) or route < 0:
+        raise ValueError("named/route lengths must be finite and nonnegative")
+    if route == 0.0:
+        return {"transport_gap": 0.0, "transport_defined": 0}
+    gap = min(1.0, max(0.0, 1.0 - named / route))
+    return {"transport_gap": gap, "transport_defined": 1}
 
 
 def aggregate_buildings(fs, region: str, tree, n_tracts: int) -> tuple[np.ndarray, dict]:
@@ -451,46 +507,166 @@ def merge_source_mix_features(cache_path: Path, sample_geoids: list[str],
             "sha256": sha256(cache_path), "bytes": cache_path.stat().st_size}
 
 
-def aggregate_roads(fs, region: str, tree, tract_geoms, n_tracts: int) -> tuple[np.ndarray, dict]:
+def aggregate_roads(fs, region: str, tree, tract_geoms, n_tracts: int) -> tuple[np.ndarray, dict, dict]:
+    """Aggregate named Overture roads and route-reference lengths, clipped in EPSG:5070.
+
+    The legacy `overture_road_km` retains the original 4326-intersection then
+    projected-length calculation. New route-v2 arrays use metric tract/line
+    geometries and intersections in EPSG:5070. This preserves v0 behavior while
+    making the route denominator's clipping explicitly metric.
+    """
     key, size, pf = open_source(fs, region, "roads")
-    total = selected = unmatched = 0
-    lengths_m = np.zeros(n_tracts, dtype=np.float64)
+    total = named_rows = route_rows = unassigned_named = unassigned_route = 0
+    legacy_named_m = np.zeros(n_tracts, dtype=np.float64)
     transformer = Transformer.from_crs("EPSG:4326", "EPSG:5070", always_xy=True)
+    metric_tracts = shapely.transform(tract_geoms, transformer.transform, interleaved=False)
+    metric_tree = shapely.STRtree(metric_tracts)
+    lengths_m = {name: np.zeros(n_tracts, dtype=np.float64) for name in (
+        "named_5070", "route", "route_core", "route_plus_fm_rm",
+        "route_interstate", "route_us", "route_state", "route_county", "route_fm_rm",
+    )}
+    network_frequency: dict[str, dict] = {}
+    dropped_reasons = Counter()
     started = time.monotonic()
-    for rg, table in rowgroups(pf, ["class", "geometry"]):
+
+    for rg, table in rowgroups(pf, ["class", "routes", "geometry"]):
         classes = table.column("class").to_pylist()
-        keep = np.fromiter((value in ROAD_CLASSES for value in classes), dtype=bool, count=len(classes))
+        named_mask = np.fromiter((value in ROAD_CLASSES for value in classes),
+                                 dtype=bool, count=len(classes))
+        routes_by_segment = table.column("routes").to_pylist()
+        family_masks = {family: np.zeros(len(classes), dtype=bool) for family in ROUTE_FAMILIES}
+        route_mask = np.zeros(len(classes), dtype=bool)
+        for index, routes in enumerate(routes_by_segment):
+            seen_networks: set[str] = set()
+            for route in routes or []:
+                route = route or {}
+                network_value = route.get("network")
+                family, reason = classify_route_network(network_value)
+                if family is None:
+                    dropped_reasons[reason] += 1
+                    display_network = (network_value.strip().upper()
+                                       if isinstance(network_value, str) and network_value.strip()
+                                       else "<missing>")
+                    if display_network not in network_frequency:
+                        network_frequency[display_network] = {
+                            "family": None, "drop_reason": reason, "route_entries": 0,
+                            "segments": 0, "entries_with_ref": 0,
+                        }
+                    stats = network_frequency[display_network]
+                else:
+                    display_network = network_value.strip().upper()
+                    if display_network not in network_frequency:
+                        network_frequency[display_network] = {
+                            "family": family, "drop_reason": None, "route_entries": 0,
+                            "segments": 0, "entries_with_ref": 0,
+                        }
+                    stats = network_frequency[display_network]
+                    family_masks[family][index] = True
+                    route_mask[index] = True
+                stats["route_entries"] += 1
+                if isinstance(route.get("ref"), str) and route["ref"].strip():
+                    stats["entries_with_ref"] += 1
+                seen_networks.add(display_network)
+            for network in seen_networks:
+                network_frequency[network]["segments"] += 1
         total += len(classes)
-        if not keep.any():
+        named_rows += int(named_mask.sum())
+        route_rows += int(route_mask.sum())
+        needed_mask = named_mask | route_mask
+        if not needed_mask.any():
             continue
-        selected += int(keep.sum())
         wkb = table.column("geometry").to_pylist()
-        if any(value is None for i, value in enumerate(wkb) if keep[i]):
-            raise ValueError("null geometry among named Overture roads")
-        lines = shapely.from_wkb([value for value, yes in zip(wkb, keep) if yes])
+        if any(value is None for i, value in enumerate(wkb) if needed_mask[i]):
+            raise ValueError("null geometry among named or route-qualified Overture roads")
+        selected_indices = np.flatnonzero(needed_mask)
+        lines = shapely.from_wkb([wkb[index] for index in selected_indices])
         if np.any(shapely.is_empty(lines)) or np.any(~shapely.is_valid(lines)):
-            raise ValueError("invalid geometry among named Overture roads")
-        pairs = tree.query(lines, predicate="intersects")
-        if not pairs.size:
-            unmatched += len(lines)
-            continue
-        road_idx, tract_idx = pairs
-        clipped = shapely.intersection(lines[road_idx], tract_geoms[tract_idx])
-        metric = shapely.transform(clipped, transformer.transform, interleaved=False)
-        lengths = shapely.length(metric)
-        valid_length = np.isfinite(lengths) & (lengths > 0)
-        lengths_m += np.bincount(tract_idx[valid_length], weights=lengths[valid_length], minlength=n_tracts)
-        intersected = np.zeros(len(lines), dtype=bool)
-        intersected[road_idx] = True
-        unmatched += int((~intersected).sum())
+            raise ValueError("invalid geometry among named or route-qualified Overture roads")
+
+        # Preserve the established v0 named-road metric unchanged.
+        named_local = named_mask[selected_indices]
+        if named_local.any():
+            named_lines = lines[named_local]
+            legacy_pairs = tree.query(named_lines, predicate="intersects")
+            if legacy_pairs.size:
+                road_idx, tract_idx = legacy_pairs
+                clipped = shapely.intersection(named_lines[road_idx], tract_geoms[tract_idx])
+                metric = shapely.transform(clipped, transformer.transform, interleaved=False)
+                lengths = shapely.length(metric)
+                valid = np.isfinite(lengths) & (lengths > 0)
+                legacy_named_m += np.bincount(tract_idx[valid], weights=lengths[valid],
+                                              minlength=n_tracts)
+                intersected = np.zeros(len(named_lines), dtype=bool)
+                intersected[road_idx] = True
+                unassigned_named += int((~intersected).sum())
+            else:
+                unassigned_named += len(named_lines)
+
+        # Route-v2 and corresponding named L_named are intersected in meters.
+        metric_lines = shapely.transform(lines, transformer.transform, interleaved=False)
+        metric_pairs = metric_tree.query(metric_lines, predicate="intersects")
+        if metric_pairs.size:
+            road_idx, tract_idx = metric_pairs
+            clipped = shapely.intersection(metric_lines[road_idx], metric_tracts[tract_idx])
+            lengths = shapely.length(clipped)
+            valid = np.isfinite(lengths) & (lengths > 0)
+            selected_tracts = tract_idx[valid]
+            selected_lengths = lengths[valid]
+            selected_segment_indices = selected_indices[road_idx[valid]]
+
+            def accumulate(name: str, mask: np.ndarray) -> None:
+                eligible = mask[selected_segment_indices]
+                if eligible.any():
+                    lengths_m[name][:] += np.bincount(
+                        selected_tracts[eligible], weights=selected_lengths[eligible],
+                        minlength=n_tracts)
+
+            accumulate("named_5070", named_mask)
+            for family in ROUTE_FAMILIES:
+                accumulate("route_" + family, family_masks[family])
+            accumulate("route", route_mask)
+            core_mask = (family_masks["interstate"] | family_masks["us"] |
+                         family_masks["state"])
+            core_fm_mask = core_mask | family_masks["fm_rm"]
+            accumulate("route_core", core_mask)
+            accumulate("route_plus_fm_rm", core_fm_mask)
+            intersected_route = np.zeros(len(lines), dtype=bool)
+            intersected_route[road_idx[route_mask[selected_indices][road_idx]]] = True
+            unassigned_route += int(np.sum(route_mask[selected_indices] & ~intersected_route))
+        else:
+            unassigned_route += int(route_mask[selected_indices].sum())
+
         if (rg + 1) % 5 == 0:
-            print(f"{region} named roads rowgroups {rg + 1}/{pf.metadata.num_row_groups}; "
-                  f"selected={selected}", flush=True)
-    return lengths_m / 1000.0, {"source_uri": f"s3://{key}", "object_bytes": size,
-                                "input_rows": total, "row_groups": pf.metadata.num_row_groups,
-                                "named_class_rows": selected, "unassigned_features": unmatched,
-                                "classes": sorted(ROAD_CLASSES),
-                                "elapsed_seconds": round(time.monotonic()-started, 2)}
+            print(f"{region} named/route roads rowgroups {rg + 1}/{pf.metadata.num_row_groups}; "
+                  f"named={named_rows} route_segments={route_rows}", flush=True)
+
+    km = {name: values / 1000.0 for name, values in lengths_m.items()}
+    route_info = {
+        "source_uri": f"s3://{key}", "object_bytes": size,
+        "input_rows": total, "row_groups": pf.metadata.num_row_groups,
+        "route_eligible_segment_rows": route_rows,
+        "route_network_frequencies": dict(sorted(network_frequency.items())),
+        "dropped_network_entry_counts_by_reason": dict(sorted(dropped_reasons.items())),
+        "unassigned_route_features": unassigned_route,
+        "route_length_km_by_family_sum": {
+            family: float(km["route_" + family].sum()) for family in ROUTE_FAMILIES
+        },
+        "route_length_km_total_deduplicated": float(km["route"].sum()),
+        "route_lengths_by_family_overlap": True,
+        "clip_crs": "EPSG:5070",
+    }
+    named_info = {
+        "named_class_rows": named_rows,
+        "unassigned_features": unassigned_named,
+        "classes": sorted(ROAD_CLASSES),
+        "legacy_named_length_km_sum": float(legacy_named_m.sum() / 1000.0),
+        "named_5070_length_km_sum": float(km["named_5070"].sum()),
+    }
+    info = {"source_uri": f"s3://{key}", "object_bytes": size,
+            "input_rows": total, "row_groups": pf.metadata.num_row_groups,
+            "named": named_info, "routes": route_info,
+            "elapsed_seconds": round(time.monotonic() - started, 2)}
+    return legacy_named_m / 1000.0, km, info
 
 
 def build_feature_cache(fs, region: str, cache_path: Path, sample_geoids: list[str],
@@ -518,7 +694,7 @@ def build_feature_cache(fs, region: str, cache_path: Path, sample_geoids: list[s
     started = time.monotonic()
     building_counts, building_info = aggregate_buildings(fs, region, tree, len(geoids))
     poi_counts, poi_info = aggregate_pois(fs, region, tree, len(geoids))
-    road_lengths, road_info = aggregate_roads(fs, region, tree, tracts, len(geoids))
+    road_lengths, route_lengths, road_info = aggregate_roads(fs, region, tree, tracts, len(geoids))
     source_features = source_row_counts = source_info = None
     if include_source_mix:
         source_features, source_row_counts, source_info = aggregate_source_mix(
@@ -527,15 +703,28 @@ def build_feature_cache(fs, region: str, cache_path: Path, sample_geoids: list[s
                 not np.array_equal(source_row_counts["pois"], poi_counts["all"])):
             raise ValueError(f"source aggregation counts do not reconcile for {region}")
     type_shares = poi_info["estimated_unclassified_type_shares"]
-    arrays = [pa.array(geoids), pa.array(road_lengths), pa.array(building_counts),
-              pa.array(poi_counts["all"]), pa.array(poi_counts["fire"]),
+    route_feature_columns = [
+        ("overture_named_road_km_5070", route_lengths["named_5070"]),
+        ("overture_route_km", route_lengths["route"]),
+        ("overture_route_core_km", route_lengths["route_core"]),
+        ("overture_route_plus_fm_rm_km", route_lengths["route_plus_fm_rm"]),
+        ("overture_route_interstate_km", route_lengths["route_interstate"]),
+        ("overture_route_us_km", route_lengths["route_us"]),
+        ("overture_route_state_km", route_lengths["route_state"]),
+        ("overture_route_county_km", route_lengths["route_county"]),
+        ("overture_route_fm_rm_km", route_lengths["route_fm_rm"]),
+    ]
+    arrays = [pa.array(geoids), pa.array(road_lengths),
+              *(pa.array(values, type=pa.float64()) for _, values in route_feature_columns),
+              pa.array(building_counts), pa.array(poi_counts["all"]), pa.array(poi_counts["fire"]),
               pa.array(poi_counts["ems"]), pa.array(poi_counts["schools"]),
               pa.array(poi_counts["unclassified"]),
               pa.array([type_shares["fire"]] * len(geoids)),
               pa.array([type_shares["ems"]] * len(geoids)),
               pa.array([type_shares["schools"]] * len(geoids))]
-    feature_names = ["GEOID", "overture_road_km", "overture_buildings", "overture_poi_all",
-        "overture_poi_fire", "overture_poi_ems", "overture_poi_schools",
+    feature_names = ["GEOID", "overture_road_km", *[name for name, _ in route_feature_columns],
+        "overture_buildings", "overture_poi_all", "overture_poi_fire", "overture_poi_ems",
+        "overture_poi_schools",
         "overture_poi_unclassified", "overture_unclassified_fire_share",
         "overture_unclassified_ems_share", "overture_unclassified_schools_share"]
     if source_features is not None:
@@ -551,7 +740,8 @@ def build_feature_cache(fs, region: str, cache_path: Path, sample_geoids: list[s
             "buildings": building_info, "pois": poi_info, "roads": road_info,
             "source_mix": source_info,
             "feature_cache": str(cache_path), "feature_cache_sha256": sha256(cache_path),
-            "aggregate_schema_version": 5 if include_source_mix else 4,
+            "aggregate_schema_version": 7 if include_source_mix else 6,
+            "route_schema_version": 1,
             "elapsed_seconds": round(time.monotonic()-started, 2)}
 
 
@@ -1039,6 +1229,304 @@ def run_poi_facility_miss_audit(
     return report
 
 
+def _read_official_sample_ids(region: str, data_root: Path) -> tuple[list[str], Path]:
+    sample_path = data_root / f"{region}-sample-submission.csv"
+    with sample_path.open("r", newline="", encoding="utf-8-sig") as stream:
+        reader = csv.reader(stream)
+        header = next(reader, [])
+        if "GEOID" not in header:
+            raise ValueError(f"official sample has no GEOID: {sample_path}")
+        index = header.index("GEOID")
+        ids = [row[index] for row in reader]
+    if len(ids) != len(set(ids)):
+        raise ValueError(f"duplicate official sample GEOIDs for {region}")
+    return ids, sample_path
+
+
+def _load_official_tract_geometries(fs, region: str, geoids: list[str]):
+    acs_key = f"{BUCKET}/reference/{region}/{region}-census-acs-housing.parquet"
+    info = fs.get_file_info(acs_key)
+    pf = pq.ParquetFile(fs.open_input_file(acs_key))
+    table = pf.read(columns=["GEOID", "geometry"])
+    source_ids = [str(value) for value in table.column("GEOID").to_pylist()]
+    if len(source_ids) != len(set(source_ids)):
+        raise ValueError(f"duplicate provided ACS geometry GEOIDs for {region}")
+    positions = {geoid: index for index, geoid in enumerate(source_ids)}
+    missing = set(geoids) - set(positions)
+    if missing:
+        raise ValueError(f"official sample IDs missing from provided ACS geometry for {region}: {len(missing)}")
+    wkb = table.column("geometry").to_pylist()
+    selected = [wkb[positions[geoid]] for geoid in geoids]
+    if any(value is None for value in selected):
+        raise ValueError(f"null provided ACS geometry for official IDs in {region}")
+    geometries = shapely.from_wkb(selected)
+    if np.any(shapely.is_empty(geometries)) or np.any(~shapely.is_valid(geometries)):
+        raise ValueError(f"invalid provided ACS geometry for {region}")
+    return geometries, {"source_uri": f"s3://{acs_key}", "object_bytes": info.size,
+                        "source_rows": pf.metadata.num_rows,
+                        "official_geometries_used": len(geoids),
+                        "extra_geometries_excluded": pf.metadata.num_rows - len(geoids),
+                        "columns_read": ["GEOID", "geometry"]}
+
+
+def _route_length_distribution(values: np.ndarray) -> dict:
+    if not len(values):
+        return {"tracts": 0}
+    quantiles = (0, 0.1, 0.25, 0.5, 0.75, 0.9, 0.95, 0.99, 1)
+    labels = ("min", "p10", "p25", "p50", "p75", "p90", "p95", "p99", "max")
+    route = np.asarray(values, dtype=np.float64)
+    if not np.isfinite(route).all() or np.any(route < 0):
+        raise ValueError("invalid L_route feature values")
+    return {
+        "tracts": len(route),
+        "zero_count": int(np.sum(route == 0)),
+        "zero_share": float(np.mean(route == 0)),
+        "positive_count": int(np.sum(route > 0)),
+        "quantiles_km": {label: float(value) for label, value in zip(
+            labels, np.quantile(route, quantiles))},
+        "bins_km": {
+            "zero": int(np.sum(route == 0)),
+            "(0,1]": int(np.sum((route > 0) & (route <= 1))),
+            "(1,5]": int(np.sum((route > 1) & (route <= 5))),
+            "(5,20]": int(np.sum((route > 5) & (route <= 20))),
+            ">20": int(np.sum(route > 20)),
+        },
+    }
+
+
+def run_transport_route_audit(fs, workspace: Path, data_root: Path,
+                              feature_root: Path, v0_path: Path,
+                              out_path: Path) -> dict:
+    """Refresh the authorized workspace cache with route lengths and write aggregates."""
+    with v0_path.open("r", newline="", encoding="utf-8-sig") as stream:
+        v0_rows = list(csv.DictReader(stream))
+    v0_by_geoid = {row["GEOID"]: row for row in v0_rows}
+    if len(v0_by_geoid) != len(v0_rows):
+        raise ValueError("duplicate GEOID in v0 gap estimates")
+    disclosed_any_undefined = {
+        "maricopa-az": 0.55, "northern-ca": 0.37,
+        "eastern-ok": 0.21, "south-central-tx": 0.28,
+    }
+    regional = {}
+    input_manifest = {}
+    official_ids_all = []
+    route_feature_names = [
+        "overture_named_road_km_5070", "overture_route_km", "overture_route_core_km",
+        "overture_route_plus_fm_rm_km", "overture_route_interstate_km",
+        "overture_route_us_km", "overture_route_state_km", "overture_route_county_km",
+        "overture_route_fm_rm_km",
+    ]
+    for region in REGIONS:
+        ids, sample_path = _read_official_sample_ids(region, data_root)
+        if set(ids) & set(official_ids_all):
+            raise ValueError(f"official GEOIDs overlap across regions: {region}")
+        official_ids_all.extend(ids)
+        feature_path = feature_root / f"{region}-overture-tract-summary.parquet"
+        metadata_path = feature_path.with_suffix(".json")
+        if not feature_path.is_file():
+            raise FileNotFoundError(f"existing permitted feature cache required: {feature_path}")
+        old_meta = json.loads(metadata_path.read_text(encoding="utf-8")) if metadata_path.is_file() else {}
+        cache_before_sha = sha256(feature_path)
+        base_cache_sha = old_meta.get("route_extension_base_feature_cache_sha256")
+        if not base_cache_sha:
+            base_cache_sha = old_meta.get("feature_cache_sha256") or cache_before_sha
+        table = pq.read_table(feature_path)
+        cache_ids = [str(value) for value in table.column("GEOID").to_pylist()]
+        validate_exact_geoid_coverage(cache_ids, ids)
+        if "overture_road_km" not in table.column_names:
+            raise ValueError(f"legacy named-road feature missing in {feature_path}")
+        tract_geoms, acs_info = _load_official_tract_geometries(fs, region, ids)
+        tract_tree = shapely.STRtree(tract_geoms)
+        legacy_named, route_lengths, road_info = aggregate_roads(
+            fs, region, tract_tree, tract_geoms, len(ids))
+        cached_legacy = np.asarray(table.column("overture_road_km").to_numpy(), dtype=np.float64)
+        if not np.allclose(legacy_named, cached_legacy, rtol=0, atol=1e-9):
+            raise ValueError(f"recomputed legacy named-road km differs from cache for {region}")
+        route_arrays = {
+            "overture_named_road_km_5070": route_lengths["named_5070"],
+            "overture_route_km": route_lengths["route"],
+            "overture_route_core_km": route_lengths["route_core"],
+            "overture_route_plus_fm_rm_km": route_lengths["route_plus_fm_rm"],
+            "overture_route_interstate_km": route_lengths["route_interstate"],
+            "overture_route_us_km": route_lengths["route_us"],
+            "overture_route_state_km": route_lengths["route_state"],
+            "overture_route_county_km": route_lengths["route_county"],
+            "overture_route_fm_rm_km": route_lengths["route_fm_rm"],
+        }
+        base_table = table.drop([name for name in route_feature_names if name in table.column_names])
+        for name in route_feature_names:
+            base_table = base_table.append_column(name, pa.array(route_arrays[name], type=pa.float64()))
+        write_parquet(feature_path, base_table)
+        output_cache_sha = sha256(feature_path)
+        has_source_mix = set(SOURCE_MIX_FEATURE_COLUMNS).issubset(set(base_table.column_names))
+        road_metadata = dict(road_info)
+        road_metadata.pop("elapsed_seconds", None)
+        old_meta.update({
+            "aggregate_schema_version": 7 if has_source_mix else 6,
+            "route_schema_version": 1,
+            "route_extension_base_feature_cache_sha256": base_cache_sha,
+            "feature_cache_sha256": output_cache_sha,
+            "roads": road_info,
+        })
+        metadata_path.write_text(json.dumps(old_meta, indent=2, ensure_ascii=False,
+                                           sort_keys=True) + "\n", encoding="utf-8")
+
+        named_5070 = route_arrays["overture_named_road_km_5070"]
+        route_km = route_arrays["overture_route_km"]
+        total_route = float(route_km.sum())
+        total_named = float(named_5070.sum())
+        if total_route <= 0:
+            raise ValueError(f"no eligible route-reference length in {region}")
+        route_gap_rows = [estimate_transport_route_v2({
+            "overture_named_road_km_5070": float(named_5070[index]),
+            "overture_route_km": float(route_km[index]),
+        }) for index in range(len(ids))]
+        route_defined = np.asarray([row["transport_defined"] for row in route_gap_rows], dtype=bool)
+        base_rows = [v0_by_geoid[geoid] for geoid in ids]
+        v0_any_undefined = np.asarray([
+            not (row["transport_defined"] == "1" and row["building_defined"] == "1" and
+                 row["poi_defined"] == "1") for row in base_rows
+        ], dtype=bool)
+        v2_any_undefined = np.asarray([
+            not (route_gap_rows[index]["transport_defined"] == 1 and
+                 row["building_defined"] == "1" and row["poi_defined"] == "1")
+            for index, row in enumerate(base_rows)
+        ], dtype=bool)
+        region_any_share = float(v2_any_undefined.mean())
+        disclosed = disclosed_any_undefined[region]
+        route_distribution = _route_length_distribution(route_km)
+        named_zero_share = float(np.mean(cached_legacy == 0))
+        ratio = total_named / total_route
+        route_info = road_info["routes"]
+        regional[region] = {
+            "official_tracts": len(ids),
+            "L_named_km_sum_epsg5070": total_named,
+            "L_route_km_sum_epsg5070": total_route,
+            "sum_L_named_over_sum_L_route": ratio,
+            "ratio_acceptance_0_6_to_1_7": bool(0.6 <= ratio <= 1.7),
+            "disclosed_ratio_band_context": [0.71, 1.59],
+            "route_transport_undefined_count": int((~route_defined).sum()),
+            "route_transport_undefined_share": float((~route_defined).mean()),
+            "v0_named_road_zero_share": named_zero_share,
+            "v0_any_component_undefined_share": float(v0_any_undefined.mean()),
+            "v2_any_component_undefined_share": region_any_share,
+            "disclosed_any_component_undefined_share": disclosed,
+            "v2_any_undefined_abs_error": abs(region_any_share - disclosed),
+            "v2_any_undefined_within_0_10": bool(abs(region_any_share - disclosed) <= 0.10),
+            "transport_v2_gap_mean_defined": float(np.mean([
+                row["transport_gap"] for row in route_gap_rows if row["transport_defined"]
+            ])) if route_defined.any() else None,
+            "L_route_distribution_km": route_distribution,
+            "route_km_by_family_sum": route_info["route_length_km_by_family_sum"],
+            "route_km_total_deduplicated": route_info["route_length_km_total_deduplicated"],
+            "route_eligible_segment_rows_in_source_layer": route_info["route_eligible_segment_rows"],
+            "unassigned_route_features": route_info["unassigned_route_features"],
+            "route_network_frequency": route_info["route_network_frequencies"],
+            "dropped_network_entry_counts_by_reason": route_info["dropped_network_entry_counts_by_reason"],
+            "legacy_named_vs_metric_named_km_sum": {
+                "legacy_4326_clip_then_5070": road_info["named"]["legacy_named_length_km_sum"],
+                "named_5070_clip": road_info["named"]["named_5070_length_km_sum"],
+            },
+        }
+        input_manifest[region] = {
+            "official_sample": {"rows": len(ids), "sha256": sha256(sample_path),
+                                "GEOID_only_read": True, "score_placeholders_used": False},
+            "provided_acs_geometry": acs_info,
+            "overture_roads": {
+                "source_uri": route_info["source_uri"], "object_bytes": route_info["object_bytes"],
+                "rows": route_info["input_rows"], "row_groups": route_info["row_groups"],
+                "columns_read": ["class", "routes", "geometry"],
+            },
+            "feature_cache": {
+                "path": str(feature_path.relative_to(workspace)),
+                "base_sha256_before_route_extension": base_cache_sha,
+                "sha256_after_route_extension": output_cache_sha,
+                "rows": len(ids), "route_schema_version": 1,
+                "aggregate_schema_version": 7 if has_source_mix else 6,
+            },
+            "v0_gap_estimates_sha256": sha256(v0_path),
+        }
+
+    if len(official_ids_all) != 9379 or set(official_ids_all) != set(v0_by_geoid):
+        raise ValueError("official route sample IDs and v0 estimates must exactly match 9,379 tracts")
+    acceptance = {
+        "all_four_region_length_ratios_in_0_6_to_1_7": all(
+            regional[r]["ratio_acceptance_0_6_to_1_7"] for r in REGIONS),
+        "regions_with_v2_any_undefined_within_0_10": [
+            r for r in REGIONS if regional[r]["v2_any_undefined_within_0_10"]
+        ],
+        "at_least_three_regions_match_disclosed_any_undefined_within_0_10": sum(
+            regional[r]["v2_any_undefined_within_0_10"] for r in REGIONS) >= 3,
+        "failed_region_rules": {
+            "ratio": [r for r in REGIONS if not regional[r]["ratio_acceptance_0_6_to_1_7"]],
+            "any_undefined": [r for r in REGIONS if not regional[r]["v2_any_undefined_within_0_10"]],
+        },
+        "ratio_failure_diagnostics": {
+            r: {
+                "ratio": regional[r]["sum_L_named_over_sum_L_route"],
+                "acceptance_range": [0.6, 1.7],
+                "L_named_km": regional[r]["L_named_km_sum_epsg5070"],
+                "L_route_km": regional[r]["L_route_km_sum_epsg5070"],
+                "diagnosis": "Named-class length exceeds the allowed-network route denominator. The listed network filter was applied as specified; excluded scenic/business, missing-network, county-name, and unsupported non-route systems were not added merely to force the ratio into band.",
+            }
+            for r in REGIONS if not regional[r]["ratio_acceptance_0_6_to_1_7"]
+        },
+    }
+    report = {
+        "analysis": "Overture route-reference transport v2 audit",
+        "rows": 9379,
+        "method": {
+            "L_named": "sum of lengths for Overture classes motorway, trunk, primary, secondary, clipped with official sample tract geometry in EPSG:5070",
+            "L_route": "deduplicated Overture road segments with at least one included routes[].network; all families clipped with official sample tract geometry in EPSG:5070",
+            "transport_gap_v2": "clip(1 - L_named/L_route, 0, 1)",
+            "transport_defined_v2": "L_route > 0; when zero, numeric placeholder gap=0 with defined=0",
+            "route_network_filter": {
+                "kept": ["US:I*", "US:US*", "US:<valid state>",
+                         "US:<state>:SR/LOOP/SPUR/BELTWAY/FUTURE/ALT/BYPASS variants",
+                         "US:<state>:FM/RM*", "US:<state>:CR*"],
+                "dropped": [":Historic", ":Business", ":BUS", "US:NHT", "US:NFSR/NFRS",
+                            ":Scenic", "US:NHS", "non-US/malformed networks", "unsupported US network families"],
+                "families": {"interstate": "US:I*", "us": "US:US*",
+                             "state": "US:<state> and recognized SR/loop/spur/beltway variants",
+                             "fm_rm": "US:<state>:FM/RM*",
+                             "county": "US:<state>:CR*"},
+                "one_segment_counted_once_in_L_route": True,
+                "per_family_lengths_can_overlap": True,
+                "reference_value_required": False,
+                "ref_presence_count_reported": True,
+            },
+            "sensitivity_cache_fields": ["overture_route_core_km", "overture_route_plus_fm_rm_km",
+                                         "overture_route_km"],
+            "aggregate_cache_schema_note": "The existing source-mix cache already used aggregate schema v5; route fields increment this repository to v6 (base) or v7 (with source mix), with route_schema_version=1.",
+            "legacy_road_length_preserved": "overture_road_km remains the original v0 calculation; new named L_named is emitted as overture_named_road_km_5070",
+        },
+        "acceptance": acceptance,
+        "regions": regional,
+        "data_use": {
+            "only_overture_roads_and_provided_acs_geometry_read": True,
+            "removed_tiger_or_other_road_reference_data_read": False,
+            "external_road_datasets_read": False,
+            "labels_or_sample_score_placeholders_read": False,
+            "leaderboard_feedback_or_calibration_used": False,
+            "organizer_disclosed_statistics_used_only_as_aggregate_validation_context": True,
+            "tract_level_route_features_written_only_to_authorized_workspace_cache": True,
+            "per_geoid_report_or_candidate_written": False,
+        },
+        "inputs": input_manifest,
+        "v0_estimates": {"path": str(v0_path.relative_to(Path(__file__).resolve().parents[1])),
+                          "sha256": sha256(v0_path)},
+        "limitations": [
+            "Network-family km can overlap when one Overture segment carries multiple eligible route networks; L_route itself counts each segment only once.",
+            "The any-undefined comparison holds v0 building/POI defined flags fixed and replaces only the transport flag; it is not a full v2 composite.",
+            "Disclosed any-undefined percentages are organizer aggregate context, not labels and not per-tract calibration targets.",
+        ],
+    }
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(json.dumps(report, indent=2, ensure_ascii=False, sort_keys=True) + "\n",
+                        encoding="utf-8")
+    return report
+
+
 def write_predictions(path: Path, records: list[dict], columns=OUTPUT_COLUMNS) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as stream:
@@ -1076,6 +1564,11 @@ def main() -> int:
     parser.add_argument("--poi-audit-out", type=Path,
                         default=Path("reports/poi-facility-miss-audit.json"),
                         help="aggregate report path used by --poi-model facility-miss")
+    parser.add_argument("--route-audit-only", action="store_true",
+                        help="refresh permitted Overture route features and write route-reference aggregates only")
+    parser.add_argument("--route-audit-out", type=Path,
+                        default=Path("reports/transport-route-ref-audit.json"),
+                        help="aggregate report path used by --route-audit-only")
     parser.add_argument("--refresh-features", action="store_true", help="re-scan allowed Overture feature columns")
     parser.add_argument("--include-source-mix", action="store_true",
                         help="include source-provenance shares; scans only sources+bbox for those source fields")
@@ -1085,6 +1578,19 @@ def main() -> int:
         parser.error("pass --workspace or set COMPETITION_WORKSPACE")
     data_root = args.data_root or workspace / "defined-flags-inputs"
     feature_root = workspace / "gap-estimator" / "features"
+    if args.route_audit_only:
+        if args.poi_model != "v0" or args.refresh_features or args.include_source_mix:
+            parser.error("--route-audit-only cannot be combined with a non-v0 POI model, --refresh-features, or --include-source-mix")
+        fs = pafs.S3FileSystem(anonymous=True, region="us-west-2")
+        report = run_transport_route_audit(
+            fs, workspace.resolve(), data_root.resolve(), feature_root.resolve(),
+            (Path(__file__).resolve().parents[1] / "reports/gap-estimates.csv"),
+            args.route_audit_out.resolve(),
+        )
+        print(f"transport route-reference report: {args.route_audit_out.resolve()}")
+        print("Acceptance: " + json.dumps(report["acceptance"], sort_keys=True))
+        print("No candidate or submission file was created or modified.")
+        return 0
     if args.poi_model == "facility-miss":
         if args.refresh_features or args.include_source_mix:
             parser.error("facility-miss audit uses existing permitted summary caches; feature refresh/source-mix flags are unsupported")
@@ -1111,8 +1617,8 @@ def main() -> int:
         feature_meta_path = feature_path.with_suffix(".json")
         cached_meta = (json.loads(feature_meta_path.read_text(encoding="utf-8"))
                        if feature_meta_path.is_file() else {})
-        acceptable_cache_versions = {5} if args.include_source_mix else {4, 5}
-        source_cache_missing = (cached_meta.get("aggregate_schema_version") == 5 and
+        acceptable_cache_versions = {7} if args.include_source_mix else {6, 7}
+        source_cache_missing = (cached_meta.get("aggregate_schema_version") == 7 and
                                 not set(SOURCE_MIX_FEATURE_COLUMNS).issubset(
                                     set(pq.read_schema(feature_path).names)
                                     if feature_path.is_file() else set()))

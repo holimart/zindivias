@@ -369,7 +369,7 @@ def run(workspace: Path, report_path: Path, figure_path: Path,
 
         # Preserve the original baseline cache SHA across idempotent source-mix refreshes.
         old_meta.update({
-            "aggregate_schema_version": 5,
+            "aggregate_schema_version": 7 if "overture_route_km" in feature_schema else 5,
             "source_mix_base_feature_cache_sha256": base_cache_hash,
             "feature_cache_sha256": merged_info["sha256"],
             "source_mix": source_info,

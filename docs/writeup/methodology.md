@@ -31,6 +31,31 @@ Defined-flag heuristics in the audit are: transport expected length at least 6 k
 
 For missing urbanity, use `pct_urban` when finite, otherwise `pop_urban/pop_total` where population is positive, otherwise the disclosed neutral 0.5 fallback. Land area is floored at 0.01 km² in expected-reference proxies. Tracts with zero Overture observations can still have a positive proxy deficit when a component is defined; they are not automatically removed. There is no dedicated water-dominated-tract correction, so water-dominated or very low-population tracts are an acknowledged proxy limitation. ACS housing-unit values are not read; ACS geometries only support tract assignment. Rail, hospitals, and removed reference sources are not used to approximate scored targets.
 
+## Route-reference transport v2 (provided Overture only)
+
+The opt-in route audit is `scripts/estimate_gaps.py --route-audit-only`. It reads only the provided Overture roads `class`, `routes`, and `geometry` columns, official sample GEOIDs, the provided ACS tract `GEOID`/`geometry` solely for clipping, and the existing v0 component flags for an any-undefined comparison. It reads no TIGER or other road reference data, labels, sample score placeholders, or leaderboard values. Named classes remain `motorway`, `trunk`, `primary`, and `secondary`; the v0 `overture_road_km` field is preserved. The v2 `L_named` is independently clipped in EPSG:5070 as `overture_named_road_km_5070`; the v2 `L_route` is the length of each segment once if it carries at least one accepted route network, also clipped in EPSG:5070. The score term is `clip(1 - L_named/L_route, 0, 1)`, defined only for `L_route > 0` (undefined rows serialize gap 0 with `defined=0`).
+
+The route filter accepts interstate (`US:I*`), U.S. (`US:US*`), state-level (`US:<state>` plus explicit SR, loop, spur, beltway, future, alternate, and bypass variants), and county `US:<state>:CR*` networks. It rejects historic/business and scenic networks (`NHT`, `NFSR`/`NFRS`, scenic tokens), missing network values, and unsupported non-route systems. County-name namespaces such as `US:OK:ADAIR` are listed but not treated as numbered county routes without an explicit `:CR` class. A segment with multiple accepted route networks contributes once to `L_route`; per-family length columns can overlap. `overture_route_core_km` and `overture_route_plus_fm_rm_km` are cached separately so the declared Texas FM/RM sensitivity can be measured without re-reading/reclassifying target data. Since the existing repository already used aggregate cache schema v5 for source-mix features, route caches use aggregate schema v6 (base) or v7 (with source mix) and `route_schema_version=1`.
+
+| Region | `sum(L_named)/sum(L_route)` | `L_named` / `L_route` km | `L_route=0` share | Route-v2 + v0 building/POI any-undefined share | Organizer disclosed any-undefined | v0 any-undefined |
+|---|---:|---:|---:|---:|---:|---:|
+| Maricopa AZ | 1.929 | 22,113.7 / 11,466.6 | 0.566 | 0.566 | 0.55 | 0.365 |
+| Northern CA | 1.504 | 12,203.6 / 8,116.7 | 0.308 | 0.308 | 0.37 | 0.305 |
+| Eastern OK | 1.161 | 27,944.0 / 24,071.9 | 0.240 | 0.240 | 0.21 | 0.407 |
+| South-Central TX | 1.183 | 118,176.4 / 99,894.1 | 0.212 | 0.212 | 0.28 | 0.369 |
+
+All four route-v2 transport + v0 building/POI any-undefined shares are within 0.10 of the disclosed region shares; they are a hybrid check, not a full v2 composite. Three of four length ratios meet the lane's broad 0.6–1.7 check; Maricopa is 1.929 and remains out of band even with all accepted state, U.S., Interstate, loop, and explicit county-route networks. The report identifies this as a denominator-coverage failure rather than adding prohibited scenic/business, missing-network, or unclassified county-name routes to force a ratio. In Northern California the observed route-entry counts reproduce `US:CA` 6,055, `US:CA:CR` 2,190, `US:US` 1,024, and `US:I` 861; the report lists all kept/dropped networks and counts for each region, per-tract `L_route` quantiles/bins, and v0 comparisons. The disclosed ratio band (0.71–1.59) and undefined shares are aggregate validation context only, not calibration targets. This is a route mechanism audit, not a validated accuracy result or assembled candidate.
+
+Reproduce from the repository (the command refreshes only route-derived columns in the authorized workspace feature cache and writes aggregate diagnostics):
+
+```sh
+/home/martin/hddProjects/langywrap/uv run \
+  --with pyarrow==26.0.0 --with numpy==2.5.4 --with shapely==2.2.0 \
+  --with pyproj==3.8.0 python scripts/estimate_gaps.py \
+  --workspace "$COMPETITION_WORKSPACE" --route-audit-only \
+  --route-audit-out reports/transport-route-ref-audit.json
+```
+
 ## POI numerator audit and selected category definitions (2026-10-24)
 
 The provided-data POI audit is reproducible with
