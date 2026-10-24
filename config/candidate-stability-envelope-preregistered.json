@@ -1,7 +1,7 @@
 {
   "candidate_id": "CANDIDATE_STABILITY_ENVELOPE_V1",
   "registered_utc": "2026-10-24",
-  "status": "preregistered_before_candidate_distribution_and_spread_measurement",
+  "status": "candidate_set_and_equal_weight_rule_frozen_before_distribution_measurement; deterministic no-new-defined-component fallback added after a structural edge-case check and before final spread outputs",
   "purpose": "analysis-only frozen sensitivity envelope of existing mechanistic and provided-feature candidates; no target fit, accuracy claim, scored promotion, or upload",
   "scope": {
     "official_rows": 9379,
@@ -86,6 +86,7 @@
     "base_component_combine": "arithmetic mean over only components with existing *_defined == 1 flags; same deterministic defined-component rule as scripts/estimate_gaps.py",
     "facility_candidate": "mean the 5 km facility catchment candidate with the existing v0 cbp_gap only when defined; if one half is undefined use the other; if neither exists the POI component is undefined",
     "building_candidates": "replace only the building component and its defined flag as specified by each already-validated feature-only component artifact",
+    "no_defined_component_fallback": "if a component replacement leaves no defined outer component for a row, preserve that row's frozen C2 full-score prediction; count and disclose this no-new-defined-signal fallback by candidate",
     "envelope_aggregation": "equal-weight arithmetic mean of the six frozen full-score candidates; no weights are estimated or adjusted",
     "spread": "per official tract max(candidate score) - min(candidate score)",
     "spread_alert_threshold": 0.05,
@@ -114,7 +115,8 @@
     "The equal-weight envelope mean is a declared diagnostic aggregation, not an accuracy-optimized prediction or submission proposal.",
     "Candidate spread measures model-specification sensitivity only; no labels or authorized holdout scores are available to rank candidates.",
     "Building morphology/source-prior and facility-catchment candidates remain analysis-only; this envelope does not satisfy approvals or prerequisites for a scored v2 assembly.",
-    "The existing v0 CBP component is retained only to make the facility-half replacement comparable; no new establishments sensitivity is incorporated."
+    "The existing v0 CBP component is retained only to make the facility-half replacement comparable; no new establishments sensitivity is incorporated.",
+    "A deterministic C2 fallback is used only if a component replacement leaves no defined full-score component; the fallback preserves an existing model prediction without target input."
   ],
   "acceptance": {
     "exact_ordered_official_ids_for_all_members": true,

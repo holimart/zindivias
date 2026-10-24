@@ -279,8 +279,9 @@ def distribution_before(sources: dict[str, dict[str, dict[str, str]]],
 
 def build_member_scores(ids: list[str], region_by_id: dict[str, str],
                          sources: dict[str, dict[str, dict[str, str]]],
-                         baseline: dict[str, dict[str, str]]) -> dict[str, dict[str, float]]:
+                         baseline: dict[str, dict[str, str]]) -> tuple[dict[str, dict[str, float]], dict[str, int]]:
     scores: dict[str, dict[str, float]] = {geoid: {} for geoid in ids}
+    fallback_rows = {candidate: 0 for candidate in CANDIDATE_ORDER}
     for geoid in ids:
         base = baseline[geoid]
         # The original component candidate must exactly reproduce the frozen C2 artifact.
@@ -334,13 +335,15 @@ def build_member_scores(ids: list[str], region_by_id: dict[str, str],
                  parse_flag(base["poi_defined"], "poi_defined", geoid)),
             ])
             if not full_defined:
-                raise ValueError(f"{candidate_id} composite is undefined at {geoid}")
+                # No new defined component is evidence to alter the frozen prediction.
+                full = c2
+                fallback_rows[candidate_id] += 1
             scores[geoid][candidate_id] = full
         if set(scores[geoid]) != set(CANDIDATE_ORDER):
             raise ValueError(f"candidate set mismatch at {geoid}")
         if any(not math.isfinite(value) or not 0 <= value <= 1 for value in scores[geoid].values()):
             raise ValueError(f"invalid full candidate score at {geoid}")
-    return scores
+    return scores, fallback_rows
 
 
 def group_summary(records: list[dict[str, Any]]) -> dict[str, Any]:
@@ -424,7 +427,7 @@ def run(workspace: Path, members_path: Path, envelope_path: Path,
             raise ValueError(f"C2 official coverage mismatch ({region})")
     before_distributions = distribution_before(sources, baseline, ids)
     coverage = feature_coverage(sources, baseline, ids)
-    scores = build_member_scores(ids, region_by_id, sources, baseline)
+    scores, fallback_rows = build_member_scores(ids, region_by_id, sources, baseline)
 
     records: list[dict[str, Any]] = []
     for geoid in ids:
@@ -535,6 +538,7 @@ def run(workspace: Path, members_path: Path, envelope_path: Path,
             "candidate_spread": global_summary["spread"],
             "spread_share_gt_0_05": global_summary["spread_share_gt_0_05"],
             "candidate_pair_deltas_vs_C2": global_summary["candidate_pair_deltas_vs_C2"],
+            "no_new_defined_component_fallback_rows": fallback_rows,
             "by_region": by_region,
             "by_region_and_urbanity": by_region_urbanity,
             "p95_spread_limit": 0.10,
