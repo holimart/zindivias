@@ -27,13 +27,12 @@ from pyproj import Transformer
 REGIONS = ("maricopa-az", "northern-ca", "eastern-ok", "south-central-tx")
 BUCKET = "us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge"
 ROAD_CLASSES = {"motorway", "trunk", "primary", "secondary"}
-FIRE_CATEGORIES = {"fire_department", "fire_protection_service"}
-EMS_CATEGORIES = {"ambulance_and_ems_services"}
-SCHOOL_CATEGORIES = {
-    "school", "elementary_school", "middle_school", "high_school",
-    "public_school", "private_school", "charter_school", "religious_school",
-    "preschool", "montessori_school",
-}
+POI_CATEGORY_CONFIG = Path(__file__).resolve().parents[1] / "config/poi-category-definitions.json"
+with POI_CATEGORY_CONFIG.open("r", encoding="utf-8") as _stream:
+    _poi_category_definitions = json.load(_stream)["selected_sets"]
+FIRE_CATEGORIES = set(_poi_category_definitions["fire"])
+EMS_CATEGORIES = set(_poi_category_definitions["ems"])
+SCHOOL_CATEGORIES = set(_poi_category_definitions["schools"])
 OUTPUT_COLUMNS = [
     "GEOID", "coverage_gap_score", "transport_gap", "transport_defined",
     "building_gap", "building_defined", "poi_gap", "poi_defined",

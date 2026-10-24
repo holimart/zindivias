@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "source_audit": "reports/poi-category-audit.json",
+  "matching_rule": "A provided Overture POI is included for a component if its categories.primary or any categories.alternate value is in that component's exact set; count the POI at most once per component.",
+  "v2_contract": "Estimator-v2 code must load selected_sets from this file; do not duplicate category strings or infer replacements from leaderboard scores.",
+  "selected_sets": {
+    "fire": [
+      "fire_department",
+      "fire_protection_service"
+    ],
+    "ems": [
+      "ambulance_and_ems_services"
+    ],
+    "schools": [
+      "charter_school",
+      "elementary_school",
+      "high_school",
+      "middle_school",
+      "montessori_school",
+      "preschool",
+      "private_school",
+      "public_school",
+      "religious_school",
+      "school"
+    ]
+  },
+  "exclusions": {
+    "hospitals": "Excluded per organizer method: Overture hospital categories exceed the removed reference count and are not a facilities component.",
+    "ems": "emergency_medicine and emergency_room describe emergency clinical care, not ambulance/EMS stations; emergency roadside services are also not stations.",
+    "schools": "Exclude dance, driving, music, cosmetology, flight, specialty/vocational, sports, and other commercial/activity schools; exclude day_care_preschool absent evidence it is part of the organizer's school reference definition."
+  },
+  "sensitivity_variants": {
+    "fire_all_fire_or_rescue_categories": "Diagnostic only; the regex also captures firework retail, fire/water restoration, firearm training, fireplace service, firewood, and animal rescue, so it is not a defensible station set.",
+    "ems_plus_emergency_medicine": "Diagnostic only; measures the zero-tract change if the emergency_medicine category is added.",
+    "schools_plus_day_care_preschool": "Diagnostic only; measures the zero-tract change if day_care_preschool is counted.",
+    "schools_all_school_or_education_categories": "Diagnostic only; intentionally broad regex includes specialty, commercial, administrative, and activity categories."
+  },
+  "provenance": "Sets are the existing estimator-v0 category contract retained after the 2026-10-24 provided-data category/source/confidence/name audit. No leaderboard information, hidden target, removed reference layer, or external facility list was used to choose them."
+}
