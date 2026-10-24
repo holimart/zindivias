@@ -1,0 +1,681 @@
+{
+  "screen": "global pooled vs region-specific top-level component-rate normalization",
+  "purpose": "deterministic no-label sensitivity screen for later steward-authorized calibration; not an accuracy measurement",
+  "variant_id_scope": "C0/C1 names below are local to this sensitivity bundle and do not overwrite frozen public-probe C0/C1 candidates",
+  "method": {
+    "input_component_rate": "bounded retained fraction 1 - C2 component gap (the C2 gaps are already clipped to [0,1]), only where that component's C2 defined flag is 1; this is not a raw observed/reference ratio",
+    "global_rate": "unweighted arithmetic mean of defined per-tract bounded retained fractions across all 9,379 authoritative IDs",
+    "region_rate": "unweighted arithmetic mean of defined per-tract bounded retained fractions within each authoritative region",
+    "normalized_gap": "clip(1 - input_component_rate / selected_normalizer_rate, 0, 1)",
+    "candidate_composite": "mean of normalized top-level component gaps whose original C2 defined flags equal 1; undefined components remain excluded (same exact mask as C2)",
+    "C0": "use one fixed globally pooled normalizer for each of transport, building, and POI",
+    "C1": "use the corresponding region-specific normalizer for each of transport, building, and POI"
+  },
+  "rates": {
+    "C0_global_pooled_component_rates": {
+      "transport": 0.8464419129857367,
+      "building": 0.9276199056809432,
+      "poi": 0.7429553551982401
+    },
+    "C1_region_specific_component_rates": {
+      "maricopa-az": {
+        "transport": 0.7579812700802315,
+        "building": 0.9509501375627153,
+        "poi": 0.6871486606029485
+      },
+      "northern-ca": {
+        "transport": 0.8286338366345083,
+        "building": 0.953431201376826,
+        "poi": 0.7663178401194595
+      },
+      "eastern-ok": {
+        "transport": 0.8811258147070349,
+        "building": 0.9807791333543777,
+        "poi": 0.8006537951551568
+      },
+      "south-central-tx": {
+        "transport": 0.8655254825606012,
+        "building": 0.908331993881732,
+        "poi": 0.7440078956870276
+      }
+    },
+    "defined_tract_counts_by_region": {
+      "maricopa-az": {
+        "transport": 1011,
+        "building": 1593,
+        "poi": 1593
+      },
+      "northern-ca": {
+        "transport": 411,
+        "building": 591,
+        "poi": 591
+      },
+      "eastern-ok": {
+        "transport": 707,
+        "building": 1192,
+        "poi": 1192
+      },
+      "south-central-tx": {
+        "transport": 3785,
+        "building": 6003,
+        "poi": 6001
+      }
+    }
+  },
+  "measure_before_C0": {
+    "artifact": "reports/estimator-sensitivity/C0_global_pooled_component_rates.csv",
+    "sha256": "8d51483a168f0126cbfd4c72bc5259df0010b9fb68294a8d4b18ad5851d1c232",
+    "rows": 9379,
+    "columns": [
+      "GEOID",
+      "transport_gap",
+      "building_gap",
+      "poi_gap",
+      "coverage_gap_score"
+    ],
+    "exact_ordered_ids_once": true,
+    "valid_rows": 9379,
+    "validity_rate": 1.0,
+    "per_region": {
+      "maricopa-az": {
+        "rows": 1593,
+        "valid_rows": 1593,
+        "validity_rate": 1.0
+      },
+      "northern-ca": {
+        "rows": 591,
+        "valid_rows": 591,
+        "validity_rate": 1.0
+      },
+      "eastern-ok": {
+        "rows": 1192,
+        "valid_rows": 1192,
+        "validity_rate": 1.0
+      },
+      "south-central-tx": {
+        "rows": 6003,
+        "valid_rows": 6003,
+        "validity_rate": 1.0
+      }
+    }
+  },
+  "measure_after_C1": {
+    "artifact": "reports/estimator-sensitivity/C1_region_specific_component_rates.csv",
+    "sha256": "19de3ddc8186b71b20a4971374557b6f827fe782196691d33d77310a85193647",
+    "rows": 9379,
+    "columns": [
+      "GEOID",
+      "transport_gap",
+      "building_gap",
+      "poi_gap",
+      "coverage_gap_score"
+    ],
+    "exact_ordered_ids_once": true,
+    "valid_rows": 9379,
+    "validity_rate": 1.0,
+    "per_region": {
+      "maricopa-az": {
+        "rows": 1593,
+        "valid_rows": 1593,
+        "validity_rate": 1.0
+      },
+      "northern-ca": {
+        "rows": 591,
+        "valid_rows": 591,
+        "validity_rate": 1.0
+      },
+      "eastern-ok": {
+        "rows": 1192,
+        "valid_rows": 1192,
+        "validity_rate": 1.0
+      },
+      "south-central-tx": {
+        "rows": 6003,
+        "valid_rows": 6003,
+        "validity_rate": 1.0
+      }
+    }
+  },
+  "paired_delta_C1_minus_C0": {
+    "all_regions": {
+      "transport_gap": {
+        "n": 9379,
+        "mean": -0.0012038618241894644,
+        "min": -0.10411623247905255,
+        "q05": -0.011533288586374466,
+        "q25": 0.0,
+        "q50": 0.0,
+        "q75": 0.0,
+        "q95": 0.015815978401413952,
+        "max": 0.03890627157931115
+      },
+      "building_gap": {
+        "n": 9379,
+        "mean": -0.0005943503989265302,
+        "min": -0.020781967084749553,
+        "q05": -0.01563152971596926,
+        "q25": 0.0,
+        "q50": 0.0,
+        "q75": 0.0,
+        "q95": 0.0,
+        "max": 0.05409622970622352
+      },
+      "poi_gap": {
+        "n": 9379,
+        "mean": -0.00244583264937635,
+        "min": -0.07510412674339007,
+        "q05": -0.07285953046603529,
+        "q25": 0.0,
+        "q50": 0.0,
+        "q75": 0.001276546660400113,
+        "q95": 0.05009273685879662,
+        "max": 0.07105684400854995
+      },
+      "coverage_gap_score": {
+        "n": 9379,
+        "mean": -0.0015092734732713839,
+        "min": -0.05910606453921733,
+        "q05": -0.03176670877860492,
+        "q25": -0.00015462845361598893,
+        "q50": 0.0,
+        "q75": 0.0006365139695608257,
+        "q95": 0.021842469044186776,
+        "max": 0.06051039693163485
+      }
+    },
+    "per_region": {
+      "maricopa-az": {
+        "transport_gap": {
+          "n": 1593,
+          "mean": -0.016035461792766825,
+          "min": -0.10411623247905255,
+          "q05": -0.08842955949645843,
+          "q25": -0.013765020796732141,
+          "q50": 0.0,
+          "q75": 0.0,
+          "q95": 0.0,
+          "max": 0.0
+        },
+        "building_gap": {
+          "n": 1593,
+          "mean": 0.0030872841654653303,
+          "min": 0.0,
+          "q05": 0.0,
+          "q25": 0.0,
+          "q50": 0.0,
+          "q75": 0.0,
+          "q95": 0.022335897415913103,
+          "max": 0.02451674652510072
+        },
+        "poi_gap": {
+          "n": 1593,
+          "mean": -0.04235626921882831,
+          "min": -0.07510412674339007,
+          "q05": -0.07413143300044128,
+          "q25": -0.07314546065986349,
+          "q50": -0.056373253263928724,
+          "q75": 0.0,
+          "q95": 0.0,
+          "max": 0.0
+        },
+        "coverage_gap_score": {
+          "n": 1593,
+          "mean": -0.021048691264989566,
+          "min": -0.05910606453921733,
+          "q05": -0.04868479645633796,
+          "q25": -0.034624672213726476,
+          "q50": -0.024147160904473698,
+          "q75": 0.0,
+          "q95": 0.0,
+          "max": 0.012021776891785185
+        }
+      },
+      "northern-ca": {
+        "transport_gap": {
+          "n": 591,
+          "mean": -0.002538735171572818,
+          "min": -0.020848469014020155,
+          "q05": -0.017074366852244838,
+          "q25": 0.0,
+          "q50": 0.0,
+          "q75": 0.0,
+          "q95": 0.0,
+          "max": 0.0
+        },
+        "building_gap": {
+          "n": 591,
+          "mean": 0.0036705752786180745,
+          "min": 0.0,
+          "q05": 0.0,
+          "q25": 0.0,
+          "q50": 0.0,
+          "q75": 0.0,
+          "q95": 0.02514723997998669,
+          "max": 0.027029799749622163
+        },
+        "poi_gap": {
+          "n": 591,
+          "mean": 0.012094051667653646,
+          "min": 0.0,
+          "q05": 0.0,
+          "q25": 0.0,
+          "q50": 0.0,
+          "q75": 0.027480634823594974,
+          "q95": 0.028049553051349208,
+          "max": 0.030338224394512392
+        },
+        "coverage_gap_score": {
+          "n": 591,
+          "mean": 0.005530770842994241,
+          "min": -0.006709936593525813,
+          "q05": -0.0030684537685803787,
+          "q25": 0.0,
+          "q50": 0.0032363296644782047,
+          "q75": 0.009348285578925216,
+          "q95": 0.02086986244455563,
+          "max": 0.027363597604875056
+        }
+      },
+      "eastern-ok": {
+        "transport_gap": {
+          "n": 1192,
+          "mean": 0.0027315557195129393,
+          "min": 0.0,
+          "q05": 0.0,
+          "q25": 0.0,
+          "q50": 0.0,
+          "q75": 0.0,
+          "q95": 0.025573212720272624,
+          "max": 0.03890627157931115
+        },
+        "building_gap": {
+          "n": 1192,
+          "mean": 0.002284370904667473,
+          "min": 0.0,
+          "q05": 0.0,
+          "q25": 0.0,
+          "q50": 0.0,
+          "q75": 0.0,
+          "q95": 0.026709539751092894,
+          "max": 0.05409622970622352
+        },
+        "poi_gap": {
+          "n": 1192,
+          "mean": 0.028052810514238843,
+          "min": 0.0,
+          "q05": 0.0,
+          "q25": 0.0,
+          "q50": 0.0,
+          "q75": 0.06499247532457597,
+          "q95": 0.06683504579409599,
+          "max": 0.07105684400854995
+        },
+        "coverage_gap_score": {
+          "n": 1192,
+          "mean": 0.014069814450170252,
+          "min": 0.0,
+          "q05": 0.0,
+          "q25": 0.0,
+          "q50": 0.006679195241264577,
+          "q75": 0.030033131260705767,
+          "q95": 0.034385846111681065,
+          "max": 0.06051039693163485
+        }
+      },
+      "south-central-tx": {
+        "transport_gap": {
+          "n": 6003,
+          "mean": 0.002081933809019603,
+          "min": 0.0,
+          "q05": 0.0,
+          "q25": 0.0,
+          "q50": 0.0,
+          "q75": 0.0,
+          "q95": 0.01682774370425144,
+          "max": 0.022042941511511427
+        },
+        "building_gap": {
+          "n": 6003,
+          "mean": -0.002562841275219908,
+          "min": -0.020781967084749553,
+          "q05": -0.017985699189409045,
+          "q25": 0.0,
+          "q50": 0.0,
+          "q75": 0.0,
+          "q95": 0.0,
+          "max": 0.0
+        },
+        "poi_gap": {
+          "n": 6003,
+          "mean": 0.000657594166006447,
+          "min": 0.0,
+          "q05": 0.0,
+          "q25": 0.0,
+          "q50": 0.0009426485877909174,
+          "q75": 0.0012764812186795704,
+          "q95": 0.0013028303959295216,
+          "max": 0.0014126658787235735
+        },
+        "coverage_gap_score": {
+          "n": 6003,
+          "mean": -0.00011074714534340637,
+          "min": -0.010365131738381272,
+          "q05": -0.006400769118367261,
+          "q25": 0.0,
+          "q50": 0.0,
+          "q75": 0.0006044857639385115,
+          "q95": 0.005485309549459873,
+          "max": 0.007783876487039824
+        }
+      }
+    }
+  },
+  "defined_component_semantics_check": {
+    "source": "C2 gap-estimator-audit flags",
+    "counts_by_region": {
+      "maricopa-az": {
+        "transport": 1011,
+        "building": 1593,
+        "poi": 1593
+      },
+      "northern-ca": {
+        "transport": 411,
+        "building": 591,
+        "poi": 591
+      },
+      "eastern-ok": {
+        "transport": 707,
+        "building": 1192,
+        "poi": 1192
+      },
+      "south-central-tx": {
+        "transport": 3785,
+        "building": 6003,
+        "poi": 6001
+      }
+    },
+    "same_flag_mask_used_for_C0_and_C1": true
+  },
+  "feature_lineage": {
+    "C2_estimates": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/gap-estimates.csv",
+      "sha256": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852",
+      "read_columns": [
+        "GEOID",
+        "coverage_gap_score",
+        "transport_gap",
+        "transport_defined",
+        "building_gap",
+        "building_defined",
+        "poi_gap",
+        "poi_defined",
+        "fire_gap",
+        "fire_defined",
+        "ems_gap",
+        "ems_defined",
+        "schools_gap",
+        "schools_defined",
+        "cbp_gap",
+        "cbp_defined"
+      ]
+    },
+    "C2_audit": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/gap-estimator-audit.json",
+      "sha256": "a872e2dd62a5333037bc8e663278134c5b0a08493c7ec41768962e33859187f9"
+    },
+    "provided_inputs_by_region": {
+      "maricopa-az": {
+        "permitted_feature_cache": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/maricopa-az-overture-tract-summary.parquet",
+        "feature_cache_sha256": "54b83014db1a6f397091b649f4a317090fade8583715829f6e9137ca706f1e17",
+        "strata_file": "$COMPETITION_WORKSPACE/defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+        "strata_sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd",
+        "feature_source_layers": [
+          "provided Overture roads",
+          "provided Overture buildings",
+          "provided Overture POIs"
+        ],
+        "strata_covariates": [
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban"
+        ],
+        "excluded": [
+          "sample score placeholders",
+          "organiser labels",
+          "removed references",
+          "external data",
+          "ACS housing_units values"
+        ]
+      },
+      "northern-ca": {
+        "permitted_feature_cache": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/northern-ca-overture-tract-summary.parquet",
+        "feature_cache_sha256": "0a9f7cebb26058a6f2e5ab8d6d70df6443ad62f558dcd65e742b161737cbeef2",
+        "strata_file": "$COMPETITION_WORKSPACE/defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+        "strata_sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+        "feature_source_layers": [
+          "provided Overture roads",
+          "provided Overture buildings",
+          "provided Overture POIs"
+        ],
+        "strata_covariates": [
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban"
+        ],
+        "excluded": [
+          "sample score placeholders",
+          "organiser labels",
+          "removed references",
+          "external data",
+          "ACS housing_units values"
+        ]
+      },
+      "eastern-ok": {
+        "permitted_feature_cache": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/eastern-ok-overture-tract-summary.parquet",
+        "feature_cache_sha256": "338e4197146ca29a0823f731cfae0085345a3cdcbb6183b6cf4ec00e8f12fbf8",
+        "strata_file": "$COMPETITION_WORKSPACE/defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+        "strata_sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54",
+        "feature_source_layers": [
+          "provided Overture roads",
+          "provided Overture buildings",
+          "provided Overture POIs"
+        ],
+        "strata_covariates": [
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban"
+        ],
+        "excluded": [
+          "sample score placeholders",
+          "organiser labels",
+          "removed references",
+          "external data",
+          "ACS housing_units values"
+        ]
+      },
+      "south-central-tx": {
+        "permitted_feature_cache": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/south-central-tx-overture-tract-summary.parquet",
+        "feature_cache_sha256": "7252546e436c4febb066be0bf6d96539884c3327ffb7f119d309e963bb9eeafb",
+        "strata_file": "$COMPETITION_WORKSPACE/defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+        "strata_sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354",
+        "feature_source_layers": [
+          "provided Overture roads",
+          "provided Overture buildings",
+          "provided Overture POIs"
+        ],
+        "strata_covariates": [
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban"
+        ],
+        "excluded": [
+          "sample score placeholders",
+          "organiser labels",
+          "removed references",
+          "external data",
+          "ACS housing_units values"
+        ]
+      }
+    },
+    "official_samples_by_region": {
+      "maricopa-az": {
+        "path": "$COMPETITION_WORKSPACE/samples/maricopa-az-sample-submission.csv",
+        "sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+        "rows": 1593,
+        "columns": [
+          "GEOID",
+          "transport_gap",
+          "building_gap",
+          "poi_gap",
+          "coverage_gap_score"
+        ],
+        "read_values": [
+          "GEOID only; score placeholders are ignored"
+        ]
+      },
+      "northern-ca": {
+        "path": "$COMPETITION_WORKSPACE/samples/northern-ca-sample-submission.csv",
+        "sha256": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+        "rows": 591,
+        "columns": [
+          "GEOID",
+          "transport_gap",
+          "building_gap",
+          "poi_gap",
+          "coverage_gap_score"
+        ],
+        "read_values": [
+          "GEOID only; score placeholders are ignored"
+        ]
+      },
+      "eastern-ok": {
+        "path": "$COMPETITION_WORKSPACE/samples/eastern-ok-sample-submission.csv",
+        "sha256": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+        "rows": 1192,
+        "columns": [
+          "GEOID",
+          "transport_gap",
+          "building_gap",
+          "poi_gap",
+          "coverage_gap_score"
+        ],
+        "read_values": [
+          "GEOID only; score placeholders are ignored"
+        ]
+      },
+      "south-central-tx": {
+        "path": "$COMPETITION_WORKSPACE/samples/south-central-tx-sample-submission.csv",
+        "sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e",
+        "rows": 6003,
+        "columns": [
+          "GEOID",
+          "transport_gap",
+          "building_gap",
+          "poi_gap",
+          "coverage_gap_score"
+        ],
+        "read_values": [
+          "GEOID only; score placeholders are ignored"
+        ]
+      }
+    },
+    "frozen_probe_C0_C1_unchanged": {
+      "C0": {
+        "artifact": "reports/candidates/C0_all_zero.csv",
+        "sha256": "7546520ee671aaaa10fabe3fd4f6edaa7b88a1a424c9957bac29dcf7a0810f73",
+        "meaning": "All score fields zero; target-RMS baseline.",
+        "validity": {
+          "artifact": "reports/candidates/C0_all_zero.csv",
+          "sha256": "7546520ee671aaaa10fabe3fd4f6edaa7b88a1a424c9957bac29dcf7a0810f73",
+          "rows": 9379,
+          "columns": [
+            "GEOID",
+            "transport_gap",
+            "building_gap",
+            "poi_gap",
+            "coverage_gap_score"
+          ],
+          "exact_ordered_ids_once": true,
+          "valid_rows": 9379,
+          "validity_rate": 1.0,
+          "per_region": {
+            "maricopa-az": {
+              "rows": 1593,
+              "valid_rows": 1593,
+              "validity_rate": 1.0
+            },
+            "northern-ca": {
+              "rows": 591,
+              "valid_rows": 591,
+              "validity_rate": 1.0
+            },
+            "eastern-ok": {
+              "rows": 1192,
+              "valid_rows": 1192,
+              "validity_rate": 1.0
+            },
+            "south-central-tx": {
+              "rows": 6003,
+              "valid_rows": 6003,
+              "validity_rate": 1.0
+            }
+          }
+        },
+        "note": "These existing probe candidates are unchanged; C0/C1 IDs in this sensitivity bundle are bundle-local variants."
+      },
+      "C1": {
+        "artifact": "reports/candidates/C1_region_constants.csv",
+        "sha256": "617b329b52c03dd12f5b06ab7d3dc880348e2cfdc45515347b76970e1df4c62e",
+        "meaning": "Within each region all four official score columns equal that region's C2 coverage-score prediction mean.",
+        "validity": {
+          "artifact": "reports/candidates/C1_region_constants.csv",
+          "sha256": "617b329b52c03dd12f5b06ab7d3dc880348e2cfdc45515347b76970e1df4c62e",
+          "rows": 9379,
+          "columns": [
+            "GEOID",
+            "transport_gap",
+            "building_gap",
+            "poi_gap",
+            "coverage_gap_score"
+          ],
+          "exact_ordered_ids_once": true,
+          "valid_rows": 9379,
+          "validity_rate": 1.0,
+          "per_region": {
+            "maricopa-az": {
+              "rows": 1593,
+              "valid_rows": 1593,
+              "validity_rate": 1.0
+            },
+            "northern-ca": {
+              "rows": 591,
+              "valid_rows": 591,
+              "validity_rate": 1.0
+            },
+            "eastern-ok": {
+              "rows": 1192,
+              "valid_rows": 1192,
+              "validity_rate": 1.0
+            },
+            "south-central-tx": {
+              "rows": 6003,
+              "valid_rows": 6003,
+              "validity_rate": 1.0
+            }
+          }
+        },
+        "note": "These existing probe candidates are unchanged; C0/C1 IDs in this sensitivity bundle are bundle-local variants."
+      }
+    },
+    "removed_or_external_reference_layers_used": []
+  },
+  "no_label_caveat": "All rates derive from C2's heuristic gaps over permitted provided Overture and strata inputs. No target labels, removed reference layers, external data, public leaderboard values, or sample score placeholders were used. Differences measure normalization sensitivity only, not accuracy or true regional target rates.",
+  "upload_status": "local screen only; no upload performed; existing platform-contract stop remains in force",
+  "environment": {
+    "python": "3.12.3"
+  }
+}
