@@ -1,0 +1,100 @@
+{
+  "candidate_id": "FACILITY_CATCHMENT_V1",
+  "registered_utc": "2026-10-25",
+  "status": "preregistered_before_nearest_facility_and_catchment_measurement",
+  "purpose": "analysis-only alternative facility-miss prior using challenge-provided Overture facility points and same-region spatial catchments; no target fitting, RMSE claim, or upload",
+  "scope": {
+    "regions": ["maricopa-az", "northern-ca", "eastern-ok", "south-central-tx"],
+    "official_scored_ids": 9379,
+    "candidate_rows": 9379,
+    "id_order": "concatenation in declared region order, preserving authoritative sample GEOID order within each region"
+  },
+  "measure_before": {
+    "source_report": "reports/poi-facility-miss-audit.json",
+    "source_report_sha256": "b559c8d3d85709d0e5f2d2102bb39da4d8255a3c62f728cf736da522025a289c",
+    "source_category_config": "config/poi-category-definitions.json",
+    "source_category_config_sha256": "8309a0bb08613b92621f4977eb78998e469951c0cd0ed012d93ea2f5cf59654f",
+    "meaning": "Freeze the existing pooled logistic facility-miss prior and category/zero-share report as baseline; do not refit its coefficients or use target/leaderboard moments."
+  },
+  "inputs": {
+    "overture_points": {
+      "dataset": "provided challenge reference/<region>/<region>-overture-pois.parquet",
+      "columns_read": ["bbox", "categories"],
+      "point_location": "center of provided Overture bbox",
+      "category_rule": "categories.primary or any categories.alternate matches the exact selected_sets in config/poi-category-definitions.json; each POI contributes at most once per facility type",
+      "facility_types": ["fire", "ems", "schools"],
+      "provenance": "challenge-provided Overture POI point records only; no external facility list, USGS coordinates, Overture names, source metadata, confidence, or geometry column"
+    },
+    "tract_geometry": {
+      "source": "provided challenge reference/<region>/<region>-census-acs-housing.parquet",
+      "columns_read": ["GEOID", "geometry"],
+      "meaning": "Provided polygons only, for assigning Overture bbox centers and computing official tract representative centroids; no housing_units or other ACS columns are read",
+      "input_crs": "EPSG:4326",
+      "distance_crs": "EPSG:5070"
+    },
+    "strata": {
+      "columns_read": ["GEOID", "ALAND", "pop_total", "pop_urban", "pct_urban", "ur_class"],
+      "meaning": "Provided population, land area and urbanity inputs; ur_class is descriptive grouping only"
+    },
+    "existing_overture_summary": {
+      "columns_read": ["GEOID", "overture_poi_fire", "overture_poi_ems", "overture_poi_schools", "overture_poi_unclassified", "overture_unclassified_fire_share", "overture_unclassified_ems_share", "overture_unclassified_schools_share"],
+      "meaning": "Validate raw point-to-tract selected-category counts and reproduce the frozen existing logistic baseline's unclassified-count treatment"
+    },
+    "official_sample": {
+      "columns_read": ["GEOID"],
+      "meaning": "Authoritative 9,379 scored IDs and order only; sample score placeholders are never parsed or used"
+    }
+  },
+  "catchments": {
+    "facility_pool": "All selected-type Overture bbox centers assigned to any provided ACS tract geometry in the same region package; official-scored tracts are target locations, while any extra provided tract geometries may contribute Overture context points only. Unassigned points are excluded and counted. No facilities cross region-package boundaries.",
+    "target_location": "centroid of official scored tract polygon transformed to EPSG:5070",
+    "radii_meters": [1000, 5000, 10000],
+    "nearest_distance": "Euclidean centroid-to-nearest-selected-Overture-point distance in EPSG:5070",
+    "radius_coverage": "tract covered if at least one same-region selected-type Overture point is within radius, inclusive",
+    "kernel_access": "exp(-nearest_distance_m / radius_m); zero when the region has no selected points of that type",
+    "population_weighting": "provided tract pop_total weights the centroid-based radius-coverage share and kernel-access mean; zero-population rows carry zero weight"
+  },
+  "baseline_and_spatial_expected_gap": {
+    "baseline": "Existing fixed region-pooled logistic P(reference type present | pop_total, ALAND, urban_fraction) from scripts/estimate_gaps.py, times its one-count-ahead conditional gap 1/(model_count+1); no coefficient refit",
+    "urban_fraction": "existing model rule: pct_urban; otherwise pop_urban/pop_total if population>0; otherwise neutral 0.5",
+    "model_count": "raw exact selected-category count + provided unclassified-category count multiplied by its already-provided region share, matching the existing logistic audit",
+    "spatial_adjustment": "For each type and radius, multiply the existing reference-presence probability by (1 + 0.05 * (1 - kernel_access)), cap probability at 1, then apply the same conditional-gap transform. This is a fixed ≤5% relative presence-prior uplift, not a fitted coefficient or observed reference count.",
+    "spatial_relative_uplift": 0.05,
+    "facility_candidate": "unweighted mean of the three expected type gaps; all three pooled-prior types remain defined under the existing positive logistic prior",
+    "candidate_delta": "catchment facility candidate minus existing logistic facility-half baseline; nonnegative and at most 0.05 by construction",
+    "primary_radius_meters": 5000,
+    "sensitivity_radii_meters": [1000, 10000],
+    "maximum_absolute_adjustment": 0.05
+  },
+  "reporting_plan": {
+    "before": "Report facility-type zero counts/shares and existing logistic expected facility-gap/candidate moments globally, per region and per region x rural/urban, sourced from the pinned audit report.",
+    "after": "Report facility-type nearest-distance quantiles, tract- and population-weighted radius coverage/kernel access, candidate/delta summaries by region and urbanity for all three radii, local zero counts, zero-population and missing-urbanity cases, nonofficial neighboring geometry/point usage and unmatched edge records.",
+    "determinism": "Repeat full build; require byte-identical candidate CSV, report, and manifest hashes.",
+    "accuracy_claim": false,
+    "target_rmse": false
+  },
+  "restrictions": {
+    "usgs_facility_lists_or_coordinates": false,
+    "external_poi_or_facility_data": false,
+    "removed_reference_layers_or_equivalent_copies": false,
+    "target_reconstruction_or_score_placeholders": false,
+    "leaderboard_information_or_probes": false,
+    "upload": false
+  },
+  "limitations": [
+    "Centroid-based Euclidean catchment is a spatial context proxy, not a road-network/service-area model or a validation of facility completeness.",
+    "Population is available only at tract scale; population-weighted access assigns the tract total to its centroid and does not model within-tract population distribution.",
+    "A nearby Overture facility is not proof that an unobserved facility is absent or that an emergency service is accessible.",
+    "The existing fixed pooled logistic prior is an explicit model assumption; the fixed catchment uplift is a sensitivity, not empirically calibrated or accuracy tested."
+  ],
+  "acceptance": {
+    "exact_official_id_coverage_and_order": true,
+    "zero_nan_or_nonfinite_candidate_values": true,
+    "1_5_10_km_radius_sensitivity": true,
+    "population_weighted_access_summaries": true,
+    "zero_population_and_edge_cases_reported": true,
+    "maximum_adjustment_at_most_0_05": true,
+    "deterministic_hash": true,
+    "no_accuracy_claim": true
+  }
+}
