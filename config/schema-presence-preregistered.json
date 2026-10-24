@@ -1,0 +1,130 @@
+{
+  "candidate_id": "SCHEMA_PRESENCE_C2_V1",
+  "registered_utc": "2026-10-25",
+  "status": "preregistered_before_schema_presence_measurement",
+  "purpose": "analysis-only metadata/support sensitivity based on optional Overture attributes; no labels, target fit, accuracy claim, promotion, or upload",
+  "source_docs": {
+    "schema_overview": "https://docs.overturemaps.org/schema/",
+    "places": "https://docs.overturemaps.org/schema/reference/places/place/",
+    "buildings": "https://docs.overturemaps.org/schema/reference/buildings/building/",
+    "transportation_segment": "https://docs.overturemaps.org/schema/reference/transportation/segment/",
+    "schema_source": "https://github.com/OvertureMaps/schema",
+    "intrinsic_completeness_prior_art": "https://wiki.openstreetmap.org/wiki/Completeness",
+    "schema_documentation_version_observed": "v2.0.0; challenge parquet top-level schemas are inventoried in docs/data-inventory.md"
+  },
+  "scope": {
+    "official_regions_order": ["maricopa-az", "northern-ca", "eastern-ok", "south-central-tx"],
+    "official_rows": 9379,
+    "candidate_csv": "reports/candidates/schema_presence_candidate.csv",
+    "candidate_id": "SCHEMA_PRESENCE_C2_V1",
+    "baseline_candidate": "C2 component estimator v0, official-region rows only"
+  },
+  "frozen_inputs": {
+    "baseline": {
+      "candidate_path": "reports/candidates/C2_component_estimator_v0.csv",
+      "candidate_sha256": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514",
+      "catalog_path": "reports/candidates.json",
+      "catalog_sha256": "f68bd57cfdcf2005d4df21a7d436bec503e39fd39c0a4f23c1ffa5b93d67d684",
+      "candidate_id": "C2",
+      "columns_read": ["GEOID", "coverage_gap_score"],
+      "role": "measure-before and candidate baseline only; model estimates are not labels or sample placeholders"
+    },
+    "feature_inventory": {
+      "path": "docs/data-inventory.md",
+      "sha256": "88fe309bd2a577d544081fd95ddc7980e77a4e4751d175eab7d5752e7f4ce950",
+      "role": "frozen challenge package schema inventory; schema verification uses public package Parquet footers"
+    },
+    "official_ids": {
+      "path_pattern": "$COMPETITION_WORKSPACE/samples/<region>-sample-submission.csv",
+      "columns_read": ["GEOID"],
+      "score_placeholders_read": false
+    },
+    "provided_tract_assignment": {
+      "source_uri_pattern": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/<region>/<region>-census-acs-housing.parquet",
+      "columns_read": ["GEOID", "geometry"],
+      "role": "provided polygon index only; no housing-unit values"
+    },
+    "provided_overture": {
+      "source_uri_pattern": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/<region>/<region>-overture-<theme>.parquet",
+      "themes": ["pois", "buildings", "roads"],
+      "spatial_assignment_column": "bbox",
+      "geometry_column_read": false,
+      "sources_column_read": false
+    }
+  },
+  "field_registry": {
+    "pois": {
+      "top_level_schema_fields": ["id", "categories", "confidence", "websites", "emails", "socials", "phones", "brand", "addresses", "names", "sources", "operating_status", "basic_category", "taxonomy", "version", "theme", "type", "bbox", "geometry"],
+      "modeled_optional_fields": ["categories", "websites", "emails", "socials", "phones", "brand", "addresses", "names", "operating_status", "basic_category", "taxonomy"],
+      "explicitly_excluded_fields": ["id", "confidence", "sources", "version", "theme", "type", "bbox", "geometry"],
+      "unknown_token_fields": ["operating_status", "basic_category"]
+    },
+    "buildings": {
+      "top_level_schema_fields": ["id", "names", "sources", "level", "height", "min_height", "is_underground", "num_floors", "num_floors_underground", "min_floor", "subtype", "class", "facade_color", "facade_material", "roof_material", "roof_shape", "roof_direction", "roof_orientation", "roof_color", "roof_height", "has_parts", "version", "theme", "type", "bbox", "geometry"],
+      "modeled_optional_fields": ["names", "level", "height", "min_height", "is_underground", "num_floors", "num_floors_underground", "min_floor", "subtype", "class", "facade_color", "facade_material", "roof_material", "roof_shape", "roof_direction", "roof_orientation", "roof_color", "roof_height", "has_parts"],
+      "explicitly_excluded_fields": ["id", "sources", "version", "theme", "type", "bbox", "geometry"],
+      "unknown_token_fields": ["subtype", "class", "facade_color", "facade_material", "roof_material", "roof_shape", "roof_orientation", "roof_color"]
+    },
+    "roads": {
+      "top_level_schema_fields": ["id", "names", "subtype", "class", "subclass", "subclass_rules", "connectors", "road_surface", "road_flags", "rail_flags", "width_rules", "level_rules", "access_restrictions", "speed_limits", "prohibited_transitions", "routes", "destinations", "sources", "version", "theme", "type", "bbox", "geometry"],
+      "modeled_optional_fields": ["names", "subclass", "subclass_rules", "connectors", "road_surface", "road_flags", "rail_flags", "width_rules", "level_rules", "access_restrictions", "speed_limits", "prohibited_transitions", "routes", "destinations"],
+      "explicitly_excluded_fields": ["id", "subtype", "class", "sources", "version", "theme", "type", "bbox", "geometry"],
+      "unknown_token_fields": ["subclass"]
+    }
+  },
+  "status_definition": {
+    "missing": "Parquet value is null; if an optional column is absent from the file schema, mark schema_unavailable instead and exclude that field from support denominators.",
+    "present_empty": "Non-null scalar text is empty, list/map is empty, or nested struct has no nonempty child value.",
+    "present_explicit_unknown": "Exact case-insensitive scalar string token unknown or unspecified in the field_registry unknown_token_fields; it remains a present nonempty field and is never reclassified as missing.",
+    "present_mixed_unknown_known": "For a supported nested struct, at least one exact unknown token and at least one known nonempty scalar child occur.",
+    "present_known": "Nonempty value not classified as an explicit unknown token.",
+    "support_indicator": "1 for present_known, present_explicit_unknown, or present_mixed_unknown_known; 0 for missing or present_empty. Unknown remains distinct in the audit and is not treated as absence.",
+    "unknown_detection_scope": "Unknown-token scanning is exact and case-insensitive for scalar categorical fields named in unknown_token_fields. Nested list payloads are measured for null/empty/nonempty presence but not recursively interpreted as unknown labels."
+  },
+  "spatial_assignment": {
+    "point": "center of provided feature bbox (xmin+xmax)/2,(ymin+ymax)/2",
+    "tract_assignment": "provided ACS tract geometry; use same deterministic point-in-polygon helper and boundary tie rule as the competition POI audit",
+    "unassigned": "outside/invalid bbox centers are excluded from tract-level candidate support and counted; no geometry fallback or external layer"
+  },
+  "candidate_formula": {
+    "theme_support": "Within each official tract and theme, sum nonempty support indicators over assigned source features and selected schema-available fields, divided by assigned feature_count times available_field_count. A theme with no assigned feature rows has unavailable support and is excluded from the cross-theme mean.",
+    "tract_support": "Equal mean of available POI, building, and road theme_support values; if none is available, support is unavailable and candidate adjustment is neutral zero.",
+    "regional_reference": "Median tract_support among official tracts with available support within the same region; recomputed after each declared optional-field drop perturbation.",
+    "deficit": "If support is available, clip((regional_reference - tract_support)/max(regional_reference, 1e-12), 0, 1); otherwise zero.",
+    "adjustment": "0.05 * deficit, positive context sensitivity fixed before measurement.",
+    "candidate_score": "clip(C2 coverage_gap_score + adjustment, 0, 1) for every official GEOID.",
+    "interpretation": "Internal attribute richness is a metadata/support hypothesis only; it is not evidence of real-world feature completeness or a hidden target."
+  },
+  "measurement_plan": {
+    "measure_before": "Report frozen C2 score moments overall and by region; report that no cross-theme field-level presence matrix is in the prior reports.",
+    "measure_after": "Report all declared optional field status counts and coverage by theme/region (source total and official-tract assigned rows), schema availability, missing versus empty versus explicit unknown, bbox assignment edge cases, per-tract support, candidate adjustment distribution, exact IDs/bounds, and hashes.",
+    "optional_field_perturbation": "For every theme.field, drop only that attribute from support computation, renormalize on the remaining schema-available fields, rederive region medians/scores, and assert max absolute candidate score change <=0.05. Also report the simultaneous all-optional-fields-unavailable neutral fallback.",
+    "determinism": "Run complete builder twice and compare candidate CSV, manifest, and report byte-for-byte.",
+    "target_rmse_or_labels": false
+  },
+  "restrictions": {
+    "removed_reference_data_or_equivalents_used": false,
+    "external_feature_datasets_used": false,
+    "sample_score_placeholders_read": false,
+    "labels_or_target_reconstruction_used": false,
+    "leaderboard_fitting_or_information_probes_used": false,
+    "upload_or_submission_made": false,
+    "confidence_field_used": false,
+    "source_membership_or_sources_field_used": false,
+    "accuracy_claim_supported": false
+  },
+  "limitations": [
+    "Feature bbox centers are an inexpensive tract-assignment proxy and can differ from a geometry-intersection assignment, particularly for long roads or large buildings.",
+    "Optional-attribute presence may reflect source conventions, feature type, or provider workflows rather than positional, semantic, or geographic completeness.",
+    "The v2 candidate is a fixed bounded sensitivity against C2 and has no target validation or authorization for scored integration."
+  ],
+  "acceptance": {
+    "all_actual_top_level_fields_accounted_for_by_registry": true,
+    "field_presence_by_theme_and_region": true,
+    "missingness_separated_from_empty_and_unknown": true,
+    "all_9379_official_ids_and_finite_bounded_scores": true,
+    "all_optional_field_drop_perturbations_at_most_0_05": true,
+    "deterministic_complete_rerun": true,
+    "no_accuracy_claim_or_target_rmse": true
+  }
+}
