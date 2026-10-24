@@ -1,5 +1,17 @@
 {
-  "method": "full platform-template ID completion; exact authoritative 9,379 candidate rows preserved; 415 eastern-WA rows use explicit pooled fills",
+  "method": "Historical full-template C0-C3 audit snapshot; official 9,379-row values are preserved. Its eastern-WA candidate fills predate the zero-default policy below and remain recorded for artifact provenance.",
+  "eastern_wa_fill_policy": {
+    "option": "--wa-fill",
+    "default_value": 0.0,
+    "scope": "415 eastern-WA rows present only in the platform template",
+    "official_scored_ids": 9379,
+    "rationale": "The operator confirmed the official scored scope is the four challenge regions. Eastern-WA rows are formatting-only, have no feature inputs, and are not target evidence; deterministic zero is the approved default.",
+    "uses_measured_global_mean_or_other_region_means": false,
+    "probe_status": "bias-probe-region-means was superseded; no probe-derived mean is used",
+    "future_build_default_applied_by": "scripts/build_full_id_candidates.py",
+    "historical_candidate_artifacts_rewritten": false,
+    "current_candidate_results_are_historical": true
+  },
   "input_template": {
     "path": "$COMPETITION_WORKSPACE/SampleSubmission.csv",
     "sha256": "32fb5c2984317d4abf8a98b88b7bb9d16e9eef1cda9a954c37da0a2cdd367f40",

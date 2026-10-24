@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Extend frozen C0-C3 candidates to the steward-required 9,794-row template.
+"""Extend candidates to the platform template without changing official rows.
 
-Only GEOID and region metadata are read from the legacy Data-page sample; its
-score placeholders are never read. The 9,379 four-region candidate values are
-preserved verbatim. Eastern-WA rows have no permitted feature inputs and are
-filled only with documented, pooled four-region predictions (or zero for C0).
-This is template-completion plumbing, not a claim that eastern-WA is scored.
+Only GEOID and region metadata are read from the legacy template; its score
+placeholders are never used. The 9,379 official-region values are preserved
+verbatim. The 415 eastern-WA template-only rows have no features or official
+score scope and receive a deterministic scalar from --wa-fill (default 0.0).
+This is formatting plumbing, not target evidence or a claim that those rows are
+scored.
 """
 from __future__ import annotations
 
@@ -51,14 +52,21 @@ def csv_bytes(rows: list[dict[str, str]]) -> bytes:
     return stream.getvalue().encode("utf-8")
 
 
-def mean_value(rows: list[dict[str, str]], column: str) -> float:
-    values = [float(row[column]) for row in rows]
-    if not values or any(not math.isfinite(value) or not 0 <= value <= 1 for value in values):
-        raise ValueError(f"invalid or empty values for {column}")
-    return sum(values) / len(values)
+def parse_wa_fill(raw: str) -> float:
+    try:
+        value = float(raw)
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError("--wa-fill must be a number in [0, 1]") from exc
+    if not math.isfinite(value) or not 0 <= value <= 1:
+        raise argparse.ArgumentTypeError("--wa-fill must be a finite number in [0, 1]")
+    return value
 
 
-def main() -> int:
+def wa_score_values(value: float) -> dict[str, float]:
+    return {column: value for column in SCORE_COLUMNS}
+
+
+def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--workspace", type=Path, required=True)
     parser.add_argument("--template", type=Path,
@@ -66,6 +74,15 @@ def main() -> int:
     parser.add_argument("--manifest", type=Path, default=ROOT / "reports/candidates.json")
     parser.add_argument("--out-audit", type=Path,
                         default=ROOT / "reports/full-id-candidate-audit.json")
+    parser.add_argument(
+        "--wa-fill", type=parse_wa_fill, default=0.0,
+        help="uniform value for each score field on the 415 template-only eastern-WA rows (default: 0.0)",
+    )
+    return parser
+
+
+def main() -> int:
+    parser = build_parser()
     args = parser.parse_args()
     workspace = args.workspace.resolve()
     template_path = (args.template or workspace / "SampleSubmission.csv").resolve()
@@ -145,24 +162,18 @@ def main() -> int:
         source_rows[candidate_id] = source
         projection_hashes[candidate_id] = sha256_bytes(csv_bytes(source))
 
-    pooled_c2_composite = mean_value(source_rows["C2"], "coverage_gap_score")
     rebuilt: dict[str, list[dict[str, str]]] = {}
     wa_fill_values = {}
+    policy_text = (
+        "uniform platform-only scalar from --wa-fill (default 0.0); no eastern-WA features, "
+        "regional-mean transfer, or target inference"
+    )
     for candidate_id in CANDIDATES:
         source_by_id = {row["GEOID"]: row for row in source_rows[candidate_id]}
-        if candidate_id == "C0":
-            fill = {column: 0.0 for column in SCORE_COLUMNS}
-            fill_policy = "all-zero baseline; no eastern-WA feature or target inference"
-        elif candidate_id == "C1":
-            fill = {column: pooled_c2_composite for column in SCORE_COLUMNS}
-            fill_policy = "all five score fields filled with the pooled mean C2 composite over the 9,379 official rows; no eastern-WA features"
-        else:
-            fill = {column: mean_value(source_rows[candidate_id], column)
-                    for column in SCORE_COLUMNS}
-            fill_policy = "each score field filled with its unweighted four-region mean over the 9,379 official rows; no eastern-WA features"
+        fill = wa_score_values(args.wa_fill)
         wa_fill_values[candidate_id] = {
-            "policy": fill_policy,
-            "values": {column: fill[column] for column in SCORE_COLUMNS},
+            "policy": policy_text,
+            "values": fill,
             "rows": len(extra_ids),
             "region": "eastern-wa",
             "scored_target_claim": False,
@@ -231,6 +242,18 @@ def main() -> int:
             "eastern_wa_fill": wa_fill_values[candidate_id],
         }
 
+    wa_fill_policy = {
+        "option": "--wa-fill",
+        "default_value": 0.0,
+        "applied_value": args.wa_fill,
+        "rows": len(extra_ids),
+        "region": "eastern-wa",
+        "official_scored_ids": len(official_ids),
+        "score_columns_all_use_same_value": True,
+        "rationale": "The official scored scope is the 9,379 IDs in the four challenge regions. Eastern-WA template-only rows have no features and are filled with a deterministic formatting value, not a target estimate.",
+        "uses_measured_global_mean_or_other_region_means": False,
+        "leaderboard_test_used": False,
+    }
     manifest["platform_template"] = {
         "source": "$COMPETITION_WORKSPACE/SampleSubmission.csv",
         "sha256": sha256_file(template_path),
@@ -241,13 +264,14 @@ def main() -> int:
         "official_scored_region_count": 9379,
         "extra_template_rows": 415,
         "extra_template_region": "eastern-wa",
-        "interpretation": "Use the steward-confirmed 9,794-row Data-page template for platform processing. The authoritative four regional samples still define 9,379 scored IDs; the additional eastern-WA rows are template-only and filled with documented proxies, not target evidence.",
+        "eastern_wa_fill_policy": wa_fill_policy,
+        "interpretation": "Use the steward-confirmed 9,794-row Data-page template for platform processing. The authoritative four regional samples still define 9,379 scored IDs; the additional eastern-WA rows are template-only formatting rows, not target evidence.",
     }
     manifest["candidate_set"] = [entries[item["candidate_id"]] for item in manifest["candidate_set"]]
     manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
     audit = {
-        "method": "full platform-template ID completion; exact authoritative 9,379 candidate rows preserved; 415 eastern-WA rows use explicit pooled fills",
+        "method": "full platform-template ID completion; exact authoritative 9,379 candidate rows preserved; 415 eastern-WA rows use the uniform --wa-fill value (default 0.0)",
         "input_template": {
             "path": "$COMPETITION_WORKSPACE/SampleSubmission.csv",
             "sha256": sha256_file(template_path),
@@ -263,7 +287,8 @@ def main() -> int:
         "manifest": {"path": str(manifest_path.relative_to(ROOT)),
                      "sha256": sha256_file(manifest_path)},
         "candidate_results": audit_candidates,
-        "no_label_caveat": "No labels, removed references, external data, or sample score placeholders were used. Eastern-WA rows are outside the official four-region scored list; pooled fills only satisfy the steward-directed platform template and are not target estimates or accuracy claims.",
+        "eastern_wa_fill_policy": wa_fill_policy,
+        "no_label_caveat": "No labels, removed references, external data, measured means, or sample score placeholders were used to determine eastern-WA values. Those rows are outside the official four-region scored list; the --wa-fill scalar only satisfies the platform template and is not a target estimate or accuracy claim.",
     }
     audit_path.parent.mkdir(parents=True, exist_ok=True)
     audit_path.write_text(json.dumps(audit, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
