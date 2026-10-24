@@ -1,0 +1,168 @@
+{
+  "candidate_columns": [
+    "GEOID",
+    "region",
+    "prior_candidate_id",
+    "prior_coverage_gap_score",
+    "building_source_support",
+    "building_source_support_missing",
+    "road_route_support",
+    "road_route_support_missing",
+    "place_confidence_support",
+    "place_confidence_support_missing",
+    "mean_theme_support",
+    "weakest_theme_support",
+    "cross_theme_support",
+    "cross_theme_adjustment",
+    "adjusted_coverage_gap_score"
+  ],
+  "candidate_csv": "reports/candidates/cross_theme_support.csv",
+  "candidate_csv_sha256": "8c4830f2cb528cc9fd5fe2f8d3692fc36e4d682ec6f7621309c22704828e75be",
+  "candidate_id": "XTS_C2_V2",
+  "candidate_rows": 9379,
+  "config_path": "config/cross-theme-support-preregistered.json",
+  "config_sha256": "db5c5ce27509e214108c2b027a0c6b4cd06dd0336e3d38e664955e674bf9bb47",
+  "input_hashes_by_region": {
+    "eastern-ok": {
+      "confidence_cache_ids_cover_official_order": true,
+      "confidence_cache_path": "gap-estimator/features/poi-confidence-by-tract.parquet",
+      "confidence_cache_read_columns": [
+        "GEOID",
+        "poi_count",
+        "confidence_valid_count",
+        "confidence_missing_count",
+        "confidence_invalid_count",
+        "confidence_below_0_5_share"
+      ],
+      "confidence_cache_rows": 9379,
+      "confidence_cache_sha256": "66eb8f093c8e02395cdab7e675b00bf304209da34362774c94c750ce6bf8b3cb",
+      "feature_cache_path": "gap-estimator/features/eastern-ok-overture-tract-summary.parquet",
+      "feature_cache_sha256": "e5a06316c316f61bf25b80b48e89c1e7f0b1461a0b8cec5831aae24e0cf83fa6",
+      "feature_rows_match_official_order": true,
+      "official_rows": 1192,
+      "official_sample_path": "samples/eastern-ok-sample-submission.csv",
+      "official_sample_sha256": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+      "poi_counts_reconciled_between_caches": true,
+      "read_columns": [
+        "GEOID",
+        "overture_buildings",
+        "overture_building_microsoft_source_share",
+        "overture_named_road_km_5070",
+        "overture_route_km",
+        "overture_poi_all"
+      ],
+      "rows": 1192
+    },
+    "maricopa-az": {
+      "confidence_cache_ids_cover_official_order": true,
+      "confidence_cache_path": "gap-estimator/features/poi-confidence-by-tract.parquet",
+      "confidence_cache_read_columns": [
+        "GEOID",
+        "poi_count",
+        "confidence_valid_count",
+        "confidence_missing_count",
+        "confidence_invalid_count",
+        "confidence_below_0_5_share"
+      ],
+      "confidence_cache_rows": 9379,
+      "confidence_cache_sha256": "66eb8f093c8e02395cdab7e675b00bf304209da34362774c94c750ce6bf8b3cb",
+      "feature_cache_path": "gap-estimator/features/maricopa-az-overture-tract-summary.parquet",
+      "feature_cache_sha256": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22",
+      "feature_rows_match_official_order": true,
+      "official_rows": 1593,
+      "official_sample_path": "samples/maricopa-az-sample-submission.csv",
+      "official_sample_sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+      "poi_counts_reconciled_between_caches": true,
+      "read_columns": [
+        "GEOID",
+        "overture_buildings",
+        "overture_building_microsoft_source_share",
+        "overture_named_road_km_5070",
+        "overture_route_km",
+        "overture_poi_all"
+      ],
+      "rows": 1593
+    },
+    "northern-ca": {
+      "confidence_cache_ids_cover_official_order": true,
+      "confidence_cache_path": "gap-estimator/features/poi-confidence-by-tract.parquet",
+      "confidence_cache_read_columns": [
+        "GEOID",
+        "poi_count",
+        "confidence_valid_count",
+        "confidence_missing_count",
+        "confidence_invalid_count",
+        "confidence_below_0_5_share"
+      ],
+      "confidence_cache_rows": 9379,
+      "confidence_cache_sha256": "66eb8f093c8e02395cdab7e675b00bf304209da34362774c94c750ce6bf8b3cb",
+      "feature_cache_path": "gap-estimator/features/northern-ca-overture-tract-summary.parquet",
+      "feature_cache_sha256": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c",
+      "feature_rows_match_official_order": true,
+      "official_rows": 591,
+      "official_sample_path": "samples/northern-ca-sample-submission.csv",
+      "official_sample_sha256": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+      "poi_counts_reconciled_between_caches": true,
+      "read_columns": [
+        "GEOID",
+        "overture_buildings",
+        "overture_building_microsoft_source_share",
+        "overture_named_road_km_5070",
+        "overture_route_km",
+        "overture_poi_all"
+      ],
+      "rows": 591
+    },
+    "south-central-tx": {
+      "confidence_cache_ids_cover_official_order": true,
+      "confidence_cache_path": "gap-estimator/features/poi-confidence-by-tract.parquet",
+      "confidence_cache_read_columns": [
+        "GEOID",
+        "poi_count",
+        "confidence_valid_count",
+        "confidence_missing_count",
+        "confidence_invalid_count",
+        "confidence_below_0_5_share"
+      ],
+      "confidence_cache_rows": 9379,
+      "confidence_cache_sha256": "66eb8f093c8e02395cdab7e675b00bf304209da34362774c94c750ce6bf8b3cb",
+      "feature_cache_path": "gap-estimator/features/south-central-tx-overture-tract-summary.parquet",
+      "feature_cache_sha256": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746",
+      "feature_rows_match_official_order": true,
+      "official_rows": 6003,
+      "official_sample_path": "samples/south-central-tx-sample-submission.csv",
+      "official_sample_sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e",
+      "poi_counts_reconciled_between_caches": true,
+      "read_columns": [
+        "GEOID",
+        "overture_buildings",
+        "overture_building_microsoft_source_share",
+        "overture_named_road_km_5070",
+        "overture_route_km",
+        "overture_poi_all"
+      ],
+      "rows": 6003
+    }
+  },
+  "maximum_absolute_adjustment": 0.04616545893719807,
+  "no_upload": true,
+  "prior_candidate_id": "C2",
+  "prior_candidate_sha256": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514",
+  "prior_official_projection_sha256": "acb2cc669353c44913de0c72b07be9b75d48bec592b8565cf2427fab2e85af83",
+  "row_changed_tolerance": 1e-12,
+  "scope": {
+    "official_ids": 9379,
+    "ordered_official_ids": true,
+    "regions": [
+      "maricopa-az",
+      "northern-ca",
+      "eastern-ok",
+      "south-central-tx"
+    ],
+    "template_only_ids_excluded": 415
+  },
+  "score_bound": [
+    0.0,
+    1.0
+  ]
+}
