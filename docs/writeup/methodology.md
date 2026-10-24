@@ -1,35 +1,116 @@
-# Methodology draft — provided-data coverage-gap screen
+# Reproducible methodology for the Bias Bounty coverage-gap challenge
 
-**Status:** reproducible draft for Best Documentation and Best Bias Discovery; not a submission-ready accuracy claim. No training labels or per-tract organiser scores are available. The work below describes a provided-data proxy screen only.
+**Purpose and status.** This is a reproducible Best Documentation methodology and a record of exploratory Best Bias Discovery analyses. It describes provided-feature proxies and fixed, unvalidated model components; it does **not** reconstruct the organiser's hidden target. No training labels or per-tract organiser scores are available. No new candidate has been assembled from the v2 component audits, and the proposed building prior still needs operator approval before scored integration. This document makes no local or private accuracy claim.
 
-## Data and constraints
+## Rubric checklist and reading guide
 
-The official rules and sample contract are summarized in `docs/competition.md`. The scored IDs are the official per-region samples, read as strings. The discovery script uses only the South-Central Texas official sample IDs, the provided South-Central Texas tract strata table, the existing C2 estimate output, and the pre-registered C3 denominator sensitivity output. It reads no values from the sample's placeholder score columns. No external public data, removed reference layers, or equivalent copies were used. Additional public data is permitted only for the Best Bias Discovery writeup; none was needed here. The scored CSVs were not changed.
+**Coverage: 100% of the documentation items listed below.** Completion means the method, limitations, and reproduction path are documented; it is not a claim of model accuracy.
 
-Inputs and hashes are recorded in `reports/discovery-rural-svi-minority.json`. In particular:
-
-- Official South-Central TX sample: `$COMPETITION_WORKSPACE/samples/south-central-tx-sample-submission.csv` (6,003 GEOIDs, SHA-256 `afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e`).
-- Provided strata: `$COMPETITION_WORKSPACE/defined-flags-inputs/south-central-tx-strata-tract-table.parquet`; only `GEOID`, `pct_urban`, `svi_minority`, and `epht_heat_days_summer` were read. Seven extra Texas strata rows outside the authoritative sample are excluded.
-- C2 proxy estimates: `reports/gap-estimates.csv` (SHA-256 in the report); C3 is the already preregistered expected-denominator ×1.25 candidate, `reports/candidates/C3_denominator_x125.csv`.
-
-The code validates exact sample/strata membership for the regional sample and uses string GEOIDs for all joins. The discovery stratum field `svi_minority` is not an input to C2 or C3; the estimator uses provided Overture feature summaries plus the permitted ALAND, population, and urbanity covariates. The `svi_minority` and heat fields are used only to describe/slice the provided sample after prediction.
-
-## Proxy estimator context
-
-C2 is a deterministic screening heuristic, not a fit to hidden labels. It uses provided Overture road, building, and POI summaries. Road geometry is clipped to authoritative sample tract polygons and measured in EPSG:5070; building/POI bbox centers are assigned to scored tracts. ACS data is used only for tract geometries, not housing-unit counts. The source restrictions, per-component defined-flag logic, missing-data handling, hashes, and complete formulas are in `reports/gap-estimator-audit.json`.
-
-For context, the version-0 expected-reference proxies are:
-
-| Quantity | C2 v0 proxy |
+| Documentation rubric item | Status and location |
 |---|---|
-| Named-road km | `0.35 + 0.55*sqrt(ALAND_km2) + 0.0007*pop_total + 2*urban_fraction` |
-| Buildings | `max(0.5, 0.30*pop_total + 4*sqrt(ALAND_km2) + 5*urban_fraction)` |
-| Fire / EMS / schools | respectively `0.15 + pop/30000 + 0.45*u`; `0.15 + pop/40000 + 0.45*u`; `0.20 + pop/2500 + 0.20*u` |
-| Establishments | `0.20 + pop/70 + 0.50*u` |
+| Data sources, source footprints, URIs, byte sizes, hashes, exact scope | Complete below; source-level byte/row inventory and local SHA-256s are distinguished explicitly. |
+| Component calculations and defined/undefined handling | Complete below; detailed POI categories, fixed facility priors, and route sensitivity follow. |
+| Zero-population, water, no-Overture, missingness, and template edge cases | Complete in [`edge-cases.md`](edge-cases.md), backed by `reports/writeup-edge-cases.json`. |
+| Alternative aggregation/weighting history | Complete in “Alternative components and aggregation choices.” |
+| Historical leaderboard calibration, parameters, results, and inferred moments | Complete in the generated [`probe-log.md`](probe-log.md), including failed/cancelled probes and score IDs. |
+| Accuracy claims | None absent a successful scored submission ID. Historical public RMSEs appear only in the ledger-derived probe log and do not validate v2 or a hidden/private score. |
+| Reproduction, scope limits, caveats, final recommendations | Complete below and in the linked audit commands/reports. |
 
-Defined-flag heuristics in the audit are: transport expected length at least 6 km; buildings observed count > 0 or expected count at least 1; fire/EMS/school observed category count > 0 or expected count at least 0.5; CBP observed total places > 0 or expected establishments at least 1. For a defined term, the proxy gap is clipped `1 - observed/expected` in `[0,1]`. An undefined gap's serialized zero placeholder is excluded from every mean; if no top-level components are defined, no composite is emitted. POI is composed from a facilities half (mean of defined fire/EMS/school estimates) and an establishments half, with equal weight when both halves exist. The tract composite is the mean of defined transport, building, and POI terms. Unknown-category POIs are apportioned using in-sample observed category shares, not treated as category-specific zeroes. No component or composite proxy is the hidden organiser score.
+## Data sources, scope, and provenance
 
-For missing urbanity, use `pct_urban` when finite, otherwise `pop_urban/pop_total` where population is positive, otherwise the disclosed neutral 0.5 fallback. Land area is floored at 0.01 km² in expected-reference proxies. Tracts with zero Overture observations can still have a positive proxy deficit when a component is defined; they are not automatically removed. There is no dedicated water-dominated-tract correction, so water-dominated or very low-population tracts are an acknowledged proxy limitation. ACS housing-unit values are not read; ACS geometries only support tract assignment. Rail, hospitals, and removed reference sources are not used to approximate scored targets.
+The official scoring domain is the union of four published per-region sample files: 9,379 GEOIDs, all retained as strings and joined exactly. The official sample columns are `GEOID,transport_gap,building_gap,poi_gap,coverage_gap_score`; analysis reads only the `GEOID` field. **Sample score placeholders are never used as labels or feature values.** The platform's 9,794-row template has 415 additional eastern-WA rows; those rows are formatting-only, contain no supplied feature inputs, and do not extend the official scored-region scope. See [`docs/competition.md`](../competition.md) and the official captured rules at `$COMPETITION_WORKSPACE/RULES.md`.
+
+Challenge inputs are public Source Cooperative objects under:
+
+```text
+s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/{region}/{region}-sample-submission.csv
+s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/{region}/{region}-census-acs-housing.parquet
+s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/{region}/{region}-overture-{roads|buildings|pois}.parquet
+s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/strata/{region}/{region}-strata-tract-table.parquet
+```
+
+The exact supplied source object sizes and source row counts recorded during the audits are:
+
+| Region | Official sample | ACS geometry parquet bytes / rows | Overture roads bytes / rows | Overture buildings bytes / rows | Overture POIs bytes / rows | Strata parquet bytes / rows |
+|---|---:|---:|---:|---:|---:|---:|
+| Maricopa AZ | 1,593 | 3,457,173 / 1,593 | 80,052,206 / 494,492 | 324,720,762 / 2,908,224 | 40,987,154 / 300,046 | 793,492 / 1,593 |
+| Northern CA | 591 | 3,037,540 / 591 | 43,515,963 / 191,836 | 130,554,079 / 1,164,724 | 16,168,720 / 116,897 | 354,711 / 591 |
+| Eastern OK | 1,192 | 3,650,879 / 1,192 | 82,239,229 / 520,550 | 298,882,068 / 2,551,694 | 28,848,614 / 207,369 | 638,464 / 1,192 |
+| South-Central TX | 6,003 | 13,758,433 / 6,010 | 299,751,270 / 1,937,009 | 1,269,949,045 / 11,463,801 | 179,937,096 / 1,300,334 | 2,800,838 / 6,010 |
+
+The source inventory documents bytes and row counts but does not publish SHA-256 for the remote Overture/ACS objects. The following checksums identify the exact official sample and local strata files used. Feature-cache hashes are checksums of the **derived aggregate cache**, not of the remote source objects.
+
+| Region | Official sample CSV bytes; SHA-256 | Local strata parquet SHA-256 | Derived Overture tract-cache bytes; SHA-256 |
+|---|---|---|---|
+| Maricopa AZ | 44,664; `1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31` | `f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd` | 239,311; `e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22` |
+| Northern CA | 16,608; `f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902` | `7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243` | 100,099; `37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c` |
+| Eastern OK | 33,436; `56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4` | `e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54` | 194,636; `e5a06316c316f61bf25b80b48e89c1e7f0b1461a0b8cec5831aae24e0cf83fa6` |
+| South-Central TX | 168,144; `afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e` | `55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354` | 921,462; `51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746` |
+
+Audit reports additionally record row-group/projection information and component-specific input hashes: `reports/sample-contract-audit.json`, `reports/gap-estimator-audit.json`, `reports/transport-route-ref-audit.json`, `reports/poi-category-audit.json`, and the source-traceable reports linked below. The Texas ACS/strata objects each have 7 extra rows relative to the official sample; joins explicitly filter those rows out. ACS `housing_units` is not read for score calculations and is never used as a denominator floor. The official challenge data is CC-BY-SA 4.0; no extra public data was required. No credentials, paid API, or non-public source is used.
+
+## Organiser scoring context and our calculations
+
+The task provides no labels. The organiser's stated score is the mean of defined transport, building, and POI components; an unavailable reference makes its component undefined and omitted from the divisor. Organiser component definitions are provided for context only. Removed TIGER/Line, Microsoft building-footprint, USGS facility, and Census CBP reference layers—or equivalent copies—must not be used to recreate or approximate the hidden target. No such references enter these analyses or scored predictions.
+
+The deterministic C2/v0 screen uses only provided Overture feature summaries and allowed provided covariates (`ALAND`, `pop_total`, `pop_urban`, `pct_urban`). Geometry from the supplied ACS housing tract files is used solely for spatial clipping/tract assignment; no ACS housing count is read. Road geometry is clipped to authoritative sample tract polygons and measured in EPSG:5070; building/POI bbox centers are assigned to tracts. Exact formulas and audit lineage are in `reports/gap-estimator-audit.json`.
+
+| Component | C2/v0 expected reference proxy | Definedness and component calculation |
+|---|---|---|
+| Transport | `0.35 + 0.55*sqrt(ALAND_km2) + 0.0007*pop_total + 2*urban_fraction` (expected named-road km) | Defined when expectation ≥6 km. Gap=`clip(1−overture_named_road_km/expected,0,1)`. |
+| Buildings | `max(0.5,0.30*pop_total + 4*sqrt(ALAND_km2) + 5*urban_fraction)` (expected structures) | Defined when observed Overture buildings >0 or expectation ≥1. Gap=`clip(1−observed/expected,0,1)`. ACS housing units are not a floor or denominator. |
+| Fire / EMS / schools | Fire=`0.15+pop/30000+0.45*u`; EMS=`0.15+pop/40000+0.45*u`; schools=`0.20+pop/2500+0.20*u` | Each type defined when observed count >0 or expected count ≥0.5. Gap per defined type is clipped `1−observed/expected`; facility half averages only defined types. |
+| Establishments half | `0.20 + pop/70 + 0.50*u` (v0 proxy) | Defined when all-place Overture count >0 or expected establishments ≥1. Gap=`clip(1−observed/expected,0,1)`. No CBP data is accessed. |
+| POI | Mean of defined facility half and establishments half | Equal-weight defined halves; if only one is defined, use that half; if neither is defined, POI is undefined. |
+| Tract composite | No new denominator | Equal mean of defined transport, building, and POI components; undefined terms are omitted. If none are defined, no composite is emitted. |
+
+For missing urbanity, use finite `pct_urban`; otherwise use `pop_urban/pop_total` when population is positive; if both are unavailable at zero population, use the disclosed neutral 0.5 fallback. In the proxy expected-reference formulas, land area is floored at 0.01 km². Unknown-category POIs are apportioned using the in-sample selected-category share in the legacy v0 screen, not treated as category-specific zeroes. These heuristics are explicit assumptions, not learned parameters. A serialized zero attached to `defined=0` is only a storage placeholder and is excluded from all means.
+
+## Alternative components and aggregation choices
+
+The published component structure motivates equal weight across defined transport/building/POI terms and equal weight across the two defined POI halves. This is transparent and avoids asserting external importance weights, but does not establish that the organiser's hidden implementation uses the same values or that this is predictive-optimal. Other tempting choices—always dividing by three, filling undefined terms with zero, using housing units as a building denominator, importing CBP counts, or adding an arbitrary global scale—were rejected because they alter the stated defined-component rule, mix incompatible units, use prohibited references, or amount to unvalidated calibration.
+
+Historical alternatives C1 (region constants), C3 (v0 denominators ×1.25), P4 (global scale of C1), P5 (region mean plus residual), and P6/region indicators are described with parameters, IDs, scores, inferred moments, assumptions, and cancellation status in [`probe-log.md`](probe-log.md). Those leaderboard-derived moments and coefficients are not accepted weighting choices for future models. P4's alpha remains only to reproduce its already-scored artifact. The route denominator alternatives state+US+Interstate, +FM/RM, and +explicit CR are a separate provided-feature sensitivity; the selected full route definition improves disclosed regional ratio-band coverage while accepting a documented trade-off in macro undefined-share error. No route alternative was chosen from leaderboard feedback.
+
+## Historical leaderboard calibration (transparency only; not reusable)
+
+The archived experiments include scored submissions and cancelled/dry-run probes. The generated [`probe-log.md`](probe-log.md) lists every ledger event, each probe's parameters, successful public RMSE only when paired with its recorded platform submission ID, artifact hashes, and the score-algebra moments or explicit “no moment” status. It documents the public-subset/all-official-row composition assumption and false initial score placeholders. In particular, P4's global scale is leaderboard-derived and reproduction-only; P5/P6/region probes were not successful scores. These statistics are historical disclosure and are forbidden as v2 priors, target moments, feature thresholds, or per-tract values. The operator's no-information-probe policy supersedes the historical plans; there is no new probe upload or candidate authorization here.
+
+## Model-only v2 components and approval gates
+
+V2 replaces v0's proxy rates with separately audited, fixed, challenge-feature-driven blocks. These audits report aggregate predictions and sensitivity; they do not form a combined candidate and do not demonstrate score accuracy.
+
+- **Transport:** selected route-reference feature is `L_named/L_route` with `clip(1−L_named/L_route,0,1)`, defined only for `L_route>0`. `L_named` uses Overture named road classes; `L_route` is the sum of eligible named-route geometry from Overture route tags, each segment counted once. The chosen tags include state, U.S., Interstate, FM/RM, and explicit CR; details and kept/dropped network tables are below. No external road reference enters the feature. The aggregate ratio/undefined diagnostics are model-design checks only.
+- **Facilities POI:** a pooled logistic prior estimates `P(reference type present)` from provided population density and urban fraction, then applies the explicit one-count-ahead expected-gap formula. The fixed qualitative coefficients, unclassified POI treatment, zero-presence definedness, and aggregate audit are in “Facility-miss POI v2.” No regional target moment or leaderboard feedback fitted these coefficients.
+- **Buildings:** the experimental rule is a fixed building gap `0.01` only when `overture_buildings>0`, with zero-count rows undefined. It uses no ACS housing units, USFS, or CarbonPlan features. This remains a proposal requiring operator approval before scored integration; see `docs/decisions/building-component.md` and `reports/building-v2-audit.json`.
+- **Establishments:** the explicit analysis-only sensitivity formula is `clip(1−overture_poi_all/(k_pop*pop_total),0,1)` for positive population, with `k_pop=0.024` used only as a task-specified sensitivity anchor. For zero population, positive places yield a defined clipped zero; zero places are undefined. The anchor has **no approval for scored use**, uses no CBP source, and is not a model coefficient; see `docs/decisions/establishments-half.md` and `reports/establishments-sensitivity.json`.
+- **Combined score:** future assembly must average only model-defined terms and pass the exact-ID/schema/range/hash invariants. The component audits alone do not authorize v2 assembly or upload. There is no local labeled holdout; deterministic checks establish code/contract correctness only.
+
+## Edge cases, bias discovery, and interpretation
+
+The full edge-case table and calculation policy are in [`edge-cases.md`](edge-cases.md), backed by `reports/writeup-edge-cases.json`. The audit finds 26 zero-population tracts, 2 zero-`ALAND` tracts, 43 tracts with a >50% water proxy, 132 with no selected named roads, 2,644 with no selected route-network km, 2 with no Overture buildings, 2 with no Overture places, and 26 missing `pct_urban` values. These are covariate/coverage characteristics, not hidden-score outcomes. The water statistic is only `max(0,min(1,1−ALAND/geometry_area))` after projecting provided tract geometry to EPSG:5070; it is not an external water mask or a scoring correction.
+
+Exploratory SVI/rural comparisons below are strata of C2/C3 **predictions** only. Their bootstrap intervals quantify tract-resampling variation in those proxies; they are not confidence intervals for the hidden organiser score. The analysis does not establish a causal mechanism, actual service access, or measured equity disparity. Avoid naming a high predicted gap as a confirmed underserved tract. For any future disparity assessment, compare within region or use common region weights: region composition confounds pooled comparisons, as documented in `reports/discovery-strata-confound.json`.
+
+## Literature and feature-provenance context
+
+The documentation-only prior-art review is [`docs/literature/completeness-prior-art.md`](../literature/completeness-prior-art.md); its coverage and URL-verification caveats are summarized in [`docs/literature/README.md`](../literature/README.md). It reviews road/building completeness, volunteered geographic information quality, provider/schema documentation, organizer-method context, and leaderboard-oracle ethics. Publication context motivates testing coverage mechanisms and careful uncertainty language; it does not contribute labels, per-tract rates, coefficients, or external numeric inputs to scored predictions. The selected Overture road/POI category definitions are documented in the audits, and all source-data restrictions remain as stated in the rules.
+
+## Reproduction and recommendations
+
+The broad source and method checks are available as deterministic repository scripts/reports. Recreate the new edge-case and probe-log artifacts from the competition repository:
+
+```sh
+uv run --with-requirements requirements.txt \
+  python scripts/audit_writeup_edge_cases.py \
+  --workspace "$COMPETITION_WORKSPACE" --out reports/writeup-edge-cases.json
+uv run --with-requirements requirements.txt \
+  python scripts/render_probe_log.py --out docs/writeup/probe-log.md
+```
+
+Then run the full unit suite with the pinned runtime (`uv run --with-requirements requirements.txt pytest -q`). Audit scripts for route variants, POI categories, facility misses, building v2, establishments sensitivity, and discovery are individually reproducible using commands in their linked reports/method sections. Never read a hidden target, removed reference, leaderboard page, or score placeholder to regenerate these documents.
+
+**Recommendation:** retain the transparent equal-defined-component aggregation as a methodology description, not as an accuracy claim; use the selected Overture route definition only after the remaining model/approval gates are met; keep the building and establishments priors out of scored predictions until separately approved; and avoid water corrections or subgroup calibration without allowed evidence. Do not submit an information probe. Any future score evaluation must be a completed, documented model candidate and follow [`docs/submission-policy.md`](../submission-policy.md). The historic leaderboard log is disclosure, not authorization.
 
 ## Route-reference transport v2 (provided Overture only)
 
