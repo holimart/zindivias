@@ -1,57 +1,129 @@
 {
   "backlog_item": "bias-est-v2-assembly-probe",
-  "state": "blocked",
-  "reason_code": "required_dependencies_not_completed",
-  "decision": "Do not assemble, preregister, or upload a v2 probe until the declared prerequisites produce their required outputs. Without region target means and validated route/facility-miss features, an assembled candidate would not meet the selected item's stated mechanism or calibration requirement.",
+  "state": "dependencies_closed_candidate_assembled_and_preregistered_no_upload",
+  "supersedes": "the 2026-10-24 blocked gate which waited on probe-derived region target means",
+  "reason_code": "ready_local_pending_operator_upload_authorization",
+  "decision": "Assemble and pre-register one model-only v2 composite from provided features and documented methodology. Do not upload: docs/final-two-protocol.md queues zero uploads and requires operator authorization through the orchestrator submission gate, and this row authorizes no queued upload.",
+  "operator_amendment_applied": {
+    "probe_design_cancelled": true,
+    "region_mean_and_beta_constants_removed": true,
+    "alpha_0_3288_and_lb_moments_allowed_in_v2": false,
+    "region_means_are_a_dependency": false
+  },
   "required_dependencies_snapshot": [
     {
-      "slug": "bias-probe-region-means",
-      "orchestrator_status": "open",
-      "required_for_v2": "measured per-region target means and global mean, including closure check",
-      "expected_artifacts_present": false,
-      "evidence": "No scripts/build_region_probes.py, no Phase 3 region-means results in reports/lb-score-algebra.json, and no region probe submissions are recorded in reports/submissions.jsonl."
+      "slug": "bias-est-transport-route-ref",
+      "required_for_v2": "provided Overture route-reference transport component and definedness audit",
+      "status": "closed",
+      "evidence": "reports/transport-route-ref-audit.json",
+      "sha256": "bf904336963f553cc7442c5996a4d8d504fe30aad5c4f1a2e44da8fa773b1927"
     },
     {
-      "slug": "bias-est-transport-route-ref",
-      "orchestrator_status": "open",
-      "required_for_v2": "provided Overture route-reference transport feature and definedness audit",
-      "expected_artifacts_present": false,
-      "evidence": "No reports/transport-route-ref-audit.json or route-network feature cache is present; scripts/estimate_gaps.py remains the v0 estimator."
+      "slug": "bias-est-road-topology-variants",
+      "required_for_v2": "route variant screen that selected the route-reference denominator",
+      "status": "closed",
+      "evidence": "reports/transport-route-variants.json",
+      "sha256": "2a1acc760aadd2fce3a1df2afae6bfd9aaaef2a2ce510df8b674bccb9eb11aa2"
+    },
+    {
+      "slug": "bias-est-poi-category-audit",
+      "required_for_v2": "provided POI category audit feeding the facility halves",
+      "status": "closed",
+      "evidence": "reports/poi-category-audit.json",
+      "sha256": "cd48fa40d0fb1b3cdd1e431734acb646791916df02ee021a60243020b17d9de8"
     },
     {
       "slug": "bias-est-facility-miss-model",
-      "orchestrator_status": "open",
-      "required_for_v2": "facility-miss POI expectation model and its per-cell audit",
-      "expected_artifacts_present": false,
-      "evidence": "No reports/poi-facility-miss-audit.json or v2 POI implementation is present; scripts/estimate_gaps.py remains the v0 estimator."
+      "required_for_v2": "facility-miss expectation model and per-cell audit",
+      "status": "closed",
+      "evidence": "reports/poi-facility-miss-audit.json",
+      "sha256": "b559c8d3d85709d0e5f2d2102bb39da4d8255a3c62f728cf736da522025a289c"
+    },
+    {
+      "slug": "bias-est-building-level",
+      "required_for_v2": "fixed building residual prior and its definedness rule",
+      "status": "closed",
+      "evidence": "reports/building-v2-audit.json",
+      "sha256": "4815735bbefcd155a8bd566fc92403e378d436aa97dc062344f36fcc9f7936d9"
+    },
+    {
+      "slug": "bias-est-establishments-level",
+      "required_for_v2": "explicit cbp_k establishments half without CBP data",
+      "status": "closed",
+      "evidence": "reports/establishments-sensitivity.json",
+      "sha256": "363776dd96e54142bb075d78d7e7296324a01536acd5223be20389488b00aa9a"
+    },
+    {
+      "slug": "bias-est-edge-case-policy",
+      "required_for_v2": "zero-population, zero-place and missing-covariate policy",
+      "status": "closed",
+      "evidence": "reports/edge-cases.json",
+      "sha256": "53626e3ad297c4609e541a7570146b732677275d2d371f17eac6606361911237"
+    },
+    {
+      "slug": "bias-v2-defined-mask-audit",
+      "required_for_v2": "independent proof that masks and composite arithmetic are honoured",
+      "status": "closed",
+      "evidence": "reports/v2-defined-mask-audit.json",
+      "sha256": "fea33ef7daeeeac2fd187803481e050085698afd6f44ed182e9c5af5028054d2"
+    },
+    {
+      "slug": "bias-v2-prior-envelope-audit",
+      "required_for_v2": "preregistered +-10% fixed-prior uncertainty envelope",
+      "status": "closed",
+      "evidence": "reports/v2-prior-envelope.json",
+      "sha256": "c50569cf0f36ec3695e59dce68012422edd3baa09399bf1afe35b434f07d3cfd"
+    }
+  ],
+  "retired_dependencies": [
+    {
+      "slug": "bias-probe-region-means",
+      "status": "not_a_dependency_under_the_model_first_directive",
+      "reason": "probe-derived region target means are forbidden as v2 levels; the composite levels come from the component mechanisms"
     }
   ],
   "repository_state_evidence": {
-    "existing_candidate_manifest_ids": ["C0", "C1", "C2", "C3", "P4", "P5", "P6"],
-    "v2_manifest_entry_present": false,
-    "v2_candidate_files_present": false,
-    "estimator_v2_audit_present": false,
-    "phase_4_preregistration_present": false,
+    "existing_candidate_manifest_ids": [
+      "C0",
+      "C1",
+      "C2",
+      "C3",
+      "P4",
+      "P5",
+      "P6",
+      "R-AZ",
+      "R-CA",
+      "R-OK",
+      "R-TX",
+      "V2_model"
+    ],
+    "v2_manifest_entry_present": true,
+    "v2_candidate_files_present": true,
+    "estimator_v2_audit_present": true,
+    "phase_4_preregistration_present": true,
+    "v2_artifact": "reports/candidates/V2_model.csv",
+    "v2_sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12",
+    "v2_rows": 9794,
+    "predicted_public_rmse_written_before_upload": 0.09135719597637867,
     "baseline_measure_before": {
       "C2_inferred_E_py": 0.004396101562947799,
       "C2_uncentred_correlation_proxy": 0.17858516630602533,
       "P5_unconstrained_detail_beta": -0.2181321596482996,
-      "source": "reports/lb-score-algebra.json"
-    },
-    "baseline_candidate_sha256": {
-      "C2_component_estimator_v0.csv": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514",
-      "P4_c1_shrink_alpha.csv": "8b329802d882ea4bdff2bfd8c465c160d6ffd9269cfbe28dce8be9e702b07d37",
-      "P5_region_shrink_residual.csv": "9d5ad1d05bedfe5da23a39d9a4f6902217c2711da8fa0b408d992f196bb93b4b",
-      "P6_global_constant.csv": "68851dd2fee88f229bee08466d342f14313fa75e84bf42867baf28995445f6b3"
+      "P5_note": "v0 tract detail is anti-informative after region-mean removal (unconstrained beta < 0)",
+      "source": "reports/lb-score-algebra.json (historical probe algebra, quoted as background only)"
     }
   },
   "submission_safeguards": {
-    "v2_candidate_preregistered": false,
+    "v2_candidate_preregistered": true,
+    "preregistered_card_sha256": "4355abd28a3960cbdd01dd2531132a55f3e6e134bfca51619c9ad847116778e4",
     "live_upload_attempted": false,
-    "reason": "All three required dependencies are open; no valid v2 artifact/prediction exists to register or dry-run.",
+    "uploads_used_for_this_candidate": 0,
+    "max_uploads_preregistered": 1,
+    "reason": "docs/final-two-protocol.md queues zero uploads; operator authorization through $ORCHESTRATOR_ROOT/scripts/zindi_submit.py is required, and no local accuracy claim can be made without the platform evaluation because the competition ships no labels",
     "scored_candidate_files_modified": false,
     "labels_or_removed_reference_layers_used": false,
-    "template_score_placeholders_used": false
+    "template_score_placeholders_used": false,
+    "lb_derived_constants_in_model": false
   },
-  "next_step": "Complete the separately dispatched region-means, route-reference, and facility-miss prerequisite work; then derive the v2 affine-shrink beta from the resulting score algebra, preregister at most two hashed candidates with forecasts, and upload only through the shared orchestrator after all validation gates pass."
+  "next_step": "Operator decision: authorize one finished-model evaluation of V2_model with comment 'model-only v2' within the 2/day gate, or leave the two reserved final uploads for the final-two cohort. Then record actual vs predicted RMSE and apply the pre-registered decision rule in docs/lb-probe-plan.md Phase 4, including the stop rule if the candidate does not beat the all-zero baseline."
 }

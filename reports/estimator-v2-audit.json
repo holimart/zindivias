@@ -1,0 +1,406 @@
+{
+  "schema_version": 1,
+  "audit_id": "estimator-v2-audit",
+  "backlog_item": "bias-est-v2-assembly-probe",
+  "status": "frozen_candidate_preregistered_no_upload",
+  "upload_status": {
+    "upload_performed": false,
+    "live_upload_attempted": false,
+    "uploads_used": 0,
+    "max_uploads_preregistered": 1,
+    "requires": "operator authorization through the orchestrator submission gate"
+  },
+  "governing_policy": {
+    "submission_policy": "docs/submission-policy.md",
+    "final_two_protocol": "docs/final-two-protocol.md",
+    "operator_directive": "model-first; no information probes; no LB-derived constants; at most one finished-model evaluation per authorized candidate under the 2/day gate",
+    "upload_queued_by_this_audit": false,
+    "upload_requires": "operator authorization through $ORCHESTRATOR_ROOT/scripts/zindi_submit.py plus the frozen final-two protocol gates"
+  },
+  "model": {
+    "candidate_id": "V2_model",
+    "estimator_version": "v2-model-only",
+    "composite_rule": "equal-weight arithmetic mean of the model-defined top-level components (transport route-reference gap, building fixed residual prior, POI gap); undefined components are excluded entirely, never zero-filled",
+    "components": {
+      "transport_gap": {
+        "formula": "clip(1 - overture_named_road_km_5070 / overture_route_km, 0, 1)",
+        "defined": "overture_route_km > 0",
+        "source": "reports/candidates/road_topology_candidate.csv",
+        "level_provenance": "provided Overture route/named-road lengths only; no prior"
+      },
+      "building_gap": {
+        "formula": "0.01 (fixed residual prior BUILDING_GAP_V2) when defined",
+        "defined": "overture_building_count > 0",
+        "source": "reports/candidates/building_morphology.csv",
+        "level_provenance": "scripts/estimator_v2_building.py BUILDING_GAP_V2 = 0.01 fixed residual prior from the closed building-level work"
+      },
+      "poi_gap": {
+        "formula": "mean of defined fire/EMS/schools gaps; equal-weight mean of the defined facility and establishments halves",
+        "defined": "facility_half_defined or establishments_half_defined",
+        "source": "reports/candidates/poi_confidence_weighted.csv",
+        "level_provenance": "fixed logistic presence priors and the explicit cbp_k = 0.024 establishments parameter, both registered in config/v2-component-mask-audit-preregistered.json"
+      }
+    },
+    "weights": {
+      "transport": 1.0,
+      "building": 1.0,
+      "poi": 1.0,
+      "normalisation": "equal weight per defined component, per the organiser's published method"
+    },
+    "parameters_not_used": {
+      "alpha_c1_from_P4": 0.3288136427728255,
+      "beta_from_P5": -0.04967993197091435,
+      "beta_unconstrained_from_P5": -0.2181321596482996,
+      "probe_region_means": null,
+      "E_qy_over_E_q_target_moment": null,
+      "note": "listed only to record that they are excluded; none of them enters the artifact (see anti_probe_checks)"
+    }
+  },
+  "frozen_inputs": {
+    "reports/candidates/road_topology_candidate.csv": "612c2080c3d470fbcdc0cd752cd26847da05a35bf5d245c0b1599134cc82fda7",
+    "reports/candidates/building_morphology.csv": "ed0928651e1ddc0de89e6fd6544c30bd510456f6e9b72eea9d09277919194b75",
+    "reports/candidates/poi_confidence_weighted.csv": "28558424db768222ec7639986970af7a37b74228ef8f4e3190e5e58b6e19071c",
+    "samples/maricopa-az-sample-submission.csv": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+    "samples/northern-ca-sample-submission.csv": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+    "samples/eastern-ok-sample-submission.csv": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+    "samples/south-central-tx-sample-submission.csv": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e",
+    "platform_template": {
+      "path": "$COMPETITION_WORKSPACE/SampleSubmission.csv",
+      "sha256": "32fb5c2984317d4abf8a98b88b7bb9d16e9eef1cda9a954c37da0a2cdd367f40",
+      "rows": 9794,
+      "columns_read": [
+        "GEOID",
+        "region"
+      ],
+      "sample_score_placeholders_read": false
+    },
+    "scripts/estimate_gaps.py": "4f59982e0349af048ba11efbd5dbc629076eef8d3c8dc08d5747da5833bfc4fe",
+    "scripts/estimator_v2_building.py": "dc13042d273cfa1291692c7fc28b1c0b3f0e70f5476ae1104c3ab65debb7c24a",
+    "scripts/estimator_v2_establishments.py": "ec99e39e9330b5af57d08ff221c81e7485fe92ea2016c38239feb5a4706b2179",
+    "scripts/audit_v2_component_masks.py": "fd8a49cdd460a2bbb6e731244c0941d2a4c27f060ec8b54693c977d1bf0eeb9a",
+    "config/v2-component-mask-audit-preregistered.json": "58b993e5e279e222a1f25eba99aece761e4dc062fda2fed100a3bb143fec37f4",
+    "prerequisite_reports": {
+      "transport route-ref": {
+        "path": "reports/transport-route-ref-audit.json",
+        "sha256": "bf904336963f553cc7442c5996a4d8d504fe30aad5c4f1a2e44da8fa773b1927"
+      },
+      "road topology variants": {
+        "path": "reports/transport-route-variants.json",
+        "sha256": "2a1acc760aadd2fce3a1df2afae6bfd9aaaef2a2ce510df8b674bccb9eb11aa2"
+      },
+      "POI category audit": {
+        "path": "reports/poi-category-audit.json",
+        "sha256": "cd48fa40d0fb1b3cdd1e431734acb646791916df02ee021a60243020b17d9de8"
+      },
+      "facility-miss model": {
+        "path": "reports/poi-facility-miss-audit.json",
+        "sha256": "b559c8d3d85709d0e5f2d2102bb39da4d8255a3c62f728cf736da522025a289c"
+      },
+      "building v2 level": {
+        "path": "reports/building-v2-audit.json",
+        "sha256": "4815735bbefcd155a8bd566fc92403e378d436aa97dc062344f36fcc9f7936d9"
+      },
+      "building source prior": {
+        "path": "reports/building-source-prior.json",
+        "sha256": "4066d3a86223dca5cdd2cf63e6660afbc6577915172a48f265c4f70da08f51d4"
+      },
+      "establishments level": {
+        "path": "reports/establishments-sensitivity.json",
+        "sha256": "363776dd96e54142bb075d78d7e7296324a01536acd5223be20389488b00aa9a"
+      },
+      "edge-case policy": {
+        "path": "reports/edge-cases.json",
+        "sha256": "53626e3ad297c4609e541a7570146b732677275d2d371f17eac6606361911237"
+      },
+      "v2 defined-mask audit": {
+        "path": "reports/v2-defined-mask-audit.json",
+        "sha256": "fea33ef7daeeeac2fd187803481e050085698afd6f44ed182e9c5af5028054d2"
+      },
+      "v2 prior envelope": {
+        "path": "reports/v2-prior-envelope.json",
+        "sha256": "c50569cf0f36ec3695e59dce68012422edd3baa09399bf1afe35b434f07d3cfd"
+      }
+    }
+  },
+  "dependency_closure": {
+    "required": [
+      "POI category audit",
+      "building source prior",
+      "building v2 level",
+      "edge-case policy",
+      "establishments level",
+      "facility-miss model",
+      "road topology variants",
+      "transport route-ref",
+      "v2 defined-mask audit",
+      "v2 prior envelope"
+    ],
+    "all_present": true,
+    "region_means_are_not_a_dependency": true
+  },
+  "measure_before": {
+    "C2_inferred_E_py": 0.004396101562947799,
+    "C2_uncentred_correlation_proxy": 0.17858516630602533,
+    "P5_unconstrained_detail_beta": -0.2181321596482996,
+    "P5_note": "v0 tract detail is anti-informative after region-mean removal (unconstrained beta < 0)",
+    "source": "reports/lb-score-algebra.json (historical probe algebra, quoted as background only)"
+  },
+  "measure_after": {
+    "uploads_performed": 0,
+    "actual_public_rmse": null,
+    "inferred_E_yv": null,
+    "inferred_uncentred_correlation": null,
+    "inferred_region_mean_removed_detail_moment": null,
+    "optimal_beta": null,
+    "states_whether_v2_beats_P4": "not measurable locally: Bias Bounty ships no labels and the platform evaluation has not been run for this candidate. The pre-registered forecast and centred-correlation breakevens state exactly what conclusion follows from each outcome.",
+    "states_whether_v2_beats_region_constant_C1": "pre-registered prediction beats C1 across the whole preregistered grid; the platform figure is still required to claim it"
+  },
+  "model_moments": {
+    "official_rows": 9379,
+    "mean_prediction": 0.06050063616206269,
+    "second_moment_E_v2": 0.007424976766226068,
+    "rms_prediction": 0.08616830488193479,
+    "sd_prediction": 0.06135674201106004,
+    "sd_detail_about_region_mean": 0.060564487089448345,
+    "region_prediction_means": {
+      "eastern-ok": 0.038996906408728424,
+      "maricopa-az": 0.07521301371134201,
+      "northern-ca": 0.057067595693998864,
+      "south-central-tx": 0.061204376849485355
+    },
+    "region_prediction_sds": {
+      "eastern-ok": 0.045064087619017895,
+      "maricopa-az": 0.06889859946005711,
+      "northern-ca": 0.06257590761811828,
+      "south-central-tx": 0.060683299431684545
+    },
+    "min_prediction": 0.005262915381296667,
+    "max_prediction": 0.528216780099,
+    "constant_within_any_region": false
+  },
+  "forecast": {
+    "written_before_upload": true,
+    "point_prediction_public_rmse": 0.09135719597637867,
+    "point_prediction_assumptions": {
+      "assumed_target_mean_equals_model_mean": 0.06050063616206269,
+      "level_hypothesis": "the frozen provided-feature model is an unbiased level estimator, so the assumed target mean equals the model's own official-tract mean",
+      "assumed_centred_correlation": 0.3,
+      "correlation_rationale": "midpoint between the only measured v0-detail informativeness (0.178585) and the row's informativeness target of 0.35 for v2 tract detail"
+    },
+    "anchor": {
+      "E_y2": 0.011501768649197401,
+      "source": "platform public RMSE of the already-scored all-zero candidate C0 (predicting 0 gives RMSE^2=E[y^2])",
+      "role": "forecast anchor only; never enters the scored artifact",
+      "used_as_model_parameter": false
+    },
+    "identity": "RMSE^2 = (mu_y - mu_v)^2 + (E[y^2] - mu_y^2) + sd_v^2 - 2*rho_c*sqrt(E[y^2] - mu_y^2)*sd_v",
+    "model_side_measurements": {
+      "mu_v": 0.06050063616206269,
+      "sd_v": 0.06135674201106004,
+      "E_v2": 0.007424976766226068,
+      "sd_detail_about_region_mean": 0.060564487089448345
+    },
+    "sensitivity_grid": {
+      "target_mean_0.5x_model_mean": {
+        "assumed_target_mean": 0.030250318081031347,
+        "predicted_public_rmse_by_centred_correlation": {
+          "0.000000": 0.12355734878755363,
+          "0.178585": 0.11406826111582519,
+          "0.250000": 0.11004485873118369,
+          "0.300000": 0.10713804847913544,
+          "0.350000": 0.10415014128972161,
+          "0.500000": 0.09462200286890554
+        }
+      },
+      "target_mean_0.75x_model_mean": {
+        "assumed_target_mean": 0.04537547712154702,
+        "predicted_public_rmse_by_centred_correlation": {
+          "0.000000": 0.11591486078757131,
+          "0.178585": 0.10633296732580658,
+          "0.250000": 0.10225021897033527,
+          "0.300000": 0.09929188156691063,
+          "0.350000": 0.09624265276224105,
+          "0.500000": 0.08645206537475544
+        }
+      },
+      "target_mean_1.0x_model_mean": {
+        "assumed_target_mean": 0.06050063616206269,
+        "predicted_public_rmse_by_centred_correlation": {
+          "0.000000": 0.10773157134004356,
+          "0.178585": 0.09831324045891689,
+          "0.250000": 0.09428394856913803,
+          "0.300000": 0.09135719597637867,
+          "0.350000": 0.08833352452803553,
+          "0.500000": 0.07856738796842387
+        }
+      },
+      "target_mean_1.25x_model_mean": {
+        "assumed_target_mean": 0.07562579520257837,
+        "predicted_public_rmse_by_centred_correlation": {
+          "0.000000": 0.09887329252830489,
+          "0.178585": 0.09005256560211204,
+          "0.250000": 0.08627316315446132,
+          "0.300000": 0.08352535436461203,
+          "0.350000": 0.08068401925283422,
+          "0.500000": 0.07148558865928752
+        }
+      },
+      "target_mean_1.5x_model_mean": {
+        "assumed_target_mean": 0.09075095424309404,
+        "predicted_public_rmse_by_centred_correlation": {
+          "0.000000": 0.08913901776091436,
+          "0.178585": 0.0818128986279391,
+          "0.250000": 0.07869256393806467,
+          "0.300000": 0.07643213097578502,
+          "0.350000": 0.07410277776070688,
+          "0.500000": 0.06662788268369475
+        }
+      }
+    },
+    "centred_correlation_breakevens_at_model_mean": {
+      "tie_all_zero_C0": 0.009600393832113417,
+      "tie_region_constant_C1": -0.9056493114426245,
+      "beat_P4_alpha_c1": 0.29860373312164057,
+      "interpretation": "the candidate beats a benchmark when its actual centred correlation with the target exceeds the listed value; below it the candidate is worse than that benchmark"
+    },
+    "sampling_noise_guard": {
+      "public_tracts_expected": 2813.7,
+      "se_public_at_point_prediction": 0.0012178361690089554,
+      "se_public_at_P4_scale": 0.0012189426266381181,
+      "pairwise_guard_vs_P4": 0.0024367787956470735,
+      "rule": "from docs/final-two-protocol.md: a public RMSE difference at or below the pairwise guard is a tie, not a selection reason"
+    },
+    "post_score_inference_formulas": {
+      "E_yv_identifiable_from_C0_and_v2": "E[y*v] = (E[y^2] + E[v^2] - RMSE_v2^2) / 2",
+      "uncentred_correlation": "corr(y, v) = E[y*v] / (sqrt(E[y^2]) * sqrt(E[v^2]))",
+      "centred_correlation": "rho_c = (E[y*v] - mu_y*mu_v) / (sd_y*sd_v); mu_y and sd_y are not identifiable from one scored candidate, so the platform evaluation identifies E[y*v] and the uncentred correlation directly",
+      "region_mean_removed_detail_moment": "E[(y - m_r) d_v2] needs a level-only companion candidate scored on the same split; it is deliberately not assumed here"
+    },
+    "decision_rule": {
+      "beats_P4_if": "actual public RMSE <= 0.089003419",
+      "ties_P4_if": "actual public RMSE within the pairwise guard of 0.091440198",
+      "beats_region_constant_C1_if": "actual public RMSE < 0.146449112",
+      "not_informative_if": "actual public RMSE > 0.107246299 (the all-zero baseline): then the v2 tract detail adds more variance than signal at its current level, so stop adding detail and keep level-only candidates",
+      "maximum_uploads_for_this_candidate": 1,
+      "second_upload_to_adjust_weights": "forbidden"
+    },
+    "historical_public_rmse_anchors": {
+      "C0": 0.107246299,
+      "C1": 0.146449112,
+      "C2": 0.235358712,
+      "C3": 0.349409867,
+      "P4": 0.091440198
+    }
+  },
+  "anti_probe_checks": {
+    "retired_lb_constants_scanned": {
+      "alpha_c1_from_P4": 0.3288136427728255,
+      "beta_constrained_from_P5": -0.04967993197091435,
+      "beta_unconstrained_from_P5": -0.2181321596482996,
+      "global_constant_c_from_P6": 0.05652688955988315
+    },
+    "offenders": {},
+    "scored_file_cells_scanned": 39176,
+    "no_retired_lb_constant_in_the_scored_file": true,
+    "score_is_not_constant_within_any_region": true,
+    "region_means_from_probe_region_targets": false,
+    "beta_or_alpha_applied": false
+  },
+  "component_facts": {
+    "official_rows": 9379,
+    "unique_official_ids": 9379,
+    "region_rows": {
+      "maricopa-az": 1593,
+      "northern-ca": 591,
+      "eastern-ok": 1192,
+      "south-central-tx": 6003
+    },
+    "expected_region_rows": {
+      "maricopa-az": 1593,
+      "northern-ca": 591,
+      "eastern-ok": 1192,
+      "south-central-tx": 6003
+    },
+    "max_composite_arithmetic_residual": 1.1102230246251565e-16,
+    "component_values_out_of_range": 0,
+    "undefined_rows_with_nonzero_placeholder": 0,
+    "zero_defined_rows": 0,
+    "duplicate_or_missing_ids": 0,
+    "implementations_compared": [
+      "scripts/estimate_gaps.py composite_mean (the frozen candidate combiner)",
+      "audit_v2_component_masks.composite_mean",
+      "audit-local exact rational defined-component mean"
+    ],
+    "defined_rates": {
+      "transport_defined": 0.7180936133916196,
+      "building_defined": 0.9997867576500693,
+      "poi_defined": 1.0
+    }
+  },
+  "artifact": {
+    "path": "reports/candidates/V2_model.csv",
+    "bytes": 575315,
+    "written": true,
+    "rebuild_hashes_match": true,
+    "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12",
+    "rows": 9794,
+    "columns": [
+      "GEOID",
+      "transport_gap",
+      "building_gap",
+      "poi_gap",
+      "coverage_gap_score"
+    ],
+    "per_region_means": {
+      "maricopa-az": 0.07521301371134201,
+      "northern-ca": 0.057067595693998864,
+      "eastern-ok": 0.038996906408728424,
+      "south-central-tx": 0.061204376849485355,
+      "eastern-wa": 0.0
+    },
+    "eastern_wa_rows": 415,
+    "eastern_wa_fill": {
+      "transport_gap": 0.0,
+      "building_gap": 0.0,
+      "poi_gap": 0.0,
+      "coverage_gap_score": 0.0
+    }
+  },
+  "acceptance": {
+    "frozen_inputs_sha_verified": true,
+    "official_rows_exact": true,
+    "region_rows_match_authoritative_samples": true,
+    "component_values_finite_in_zero_one": true,
+    "undefined_rows_carry_zero_placeholder": true,
+    "zero_defined_composite_rows": true,
+    "zero_duplicate_or_missing_ids": true,
+    "composite_is_mean_of_defined_components_only": true,
+    "template_rows_exact": true,
+    "template_only_rows_are_eastern_wa": true,
+    "template_only_fill_deterministic": true,
+    "deterministic_rebuild_identical_hash": true,
+    "score_columns_match_platform_schema": true,
+    "no_retired_lb_constant_in_the_scored_file": true,
+    "score_is_not_constant_within_any_region": true,
+    "equal_model_derived_component_weights": true,
+    "forecast_preregistered_before_upload": true,
+    "all_passed": true
+  },
+  "prohibitions": {
+    "removed_reference_layers_or_equivalents_read": false,
+    "labels_read": false,
+    "sample_or_template_score_placeholders_read": false,
+    "leaderboard_derived_constants_in_model": false,
+    "per_geoid_or_per_GEOID_tuning": false,
+    "upload_attempted": false,
+    "candidate_promoted_to_final_selection": false
+  },
+  "reproducibility": {
+    "command": "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v2_candidates.py --workspace \"$COMPETITION_WORKSPACE\"",
+    "git_commit": "b45733aa31903c71ec4f3fb432c2bc9d519f3ff9",
+    "script_sha256": "f1a21bd5854fcb97153e1fab9256b3a65dd7df21a15171a685ee2a4e9492b5dc",
+    "python": "3.12.3"
+  },
+  "manifest_card_sha256": "542ec4564285ade5c438d04fa1e05bf851a28fa5330c4a0d9b4fec502844c9de",
+  "manifest_sha256_after_write": "5374d6811fc1c6ea28ef680e3d29038c981d16265d4731df6dadd286a0bf34e1"
+}

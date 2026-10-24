@@ -812,6 +812,129 @@
       "defined_rates": null,
       "registration_status": "cancelled_by_operator_2026-10-24",
       "registration_note": "Retired: leaderboard information probes are cancelled; historical artifact/hash retained, not uploadable."
+    },
+    {
+      "candidate_id": "V2_model",
+      "name": "model-only v2 composite (provided features + documented priors)",
+      "artifact": "reports/candidates/V2_model.csv",
+      "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "pre_registered": true,
+      "description": "Single frozen model-only v2 composite: equal-weight mean of the model-defined transport route-reference, fixed building prior and POI components. No leaderboard-derived level, alpha, beta or probe region mean. Not uploaded: the frozen final-two protocol queues zero uploads and requires operator authorization.",
+      "phase": "model-only-v2-evaluation",
+      "estimator_version": "v2-model-only",
+      "parameters": {
+        "composite": "mean of defined components (equal weights, undefined excluded)",
+        "building_gap_constant": "0.01 (fixed residual prior BUILDING_GAP_V2) when defined",
+        "establishments_cbp_k": 0.024,
+        "facility_presence_priors": {
+          "fire": {
+            "intercept": -2.8,
+            "log_density": 0.3,
+            "urban_fraction": 0.7
+          },
+          "ems": {
+            "intercept": -3.2,
+            "log_density": 0.25,
+            "urban_fraction": 0.6
+          },
+          "schools": {
+            "intercept": -1.0,
+            "log_density": 0.2,
+            "urban_fraction": 0.35
+          }
+        },
+        "transport": "ratio of provided Overture route and named-road lengths (no prior)",
+        "predicted_public_rmse": 0.09135719597637867,
+        "prediction_basis": "model-side moments of the frozen artifact (mu_v, sd_v, E[v^2]) with the all-zero candidate C0 platform RMSE as the E[y^2] anchor, assumed target mean equal to the model's own mean and assumed centred correlation 0.3; no LB-derived model parameter",
+        "predicted_by_centred_correlation": {
+          "0.000000": 0.10773157134004356,
+          "0.178585": 0.09831324045891689,
+          "0.250000": 0.09428394856913803,
+          "0.300000": 0.09135719597637867,
+          "0.350000": 0.08833352452803553,
+          "0.500000": 0.07856738796842387
+        },
+        "centred_correlation_breakevens": {
+          "tie_all_zero_C0": 0.009600393832113417,
+          "tie_region_constant_C1": -0.9056493114426245,
+          "beat_P4_alpha_c1": 0.29860373312164057,
+          "interpretation": "the candidate beats a benchmark when its actual centred correlation with the target exceeds the listed value; below it the candidate is worse than that benchmark"
+        }
+      },
+      "hypothesis": "The v0 detail failed because its component levels were uncentred proxies whose uncentred correlation with the target was 0.1786 and whose region-mean-removed detail was anti-informative (unconstrained beta -0.218). v2 replaces each proxy with a mechanism estimated from the provided Overture counts themselves - route/named-road ratio, fixed building residual prior calibrated against the Overture building presence rate, and the organiser's facility/establishments halves with fixed presence priors - so the composite should track the same completeness mechanism the organiser scored, giving centred correlation above the 0.30 forecast assumption and a public RMSE below the 0.091440198 P4 benchmark.",
+      "eastern_wa_fill": {
+        "region": "eastern-wa",
+        "rows": 415,
+        "policy": "uniform platform-only scalar 0.0 per b750a35; no eastern-WA features, regional-mean transfer, or target inference",
+        "values": {
+          "transport_gap": 0.0,
+          "building_gap": 0.0,
+          "poi_gap": 0.0,
+          "coverage_gap_score": 0.0
+        },
+        "scored_target_claim": false
+      },
+      "column_checks": {
+        "unique_columns": true,
+        "all_rows_have_columns": true,
+        "finite_bounded_scores": true,
+        "no_missing_official_ids": true,
+        "no_duplicate_ids": true
+      },
+      "per_region_means": {
+        "maricopa-az": 0.07521301371134201,
+        "northern-ca": 0.057067595693998864,
+        "eastern-ok": 0.038996906408728424,
+        "south-central-tx": 0.061204376849485355,
+        "eastern-wa": 0.0
+      },
+      "defined_rates": {
+        "transport_defined": 0.7180936133916196,
+        "building_defined": 0.9997867576500693,
+        "poi_defined": 1.0
+      },
+      "local_invariants": {
+        "gates": {
+          "frozen_inputs_sha_verified": true,
+          "official_rows_exact": true,
+          "region_rows_match_authoritative_samples": true,
+          "component_values_finite_in_zero_one": true,
+          "undefined_rows_carry_zero_placeholder": true,
+          "zero_defined_composite_rows": true,
+          "zero_duplicate_or_missing_ids": true,
+          "composite_is_mean_of_defined_components_only": true,
+          "template_rows_exact": true,
+          "template_only_rows_are_eastern_wa": true,
+          "template_only_fill_deterministic": true,
+          "deterministic_rebuild_identical_hash": true,
+          "score_columns_match_platform_schema": true,
+          "no_retired_lb_constant_in_the_scored_file": true,
+          "score_is_not_constant_within_any_region": true,
+          "equal_model_derived_component_weights": true,
+          "forecast_preregistered_before_upload": true,
+          "all_passed": true
+        },
+        "max_composite_arithmetic_residual": 1.1102230246251565e-16,
+        "mask_audit": "reports/v2-defined-mask-audit.json",
+        "prior_envelope": "reports/v2-prior-envelope.json"
+      },
+      "upload_status": {
+        "uploaded": false,
+        "live_upload_attempted": false,
+        "uploads_used_for_this_candidate": 0,
+        "max_uploads_preregistered": 1,
+        "reason": "docs/final-two-protocol.md queues zero uploads and requires operator authorization through the orchestrator gate; this row authorizes no queued upload",
+        "comment_if_authorized": "model-only v2"
+      },
+      "registration_status": "preregistered_model_only_awaiting_operator_authorization"
     }
   ],
   "feature_source": "provided Overture buildings/roads/POIs plus provided ACS housing geometries and strata covariates",
@@ -1161,5 +1284,15 @@
       "P6_sha256": "68851dd2fee88f229bee08466d342f14313fa75e84bf42867baf28995445f6b3"
     },
     "uploads_started": false
+  },
+  "model_only_v2_preregistration": {
+    "frozen_before_upload": true,
+    "candidate_id": "V2_model",
+    "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12",
+    "predicted_public_rmse": 0.09135719597637867,
+    "prediction_written_before_any_upload": true,
+    "max_uploads": 1,
+    "upload_authorized": false,
+    "protocol": "docs/final-two-protocol.md"
   }
 }
