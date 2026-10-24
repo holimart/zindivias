@@ -31,8 +31,8 @@ class PoiConfidenceCandidateTests(unittest.TestCase):
         report_path = REPO / "reports/poi-confidence-candidate.json"
         report = json.loads(report_path.read_text(encoding="utf-8"))
         after = report["measure_after"]
-        candidate_path = REPO / after["candidate_csv"]
-        manifest_path = REPO / after["candidate_manifest"]
+        candidate_path = REPO / report["candidate_csv"]
+        manifest_path = REPO / report["candidate_manifest"]
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         self.assertEqual(report["candidate_id"], CONFIG["candidate_id"])
         self.assertEqual(report["candidate_rows"], 9379)
