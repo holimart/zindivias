@@ -1,0 +1,516 @@
+{
+  "analysis": "Eastern Oklahoma provided Overture fire/EMS POI-zero rates by tribal_any within rural and drought strata",
+  "definitions": {
+    "drought_cut": "linear empirical 75th percentile of finite provided usdm_summer_dsci over all official Eastern Oklahoma sample tracts; ties at the threshold are included in the upper-quartile group",
+    "drought_high": "usdm_summer_dsci >= region-wide q75",
+    "effect_direction": "positive tribal-minus-nontribal zero-share difference means more tracts with zero Overture POIs in the tribal group",
+    "fire_and_ems_counts": "provided per-tract Overture summary counts, using config/poi-category-definitions.json selected categories; a zero is a provided-category count of exactly 0",
+    "intervals": "95% Wilson intervals for each binomial share; Newcombe-Wilson score interval for independent difference in proportions; tracts are the analysis units",
+    "official_scope": "Eastern Oklahoma authoritative 1,192 sample GEOIDs; sample score values are not used",
+    "rural": "provided pct_urban < 0.5; missing pct_urban excluded",
+    "tribal": "provided tribal_any boolean; missing status excluded from comparisons"
+  },
+  "dispatch_context": "If volunteer fire departments or mutual-aid dispatchers rely on Overture POIs, absent fire/EMS records in the named rural high-drought tracts could make map-based address/name lookup less reliable and warrants local validation. No volunteer-agency roster, service ground truth, or dispatch outcomes were analyzed; this is a plausible consequence, not a verified station absence or dispatch failure.",
+  "environment": {
+    "numpy": "2.5.4",
+    "pyarrow": "26.0.0",
+    "python": "3.12.3"
+  },
+  "inputs": {
+    "category_config": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/config/poi-category-definitions.json",
+      "selected_ems_categories": [
+        "ambulance_and_ems_services"
+      ],
+      "selected_fire_categories": [
+        "fire_department",
+        "fire_protection_service"
+      ],
+      "sha256": "8309a0bb08613b92621f4977eb78998e469951c0cd0ed012d93ea2f5cf59654f"
+    },
+    "external_data_used": [],
+    "official_sample_geoids": {
+      "only_geoid_values_used": true,
+      "ordered_geoid_sequence_sha256": "d1886fe60e412888bc5dbc1057f918eb840caa40936037f45bce9ce1c9169964",
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/eastern-ok-sample-submission.csv",
+      "rows": 1192,
+      "score_placeholder_values_used": false
+    },
+    "organizer_targets_or_sample_scores_used": false,
+    "provided_overture_tract_summary": {
+      "bytes": 27088,
+      "extra_source_rows_excluded": 0,
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/eastern-ok-overture-tract-summary.parquet",
+      "read_columns": [
+        "GEOID",
+        "overture_poi_fire",
+        "overture_poi_ems"
+      ],
+      "sha256": "338e4197146ca29a0823f731cfae0085345a3cdcbb6183b6cf4ec00e8f12fbf8",
+      "source_rows": 1192
+    },
+    "provided_strata": {
+      "bytes": 638464,
+      "extra_source_rows_excluded": 0,
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+      "read_columns": [
+        "GEOID",
+        "pct_urban",
+        "pop_total",
+        "tribal_any",
+        "usdm_summer_dsci"
+      ],
+      "sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54",
+      "source_rows": 1192
+    },
+    "removed_reference_layers_read": false
+  },
+  "interpretation": "descriptive presence screen only; Overture absence is not evidence that an emergency service does not exist",
+  "named_rural_upper_drought_high_population_both_zero_tracts": [
+    {
+      "GEOID": "40031002005",
+      "overture_poi_ems": 0,
+      "overture_poi_fire": 0,
+      "pct_urban": 0.4990409764603313,
+      "pop_total": 5735.0,
+      "tribal_any": true,
+      "usdm_summer_dsci": 99.71573201254033
+    },
+    {
+      "GEOID": "40017300202",
+      "overture_poi_ems": 0,
+      "overture_poi_fire": 0,
+      "pct_urban": 0.25189786059351277,
+      "pop_total": 4347.0,
+      "tribal_any": true,
+      "usdm_summer_dsci": 122.08994644022764
+    },
+    {
+      "GEOID": "40039960702",
+      "overture_poi_ems": 0,
+      "overture_poi_fire": 0,
+      "pct_urban": 0.43447154471544713,
+      "pop_total": 3075.0,
+      "tribal_any": true,
+      "usdm_summer_dsci": 152.42403084651292
+    },
+    {
+      "GEOID": "40017301301",
+      "overture_poi_ems": 0,
+      "overture_poi_fire": 0,
+      "pct_urban": 0.2226148409893993,
+      "pop_total": 2830.0,
+      "tribal_any": true,
+      "usdm_summer_dsci": 95.44426767283016
+    },
+    {
+      "GEOID": "40147001200",
+      "overture_poi_ems": 0,
+      "overture_poi_fire": 0,
+      "pct_urban": 0.0,
+      "pop_total": 2286.0,
+      "tribal_any": true,
+      "usdm_summer_dsci": 91.53271318418203
+    },
+    {
+      "GEOID": "40141070300",
+      "overture_poi_ems": 0,
+      "overture_poi_fire": 0,
+      "pct_urban": 0.0,
+      "pop_total": 2253.0,
+      "tribal_any": true,
+      "usdm_summer_dsci": 152.41431571787425
+    },
+    {
+      "GEOID": "40015162200",
+      "overture_poi_ems": 0,
+      "overture_poi_fire": 0,
+      "pct_urban": 0.0,
+      "pop_total": 2201.0,
+      "tribal_any": true,
+      "usdm_summer_dsci": 124.09160221228362
+    },
+    {
+      "GEOID": "40017301408",
+      "overture_poi_ems": 0,
+      "overture_poi_fire": 0,
+      "pct_urban": 0.0,
+      "pop_total": 2055.0,
+      "tribal_any": true,
+      "usdm_summer_dsci": 90.39537690060442
+    },
+    {
+      "GEOID": "40113940012",
+      "overture_poi_ems": 0,
+      "overture_poi_fire": 0,
+      "pct_urban": 0.0,
+      "pop_total": 2014.0,
+      "tribal_any": true,
+      "usdm_summer_dsci": 121.93777905014367
+    },
+    {
+      "GEOID": "40083600402",
+      "overture_poi_ems": 0,
+      "overture_poi_fire": 0,
+      "pct_urban": 0.27967930928152945,
+      "pop_total": 3243.0,
+      "tribal_any": false,
+      "usdm_summer_dsci": 89.3571394268144
+    },
+    {
+      "GEOID": "40119011103",
+      "overture_poi_ems": 0,
+      "overture_poi_fire": 0,
+      "pct_urban": 0.0,
+      "pop_total": 2890.0,
+      "tribal_any": false,
+      "usdm_summer_dsci": 88.02162486515998
+    },
+    {
+      "GEOID": "40153953100",
+      "overture_poi_ems": 0,
+      "overture_poi_fire": 0,
+      "pct_urban": 0.0,
+      "pop_total": 2059.0,
+      "tribal_any": false,
+      "usdm_summer_dsci": 168.92584235126097
+    }
+  ],
+  "population_and_missingness": {
+    "finite_region_wide_dsci_n": 1192,
+    "named_tracts_n": 12,
+    "official_sample_tracts": 1192,
+    "rural_known_tribal_n": 411,
+    "rural_lower_three_drought_known_tribal_n": 299,
+    "rural_tracts_missing_drought_value": 0,
+    "rural_upper_drought_known_tribal_n": 112,
+    "tracts_missing_pct_urban": 1,
+    "tracts_missing_tribal_any": 0,
+    "tracts_missing_usdm_summer_dsci": 0,
+    "usdm_summer_dsci_upper_quartile_cutoff": 86.33638470113696
+  },
+  "primary_hypothesis_test": {
+    "ci_excludes_zero": false,
+    "estimate": 0.06492374727668848,
+    "newcombe_wilson_95_ci": [
+      -0.14759128829401746,
+      0.25270187180771564
+    ],
+    "outcome": "tribal minus nontribal zero-EMS-POI share among rural tracts in the region-wide upper quartile of usdm_summer_dsci",
+    "secondary_fire_zero_contrast": {
+      "ci_excludes_zero": true,
+      "definition": "overture_poi_fire == 0",
+      "interval_method": "Newcombe-Wilson score interval for independent binomial proportions",
+      "newcombe_wilson_95_ci_difference": [
+        -0.37854055900104766,
+        -0.007409680082880038
+      ],
+      "nontribal": {
+        "tracts": 27,
+        "wilson_95_ci": [
+          0.18643261498715644,
+          0.5217523949267991
+        ],
+        "zero_share": 0.3333333333333333,
+        "zero_tracts": 9
+      },
+      "tribal": {
+        "tracts": 85,
+        "wilson_95_ci": [
+          0.09161380494530419,
+          0.2442818367609198
+        ],
+        "zero_share": 0.15294117647058825,
+        "zero_tracts": 13
+      },
+      "tribal_minus_nontribal_zero_share": -0.18039215686274507
+    },
+    "writeup_gate": "include a writeup section only if this primary 95% CI excludes zero",
+    "writeup_gate_reason": "Primary rural upper-DSCI EMS-zero contrast CI spans zero; the secondary fire-zero contrast is in the opposite direction and is not promoted as an EMS/fire desert finding.",
+    "writeup_section_material": false
+  },
+  "stratum_results": {
+    "rural_all_drought_levels": {
+      "nontribal_tracts": 35,
+      "outcomes": {
+        "ems_zero": {
+          "ci_excludes_zero": false,
+          "definition": "overture_poi_ems == 0",
+          "interval_method": "Newcombe-Wilson score interval for independent binomial proportions",
+          "newcombe_wilson_95_ci_difference": [
+            -0.10961448529205275,
+            0.22033862307934377
+          ],
+          "nontribal": {
+            "tracts": 35,
+            "wilson_95_ci": [
+              0.32994236002509725,
+              0.6443119540413141
+            ],
+            "zero_share": 0.4857142857142857,
+            "zero_tracts": 17
+          },
+          "tribal": {
+            "tracts": 376,
+            "wilson_95_ci": [
+              0.4920209146855567,
+              0.59222476007399
+            ],
+            "zero_share": 0.5425531914893617,
+            "zero_tracts": 204
+          },
+          "tribal_minus_nontribal_zero_share": 0.05683890577507594
+        },
+        "fire_and_ems_zero": {
+          "ci_excludes_zero": false,
+          "definition": "both selected-category counts equal zero",
+          "interval_method": "Newcombe-Wilson score interval for independent binomial proportions",
+          "newcombe_wilson_95_ci_difference": [
+            -0.16100129041917993,
+            0.12252706761664717
+          ],
+          "nontribal": {
+            "tracts": 35,
+            "wilson_95_ci": [
+              0.12065879834191687,
+              0.3901731689199025
+            ],
+            "zero_share": 0.22857142857142856,
+            "zero_tracts": 8
+          },
+          "tribal": {
+            "tracts": 376,
+            "wilson_95_ci": [
+              0.19406828039833357,
+              0.2793962523544987
+            ],
+            "zero_share": 0.23404255319148937,
+            "zero_tracts": 88
+          },
+          "tribal_minus_nontribal_zero_share": 0.005471124620060802
+        },
+        "fire_zero": {
+          "ci_excludes_zero": false,
+          "definition": "overture_poi_fire == 0",
+          "interval_method": "Newcombe-Wilson score interval for independent binomial proportions",
+          "newcombe_wilson_95_ci_difference": [
+            -0.23220561108003365,
+            0.07521209758480318
+          ],
+          "nontribal": {
+            "tracts": 35,
+            "wilson_95_ci": [
+              0.18550844674265818,
+              0.4797976361206918
+            ],
+            "zero_share": 0.3142857142857143,
+            "zero_tracts": 11
+          },
+          "tribal": {
+            "tracts": 376,
+            "wilson_95_ci": [
+              0.21139021844386577,
+              0.29893179701626826
+            ],
+            "zero_share": 0.2526595744680851,
+            "zero_tracts": 95
+          },
+          "tribal_minus_nontribal_zero_share": -0.061626139817629155
+        }
+      },
+      "stratum": "all rural tracts with known tribal status",
+      "tracts_with_known_tribal_status": 411,
+      "tribal_tracts": 376
+    },
+    "rural_lower_three_drought_quartiles": {
+      "nontribal_tracts": 8,
+      "outcomes": {
+        "ems_zero": {
+          "ci_excludes_zero": false,
+          "definition": "overture_poi_ems == 0",
+          "interval_method": "Newcombe-Wilson score interval for independent binomial proportions",
+          "newcombe_wilson_95_ci_difference": [
+            -0.41867454320125913,
+            0.04919431491674431
+          ],
+          "nontribal": {
+            "tracts": 8,
+            "wilson_95_ci": [
+              0.5291118177871464,
+              0.9775825085499433
+            ],
+            "zero_share": 0.875,
+            "zero_tracts": 7
+          },
+          "tribal": {
+            "tracts": 291,
+            "wilson_95_ci": [
+              0.5164667624865131,
+              0.629374328423806
+            ],
+            "zero_share": 0.5738831615120275,
+            "zero_tracts": 167
+          },
+          "tribal_minus_nontribal_zero_share": -0.30111683848797255
+        },
+        "fire_and_ems_zero": {
+          "ci_excludes_zero": false,
+          "definition": "both selected-category counts equal zero",
+          "interval_method": "Newcombe-Wilson score interval for independent binomial proportions",
+          "newcombe_wilson_95_ci_difference": [
+            -0.33620097548286676,
+            0.1940057127580319
+          ],
+          "nontribal": {
+            "tracts": 8,
+            "wilson_95_ci": [
+              0.071479212752109,
+              0.5907245696898311
+            ],
+            "zero_share": 0.25,
+            "zero_tracts": 2
+          },
+          "tribal": {
+            "tracts": 291,
+            "wilson_95_ci": [
+              0.2108637299871679,
+              0.31091315795806423
+            ],
+            "zero_share": 0.25773195876288657,
+            "zero_tracts": 75
+          },
+          "tribal_minus_nontribal_zero_share": 0.0077319587628865705
+        },
+        "fire_zero": {
+          "ci_excludes_zero": false,
+          "definition": "overture_poi_fire == 0",
+          "interval_method": "Newcombe-Wilson score interval for independent binomial proportions",
+          "newcombe_wilson_95_ci_difference": [
+            -0.31238422971928087,
+            0.2183749821877535
+          ],
+          "nontribal": {
+            "tracts": 8,
+            "wilson_95_ci": [
+              0.071479212752109,
+              0.5907245696898311
+            ],
+            "zero_share": 0.25,
+            "zero_tracts": 2
+          },
+          "tribal": {
+            "tracts": 291,
+            "wilson_95_ci": [
+              0.23320131856613632,
+              0.33605871525687414
+            ],
+            "zero_share": 0.281786941580756,
+            "zero_tracts": 82
+          },
+          "tribal_minus_nontribal_zero_share": 0.03178694158075601
+        }
+      },
+      "stratum": "rural and below region-wide upper-quartile summer DSCI",
+      "tracts_with_known_tribal_status": 299,
+      "tribal_tracts": 291
+    },
+    "rural_upper_drought_quartile": {
+      "nontribal_tracts": 27,
+      "outcomes": {
+        "ems_zero": {
+          "ci_excludes_zero": false,
+          "definition": "overture_poi_ems == 0",
+          "interval_method": "Newcombe-Wilson score interval for independent binomial proportions",
+          "newcombe_wilson_95_ci_difference": [
+            -0.14759128829401746,
+            0.25270187180771564
+          ],
+          "nontribal": {
+            "tracts": 27,
+            "wilson_95_ci": [
+              0.21532512960965597,
+              0.5577076558789761
+            ],
+            "zero_share": 0.37037037037037035,
+            "zero_tracts": 10
+          },
+          "tribal": {
+            "tracts": 85,
+            "wilson_95_ci": [
+              0.33495777427196094,
+              0.5412261589275046
+            ],
+            "zero_share": 0.43529411764705883,
+            "zero_tracts": 37
+          },
+          "tribal_minus_nontribal_zero_share": 0.06492374727668848
+        },
+        "fire_and_ems_zero": {
+          "ci_excludes_zero": false,
+          "definition": "both selected-category counts equal zero",
+          "interval_method": "Newcombe-Wilson score interval for independent binomial proportions",
+          "newcombe_wilson_95_ci_difference": [
+            -0.2645106068781067,
+            0.0784819357311897
+          ],
+          "nontribal": {
+            "tracts": 27,
+            "wilson_95_ci": [
+              0.10607239452360037,
+              0.4075692886663257
+            ],
+            "zero_share": 0.2222222222222222,
+            "zero_tracts": 6
+          },
+          "tribal": {
+            "tracts": 85,
+            "wilson_95_ci": [
+              0.09161380494530419,
+              0.2442818367609198
+            ],
+            "zero_share": 0.15294117647058825,
+            "zero_tracts": 13
+          },
+          "tribal_minus_nontribal_zero_share": -0.06928104575163396
+        },
+        "fire_zero": {
+          "ci_excludes_zero": true,
+          "definition": "overture_poi_fire == 0",
+          "interval_method": "Newcombe-Wilson score interval for independent binomial proportions",
+          "newcombe_wilson_95_ci_difference": [
+            -0.37854055900104766,
+            -0.007409680082880038
+          ],
+          "nontribal": {
+            "tracts": 27,
+            "wilson_95_ci": [
+              0.18643261498715644,
+              0.5217523949267991
+            ],
+            "zero_share": 0.3333333333333333,
+            "zero_tracts": 9
+          },
+          "tribal": {
+            "tracts": 85,
+            "wilson_95_ci": [
+              0.09161380494530419,
+              0.2442818367609198
+            ],
+            "zero_share": 0.15294117647058825,
+            "zero_tracts": 13
+          },
+          "tribal_minus_nontribal_zero_share": -0.18039215686274507
+        }
+      },
+      "stratum": "rural and region-wide upper-quartile summer DSCI",
+      "tracts_with_known_tribal_status": 112,
+      "tribal_tracts": 85
+    }
+  },
+  "uncertainty_caveats": [
+    "The intervals do not model spatial dependence, measurement error, multiple endpoint/stratum comparisons, or uncertainty in the provided Overture counts.",
+    "tribal_any is a provided tract overlap indicator, not an individual identity or proof that an emergency service serves a community.",
+    "No fire-agency roster, volunteer status, dispatch outcomes, or field-level ground truth is provided or used; potential dispatch/geocoding consequences are hypotheses only.",
+    "This report does not compare the unstratified all-tract tribal and nontribal rates; all reported comparisons are within rural strata."
+  ]
+}
