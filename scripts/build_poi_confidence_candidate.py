@@ -53,13 +53,13 @@ from audit_poi_categories import (  # noqa: E402
 from estimate_gaps import (  # noqa: E402
     FACILITY_MISS_PRIORS,
     FACILITY_MISS_K_POP_ANALYSIS,
-    combine_poi_gap,
     expected_facility_miss_gap_v2,
     facility_reference_presence_probability_v2,
 )
 from estimator_v2_establishments import (  # noqa: E402
     estimate_establishments_component_v2,
     facility_half_v2,
+    combine_poi_halves_v2,
 )
 
 with (ROOT / "config/poi-category-definitions.json").open("r", encoding="utf-8") as _stream:
@@ -386,9 +386,9 @@ def v2_poi_components(row: dict[str, Any], counts: dict[str, float],
     facility = facility_half_v2(facility_inputs)
     establishments = estimate_establishments_component_v2(
         row["all_poi_count"], row["strata"]["pop_total"], FACILITY_MISS_K_POP_ANALYSIS)
-    poi = combine_poi_gap(float(facility["facility_gap"]), int(facility["facility_defined"]),
-                          float(establishments["establishments_gap"]),
-                          int(establishments["establishments_defined"]))
+    poi = combine_poi_halves_v2(float(facility["facility_gap"]), int(facility["facility_defined"]),
+                                 float(establishments["establishments_gap"]),
+                                 int(establishments["establishments_defined"]))
     return {"facility_gap": float(facility["facility_gap"]),
             "facility_defined": int(facility["facility_defined"]),
             "establishments_gap": float(establishments["establishments_gap"]),
