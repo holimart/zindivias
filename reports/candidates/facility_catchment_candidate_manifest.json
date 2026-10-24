@@ -1,0 +1,435 @@
+{
+  "all_numeric_columns_finite": true,
+  "candidate_columns": [
+    "GEOID",
+    "region",
+    "urbanity_cell",
+    "ur_class",
+    "pop_total",
+    "ALAND",
+    "pct_urban_value",
+    "pct_urban_missing",
+    "urban_fraction",
+    "urbanity_source",
+    "facility_logistic_baseline",
+    "facility_catchment_gap_1km",
+    "facility_delta_1km",
+    "facility_catchment_gap_5km",
+    "facility_delta_5km",
+    "facility_catchment_gap_10km",
+    "facility_delta_10km",
+    "fire_selected_overture_count",
+    "fire_model_count",
+    "fire_p_ref_present",
+    "fire_baseline_expected_gap",
+    "fire_nearest_distance_1km_m",
+    "fire_nearest_distance_1km_missing",
+    "fire_neighbor_count_1km",
+    "fire_kernel_access_1km",
+    "fire_isolation_1km",
+    "fire_catchment_expected_gap_1km",
+    "fire_catchment_delta_1km",
+    "fire_nearest_distance_5km_m",
+    "fire_nearest_distance_5km_missing",
+    "fire_neighbor_count_5km",
+    "fire_kernel_access_5km",
+    "fire_isolation_5km",
+    "fire_catchment_expected_gap_5km",
+    "fire_catchment_delta_5km",
+    "fire_nearest_distance_10km_m",
+    "fire_nearest_distance_10km_missing",
+    "fire_neighbor_count_10km",
+    "fire_kernel_access_10km",
+    "fire_isolation_10km",
+    "fire_catchment_expected_gap_10km",
+    "fire_catchment_delta_10km",
+    "ems_selected_overture_count",
+    "ems_model_count",
+    "ems_p_ref_present",
+    "ems_baseline_expected_gap",
+    "ems_nearest_distance_1km_m",
+    "ems_nearest_distance_1km_missing",
+    "ems_neighbor_count_1km",
+    "ems_kernel_access_1km",
+    "ems_isolation_1km",
+    "ems_catchment_expected_gap_1km",
+    "ems_catchment_delta_1km",
+    "ems_nearest_distance_5km_m",
+    "ems_nearest_distance_5km_missing",
+    "ems_neighbor_count_5km",
+    "ems_kernel_access_5km",
+    "ems_isolation_5km",
+    "ems_catchment_expected_gap_5km",
+    "ems_catchment_delta_5km",
+    "ems_nearest_distance_10km_m",
+    "ems_nearest_distance_10km_missing",
+    "ems_neighbor_count_10km",
+    "ems_kernel_access_10km",
+    "ems_isolation_10km",
+    "ems_catchment_expected_gap_10km",
+    "ems_catchment_delta_10km",
+    "schools_selected_overture_count",
+    "schools_model_count",
+    "schools_p_ref_present",
+    "schools_baseline_expected_gap",
+    "schools_nearest_distance_1km_m",
+    "schools_nearest_distance_1km_missing",
+    "schools_neighbor_count_1km",
+    "schools_kernel_access_1km",
+    "schools_isolation_1km",
+    "schools_catchment_expected_gap_1km",
+    "schools_catchment_delta_1km",
+    "schools_nearest_distance_5km_m",
+    "schools_nearest_distance_5km_missing",
+    "schools_neighbor_count_5km",
+    "schools_kernel_access_5km",
+    "schools_isolation_5km",
+    "schools_catchment_expected_gap_5km",
+    "schools_catchment_delta_5km",
+    "schools_nearest_distance_10km_m",
+    "schools_nearest_distance_10km_missing",
+    "schools_neighbor_count_10km",
+    "schools_kernel_access_10km",
+    "schools_isolation_10km",
+    "schools_catchment_expected_gap_10km",
+    "schools_catchment_delta_10km"
+  ],
+  "candidate_csv": "reports/candidates/facility_catchment_candidate.csv",
+  "candidate_csv_sha256": "d646129188b006a971d4a98292d1a9221959036a9d5ba0329969dd1913ee876c",
+  "candidate_gaps_in_0_1": true,
+  "candidate_id": "FACILITY_CATCHMENT_V1",
+  "candidate_rows": 9379,
+  "category_config_sha256": "8309a0bb08613b92621f4977eb78998e469951c0cd0ed012d93ea2f5cf59654f",
+  "config_path": "config/facility-catchment-preregistered.json",
+  "config_sha256": "18cf5fc3468997728b3d4786c5892b636d17b7cd191eb02b2a047aa300bbc656",
+  "inputs_by_region": {
+    "eastern-ok": {
+      "official_sample": {
+        "official_geoid_projection_sha256": "d1886fe60e412888bc5dbc1057f918eb840caa40936037f45bce9ce1c9169964",
+        "official_rows": 1192,
+        "sample_score_placeholders_read": false,
+        "workspace_path": "samples/eastern-ok-sample-submission.csv"
+      },
+      "overture_feature_cache": {
+        "columns_read": [
+          "GEOID",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "exact_official_order": true,
+        "official_projection_sha256": "8b995e8e03c99577c51d8833387652fede44ae6663422a4c4dc2ea439745c2c1",
+        "rows": 1192,
+        "workspace_path": "gap-estimator/features/eastern-ok-overture-tract-summary.parquet"
+      },
+      "provided_acs_geometry": {
+        "all_geometry_wkb_projection_sha256": "be826e84851c10d5f565ccd1512ef5ddb1acf883204517f9ffb4b817891751b6",
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "context_only_geometry_ids_used_for_point_assignment": true,
+        "distance_crs": "EPSG:5070",
+        "object_bytes": 3650879,
+        "official_centroids": 1192,
+        "official_order_hash": "0ed6a6caa58085044a048ee0e90abdc881421022dde83588cd9a5f7ac768dbeb",
+        "official_ordered_geoid_centroid_sha256": "892a690809a9a8048851910a692e449e8f9b2b43bddab2573d678b6409e8c906",
+        "official_target_geometry_ids": 1192,
+        "provided_context_only_geometry_ids": 0,
+        "provided_geometry_ids": 1192,
+        "source_rows": 1192,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-census-acs-housing.parquet"
+      },
+      "provided_overture_poi": {
+        "assigned_facility_points_by_type": {
+          "ems": 471,
+          "fire": 866,
+          "schools": 4836
+        },
+        "columns_read": [
+          "bbox",
+          "categories"
+        ],
+        "context_only_assigned_facility_type_records": 0,
+        "no_overview_poi_geometry_or_metadata_read": true,
+        "object_bytes": 28848614,
+        "official_target_assigned_facility_type_records": 6173,
+        "row_groups": 6,
+        "selected_assigned_point_projection_sha256": "069bc8dda74d4d0b09b0c5677e43d0d7f9d63a67e813cb49f3460eae8faca124",
+        "selected_facility_type_record_matches": 5881,
+        "source_rows": 207369,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-pois.parquet",
+        "unmatched_poi_rows_excluded": 0
+      },
+      "strata": {
+        "columns_read": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban",
+          "ur_class"
+        ],
+        "context_only_strata_rows_not_used_as_targets": 0,
+        "official_projection_sha256": "97c7d9a4cd1a0c9443a802e3511912182b5f2696f2a022ea77bc82a32e1c0362",
+        "official_rows_used": 1192,
+        "source_rows": 1192,
+        "workspace_path": "defined-flags-inputs/eastern-ok-strata-tract-table.parquet"
+      }
+    },
+    "maricopa-az": {
+      "official_sample": {
+        "official_geoid_projection_sha256": "f5dee76799fa137848f0fe7b3cbde36cbeed06ee372957e6df68ee3e526f30d5",
+        "official_rows": 1593,
+        "sample_score_placeholders_read": false,
+        "workspace_path": "samples/maricopa-az-sample-submission.csv"
+      },
+      "overture_feature_cache": {
+        "columns_read": [
+          "GEOID",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "exact_official_order": true,
+        "official_projection_sha256": "4324b0ad997781fb1e485b41f47cdc436bae9db60a3d7823f5bb2f8324234599",
+        "rows": 1593,
+        "workspace_path": "gap-estimator/features/maricopa-az-overture-tract-summary.parquet"
+      },
+      "provided_acs_geometry": {
+        "all_geometry_wkb_projection_sha256": "52763f6db843aed3401b53e1afd18732b739e2df1a67d1e8ad78d4ed5d641fac",
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "context_only_geometry_ids_used_for_point_assignment": true,
+        "distance_crs": "EPSG:5070",
+        "object_bytes": 3457173,
+        "official_centroids": 1593,
+        "official_order_hash": "b9ded7b20be169c1857d7eafc0eece368087376e11461726f313ac9a9d7e416d",
+        "official_ordered_geoid_centroid_sha256": "957563e920a240396ebb7cbb83703fcd55da364830571617684d47f5f7978939",
+        "official_target_geometry_ids": 1593,
+        "provided_context_only_geometry_ids": 0,
+        "provided_geometry_ids": 1593,
+        "source_rows": 1593,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-census-acs-housing.parquet"
+      },
+      "provided_overture_poi": {
+        "assigned_facility_points_by_type": {
+          "ems": 304,
+          "fire": 716,
+          "schools": 5582
+        },
+        "columns_read": [
+          "bbox",
+          "categories"
+        ],
+        "context_only_assigned_facility_type_records": 0,
+        "no_overview_poi_geometry_or_metadata_read": true,
+        "object_bytes": 40987154,
+        "official_target_assigned_facility_type_records": 6602,
+        "row_groups": 9,
+        "selected_assigned_point_projection_sha256": "6d8c0d3148e25b3aaf877766d4c71ed66b8c4a2113ba2c42350876d2c6a134b8",
+        "selected_facility_type_record_matches": 6408,
+        "source_rows": 300046,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-pois.parquet",
+        "unmatched_poi_rows_excluded": 0
+      },
+      "strata": {
+        "columns_read": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban",
+          "ur_class"
+        ],
+        "context_only_strata_rows_not_used_as_targets": 0,
+        "official_projection_sha256": "6f145c5b248de9b124fa52a7ad86e5467cde7451a8daf2e9479eb3f91845f67c",
+        "official_rows_used": 1593,
+        "source_rows": 1593,
+        "workspace_path": "defined-flags-inputs/maricopa-az-strata-tract-table.parquet"
+      }
+    },
+    "northern-ca": {
+      "official_sample": {
+        "official_geoid_projection_sha256": "84c4bc3c03900cb37c5e6afbfbb7dde3c49849a68475b2bd5fdea3096ee3c915",
+        "official_rows": 591,
+        "sample_score_placeholders_read": false,
+        "workspace_path": "samples/northern-ca-sample-submission.csv"
+      },
+      "overture_feature_cache": {
+        "columns_read": [
+          "GEOID",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "exact_official_order": true,
+        "official_projection_sha256": "622029e5ee4f7840cda70dd9be768420c60b730e3f46579f369ab83b209a9baf",
+        "rows": 591,
+        "workspace_path": "gap-estimator/features/northern-ca-overture-tract-summary.parquet"
+      },
+      "provided_acs_geometry": {
+        "all_geometry_wkb_projection_sha256": "06bd4c0c80097d076e6d7fc0f3c457f40222c7c66e433592b3389e5a0c2bfee1",
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "context_only_geometry_ids_used_for_point_assignment": true,
+        "distance_crs": "EPSG:5070",
+        "object_bytes": 3037540,
+        "official_centroids": 591,
+        "official_order_hash": "e8605b8b5b7639a37632aece53a141197569f1d870cf3800f9d3c849bf841f43",
+        "official_ordered_geoid_centroid_sha256": "0cc82efe807325322ccbc7b7db881c47f45dc2933ab6fbb3332a6caf3d99b8ca",
+        "official_target_geometry_ids": 591,
+        "provided_context_only_geometry_ids": 0,
+        "provided_geometry_ids": 591,
+        "source_rows": 591,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-census-acs-housing.parquet"
+      },
+      "provided_overture_poi": {
+        "assigned_facility_points_by_type": {
+          "ems": 177,
+          "fire": 491,
+          "schools": 2773
+        },
+        "columns_read": [
+          "bbox",
+          "categories"
+        ],
+        "context_only_assigned_facility_type_records": 0,
+        "no_overview_poi_geometry_or_metadata_read": true,
+        "object_bytes": 16168720,
+        "official_target_assigned_facility_type_records": 3441,
+        "row_groups": 4,
+        "selected_assigned_point_projection_sha256": "2edb5fb3576271c561c87a8b716f3854694391613004976e4127b42029bd7104",
+        "selected_facility_type_record_matches": 3316,
+        "source_rows": 116897,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-pois.parquet",
+        "unmatched_poi_rows_excluded": 0
+      },
+      "strata": {
+        "columns_read": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban",
+          "ur_class"
+        ],
+        "context_only_strata_rows_not_used_as_targets": 0,
+        "official_projection_sha256": "a675cf28c20ec96716211d01f76eb41fa60185159f6f20e1773761295842eb3f",
+        "official_rows_used": 591,
+        "source_rows": 591,
+        "workspace_path": "defined-flags-inputs/northern-ca-strata-tract-table.parquet"
+      }
+    },
+    "south-central-tx": {
+      "official_sample": {
+        "official_geoid_projection_sha256": "10c6cef055d79af255b9a6890c1896565ffe8884c756815c5474ff7d6633883c",
+        "official_rows": 6003,
+        "sample_score_placeholders_read": false,
+        "workspace_path": "samples/south-central-tx-sample-submission.csv"
+      },
+      "overture_feature_cache": {
+        "columns_read": [
+          "GEOID",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "exact_official_order": true,
+        "official_projection_sha256": "8a9ae089c48d7786e760b5a4f74873f7bbc87d75c26350e349c65952d3f7ee2d",
+        "rows": 6003,
+        "workspace_path": "gap-estimator/features/south-central-tx-overture-tract-summary.parquet"
+      },
+      "provided_acs_geometry": {
+        "all_geometry_wkb_projection_sha256": "b33cb75638d739176fb5c57ce90bc2635bc966ade9de69319aa224d275427d39",
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "context_only_geometry_ids_used_for_point_assignment": true,
+        "distance_crs": "EPSG:5070",
+        "object_bytes": 13758433,
+        "official_centroids": 6003,
+        "official_order_hash": "863d374ef7da4fe02cd0e1d969f56215fb9aa5e438c570dd584725701bd9cc6a",
+        "official_ordered_geoid_centroid_sha256": "99e5df3e63ac075c46fc8936322df557966763fe84dcee722f11c991653d32d3",
+        "official_target_geometry_ids": 6003,
+        "provided_context_only_geometry_ids": 7,
+        "provided_geometry_ids": 6010,
+        "source_rows": 6010,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-census-acs-housing.parquet"
+      },
+      "provided_overture_poi": {
+        "assigned_facility_points_by_type": {
+          "ems": 1787,
+          "fire": 3169,
+          "schools": 26247
+        },
+        "columns_read": [
+          "bbox",
+          "categories"
+        ],
+        "context_only_assigned_facility_type_records": 0,
+        "no_overview_poi_geometry_or_metadata_read": true,
+        "object_bytes": 179937096,
+        "official_target_assigned_facility_type_records": 31203,
+        "row_groups": 36,
+        "selected_assigned_point_projection_sha256": "f819633232e95eea28d49e9023cedc5c418743f5e43b08b7be6405c92ff3e2cc",
+        "selected_facility_type_record_matches": 30146,
+        "source_rows": 1300334,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-pois.parquet",
+        "unmatched_poi_rows_excluded": 0
+      },
+      "strata": {
+        "columns_read": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban",
+          "ur_class"
+        ],
+        "context_only_strata_rows_not_used_as_targets": 7,
+        "official_projection_sha256": "eb1948261a5904137a30ece5aa1bdf03833b04a46a7b1e09f6adc2b67007690c",
+        "official_rows_used": 6003,
+        "source_rows": 6010,
+        "workspace_path": "defined-flags-inputs/south-central-tx-strata-tract-table.parquet"
+      }
+    }
+  },
+  "maximum_absolute_delta_by_radius": {
+    "10km": 0.007257218374583152,
+    "1km": 0.013728803990057104,
+    "5km": 0.00905012634705335
+  },
+  "no_upload": true,
+  "official_id_count": 9379,
+  "official_id_order_sha256": "454ab5d180107aa9d0ab2d4d648070bc716754a94375e6d84d4898055a94fa37",
+  "prior_candidate_id": "fixed pooled logistic facility-miss prior from reports/poi-facility-miss-audit.json",
+  "prior_report_sha256": "b559c8d3d85709d0e5f2d2102bb39da4d8255a3c62f728cf736da522025a289c",
+  "scope": {
+    "cross_region_neighbors": false,
+    "same_region_context_only": true,
+    "sample_score_placeholders_read": false,
+    "scored_ids_only": true
+  }
+}

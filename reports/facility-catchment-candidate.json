@@ -1,0 +1,4705 @@
+{
+  "analysis": "Provided-feature-only facility spatial-catchment prior sensitivity; no accuracy test or target fit",
+  "candidate_csv": "reports/candidates/facility_catchment_candidate.csv",
+  "candidate_csv_sha256": "d646129188b006a971d4a98292d1a9221959036a9d5ba0329969dd1913ee876c",
+  "candidate_id": "FACILITY_CATCHMENT_V1",
+  "candidate_manifest": "reports/candidates/facility_catchment_candidate_manifest.json",
+  "candidate_manifest_sha256": "180da02422e5b3045580dd642288c5fcb6aa18f01382c732b10946a20a99605e",
+  "candidate_rows": 9379,
+  "code_commit_at_run": "54b4902b19c56e7bd4e77e224e2bc38d765007d9",
+  "environment": {
+    "numpy": "2.5.4",
+    "pyarrow": "26.0.0",
+    "python": "3.12.3",
+    "shapely": "2.2.0"
+  },
+  "input_hashes_by_region": {
+    "eastern-ok": {
+      "official_sample": {
+        "official_geoid_projection_sha256": "d1886fe60e412888bc5dbc1057f918eb840caa40936037f45bce9ce1c9169964",
+        "official_rows": 1192,
+        "sample_score_placeholders_read": false,
+        "workspace_path": "samples/eastern-ok-sample-submission.csv"
+      },
+      "overture_feature_cache": {
+        "columns_read": [
+          "GEOID",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "exact_official_order": true,
+        "official_projection_sha256": "8b995e8e03c99577c51d8833387652fede44ae6663422a4c4dc2ea439745c2c1",
+        "rows": 1192,
+        "workspace_path": "gap-estimator/features/eastern-ok-overture-tract-summary.parquet"
+      },
+      "provided_acs_geometry": {
+        "all_geometry_wkb_projection_sha256": "be826e84851c10d5f565ccd1512ef5ddb1acf883204517f9ffb4b817891751b6",
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "context_only_geometry_ids_used_for_point_assignment": true,
+        "distance_crs": "EPSG:5070",
+        "object_bytes": 3650879,
+        "official_centroids": 1192,
+        "official_order_hash": "0ed6a6caa58085044a048ee0e90abdc881421022dde83588cd9a5f7ac768dbeb",
+        "official_ordered_geoid_centroid_sha256": "892a690809a9a8048851910a692e449e8f9b2b43bddab2573d678b6409e8c906",
+        "official_target_geometry_ids": 1192,
+        "provided_context_only_geometry_ids": 0,
+        "provided_geometry_ids": 1192,
+        "source_rows": 1192,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-census-acs-housing.parquet"
+      },
+      "provided_overture_poi": {
+        "assigned_facility_points_by_type": {
+          "ems": 471,
+          "fire": 866,
+          "schools": 4836
+        },
+        "columns_read": [
+          "bbox",
+          "categories"
+        ],
+        "context_only_assigned_facility_type_records": 0,
+        "no_overview_poi_geometry_or_metadata_read": true,
+        "object_bytes": 28848614,
+        "official_target_assigned_facility_type_records": 6173,
+        "row_groups": 6,
+        "selected_assigned_point_projection_sha256": "069bc8dda74d4d0b09b0c5677e43d0d7f9d63a67e813cb49f3460eae8faca124",
+        "selected_facility_type_record_matches": 5881,
+        "source_rows": 207369,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-pois.parquet",
+        "unmatched_poi_rows_excluded": 0
+      },
+      "strata": {
+        "columns_read": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban",
+          "ur_class"
+        ],
+        "context_only_strata_rows_not_used_as_targets": 0,
+        "official_projection_sha256": "97c7d9a4cd1a0c9443a802e3511912182b5f2696f2a022ea77bc82a32e1c0362",
+        "official_rows_used": 1192,
+        "source_rows": 1192,
+        "workspace_path": "defined-flags-inputs/eastern-ok-strata-tract-table.parquet"
+      }
+    },
+    "maricopa-az": {
+      "official_sample": {
+        "official_geoid_projection_sha256": "f5dee76799fa137848f0fe7b3cbde36cbeed06ee372957e6df68ee3e526f30d5",
+        "official_rows": 1593,
+        "sample_score_placeholders_read": false,
+        "workspace_path": "samples/maricopa-az-sample-submission.csv"
+      },
+      "overture_feature_cache": {
+        "columns_read": [
+          "GEOID",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "exact_official_order": true,
+        "official_projection_sha256": "4324b0ad997781fb1e485b41f47cdc436bae9db60a3d7823f5bb2f8324234599",
+        "rows": 1593,
+        "workspace_path": "gap-estimator/features/maricopa-az-overture-tract-summary.parquet"
+      },
+      "provided_acs_geometry": {
+        "all_geometry_wkb_projection_sha256": "52763f6db843aed3401b53e1afd18732b739e2df1a67d1e8ad78d4ed5d641fac",
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "context_only_geometry_ids_used_for_point_assignment": true,
+        "distance_crs": "EPSG:5070",
+        "object_bytes": 3457173,
+        "official_centroids": 1593,
+        "official_order_hash": "b9ded7b20be169c1857d7eafc0eece368087376e11461726f313ac9a9d7e416d",
+        "official_ordered_geoid_centroid_sha256": "957563e920a240396ebb7cbb83703fcd55da364830571617684d47f5f7978939",
+        "official_target_geometry_ids": 1593,
+        "provided_context_only_geometry_ids": 0,
+        "provided_geometry_ids": 1593,
+        "source_rows": 1593,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-census-acs-housing.parquet"
+      },
+      "provided_overture_poi": {
+        "assigned_facility_points_by_type": {
+          "ems": 304,
+          "fire": 716,
+          "schools": 5582
+        },
+        "columns_read": [
+          "bbox",
+          "categories"
+        ],
+        "context_only_assigned_facility_type_records": 0,
+        "no_overview_poi_geometry_or_metadata_read": true,
+        "object_bytes": 40987154,
+        "official_target_assigned_facility_type_records": 6602,
+        "row_groups": 9,
+        "selected_assigned_point_projection_sha256": "6d8c0d3148e25b3aaf877766d4c71ed66b8c4a2113ba2c42350876d2c6a134b8",
+        "selected_facility_type_record_matches": 6408,
+        "source_rows": 300046,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-pois.parquet",
+        "unmatched_poi_rows_excluded": 0
+      },
+      "strata": {
+        "columns_read": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban",
+          "ur_class"
+        ],
+        "context_only_strata_rows_not_used_as_targets": 0,
+        "official_projection_sha256": "6f145c5b248de9b124fa52a7ad86e5467cde7451a8daf2e9479eb3f91845f67c",
+        "official_rows_used": 1593,
+        "source_rows": 1593,
+        "workspace_path": "defined-flags-inputs/maricopa-az-strata-tract-table.parquet"
+      }
+    },
+    "northern-ca": {
+      "official_sample": {
+        "official_geoid_projection_sha256": "84c4bc3c03900cb37c5e6afbfbb7dde3c49849a68475b2bd5fdea3096ee3c915",
+        "official_rows": 591,
+        "sample_score_placeholders_read": false,
+        "workspace_path": "samples/northern-ca-sample-submission.csv"
+      },
+      "overture_feature_cache": {
+        "columns_read": [
+          "GEOID",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "exact_official_order": true,
+        "official_projection_sha256": "622029e5ee4f7840cda70dd9be768420c60b730e3f46579f369ab83b209a9baf",
+        "rows": 591,
+        "workspace_path": "gap-estimator/features/northern-ca-overture-tract-summary.parquet"
+      },
+      "provided_acs_geometry": {
+        "all_geometry_wkb_projection_sha256": "06bd4c0c80097d076e6d7fc0f3c457f40222c7c66e433592b3389e5a0c2bfee1",
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "context_only_geometry_ids_used_for_point_assignment": true,
+        "distance_crs": "EPSG:5070",
+        "object_bytes": 3037540,
+        "official_centroids": 591,
+        "official_order_hash": "e8605b8b5b7639a37632aece53a141197569f1d870cf3800f9d3c849bf841f43",
+        "official_ordered_geoid_centroid_sha256": "0cc82efe807325322ccbc7b7db881c47f45dc2933ab6fbb3332a6caf3d99b8ca",
+        "official_target_geometry_ids": 591,
+        "provided_context_only_geometry_ids": 0,
+        "provided_geometry_ids": 591,
+        "source_rows": 591,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-census-acs-housing.parquet"
+      },
+      "provided_overture_poi": {
+        "assigned_facility_points_by_type": {
+          "ems": 177,
+          "fire": 491,
+          "schools": 2773
+        },
+        "columns_read": [
+          "bbox",
+          "categories"
+        ],
+        "context_only_assigned_facility_type_records": 0,
+        "no_overview_poi_geometry_or_metadata_read": true,
+        "object_bytes": 16168720,
+        "official_target_assigned_facility_type_records": 3441,
+        "row_groups": 4,
+        "selected_assigned_point_projection_sha256": "2edb5fb3576271c561c87a8b716f3854694391613004976e4127b42029bd7104",
+        "selected_facility_type_record_matches": 3316,
+        "source_rows": 116897,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-pois.parquet",
+        "unmatched_poi_rows_excluded": 0
+      },
+      "strata": {
+        "columns_read": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban",
+          "ur_class"
+        ],
+        "context_only_strata_rows_not_used_as_targets": 0,
+        "official_projection_sha256": "a675cf28c20ec96716211d01f76eb41fa60185159f6f20e1773761295842eb3f",
+        "official_rows_used": 591,
+        "source_rows": 591,
+        "workspace_path": "defined-flags-inputs/northern-ca-strata-tract-table.parquet"
+      }
+    },
+    "south-central-tx": {
+      "official_sample": {
+        "official_geoid_projection_sha256": "10c6cef055d79af255b9a6890c1896565ffe8884c756815c5474ff7d6633883c",
+        "official_rows": 6003,
+        "sample_score_placeholders_read": false,
+        "workspace_path": "samples/south-central-tx-sample-submission.csv"
+      },
+      "overture_feature_cache": {
+        "columns_read": [
+          "GEOID",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "exact_official_order": true,
+        "official_projection_sha256": "8a9ae089c48d7786e760b5a4f74873f7bbc87d75c26350e349c65952d3f7ee2d",
+        "rows": 6003,
+        "workspace_path": "gap-estimator/features/south-central-tx-overture-tract-summary.parquet"
+      },
+      "provided_acs_geometry": {
+        "all_geometry_wkb_projection_sha256": "b33cb75638d739176fb5c57ce90bc2635bc966ade9de69319aa224d275427d39",
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "context_only_geometry_ids_used_for_point_assignment": true,
+        "distance_crs": "EPSG:5070",
+        "object_bytes": 13758433,
+        "official_centroids": 6003,
+        "official_order_hash": "863d374ef7da4fe02cd0e1d969f56215fb9aa5e438c570dd584725701bd9cc6a",
+        "official_ordered_geoid_centroid_sha256": "99e5df3e63ac075c46fc8936322df557966763fe84dcee722f11c991653d32d3",
+        "official_target_geometry_ids": 6003,
+        "provided_context_only_geometry_ids": 7,
+        "provided_geometry_ids": 6010,
+        "source_rows": 6010,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-census-acs-housing.parquet"
+      },
+      "provided_overture_poi": {
+        "assigned_facility_points_by_type": {
+          "ems": 1787,
+          "fire": 3169,
+          "schools": 26247
+        },
+        "columns_read": [
+          "bbox",
+          "categories"
+        ],
+        "context_only_assigned_facility_type_records": 0,
+        "no_overview_poi_geometry_or_metadata_read": true,
+        "object_bytes": 179937096,
+        "official_target_assigned_facility_type_records": 31203,
+        "row_groups": 36,
+        "selected_assigned_point_projection_sha256": "f819633232e95eea28d49e9023cedc5c418743f5e43b08b7be6405c92ff3e2cc",
+        "selected_facility_type_record_matches": 30146,
+        "source_rows": 1300334,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-pois.parquet",
+        "unmatched_poi_rows_excluded": 0
+      },
+      "strata": {
+        "columns_read": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban",
+          "ur_class"
+        ],
+        "context_only_strata_rows_not_used_as_targets": 7,
+        "official_projection_sha256": "eb1948261a5904137a30ece5aa1bdf03833b04a46a7b1e09f6adc2b67007690c",
+        "official_rows_used": 6003,
+        "source_rows": 6010,
+        "workspace_path": "defined-flags-inputs/south-central-tx-strata-tract-table.parquet"
+      }
+    }
+  },
+  "limitations": [
+    "Centroid-based Euclidean catchment is a spatial context proxy, not a road-network/service-area model or a validation of facility completeness.",
+    "Population is available only at tract scale; population-weighted access assigns the tract total to its centroid and does not model within-tract population distribution.",
+    "A nearby Overture facility is not proof that an unobserved facility is absent or that an emergency service is accessible.",
+    "The existing fixed pooled logistic prior is an explicit model assumption; the fixed catchment uplift is a sensitivity, not empirically calibrated or accuracy tested."
+  ],
+  "measure_after": {
+    "candidate_delta_by_urbanity_cell": {
+      "eastern-ok:rural": {
+        "10km": {
+          "max": 0.0036158770621941144,
+          "mean": 0.0011050178852803276,
+          "median": 0.0009299868203393735,
+          "min": 2.822613584648956e-05,
+          "n": 411,
+          "q10": 0.000333630577291924,
+          "q90": 0.002234271884948208,
+          "std_population": 0.0007427366556790037
+        },
+        "1km": {
+          "max": 0.007282279398685282,
+          "mean": 0.002438714425091124,
+          "median": 0.002039159656720399,
+          "min": 0.00025397694486789177,
+          "n": 411,
+          "q10": 0.0009888604391404196,
+          "q90": 0.004912472409432517,
+          "std_population": 0.0014670672224678786
+        },
+        "5km": {
+          "max": 0.005138363391723161,
+          "mean": 0.001626340560023821,
+          "median": 0.001368851398188535,
+          "min": 5.577626408618738e-05,
+          "n": 411,
+          "q10": 0.0005627925563591249,
+          "q90": 0.0032495604823023494,
+          "std_population": 0.0010582887851726354
+        }
+      },
+      "eastern-ok:urban": {
+        "10km": {
+          "max": 0.003249154998658965,
+          "mean": 0.000992052871633152,
+          "median": 0.0009376318434770325,
+          "min": 6.859150236649542e-05,
+          "n": 781,
+          "q10": 0.00036365722183330507,
+          "q90": 0.0016424587260108203,
+          "std_population": 0.0005259588957944406
+        },
+        "1km": {
+          "max": 0.01158382895578644,
+          "mean": 0.00451106223927273,
+          "median": 0.004504684635843081,
+          "min": 0.0005548635825956411,
+          "n": 781,
+          "q10": 0.0020862946244399674,
+          "q90": 0.00679189590130197,
+          "std_population": 0.0019387657762442855
+        },
+        "5km": {
+          "max": 0.00558028071308353,
+          "mean": 0.0017552113177103652,
+          "median": 0.0017040314737799267,
+          "min": 0.00013536959840793755,
+          "n": 781,
+          "q10": 0.0006831000442303892,
+          "q90": 0.0028361921242967825,
+          "std_population": 0.0008744646417839538
+        }
+      },
+      "maricopa-az:rural": {
+        "10km": {
+          "max": 0.005959977162465005,
+          "mean": 0.0018583379417980333,
+          "median": 0.0015840285842593088,
+          "min": 4.6865977471752945e-05,
+          "n": 163,
+          "q10": 0.0007044417980786158,
+          "q90": 0.003341261403406629,
+          "std_population": 0.0011558757377974197
+        },
+        "1km": {
+          "max": 0.008999945186768055,
+          "mean": 0.003116922878304778,
+          "median": 0.002706692214875926,
+          "min": 0.0003777883903460441,
+          "n": 163,
+          "q10": 0.0013274793511136196,
+          "q90": 0.005938000233622243,
+          "std_population": 0.00171937827320159
+        },
+        "5km": {
+          "max": 0.006048603461971461,
+          "mean": 0.002426079672112315,
+          "median": 0.002000915681170362,
+          "min": 9.141850117107969e-05,
+          "n": 163,
+          "q10": 0.0010783336612385868,
+          "q90": 0.004602484957909287,
+          "std_population": 0.0013642564546321224
+        }
+      },
+      "maricopa-az:urban": {
+        "10km": {
+          "max": 0.007257218374583152,
+          "mean": 0.001222203674679727,
+          "median": 0.0011380972199137723,
+          "min": 2.9599609265591048e-05,
+          "n": 1430,
+          "q10": 0.00047501174106830135,
+          "q90": 0.0020346296004738348,
+          "std_population": 0.0006997324260555837
+        },
+        "1km": {
+          "max": 0.0119312736994448,
+          "mean": 0.005317446470501496,
+          "median": 0.005251622721411567,
+          "min": 0.0002386825499437889,
+          "n": 1430,
+          "q10": 0.002665740035737548,
+          "q90": 0.00822347887527027,
+          "std_population": 0.0020989915338014307
+        },
+        "5km": {
+          "max": 0.00905012634705335,
+          "mean": 0.0021205845393215857,
+          "median": 0.0020299206523064356,
+          "min": 5.7731628209845356e-05,
+          "n": 1430,
+          "q10": 0.0008995763341347149,
+          "q90": 0.0034168722834267756,
+          "std_population": 0.0010595945102833033
+        }
+      },
+      "northern-ca:rural": {
+        "10km": {
+          "max": 0.004515596548795436,
+          "mean": 0.0011086218771118475,
+          "median": 0.000943667632352832,
+          "min": 7.620861777466598e-05,
+          "n": 147,
+          "q10": 0.0004047037163684708,
+          "q90": 0.0018919587366043836,
+          "std_population": 0.0007543617557763539
+        },
+        "1km": {
+          "max": 0.007058457981406668,
+          "mean": 0.00228331067105483,
+          "median": 0.0018880366771214796,
+          "min": 0.0004949081828506223,
+          "n": 147,
+          "q10": 0.0009949358413768893,
+          "q90": 0.004031301313745501,
+          "std_population": 0.0013328328123949846
+        },
+        "5km": {
+          "max": 0.006104919632286404,
+          "mean": 0.0015733541922649432,
+          "median": 0.0013694857899244663,
+          "min": 0.0001445849105243778,
+          "n": 147,
+          "q10": 0.0006415884778682934,
+          "q90": 0.0026989764259499633,
+          "std_population": 0.0010321772954796785
+        }
+      },
+      "northern-ca:urban": {
+        "10km": {
+          "max": 0.003935853128505279,
+          "mean": 0.001030309879792114,
+          "median": 0.0009385585334677621,
+          "min": 4.3989093557315895e-05,
+          "n": 444,
+          "q10": 0.00032121834460010075,
+          "q90": 0.001849168101809595,
+          "std_population": 0.0006007633141817777
+        },
+        "1km": {
+          "max": 0.011098454909549305,
+          "mean": 0.004497733503575422,
+          "median": 0.004475463248775326,
+          "min": 0.00039992560802244725,
+          "n": 444,
+          "q10": 0.0020450623741914294,
+          "q90": 0.00691073169280335,
+          "std_population": 0.001994821494016844
+        },
+        "5km": {
+          "max": 0.005991607915691671,
+          "mean": 0.001781831991352271,
+          "median": 0.0016829095949440764,
+          "min": 8.70278932807722e-05,
+          "n": 444,
+          "q10": 0.0006130329367484062,
+          "q90": 0.003049773736575556,
+          "std_population": 0.0009381607317501845
+        }
+      },
+      "south-central-tx:rural": {
+        "10km": {
+          "max": 0.005677680703255056,
+          "mean": 0.001341992855521414,
+          "median": 0.001130932009552027,
+          "min": 3.886190964833003e-05,
+          "n": 991,
+          "q10": 0.0004046131286020854,
+          "q90": 0.0027151940044961576,
+          "std_population": 0.0009289336304641384
+        },
+        "1km": {
+          "max": 0.009435469398900997,
+          "mean": 0.0028470203925990765,
+          "median": 0.0024949597632339462,
+          "min": 0.00034832339584689453,
+          "n": 991,
+          "q10": 0.0011836213415988318,
+          "q90": 0.005499163136190061,
+          "std_population": 0.0016140692324057469
+        },
+        "5km": {
+          "max": 0.007265552190765134,
+          "mean": 0.0019530147335343963,
+          "median": 0.0016630198752956155,
+          "min": 7.676202147615524e-05,
+          "n": 991,
+          "q10": 0.0006764816803370502,
+          "q90": 0.003978987227317918,
+          "std_population": 0.0012429429164107165
+        }
+      },
+      "south-central-tx:urban": {
+        "10km": {
+          "max": 0.006834190062428747,
+          "mean": 0.000999883904883605,
+          "median": 0.0009507079552710518,
+          "min": 3.431899243815095e-05,
+          "n": 5012,
+          "q10": 0.0003627200176858192,
+          "q90": 0.0016377816490544576,
+          "std_population": 0.0005432393874405626
+        },
+        "1km": {
+          "max": 0.013728803990057104,
+          "mean": 0.004754688867397742,
+          "median": 0.004745985330210596,
+          "min": 0.00032876700793176006,
+          "n": 5012,
+          "q10": 0.00210581606094212,
+          "q90": 0.007140809474687807,
+          "std_population": 0.002030022970957507
+        },
+        "5km": {
+          "max": 0.00724266527408568,
+          "mean": 0.0017818530306038366,
+          "median": 0.0017271857278095826,
+          "min": 6.830920609256219e-05,
+          "n": 5012,
+          "q10": 0.0006891977018319535,
+          "q90": 0.0028538156948409153,
+          "std_population": 0.0008859948422794316
+        }
+      }
+    },
+    "deterministic_rerun": "candidate, report and manifest were rerun and compared byte-for-byte",
+    "exact_id_and_output_checks": {
+      "candidate_csv_rows": 9379,
+      "candidate_gaps_in_0_1": true,
+      "exact_official_order": true,
+      "finite_all_numeric_candidate_columns": true,
+      "max_delta_at_most_0_05_by_radius": {
+        "10km": true,
+        "1km": true,
+        "5km": true
+      },
+      "no_accuracy_claim": true,
+      "official_id_count": 9379,
+      "unique_official_ids": 9379
+    },
+    "global_official": {
+      "by_radius": {
+        "10km": {
+          "candidate": {
+            "max": 0.4012374412270682,
+            "mean": 0.1267477888262364,
+            "median": 0.1257268339488297,
+            "min": 0.011740739766881515,
+            "n": 9379,
+            "q10": 0.0462522821077061,
+            "q90": 0.20270312887749803,
+            "std_population": 0.06375464401131921
+          },
+          "delta": {
+            "max": 0.007257218374583152,
+            "mean": 0.001091947333037881,
+            "median": 0.0009937378433606536,
+            "min": 2.822613584648956e-05,
+            "n": 9379,
+            "q10": 0.00038279477370753163,
+            "q90": 0.0018396412082811512,
+            "std_population": 0.0006670221905097786
+          },
+          "max_absolute_delta": 0.007257218374583152
+        },
+        "1km": {
+          "candidate": {
+            "max": 0.41037703963811123,
+            "mean": 0.1300936276405768,
+            "median": 0.1290743059853882,
+            "min": 0.0121309502583363,
+            "n": 9379,
+            "q10": 0.04730340372415578,
+            "q90": 0.20800594574719072,
+            "std_population": 0.06544118607479875
+          },
+          "delta": {
+            "max": 0.013728803990057104,
+            "mean": 0.00443778614737829,
+            "median": 0.004433886495762457,
+            "min": 0.0002386825499437889,
+            "n": 9379,
+            "q10": 0.001698236886302168,
+            "q90": 0.006975107439770845,
+            "std_population": 0.0021311890401235064
+          },
+          "max_absolute_delta": 0.013728803990057104
+        },
+        "5km": {
+          "candidate": {
+            "max": 0.4028473949521854,
+            "mean": 0.1275063196196329,
+            "median": 0.12660028721525915,
+            "min": 0.011856525149306995,
+            "n": 9379,
+            "q10": 0.04663463750971713,
+            "q90": 0.20381621778500508,
+            "std_population": 0.06403042148998753
+          },
+          "delta": {
+            "max": 0.00905012634705335,
+            "mean": 0.0018504781264343888,
+            "median": 0.0017436062864484986,
+            "min": 5.577626408618738e-05,
+            "n": 9379,
+            "q10": 0.0006980451315881236,
+            "q90": 0.0030552049850148147,
+            "std_population": 0.0009910922816432006
+          },
+          "max_absolute_delta": 0.00905012634705335
+        }
+      },
+      "candidate": {
+        "10km": {
+          "max": 0.4012374412270682,
+          "mean": 0.1267477888262364,
+          "median": 0.1257268339488297,
+          "min": 0.011740739766881515,
+          "n": 9379,
+          "q10": 0.0462522821077061,
+          "q90": 0.20270312887749803,
+          "std_population": 0.06375464401131921
+        },
+        "1km": {
+          "max": 0.41037703963811123,
+          "mean": 0.1300936276405768,
+          "median": 0.1290743059853882,
+          "min": 0.0121309502583363,
+          "n": 9379,
+          "q10": 0.04730340372415578,
+          "q90": 0.20800594574719072,
+          "std_population": 0.06544118607479875
+        },
+        "5km": {
+          "max": 0.4028473949521854,
+          "mean": 0.1275063196196329,
+          "median": 0.12660028721525915,
+          "min": 0.011856525149306995,
+          "n": 9379,
+          "q10": 0.04663463750971713,
+          "q90": 0.20381621778500508,
+          "std_population": 0.06403042148998753
+        }
+      },
+      "delta": {
+        "10km": {
+          "max": 0.007257218374583152,
+          "mean": 0.001091947333037881,
+          "median": 0.0009937378433606536,
+          "min": 2.822613584648956e-05,
+          "n": 9379,
+          "q10": 0.00038279477370753163,
+          "q90": 0.0018396412082811512,
+          "std_population": 0.0006670221905097786
+        },
+        "1km": {
+          "max": 0.013728803990057104,
+          "mean": 0.00443778614737829,
+          "median": 0.004433886495762457,
+          "min": 0.0002386825499437889,
+          "n": 9379,
+          "q10": 0.001698236886302168,
+          "q90": 0.006975107439770845,
+          "std_population": 0.0021311890401235064
+        },
+        "5km": {
+          "max": 0.00905012634705335,
+          "mean": 0.0018504781264343888,
+          "median": 0.0017436062864484986,
+          "min": 5.577626408618738e-05,
+          "n": 9379,
+          "q10": 0.0006980451315881236,
+          "q90": 0.0030552049850148147,
+          "std_population": 0.0009910922816432006
+        }
+      },
+      "official_rows": 9379
+    },
+    "per_region": {
+      "eastern-ok": {
+        "by_radius": {
+          "10km": {
+            "by_facility_type": {
+              "ems": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 471,
+                "nearest_distance_m": {
+                  "max": 33976.17665187481,
+                  "mean": 4964.045224118462,
+                  "median": 3127.9672276115107,
+                  "min": 52.848612406470764,
+                  "n": 1192,
+                  "q10": 1011.7098136772065,
+                  "q90": 11991.64006249207,
+                  "std_population": 5007.743806868642
+                },
+                "neighbor_count_within_radius": {
+                  "max": 23.0,
+                  "mean": 6.066275167785235,
+                  "median": 4.0,
+                  "min": 0.0,
+                  "n": 1192,
+                  "q10": 0.0,
+                  "q90": 17.0,
+                  "std_population": 6.022870579569381
+                },
+                "population_weighted_coverage_share": 0.8822149485058575,
+                "population_weighted_kernel_access": 0.6670573938817175,
+                "population_within_radius_centroid_proxy": 3463987.0,
+                "total_population_weight": 3926466.0,
+                "tract_count_within_radius": 1032,
+                "tract_weighted_coverage_share": 0.8657718120805369
+              },
+              "fire": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 866,
+                "nearest_distance_m": {
+                  "max": 32066.94141112343,
+                  "mean": 3371.741816769311,
+                  "median": 2158.36374903086,
+                  "min": 9.096206794598032,
+                  "n": 1192,
+                  "q10": 777.3476160939362,
+                  "q90": 8045.773980758765,
+                  "std_population": 3497.7191106234563
+                },
+                "neighbor_count_within_radius": {
+                  "max": 52.0,
+                  "mean": 13.220637583892618,
+                  "median": 8.0,
+                  "min": 0.0,
+                  "n": 1192,
+                  "q10": 1.0,
+                  "q90": 35.0,
+                  "std_population": 13.684513742621995
+                },
+                "population_weighted_coverage_share": 0.945306288148172,
+                "population_weighted_kernel_access": 0.7488120364740288,
+                "population_within_radius_centroid_proxy": 3711713.0,
+                "total_population_weight": 3926466.0,
+                "tract_count_within_radius": 1114,
+                "tract_weighted_coverage_share": 0.9345637583892618
+              },
+              "schools": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 4836,
+                "nearest_distance_m": {
+                  "max": 19357.417161218986,
+                  "mean": 2260.059579379726,
+                  "median": 904.9222930142432,
+                  "min": 22.083760062097053,
+                  "n": 1192,
+                  "q10": 215.79647365269142,
+                  "q90": 6391.949483136664,
+                  "std_population": 2928.988789148402
+                },
+                "neighbor_count_within_radius": {
+                  "max": 394.0,
+                  "mean": 122.30201342281879,
+                  "median": 65.5,
+                  "min": 0.0,
+                  "n": 1192,
+                  "q10": 3.0,
+                  "q90": 326.9000000000001,
+                  "std_population": 124.92762762334493
+                },
+                "population_weighted_coverage_share": 0.9754557915438463,
+                "population_weighted_kernel_access": 0.8306957126559268,
+                "population_within_radius_centroid_proxy": 3830094.0,
+                "total_population_weight": 3926466.0,
+                "tract_count_within_radius": 1155,
+                "tract_weighted_coverage_share": 0.9689597315436241
+              }
+            },
+            "candidate": {
+              "max": 0.30644858851942813,
+              "mean": 0.10387711922150494,
+              "median": 0.10004095936218457,
+              "min": 0.014919331366722252,
+              "n": 1192,
+              "q10": 0.0344707929758446,
+              "q90": 0.17865340044474284,
+              "std_population": 0.05909853414183236
+            },
+            "delta": {
+              "max": 0.0036158770621941144,
+              "mean": 0.0010310030567078072,
+              "median": 0.0009347529677123795,
+              "min": 2.822613584648956e-05,
+              "n": 1192,
+              "q10": 0.0003541178345345737,
+              "q90": 0.0017723296331065847,
+              "std_population": 0.0006118364938034982
+            },
+            "max_absolute_delta": 0.0036158770621941144,
+            "radius_meters": 10000
+          },
+          "1km": {
+            "by_facility_type": {
+              "ems": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 471,
+                "nearest_distance_m": {
+                  "max": 33976.17665187481,
+                  "mean": 4964.045224118462,
+                  "median": 3127.9672276115107,
+                  "min": 52.848612406470764,
+                  "n": 1192,
+                  "q10": 1011.7098136772065,
+                  "q90": 11991.64006249207,
+                  "std_population": 5007.743806868642
+                },
+                "neighbor_count_within_radius": {
+                  "max": 6.0,
+                  "mean": 0.1342281879194631,
+                  "median": 0.0,
+                  "min": 0.0,
+                  "n": 1192,
+                  "q10": 0.0,
+                  "q90": 0.0,
+                  "std_population": 0.48164592136532963
+                },
+                "population_weighted_coverage_share": 0.08647852801985297,
+                "population_weighted_kernel_access": 0.11063560423930582,
+                "population_within_radius_centroid_proxy": 339555.0,
+                "total_population_weight": 3926466.0,
+                "tract_count_within_radius": 117,
+                "tract_weighted_coverage_share": 0.09815436241610738
+              },
+              "fire": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 866,
+                "nearest_distance_m": {
+                  "max": 32066.94141112343,
+                  "mean": 3371.741816769311,
+                  "median": 2158.36374903086,
+                  "min": 9.096206794598032,
+                  "n": 1192,
+                  "q10": 777.3476160939362,
+                  "q90": 8045.773980758765,
+                  "std_population": 3497.7191106234563
+                },
+                "neighbor_count_within_radius": {
+                  "max": 4.0,
+                  "mean": 0.23657718120805368,
+                  "median": 0.0,
+                  "min": 0.0,
+                  "n": 1192,
+                  "q10": 0.0,
+                  "q90": 1.0,
+                  "std_population": 0.5490116462036322
+                },
+                "population_weighted_coverage_share": 0.18180063191684329,
+                "population_weighted_kernel_access": 0.17678492070365645,
+                "population_within_radius_centroid_proxy": 713834.0,
+                "total_population_weight": 3926466.0,
+                "tract_count_within_radius": 227,
+                "tract_weighted_coverage_share": 0.19043624161073824
+              },
+              "schools": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 4836,
+                "nearest_distance_m": {
+                  "max": 19357.417161218986,
+                  "mean": 2260.059579379726,
+                  "median": 904.9222930142432,
+                  "min": 22.083760062097053,
+                  "n": 1192,
+                  "q10": 215.79647365269142,
+                  "q90": 6391.949483136664,
+                  "std_population": 2928.988789148402
+                },
+                "neighbor_count_within_radius": {
+                  "max": 32.0,
+                  "mean": 2.563758389261745,
+                  "median": 1.0,
+                  "min": 0.0,
+                  "n": 1192,
+                  "q10": 0.0,
+                  "q90": 7.0,
+                  "std_population": 3.818354028275588
+                },
+                "population_weighted_coverage_share": 0.5157090370832194,
+                "population_weighted_kernel_access": 0.3835454703886525,
+                "population_within_radius_centroid_proxy": 2024914.0,
+                "total_population_weight": 3926466.0,
+                "tract_count_within_radius": 619,
+                "tract_weighted_coverage_share": 0.5192953020134228
+              }
+            },
+            "candidate": {
+              "max": 0.312202082890997,
+              "mean": 0.10664263565941497,
+              "median": 0.10216889305686624,
+              "min": 0.015240636861571488,
+              "n": 1192,
+              "q10": 0.035067115780225165,
+              "q90": 0.1833522897351956,
+              "std_population": 0.06072398387338313
+            },
+            "delta": {
+              "max": 0.01158382895578644,
+              "mean": 0.00379651949461783,
+              "median": 0.003554810980473222,
+              "min": 0.00025397694486789177,
+              "n": 1192,
+              "q10": 0.001427960458868468,
+              "q90": 0.006297893845641928,
+              "std_population": 0.002043304753449459
+            },
+            "max_absolute_delta": 0.01158382895578644,
+            "radius_meters": 1000
+          },
+          "5km": {
+            "by_facility_type": {
+              "ems": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 471,
+                "nearest_distance_m": {
+                  "max": 33976.17665187481,
+                  "mean": 4964.045224118462,
+                  "median": 3127.9672276115107,
+                  "min": 52.848612406470764,
+                  "n": 1192,
+                  "q10": 1011.7098136772065,
+                  "q90": 11991.64006249207,
+                  "std_population": 5007.743806868642
+                },
+                "neighbor_count_within_radius": {
+                  "max": 11.0,
+                  "mean": 2.077181208053691,
+                  "median": 1.0,
+                  "min": 0.0,
+                  "n": 1192,
+                  "q10": 0.0,
+                  "q90": 5.0,
+                  "std_population": 2.364250546159605
+                },
+                "population_weighted_coverage_share": 0.6913152947204942,
+                "population_weighted_kernel_access": 0.49063391680467516,
+                "population_within_radius_centroid_proxy": 2714426.0,
+                "total_population_weight": 3926466.0,
+                "tract_count_within_radius": 828,
+                "tract_weighted_coverage_share": 0.6946308724832215
+              },
+              "fire": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 866,
+                "nearest_distance_m": {
+                  "max": 32066.94141112343,
+                  "mean": 3371.741816769311,
+                  "median": 2158.36374903086,
+                  "min": 9.096206794598032,
+                  "n": 1192,
+                  "q10": 777.3476160939362,
+                  "q90": 8045.773980758765,
+                  "std_population": 3497.7191106234563
+                },
+                "neighbor_count_within_radius": {
+                  "max": 22.0,
+                  "mean": 4.1124161073825505,
+                  "median": 3.0,
+                  "min": 0.0,
+                  "n": 1192,
+                  "q10": 0.0,
+                  "q90": 10.0,
+                  "std_population": 4.5580646356570895
+                },
+                "population_weighted_coverage_share": 0.8057545894959998,
+                "population_weighted_kernel_access": 0.5927901979554073,
+                "population_within_radius_centroid_proxy": 3163768.0,
+                "total_population_weight": 3926466.0,
+                "tract_count_within_radius": 955,
+                "tract_weighted_coverage_share": 0.8011744966442953
+              },
+              "schools": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 4836,
+                "nearest_distance_m": {
+                  "max": 19357.417161218986,
+                  "mean": 2260.059579379726,
+                  "median": 904.9222930142432,
+                  "min": 22.083760062097053,
+                  "n": 1192,
+                  "q10": 215.79647365269142,
+                  "q90": 6391.949483136664,
+                  "std_population": 2928.988789148402
+                },
+                "neighbor_count_within_radius": {
+                  "max": 153.0,
+                  "mean": 41.79194630872483,
+                  "median": 28.0,
+                  "min": 0.0,
+                  "n": 1192,
+                  "q10": 0.0,
+                  "q90": 106.90000000000009,
+                  "std_population": 41.8275703314936
+                },
+                "population_weighted_coverage_share": 0.8596949521529029,
+                "population_weighted_kernel_access": 0.7210123880028947,
+                "population_within_radius_centroid_proxy": 3375563.0,
+                "total_population_weight": 3926466.0,
+                "tract_count_within_radius": 1017,
+                "tract_weighted_coverage_share": 0.8531879194630873
+              }
+            },
+            "candidate": {
+              "max": 0.3073735134948159,
+              "mean": 0.10455689301823808,
+              "median": 0.10074824300977245,
+              "min": 0.015084660730604332,
+              "n": 1192,
+              "q10": 0.03475589528308271,
+              "q90": 0.17976306028289268,
+              "std_population": 0.059378994397898205
+            },
+            "delta": {
+              "max": 0.00558028071308353,
+              "mean": 0.0017107768534409275,
+              "median": 0.0015989876089203964,
+              "min": 5.577626408618738e-05,
+              "n": 1192,
+              "q10": 0.0006357892741788148,
+              "q90": 0.0028912700073328457,
+              "std_population": 0.0009438976021350684
+            },
+            "max_absolute_delta": 0.00558028071308353,
+            "radius_meters": 5000
+          }
+        },
+        "by_ur_class": {
+          "Rural": {
+            "by_radius": {
+              "10km": {
+                "candidate": {
+                  "max": 0.1523535184444983,
+                  "mean": 0.053066696939358005,
+                  "median": 0.04432745339866682,
+                  "min": 0.014919331366722252,
+                  "n": 411,
+                  "q10": 0.023530052608046175,
+                  "q90": 0.10488423109155869,
+                  "std_population": 0.03002042979887253
+                },
+                "delta": {
+                  "max": 0.0036158770621941144,
+                  "mean": 0.0011050178852803276,
+                  "median": 0.0009299868203393735,
+                  "min": 2.822613584648956e-05,
+                  "n": 411,
+                  "q10": 0.000333630577291924,
+                  "q90": 0.002234271884948208,
+                  "std_population": 0.0007427366556790037
+                }
+              },
+              "1km": {
+                "candidate": {
+                  "max": 0.1569973420541979,
+                  "mean": 0.0544003934791688,
+                  "median": 0.04580437044785307,
+                  "min": 0.015240636861571488,
+                  "n": 411,
+                  "q10": 0.024082976571793053,
+                  "q90": 0.10821174558242021,
+                  "std_population": 0.030869629240648264
+                },
+                "delta": {
+                  "max": 0.007282279398685282,
+                  "mean": 0.002438714425091124,
+                  "median": 0.002039159656720399,
+                  "min": 0.00025397694486789177,
+                  "n": 411,
+                  "q10": 0.0009888604391404196,
+                  "q90": 0.004912472409432517,
+                  "std_population": 0.0014670672224678786
+                }
+              },
+              "5km": {
+                "candidate": {
+                  "max": 0.15401449062033282,
+                  "mean": 0.0535880196141015,
+                  "median": 0.04463907049870853,
+                  "min": 0.015084660730604332,
+                  "n": 411,
+                  "q10": 0.023681769057043996,
+                  "q90": 0.10602314362479104,
+                  "std_population": 0.03035109725256117
+                },
+                "delta": {
+                  "max": 0.005138363391723161,
+                  "mean": 0.001626340560023821,
+                  "median": 0.001368851398188535,
+                  "min": 5.577626408618738e-05,
+                  "n": 411,
+                  "q10": 0.0005627925563591249,
+                  "q90": 0.0032495604823023494,
+                  "std_population": 0.0010582887851726354
+                }
+              }
+            },
+            "rows": 411
+          },
+          "Urban": {
+            "by_radius": {
+              "10km": {
+                "candidate": {
+                  "max": 0.30644858851942813,
+                  "mean": 0.13067311462739573,
+                  "median": 0.12966100704279115,
+                  "min": 0.026223558874017523,
+                  "n": 780,
+                  "q10": 0.06301539694089339,
+                  "q90": 0.1947063323135206,
+                  "std_population": 0.05276173283762266
+                },
+                "delta": {
+                  "max": 0.003249154998658965,
+                  "mean": 0.0009929330144948009,
+                  "median": 0.0009388960666569246,
+                  "min": 6.859150236649542e-05,
+                  "n": 780,
+                  "q10": 0.0003639770287699129,
+                  "q90": 0.001643095078500087,
+                  "std_population": 0.0005257208524132919
+                }
+              },
+              "1km": {
+                "candidate": {
+                  "max": 0.312202082890997,
+                  "mean": 0.13419484965842296,
+                  "median": 0.1330355766224426,
+                  "min": 0.027021294385869334,
+                  "n": 780,
+                  "q10": 0.0646468240826463,
+                  "q90": 0.20008230506885072,
+                  "std_population": 0.05417825077606566
+                },
+                "delta": {
+                  "max": 0.01158382895578644,
+                  "mean": 0.004514668045522022,
+                  "median": 0.004504910740251278,
+                  "min": 0.0005548635825956411,
+                  "n": 780,
+                  "q10": 0.002087563573846407,
+                  "q90": 0.006792415759635889,
+                  "std_population": 0.001937389297428802
+                }
+              },
+              "5km": {
+                "candidate": {
+                  "max": 0.3073735134948159,
+                  "mean": 0.13143691507634966,
+                  "median": 0.13024795750764415,
+                  "min": 0.026504159870969962,
+                  "n": 780,
+                  "q10": 0.06331517826538365,
+                  "q90": 0.1960334585560691,
+                  "std_population": 0.0530191843654274
+                },
+                "delta": {
+                  "max": 0.00558028071308353,
+                  "mean": 0.0017567334634487125,
+                  "median": 0.0017046668292696882,
+                  "min": 0.00013536959840793755,
+                  "n": 780,
+                  "q10": 0.0006881078231405754,
+                  "q90": 0.0028370266527200042,
+                  "std_population": 0.0008739904227122369
+                }
+              }
+            },
+            "rows": 780
+          },
+          "unclassified": {
+            "by_radius": {
+              "10km": {
+                "candidate": {
+                  "max": 0.08608426058907692,
+                  "mean": 0.08608426058907692,
+                  "median": 0.08608426058907692,
+                  "min": 0.08608426058907692,
+                  "n": 1,
+                  "q10": 0.08608426058907692,
+                  "q90": 0.08608426058907692,
+                  "std_population": 0.0
+                },
+                "delta": {
+                  "max": 0.00030554143954691915,
+                  "mean": 0.00030554143954691915,
+                  "median": 0.00030554143954691915,
+                  "min": 0.00030554143954691915,
+                  "n": 1,
+                  "q10": 0.00030554143954691915,
+                  "q90": 0.00030554143954691915,
+                  "std_population": 0.0
+                }
+              },
+              "1km": {
+                "candidate": {
+                  "max": 0.08747725251435405,
+                  "mean": 0.08747725251435405,
+                  "median": 0.08747725251435405,
+                  "min": 0.08747725251435405,
+                  "n": 1,
+                  "q10": 0.08747725251435405,
+                  "q90": 0.08747725251435405,
+                  "std_population": 0.0
+                },
+                "delta": {
+                  "max": 0.001698533364824048,
+                  "mean": 0.001698533364824048,
+                  "median": 0.001698533364824048,
+                  "min": 0.001698533364824048,
+                  "n": 1,
+                  "q10": 0.001698533364824048,
+                  "q90": 0.001698533364824048,
+                  "std_population": 0.0
+                }
+              },
+              "5km": {
+                "candidate": {
+                  "max": 0.08634665679132936,
+                  "mean": 0.08634665679132936,
+                  "median": 0.08634665679132936,
+                  "min": 0.08634665679132936,
+                  "n": 1,
+                  "q10": 0.08634665679132936,
+                  "q90": 0.08634665679132936,
+                  "std_population": 0.0
+                },
+                "delta": {
+                  "max": 0.0005679376417993542,
+                  "mean": 0.0005679376417993542,
+                  "median": 0.0005679376417993542,
+                  "min": 0.0005679376417993542,
+                  "n": 1,
+                  "q10": 0.0005679376417993542,
+                  "q90": 0.0005679376417993542,
+                  "std_population": 0.0
+                }
+              }
+            },
+            "rows": 1
+          }
+        },
+        "by_urbanity_cell": {
+          "rural": {
+            "baseline": {
+              "max": 0.14971506265551263,
+              "mean": 0.05196167905407768,
+              "median": 0.04395009395144831,
+              "min": 0.014521868174245207,
+              "n": 411,
+              "q10": 0.023135684452723196,
+              "q90": 0.10350167748503125,
+              "std_population": 0.0294386288032657
+            },
+            "by_radius": {
+              "10km": {
+                "candidate": {
+                  "max": 0.1523535184444983,
+                  "mean": 0.053066696939358005,
+                  "median": 0.04432745339866682,
+                  "min": 0.014919331366722252,
+                  "n": 411,
+                  "q10": 0.023530052608046175,
+                  "q90": 0.10488423109155869,
+                  "std_population": 0.03002042979887253
+                },
+                "delta": {
+                  "max": 0.0036158770621941144,
+                  "mean": 0.0011050178852803276,
+                  "median": 0.0009299868203393735,
+                  "min": 2.822613584648956e-05,
+                  "n": 411,
+                  "q10": 0.000333630577291924,
+                  "q90": 0.002234271884948208,
+                  "std_population": 0.0007427366556790037
+                }
+              },
+              "1km": {
+                "candidate": {
+                  "max": 0.1569973420541979,
+                  "mean": 0.0544003934791688,
+                  "median": 0.04580437044785307,
+                  "min": 0.015240636861571488,
+                  "n": 411,
+                  "q10": 0.024082976571793053,
+                  "q90": 0.10821174558242021,
+                  "std_population": 0.030869629240648264
+                },
+                "delta": {
+                  "max": 0.007282279398685282,
+                  "mean": 0.002438714425091124,
+                  "median": 0.002039159656720399,
+                  "min": 0.00025397694486789177,
+                  "n": 411,
+                  "q10": 0.0009888604391404196,
+                  "q90": 0.004912472409432517,
+                  "std_population": 0.0014670672224678786
+                }
+              },
+              "5km": {
+                "candidate": {
+                  "max": 0.15401449062033282,
+                  "mean": 0.0535880196141015,
+                  "median": 0.04463907049870853,
+                  "min": 0.015084660730604332,
+                  "n": 411,
+                  "q10": 0.023681769057043996,
+                  "q90": 0.10602314362479104,
+                  "std_population": 0.03035109725256117
+                },
+                "delta": {
+                  "max": 0.005138363391723161,
+                  "mean": 0.001626340560023821,
+                  "median": 0.001368851398188535,
+                  "min": 5.577626408618738e-05,
+                  "n": 411,
+                  "q10": 0.0005627925563591249,
+                  "q90": 0.0032495604823023494,
+                  "std_population": 0.0010582887851726354
+                }
+              }
+            },
+            "rows": 411
+          },
+          "urban": {
+            "baseline": {
+              "max": 0.3054049884063558,
+              "mean": 0.12962396975315274,
+              "median": 0.12853818203529532,
+              "min": 0.02577578841091177,
+              "n": 781,
+              "q10": 0.06277201644649648,
+              "q90": 0.1929449772405365,
+              "std_population": 0.05246974780204059
+            },
+            "by_radius": {
+              "10km": {
+                "candidate": {
+                  "max": 0.30644858851942813,
+                  "mean": 0.13061602262478586,
+                  "median": 0.12945529413084164,
+                  "min": 0.026223558874017523,
+                  "n": 781,
+                  "q10": 0.06307146022841845,
+                  "q90": 0.19468269332575913,
+                  "std_population": 0.0527520469206151
+                },
+                "delta": {
+                  "max": 0.003249154998658965,
+                  "mean": 0.000992052871633152,
+                  "median": 0.0009376318434770325,
+                  "min": 6.859150236649542e-05,
+                  "n": 781,
+                  "q10": 0.00036365722183330507,
+                  "q90": 0.0016424587260108203,
+                  "std_population": 0.0005259588957944406
+                }
+              },
+              "1km": {
+                "candidate": {
+                  "max": 0.312202082890997,
+                  "mean": 0.13413503199242544,
+                  "median": 0.13290084179689435,
+                  "min": 0.027021294385869334,
+                  "n": 781,
+                  "q10": 0.06464927199448996,
+                  "q90": 0.20007328724210374,
+                  "std_population": 0.0541693220549177
+                },
+                "delta": {
+                  "max": 0.01158382895578644,
+                  "mean": 0.00451106223927273,
+                  "median": 0.004504684635843081,
+                  "min": 0.0005548635825956411,
+                  "n": 781,
+                  "q10": 0.0020862946244399674,
+                  "q90": 0.00679189590130197,
+                  "std_population": 0.0019387657762442855
+                }
+              },
+              "5km": {
+                "candidate": {
+                  "max": 0.3073735134948159,
+                  "mean": 0.13137918107086308,
+                  "median": 0.13016963892336622,
+                  "min": 0.026504159870969962,
+                  "n": 781,
+                  "q10": 0.06333745155439939,
+                  "q90": 0.19601872552210656,
+                  "std_population": 0.05300975894686903
+                },
+                "delta": {
+                  "max": 0.00558028071308353,
+                  "mean": 0.0017552113177103652,
+                  "median": 0.0017040314737799267,
+                  "min": 0.00013536959840793755,
+                  "n": 781,
+                  "q10": 0.0006831000442303892,
+                  "q90": 0.0028361921242967825,
+                  "std_population": 0.0008744646417839538
+                }
+              }
+            },
+            "rows": 781
+          }
+        },
+        "existing_logistic_baseline": {
+          "max": 0.3054049884063558,
+          "mean": 0.10284611616479715,
+          "median": 0.09844356711358995,
+          "min": 0.014521868174245207,
+          "n": 1192,
+          "q10": 0.033429439613826106,
+          "q90": 0.177169095385611,
+          "std_population": 0.05886601668681046
+        },
+        "facility_zero_counts_and_shares": {
+          "ems": 864,
+          "fire": 646,
+          "schools": 130
+        },
+        "official_rows": 1192,
+        "zero_population_and_edge_cases": {
+          "missing_pct_urban_rows": 1,
+          "neutral_or_population_urbanity_fallback_rows": 1,
+          "no_type_points_in_region": {
+            "ems": false,
+            "fire": false,
+            "schools": false
+          },
+          "rows_with_no_selected_facility_within_10km_by_type": {
+            "ems": 160,
+            "fire": 78,
+            "schools": 37
+          },
+          "tracts_with_no_selected_type_within_10km_any_type": 25,
+          "zero_land_area_rows": 0,
+          "zero_population_delta_5km": {
+            "max": 0.0005679376417993542,
+            "mean": 0.0005679376417993542,
+            "median": 0.0005679376417993542,
+            "min": 0.0005679376417993542,
+            "n": 1,
+            "q10": 0.0005679376417993542,
+            "q90": 0.0005679376417993542,
+            "std_population": 0.0
+          },
+          "zero_population_facility_candidate_5km": {
+            "max": 0.08634665679132936,
+            "mean": 0.08634665679132936,
+            "median": 0.08634665679132936,
+            "min": 0.08634665679132936,
+            "n": 1,
+            "q10": 0.08634665679132936,
+            "q90": 0.08634665679132936,
+            "std_population": 0.0
+          },
+          "zero_population_rows": 1
+        }
+      },
+      "maricopa-az": {
+        "by_radius": {
+          "10km": {
+            "by_facility_type": {
+              "ems": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 304,
+                "nearest_distance_m": {
+                  "max": 100480.0275009012,
+                  "mean": 4951.643325334551,
+                  "median": 2652.869467456383,
+                  "min": 97.85659046573579,
+                  "n": 1593,
+                  "q10": 940.165288230941,
+                  "q90": 9970.230296084093,
+                  "std_population": 7989.306806233426
+                },
+                "neighbor_count_within_radius": {
+                  "max": 31.0,
+                  "mean": 10.081607030759573,
+                  "median": 9.0,
+                  "min": 0.0,
+                  "n": 1593,
+                  "q10": 1.0,
+                  "q90": 22.0,
+                  "std_population": 8.124169418592711
+                },
+                "population_weighted_coverage_share": 0.912642015568318,
+                "population_weighted_kernel_access": 0.7056742979471117,
+                "population_within_radius_centroid_proxy": 6029364.0,
+                "total_population_weight": 6606494.0,
+                "tract_count_within_radius": 1434,
+                "tract_weighted_coverage_share": 0.9001883239171374
+              },
+              "fire": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 716,
+                "nearest_distance_m": {
+                  "max": 100137.38692073229,
+                  "mean": 3248.2846787544186,
+                  "median": 1639.4208899687528,
+                  "min": 67.3321285503921,
+                  "n": 1593,
+                  "q10": 741.1020261112116,
+                  "q90": 5610.6427950093575,
+                  "std_population": 6707.6955201864785
+                },
+                "neighbor_count_within_radius": {
+                  "max": 65.0,
+                  "mean": 24.047708725674827,
+                  "median": 24.0,
+                  "min": 0.0,
+                  "n": 1593,
+                  "q10": 2.0,
+                  "q90": 47.0,
+                  "std_population": 16.905675585544387
+                },
+                "population_weighted_coverage_share": 0.9525153583731402,
+                "population_weighted_kernel_access": 0.8006154475781548,
+                "population_within_radius_centroid_proxy": 6292787.0,
+                "total_population_weight": 6606494.0,
+                "tract_count_within_radius": 1499,
+                "tract_weighted_coverage_share": 0.9409918392969241
+              },
+              "schools": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 5582,
+                "nearest_distance_m": {
+                  "max": 60027.02258909998,
+                  "mean": 1983.140240435467,
+                  "median": 621.5922665042716,
+                  "min": 9.232825886083377,
+                  "n": 1593,
+                  "q10": 180.46918462165382,
+                  "q90": 4300.842329760143,
+                  "std_population": 4581.587195297794
+                },
+                "neighbor_count_within_radius": {
+                  "max": 664.0,
+                  "mean": 256.5586942875078,
+                  "median": 236.0,
+                  "min": 0.0,
+                  "n": 1593,
+                  "q10": 10.200000000000017,
+                  "q90": 545.0,
+                  "std_population": 197.93111783829167
+                },
+                "population_weighted_coverage_share": 0.9611181059121525,
+                "population_weighted_kernel_access": 0.8841379667481678,
+                "population_within_radius_centroid_proxy": 6349621.0,
+                "total_population_weight": 6606494.0,
+                "tract_count_within_radius": 1512,
+                "tract_weighted_coverage_share": 0.9491525423728814
+              }
+            },
+            "candidate": {
+              "max": 0.36550946824333114,
+              "mean": 0.1441098514566478,
+              "median": 0.14425030326984958,
+              "min": 0.01301114669893908,
+              "n": 1593,
+              "q10": 0.06418486911340228,
+              "q90": 0.220794970032177,
+              "std_population": 0.06091454486972947
+            },
+            "delta": {
+              "max": 0.007257218374583152,
+              "mean": 0.0012872946260546702,
+              "median": 0.0011641980179543654,
+              "min": 2.9599609265591048e-05,
+              "n": 1593,
+              "q10": 0.0004925894125910102,
+              "q90": 0.0022291560928561437,
+              "std_population": 0.0007832008049743447
+            },
+            "max_absolute_delta": 0.007257218374583152,
+            "radius_meters": 10000
+          },
+          "1km": {
+            "by_facility_type": {
+              "ems": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 304,
+                "nearest_distance_m": {
+                  "max": 100480.0275009012,
+                  "mean": 4951.643325334551,
+                  "median": 2652.869467456383,
+                  "min": 97.85659046573579,
+                  "n": 1593,
+                  "q10": 940.165288230941,
+                  "q90": 9970.230296084093,
+                  "std_population": 7989.306806233426
+                },
+                "neighbor_count_within_radius": {
+                  "max": 3.0,
+                  "mean": 0.13433772755806653,
+                  "median": 0.0,
+                  "min": 0.0,
+                  "n": 1593,
+                  "q10": 0.0,
+                  "q90": 1.0,
+                  "std_population": 0.39872027420707185
+                },
+                "population_weighted_coverage_share": 0.11614935244018991,
+                "population_weighted_kernel_access": 0.1365001107179365,
+                "population_within_radius_centroid_proxy": 767340.0,
+                "total_population_weight": 6606494.0,
+                "tract_count_within_radius": 183,
+                "tract_weighted_coverage_share": 0.11487758945386065
+              },
+              "fire": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 716,
+                "nearest_distance_m": {
+                  "max": 100137.38692073229,
+                  "mean": 3248.2846787544186,
+                  "median": 1639.4208899687528,
+                  "min": 67.3321285503921,
+                  "n": 1593,
+                  "q10": 741.1020261112116,
+                  "q90": 5610.6427950093575,
+                  "std_population": 6707.6955201864785
+                },
+                "neighbor_count_within_radius": {
+                  "max": 6.0,
+                  "mean": 0.31198995605775265,
+                  "median": 0.0,
+                  "min": 0.0,
+                  "n": 1593,
+                  "q10": 0.0,
+                  "q90": 1.0,
+                  "std_population": 0.6407098385383275
+                },
+                "population_weighted_coverage_share": 0.24578694841772353,
+                "population_weighted_kernel_access": 0.2322926154050073,
+                "population_within_radius_centroid_proxy": 1623790.0,
+                "total_population_weight": 6606494.0,
+                "tract_count_within_radius": 380,
+                "tract_weighted_coverage_share": 0.23854362837413684
+              },
+              "schools": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 5582,
+                "nearest_distance_m": {
+                  "max": 60027.02258909998,
+                  "mean": 1983.140240435467,
+                  "median": 621.5922665042716,
+                  "min": 9.232825886083377,
+                  "n": 1593,
+                  "q10": 180.46918462165382,
+                  "q90": 4300.842329760143,
+                  "std_population": 4581.587195297794
+                },
+                "neighbor_count_within_radius": {
+                  "max": 45.0,
+                  "mean": 3.66541117388575,
+                  "median": 3.0,
+                  "min": 0.0,
+                  "n": 1593,
+                  "q10": 0.0,
+                  "q90": 9.0,
+                  "std_population": 4.337073871289566
+                },
+                "population_weighted_coverage_share": 0.7304113195289362,
+                "population_weighted_kernel_access": 0.5127804479878808,
+                "population_within_radius_centroid_proxy": 4825458.0,
+                "total_population_weight": 6606494.0,
+                "tract_count_within_radius": 1115,
+                "tract_weighted_coverage_share": 0.6999372253609542
+              }
+            },
+            "candidate": {
+              "max": 0.3733857704957682,
+              "mean": 0.1479148398701291,
+              "median": 0.1481494486854545,
+              "min": 0.013422674623631697,
+              "n": 1593,
+              "q10": 0.06480003312149002,
+              "q90": 0.22633979609948643,
+              "std_population": 0.06263414835884164
+            },
+            "delta": {
+              "max": 0.0119312736994448,
+              "mean": 0.005092283039535982,
+              "median": 0.005067611180647025,
+              "min": 0.0002386825499437889,
+              "n": 1593,
+              "q10": 0.0022190582127307266,
+              "q90": 0.007980598465923798,
+              "std_population": 0.0021684619531121265
+            },
+            "max_absolute_delta": 0.0119312736994448,
+            "radius_meters": 1000
+          },
+          "5km": {
+            "by_facility_type": {
+              "ems": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 304,
+                "nearest_distance_m": {
+                  "max": 100480.0275009012,
+                  "mean": 4951.643325334551,
+                  "median": 2652.869467456383,
+                  "min": 97.85659046573579,
+                  "n": 1593,
+                  "q10": 940.165288230941,
+                  "q90": 9970.230296084093,
+                  "std_population": 7989.306806233426
+                },
+                "neighbor_count_within_radius": {
+                  "max": 16.0,
+                  "mean": 2.92090395480226,
+                  "median": 2.0,
+                  "min": 0.0,
+                  "n": 1593,
+                  "q10": 0.0,
+                  "q90": 7.0,
+                  "std_population": 2.9220930311254367
+                },
+                "population_weighted_coverage_share": 0.7542484712768982,
+                "population_weighted_kernel_access": 0.5409514956352932,
+                "population_within_radius_centroid_proxy": 4982938.0,
+                "total_population_weight": 6606494.0,
+                "tract_count_within_radius": 1180,
+                "tract_weighted_coverage_share": 0.7407407407407407
+              },
+              "fire": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 716,
+                "nearest_distance_m": {
+                  "max": 100137.38692073229,
+                  "mean": 3248.2846787544186,
+                  "median": 1639.4208899687528,
+                  "min": 67.3321285503921,
+                  "n": 1593,
+                  "q10": 741.1020261112116,
+                  "q90": 5610.6427950093575,
+                  "std_population": 6707.6955201864785
+                },
+                "neighbor_count_within_radius": {
+                  "max": 29.0,
+                  "mean": 6.9001883239171375,
+                  "median": 6.0,
+                  "min": 0.0,
+                  "n": 1593,
+                  "q10": 0.0,
+                  "q90": 14.0,
+                  "std_population": 5.444874686688102
+                },
+                "population_weighted_coverage_share": 0.9042364982091863,
+                "population_weighted_kernel_access": 0.6707335093284287,
+                "population_within_radius_centroid_proxy": 5973833.0,
+                "total_population_weight": 6606494.0,
+                "tract_count_within_radius": 1418,
+                "tract_weighted_coverage_share": 0.8901443816698054
+              },
+              "schools": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 5582,
+                "nearest_distance_m": {
+                  "max": 60027.02258909998,
+                  "mean": 1983.140240435467,
+                  "median": 621.5922665042716,
+                  "min": 9.232825886083377,
+                  "n": 1593,
+                  "q10": 180.46918462165382,
+                  "q90": 4300.842329760143,
+                  "std_population": 4581.587195297794
+                },
+                "neighbor_count_within_radius": {
+                  "max": 239.0,
+                  "mean": 75.43691148775895,
+                  "median": 65.0,
+                  "min": 0.0,
+                  "n": 1593,
+                  "q10": 1.0,
+                  "q90": 172.0,
+                  "std_population": 61.55704059208882
+                },
+                "population_weighted_coverage_share": 0.9250257398250873,
+                "population_weighted_kernel_access": 0.8111259079012286,
+                "population_within_radius_centroid_proxy": 6111177.0,
+                "total_population_weight": 6606494.0,
+                "tract_count_within_radius": 1443,
+                "tract_weighted_coverage_share": 0.9058380414312618
+              }
+            },
+            "candidate": {
+              "max": 0.366799658760137,
+              "mean": 0.14497440044502136,
+              "median": 0.14511811360967117,
+              "min": 0.013154377866330601,
+              "n": 1593,
+              "q10": 0.06444241114518967,
+              "q90": 0.22190192129003772,
+              "std_population": 0.06121115611920729
+            },
+            "delta": {
+              "max": 0.00905012634705335,
+              "mean": 0.0021518436144282328,
+              "median": 0.0020297528247870122,
+              "min": 5.7731628209845356e-05,
+              "n": 1593,
+              "q10": 0.0009195699298763281,
+              "q90": 0.003556935075578901,
+              "std_population": 0.001098577984474923
+            },
+            "max_absolute_delta": 0.00905012634705335,
+            "radius_meters": 5000
+          }
+        },
+        "by_ur_class": {
+          "Rural": {
+            "by_radius": {
+              "10km": {
+                "candidate": {
+                  "max": 0.20242502547764904,
+                  "mean": 0.06576743051834522,
+                  "median": 0.05669286760589596,
+                  "min": 0.01301114669893908,
+                  "n": 163,
+                  "q10": 0.02821530271238002,
+                  "q90": 0.12414859141903203,
+                  "std_population": 0.035746386307916246
+                },
+                "delta": {
+                  "max": 0.005959977162465005,
+                  "mean": 0.0018583379417980333,
+                  "median": 0.0015840285842593088,
+                  "min": 4.6865977471752945e-05,
+                  "n": 163,
+                  "q10": 0.0007044417980786158,
+                  "q90": 0.003341261403406629,
+                  "std_population": 0.0011558757377974197
+                }
+              },
+              "1km": {
+                "candidate": {
+                  "max": 0.207995739880889,
+                  "mean": 0.06702601545485194,
+                  "median": 0.057311616427828775,
+                  "min": 0.013422674623631697,
+                  "n": 163,
+                  "q10": 0.028891210793826456,
+                  "q90": 0.1254966663900745,
+                  "std_population": 0.03662949726727723
+                },
+                "delta": {
+                  "max": 0.008999945186768055,
+                  "mean": 0.003116922878304778,
+                  "median": 0.002706692214875926,
+                  "min": 0.0003777883903460441,
+                  "n": 163,
+                  "q10": 0.0013274793511136196,
+                  "q90": 0.005938000233622243,
+                  "std_population": 0.00171937827320159
+                }
+              },
+              "5km": {
+                "candidate": {
+                  "max": 0.2044632193032827,
+                  "mean": 0.06633517224865948,
+                  "median": 0.0571378091702656,
+                  "min": 0.013154377866330601,
+                  "n": 163,
+                  "q10": 0.02855414186874398,
+                  "q90": 0.12497596869552349,
+                  "std_population": 0.03610834228591884
+                },
+                "delta": {
+                  "max": 0.006048603461971461,
+                  "mean": 0.002426079672112315,
+                  "median": 0.002000915681170362,
+                  "min": 9.141850117107969e-05,
+                  "n": 163,
+                  "q10": 0.0010783336612385868,
+                  "q90": 0.004602484957909287,
+                  "std_population": 0.0013642564546321224
+                }
+              }
+            },
+            "rows": 163
+          },
+          "Urban": {
+            "by_radius": {
+              "10km": {
+                "candidate": {
+                  "max": 0.36550946824333114,
+                  "mean": 0.1533090254074944,
+                  "median": 0.1493487689332958,
+                  "min": 0.013701852742014417,
+                  "n": 1419,
+                  "q10": 0.08438683051653408,
+                  "q90": 0.22668653199932573,
+                  "std_population": 0.056704761724452206
+                },
+                "delta": {
+                  "max": 0.006407648081731221,
+                  "mean": 0.0012160405931015722,
+                  "median": 0.0011382361518008643,
+                  "min": 2.9599609265591048e-05,
+                  "n": 1419,
+                  "q10": 0.0004848156260395836,
+                  "q90": 0.002024291555821167,
+                  "std_population": 0.0006722578014209817
+                }
+              },
+              "1km": {
+                "candidate": {
+                  "max": 0.3733857704957682,
+                  "mean": 0.15741615275239182,
+                  "median": 0.1536551955670392,
+                  "min": 0.013910935682692615,
+                  "n": 1419,
+                  "q10": 0.08649344980113734,
+                  "q90": 0.23325932854772555,
+                  "std_population": 0.0582544296377983
+                },
+                "delta": {
+                  "max": 0.0119312736994448,
+                  "mean": 0.005323167937999032,
+                  "median": 0.005255658438347494,
+                  "min": 0.0002386825499437889,
+                  "n": 1419,
+                  "q10": 0.002700102951076575,
+                  "q90": 0.008241179353331013,
+                  "std_population": 0.002097143704526189
+                }
+              },
+              "5km": {
+                "candidate": {
+                  "max": 0.366799658760137,
+                  "mean": 0.15420850877030684,
+                  "median": 0.15017040377947471,
+                  "min": 0.013729984760958672,
+                  "n": 1419,
+                  "q10": 0.08485477213764163,
+                  "q90": 0.22811863388173673,
+                  "std_population": 0.05698144903418384
+                },
+                "delta": {
+                  "max": 0.00905012634705335,
+                  "mean": 0.002115523955914054,
+                  "median": 0.0020300041951163694,
+                  "min": 5.7731628209845356e-05,
+                  "n": 1419,
+                  "q10": 0.0009068420971812818,
+                  "q90": 0.0034028447695834243,
+                  "std_population": 0.001041347971603944
+                }
+              }
+            },
+            "rows": 1419
+          },
+          "unclassified": {
+            "by_radius": {
+              "10km": {
+                "candidate": {
+                  "max": 0.15268903267952671,
+                  "mean": 0.11830864933773913,
+                  "median": 0.1311229933402159,
+                  "min": 0.06629795641621576,
+                  "n": 11,
+                  "q10": 0.069054213476475,
+                  "q90": 0.15021073741066907,
+                  "std_population": 0.03324292958581287
+                },
+                "delta": {
+                  "max": 0.007257218374583152,
+                  "mean": 0.0020172411982617043,
+                  "median": 0.0009151108979970068,
+                  "min": 0.0002984892299594949,
+                  "n": 11,
+                  "q10": 0.0003562858533473906,
+                  "q90": 0.004778923105725502,
+                  "std_population": 0.00217147073474325
+                }
+              },
+              "1km": {
+                "candidate": {
+                  "max": 0.15270340502019075,
+                  "mean": 0.12087078530279684,
+                  "median": 0.13520808545104754,
+                  "min": 0.06791433682690812,
+                  "n": 11,
+                  "q10": 0.0706886658597487,
+                  "q90": 0.15269868725625088,
+                  "std_population": 0.03378298728292127
+                },
+                "delta": {
+                  "max": 0.007271590715247189,
+                  "mean": 0.004579377163319384,
+                  "median": 0.004675841053012497,
+                  "min": 0.0019148696406518506,
+                  "n": 11,
+                  "q10": 0.002053165007743288,
+                  "q90": 0.007266872951307318,
+                  "std_population": 0.002203866823424414
+                }
+              },
+              "5km": {
+                "candidate": {
+                  "max": 0.15270337247579738,
+                  "mean": 0.11906480793837065,
+                  "median": 0.13190311740141547,
+                  "min": 0.06656418456419383,
+                  "n": 11,
+                  "q10": 0.06939809979758371,
+                  "q90": 0.15175450605722848,
+                  "std_population": 0.03359618767507475
+                },
+                "delta": {
+                  "max": 0.007271558170853815,
+                  "mean": 0.002773399798893204,
+                  "median": 0.0016952349591965732,
+                  "min": 0.0005647173779375625,
+                  "n": 11,
+                  "q10": 0.00066531002029728,
+                  "q90": 0.00632269175228492,
+                  "std_population": 0.0023745473005218824
+                }
+              }
+            },
+            "rows": 11
+          }
+        },
+        "by_urbanity_cell": {
+          "rural": {
+            "baseline": {
+              "max": 0.19899579469412096,
+              "mean": 0.06390909257654717,
+              "median": 0.054584934657670635,
+              "min": 0.012793576233813794,
+              "n": 163,
+              "q10": 0.027723927961947867,
+              "q90": 0.11954707268018319,
+              "std_population": 0.03491705821408258
+            },
+            "by_radius": {
+              "10km": {
+                "candidate": {
+                  "max": 0.20242502547764904,
+                  "mean": 0.06576743051834522,
+                  "median": 0.05669286760589596,
+                  "min": 0.01301114669893908,
+                  "n": 163,
+                  "q10": 0.02821530271238002,
+                  "q90": 0.12414859141903203,
+                  "std_population": 0.035746386307916246
+                },
+                "delta": {
+                  "max": 0.005959977162465005,
+                  "mean": 0.0018583379417980333,
+                  "median": 0.0015840285842593088,
+                  "min": 4.6865977471752945e-05,
+                  "n": 163,
+                  "q10": 0.0007044417980786158,
+                  "q90": 0.003341261403406629,
+                  "std_population": 0.0011558757377974197
+                }
+              },
+              "1km": {
+                "candidate": {
+                  "max": 0.207995739880889,
+                  "mean": 0.06702601545485194,
+                  "median": 0.057311616427828775,
+                  "min": 0.013422674623631697,
+                  "n": 163,
+                  "q10": 0.028891210793826456,
+                  "q90": 0.1254966663900745,
+                  "std_population": 0.03662949726727723
+                },
+                "delta": {
+                  "max": 0.008999945186768055,
+                  "mean": 0.003116922878304778,
+                  "median": 0.002706692214875926,
+                  "min": 0.0003777883903460441,
+                  "n": 163,
+                  "q10": 0.0013274793511136196,
+                  "q90": 0.005938000233622243,
+                  "std_population": 0.00171937827320159
+                }
+              },
+              "5km": {
+                "candidate": {
+                  "max": 0.2044632193032827,
+                  "mean": 0.06633517224865948,
+                  "median": 0.0571378091702656,
+                  "min": 0.013154377866330601,
+                  "n": 163,
+                  "q10": 0.02855414186874398,
+                  "q90": 0.12497596869552349,
+                  "std_population": 0.03610834228591884
+                },
+                "delta": {
+                  "max": 0.006048603461971461,
+                  "mean": 0.002426079672112315,
+                  "median": 0.002000915681170362,
+                  "min": 9.141850117107969e-05,
+                  "n": 163,
+                  "q10": 0.0010783336612385868,
+                  "q90": 0.004602484957909287,
+                  "std_population": 0.0013642564546321224
+                }
+              }
+            },
+            "rows": 163
+          },
+          "urban": {
+            "baseline": {
+              "max": 0.3640531248272092,
+              "mean": 0.1518175880707396,
+              "median": 0.14784741859657555,
+              "min": 0.013672253132748826,
+              "n": 1430,
+              "q10": 0.08305557662244165,
+              "q90": 0.22330612049419069,
+              "std_population": 0.05635019255064937
+            },
+            "by_radius": {
+              "10km": {
+                "candidate": {
+                  "max": 0.36550946824333114,
+                  "mean": 0.15303979174541935,
+                  "median": 0.14912980770453377,
+                  "min": 0.013701852742014417,
+                  "n": 1430,
+                  "q10": 0.08418760551381223,
+                  "q90": 0.2255902572514458,
+                  "std_population": 0.05664404142064713
+                },
+                "delta": {
+                  "max": 0.007257218374583152,
+                  "mean": 0.001222203674679727,
+                  "median": 0.0011380972199137723,
+                  "min": 2.9599609265591048e-05,
+                  "n": 1430,
+                  "q10": 0.00047501174106830135,
+                  "q90": 0.0020346296004738348,
+                  "std_population": 0.0006997324260555837
+                }
+              },
+              "1km": {
+                "candidate": {
+                  "max": 0.3733857704957682,
+                  "mean": 0.1571350345412411,
+                  "median": 0.1531875459656586,
+                  "min": 0.013910935682692615,
+                  "n": 1430,
+                  "q10": 0.0861237674387138,
+                  "q90": 0.23270116686383518,
+                  "std_population": 0.0581931939178134
+                },
+                "delta": {
+                  "max": 0.0119312736994448,
+                  "mean": 0.005317446470501496,
+                  "median": 0.005251622721411567,
+                  "min": 0.0002386825499437889,
+                  "n": 1430,
+                  "q10": 0.002665740035737548,
+                  "q90": 0.00822347887527027,
+                  "std_population": 0.0020989915338014307
+                }
+              },
+              "5km": {
+                "candidate": {
+                  "max": 0.366799658760137,
+                  "mean": 0.15393817261006118,
+                  "median": 0.1500131382143198,
+                  "min": 0.013729984760958672,
+                  "n": 1430,
+                  "q10": 0.08461877161545125,
+                  "q90": 0.22728410697986892,
+                  "std_population": 0.05692116794384454
+                },
+                "delta": {
+                  "max": 0.00905012634705335,
+                  "mean": 0.0021205845393215857,
+                  "median": 0.0020299206523064356,
+                  "min": 5.7731628209845356e-05,
+                  "n": 1430,
+                  "q10": 0.0008995763341347149,
+                  "q90": 0.0034168722834267756,
+                  "std_population": 0.0010595945102833033
+                }
+              }
+            },
+            "rows": 1430
+          }
+        },
+        "existing_logistic_baseline": {
+          "max": 0.3640531248272092,
+          "mean": 0.1428225568305931,
+          "median": 0.14310395421533692,
+          "min": 0.012793576233813794,
+          "n": 1593,
+          "q10": 0.06251016218975475,
+          "q90": 0.21924027306580793,
+          "std_population": 0.0607043284554093
+        },
+        "facility_zero_counts_and_shares": {
+          "ems": 1346,
+          "fire": 1105,
+          "schools": 254
+        },
+        "official_rows": 1593,
+        "zero_population_and_edge_cases": {
+          "missing_pct_urban_rows": 11,
+          "neutral_or_population_urbanity_fallback_rows": 11,
+          "no_type_points_in_region": {
+            "ems": false,
+            "fire": false,
+            "schools": false
+          },
+          "rows_with_no_selected_facility_within_10km_by_type": {
+            "ems": 159,
+            "fire": 94,
+            "schools": 81
+          },
+          "tracts_with_no_selected_type_within_10km_any_type": 73,
+          "zero_land_area_rows": 0,
+          "zero_population_delta_5km": {
+            "max": 0.007271558170853815,
+            "mean": 0.002773399798893204,
+            "median": 0.0016952349591965732,
+            "min": 0.0005647173779375625,
+            "n": 11,
+            "q10": 0.00066531002029728,
+            "q90": 0.00632269175228492,
+            "std_population": 0.0023745473005218824
+          },
+          "zero_population_facility_candidate_5km": {
+            "max": 0.15270337247579738,
+            "mean": 0.11906480793837065,
+            "median": 0.13190311740141547,
+            "min": 0.06656418456419383,
+            "n": 11,
+            "q10": 0.06939809979758371,
+            "q90": 0.15175450605722848,
+            "std_population": 0.03359618767507475
+          },
+          "zero_population_rows": 11
+        }
+      },
+      "northern-ca": {
+        "by_radius": {
+          "10km": {
+            "by_facility_type": {
+              "ems": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 177,
+                "nearest_distance_m": {
+                  "max": 46701.74872108159,
+                  "mean": 5778.337671583972,
+                  "median": 3277.8339773174357,
+                  "min": 148.77347516067786,
+                  "n": 591,
+                  "q10": 894.5866039370106,
+                  "q90": 15230.817180607091,
+                  "std_population": 6749.778827481752
+                },
+                "neighbor_count_within_radius": {
+                  "max": 22.0,
+                  "mean": 6.592216582064298,
+                  "median": 6.0,
+                  "min": 0.0,
+                  "n": 591,
+                  "q10": 0.0,
+                  "q90": 15.0,
+                  "std_population": 5.708770258271185
+                },
+                "population_weighted_coverage_share": 0.8576663219313096,
+                "population_weighted_kernel_access": 0.6647163404291758,
+                "population_within_radius_centroid_proxy": 2108908.0,
+                "total_population_weight": 2458891.0,
+                "tract_count_within_radius": 491,
+                "tract_weighted_coverage_share": 0.8307952622673435
+              },
+              "fire": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 491,
+                "nearest_distance_m": {
+                  "max": 49733.486008747255,
+                  "mean": 3461.009567447192,
+                  "median": 1540.0373833498236,
+                  "min": 69.78165792838986,
+                  "n": 591,
+                  "q10": 619.9211468727044,
+                  "q90": 8671.308733461687,
+                  "std_population": 5057.360176624035
+                },
+                "neighbor_count_within_radius": {
+                  "max": 51.0,
+                  "mean": 20.060913705583758,
+                  "median": 18.0,
+                  "min": 0.0,
+                  "n": 591,
+                  "q10": 1.0,
+                  "q90": 42.0,
+                  "std_population": 15.741342374157236
+                },
+                "population_weighted_coverage_share": 0.9378959864426687,
+                "population_weighted_kernel_access": 0.7812970178384752,
+                "population_within_radius_centroid_proxy": 2306184.0,
+                "total_population_weight": 2458891.0,
+                "tract_count_within_radius": 545,
+                "tract_weighted_coverage_share": 0.922165820642978
+              },
+              "schools": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 2773,
+                "nearest_distance_m": {
+                  "max": 47400.46818252025,
+                  "mean": 2191.805275959247,
+                  "median": 643.2918402095131,
+                  "min": 20.01565760591541,
+                  "n": 591,
+                  "q10": 172.87976182787713,
+                  "q90": 6769.9434808719725,
+                  "std_population": 4006.6242749165876
+                },
+                "neighbor_count_within_radius": {
+                  "max": 549.0,
+                  "mean": 191.03045685279187,
+                  "median": 136.0,
+                  "min": 0.0,
+                  "n": 591,
+                  "q10": 3.0,
+                  "q90": 450.0,
+                  "std_population": 174.70604488129595
+                },
+                "population_weighted_coverage_share": 0.9572953823491973,
+                "population_weighted_kernel_access": 0.8617171840290536,
+                "population_within_radius_centroid_proxy": 2353885.0,
+                "total_population_weight": 2458891.0,
+                "tract_count_within_radius": 561,
+                "tract_weighted_coverage_share": 0.949238578680203
+              }
+            },
+            "candidate": {
+              "max": 0.34531655667730393,
+              "mean": 0.11383009156101011,
+              "median": 0.10868742242512214,
+              "min": 0.013278646794383347,
+              "n": 591,
+              "q10": 0.03514676963143302,
+              "q90": 0.19269567267638912,
+              "std_population": 0.06343022847542369
+            },
+            "delta": {
+              "max": 0.004515596548795436,
+              "mean": 0.0010497884984147887,
+              "median": 0.0009400327315538526,
+              "min": 4.3989093557315895e-05,
+              "n": 591,
+              "q10": 0.00034083482307731283,
+              "q90": 0.0018874873654966123,
+              "std_population": 0.0006432998397434024
+            },
+            "max_absolute_delta": 0.004515596548795436,
+            "radius_meters": 10000
+          },
+          "1km": {
+            "by_facility_type": {
+              "ems": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 177,
+                "nearest_distance_m": {
+                  "max": 46701.74872108159,
+                  "mean": 5778.337671583972,
+                  "median": 3277.8339773174357,
+                  "min": 148.77347516067786,
+                  "n": 591,
+                  "q10": 894.5866039370106,
+                  "q90": 15230.817180607091,
+                  "std_population": 6749.778827481752
+                },
+                "neighbor_count_within_radius": {
+                  "max": 2.0,
+                  "mean": 0.13874788494077833,
+                  "median": 0.0,
+                  "min": 0.0,
+                  "n": 591,
+                  "q10": 0.0,
+                  "q90": 1.0,
+                  "std_population": 0.37390035824154755
+                },
+                "population_weighted_coverage_share": 0.12383021451540552,
+                "population_weighted_kernel_access": 0.12711642488222197,
+                "population_within_radius_centroid_proxy": 304485.0,
+                "total_population_weight": 2458891.0,
+                "tract_count_within_radius": 76,
+                "tract_weighted_coverage_share": 0.12859560067681894
+              },
+              "fire": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 491,
+                "nearest_distance_m": {
+                  "max": 49733.486008747255,
+                  "mean": 3461.009567447192,
+                  "median": 1540.0373833498236,
+                  "min": 69.78165792838986,
+                  "n": 591,
+                  "q10": 619.9211468727044,
+                  "q90": 8671.308733461687,
+                  "std_population": 5057.360176624035
+                },
+                "neighbor_count_within_radius": {
+                  "max": 6.0,
+                  "mean": 0.40609137055837563,
+                  "median": 0.0,
+                  "min": 0.0,
+                  "n": 591,
+                  "q10": 0.0,
+                  "q90": 1.0,
+                  "std_population": 0.798198130548307
+                },
+                "population_weighted_coverage_share": 0.2911906221137903,
+                "population_weighted_kernel_access": 0.24556655416677706,
+                "population_within_radius_centroid_proxy": 716006.0,
+                "total_population_weight": 2458891.0,
+                "tract_count_within_radius": 168,
+                "tract_weighted_coverage_share": 0.28426395939086296
+              },
+              "schools": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 2773,
+                "nearest_distance_m": {
+                  "max": 47400.46818252025,
+                  "mean": 2191.805275959247,
+                  "median": 643.2918402095131,
+                  "min": 20.01565760591541,
+                  "n": 591,
+                  "q10": 172.87976182787713,
+                  "q90": 6769.9434808719725,
+                  "std_population": 4006.6242749165876
+                },
+                "neighbor_count_within_radius": {
+                  "max": 33.0,
+                  "mean": 3.8798646362098137,
+                  "median": 2.0,
+                  "min": 0.0,
+                  "n": 591,
+                  "q10": 0.0,
+                  "q90": 10.0,
+                  "std_population": 4.875518175275991
+                },
+                "population_weighted_coverage_share": 0.6582219382640385,
+                "population_weighted_kernel_access": 0.4824743611747364,
+                "population_within_radius_centroid_proxy": 1618496.0,
+                "total_population_weight": 2458891.0,
+                "tract_count_within_radius": 369,
+                "tract_weighted_coverage_share": 0.6243654822335025
+              }
+            },
+            "candidate": {
+              "max": 0.3527769138066595,
+              "mean": 0.11672724103930011,
+              "median": 0.11165461381892555,
+              "min": 0.013477067098934002,
+              "n": 591,
+              "q10": 0.03611298422657378,
+              "q90": 0.19871928991930857,
+              "std_population": 0.06509171778390235
+            },
+            "delta": {
+              "max": 0.011098454909549305,
+              "mean": 0.003946937976704819,
+              "median": 0.0037620948966076845,
+              "min": 0.00039992560802244725,
+              "n": 591,
+              "q10": 0.0014059014818820492,
+              "q90": 0.0065499290222165996,
+              "std_population": 0.0020851161644326885
+            },
+            "max_absolute_delta": 0.011098454909549305,
+            "radius_meters": 1000
+          },
+          "5km": {
+            "by_facility_type": {
+              "ems": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 177,
+                "nearest_distance_m": {
+                  "max": 46701.74872108159,
+                  "mean": 5778.337671583972,
+                  "median": 3277.8339773174357,
+                  "min": 148.77347516067786,
+                  "n": 591,
+                  "q10": 894.5866039370106,
+                  "q90": 15230.817180607091,
+                  "std_population": 6749.778827481752
+                },
+                "neighbor_count_within_radius": {
+                  "max": 10.0,
+                  "mean": 2.4027072758037225,
+                  "median": 2.0,
+                  "min": 0.0,
+                  "n": 591,
+                  "q10": 0.0,
+                  "q90": 6.0,
+                  "std_population": 2.5550307591032997
+                },
+                "population_weighted_coverage_share": 0.6920904586661223,
+                "population_weighted_kernel_access": 0.4986298340509656,
+                "population_within_radius_centroid_proxy": 1701775.0,
+                "total_population_weight": 2458891.0,
+                "tract_count_within_radius": 394,
+                "tract_weighted_coverage_share": 0.6666666666666666
+              },
+              "fire": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 491,
+                "nearest_distance_m": {
+                  "max": 49733.486008747255,
+                  "mean": 3461.009567447192,
+                  "median": 1540.0373833498236,
+                  "min": 69.78165792838986,
+                  "n": 591,
+                  "q10": 619.9211468727044,
+                  "q90": 8671.308733461687,
+                  "std_population": 5057.360176624035
+                },
+                "neighbor_count_within_radius": {
+                  "max": 21.0,
+                  "mean": 6.998307952622674,
+                  "median": 6.0,
+                  "min": 0.0,
+                  "n": 591,
+                  "q10": 0.0,
+                  "q90": 15.0,
+                  "std_population": 5.8270328519571475
+                },
+                "population_weighted_coverage_share": 0.8360663404762554,
+                "population_weighted_kernel_access": 0.6500224798715596,
+                "population_within_radius_centroid_proxy": 2055796.0,
+                "total_population_weight": 2458891.0,
+                "tract_count_within_radius": 482,
+                "tract_weighted_coverage_share": 0.8155668358714044
+              },
+              "schools": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 2773,
+                "nearest_distance_m": {
+                  "max": 47400.46818252025,
+                  "mean": 2191.805275959247,
+                  "median": 643.2918402095131,
+                  "min": 20.01565760591541,
+                  "n": 591,
+                  "q10": 172.87976182787713,
+                  "q90": 6769.9434808719725,
+                  "std_population": 4006.6242749165876
+                },
+                "neighbor_count_within_radius": {
+                  "max": 213.0,
+                  "mean": 66.5228426395939,
+                  "median": 54.0,
+                  "min": 0.0,
+                  "n": 591,
+                  "q10": 0.0,
+                  "q90": 147.0,
+                  "std_population": 58.91818643766823
+                },
+                "population_weighted_coverage_share": 0.8895762357908504,
+                "population_weighted_kernel_access": 0.7769094885279745,
+                "population_within_radius_centroid_proxy": 2187371.0,
+                "total_population_weight": 2458891.0,
+                "tract_count_within_radius": 514,
+                "tract_weighted_coverage_share": 0.8697123519458545
+              }
+            },
+            "candidate": {
+              "max": 0.34671682695166206,
+              "mean": 0.11451028016991065,
+              "median": 0.1094452770785503,
+              "min": 0.013411589024546698,
+              "n": 591,
+              "q10": 0.035507471084237935,
+              "q90": 0.19462435256280738,
+              "std_population": 0.06371124138442215
+            },
+            "delta": {
+              "max": 0.006104919632286404,
+              "mean": 0.0017299771073153217,
+              "median": 0.0015807090685448638,
+              "min": 8.70278932807722e-05,
+              "n": 591,
+              "q10": 0.0006188786445530184,
+              "q90": 0.003033366265541626,
+              "std_population": 0.0009666143194844878
+            },
+            "max_absolute_delta": 0.006104919632286404,
+            "radius_meters": 5000
+          }
+        },
+        "by_ur_class": {
+          "Rural": {
+            "by_radius": {
+              "10km": {
+                "candidate": {
+                  "max": 0.1456941349917462,
+                  "mean": 0.04965724568401014,
+                  "median": 0.042257976840749244,
+                  "min": 0.013278646794383347,
+                  "n": 147,
+                  "q10": 0.02131772037022432,
+                  "q90": 0.0870220732299237,
+                  "std_population": 0.027424334920744895
+                },
+                "delta": {
+                  "max": 0.004515596548795436,
+                  "mean": 0.0011086218771118475,
+                  "median": 0.000943667632352832,
+                  "min": 7.620861777466598e-05,
+                  "n": 147,
+                  "q10": 0.0004047037163684708,
+                  "q90": 0.0018919587366043836,
+                  "std_population": 0.0007543617557763539
+                }
+              },
+              "1km": {
+                "candidate": {
+                  "max": 0.14823699642435742,
+                  "mean": 0.05083193447795313,
+                  "median": 0.043178202835707113,
+                  "min": 0.013477067098934002,
+                  "n": 147,
+                  "q10": 0.02169696172532542,
+                  "q90": 0.08928855772835732,
+                  "std_population": 0.028159217810545686
+                },
+                "delta": {
+                  "max": 0.007058457981406668,
+                  "mean": 0.00228331067105483,
+                  "median": 0.0018880366771214796,
+                  "min": 0.0004949081828506223,
+                  "n": 147,
+                  "q10": 0.0009949358413768893,
+                  "q90": 0.004031301313745501,
+                  "std_population": 0.0013328328123949846
+                }
+              },
+              "5km": {
+                "candidate": {
+                  "max": 0.14728345807523716,
+                  "mean": 0.05012197799916324,
+                  "median": 0.04267358926085004,
+                  "min": 0.013411589024546698,
+                  "n": 147,
+                  "q10": 0.021511802606558474,
+                  "q90": 0.08778036723132646,
+                  "std_population": 0.027736405292193896
+                },
+                "delta": {
+                  "max": 0.006104919632286404,
+                  "mean": 0.0015733541922649432,
+                  "median": 0.0013694857899244663,
+                  "min": 0.0001445849105243778,
+                  "n": 147,
+                  "q10": 0.0006415884778682934,
+                  "q90": 0.0026989764259499633,
+                  "std_population": 0.0010321772954796785
+                }
+              }
+            },
+            "rows": 147
+          },
+          "Urban": {
+            "by_radius": {
+              "10km": {
+                "candidate": {
+                  "max": 0.34531655667730393,
+                  "mean": 0.13507650675001687,
+                  "median": 0.13300663209090963,
+                  "min": 0.027816119691194085,
+                  "n": 444,
+                  "q10": 0.06397300759266615,
+                  "q90": 0.2037368165161953,
+                  "std_population": 0.057372521756443785
+                },
+                "delta": {
+                  "max": 0.003935853128505279,
+                  "mean": 0.001030309879792114,
+                  "median": 0.0009385585334677621,
+                  "min": 4.3989093557315895e-05,
+                  "n": 444,
+                  "q10": 0.00032121834460010075,
+                  "q90": 0.001849168101809595,
+                  "std_population": 0.0006007633141817777
+                }
+              },
+              "1km": {
+                "candidate": {
+                  "max": 0.3527769138066595,
+                  "mean": 0.13854393037380014,
+                  "median": 0.13661137118423755,
+                  "min": 0.028282452000739224,
+                  "n": 444,
+                  "q10": 0.06503155015981718,
+                  "q90": 0.20775320226202149,
+                  "std_population": 0.05885224166938416
+                },
+                "delta": {
+                  "max": 0.011098454909549305,
+                  "mean": 0.004497733503575422,
+                  "median": 0.004475463248775326,
+                  "min": 0.00039992560802244725,
+                  "n": 444,
+                  "q10": 0.0020450623741914294,
+                  "q90": 0.00691073169280335,
+                  "std_population": 0.001994821494016844
+                }
+              },
+              "5km": {
+                "candidate": {
+                  "max": 0.34671682695166206,
+                  "mean": 0.135828028861577,
+                  "median": 0.13388500166040512,
+                  "min": 0.027889184876533444,
+                  "n": 444,
+                  "q10": 0.06421929688230396,
+                  "q90": 0.20464722307431166,
+                  "std_population": 0.057630351673035304
+                },
+                "delta": {
+                  "max": 0.005991607915691671,
+                  "mean": 0.001781831991352271,
+                  "median": 0.0016829095949440764,
+                  "min": 8.70278932807722e-05,
+                  "n": 444,
+                  "q10": 0.0006130329367484062,
+                  "q90": 0.003049773736575556,
+                  "std_population": 0.0009381607317501845
+                }
+              }
+            },
+            "rows": 444
+          }
+        },
+        "by_urbanity_cell": {
+          "rural": {
+            "baseline": {
+              "max": 0.14117853844295075,
+              "mean": 0.04854862380689829,
+              "median": 0.04114075141027779,
+              "min": 0.012835319192393715,
+              "n": 147,
+              "q10": 0.020667431015231705,
+              "q90": 0.08526803890107713,
+              "std_population": 0.026849266358510353
+            },
+            "by_radius": {
+              "10km": {
+                "candidate": {
+                  "max": 0.1456941349917462,
+                  "mean": 0.04965724568401014,
+                  "median": 0.042257976840749244,
+                  "min": 0.013278646794383347,
+                  "n": 147,
+                  "q10": 0.02131772037022432,
+                  "q90": 0.0870220732299237,
+                  "std_population": 0.027424334920744895
+                },
+                "delta": {
+                  "max": 0.004515596548795436,
+                  "mean": 0.0011086218771118475,
+                  "median": 0.000943667632352832,
+                  "min": 7.620861777466598e-05,
+                  "n": 147,
+                  "q10": 0.0004047037163684708,
+                  "q90": 0.0018919587366043836,
+                  "std_population": 0.0007543617557763539
+                }
+              },
+              "1km": {
+                "candidate": {
+                  "max": 0.14823699642435742,
+                  "mean": 0.05083193447795313,
+                  "median": 0.043178202835707113,
+                  "min": 0.013477067098934002,
+                  "n": 147,
+                  "q10": 0.02169696172532542,
+                  "q90": 0.08928855772835732,
+                  "std_population": 0.028159217810545686
+                },
+                "delta": {
+                  "max": 0.007058457981406668,
+                  "mean": 0.00228331067105483,
+                  "median": 0.0018880366771214796,
+                  "min": 0.0004949081828506223,
+                  "n": 147,
+                  "q10": 0.0009949358413768893,
+                  "q90": 0.004031301313745501,
+                  "std_population": 0.0013328328123949846
+                }
+              },
+              "5km": {
+                "candidate": {
+                  "max": 0.14728345807523716,
+                  "mean": 0.05012197799916324,
+                  "median": 0.04267358926085004,
+                  "min": 0.013411589024546698,
+                  "n": 147,
+                  "q10": 0.021511802606558474,
+                  "q90": 0.08778036723132646,
+                  "std_population": 0.027736405292193896
+                },
+                "delta": {
+                  "max": 0.006104919632286404,
+                  "mean": 0.0015733541922649432,
+                  "median": 0.0013694857899244663,
+                  "min": 0.0001445849105243778,
+                  "n": 147,
+                  "q10": 0.0006415884778682934,
+                  "q90": 0.0026989764259499633,
+                  "std_population": 0.0010321772954796785
+                }
+              }
+            },
+            "rows": 147
+          },
+          "urban": {
+            "baseline": {
+              "max": 0.3436643888389588,
+              "mean": 0.13404619687022473,
+              "median": 0.13173981865452652,
+              "min": 0.027735559554984444,
+              "n": 444,
+              "q10": 0.06333013733445833,
+              "q90": 0.20237125349908064,
+              "std_population": 0.057121336142309034
+            },
+            "by_radius": {
+              "10km": {
+                "candidate": {
+                  "max": 0.34531655667730393,
+                  "mean": 0.13507650675001687,
+                  "median": 0.13300663209090963,
+                  "min": 0.027816119691194085,
+                  "n": 444,
+                  "q10": 0.06397300759266615,
+                  "q90": 0.2037368165161953,
+                  "std_population": 0.057372521756443785
+                },
+                "delta": {
+                  "max": 0.003935853128505279,
+                  "mean": 0.001030309879792114,
+                  "median": 0.0009385585334677621,
+                  "min": 4.3989093557315895e-05,
+                  "n": 444,
+                  "q10": 0.00032121834460010075,
+                  "q90": 0.001849168101809595,
+                  "std_population": 0.0006007633141817777
+                }
+              },
+              "1km": {
+                "candidate": {
+                  "max": 0.3527769138066595,
+                  "mean": 0.13854393037380014,
+                  "median": 0.13661137118423755,
+                  "min": 0.028282452000739224,
+                  "n": 444,
+                  "q10": 0.06503155015981718,
+                  "q90": 0.20775320226202149,
+                  "std_population": 0.05885224166938416
+                },
+                "delta": {
+                  "max": 0.011098454909549305,
+                  "mean": 0.004497733503575422,
+                  "median": 0.004475463248775326,
+                  "min": 0.00039992560802244725,
+                  "n": 444,
+                  "q10": 0.0020450623741914294,
+                  "q90": 0.00691073169280335,
+                  "std_population": 0.001994821494016844
+                }
+              },
+              "5km": {
+                "candidate": {
+                  "max": 0.34671682695166206,
+                  "mean": 0.135828028861577,
+                  "median": 0.13388500166040512,
+                  "min": 0.027889184876533444,
+                  "n": 444,
+                  "q10": 0.06421929688230396,
+                  "q90": 0.20464722307431166,
+                  "std_population": 0.057630351673035304
+                },
+                "delta": {
+                  "max": 0.005991607915691671,
+                  "mean": 0.001781831991352271,
+                  "median": 0.0016829095949440764,
+                  "min": 8.70278932807722e-05,
+                  "n": 444,
+                  "q10": 0.0006130329367484062,
+                  "q90": 0.003049773736575556,
+                  "std_population": 0.0009381607317501845
+                }
+              }
+            },
+            "rows": 444
+          }
+        },
+        "existing_logistic_baseline": {
+          "max": 0.3436643888389588,
+          "mean": 0.1127803030625953,
+          "median": 0.108067822925485,
+          "min": 0.012835319192393715,
+          "n": 591,
+          "q10": 0.034452407957356615,
+          "q90": 0.19072900456308803,
+          "std_population": 0.06321808262442569
+        },
+        "facility_zero_counts_and_shares": {
+          "ems": 451,
+          "fire": 316,
+          "schools": 49
+        },
+        "official_rows": 591,
+        "zero_population_and_edge_cases": {
+          "missing_pct_urban_rows": 0,
+          "neutral_or_population_urbanity_fallback_rows": 0,
+          "no_type_points_in_region": {
+            "ems": false,
+            "fire": false,
+            "schools": false
+          },
+          "rows_with_no_selected_facility_within_10km_by_type": {
+            "ems": 100,
+            "fire": 46,
+            "schools": 30
+          },
+          "tracts_with_no_selected_type_within_10km_any_type": 26,
+          "zero_land_area_rows": 0,
+          "zero_population_delta_5km": {
+            "max": null,
+            "mean": null,
+            "median": null,
+            "min": null,
+            "n": 0,
+            "q10": null,
+            "q90": null,
+            "std_population": null
+          },
+          "zero_population_facility_candidate_5km": {
+            "max": null,
+            "mean": null,
+            "median": null,
+            "min": null,
+            "n": 0,
+            "q10": null,
+            "q90": null,
+            "std_population": null
+          },
+          "zero_population_rows": 0
+        }
+      },
+      "south-central-tx": {
+        "by_radius": {
+          "10km": {
+            "by_facility_type": {
+              "ems": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 1787,
+                "nearest_distance_m": {
+                  "max": 59787.49471562331,
+                  "mean": 3630.2209007568595,
+                  "median": 2375.1229633473854,
+                  "min": 16.612090992559914,
+                  "n": 6003,
+                  "q10": 824.046829275738,
+                  "q90": 7468.7737309636395,
+                  "std_population": 4362.7772216707735
+                },
+                "neighbor_count_within_radius": {
+                  "max": 82.0,
+                  "mean": 13.763784774279527,
+                  "median": 10.0,
+                  "min": 0.0,
+                  "n": 6003,
+                  "q10": 1.0,
+                  "q90": 29.0,
+                  "std_population": 14.360097548444939
+                },
+                "population_weighted_coverage_share": 0.9510464265309149,
+                "population_weighted_kernel_access": 0.7405590423282858,
+                "population_within_radius_centroid_proxy": 24497595.0,
+                "total_population_weight": 25758569.0,
+                "tract_count_within_radius": 5639,
+                "tract_weighted_coverage_share": 0.9393636515075795
+              },
+              "fire": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 3169,
+                "nearest_distance_m": {
+                  "max": 78323.49878297524,
+                  "mean": 2631.987923799257,
+                  "median": 1642.0083134447873,
+                  "min": 16.612090992559914,
+                  "n": 6003,
+                  "q10": 672.5481532128556,
+                  "q90": 5579.4455340330505,
+                  "std_population": 3566.9230127908477
+                },
+                "neighbor_count_within_radius": {
+                  "max": 69.0,
+                  "mean": 22.665000832916874,
+                  "median": 22.0,
+                  "min": 0.0,
+                  "n": 6003,
+                  "q10": 2.0,
+                  "q90": 46.0,
+                  "std_population": 16.221682443215368
+                },
+                "population_weighted_coverage_share": 0.9760288702373179,
+                "population_weighted_kernel_access": 0.8032313013664117,
+                "population_within_radius_centroid_proxy": 25141107.0,
+                "total_population_weight": 25758569.0,
+                "tract_count_within_radius": 5802,
+                "tract_weighted_coverage_share": 0.9665167416291854
+              },
+              "schools": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 26247,
+                "nearest_distance_m": {
+                  "max": 34904.02224832867,
+                  "mean": 1590.4697471213235,
+                  "median": 610.1127518820094,
+                  "min": 6.771129545069807,
+                  "n": 6003,
+                  "q10": 203.84637859474265,
+                  "q90": 4394.502973439904,
+                  "std_population": 2738.930426426267
+                },
+                "neighbor_count_within_radius": {
+                  "max": 831.0,
+                  "mean": 264.6315175745461,
+                  "median": 250.0,
+                  "min": 0.0,
+                  "n": 6003,
+                  "q10": 10.0,
+                  "q90": 559.0,
+                  "std_population": 206.53611766999668
+                },
+                "population_weighted_coverage_share": 0.9836495963731525,
+                "population_weighted_kernel_access": 0.8841909503777085,
+                "population_within_radius_centroid_proxy": 25337406.0,
+                "total_population_weight": 25758569.0,
+                "tract_count_within_radius": 5865,
+                "tract_weighted_coverage_share": 0.9770114942528736
+              }
+            },
+            "candidate": {
+              "max": 0.4012374412270682,
+              "mean": 0.12795359117212068,
+              "median": 0.1261053302804657,
+              "min": 0.011740739766881515,
+              "n": 6003,
+              "q10": 0.04881772823820439,
+              "q90": 0.2029570382581191,
+              "std_population": 0.06383197719993998
+            },
+            "delta": {
+              "max": 0.006834190062428747,
+              "mean": 0.0010563606615189654,
+              "median": 0.0009697404796996656,
+              "min": 3.431899243815095e-05,
+              "n": 6003,
+              "q10": 0.0003693489289163243,
+              "q90": 0.0017579782902079678,
+              "std_population": 0.0006363778808071235
+            },
+            "max_absolute_delta": 0.006834190062428747,
+            "radius_meters": 10000
+          },
+          "1km": {
+            "by_facility_type": {
+              "ems": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 1787,
+                "nearest_distance_m": {
+                  "max": 59787.49471562331,
+                  "mean": 3630.2209007568595,
+                  "median": 2375.1229633473854,
+                  "min": 16.612090992559914,
+                  "n": 6003,
+                  "q10": 824.046829275738,
+                  "q90": 7468.7737309636395,
+                  "std_population": 4362.7772216707735
+                },
+                "neighbor_count_within_radius": {
+                  "max": 9.0,
+                  "mean": 0.2027319673496585,
+                  "median": 0.0,
+                  "min": 0.0,
+                  "n": 6003,
+                  "q10": 0.0,
+                  "q90": 1.0,
+                  "std_population": 0.6089831161354492
+                },
+                "population_weighted_coverage_share": 0.13352523581570078,
+                "population_weighted_kernel_access": 0.1546173237805494,
+                "population_within_radius_centroid_proxy": 3439419.0,
+                "total_population_weight": 25758569.0,
+                "tract_count_within_radius": 894,
+                "tract_weighted_coverage_share": 0.1489255372313843
+              },
+              "fire": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 3169,
+                "nearest_distance_m": {
+                  "max": 78323.49878297524,
+                  "mean": 2631.987923799257,
+                  "median": 1642.0083134447873,
+                  "min": 16.612090992559914,
+                  "n": 6003,
+                  "q10": 672.5481532128556,
+                  "q90": 5579.4455340330505,
+                  "std_population": 3566.9230127908477
+                },
+                "neighbor_count_within_radius": {
+                  "max": 5.0,
+                  "mean": 0.3021822422122272,
+                  "median": 0.0,
+                  "min": 0.0,
+                  "n": 6003,
+                  "q10": 0.0,
+                  "q90": 1.0,
+                  "std_population": 0.6264535205672653
+                },
+                "population_weighted_coverage_share": 0.21865143207295407,
+                "population_weighted_kernel_access": 0.2244926157727002,
+                "population_within_radius_centroid_proxy": 5632148.0,
+                "total_population_weight": 25758569.0,
+                "tract_count_within_radius": 1401,
+                "tract_weighted_coverage_share": 0.23338330834582707
+              },
+              "schools": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 26247,
+                "nearest_distance_m": {
+                  "max": 34904.02224832867,
+                  "mean": 1590.4697471213235,
+                  "median": 610.1127518820094,
+                  "min": 6.771129545069807,
+                  "n": 6003,
+                  "q10": 203.84637859474265,
+                  "q90": 4394.502973439904,
+                  "std_population": 2738.930426426267
+                },
+                "neighbor_count_within_radius": {
+                  "max": 54.0,
+                  "mean": 3.894885890388139,
+                  "median": 3.0,
+                  "min": 0.0,
+                  "n": 6003,
+                  "q10": 0.0,
+                  "q90": 10.0,
+                  "std_population": 4.620833559155222
+                },
+                "population_weighted_coverage_share": 0.6878012516922039,
+                "population_weighted_kernel_access": 0.4810180728638814,
+                "population_within_radius_centroid_proxy": 17716776.0,
+                "total_population_weight": 25758569.0,
+                "tract_count_within_radius": 4110,
+                "tract_weighted_coverage_share": 0.6846576711644178
+              }
+            },
+            "candidate": {
+              "max": 0.41037703963811123,
+              "mean": 0.131336993597802,
+              "median": 0.12964061993457146,
+              "min": 0.0121309502583363,
+              "n": 6003,
+              "q10": 0.05001607868711744,
+              "q90": 0.20807315924559433,
+              "std_population": 0.06548284323972425
+            },
+            "delta": {
+              "max": 0.013728803990057104,
+              "mean": 0.004439763087200261,
+              "median": 0.00442450309774009,
+              "min": 0.00032876700793176006,
+              "n": 6003,
+              "q10": 0.0017422574945839958,
+              "q90": 0.006890737023637189,
+              "std_population": 0.0020910186062109526
+            },
+            "max_absolute_delta": 0.013728803990057104,
+            "radius_meters": 1000
+          },
+          "5km": {
+            "by_facility_type": {
+              "ems": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 1787,
+                "nearest_distance_m": {
+                  "max": 59787.49471562331,
+                  "mean": 3630.2209007568595,
+                  "median": 2375.1229633473854,
+                  "min": 16.612090992559914,
+                  "n": 6003,
+                  "q10": 824.046829275738,
+                  "q90": 7468.7737309636395,
+                  "std_population": 4362.7772216707735
+                },
+                "neighbor_count_within_radius": {
+                  "max": 37.0,
+                  "mean": 4.078460769615193,
+                  "median": 3.0,
+                  "min": 0.0,
+                  "n": 6003,
+                  "q10": 0.0,
+                  "q90": 9.0,
+                  "std_population": 5.004979113005807
+                },
+                "population_weighted_coverage_share": 0.8220283898534891,
+                "population_weighted_kernel_access": 0.5790364672667101,
+                "population_within_radius_centroid_proxy": 21174275.0,
+                "total_population_weight": 25758569.0,
+                "tract_count_within_radius": 4889,
+                "tract_weighted_coverage_share": 0.8144261202731967
+              },
+              "fire": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 3169,
+                "nearest_distance_m": {
+                  "max": 78323.49878297524,
+                  "mean": 2631.987923799257,
+                  "median": 1642.0083134447873,
+                  "min": 16.612090992559914,
+                  "n": 6003,
+                  "q10": 672.5481532128556,
+                  "q90": 5579.4455340330505,
+                  "std_population": 3566.9230127908477
+                },
+                "neighbor_count_within_radius": {
+                  "max": 25.0,
+                  "mean": 6.4477761119440276,
+                  "median": 6.0,
+                  "min": 0.0,
+                  "n": 6003,
+                  "q10": 0.0,
+                  "q90": 13.800000000000182,
+                  "std_population": 5.048199759133119
+                },
+                "population_weighted_coverage_share": 0.8973282638488186,
+                "population_weighted_kernel_access": 0.6667490201338228,
+                "population_within_radius_centroid_proxy": 23113892.0,
+                "total_population_weight": 25758569.0,
+                "tract_count_within_radius": 5305,
+                "tract_weighted_coverage_share": 0.8837248042645344
+              },
+              "schools": {
+                "distance_missing_rows": 0,
+                "facility_points_in_same_region_pool": 26247,
+                "nearest_distance_m": {
+                  "max": 34904.02224832867,
+                  "mean": 1590.4697471213235,
+                  "median": 610.1127518820094,
+                  "min": 6.771129545069807,
+                  "n": 6003,
+                  "q10": 203.84637859474265,
+                  "q90": 4394.502973439904,
+                  "std_population": 2738.930426426267
+                },
+                "neighbor_count_within_radius": {
+                  "max": 299.0,
+                  "mean": 79.29485257371314,
+                  "median": 75.0,
+                  "min": 0.0,
+                  "n": 6003,
+                  "q10": 1.0,
+                  "q90": 164.0,
+                  "std_population": 64.20871414642968
+                },
+                "population_weighted_coverage_share": 0.9321210351398015,
+                "population_weighted_kernel_access": 0.80244486151051,
+                "population_within_radius_centroid_proxy": 24010104.0,
+                "total_population_weight": 25758569.0,
+                "tract_count_within_radius": 5495,
+                "tract_weighted_coverage_share": 0.915375645510578
+              }
+            },
+            "candidate": {
+              "max": 0.4028473949521854,
+              "mean": 0.12870733962109965,
+              "median": 0.12697423867121663,
+              "min": 0.011856525149306995,
+              "n": 6003,
+              "q10": 0.049239199578500446,
+              "q90": 0.2039177257623955,
+              "std_population": 0.06409342536448653
+            },
+            "delta": {
+              "max": 0.007265552190765134,
+              "mean": 0.0018101091104979206,
+              "median": 0.001718316260741766,
+              "min": 6.830920609256219e-05,
+              "n": 6003,
+              "q10": 0.0006837458789956064,
+              "q90": 0.0029633371076277066,
+              "std_population": 0.0009562821652978007
+            },
+            "max_absolute_delta": 0.007265552190765134,
+            "radius_meters": 5000
+          }
+        },
+        "by_ur_class": {
+          "Rural": {
+            "by_radius": {
+              "10km": {
+                "candidate": {
+                  "max": 0.2529010823469014,
+                  "mean": 0.061217598530452916,
+                  "median": 0.053721440313263834,
+                  "min": 0.011740739766881515,
+                  "n": 991,
+                  "q10": 0.027854918839490605,
+                  "q90": 0.1145387704231026,
+                  "std_population": 0.03307929818859952
+                },
+                "delta": {
+                  "max": 0.005677680703255056,
+                  "mean": 0.001341992855521414,
+                  "median": 0.001130932009552027,
+                  "min": 3.886190964833003e-05,
+                  "n": 991,
+                  "q10": 0.0004046131286020854,
+                  "q90": 0.0027151940044961576,
+                  "std_population": 0.0009289336304641384
+                }
+              },
+              "1km": {
+                "candidate": {
+                  "max": 0.2607032148631203,
+                  "mean": 0.06272262606753058,
+                  "median": 0.05486294328223767,
+                  "min": 0.0121309502583363,
+                  "n": 991,
+                  "q10": 0.02840637499893295,
+                  "q90": 0.11734866033958717,
+                  "std_population": 0.03393965362248537
+                },
+                "delta": {
+                  "max": 0.009435469398900997,
+                  "mean": 0.0028470203925990765,
+                  "median": 0.0024949597632339462,
+                  "min": 0.00034832339584689453,
+                  "n": 991,
+                  "q10": 0.0011836213415988318,
+                  "q90": 0.005499163136190061,
+                  "std_population": 0.0016140692324057469
+                }
+              },
+              "5km": {
+                "candidate": {
+                  "max": 0.254321596004698,
+                  "mean": 0.06182862040846591,
+                  "median": 0.054238879094173416,
+                  "min": 0.011856525149306995,
+                  "n": 991,
+                  "q10": 0.028039770411664958,
+                  "q90": 0.11579898024759298,
+                  "std_population": 0.03343334212644076
+                },
+                "delta": {
+                  "max": 0.007265552190765134,
+                  "mean": 0.0019530147335343963,
+                  "median": 0.0016630198752956155,
+                  "min": 7.676202147615524e-05,
+                  "n": 991,
+                  "q10": 0.0006764816803370502,
+                  "q90": 0.003978987227317918,
+                  "std_population": 0.0012429429164107165
+                }
+              }
+            },
+            "rows": 991
+          },
+          "Urban": {
+            "by_radius": {
+              "10km": {
+                "candidate": {
+                  "max": 0.4012374412270682,
+                  "mean": 0.1412153750504044,
+                  "median": 0.13779538553512993,
+                  "min": 0.02003465029388262,
+                  "n": 4998,
+                  "q10": 0.06855515188576888,
+                  "q90": 0.2129307115139141,
+                  "std_population": 0.060115714867056275
+                },
+                "delta": {
+                  "max": 0.004940379150324775,
+                  "mean": 0.0009981434700497029,
+                  "median": 0.0009507079552710518,
+                  "min": 3.431899243815095e-05,
+                  "n": 4998,
+                  "q10": 0.00036342991021072474,
+                  "q90": 0.0016342721812230734,
+                  "std_population": 0.0005355622981535153
+                }
+              },
+              "1km": {
+                "candidate": {
+                  "max": 0.41037703963811123,
+                  "mean": 0.14497230414140305,
+                  "median": 0.14158160987630888,
+                  "min": 0.02037345383771295,
+                  "n": 4998,
+                  "q10": 0.07042740540982333,
+                  "q90": 0.2179719529429705,
+                  "std_population": 0.06162958082793418
+                },
+                "delta": {
+                  "max": 0.013728803990057104,
+                  "mean": 0.00475507256104835,
+                  "median": 0.004745649273450142,
+                  "min": 0.00032876700793176006,
+                  "n": 4998,
+                  "q10": 0.0021126006755320184,
+                  "q90": 0.007137856714641051,
+                  "std_population": 0.002029867036677551
+                }
+              },
+              "5km": {
+                "candidate": {
+                  "max": 0.4028473949521854,
+                  "mean": 0.14199726849396363,
+                  "median": 0.1386286208907232,
+                  "min": 0.020082072830950485,
+                  "n": 4998,
+                  "q10": 0.06907830271663658,
+                  "q90": 0.2137793351067119,
+                  "std_population": 0.06037223514341951
+                },
+                "delta": {
+                  "max": 0.006881961714080148,
+                  "mean": 0.0017800369136089028,
+                  "median": 0.0017271857278095826,
+                  "min": 6.830920609256219e-05,
+                  "n": 4998,
+                  "q10": 0.0006909862772045195,
+                  "q90": 0.002847800239446061,
+                  "std_population": 0.0008808044505622672
+                }
+              }
+            },
+            "rows": 4998
+          },
+          "unclassified": {
+            "by_radius": {
+              "10km": {
+                "candidate": {
+                  "max": 0.1522660043673723,
+                  "mean": 0.11745165433145575,
+                  "median": 0.13064573969733131,
+                  "min": 0.04713568897169664,
+                  "n": 14,
+                  "q10": 0.06114448611676401,
+                  "q90": 0.1484995456375863,
+                  "std_population": 0.03636639511899933
+                },
+                "delta": {
+                  "max": 0.006834190062428747,
+                  "mean": 0.0016212191405867314,
+                  "median": 0.001131446096880373,
+                  "min": 0.000198752754317022,
+                  "n": 14,
+                  "q10": 0.0003452707609769935,
+                  "q90": 0.003067731332642735,
+                  "std_population": 0.0016925319682827402
+                }
+              },
+              "1km": {
+                "candidate": {
+                  "max": 0.15270340502017007,
+                  "mean": 0.1204481454249993,
+                  "median": 0.1338830676256897,
+                  "min": 0.04845002537008697,
+                  "n": 14,
+                  "q10": 0.062445919280238224,
+                  "q90": 0.152637307191958,
+                  "std_population": 0.03728386027902907
+                },
+                "delta": {
+                  "max": 0.007271590715226511,
+                  "mean": 0.0046177102341303025,
+                  "median": 0.005138139807773473,
+                  "min": 0.0015182856189737692,
+                  "n": 14,
+                  "q10": 0.0016451449845712811,
+                  "q90": 0.007205492887014453,
+                  "std_population": 0.0020804292104638195
+                }
+              },
+              "5km": {
+                "candidate": {
+                  "max": 0.15267447957902924,
+                  "mean": 0.11826064198866423,
+                  "median": 0.13119858151500227,
+                  "min": 0.0474203980272507,
+                  "n": 14,
+                  "q10": 0.06139310856725191,
+                  "q90": 0.15022079249019504,
+                  "std_population": 0.03670395640518885
+                },
+                "delta": {
+                  "max": 0.00724266527408568,
+                  "mean": 0.002430206797795224,
+                  "median": 0.002035643701562978,
+                  "min": 0.0003852592983478037,
+                  "n": 14,
+                  "q10": 0.0006233539649218745,
+                  "q90": 0.004788978185251478,
+                  "std_population": 0.001907163489357296
+                }
+              }
+            },
+            "rows": 14
+          }
+        },
+        "by_urbanity_cell": {
+          "rural": {
+            "baseline": {
+              "max": 0.2512677454642193,
+              "mean": 0.059875605674931505,
+              "median": 0.05256278989540473,
+              "min": 0.011577492287785507,
+              "n": 991,
+              "q10": 0.027318835999200885,
+              "q90": 0.11198375105851342,
+              "std_population": 0.0323505838357005
+            },
+            "by_radius": {
+              "10km": {
+                "candidate": {
+                  "max": 0.2529010823469014,
+                  "mean": 0.061217598530452916,
+                  "median": 0.053721440313263834,
+                  "min": 0.011740739766881515,
+                  "n": 991,
+                  "q10": 0.027854918839490605,
+                  "q90": 0.1145387704231026,
+                  "std_population": 0.03307929818859952
+                },
+                "delta": {
+                  "max": 0.005677680703255056,
+                  "mean": 0.001341992855521414,
+                  "median": 0.001130932009552027,
+                  "min": 3.886190964833003e-05,
+                  "n": 991,
+                  "q10": 0.0004046131286020854,
+                  "q90": 0.0027151940044961576,
+                  "std_population": 0.0009289336304641384
+                }
+              },
+              "1km": {
+                "candidate": {
+                  "max": 0.2607032148631203,
+                  "mean": 0.06272262606753058,
+                  "median": 0.05486294328223767,
+                  "min": 0.0121309502583363,
+                  "n": 991,
+                  "q10": 0.02840637499893295,
+                  "q90": 0.11734866033958717,
+                  "std_population": 0.03393965362248537
+                },
+                "delta": {
+                  "max": 0.009435469398900997,
+                  "mean": 0.0028470203925990765,
+                  "median": 0.0024949597632339462,
+                  "min": 0.00034832339584689453,
+                  "n": 991,
+                  "q10": 0.0011836213415988318,
+                  "q90": 0.005499163136190061,
+                  "std_population": 0.0016140692324057469
+                }
+              },
+              "5km": {
+                "candidate": {
+                  "max": 0.254321596004698,
+                  "mean": 0.06182862040846591,
+                  "median": 0.054238879094173416,
+                  "min": 0.011856525149306995,
+                  "n": 991,
+                  "q10": 0.028039770411664958,
+                  "q90": 0.11579898024759298,
+                  "std_population": 0.03343334212644076
+                },
+                "delta": {
+                  "max": 0.007265552190765134,
+                  "mean": 0.0019530147335343963,
+                  "median": 0.0016630198752956155,
+                  "min": 7.676202147615524e-05,
+                  "n": 991,
+                  "q10": 0.0006764816803370502,
+                  "q90": 0.003978987227317918,
+                  "std_population": 0.0012429429164107165
+                }
+              }
+            },
+            "rows": 991
+          },
+          "urban": {
+            "baseline": {
+              "max": 0.3993755551171653,
+              "mean": 0.14014911203736732,
+              "median": 0.1366726929510706,
+              "min": 0.019984105740658,
+              "n": 5012,
+              "q10": 0.06787263663820987,
+              "q90": 0.21132374211919994,
+              "std_population": 0.05980466267608471
+            },
+            "by_radius": {
+              "10km": {
+                "candidate": {
+                  "max": 0.4012374412270682,
+                  "mean": 0.14114899594225092,
+                  "median": 0.13776237386505769,
+                  "min": 0.02003465029388262,
+                  "n": 5012,
+                  "q10": 0.06850546816598112,
+                  "q90": 0.21275022146508377,
+                  "std_population": 0.06007554966100276
+                },
+                "delta": {
+                  "max": 0.006834190062428747,
+                  "mean": 0.000999883904883605,
+                  "median": 0.0009507079552710518,
+                  "min": 3.431899243815095e-05,
+                  "n": 5012,
+                  "q10": 0.0003627200176858192,
+                  "q90": 0.0016377816490544576,
+                  "std_population": 0.0005432393874405626
+                }
+              },
+              "1km": {
+                "candidate": {
+                  "max": 0.41037703963811123,
+                  "mean": 0.14490380090476507,
+                  "median": 0.14153772547985555,
+                  "min": 0.02037345383771295,
+                  "n": 5012,
+                  "q10": 0.07040487905429782,
+                  "q90": 0.21783434964187676,
+                  "std_population": 0.0615885860789791
+                },
+                "delta": {
+                  "max": 0.013728803990057104,
+                  "mean": 0.004754688867397742,
+                  "median": 0.004745985330210596,
+                  "min": 0.00032876700793176006,
+                  "n": 5012,
+                  "q10": 0.00210581606094212,
+                  "q90": 0.007140809474687807,
+                  "std_population": 0.002030022970957507
+                }
+              },
+              "5km": {
+                "candidate": {
+                  "max": 0.4028473949521854,
+                  "mean": 0.14193096506797115,
+                  "median": 0.13854555078155711,
+                  "min": 0.020082072830950485,
+                  "n": 5012,
+                  "q10": 0.06898233557477526,
+                  "q90": 0.21370729679743747,
+                  "std_population": 0.06033206650695315
+                },
+                "delta": {
+                  "max": 0.00724266527408568,
+                  "mean": 0.0017818530306038366,
+                  "median": 0.0017271857278095826,
+                  "min": 6.830920609256219e-05,
+                  "n": 5012,
+                  "q10": 0.0006891977018319535,
+                  "q90": 0.0028538156948409153,
+                  "std_population": 0.0008859948422794316
+                }
+              }
+            },
+            "rows": 5012
+          }
+        },
+        "existing_logistic_baseline": {
+          "max": 0.3993755551171653,
+          "mean": 0.12689723051060173,
+          "median": 0.12480470901974973,
+          "min": 0.011577492287785507,
+          "n": 6003,
+          "q10": 0.047963172711272276,
+          "q90": 0.2016018020281419,
+          "std_population": 0.0636167532959326
+        },
+        "facility_zero_counts_and_shares": {
+          "ems": 4621,
+          "fire": 3825,
+          "schools": 655
+        },
+        "official_rows": 6003,
+        "zero_population_and_edge_cases": {
+          "missing_pct_urban_rows": 14,
+          "neutral_or_population_urbanity_fallback_rows": 14,
+          "no_type_points_in_region": {
+            "ems": false,
+            "fire": false,
+            "schools": false
+          },
+          "rows_with_no_selected_facility_within_10km_by_type": {
+            "ems": 364,
+            "fire": 201,
+            "schools": 138
+          },
+          "tracts_with_no_selected_type_within_10km_any_type": 96,
+          "zero_land_area_rows": 2,
+          "zero_population_delta_5km": {
+            "max": 0.00724266527408568,
+            "mean": 0.002430206797795224,
+            "median": 0.002035643701562978,
+            "min": 0.0003852592983478037,
+            "n": 14,
+            "q10": 0.0006233539649218745,
+            "q90": 0.004788978185251478,
+            "std_population": 0.001907163489357296
+          },
+          "zero_population_facility_candidate_5km": {
+            "max": 0.15267447957902924,
+            "mean": 0.11826064198866423,
+            "median": 0.13119858151500227,
+            "min": 0.0474203980272507,
+            "n": 14,
+            "q10": 0.06139310856725191,
+            "q90": 0.15022079249019504,
+            "std_population": 0.03670395640518885
+          },
+          "zero_population_rows": 14
+        }
+      }
+    },
+    "population_weighted_access": {
+      "10km": {
+        "eastern-ok": {
+          "ems": 0.8822149485058575,
+          "fire": 0.945306288148172,
+          "schools": 0.9754557915438463
+        },
+        "maricopa-az": {
+          "ems": 0.912642015568318,
+          "fire": 0.9525153583731402,
+          "schools": 0.9611181059121525
+        },
+        "northern-ca": {
+          "ems": 0.8576663219313096,
+          "fire": 0.9378959864426687,
+          "schools": 0.9572953823491973
+        },
+        "south-central-tx": {
+          "ems": 0.9510464265309149,
+          "fire": 0.9760288702373179,
+          "schools": 0.9836495963731525
+        }
+      },
+      "1km": {
+        "eastern-ok": {
+          "ems": 0.08647852801985297,
+          "fire": 0.18180063191684329,
+          "schools": 0.5157090370832194
+        },
+        "maricopa-az": {
+          "ems": 0.11614935244018991,
+          "fire": 0.24578694841772353,
+          "schools": 0.7304113195289362
+        },
+        "northern-ca": {
+          "ems": 0.12383021451540552,
+          "fire": 0.2911906221137903,
+          "schools": 0.6582219382640385
+        },
+        "south-central-tx": {
+          "ems": 0.13352523581570078,
+          "fire": 0.21865143207295407,
+          "schools": 0.6878012516922039
+        }
+      },
+      "5km": {
+        "eastern-ok": {
+          "ems": 0.6913152947204942,
+          "fire": 0.8057545894959998,
+          "schools": 0.8596949521529029
+        },
+        "maricopa-az": {
+          "ems": 0.7542484712768982,
+          "fire": 0.9042364982091863,
+          "schools": 0.9250257398250873
+        },
+        "northern-ca": {
+          "ems": 0.6920904586661223,
+          "fire": 0.8360663404762554,
+          "schools": 0.8895762357908504
+        },
+        "south-central-tx": {
+          "ems": 0.8220283898534891,
+          "fire": 0.8973282638488186,
+          "schools": 0.9321210351398015
+        }
+      }
+    }
+  },
+  "measure_before": {
+    "existing_task_report": {
+      "meaning": "Freeze the existing pooled logistic facility-miss prior and category/zero-share report as baseline; do not refit its coefficients or use target/leaderboard moments.",
+      "source_category_config": "config/poi-category-definitions.json",
+      "source_category_config_sha256": "8309a0bb08613b92621f4977eb78998e469951c0cd0ed012d93ea2f5cf59654f",
+      "source_report": "reports/poi-facility-miss-audit.json",
+      "source_report_sha256": "b559c8d3d85709d0e5f2d2102bb39da4d8255a3c62f728cf736da522025a289c"
+    },
+    "facility_zero_shares_and_logistic_candidate_moments": {
+      "by_region": {
+        "eastern-ok": {
+          "establishments_half_mean_defined": 0.06632641538929548,
+          "expected_facility_gap_mean_by_type": {
+            "ems": 0.076227111196771,
+            "fire": 0.11248733349631306,
+            "schools": 0.11982390380130738
+          },
+          "facility_half_mean_defined": 0.10284611616479715,
+          "observed_overture_zero_counts": {
+            "ems0": 864,
+            "fire0": 646,
+            "sch0": 130
+          },
+          "poi_defined_tracts": 1192,
+          "poi_v2_E_p_squared_defined": 0.01622475178476029,
+          "poi_v2_mean_defined": 0.08458626577704631,
+          "poi_v2_share_gt_0_25_defined": 0.08137583892617449,
+          "prior_probability_mean_by_type": {
+            "ems": 0.08760643309912423,
+            "fire": 0.14401084728698635,
+            "schools": 0.3849202292665062
+          },
+          "tracts": 1192,
+          "urbanity_fallback_tracts": 1,
+          "v0_composite_E_p_squared_defined": 0.028795695475608722,
+          "v0_composite_mean_defined": 0.11734124649737128,
+          "v0_poi_E_p_squared_defined": 0.0733073041599645,
+          "v0_poi_defined_tracts": 1192,
+          "v0_poi_mean_defined": 0.19934620484484325,
+          "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.013847543356564858,
+          "v2_poi_with_v0_transport_building_composite_mean": 0.06742851828363232,
+          "v2_poi_with_v0_transport_building_composite_tracts": 1192
+        },
+        "maricopa-az": {
+          "establishments_half_mean_defined": 0.17293110454910288,
+          "expected_facility_gap_mean_by_type": {
+            "ems": 0.10675472103133024,
+            "fire": 0.16334001444430019,
+            "schools": 0.1583729350161489
+          },
+          "facility_half_mean_defined": 0.1428225568305931,
+          "observed_overture_zero_counts": {
+            "ems0": 1346,
+            "fire0": 1105,
+            "sch0": 254
+          },
+          "poi_defined_tracts": 1593,
+          "poi_v2_E_p_squared_defined": 0.045771081995518416,
+          "poi_v2_mean_defined": 0.15787683068984798,
+          "poi_v2_share_gt_0_25_defined": 0.24356559949780288,
+          "prior_probability_mean_by_type": {
+            "ems": 0.11564573557718723,
+            "fire": 0.19462774445982897,
+            "schools": 0.4444911983727035
+          },
+          "tracts": 1593,
+          "urbanity_fallback_tracts": 11,
+          "v0_composite_E_p_squared_defined": 0.060048781025501104,
+          "v0_composite_mean_defined": 0.19668435231946868,
+          "v0_poi_E_p_squared_defined": 0.13579538774213246,
+          "v0_poi_defined_tracts": 1593,
+          "v0_poi_mean_defined": 0.31285133939705145,
+          "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.03609598891162353,
+          "v2_poi_with_v0_transport_building_composite_mean": 0.13357255882591032,
+          "v2_poi_with_v0_transport_building_composite_tracts": 1593
+        },
+        "northern-ca": {
+          "establishments_half_mean_defined": 0.13874768171310967,
+          "expected_facility_gap_mean_by_type": {
+            "ems": 0.09229994799188823,
+            "fire": 0.13071413599365525,
+            "schools": 0.1153268252022425
+          },
+          "facility_half_mean_defined": 0.11278030306259533,
+          "observed_overture_zero_counts": {
+            "ems0": 451,
+            "fire0": 316,
+            "sch0": 49
+          },
+          "poi_defined_tracts": 591,
+          "poi_v2_E_p_squared_defined": 0.034608380067779096,
+          "poi_v2_mean_defined": 0.1257639923878525,
+          "poi_v2_share_gt_0_25_defined": 0.17597292724196278,
+          "prior_probability_mean_by_type": {
+            "ems": 0.10336537576225542,
+            "fire": 0.17252310748004626,
+            "schools": 0.4172521569313171
+          },
+          "tracts": 591,
+          "urbanity_fallback_tracts": 0,
+          "v0_composite_E_p_squared_defined": 0.04472991574442255,
+          "v0_composite_mean_defined": 0.15383899870291118,
+          "v0_poi_E_p_squared_defined": 0.0962627001291376,
+          "v0_poi_defined_tracts": 591,
+          "v0_poi_mean_defined": 0.2336821598805405,
+          "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.0271689063190847,
+          "v2_poi_with_v0_transport_building_composite_mean": 0.10963640500928665,
+          "v2_poi_with_v0_transport_building_composite_tracts": 591
+        },
+        "south-central-tx": {
+          "establishments_half_mean_defined": 0.11055731932532434,
+          "expected_facility_gap_mean_by_type": {
+            "ems": 0.09813996093662807,
+            "fire": 0.1515250741633505,
+            "schools": 0.13102665643182662
+          },
+          "facility_half_mean_defined": 0.1268972305106017,
+          "observed_overture_zero_counts": {
+            "ems0": 4621,
+            "fire0": 3825,
+            "sch0": 655
+          },
+          "poi_defined_tracts": 6003,
+          "poi_v2_E_p_squared_defined": 0.029170951031338443,
+          "poi_v2_mean_defined": 0.11873308442903742,
+          "poi_v2_share_gt_0_25_defined": 0.14942528735632185,
+          "prior_probability_mean_by_type": {
+            "ems": 0.1111784846265051,
+            "fire": 0.1865738799158456,
+            "schools": 0.4348608115425293
+          },
+          "tracts": 6003,
+          "urbanity_fallback_tracts": 14,
+          "v0_composite_E_p_squared_defined": 0.05625639822359812,
+          "v0_composite_mean_defined": 0.17336658607282127,
+          "v0_poi_E_p_squared_defined": 0.10049044278710664,
+          "v0_poi_defined_tracts": 6001,
+          "v0_poi_mean_defined": 0.2559921043129724,
+          "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.03362835856113965,
+          "v2_poi_with_v0_transport_building_composite_mean": 0.11694007054316582,
+          "v2_poi_with_v0_transport_building_composite_tracts": 6003
+        }
+      },
+      "by_region_and_urbanity": {
+        "eastern-ok:rural": {
+          "establishments_half_mean_defined": 0.04627560225318435,
+          "expected_facility_gap_mean_by_type": {
+            "ems": 0.03112553248575723,
+            "fire": 0.03496226633326188,
+            "schools": 0.08979723834321392
+          },
+          "facility_half_mean_defined": 0.05196167905407768,
+          "observed_overture_zero_counts": {
+            "ems0": 221,
+            "fire0": 106,
+            "sch0": 51
+          },
+          "poi_defined_tracts": 411,
+          "poi_v2_E_p_squared_defined": 0.006882634021513469,
+          "poi_v2_mean_defined": 0.04911864065363101,
+          "poi_v2_share_gt_0_25_defined": 0.031630170316301706,
+          "prior_probability_mean_by_type": {
+            "ems": 0.042469926204229354,
+            "fire": 0.06303828393369403,
+            "schools": 0.28075233177232495
+          },
+          "tracts": 411,
+          "urbanity_fallback_tracts": 0,
+          "v0_composite_E_p_squared_defined": 0.005101287825092647,
+          "v0_composite_mean_defined": 0.026444878000453934,
+          "v0_poi_E_p_squared_defined": 0.019144134617429667,
+          "v0_poi_defined_tracts": 411,
+          "v0_poi_mean_defined": 0.05073124033002034,
+          "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.0034776250373085055,
+          "v2_poi_with_v0_transport_building_composite_mean": 0.02573172522687576,
+          "v2_poi_with_v0_transport_building_composite_tracts": 411
+        },
+        "eastern-ok:urban": {
+          "establishments_half_mean_defined": 0.07687812371060364,
+          "expected_facility_gap_mean_by_type": {
+            "ems": 0.09996174480781668,
+            "fire": 0.15328477601105572,
+            "schools": 0.13562538844058575
+          },
+          "facility_half_mean_defined": 0.1296239697531527,
+          "observed_overture_zero_counts": {
+            "ems0": 643,
+            "fire0": 540,
+            "sch0": 79
+          },
+          "poi_defined_tracts": 781,
+          "poi_v2_E_p_squared_defined": 0.02114102630549582,
+          "poi_v2_mean_defined": 0.10325104673187818,
+          "poi_v2_share_gt_0_25_defined": 0.10755441741357234,
+          "prior_probability_mean_by_type": {
+            "ems": 0.11135944761103435,
+            "fire": 0.18662252915408387,
+            "schools": 0.43973841860083207
+          },
+          "tracts": 781,
+          "urbanity_fallback_tracts": 1,
+          "v0_composite_E_p_squared_defined": 0.041264839578505144,
+          "v0_composite_mean_defined": 0.1651753149381306,
+          "v0_poi_E_p_squared_defined": 0.10181058544291177,
+          "v0_poi_defined_tracts": 781,
+          "v0_poi_mean_defined": 0.27755459206071037,
+          "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.019304696274893104,
+          "v2_poi_with_v0_transport_building_composite_mean": 0.08937138889352597,
+          "v2_poi_with_v0_transport_building_composite_tracts": 781
+        },
+        "maricopa-az:rural": {
+          "establishments_half_mean_defined": 0.1323495652262349,
+          "expected_facility_gap_mean_by_type": {
+            "ems": 0.033858230112517866,
+            "fire": 0.04117975955453583,
+            "schools": 0.11668928806258783
+          },
+          "facility_half_mean_defined": 0.06390909257654717,
+          "observed_overture_zero_counts": {
+            "ems0": 100,
+            "fire0": 67,
+            "sch0": 34
+          },
+          "poi_defined_tracts": 163,
+          "poi_v2_E_p_squared_defined": 0.02564106287411699,
+          "poi_v2_mean_defined": 0.09812932890139103,
+          "poi_v2_share_gt_0_25_defined": 0.13496932515337423,
+          "prior_probability_mean_by_type": {
+            "ems": 0.043108665967995674,
+            "fire": 0.0641539950499655,
+            "schools": 0.28224003923445834
+          },
+          "tracts": 163,
+          "urbanity_fallback_tracts": 0,
+          "v0_composite_E_p_squared_defined": 0.03356373218819282,
+          "v0_composite_mean_defined": 0.07946464489344565,
+          "v0_poi_E_p_squared_defined": 0.05414007026233046,
+          "v0_poi_defined_tracts": 163,
+          "v0_poi_mean_defined": 0.10919673079950756,
+          "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.024319982539724342,
+          "v2_poi_with_v0_transport_building_composite_mean": 0.0737184947873666,
+          "v2_poi_with_v0_transport_building_composite_tracts": 163
+        },
+        "maricopa-az:urban": {
+          "establishments_half_mean_defined": 0.17755683245793324,
+          "expected_facility_gap_mean_by_type": {
+            "ems": 0.11506390146473332,
+            "fire": 0.1772645749666999,
+            "schools": 0.16312428778078558
+          },
+          "facility_half_mean_defined": 0.1518175880707396,
+          "observed_overture_zero_counts": {
+            "ems0": 1246,
+            "fire0": 1038,
+            "sch0": 220
+          },
+          "poi_defined_tracts": 1430,
+          "poi_v2_E_p_squared_defined": 0.04806562263662921,
+          "poi_v2_mean_defined": 0.16468721026433644,
+          "poi_v2_share_gt_0_25_defined": 0.25594405594405595,
+          "prior_probability_mean_by_type": {
+            "ems": 0.12391394700816499,
+            "fire": 0.20949992708486936,
+            "schools": 0.4629855612674826
+          },
+          "tracts": 1430,
+          "urbanity_fallback_tracts": 11,
+          "v0_composite_E_p_squared_defined": 0.0630677061726908,
+          "v0_composite_mean_defined": 0.21004575952956783,
+          "v0_poi_E_p_squared_defined": 0.14510295190241757,
+          "v0_poi_defined_tracts": 1430,
+          "v0_poi_mean_defined": 0.33606511646096726,
+          "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.03743828893863022,
+          "v2_poi_with_v0_transport_building_composite_mean": 0.14039508500652753,
+          "v2_poi_with_v0_transport_building_composite_tracts": 1430
+        },
+        "northern-ca:rural": {
+          "establishments_half_mean_defined": 0.06725851108253558,
+          "expected_facility_gap_mean_by_type": {
+            "ems": 0.0324476761672706,
+            "fire": 0.03424831730961403,
+            "schools": 0.07894987794381024
+          },
+          "facility_half_mean_defined": 0.0485486238068983,
+          "observed_overture_zero_counts": {
+            "ems0": 79,
+            "fire0": 36,
+            "sch0": 11
+          },
+          "poi_defined_tracts": 147,
+          "poi_v2_E_p_squared_defined": 0.010531834109418603,
+          "poi_v2_mean_defined": 0.05790356744471694,
+          "poi_v2_share_gt_0_25_defined": 0.06802721088435375,
+          "prior_probability_mean_by_type": {
+            "ems": 0.0431502634513112,
+            "fire": 0.0642153114173747,
+            "schools": 0.2827749306041588
+          },
+          "tracts": 147,
+          "urbanity_fallback_tracts": 0,
+          "v0_composite_E_p_squared_defined": 0.006012731364196291,
+          "v0_composite_mean_defined": 0.027348656987583066,
+          "v0_poi_E_p_squared_defined": 0.013945848579673565,
+          "v0_poi_defined_tracts": 147,
+          "v0_poi_mean_defined": 0.0407521410390669,
+          "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.00599185468742923,
+          "v2_poi_with_v0_transport_building_composite_mean": 0.03380028695328171,
+          "v2_poi_with_v0_transport_building_composite_tracts": 147
+        },
+        "northern-ca:urban": {
+          "establishments_half_mean_defined": 0.16241639361107,
+          "expected_facility_gap_mean_by_type": {
+            "ems": 0.11211590285274134,
+            "fire": 0.16265214353093913,
+            "schools": 0.1273705442269937
+          },
+          "facility_half_mean_defined": 0.13404619687022473,
+          "observed_overture_zero_counts": {
+            "ems0": 372,
+            "fire0": 280,
+            "sch0": 38
+          },
+          "poi_defined_tracts": 444,
+          "poi_v2_E_p_squared_defined": 0.04257966893237142,
+          "poi_v2_mean_defined": 0.14823129524064738,
+          "poi_v2_share_gt_0_25_defined": 0.21171171171171171,
+          "prior_probability_mean_by_type": {
+            "ems": 0.12330146024358156,
+            "fire": 0.20838176968998484,
+            "schools": 0.46177502240449797
+          },
+          "tracts": 444,
+          "urbanity_fallback_tracts": 0,
+          "v0_composite_E_p_squared_defined": 0.0575484430054434,
+          "v0_composite_mean_defined": 0.19571755778433736,
+          "v0_poi_E_p_squared_defined": 0.12351625233132503,
+          "v0_poi_defined_tracts": 444,
+          "v0_poi_mean_defined": 0.29755763909156896,
+          "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.03418022746740307,
+          "v2_poi_with_v0_transport_building_composite_mean": 0.1347443089602613,
+          "v2_poi_with_v0_transport_building_composite_tracts": 444
+        },
+        "south-central-tx:rural": {
+          "establishments_half_mean_defined": 0.05079352290658698,
+          "expected_facility_gap_mean_by_type": {
+            "ems": 0.03387244229191973,
+            "fire": 0.041750314542597027,
+            "schools": 0.10400406019027776
+          },
+          "facility_half_mean_defined": 0.059875605674931505,
+          "observed_overture_zero_counts": {
+            "ems0": 559,
+            "fire0": 357,
+            "sch0": 164
+          },
+          "poi_defined_tracts": 991,
+          "poi_v2_E_p_squared_defined": 0.00930709694227199,
+          "poi_v2_mean_defined": 0.05533456429075924,
+          "poi_v2_share_gt_0_25_defined": 0.04339051463168517,
+          "prior_probability_mean_by_type": {
+            "ems": 0.04451530783276518,
+            "fire": 0.06661428930566282,
+            "schools": 0.28754363460892873
+          },
+          "tracts": 991,
+          "urbanity_fallback_tracts": 0,
+          "v0_composite_E_p_squared_defined": 0.010532578828278046,
+          "v0_composite_mean_defined": 0.039281320411622515,
+          "v0_poi_E_p_squared_defined": 0.03195422375969767,
+          "v0_poi_defined_tracts": 991,
+          "v0_poi_mean_defined": 0.08282635699989888,
+          "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.006361000378771069,
+          "v2_poi_with_v0_transport_building_composite_mean": 0.029340383493653935,
+          "v2_poi_with_v0_transport_building_composite_tracts": 991
+        },
+        "south-central-tx:urban": {
+          "establishments_half_mean_defined": 0.12237886069278317,
+          "expected_facility_gap_mean_by_type": {
+            "ems": 0.11084728555293014,
+            "fire": 0.17323033888485223,
+            "schools": 0.13636971167431958
+          },
+          "facility_half_mean_defined": 0.14014911203736732,
+          "observed_overture_zero_counts": {
+            "ems0": 4062,
+            "fire0": 3468,
+            "sch0": 491
+          },
+          "poi_defined_tracts": 5012,
+          "poi_v2_E_p_squared_defined": 0.0330985406965948,
+          "poi_v2_mean_defined": 0.13126858591687338,
+          "poi_v2_share_gt_0_25_defined": 0.17039106145251395,
+          "prior_probability_mean_by_type": {
+            "ems": 0.12435949184968868,
+            "fire": 0.21029294501853735,
+            "schools": 0.46398916795537815
+          },
+          "tracts": 5012,
+          "urbanity_fallback_tracts": 14,
+          "v0_composite_E_p_squared_defined": 0.06529716139613646,
+          "v0_composite_mean_defined": 0.19987865675722832,
+          "v0_poi_E_p_squared_defined": 0.11404720786817699,
+          "v0_poi_defined_tracts": 5010,
+          "v0_poi_mean_defined": 0.2902450495399696,
+          "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.03901980947070215,
+          "v2_poi_with_v0_transport_building_composite_mean": 0.1342607588644081,
+          "v2_poi_with_v0_transport_building_composite_tracts": 5012
+        }
+      },
+      "global": {
+        "establishments_half_mean_defined": 0.1173077412663411,
+        "expected_facility_gap_mean_by_type": {
+          "ems": 0.0964502017182263,
+          "fire": 0.14725904884446303,
+          "schools": 0.13325827391690628
+        },
+        "facility_half_mean_defined": 0.12565584149319853,
+        "observed_overture_zero_counts": {
+          "ems0": 7282,
+          "fire0": 5892,
+          "sch0": 1088
+        },
+        "poi_defined_tracts": 9379,
+        "poi_v2_E_p_squared_defined": 0.03068770758156277,
+        "poi_v2_mean_defined": 0.12148479000148199,
+        "poi_v2_share_gt_0_25_defined": 0.1584390659985073,
+        "prior_probability_mean_by_type": {
+          "ems": 0.1084490782937433,
+          "fire": 0.18164698630409676,
+          "schools": 0.42903986232323316
+        },
+        "tracts": 9379,
+        "urbanity_fallback_tracts": 26,
+        "v0_composite_E_p_squared_defined": 0.05268415779099713,
+        "v0_composite_mean_defined": 0.1689761598782756,
+        "v0_poi_E_p_squared_defined": 0.10276621117347147,
+        "v0_poi_defined_tracts": 9377,
+        "v0_poi_mean_defined": 0.2570446448017599,
+        "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.0311264572016571,
+        "v2_poi_with_v0_transport_building_composite_mean": 0.1130122868999763,
+        "v2_poi_with_v0_transport_building_composite_tracts": 9379
+      }
+    },
+    "recomputed_baseline_consistency": {
+      "eastern-ok": {
+        "existing_logistic_facility_half_mean": 0.10284611616479715,
+        "facility_type_zero_counts": {
+          "ems": 864,
+          "fire": 646,
+          "schools": 130
+        },
+        "facility_type_zero_shares": {
+          "ems": 0.7248322147651006,
+          "fire": 0.5419463087248322,
+          "schools": 0.10906040268456375
+        },
+        "official_rows": 1192,
+        "pinned_existing_task_audit": {
+          "establishments_half_mean_defined": 0.06632641538929548,
+          "expected_facility_gap_mean_by_type": {
+            "ems": 0.076227111196771,
+            "fire": 0.11248733349631306,
+            "schools": 0.11982390380130738
+          },
+          "facility_half_mean_defined": 0.10284611616479715,
+          "observed_overture_zero_counts": {
+            "ems0": 864,
+            "fire0": 646,
+            "sch0": 130
+          },
+          "poi_defined_tracts": 1192,
+          "poi_v2_E_p_squared_defined": 0.01622475178476029,
+          "poi_v2_mean_defined": 0.08458626577704631,
+          "poi_v2_share_gt_0_25_defined": 0.08137583892617449,
+          "prior_probability_mean_by_type": {
+            "ems": 0.08760643309912423,
+            "fire": 0.14401084728698635,
+            "schools": 0.3849202292665062
+          },
+          "tracts": 1192,
+          "urbanity_fallback_tracts": 1,
+          "v0_composite_E_p_squared_defined": 0.028795695475608722,
+          "v0_composite_mean_defined": 0.11734124649737128,
+          "v0_poi_E_p_squared_defined": 0.0733073041599645,
+          "v0_poi_defined_tracts": 1192,
+          "v0_poi_mean_defined": 0.19934620484484325,
+          "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.013847543356564858,
+          "v2_poi_with_v0_transport_building_composite_mean": 0.06742851828363232,
+          "v2_poi_with_v0_transport_building_composite_tracts": 1192
+        }
+      },
+      "maricopa-az": {
+        "existing_logistic_facility_half_mean": 0.1428225568305931,
+        "facility_type_zero_counts": {
+          "ems": 1346,
+          "fire": 1105,
+          "schools": 254
+        },
+        "facility_type_zero_shares": {
+          "ems": 0.8449466415568111,
+          "fire": 0.6936597614563716,
+          "schools": 0.15944758317639673
+        },
+        "official_rows": 1593,
+        "pinned_existing_task_audit": {
+          "establishments_half_mean_defined": 0.17293110454910288,
+          "expected_facility_gap_mean_by_type": {
+            "ems": 0.10675472103133024,
+            "fire": 0.16334001444430019,
+            "schools": 0.1583729350161489
+          },
+          "facility_half_mean_defined": 0.1428225568305931,
+          "observed_overture_zero_counts": {
+            "ems0": 1346,
+            "fire0": 1105,
+            "sch0": 254
+          },
+          "poi_defined_tracts": 1593,
+          "poi_v2_E_p_squared_defined": 0.045771081995518416,
+          "poi_v2_mean_defined": 0.15787683068984798,
+          "poi_v2_share_gt_0_25_defined": 0.24356559949780288,
+          "prior_probability_mean_by_type": {
+            "ems": 0.11564573557718723,
+            "fire": 0.19462774445982897,
+            "schools": 0.4444911983727035
+          },
+          "tracts": 1593,
+          "urbanity_fallback_tracts": 11,
+          "v0_composite_E_p_squared_defined": 0.060048781025501104,
+          "v0_composite_mean_defined": 0.19668435231946868,
+          "v0_poi_E_p_squared_defined": 0.13579538774213246,
+          "v0_poi_defined_tracts": 1593,
+          "v0_poi_mean_defined": 0.31285133939705145,
+          "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.03609598891162353,
+          "v2_poi_with_v0_transport_building_composite_mean": 0.13357255882591032,
+          "v2_poi_with_v0_transport_building_composite_tracts": 1593
+        }
+      },
+      "northern-ca": {
+        "existing_logistic_facility_half_mean": 0.1127803030625953,
+        "facility_type_zero_counts": {
+          "ems": 451,
+          "fire": 316,
+          "schools": 49
+        },
+        "facility_type_zero_shares": {
+          "ems": 0.7631133671742809,
+          "fire": 0.5346869712351946,
+          "schools": 0.0829103214890017
+        },
+        "official_rows": 591,
+        "pinned_existing_task_audit": {
+          "establishments_half_mean_defined": 0.13874768171310967,
+          "expected_facility_gap_mean_by_type": {
+            "ems": 0.09229994799188823,
+            "fire": 0.13071413599365525,
+            "schools": 0.1153268252022425
+          },
+          "facility_half_mean_defined": 0.11278030306259533,
+          "observed_overture_zero_counts": {
+            "ems0": 451,
+            "fire0": 316,
+            "sch0": 49
+          },
+          "poi_defined_tracts": 591,
+          "poi_v2_E_p_squared_defined": 0.034608380067779096,
+          "poi_v2_mean_defined": 0.1257639923878525,
+          "poi_v2_share_gt_0_25_defined": 0.17597292724196278,
+          "prior_probability_mean_by_type": {
+            "ems": 0.10336537576225542,
+            "fire": 0.17252310748004626,
+            "schools": 0.4172521569313171
+          },
+          "tracts": 591,
+          "urbanity_fallback_tracts": 0,
+          "v0_composite_E_p_squared_defined": 0.04472991574442255,
+          "v0_composite_mean_defined": 0.15383899870291118,
+          "v0_poi_E_p_squared_defined": 0.0962627001291376,
+          "v0_poi_defined_tracts": 591,
+          "v0_poi_mean_defined": 0.2336821598805405,
+          "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.0271689063190847,
+          "v2_poi_with_v0_transport_building_composite_mean": 0.10963640500928665,
+          "v2_poi_with_v0_transport_building_composite_tracts": 591
+        }
+      },
+      "south-central-tx": {
+        "existing_logistic_facility_half_mean": 0.12689723051060173,
+        "facility_type_zero_counts": {
+          "ems": 4621,
+          "fire": 3825,
+          "schools": 655
+        },
+        "facility_type_zero_shares": {
+          "ems": 0.7697817757787773,
+          "fire": 0.6371814092953523,
+          "schools": 0.10911211061136099
+        },
+        "official_rows": 6003,
+        "pinned_existing_task_audit": {
+          "establishments_half_mean_defined": 0.11055731932532434,
+          "expected_facility_gap_mean_by_type": {
+            "ems": 0.09813996093662807,
+            "fire": 0.1515250741633505,
+            "schools": 0.13102665643182662
+          },
+          "facility_half_mean_defined": 0.1268972305106017,
+          "observed_overture_zero_counts": {
+            "ems0": 4621,
+            "fire0": 3825,
+            "sch0": 655
+          },
+          "poi_defined_tracts": 6003,
+          "poi_v2_E_p_squared_defined": 0.029170951031338443,
+          "poi_v2_mean_defined": 0.11873308442903742,
+          "poi_v2_share_gt_0_25_defined": 0.14942528735632185,
+          "prior_probability_mean_by_type": {
+            "ems": 0.1111784846265051,
+            "fire": 0.1865738799158456,
+            "schools": 0.4348608115425293
+          },
+          "tracts": 6003,
+          "urbanity_fallback_tracts": 14,
+          "v0_composite_E_p_squared_defined": 0.05625639822359812,
+          "v0_composite_mean_defined": 0.17336658607282127,
+          "v0_poi_E_p_squared_defined": 0.10049044278710664,
+          "v0_poi_defined_tracts": 6001,
+          "v0_poi_mean_defined": 0.2559921043129724,
+          "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.03362835856113965,
+          "v2_poi_with_v0_transport_building_composite_mean": 0.11694007054316582,
+          "v2_poi_with_v0_transport_building_composite_tracts": 6003
+        }
+      }
+    },
+    "selected_columns_only": {
+      "acs_geometry": [
+        "GEOID",
+        "geometry"
+      ],
+      "official_sample": [
+        "GEOID"
+      ],
+      "overture_cache": [
+        "GEOID",
+        "overture_poi_fire",
+        "overture_poi_ems",
+        "overture_poi_schools",
+        "overture_poi_unclassified",
+        "overture_unclassified_fire_share",
+        "overture_unclassified_ems_share",
+        "overture_unclassified_schools_share"
+      ],
+      "overture_poi": [
+        "bbox",
+        "categories"
+      ],
+      "strata": [
+        "GEOID",
+        "ALAND",
+        "pop_total",
+        "pop_urban",
+        "pct_urban",
+        "ur_class"
+      ]
+    }
+  },
+  "method": {
+    "acceptance": {
+      "1_5_10_km_radius_sensitivity": true,
+      "deterministic_hash": true,
+      "exact_official_id_coverage_and_order": true,
+      "maximum_adjustment_at_most_0_05": true,
+      "no_accuracy_claim": true,
+      "population_weighted_access_summaries": true,
+      "zero_nan_or_nonfinite_candidate_values": true,
+      "zero_population_and_edge_cases_reported": true
+    },
+    "baseline_and_spatial_expected_gap": {
+      "baseline": "Existing fixed region-pooled logistic P(reference type present | pop_total, ALAND, urban_fraction) from scripts/estimate_gaps.py, times its one-count-ahead conditional gap 1/(model_count+1); no coefficient refit",
+      "candidate_delta": "catchment facility candidate minus existing logistic facility-half baseline; nonnegative and at most 0.05 by construction",
+      "facility_candidate": "unweighted mean of the three expected type gaps; all three pooled-prior types remain defined under the existing positive logistic prior",
+      "maximum_absolute_adjustment": 0.05,
+      "model_count": "raw exact selected-category count + provided unclassified-category count multiplied by its already-provided region share, matching the existing logistic audit",
+      "primary_radius_meters": 5000,
+      "sensitivity_radii_meters": [
+        1000,
+        10000
+      ],
+      "spatial_adjustment": "For each type and radius, multiply the existing reference-presence probability by (1 + 0.05 * (1 - kernel_access)), cap probability at 1, then apply the same conditional-gap transform. This is a fixed \u22645% relative presence-prior uplift, not a fitted coefficient or observed reference count.",
+      "spatial_relative_uplift": 0.05,
+      "urban_fraction": "existing model rule: pct_urban; otherwise pop_urban/pop_total if population>0; otherwise neutral 0.5"
+    },
+    "candidate_id": "FACILITY_CATCHMENT_V1",
+    "catchments": {
+      "facility_pool": "All selected-type Overture bbox centers assigned to any provided ACS tract geometry in the same region package; official-scored tracts are target locations, while any extra provided tract geometries may contribute Overture context points only. Unassigned points are excluded and counted. No facilities cross region-package boundaries.",
+      "kernel_access": "exp(-nearest_distance_m / radius_m); zero when the region has no selected points of that type",
+      "nearest_distance": "Euclidean centroid-to-nearest-selected-Overture-point distance in EPSG:5070",
+      "population_weighting": "provided tract pop_total weights the centroid-based radius-coverage share and kernel-access mean; zero-population rows carry zero weight",
+      "radii_meters": [
+        1000,
+        5000,
+        10000
+      ],
+      "radius_coverage": "tract covered if at least one same-region selected-type Overture point is within radius, inclusive",
+      "target_location": "centroid of official scored tract polygon transformed to EPSG:5070"
+    },
+    "inputs": {
+      "existing_overture_summary": {
+        "columns_read": [
+          "GEOID",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "meaning": "Validate raw point-to-tract selected-category counts and reproduce the frozen existing logistic baseline's unclassified-count treatment"
+      },
+      "official_sample": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "meaning": "Authoritative 9,379 scored IDs and order only; sample score placeholders are never parsed or used"
+      },
+      "overture_points": {
+        "category_rule": "categories.primary or any categories.alternate matches the exact selected_sets in config/poi-category-definitions.json; each POI contributes at most once per facility type",
+        "columns_read": [
+          "bbox",
+          "categories"
+        ],
+        "dataset": "provided challenge reference/<region>/<region>-overture-pois.parquet",
+        "facility_types": [
+          "fire",
+          "ems",
+          "schools"
+        ],
+        "point_location": "center of provided Overture bbox",
+        "provenance": "challenge-provided Overture POI point records only; no external facility list, USGS coordinates, Overture names, source metadata, confidence, or geometry column"
+      },
+      "strata": {
+        "columns_read": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban",
+          "ur_class"
+        ],
+        "meaning": "Provided population, land area and urbanity inputs; ur_class is descriptive grouping only"
+      },
+      "tract_geometry": {
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "distance_crs": "EPSG:5070",
+        "input_crs": "EPSG:4326",
+        "meaning": "Provided polygons only, for assigning Overture bbox centers and computing official tract representative centroids; no housing_units or other ACS columns are read",
+        "source": "provided challenge reference/<region>/<region>-census-acs-housing.parquet"
+      }
+    },
+    "limitations": [
+      "Centroid-based Euclidean catchment is a spatial context proxy, not a road-network/service-area model or a validation of facility completeness.",
+      "Population is available only at tract scale; population-weighted access assigns the tract total to its centroid and does not model within-tract population distribution.",
+      "A nearby Overture facility is not proof that an unobserved facility is absent or that an emergency service is accessible.",
+      "The existing fixed pooled logistic prior is an explicit model assumption; the fixed catchment uplift is a sensitivity, not empirically calibrated or accuracy tested."
+    ],
+    "measure_before": {
+      "meaning": "Freeze the existing pooled logistic facility-miss prior and category/zero-share report as baseline; do not refit its coefficients or use target/leaderboard moments.",
+      "source_category_config": "config/poi-category-definitions.json",
+      "source_category_config_sha256": "8309a0bb08613b92621f4977eb78998e469951c0cd0ed012d93ea2f5cf59654f",
+      "source_report": "reports/poi-facility-miss-audit.json",
+      "source_report_sha256": "b559c8d3d85709d0e5f2d2102bb39da4d8255a3c62f728cf736da522025a289c"
+    },
+    "purpose": "analysis-only alternative facility-miss prior using challenge-provided Overture facility points and same-region spatial catchments; no target fitting, RMSE claim, or upload",
+    "registered_utc": "2026-10-25",
+    "reporting_plan": {
+      "accuracy_claim": false,
+      "after": "Report facility-type nearest-distance quantiles, tract- and population-weighted radius coverage/kernel access, candidate/delta summaries by region and urbanity for all three radii, local zero counts, zero-population and missing-urbanity cases, nonofficial neighboring geometry/point usage and unmatched edge records.",
+      "before": "Report facility-type zero counts/shares and existing logistic expected facility-gap/candidate moments globally, per region and per region x rural/urban, sourced from the pinned audit report.",
+      "determinism": "Repeat full build; require byte-identical candidate CSV, report, and manifest hashes.",
+      "target_rmse": false
+    },
+    "restrictions": {
+      "external_poi_or_facility_data": false,
+      "leaderboard_information_or_probes": false,
+      "removed_reference_layers_or_equivalent_copies": false,
+      "target_reconstruction_or_score_placeholders": false,
+      "upload": false,
+      "usgs_facility_lists_or_coordinates": false
+    },
+    "scope": {
+      "candidate_rows": 9379,
+      "id_order": "concatenation in declared region order, preserving authoritative sample GEOID order within each region",
+      "official_scored_ids": 9379,
+      "regions": [
+        "maricopa-az",
+        "northern-ca",
+        "eastern-ok",
+        "south-central-tx"
+      ]
+    },
+    "status": "preregistered_before_nearest_facility_and_catchment_measurement"
+  },
+  "preregistration": {
+    "path": "config/facility-catchment-preregistered.json",
+    "registered_before_spatial_measurement": true,
+    "sha256": "18cf5fc3468997728b3d4786c5892b636d17b7cd191eb02b2a047aa300bbc656"
+  },
+  "restrictions": {
+    "USGS_facility_lists_or_coordinates_used": false,
+    "accuracy_claim": false,
+    "external_POI_or_facility_data_used": false,
+    "labels_or_target_reconstruction_used": false,
+    "leaderboard_information_or_probes_used": false,
+    "removed_references_or_equivalents_read": false,
+    "sample_score_placeholders_read_or_used": false,
+    "upload_or_submission_made": false
+  },
+  "script_sha256_at_run": "0683ffa78db3836789047a98f3b382e8886ca4694b1c934d98faffe4aa724bca"
+}
