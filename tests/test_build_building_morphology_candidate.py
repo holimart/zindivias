@@ -11,6 +11,7 @@ from build_building_morphology_candidate import (
     CONFIG,
     morphology_gap,
     morphology_support,
+    missingness_summary,
     subtype_present,
 )
 import pyarrow as pa
@@ -42,6 +43,12 @@ class BuildingMorphologyCandidateTests(unittest.TestCase):
     def test_subtype_missingness_uses_nonempty_trimmed_values(self):
         result = subtype_present(pa.array(["residential", "", None, "  office  "]))
         self.assertEqual(result.tolist(), [True, False, False, True])
+
+    def test_attribute_missingness_is_building_weighted_and_bounded(self):
+        result = missingness_summary(np.array([3, 2]), np.array([1, 2]))
+        self.assertEqual(result["missing_rows"], 2)
+        self.assertAlmostEqual(result["missing_share"], 0.4)
+        self.assertEqual(missingness_summary(np.array([0]), np.array([0]))["missing_share"], 0.0)
 
     def test_invalid_numeric_context_is_rejected(self):
         with self.assertRaises(ValueError):

@@ -335,6 +335,15 @@ def component_summary(values: np.ndarray, baseline: np.ndarray, defined: np.ndar
     }
 
 
+def missingness_summary(total_by_tract: np.ndarray, present_by_tract: np.ndarray) -> dict[str, int | float]:
+    total = int(np.sum(total_by_tract))
+    present = int(np.sum(present_by_tract))
+    if present < 0 or present > total:
+        raise ValueError("attribute presence count is inconsistent with assigned building count")
+    missing = total - present
+    return {"missing_rows": missing, "missing_share": missing / total if total else 0.0}
+
+
 def run(workspace: Path, candidate_csv: Path, out_json: Path) -> dict[str, Any]:
     fs = pafs.S3FileSystem(anonymous=True, region="us-west-2")
     transformer = Transformer.from_crs("EPSG:4326", "EPSG:5070", always_xy=True)
@@ -410,26 +419,30 @@ def run(workspace: Path, candidate_csv: Path, out_json: Path) -> dict[str, Any]:
             values = np.asarray([row[f"building_gap_morph_beta_{beta:.2f}"] for row in region_rows], dtype=np.float64)
             sensitivity[f"{beta:.2f}"] = component_summary(values, base_values, region_defined)
         n = len(ids)
-        subtype_missing = n - raw["subtype_n"]
-        parts_missing = n - raw["parts_nonnull_n"]
-        floors_missing = n - raw["floors_present_n"]
-        height_missing = n - raw["height_present_n"]
+        subtype_missing = missingness_summary(count, raw["subtype_n"])
+        parts_missing = missingness_summary(count, raw["parts_nonnull_n"])
+        floors_missing = missingness_summary(count, raw["floors_present_n"])
+        height_missing = missingness_summary(count, raw["height_present_n"])
+        total_assigned_buildings = int(count.sum())
+        geometry_invalid_share = (float(raw["invalid_geometry_n"].sum() / total_assigned_buildings)
+                                  if total_assigned_buildings else 0.0)
         region_reports[region] = {
             "official_tracts": n,
             "raw_building_scan": raw["summary"],
             "building_count_matches_existing_feature_cache": True,
             "attribute_missingness": {
-                "subtype_null_or_empty_rows": int(subtype_missing.sum()),
-                "subtype_null_or_empty_share": float(subtype_missing.sum() / max(1, count.sum())),
-                "has_parts_null_rows": int(parts_missing.sum()),
-                "has_parts_null_share": float(parts_missing.sum() / max(1, count.sum())),
+                "assigned_building_rows": total_assigned_buildings,
+                "subtype_null_or_empty_rows": subtype_missing["missing_rows"],
+                "subtype_null_or_empty_share": subtype_missing["missing_share"],
+                "has_parts_null_rows": parts_missing["missing_rows"],
+                "has_parts_null_share": parts_missing["missing_share"],
                 "has_parts_true_rows": int(raw["parts_true_n"].sum()),
-                "num_floors_null_rows": int(floors_missing.sum()),
-                "num_floors_null_share": float(floors_missing.sum() / max(1, count.sum())),
-                "height_null_rows": int(height_missing.sum()),
-                "height_null_share": float(height_missing.sum() / max(1, count.sum())),
+                "num_floors_null_rows": floors_missing["missing_rows"],
+                "num_floors_null_share": floors_missing["missing_share"],
+                "height_null_rows": height_missing["missing_rows"],
+                "height_null_share": height_missing["missing_share"],
                 "geometry_missing_or_invalid_assigned_rows": int(raw["invalid_geometry_n"].sum()),
-                "geometry_missing_or_invalid_share": float(raw["invalid_geometry_n"].sum() / max(1, count.sum())),
+                "geometry_missing_or_invalid_share": geometry_invalid_share,
             },
             "morphology_support_terms_defined_tracts_only": {
                 name: finite_summary(np.asarray(values)[region_defined])
