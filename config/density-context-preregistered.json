@@ -1,0 +1,90 @@
+{
+  "candidate_id": "DENSITY_C2_V1",
+  "registered_utc": "2026-10-25",
+  "status": "preregistered_before_density_feature_measurement",
+  "purpose": "analysis-only fixed density-context sensitivity using provided challenge Overture counts, ACS tract geometry, and strata; no target fitting, target-RMSE claim, or upload",
+  "prior_candidate": {
+    "candidate_id": "C2",
+    "path": "reports/candidates/C2_component_estimator_v0.csv",
+    "sha256": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514",
+    "score_column": "coverage_gap_score",
+    "usage": "Frozen feature-derived baseline on official IDs. Do not fit or calibrate this adjustment to the baseline values. For 415 template-only eastern-WA rows, use approved formatting fill 0.0, not C2's historical pooled-mean fill."
+  },
+  "scope": {
+    "regions": ["maricopa-az", "northern-ca", "eastern-ok", "south-central-tx"],
+    "official_id_count": 9379,
+    "template_id_count": 9794,
+    "template_only_region": "eastern-wa",
+    "template_only_count": 415
+  },
+  "inputs": {
+    "overture": {
+      "workspace_feature_cache_columns": ["GEOID", "overture_buildings"],
+      "meaning": "Provided Overture building record counts assigned to official tract polygons"
+    },
+    "acs_strata": {
+      "columns": ["GEOID", "ALAND", "pop_total", "ur_class"],
+      "meaning": "Provided tract land area and population for density; urban/rural class is used only for descriptive grouping"
+    },
+    "acs_geometry": {
+      "source": "provided challenge package reference/<region>/<region>-census-acs-housing.parquet",
+      "columns_read": ["GEOID", "geometry"],
+      "meaning": "Provided tract boundary geometry only; housing_units and all other columns are not read",
+      "crs": "EPSG:4326 input, transformed to EPSG:5070 before centroid distances"
+    },
+    "template_ids": {
+      "path": "data/reproduction/template-geoid-region.csv",
+      "columns_read": ["GEOID", "region"],
+      "meaning": "Score-free, previously committed projection of the platform template; no template score placeholders are read"
+    }
+  },
+  "density_features": {
+    "tract_population_density": "pop_total / (ALAND / 1,000,000) persons per square kilometer, defined only for positive finite ALAND",
+    "tract_overture_building_density": "overture_buildings / (ALAND / 1,000,000) records per square kilometer, defined only for positive finite ALAND",
+    "population_support": "clip(log1p(population_density) / log1p(5000), 0, 1)",
+    "building_support": "clip(log1p(overture_building_density) / log1p(1000), 0, 1)",
+    "fixed_scales_are_qualitative": true,
+    "no_empirical_quantiles_or_score-derived_thresholds": true
+  },
+  "neighborhood": {
+    "distance_unit": "meters in projected EPSG:5070",
+    "location": "centroid of provided official tract geometry",
+    "radii_meters": [5000, 20000],
+    "aggregation": "arithmetic mean of the available neighboring tract population-support values and Overture-building-support values, separately at each radius",
+    "self_exclusion": "exclude the focal tract GEOID from every neighborhood before aggregation (leave-one-tract-out); no own-tract density enters its context feature",
+    "region_boundary_safety": "build and query a separate spatial index per official challenge region; only the 9,379 official tract GEOIDs in that same region may be neighbors; never cross region boundaries or add the seven extra Texas ACS polygons",
+    "empty_context": "each unavailable radius/metric summary is explicitly missing and filled with neutral 0.5 in the candidate table; final context support averages only available summaries; if all four summaries are missing, use context support 1.0 and zero adjustment (no evidence, no change)"
+  },
+  "candidate_adjustment": {
+    "context_support": "mean of the available four neighborhood support summaries (population and Overture building density at 5 km and 20 km); if none available, 1.0",
+    "proposal": "0.05 * (1 - context_support)",
+    "candidate_score": "clip(frozen C2 coverage_gap_score + proposal, 0, 1)",
+    "adjustment_direction": "nonnegative feature-only conservative sensitivity; sparse contextual density increases the estimate by at most 0.05",
+    "maximum_absolute_candidate_delta": 0.05,
+    "eastern_wa_template_fill": 0.0,
+    "row_changed_tolerance": 1e-12
+  },
+  "measurement_plan": {
+    "before": "Freeze C2 full-artifact hash; report official-scope global, four-region, and urbanity-class score moments and coverage of existing provided density inputs before adjustment.",
+    "after": "Report 5 km/20 km neighbor counts and support summaries, missingness, four-region and urbanity delta distributions, candidate bounds/IDs/hashes, and leave-one-tract-out self-invariance checks.",
+    "labels_or_score_feedback": false,
+    "external_or_removed_reference_layers": false,
+    "leaderboard_probes_or_score_tuned_thresholds": false,
+    "upload": false
+  },
+  "limitations": [
+    "Population density and Overture building density are context covariates, not observed map completeness or target proxies.",
+    "The fixed support scales and positive adjustment direction are qualitative assumptions; without labels or an authorized scored evaluation their accuracy is unknown.",
+    "Centroid-radius neighborhoods are a deterministic spatial context, not an adjacency or service-area model.",
+    "The eastern-WA rows are template-only, have no features, and receive zero formatting values without any target claim."
+  ],
+  "acceptance": {
+    "exact_official_and_template_ids": true,
+    "region_boundary_safe": true,
+    "no_self_leakage": true,
+    "finite_bounded_all_outputs": true,
+    "deterministic_rerun": true,
+    "maximum_absolute_adjustment_at_most_0_05": true,
+    "no_accuracy_claim": true
+  }
+}
