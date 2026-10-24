@@ -78,4 +78,12 @@ P4/P5 forecasts assume public composition represents all official rows. P5's unc
 
 ## Phase-2 actual vs predicted
 
-To be completed only from successful orchestrator `--status` results. The score-algebra script updates `reports/lb-score-algebra.json` with actual-vs-predicted values after each result; preserve the pre-registration parameters and candidate hashes above.
+| Candidate | Predicted public RMSE | Actual public RMSE | Difference / status |
+|---|---:|---:|---|
+| P4 | 0.091438725 | 0.091440198 | +0.000001473; successful, ID `ySXi73rd` |
+| P5 | 0.088921961 | — | Upload rejected HTTP 400 by platform's stricter 5-submissions/day limit; no submission ID or score |
+| P6 | 0.091139889* | — | Not uploaded; held until platform rate limit resets |
+
+P4's actual closely matches the representative-public algebra forecast. The platform returned `You can only submit 5 times a day, please try again in about 14 hours` for P5, despite the official page's 10/day limit. No more uploads are attempted in this window; P6 and a retry of P5 are deferred until the platform permits them. The failure and response are recorded in `reports/submissions.jsonl` and `reports/lb-score-algebra.json`; P5 did not receive a Zindi submission ID or score. This is not a score for P5. The phase-2 budget remains capped at four probes, with P4 as the only scored phase-2 result so far.
+
+* P6 forecast assumes `E[y]≈c`; it is not an empirically identified prediction.

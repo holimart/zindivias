@@ -266,12 +266,16 @@ def main() -> int:
 
     # Actual phase-2 scores appear only after status refresh rows have been committed.
     all_status_records = {}
+    latest_uploads = {}
     for line in ledger_path.read_text(encoding="utf-8").splitlines():
         if not line.strip():
             continue
         record = json.loads(line)
+        cid = record.get("candidate_id")
         if record.get("event") == "score_refresh" and record.get("status") == "successful":
-            all_status_records[record["candidate_id"]] = record
+            all_status_records[cid] = record
+        if cid in PHASE2 and record.get("live_upload") is True:
+            latest_uploads[cid] = record
 
     new_entries = {}
     for cid in PHASE2:
@@ -323,12 +327,16 @@ def main() -> int:
     probes_result = {}
     for cid in PHASE2:
         actual = all_status_records.get(cid)
+        attempt = latest_uploads.get(cid)
         probes_result[cid] = {**probe_params[cid],
                               "artifact": ARTIFACTS[cid],
                               "sha256": new_entries[cid]["sha256"],
                               "actual_public_rmse": (float(actual["our_score"]) if actual else None),
-                              "submission_id": (actual.get("platform_submission_id") if actual else None),
-                              "status": (actual.get("status") if actual else "not_submitted")}
+                              "submission_id": (actual.get("platform_submission_id") if actual else
+                                                attempt.get("platform_submission_id") if attempt else None),
+                              "status": (actual.get("status") if actual else
+                                         attempt.get("status") if attempt else "not_submitted"),
+                              "upload_response": (attempt.get("response") if attempt else None)}
     report = {
         "method": "phase-1 public RMSE score algebra and pre-registered phase-2 global transforms",
         "no_labels_or_removed_references_used": True,
