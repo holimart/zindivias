@@ -1,0 +1,4879 @@
+{
+  "schema_version": 1,
+  "audit_id": "maricopa-route-ratio-diagnostic",
+  "backlog_item": "bias-maricopa-route-ratio-diagnostic",
+  "intent": "validation screen (no candidate change, no upload)",
+  "preregistration": {
+    "band": [
+      0.6,
+      1.7
+    ],
+    "band_is_frozen": true,
+    "band_relaxed": false,
+    "absolute_tolerance": 1e-09,
+    "regions": [
+      "maricopa-az",
+      "northern-ca",
+      "eastern-ok",
+      "south-central-tx"
+    ],
+    "measure_before": {
+      "source": "reports/transport-route-ref-audit.json",
+      "sha256": "bf904336963f553cc7442c5996a4d8d504fe30aad5c4f1a2e44da8fa773b1927",
+      "ratios": {
+        "maricopa-az": 1.928540323621719,
+        "northern-ca": 1.503515379614183,
+        "eastern-ok": 1.160856228033402,
+        "south-central-tx": 1.1830168216117956
+      },
+      "maricopa_L_named_km": 22113.71284793831,
+      "maricopa_L_route_km": 11466.55456309551,
+      "limitation": "it reports the ratio and the excluded network systems but does not resolve whether an implementation or interpretation mismatch remains"
+    }
+  },
+  "method": {
+    "L_named": "sum of EPSG:5070 clipped lengths of provided Overture road segments whose class is in motorway,primary,secondary,trunk, counted for every such segment",
+    "L_route": "sum of EPSG:5070 clipped lengths of provided Overture road segments with at least one routes[].network value in a kept family, counted once per segment (deduplicated by segment row; per-family lengths may overlap)",
+    "aggregate_ratio": "sum(L_named) / sum(L_route) over the official scored tracts of the region",
+    "kept_families": {
+      "interstate": "US:I*",
+      "us": "US:US*",
+      "state": "US:<state> and SR/LOOP/SPUR/BELTWAY/FUTURE/ALT*/BYPASS*",
+      "county": "US:<state>:CR*",
+      "fm_rm": "US:<state>:FM/RM*"
+    },
+    "dropped": [
+      "missing_network",
+      "non_us_or_malformed",
+      "excluded_historic_business_or_scenic (HISTORIC/BUSINESS/BUS/NHT/NFSR/NFRS/SCENIC/THC/NSB tokens)",
+      "excluded_non_route_highway_system (US:NHS, US:NFRS)",
+      "unsupported_us_network (unknown state token, county-name namespaces, numbered-only state namespaces, non-highway systems)"
+    ],
+    "deduplication": "one segment row contributes to L_route once regardless of how many kept families or route entries it carries; family columns overlap by construction and are only used for attribution, never summed into L_route",
+    "clip": "shapely intersection of the WGS84 segment with the official tract polygon, then lengths in EPSG:5070",
+    "disjoint_classes": "A = named and route, B = named without route, C = route without named; ratio = (A+B)/(A+C); ratio > 1 exactly when B > C",
+    "independent_implementation": "own classifier, own clip/accumulate loop, own aggregation; the frozen module is imported only to compare the rule constant sets"
+  },
+  "rule_constants": {
+    "comparison_purpose": "the measurement path never imports the frozen module; these sets are loaded only to report whether the two implementations encode the same rule",
+    "sets": [
+      {
+        "label": "named_road_classes",
+        "independent": [
+          "MOTORWAY",
+          "PRIMARY",
+          "SECONDARY",
+          "TRUNK"
+        ],
+        "frozen": [
+          "MOTORWAY",
+          "PRIMARY",
+          "SECONDARY",
+          "TRUNK"
+        ],
+        "identical": true,
+        "only_independent": [],
+        "only_frozen": []
+      },
+      {
+        "label": "state_codes",
+        "independent": [
+          "AK",
+          "AL",
+          "AR",
+          "AZ",
+          "CA",
+          "CO",
+          "CT",
+          "DC",
+          "DE",
+          "FL",
+          "GA",
+          "HI",
+          "IA",
+          "ID",
+          "IL",
+          "IN",
+          "KS",
+          "KY",
+          "LA",
+          "MA",
+          "MD",
+          "ME",
+          "MI",
+          "MN",
+          "MO",
+          "MS",
+          "MT",
+          "NC",
+          "ND",
+          "NE",
+          "NH",
+          "NJ",
+          "NM",
+          "NV",
+          "NY",
+          "OH",
+          "OK",
+          "OR",
+          "PA",
+          "PR",
+          "RI",
+          "SC",
+          "SD",
+          "TN",
+          "TX",
+          "UT",
+          "VA",
+          "VT",
+          "WA",
+          "WI",
+          "WV",
+          "WY"
+        ],
+        "frozen": [
+          "AK",
+          "AL",
+          "AR",
+          "AZ",
+          "CA",
+          "CO",
+          "CT",
+          "DC",
+          "DE",
+          "FL",
+          "GA",
+          "HI",
+          "IA",
+          "ID",
+          "IL",
+          "IN",
+          "KS",
+          "KY",
+          "LA",
+          "MA",
+          "MD",
+          "ME",
+          "MI",
+          "MN",
+          "MO",
+          "MS",
+          "MT",
+          "NC",
+          "ND",
+          "NE",
+          "NH",
+          "NJ",
+          "NM",
+          "NV",
+          "NY",
+          "OH",
+          "OK",
+          "OR",
+          "PA",
+          "PR",
+          "RI",
+          "SC",
+          "SD",
+          "TN",
+          "TX",
+          "UT",
+          "VA",
+          "VT",
+          "WA",
+          "WI",
+          "WV",
+          "WY"
+        ],
+        "identical": true,
+        "only_independent": [],
+        "only_frozen": []
+      },
+      {
+        "label": "excluded_system_tokens",
+        "independent": [
+          "BUS",
+          "BUSINESS",
+          "HISTORIC",
+          "NFRS",
+          "NFSR",
+          "NHT",
+          "NSB",
+          "SCENIC",
+          "THC"
+        ],
+        "frozen": [
+          "BUS",
+          "BUSINESS",
+          "HISTORIC",
+          "NFRS",
+          "NFSR",
+          "NHT",
+          "NSB",
+          "SCENIC",
+          "THC"
+        ],
+        "identical": true,
+        "only_independent": [],
+        "only_frozen": []
+      },
+      {
+        "label": "state_route_variants",
+        "independent": [
+          "ALT",
+          "ALTERNATE",
+          "BELTWAY",
+          "BYP",
+          "BYPASS",
+          "FUTURE",
+          "LOOP",
+          "SPUR"
+        ],
+        "frozen": [
+          "ALT",
+          "ALTERNATE",
+          "BELTWAY",
+          "BYP",
+          "BYPASS",
+          "FUTURE",
+          "LOOP",
+          "SPUR"
+        ],
+        "identical": true,
+        "only_independent": [],
+        "only_frozen": []
+      },
+      {
+        "label": "families",
+        "independent": [
+          "COUNTY",
+          "FM_RM",
+          "INTERSTATE",
+          "STATE",
+          "US"
+        ],
+        "frozen": [
+          "COUNTY",
+          "FM_RM",
+          "INTERSTATE",
+          "STATE",
+          "US"
+        ],
+        "identical": true,
+        "only_independent": [],
+        "only_frozen": []
+      }
+    ],
+    "note_non_route_systems": "the frozen classifier drops US:NHS and US:NFRS explicitly and routes US:NFSR through the excluded-system token list; the independent classifier lists NHS and NFRS as non-route systems and NFSR/NFRS as excluded system tokens, and both reject the same observed strings (verified string-by-string in network_string_agreement)"
+  },
+  "regions": {
+    "maricopa-az": {
+      "region": "maricopa-az",
+      "official_tracts": 1593,
+      "cache_row_order_matches_official_sample": true,
+      "sample": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/maricopa-az-sample-submission.csv",
+        "sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+        "rows": 1593,
+        "columns_in_file": [
+          "GEOID",
+          "transport_gap",
+          "building_gap",
+          "poi_gap",
+          "coverage_gap_score"
+        ],
+        "columns_read": [
+          "GEOID"
+        ],
+        "score_placeholder_columns_read": false
+      },
+      "feature_cache": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/maricopa-az-overture-tract-summary.parquet",
+        "sha256": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22",
+        "columns_used": [
+          "overture_named_road_km_5070",
+          "overture_route_core_km",
+          "overture_route_county_km",
+          "overture_route_fm_rm_km",
+          "overture_route_interstate_km",
+          "overture_route_km",
+          "overture_route_plus_fm_rm_km",
+          "overture_route_state_km",
+          "overture_route_us_km"
+        ]
+      },
+      "scan": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-roads.parquet",
+        "object_bytes": 80052206,
+        "rows": 494492,
+        "row_groups": 17,
+        "columns_read": [
+          "id",
+          "class",
+          "routes",
+          "geometry"
+        ],
+        "named_class_rows": 57516,
+        "route_eligible_segment_rows": 10152,
+        "duplicate_segment_ids": 0,
+        "duplicate_detection": "hash-based set of segment id values within this scan run",
+        "unique_segment_ids": 494492,
+        "dropped_network_entry_counts_by_reason": {
+          "excluded_historic_business_or_scenic": 4756,
+          "excluded_non_route_highway_system": 1424,
+          "missing_network": 2013,
+          "non_us_or_malformed": 5,
+          "unsupported_us_network": 906
+        },
+        "clip_crs": "EPSG:5070",
+        "acs": {
+          "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-census-acs-housing.parquet",
+          "object_bytes": 3457173,
+          "source_rows": 1593,
+          "official_geometries_used": 1593,
+          "extra_geometries_excluded": 0,
+          "columns_read": [
+            "GEOID",
+            "geometry"
+          ]
+        }
+      },
+      "length_km": {
+        "named_all": {
+          "np_sum_km": 22113.71284793831,
+          "fsum_km": 22113.71284793831
+        },
+        "route": {
+          "np_sum_km": 11466.55456309551,
+          "fsum_km": 11466.55456309551
+        },
+        "A_named_and_route": 11146.389312589543,
+        "B_named_without_route": 10967.323535348767,
+        "C_route_without_named": 320.16525050596636,
+        "by_family": {
+          "interstate": 3660.9628796968664,
+          "us": 2823.3245318471713,
+          "state": 5977.664089182896,
+          "county": 0.0,
+          "fm_rm": 0.0
+        },
+        "family_sum": {
+          "interstate": 3660.9628796968664,
+          "us": 2823.3245318471713,
+          "state": 5977.664089182896,
+          "county": 0.0,
+          "fm_rm": 0.0
+        }
+      },
+      "aggregates": {
+        "independent_ratio": 1.928540323621719,
+        "ratio_from_disjoint_classes": 1.928540323621719,
+        "ratio_identity_abs_difference": 0.0,
+        "comparison_to_prior_audit": [
+          {
+            "label": "L_named_km",
+            "independent": 22113.71284793831,
+            "prior_audit": 22113.71284793831,
+            "abs_difference": 0.0,
+            "within_1e-9": true
+          },
+          {
+            "label": "L_route_km",
+            "independent": 11466.55456309551,
+            "prior_audit": 11466.55456309551,
+            "abs_difference": 0.0,
+            "within_1e-9": true
+          },
+          {
+            "label": "sum_L_named_over_sum_L_route",
+            "independent": 1.928540323621719,
+            "prior_audit": 1.928540323621719,
+            "abs_difference": 0.0,
+            "within_1e-9": true
+          },
+          {
+            "label": "cache_L_named_km",
+            "independent": 22113.71284793831,
+            "prior_audit": 22113.71284793831,
+            "abs_difference": 0.0,
+            "within_1e-9": true
+          },
+          {
+            "label": "cache_L_route_km",
+            "independent": 11466.55456309551,
+            "prior_audit": 11466.55456309551,
+            "abs_difference": 0.0,
+            "within_1e-9": true
+          }
+        ],
+        "independent_vs_frozen_cache_max_abs_km": {
+          "named_all_vs_overture_named_road_km_5070": 0.0,
+          "route_vs_overture_route_km": 0.0,
+          "named_and_route_vs_named_all_plus_route_minus_without": 2.2737367544323206e-13,
+          "family_interstate_vs_cache": 0.0,
+          "family_us_vs_cache": 0.0,
+          "family_state_vs_cache": 0.0,
+          "family_county_vs_cache": 0.0,
+          "family_fm_rm_vs_cache": 0.0
+        }
+      },
+      "numerator_only_attribution": {
+        "B_named_without_route_km": 10967.323535348767,
+        "C_route_without_named_km": 320.16525050596636,
+        "excess_B_minus_C_km": 10647.1582848428,
+        "by_drop_reason_overlapping_km": {
+          "missing_network": 127.86577487291646,
+          "non_us_or_malformed": 0.3933355263411702,
+          "excluded_historic_business_or_scenic": 675.6308822108064,
+          "excluded_non_route_highway_system": 0.1996539207646643,
+          "unsupported_us_network": 446.00958650605116
+        },
+        "by_sole_drop_reason_additive_km": {
+          "missing_network": 76.86811744376487,
+          "non_us_or_malformed": 0.14857007837815187,
+          "excluded_historic_business_or_scenic": 497.5950130499446,
+          "excluded_non_route_highway_system": 0.1996539207646643,
+          "unsupported_us_network": 319.21614022230403,
+          "no_route_entries_at_all": 9895.26017147275,
+          "multiple_drop_reasons": 178.03586916086175
+        },
+        "sole_partition_abs_sum_error": 0.0
+      },
+      "definedness": {
+        "route_zero_tracts": 901,
+        "route_zero_share": 0.5655994978028877,
+        "defined_tracts_with_named_ge_route_clipped_to_zero": 679,
+        "defined_tracts_with_named_ge_route_share": 0.9812138728323699
+      },
+      "band": {
+        "preregistered_band": [
+          0.6,
+          1.7
+        ],
+        "relaxed": false,
+        "disclosed_band_context": [
+          0.71,
+          1.59
+        ],
+        "ratio": 1.928540323621719,
+        "pass": false
+      },
+      "network_string_agreement": {
+        "distinct_strings_independent": 38,
+        "distinct_strings_prior_audit": 38,
+        "classification_mismatches": [],
+        "classification_mismatch_count": 0,
+        "strings_missing_from_prior_audit": [],
+        "strings_missing_from_independent_scan": [],
+        "decisions": [
+          {
+            "network_string": "<missing>",
+            "independent_family": null,
+            "independent_drop_reason": "missing_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "missing_network",
+            "segments_independent": 1872,
+            "segments_prior_audit": 1872,
+            "route_entries_independent": 2013,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "MX:MX",
+            "independent_family": null,
+            "independent_drop_reason": "non_us_or_malformed",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "non_us_or_malformed",
+            "segments_independent": 5,
+            "segments_prior_audit": 5,
+            "route_entries_independent": 5,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:AZ",
+            "independent_family": "state",
+            "independent_drop_reason": null,
+            "prior_audit_family": "state",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 5840,
+            "segments_prior_audit": 5840,
+            "route_entries_independent": 6011,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:AZ:APACHE",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 70,
+            "segments_prior_audit": 70,
+            "route_entries_independent": 70,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:AZ:BUSINESS",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 331,
+            "segments_prior_audit": 331,
+            "route_entries_independent": 332,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:AZ:COCONINO",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 103,
+            "segments_prior_audit": 103,
+            "route_entries_independent": 103,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:AZ:FUTURE",
+            "independent_family": "state",
+            "independent_drop_reason": null,
+            "prior_audit_family": "state",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 29,
+            "segments_prior_audit": 29,
+            "route_entries_independent": 29,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:AZ:LOOP",
+            "independent_family": "state",
+            "independent_drop_reason": null,
+            "prior_audit_family": "state",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 564,
+            "segments_prior_audit": 564,
+            "route_entries_independent": 567,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:AZ:MARICOPA",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 130,
+            "segments_prior_audit": 130,
+            "route_entries_independent": 130,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:AZ:MOHAVE",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 104,
+            "segments_prior_audit": 104,
+            "route_entries_independent": 107,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:AZ:SCENIC",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 553,
+            "segments_prior_audit": 553,
+            "route_entries_independent": 556,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:AZ:SPUR",
+            "independent_family": "state",
+            "independent_drop_reason": null,
+            "prior_audit_family": "state",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 32,
+            "segments_prior_audit": 32,
+            "route_entries_independent": 32,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:AZ:TRUCK",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 30,
+            "segments_prior_audit": 30,
+            "route_entries_independent": 30,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:AZ:YAVAPAI",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 45,
+            "segments_prior_audit": 45,
+            "route_entries_independent": 45,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:BIA",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 393,
+            "segments_prior_audit": 393,
+            "route_entries_independent": 398,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:I",
+            "independent_family": "interstate",
+            "independent_drop_reason": null,
+            "prior_audit_family": "interstate",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 1324,
+            "segments_prior_audit": 1324,
+            "route_entries_independent": 1328,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:I:BUSINESS:LOOP",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 569,
+            "segments_prior_audit": 569,
+            "route_entries_independent": 569,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:I:BUSINESS:SPUR",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 5,
+            "segments_prior_audit": 5,
+            "route_entries_independent": 5,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:I:EXPRESS",
+            "independent_family": "interstate",
+            "independent_drop_reason": null,
+            "prior_audit_family": "interstate",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 3,
+            "segments_prior_audit": 3,
+            "route_entries_independent": 3,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:I:FUTURE",
+            "independent_family": "interstate",
+            "independent_drop_reason": null,
+            "prior_audit_family": "interstate",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 195,
+            "segments_prior_audit": 195,
+            "route_entries_independent": 200,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NFRS:COCONINO:FR",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 81,
+            "segments_prior_audit": 81,
+            "route_entries_independent": 81,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NFSR:COCONINO:NF",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 41,
+            "segments_prior_audit": 41,
+            "route_entries_independent": 41,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NFSR:CORONADO:FR",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 21,
+            "segments_prior_audit": 21,
+            "route_entries_independent": 21,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NFSR:KAIBAB:FR",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 40,
+            "segments_prior_audit": 40,
+            "route_entries_independent": 40,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NFSR:TONTO:FR",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 5,
+            "segments_prior_audit": 5,
+            "route_entries_independent": 5,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NHS:HPC",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_non_route_highway_system",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_non_route_highway_system",
+            "segments_independent": 814,
+            "segments_prior_audit": 814,
+            "route_entries_independent": 814,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NHS:STRAHNET",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_non_route_highway_system",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_non_route_highway_system",
+            "segments_independent": 610,
+            "segments_prior_audit": 610,
+            "route_entries_independent": 610,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NHT",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 453,
+            "segments_prior_audit": 453,
+            "route_entries_independent": 453,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NM",
+            "independent_family": "state",
+            "independent_drop_reason": null,
+            "prior_audit_family": "state",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 199,
+            "segments_prior_audit": 199,
+            "route_entries_independent": 200,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NM:FRONTAGE",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 7,
+            "segments_prior_audit": 7,
+            "route_entries_independent": 7,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NM:HIDALGO",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 11,
+            "segments_prior_audit": 11,
+            "route_entries_independent": 11,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NSFR:CORONADO:FR",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 5,
+            "segments_prior_audit": 5,
+            "route_entries_independent": 5,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:US",
+            "independent_family": "us",
+            "independent_drop_reason": null,
+            "prior_audit_family": "us",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 2402,
+            "segments_prior_audit": 2402,
+            "route_entries_independent": 2887,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:US:BUSINESS",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 26,
+            "segments_prior_audit": 26,
+            "route_entries_independent": 26,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:US:HISTORIC",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 2621,
+            "segments_prior_audit": 2621,
+            "route_entries_independent": 2627,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:US:OLD",
+            "independent_family": "us",
+            "independent_drop_reason": null,
+            "prior_audit_family": "us",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 56,
+            "segments_prior_audit": 56,
+            "route_entries_independent": 56,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:US:SPUR",
+            "independent_family": "us",
+            "independent_drop_reason": null,
+            "prior_audit_family": "us",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 6,
+            "segments_prior_audit": 6,
+            "route_entries_independent": 6,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:US:TEMPORARY",
+            "independent_family": "us",
+            "independent_drop_reason": null,
+            "prior_audit_family": "us",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 21,
+            "segments_prior_audit": 21,
+            "route_entries_independent": 21,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          }
+        ]
+      },
+      "counterfactuals_diagnostic_only": {
+        "denominator_reinstates_missing_network": {
+          "added_route_km": 127.86577487291646,
+          "diagnostic_ratio": 1.907271963870604,
+          "adopted": false,
+          "note": "diagnostic only: the frozen filter and the frozen band are unchanged"
+        },
+        "denominator_reinstates_non_us_or_malformed": {
+          "added_route_km": 0.3933355263411702,
+          "diagnostic_ratio": 1.928474171457257,
+          "adopted": false,
+          "note": "diagnostic only: the frozen filter and the frozen band are unchanged"
+        },
+        "denominator_reinstates_excluded_historic_business_or_scenic": {
+          "added_route_km": 675.6308822108064,
+          "diagnostic_ratio": 1.8212300370100665,
+          "adopted": false,
+          "note": "diagnostic only: the frozen filter and the frozen band are unchanged"
+        },
+        "denominator_reinstates_excluded_non_route_highway_system": {
+          "added_route_km": 0.1996539207646643,
+          "diagnostic_ratio": 1.9285067447527837,
+          "adopted": false,
+          "note": "diagnostic only: the frozen filter and the frozen band are unchanged"
+        },
+        "denominator_reinstates_unsupported_us_network": {
+          "added_route_km": 446.00958650605116,
+          "diagnostic_ratio": 1.856335258322865,
+          "adopted": false,
+          "note": "diagnostic only: the frozen filter and the frozen band are unchanged"
+        },
+        "numerator_restricted_to_route_qualified_length": {
+          "diagnostic_ratio": 0.9720783388990795,
+          "adopted": false,
+          "note": "diagnostic only: measures how much of the excess is numerator-only length"
+        }
+      },
+      "prior_audit_snapshot": {
+        "L_named_km": 22113.71284793831,
+        "L_route_km": 11466.55456309551,
+        "ratio": 1.928540323621719,
+        "dropped_network_entry_counts_by_reason": {
+          "excluded_historic_business_or_scenic": 4756,
+          "excluded_non_route_highway_system": 1424,
+          "missing_network": 2013,
+          "non_us_or_malformed": 5,
+          "unsupported_us_network": 906
+        }
+      }
+    },
+    "northern-ca": {
+      "region": "northern-ca",
+      "official_tracts": 591,
+      "cache_row_order_matches_official_sample": true,
+      "sample": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/northern-ca-sample-submission.csv",
+        "sha256": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+        "rows": 591,
+        "columns_in_file": [
+          "GEOID",
+          "transport_gap",
+          "building_gap",
+          "poi_gap",
+          "coverage_gap_score"
+        ],
+        "columns_read": [
+          "GEOID"
+        ],
+        "score_placeholder_columns_read": false
+      },
+      "feature_cache": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/northern-ca-overture-tract-summary.parquet",
+        "sha256": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c",
+        "columns_used": [
+          "overture_named_road_km_5070",
+          "overture_route_core_km",
+          "overture_route_county_km",
+          "overture_route_fm_rm_km",
+          "overture_route_interstate_km",
+          "overture_route_km",
+          "overture_route_plus_fm_rm_km",
+          "overture_route_state_km",
+          "overture_route_us_km"
+        ]
+      },
+      "scan": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-roads.parquet",
+        "object_bytes": 43515963,
+        "rows": 191836,
+        "row_groups": 9,
+        "columns_read": [
+          "id",
+          "class",
+          "routes",
+          "geometry"
+        ],
+        "named_class_rows": 26050,
+        "route_eligible_segment_rows": 9374,
+        "duplicate_segment_ids": 0,
+        "duplicate_detection": "hash-based set of segment id values within this scan run",
+        "unique_segment_ids": 191836,
+        "dropped_network_entry_counts_by_reason": {
+          "excluded_historic_business_or_scenic": 3453,
+          "missing_network": 298,
+          "unsupported_us_network": 549
+        },
+        "clip_crs": "EPSG:5070",
+        "acs": {
+          "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-census-acs-housing.parquet",
+          "object_bytes": 3037540,
+          "source_rows": 591,
+          "official_geometries_used": 591,
+          "extra_geometries_excluded": 0,
+          "columns_read": [
+            "GEOID",
+            "geometry"
+          ]
+        }
+      },
+      "length_km": {
+        "named_all": {
+          "np_sum_km": 12203.647742818603,
+          "fsum_km": 12203.647742818604
+        },
+        "route": {
+          "np_sum_km": 8116.742873591476,
+          "fsum_km": 8116.742873591475
+        },
+        "A_named_and_route": 7685.247273729365,
+        "B_named_without_route": 4518.400469089238,
+        "C_route_without_named": 431.4955998621097,
+        "by_family": {
+          "interstate": 1351.7436668630835,
+          "us": 846.4883562885342,
+          "state": 4817.556541094929,
+          "county": 1219.5059792079887,
+          "fm_rm": 0.0
+        },
+        "family_sum": {
+          "interstate": 1351.7436668630835,
+          "us": 846.4883562885342,
+          "state": 4817.556541094929,
+          "county": 1219.5059792079887,
+          "fm_rm": 0.0
+        }
+      },
+      "aggregates": {
+        "independent_ratio": 1.503515379614183,
+        "ratio_from_disjoint_classes": 1.5035153796141834,
+        "ratio_identity_abs_difference": 4.440892098500626e-16,
+        "comparison_to_prior_audit": [
+          {
+            "label": "L_named_km",
+            "independent": 12203.647742818603,
+            "prior_audit": 12203.647742818603,
+            "abs_difference": 0.0,
+            "within_1e-9": true
+          },
+          {
+            "label": "L_route_km",
+            "independent": 8116.742873591476,
+            "prior_audit": 8116.742873591476,
+            "abs_difference": 0.0,
+            "within_1e-9": true
+          },
+          {
+            "label": "sum_L_named_over_sum_L_route",
+            "independent": 1.503515379614183,
+            "prior_audit": 1.503515379614183,
+            "abs_difference": 0.0,
+            "within_1e-9": true
+          },
+          {
+            "label": "cache_L_named_km",
+            "independent": 12203.647742818603,
+            "prior_audit": 12203.647742818603,
+            "abs_difference": 0.0,
+            "within_1e-9": true
+          },
+          {
+            "label": "cache_L_route_km",
+            "independent": 8116.742873591476,
+            "prior_audit": 8116.742873591476,
+            "abs_difference": 0.0,
+            "within_1e-9": true
+          }
+        ],
+        "independent_vs_frozen_cache_max_abs_km": {
+          "named_all_vs_overture_named_road_km_5070": 0.0,
+          "route_vs_overture_route_km": 0.0,
+          "named_and_route_vs_named_all_plus_route_minus_without": 1.4210854715202004e-13,
+          "family_interstate_vs_cache": 0.0,
+          "family_us_vs_cache": 0.0,
+          "family_state_vs_cache": 0.0,
+          "family_county_vs_cache": 0.0,
+          "family_fm_rm_vs_cache": 0.0
+        }
+      },
+      "numerator_only_attribution": {
+        "B_named_without_route_km": 4518.400469089238,
+        "C_route_without_named_km": 431.4955998621097,
+        "excess_B_minus_C_km": 4086.904869227128,
+        "by_drop_reason_overlapping_km": {
+          "missing_network": 12.390461887860585,
+          "non_us_or_malformed": 0.0,
+          "excluded_historic_business_or_scenic": 385.32353914509815,
+          "excluded_non_route_highway_system": 0.0,
+          "unsupported_us_network": 158.93088105721066
+        },
+        "by_sole_drop_reason_additive_km": {
+          "missing_network": 12.147038657514875,
+          "non_us_or_malformed": 0.0,
+          "excluded_historic_business_or_scenic": 383.8307124189927,
+          "excluded_non_route_highway_system": 0.0,
+          "unsupported_us_network": 157.68147756145086,
+          "no_route_entries_at_all": 3963.248413725174,
+          "multiple_drop_reasons": 1.4928267261055104
+        },
+        "sole_partition_abs_sum_error": 0.0
+      },
+      "definedness": {
+        "route_zero_tracts": 182,
+        "route_zero_share": 0.3079526226734349,
+        "defined_tracts_with_named_ge_route_clipped_to_zero": 391,
+        "defined_tracts_with_named_ge_route_share": 0.9559902200488998
+      },
+      "band": {
+        "preregistered_band": [
+          0.6,
+          1.7
+        ],
+        "relaxed": false,
+        "disclosed_band_context": [
+          0.71,
+          1.59
+        ],
+        "ratio": 1.503515379614183,
+        "pass": true
+      },
+      "network_string_agreement": {
+        "distinct_strings_independent": 35,
+        "distinct_strings_prior_audit": 35,
+        "classification_mismatches": [],
+        "classification_mismatch_count": 0,
+        "strings_missing_from_prior_audit": [],
+        "strings_missing_from_independent_scan": [],
+        "decisions": [
+          {
+            "network_string": "<missing>",
+            "independent_family": null,
+            "independent_drop_reason": "missing_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "missing_network",
+            "segments_independent": 257,
+            "segments_prior_audit": 257,
+            "route_entries_independent": 298,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:AB:NSB",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 362,
+            "segments_prior_audit": 362,
+            "route_entries_independent": 362,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:BIA",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 6,
+            "segments_prior_audit": 6,
+            "route_entries_independent": 6,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:CA",
+            "independent_family": "state",
+            "independent_drop_reason": null,
+            "prior_audit_family": "state",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 5712,
+            "segments_prior_audit": 5712,
+            "route_entries_independent": 6055,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:CA:CR",
+            "independent_family": "county",
+            "independent_drop_reason": null,
+            "prior_audit_family": "county",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 2184,
+            "segments_prior_audit": 2184,
+            "route_entries_independent": 2190,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:CA:CR:SCENIC",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 3,
+            "segments_prior_audit": 3,
+            "route_entries_independent": 3,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:CA:HUMBOLDT",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 78,
+            "segments_prior_audit": 78,
+            "route_entries_independent": 78,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:CA:MENDOCINO",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 6,
+            "segments_prior_audit": 6,
+            "route_entries_independent": 6,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:CA:NEVADA",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 6,
+            "segments_prior_audit": 6,
+            "route_entries_independent": 6,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:CA:SCENIC",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 17,
+            "segments_prior_audit": 17,
+            "route_entries_independent": 17,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:CA:SIERRA",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 8,
+            "segments_prior_audit": 8,
+            "route_entries_independent": 8,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:CA:SISKIYOU",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 57,
+            "segments_prior_audit": 57,
+            "route_entries_independent": 58,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:CA:TRINITY",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 126,
+            "segments_prior_audit": 126,
+            "route_entries_independent": 126,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:I",
+            "independent_family": "interstate",
+            "independent_drop_reason": null,
+            "prior_audit_family": "interstate",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 857,
+            "segments_prior_audit": 857,
+            "route_entries_independent": 861,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:I:BUSINESS:LOOP",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 446,
+            "segments_prior_audit": 446,
+            "route_entries_independent": 447,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NFSF:KLAMATH:NF",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 21,
+            "segments_prior_audit": 21,
+            "route_entries_independent": 21,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NFSR:HUMBOLDT-TOIYABE:NF",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 5,
+            "segments_prior_audit": 5,
+            "route_entries_independent": 5,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NFSR:KLAMATH:NF",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 25,
+            "segments_prior_audit": 25,
+            "route_entries_independent": 25,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NFSR:MENDOCINO:NF",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 50,
+            "segments_prior_audit": 50,
+            "route_entries_independent": 53,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NFSR:MODOC:FR",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 3,
+            "segments_prior_audit": 3,
+            "route_entries_independent": 3,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NFSR:SHASTA-TRINITY:NF",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 19,
+            "segments_prior_audit": 19,
+            "route_entries_independent": 19,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NFSR:SIX RIVERS:NF",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 27,
+            "segments_prior_audit": 27,
+            "route_entries_independent": 27,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NFSR:TAHOE:43:NFR",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 1,
+            "segments_prior_audit": 1,
+            "route_entries_independent": 1,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NFSR:TAHOE:96:NFH",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 10,
+            "segments_prior_audit": 10,
+            "route_entries_independent": 10,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NFSR:TAHOE:NF",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 1,
+            "segments_prior_audit": 1,
+            "route_entries_independent": 1,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NFSR:TAHOE:NFH",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 8,
+            "segments_prior_audit": 8,
+            "route_entries_independent": 8,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NFSR:TAHOE:NFR",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 5,
+            "segments_prior_audit": 5,
+            "route_entries_independent": 5,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NFSR:TRINITY:NF",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 65,
+            "segments_prior_audit": 65,
+            "route_entries_independent": 65,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NHS HIGH PRIORITY CORRIDORS",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 236,
+            "segments_prior_audit": 236,
+            "route_entries_independent": 236,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NHT",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 1287,
+            "segments_prior_audit": 1287,
+            "route_entries_independent": 1427,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NV:WASHOE",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 1,
+            "segments_prior_audit": 1,
+            "route_entries_independent": 1,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OR:NAMED",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 3,
+            "segments_prior_audit": 3,
+            "route_entries_independent": 3,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:US",
+            "independent_family": "us",
+            "independent_drop_reason": null,
+            "prior_audit_family": "us",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 753,
+            "segments_prior_audit": 753,
+            "route_entries_independent": 1024,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:US:HISTORIC",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 907,
+            "segments_prior_audit": 907,
+            "route_entries_independent": 975,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:US:OLD",
+            "independent_family": "us",
+            "independent_drop_reason": null,
+            "prior_audit_family": "us",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 27,
+            "segments_prior_audit": 27,
+            "route_entries_independent": 27,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          }
+        ]
+      },
+      "counterfactuals_diagnostic_only": {
+        "denominator_reinstates_missing_network": {
+          "added_route_km": 12.390461887860585,
+          "diagnostic_ratio": 1.5012237146555567,
+          "adopted": false,
+          "note": "diagnostic only: the frozen filter and the frozen band are unchanged"
+        },
+        "denominator_reinstates_excluded_historic_business_or_scenic": {
+          "added_route_km": 385.32353914509815,
+          "diagnostic_ratio": 1.4353743137711619,
+          "adopted": false,
+          "note": "diagnostic only: the frozen filter and the frozen band are unchanged"
+        },
+        "denominator_reinstates_unsupported_us_network": {
+          "added_route_km": 158.93088105721066,
+          "diagnostic_ratio": 1.4746409905252078,
+          "adopted": false,
+          "note": "diagnostic only: the frozen filter and the frozen band are unchanged"
+        },
+        "numerator_restricted_to_route_qualified_length": {
+          "diagnostic_ratio": 0.946838823579589,
+          "adopted": false,
+          "note": "diagnostic only: measures how much of the excess is numerator-only length"
+        }
+      },
+      "prior_audit_snapshot": {
+        "L_named_km": 12203.647742818603,
+        "L_route_km": 8116.742873591476,
+        "ratio": 1.503515379614183,
+        "dropped_network_entry_counts_by_reason": {
+          "excluded_historic_business_or_scenic": 3453,
+          "missing_network": 298,
+          "unsupported_us_network": 549
+        }
+      }
+    },
+    "eastern-ok": {
+      "region": "eastern-ok",
+      "official_tracts": 1192,
+      "cache_row_order_matches_official_sample": true,
+      "sample": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/eastern-ok-sample-submission.csv",
+        "sha256": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+        "rows": 1192,
+        "columns_in_file": [
+          "GEOID",
+          "transport_gap",
+          "building_gap",
+          "poi_gap",
+          "coverage_gap_score"
+        ],
+        "columns_read": [
+          "GEOID"
+        ],
+        "score_placeholder_columns_read": false
+      },
+      "feature_cache": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/eastern-ok-overture-tract-summary.parquet",
+        "sha256": "e5a06316c316f61bf25b80b48e89c1e7f0b1461a0b8cec5831aae24e0cf83fa6",
+        "columns_used": [
+          "overture_named_road_km_5070",
+          "overture_route_core_km",
+          "overture_route_county_km",
+          "overture_route_fm_rm_km",
+          "overture_route_interstate_km",
+          "overture_route_km",
+          "overture_route_plus_fm_rm_km",
+          "overture_route_state_km",
+          "overture_route_us_km"
+        ]
+      },
+      "scan": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-roads.parquet",
+        "object_bytes": 82239229,
+        "rows": 520550,
+        "row_groups": 16,
+        "columns_read": [
+          "id",
+          "class",
+          "routes",
+          "geometry"
+        ],
+        "named_class_rows": 59436,
+        "route_eligible_segment_rows": 34763,
+        "duplicate_segment_ids": 0,
+        "duplicate_detection": "hash-based set of segment id values within this scan run",
+        "unique_segment_ids": 520550,
+        "dropped_network_entry_counts_by_reason": {
+          "excluded_historic_business_or_scenic": 3964,
+          "missing_network": 29,
+          "non_us_or_malformed": 10,
+          "unsupported_us_network": 27701
+        },
+        "clip_crs": "EPSG:5070",
+        "acs": {
+          "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-census-acs-housing.parquet",
+          "object_bytes": 3650879,
+          "source_rows": 1192,
+          "official_geometries_used": 1192,
+          "extra_geometries_excluded": 0,
+          "columns_read": [
+            "GEOID",
+            "geometry"
+          ]
+        }
+      },
+      "length_km": {
+        "named_all": {
+          "np_sum_km": 27944.02776408843,
+          "fsum_km": 27944.02776408843
+        },
+        "route": {
+          "np_sum_km": 24071.910964743845,
+          "fsum_km": 24071.910964743845
+        },
+        "A_named_and_route": 23841.67419991719,
+        "B_named_without_route": 4102.353564171241,
+        "C_route_without_named": 230.23676482665473,
+        "by_family": {
+          "interstate": 3119.4753311485197,
+          "us": 9274.653811613374,
+          "state": 14579.862638493858,
+          "county": 0.0,
+          "fm_rm": 1.2794946049364488
+        },
+        "family_sum": {
+          "interstate": 3119.4753311485197,
+          "us": 9274.653811613374,
+          "state": 14579.862638493858,
+          "county": 0.0,
+          "fm_rm": 1.2794946049364488
+        }
+      },
+      "aggregates": {
+        "independent_ratio": 1.160856228033402,
+        "ratio_from_disjoint_classes": 1.160856228033402,
+        "ratio_identity_abs_difference": 0.0,
+        "comparison_to_prior_audit": [
+          {
+            "label": "L_named_km",
+            "independent": 27944.02776408843,
+            "prior_audit": 27944.02776408843,
+            "abs_difference": 0.0,
+            "within_1e-9": true
+          },
+          {
+            "label": "L_route_km",
+            "independent": 24071.910964743845,
+            "prior_audit": 24071.910964743845,
+            "abs_difference": 0.0,
+            "within_1e-9": true
+          },
+          {
+            "label": "sum_L_named_over_sum_L_route",
+            "independent": 1.160856228033402,
+            "prior_audit": 1.160856228033402,
+            "abs_difference": 0.0,
+            "within_1e-9": true
+          },
+          {
+            "label": "cache_L_named_km",
+            "independent": 27944.02776408843,
+            "prior_audit": 27944.02776408843,
+            "abs_difference": 0.0,
+            "within_1e-9": true
+          },
+          {
+            "label": "cache_L_route_km",
+            "independent": 24071.910964743845,
+            "prior_audit": 24071.910964743845,
+            "abs_difference": 0.0,
+            "within_1e-9": true
+          }
+        ],
+        "independent_vs_frozen_cache_max_abs_km": {
+          "named_all_vs_overture_named_road_km_5070": 0.0,
+          "route_vs_overture_route_km": 0.0,
+          "named_and_route_vs_named_all_plus_route_minus_without": 8.526512829121202e-14,
+          "family_interstate_vs_cache": 0.0,
+          "family_us_vs_cache": 0.0,
+          "family_state_vs_cache": 0.0,
+          "family_county_vs_cache": 0.0,
+          "family_fm_rm_vs_cache": 0.0
+        }
+      },
+      "numerator_only_attribution": {
+        "B_named_without_route_km": 4102.353564171241,
+        "C_route_without_named_km": 230.23676482665473,
+        "excess_B_minus_C_km": 3872.116799344586,
+        "by_drop_reason_overlapping_km": {
+          "missing_network": 0.0,
+          "non_us_or_malformed": 0.0,
+          "excluded_historic_business_or_scenic": 322.63435693242,
+          "excluded_non_route_highway_system": 0.0,
+          "unsupported_us_network": 95.84557785935283
+        },
+        "by_sole_drop_reason_additive_km": {
+          "missing_network": 0.0,
+          "non_us_or_malformed": 0.0,
+          "excluded_historic_business_or_scenic": 319.0185556468643,
+          "excluded_non_route_highway_system": 0.0,
+          "unsupported_us_network": 92.22977657379707,
+          "no_route_entries_at_all": 3687.489430665023,
+          "multiple_drop_reasons": 3.615801285555749
+        },
+        "sole_partition_abs_sum_error": 0.0
+      },
+      "definedness": {
+        "route_zero_tracts": 286,
+        "route_zero_share": 0.23993288590604026,
+        "defined_tracts_with_named_ge_route_clipped_to_zero": 870,
+        "defined_tracts_with_named_ge_route_share": 0.9602649006622517
+      },
+      "band": {
+        "preregistered_band": [
+          0.6,
+          1.7
+        ],
+        "relaxed": false,
+        "disclosed_band_context": [
+          0.71,
+          1.59
+        ],
+        "ratio": 1.160856228033402,
+        "pass": true
+      },
+      "network_string_agreement": {
+        "distinct_strings_independent": 100,
+        "distinct_strings_prior_audit": 100,
+        "classification_mismatches": [],
+        "classification_mismatch_count": 0,
+        "strings_missing_from_prior_audit": [],
+        "strings_missing_from_independent_scan": [],
+        "decisions": [
+          {
+            "network_string": "<missing>",
+            "independent_family": null,
+            "independent_drop_reason": "missing_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "missing_network",
+            "segments_independent": 29,
+            "segments_prior_audit": 29,
+            "route_entries_independent": 29,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "LCN",
+            "independent_family": null,
+            "independent_drop_reason": "non_us_or_malformed",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "non_us_or_malformed",
+            "segments_independent": 10,
+            "segments_prior_audit": 10,
+            "route_entries_independent": 10,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:AR",
+            "independent_family": "state",
+            "independent_drop_reason": null,
+            "prior_audit_family": "state",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 13,
+            "segments_prior_audit": 13,
+            "route_entries_independent": 13,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:AR:WASHINGTON",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 3,
+            "segments_prior_audit": 3,
+            "route_entries_independent": 3,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:BIA:CHOCTAW",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 14,
+            "segments_prior_audit": 14,
+            "route_entries_independent": 14,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:BYWAY",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 324,
+            "segments_prior_audit": 324,
+            "route_entries_independent": 324,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:I",
+            "independent_family": "interstate",
+            "independent_drop_reason": null,
+            "prior_audit_family": "interstate",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 1600,
+            "segments_prior_audit": 1600,
+            "route_entries_independent": 1640,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:I:BUSINESS:LOOP",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 454,
+            "segments_prior_audit": 454,
+            "route_entries_independent": 454,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:KS",
+            "independent_family": "state",
+            "independent_drop_reason": null,
+            "prior_audit_family": "state",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 3,
+            "segments_prior_audit": 3,
+            "route_entries_independent": 3,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:KS:COWLEY",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 1,
+            "segments_prior_audit": 1,
+            "route_entries_independent": 1,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:KS:TURNPIKE",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 2,
+            "segments_prior_audit": 2,
+            "route_entries_independent": 2,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:MO",
+            "independent_family": "state",
+            "independent_drop_reason": null,
+            "prior_audit_family": "state",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 2,
+            "segments_prior_audit": 2,
+            "route_entries_independent": 2,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:MO:SUPPLEMENTAL",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 2,
+            "segments_prior_audit": 2,
+            "route_entries_independent": 2,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NHS HIGH PRIORITY CORRIDORS",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 211,
+            "segments_prior_audit": 211,
+            "route_entries_independent": 211,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NHT",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 106,
+            "segments_prior_audit": 106,
+            "route_entries_independent": 107,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK",
+            "independent_family": "state",
+            "independent_drop_reason": null,
+            "prior_audit_family": "state",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 22796,
+            "segments_prior_audit": 22796,
+            "route_entries_independent": 27827,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:ADAIR",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 320,
+            "segments_prior_audit": 320,
+            "route_entries_independent": 320,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:ALFALFA",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 976,
+            "segments_prior_audit": 976,
+            "route_entries_independent": 988,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:ATOKA",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 105,
+            "segments_prior_audit": 105,
+            "route_entries_independent": 105,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:BECKHAM",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 138,
+            "segments_prior_audit": 138,
+            "route_entries_independent": 138,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:BLAINE",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 986,
+            "segments_prior_audit": 986,
+            "route_entries_independent": 993,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:BRYAN",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 274,
+            "segments_prior_audit": 274,
+            "route_entries_independent": 274,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:BUSINESS",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 36,
+            "segments_prior_audit": 36,
+            "route_entries_independent": 36,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:CADDO",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 1018,
+            "segments_prior_audit": 1018,
+            "route_entries_independent": 1024,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:CANADIAN",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 67,
+            "segments_prior_audit": 67,
+            "route_entries_independent": 67,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:CARTER",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 78,
+            "segments_prior_audit": 78,
+            "route_entries_independent": 78,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:CHEROKEE",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 131,
+            "segments_prior_audit": 131,
+            "route_entries_independent": 132,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:CHOCTAW",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 119,
+            "segments_prior_audit": 119,
+            "route_entries_independent": 120,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:COAL",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 42,
+            "segments_prior_audit": 42,
+            "route_entries_independent": 42,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:COMANCHE",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 32,
+            "segments_prior_audit": 32,
+            "route_entries_independent": 32,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:COTTON",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 131,
+            "segments_prior_audit": 131,
+            "route_entries_independent": 131,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:CRAIG",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 192,
+            "segments_prior_audit": 192,
+            "route_entries_independent": 194,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:CREEK",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 224,
+            "segments_prior_audit": 224,
+            "route_entries_independent": 224,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:CUSTER",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 1031,
+            "segments_prior_audit": 1031,
+            "route_entries_independent": 1033,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:DELAWARE",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 283,
+            "segments_prior_audit": 283,
+            "route_entries_independent": 283,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:DEWEY",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 965,
+            "segments_prior_audit": 965,
+            "route_entries_independent": 966,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:ELLIS",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 230,
+            "segments_prior_audit": 230,
+            "route_entries_independent": 230,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:GARFIELD",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 1166,
+            "segments_prior_audit": 1166,
+            "route_entries_independent": 1169,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:GARVIN",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 265,
+            "segments_prior_audit": 265,
+            "route_entries_independent": 267,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:GRADY",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 492,
+            "segments_prior_audit": 492,
+            "route_entries_independent": 493,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:GRANT",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 882,
+            "segments_prior_audit": 882,
+            "route_entries_independent": 887,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:GREER",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 472,
+            "segments_prior_audit": 472,
+            "route_entries_independent": 473,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:HARMON",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 5,
+            "segments_prior_audit": 5,
+            "route_entries_independent": 5,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:HARPER",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 168,
+            "segments_prior_audit": 168,
+            "route_entries_independent": 168,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:HASKELL",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 124,
+            "segments_prior_audit": 124,
+            "route_entries_independent": 127,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:HUGHES",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 22,
+            "segments_prior_audit": 22,
+            "route_entries_independent": 22,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:JACKSON",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 607,
+            "segments_prior_audit": 607,
+            "route_entries_independent": 608,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:JEFFERSON",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 49,
+            "segments_prior_audit": 49,
+            "route_entries_independent": 50,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:KAY",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 183,
+            "segments_prior_audit": 183,
+            "route_entries_independent": 183,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:KINGFISHER",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 976,
+            "segments_prior_audit": 976,
+            "route_entries_independent": 977,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:KIOWA",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 921,
+            "segments_prior_audit": 921,
+            "route_entries_independent": 924,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:LATIMER",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 10,
+            "segments_prior_audit": 10,
+            "route_entries_independent": 10,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:LEFLORE",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 191,
+            "segments_prior_audit": 191,
+            "route_entries_independent": 192,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:LINCOLN",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 845,
+            "segments_prior_audit": 845,
+            "route_entries_independent": 848,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:LOGAN",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 254,
+            "segments_prior_audit": 254,
+            "route_entries_independent": 256,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:LOOP",
+            "independent_family": "state",
+            "independent_drop_reason": null,
+            "prior_audit_family": "state",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 14,
+            "segments_prior_audit": 14,
+            "route_entries_independent": 14,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:LOVE",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 134,
+            "segments_prior_audit": 134,
+            "route_entries_independent": 135,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:MAJOR",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 632,
+            "segments_prior_audit": 632,
+            "route_entries_independent": 633,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:MARSHALL",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 8,
+            "segments_prior_audit": 8,
+            "route_entries_independent": 8,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:MAYES",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 461,
+            "segments_prior_audit": 461,
+            "route_entries_independent": 465,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:MCCLAIN",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 34,
+            "segments_prior_audit": 34,
+            "route_entries_independent": 34,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:MCCURTAIN",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 121,
+            "segments_prior_audit": 121,
+            "route_entries_independent": 121,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:MCINTOSH",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 483,
+            "segments_prior_audit": 483,
+            "route_entries_independent": 485,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:MUSKOGEE",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 575,
+            "segments_prior_audit": 575,
+            "route_entries_independent": 578,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:NOBLE",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 718,
+            "segments_prior_audit": 718,
+            "route_entries_independent": 718,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:NOWATA",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 7,
+            "segments_prior_audit": 7,
+            "route_entries_independent": 7,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:OKFUSKEE",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 210,
+            "segments_prior_audit": 210,
+            "route_entries_independent": 211,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:OKMULGEE",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 183,
+            "segments_prior_audit": 183,
+            "route_entries_independent": 186,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:OSAGE",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 251,
+            "segments_prior_audit": 251,
+            "route_entries_independent": 253,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:OTTAWA",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 288,
+            "segments_prior_audit": 288,
+            "route_entries_independent": 289,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:PAWNEE",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 165,
+            "segments_prior_audit": 165,
+            "route_entries_independent": 165,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:PAYNE",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 524,
+            "segments_prior_audit": 524,
+            "route_entries_independent": 529,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:PITTSBURG",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 190,
+            "segments_prior_audit": 190,
+            "route_entries_independent": 192,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:PONTOTOC",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 405,
+            "segments_prior_audit": 405,
+            "route_entries_independent": 406,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:POTTAWATOMIE",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 184,
+            "segments_prior_audit": 184,
+            "route_entries_independent": 185,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:PUSHMATAHA",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 115,
+            "segments_prior_audit": 115,
+            "route_entries_independent": 116,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:ROGERMILLS",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 17,
+            "segments_prior_audit": 17,
+            "route_entries_independent": 17,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:ROGERS",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 1074,
+            "segments_prior_audit": 1074,
+            "route_entries_independent": 1081,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:ROGER_MILLS",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 286,
+            "segments_prior_audit": 286,
+            "route_entries_independent": 287,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:SEMINOLE",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 350,
+            "segments_prior_audit": 350,
+            "route_entries_independent": 351,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:SEQUOYAH",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 279,
+            "segments_prior_audit": 279,
+            "route_entries_independent": 280,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:SPUR",
+            "independent_family": "state",
+            "independent_drop_reason": null,
+            "prior_audit_family": "state",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 35,
+            "segments_prior_audit": 35,
+            "route_entries_independent": 38,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:STEPHENS",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 175,
+            "segments_prior_audit": 175,
+            "route_entries_independent": 176,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:TILLMAN",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 319,
+            "segments_prior_audit": 319,
+            "route_entries_independent": 323,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:TRUCK",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 27,
+            "segments_prior_audit": 27,
+            "route_entries_independent": 27,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:TULSA:TULSA",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 46,
+            "segments_prior_audit": 46,
+            "route_entries_independent": 46,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:TURNPIKE",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 483,
+            "segments_prior_audit": 483,
+            "route_entries_independent": 487,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:WAGONER",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 178,
+            "segments_prior_audit": 178,
+            "route_entries_independent": 178,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:WASHINGTON",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 52,
+            "segments_prior_audit": 52,
+            "route_entries_independent": 52,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:WASHITA",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 2335,
+            "segments_prior_audit": 2335,
+            "route_entries_independent": 2351,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:WOODS",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 333,
+            "segments_prior_audit": 333,
+            "route_entries_independent": 333,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK:WOODWARD",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 405,
+            "segments_prior_audit": 405,
+            "route_entries_independent": 406,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX",
+            "independent_family": "state",
+            "independent_drop_reason": null,
+            "prior_audit_family": "state",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 7,
+            "segments_prior_audit": 7,
+            "route_entries_independent": 8,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:FM",
+            "independent_family": "fm_rm",
+            "independent_drop_reason": null,
+            "prior_audit_family": "fm_rm",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 2,
+            "segments_prior_audit": 2,
+            "route_entries_independent": 2,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:US",
+            "independent_family": "us",
+            "independent_drop_reason": null,
+            "prior_audit_family": "us",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 14853,
+            "segments_prior_audit": 14853,
+            "route_entries_independent": 21397,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:US:ALTERNATE",
+            "independent_family": "us",
+            "independent_drop_reason": null,
+            "prior_audit_family": "us",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 235,
+            "segments_prior_audit": 235,
+            "route_entries_independent": 235,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:US:BUSINESS",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 783,
+            "segments_prior_audit": 783,
+            "route_entries_independent": 937,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:US:BYPASS",
+            "independent_family": "us",
+            "independent_drop_reason": null,
+            "prior_audit_family": "us",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 63,
+            "segments_prior_audit": 63,
+            "route_entries_independent": 63,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:US:HISTORIC",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 2429,
+            "segments_prior_audit": 2429,
+            "route_entries_independent": 2430,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:US:SPUR",
+            "independent_family": "us",
+            "independent_drop_reason": null,
+            "prior_audit_family": "us",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 21,
+            "segments_prior_audit": 21,
+            "route_entries_independent": 21,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          }
+        ]
+      },
+      "counterfactuals_diagnostic_only": {
+        "denominator_reinstates_excluded_historic_business_or_scenic": {
+          "added_route_km": 322.63435693242,
+          "diagnostic_ratio": 1.1455031194722944,
+          "adopted": false,
+          "note": "diagnostic only: the frozen filter and the frozen band are unchanged"
+        },
+        "denominator_reinstates_unsupported_us_network": {
+          "added_route_km": 95.84557785935283,
+          "diagnostic_ratio": 1.1562524520978346,
+          "adopted": false,
+          "note": "diagnostic only: the frozen filter and the frozen band are unchanged"
+        },
+        "numerator_restricted_to_route_qualified_length": {
+          "diagnostic_ratio": 0.9904354596041891,
+          "adopted": false,
+          "note": "diagnostic only: measures how much of the excess is numerator-only length"
+        }
+      },
+      "prior_audit_snapshot": {
+        "L_named_km": 27944.02776408843,
+        "L_route_km": 24071.910964743845,
+        "ratio": 1.160856228033402,
+        "dropped_network_entry_counts_by_reason": {
+          "excluded_historic_business_or_scenic": 3964,
+          "missing_network": 29,
+          "non_us_or_malformed": 10,
+          "unsupported_us_network": 27701
+        }
+      }
+    },
+    "south-central-tx": {
+      "region": "south-central-tx",
+      "official_tracts": 6003,
+      "cache_row_order_matches_official_sample": true,
+      "sample": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/south-central-tx-sample-submission.csv",
+        "sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e",
+        "rows": 6003,
+        "columns_in_file": [
+          "GEOID",
+          "transport_gap",
+          "building_gap",
+          "poi_gap",
+          "coverage_gap_score"
+        ],
+        "columns_read": [
+          "GEOID"
+        ],
+        "score_placeholder_columns_read": false
+      },
+      "feature_cache": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/south-central-tx-overture-tract-summary.parquet",
+        "sha256": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746",
+        "columns_used": [
+          "overture_named_road_km_5070",
+          "overture_route_core_km",
+          "overture_route_county_km",
+          "overture_route_fm_rm_km",
+          "overture_route_interstate_km",
+          "overture_route_km",
+          "overture_route_plus_fm_rm_km",
+          "overture_route_state_km",
+          "overture_route_us_km"
+        ]
+      },
+      "scan": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-roads.parquet",
+        "object_bytes": 299751270,
+        "rows": 1937009,
+        "row_groups": 60,
+        "columns_read": [
+          "id",
+          "class",
+          "routes",
+          "geometry"
+        ],
+        "named_class_rows": 353790,
+        "route_eligible_segment_rows": 165977,
+        "duplicate_segment_ids": 0,
+        "duplicate_detection": "hash-based set of segment id values within this scan run",
+        "unique_segment_ids": 1937009,
+        "dropped_network_entry_counts_by_reason": {
+          "excluded_historic_business_or_scenic": 9947,
+          "missing_network": 14736,
+          "non_us_or_malformed": 4212,
+          "unsupported_us_network": 17919
+        },
+        "clip_crs": "EPSG:5070",
+        "acs": {
+          "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-census-acs-housing.parquet",
+          "object_bytes": 13758433,
+          "source_rows": 6010,
+          "official_geometries_used": 6003,
+          "extra_geometries_excluded": 7,
+          "columns_read": [
+            "GEOID",
+            "geometry"
+          ]
+        }
+      },
+      "length_km": {
+        "named_all": {
+          "np_sum_km": 118176.3816858997,
+          "fsum_km": 118176.3816858997
+        },
+        "route": {
+          "np_sum_km": 99894.08394454684,
+          "fsum_km": 99894.08394454684
+        },
+        "A_named_and_route": 82494.52442567244,
+        "B_named_without_route": 35681.85726022726,
+        "C_route_without_named": 17399.559518874405,
+        "by_family": {
+          "interstate": 9276.806947001807,
+          "us": 21032.33566193845,
+          "state": 24101.024383730743,
+          "county": 0.0,
+          "fm_rm": 51254.03170019502
+        },
+        "family_sum": {
+          "interstate": 9276.806947001807,
+          "us": 21032.33566193845,
+          "state": 24101.024383730743,
+          "county": 0.0,
+          "fm_rm": 51254.03170019502
+        }
+      },
+      "aggregates": {
+        "independent_ratio": 1.1830168216117956,
+        "ratio_from_disjoint_classes": 1.1830168216117956,
+        "ratio_identity_abs_difference": 0.0,
+        "comparison_to_prior_audit": [
+          {
+            "label": "L_named_km",
+            "independent": 118176.3816858997,
+            "prior_audit": 118176.3816858997,
+            "abs_difference": 0.0,
+            "within_1e-9": true
+          },
+          {
+            "label": "L_route_km",
+            "independent": 99894.08394454684,
+            "prior_audit": 99894.08394454684,
+            "abs_difference": 0.0,
+            "within_1e-9": true
+          },
+          {
+            "label": "sum_L_named_over_sum_L_route",
+            "independent": 1.1830168216117956,
+            "prior_audit": 1.1830168216117956,
+            "abs_difference": 0.0,
+            "within_1e-9": true
+          },
+          {
+            "label": "cache_L_named_km",
+            "independent": 118176.3816858997,
+            "prior_audit": 118176.3816858997,
+            "abs_difference": 0.0,
+            "within_1e-9": true
+          },
+          {
+            "label": "cache_L_route_km",
+            "independent": 99894.08394454684,
+            "prior_audit": 99894.08394454684,
+            "abs_difference": 0.0,
+            "within_1e-9": true
+          }
+        ],
+        "independent_vs_frozen_cache_max_abs_km": {
+          "named_all_vs_overture_named_road_km_5070": 0.0,
+          "route_vs_overture_route_km": 0.0,
+          "named_and_route_vs_named_all_plus_route_minus_without": 3.979039320256561e-13,
+          "family_interstate_vs_cache": 0.0,
+          "family_us_vs_cache": 0.0,
+          "family_state_vs_cache": 0.0,
+          "family_county_vs_cache": 0.0,
+          "family_fm_rm_vs_cache": 0.0
+        }
+      },
+      "numerator_only_attribution": {
+        "B_named_without_route_km": 35681.85726022726,
+        "C_route_without_named_km": 17399.559518874405,
+        "excess_B_minus_C_km": 18282.297741352857,
+        "by_drop_reason_overlapping_km": {
+          "missing_network": 678.5365819280377,
+          "non_us_or_malformed": 34.289633505856074,
+          "excluded_historic_business_or_scenic": 1322.3663510654915,
+          "excluded_non_route_highway_system": 0.0,
+          "unsupported_us_network": 2382.0142983153937
+        },
+        "by_sole_drop_reason_additive_km": {
+          "missing_network": 503.4458511485002,
+          "non_us_or_malformed": 5.073894981610844,
+          "excluded_historic_business_or_scenic": 1137.3333502913447,
+          "excluded_non_route_highway_system": 0.0,
+          "unsupported_us_network": 2353.8334507856316,
+          "no_route_entries_at_all": 31473.49018449688,
+          "multiple_drop_reasons": 208.68052852328998
+        },
+        "sole_partition_abs_sum_error": 0.0
+      },
+      "definedness": {
+        "route_zero_tracts": 1275,
+        "route_zero_share": 0.21239380309845077,
+        "defined_tracts_with_named_ge_route_clipped_to_zero": 3910,
+        "defined_tracts_with_named_ge_route_share": 0.8269881556683587
+      },
+      "band": {
+        "preregistered_band": [
+          0.6,
+          1.7
+        ],
+        "relaxed": false,
+        "disclosed_band_context": [
+          0.71,
+          1.59
+        ],
+        "ratio": 1.1830168216117956,
+        "pass": true
+      },
+      "network_string_agreement": {
+        "distinct_strings_independent": 97,
+        "distinct_strings_prior_audit": 97,
+        "classification_mismatches": [],
+        "classification_mismatch_count": 0,
+        "strings_missing_from_prior_audit": [],
+        "strings_missing_from_independent_scan": [],
+        "decisions": [
+          {
+            "network_string": "<missing>",
+            "independent_family": null,
+            "independent_drop_reason": "missing_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "missing_network",
+            "segments_independent": 14054,
+            "segments_prior_audit": 14054,
+            "route_entries_independent": 14736,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "MX:MEX",
+            "independent_family": null,
+            "independent_drop_reason": "non_us_or_malformed",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "non_us_or_malformed",
+            "segments_independent": 1,
+            "segments_prior_audit": 1,
+            "route_entries_independent": 1,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "MX:MX",
+            "independent_family": null,
+            "independent_drop_reason": "non_us_or_malformed",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "non_us_or_malformed",
+            "segments_independent": 2,
+            "segments_prior_audit": 2,
+            "route_entries_independent": 2,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "MX:TAM",
+            "independent_family": null,
+            "independent_drop_reason": "non_us_or_malformed",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "non_us_or_malformed",
+            "segments_independent": 1,
+            "segments_prior_audit": 1,
+            "route_entries_independent": 1,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "TEXAS TRUNK SYSTEM",
+            "independent_family": null,
+            "independent_drop_reason": "non_us_or_malformed",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "non_us_or_malformed",
+            "segments_independent": 4010,
+            "segments_prior_audit": 4010,
+            "route_entries_independent": 4208,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:AUTO TRAIL",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 93,
+            "segments_prior_audit": 93,
+            "route_entries_independent": 93,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:I",
+            "independent_family": "interstate",
+            "independent_drop_reason": null,
+            "prior_audit_family": "interstate",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 6775,
+            "segments_prior_audit": 6775,
+            "route_entries_independent": 6813,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:I:BUSINESS:LOOP",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 943,
+            "segments_prior_audit": 943,
+            "route_entries_independent": 943,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:I:BUSINESS:SPUR",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 68,
+            "segments_prior_audit": 68,
+            "route_entries_independent": 68,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:I:EXPRESS",
+            "independent_family": "interstate",
+            "independent_drop_reason": null,
+            "prior_audit_family": "interstate",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 19,
+            "segments_prior_audit": 19,
+            "route_entries_independent": 19,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:I:EXPRESS:TOLL",
+            "independent_family": "interstate",
+            "independent_drop_reason": null,
+            "prior_audit_family": "interstate",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 97,
+            "segments_prior_audit": 97,
+            "route_entries_independent": 97,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:I:FUTURE",
+            "independent_family": "interstate",
+            "independent_drop_reason": null,
+            "prior_audit_family": "interstate",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 1211,
+            "segments_prior_audit": 1211,
+            "route_entries_independent": 1567,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:I:TOLL",
+            "independent_family": "interstate",
+            "independent_drop_reason": null,
+            "prior_audit_family": "interstate",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 22,
+            "segments_prior_audit": 22,
+            "route_entries_independent": 22,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NHS HIGH PRIORITY CORRIDORS",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 2272,
+            "segments_prior_audit": 2272,
+            "route_entries_independent": 2322,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:NHT",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 15,
+            "segments_prior_audit": 15,
+            "route_entries_independent": 15,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:OK",
+            "independent_family": "state",
+            "independent_drop_reason": null,
+            "prior_audit_family": "state",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 5,
+            "segments_prior_audit": 5,
+            "route_entries_independent": 5,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX",
+            "independent_family": "state",
+            "independent_drop_reason": null,
+            "prior_audit_family": "state",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 41555,
+            "segments_prior_audit": 41555,
+            "route_entries_independent": 43986,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:ANDERSON",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 414,
+            "segments_prior_audit": 414,
+            "route_entries_independent": 416,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:BELTWAY",
+            "independent_family": "state",
+            "independent_drop_reason": null,
+            "prior_audit_family": "state",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 1080,
+            "segments_prior_audit": 1080,
+            "route_entries_independent": 1080,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:BLANCO",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 244,
+            "segments_prior_audit": 244,
+            "route_entries_independent": 244,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:BRAZORIA",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 1603,
+            "segments_prior_audit": 1603,
+            "route_entries_independent": 1605,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:BROOKS",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 213,
+            "segments_prior_audit": 213,
+            "route_entries_independent": 215,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:BROWN",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 391,
+            "segments_prior_audit": 391,
+            "route_entries_independent": 391,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:BURLESON",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 80,
+            "segments_prior_audit": 80,
+            "route_entries_independent": 80,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:BURNET",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 855,
+            "segments_prior_audit": 855,
+            "route_entries_independent": 855,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:BUSINESS",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 2031,
+            "segments_prior_audit": 2031,
+            "route_entries_independent": 2038,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:CALDWELL",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 920,
+            "segments_prior_audit": 920,
+            "route_entries_independent": 922,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:CCOL",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 61,
+            "segments_prior_audit": 61,
+            "route_entries_independent": 61,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:COLLIN",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 40,
+            "segments_prior_audit": 40,
+            "route_entries_independent": 40,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:COLORADO",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 302,
+            "segments_prior_audit": 302,
+            "route_entries_independent": 302,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:CONNECTOR",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 2,
+            "segments_prior_audit": 2,
+            "route_entries_independent": 2,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:COOKE",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 14,
+            "segments_prior_audit": 14,
+            "route_entries_independent": 14,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:CORYELL",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 5,
+            "segments_prior_audit": 5,
+            "route_entries_independent": 5,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:CTRMA",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 96,
+            "segments_prior_audit": 96,
+            "route_entries_independent": 96,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:CTRMA:EXPRESS",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 11,
+            "segments_prior_audit": 11,
+            "route_entries_independent": 11,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:EXPRESS:TOLL",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 44,
+            "segments_prior_audit": 44,
+            "route_entries_independent": 53,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:FANNIN",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 8,
+            "segments_prior_audit": 8,
+            "route_entries_independent": 8,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:FM",
+            "independent_family": "fm_rm",
+            "independent_drop_reason": null,
+            "prior_audit_family": "fm_rm",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 77392,
+            "segments_prior_audit": 77392,
+            "route_entries_independent": 77833,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:FM:BUSINESS",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 123,
+            "segments_prior_audit": 123,
+            "route_entries_independent": 123,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:FM:SPUR",
+            "independent_family": "fm_rm",
+            "independent_drop_reason": null,
+            "prior_audit_family": "fm_rm",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 9,
+            "segments_prior_audit": 9,
+            "route_entries_independent": 9,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:FORT_BEND:FBCTRA",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 47,
+            "segments_prior_audit": 47,
+            "route_entries_independent": 47,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:GONZALES",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 59,
+            "segments_prior_audit": 59,
+            "route_entries_independent": 59,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:GREGG",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 28,
+            "segments_prior_audit": 28,
+            "route_entries_independent": 28,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:GREGG:PR",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 1,
+            "segments_prior_audit": 1,
+            "route_entries_independent": 1,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:GUADALUPE",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 894,
+            "segments_prior_audit": 894,
+            "route_entries_independent": 895,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:HARRIS:HCTRA",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 296,
+            "segments_prior_audit": 296,
+            "route_entries_independent": 296,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:HAYS",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 30,
+            "segments_prior_audit": 30,
+            "route_entries_independent": 30,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:HISTORIC",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 196,
+            "segments_prior_audit": 196,
+            "route_entries_independent": 196,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:JACKSON",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 110,
+            "segments_prior_audit": 110,
+            "route_entries_independent": 110,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:JIM_WELLS",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 738,
+            "segments_prior_audit": 738,
+            "route_entries_independent": 744,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:KENT",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 251,
+            "segments_prior_audit": 251,
+            "route_entries_independent": 253,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:KLEBERG",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 348,
+            "segments_prior_audit": 348,
+            "route_entries_independent": 359,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:KNOX",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 2,
+            "segments_prior_audit": 2,
+            "route_entries_independent": 2,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:LAMAR",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 1,
+            "segments_prior_audit": 1,
+            "route_entries_independent": 1,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:LAVACA",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 292,
+            "segments_prior_audit": 292,
+            "route_entries_independent": 292,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:LIBERTY",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 408,
+            "segments_prior_audit": 408,
+            "route_entries_independent": 501,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:LOOP",
+            "independent_family": "state",
+            "independent_drop_reason": null,
+            "prior_audit_family": "state",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 6022,
+            "segments_prior_audit": 6022,
+            "route_entries_independent": 6125,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:LOOP:EXPRESS:TOLL",
+            "independent_family": "state",
+            "independent_drop_reason": null,
+            "prior_audit_family": "state",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 8,
+            "segments_prior_audit": 8,
+            "route_entries_independent": 8,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:MILAM",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 40,
+            "segments_prior_audit": 40,
+            "route_entries_independent": 40,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:MITCHELL",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 506,
+            "segments_prior_audit": 506,
+            "route_entries_independent": 509,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:MONTGOMERY:MCTRA",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 12,
+            "segments_prior_audit": 12,
+            "route_entries_independent": 12,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:NACOGDOCHES",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 4,
+            "segments_prior_audit": 4,
+            "route_entries_independent": 4,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:NASA",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 77,
+            "segments_prior_audit": 77,
+            "route_entries_independent": 77,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:NOLAN",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 637,
+            "segments_prior_audit": 637,
+            "route_entries_independent": 637,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:NTTA",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 606,
+            "segments_prior_audit": 606,
+            "route_entries_independent": 606,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:PA",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 82,
+            "segments_prior_audit": 82,
+            "route_entries_independent": 82,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:PARK",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 766,
+            "segments_prior_audit": 766,
+            "route_entries_independent": 766,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:RECREATIONAL",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 56,
+            "segments_prior_audit": 56,
+            "route_entries_independent": 56,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:RM",
+            "independent_family": "fm_rm",
+            "independent_drop_reason": null,
+            "prior_audit_family": "fm_rm",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 4339,
+            "segments_prior_audit": 4339,
+            "route_entries_independent": 4356,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:RUNNELS",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 5,
+            "segments_prior_audit": 5,
+            "route_entries_independent": 5,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:RUSK",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 1,
+            "segments_prior_audit": 1,
+            "route_entries_independent": 1,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:SAN_PATRICIO",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 16,
+            "segments_prior_audit": 16,
+            "route_entries_independent": 18,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:SCHLEICHER",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 103,
+            "segments_prior_audit": 103,
+            "route_entries_independent": 103,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:SCURRY",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 667,
+            "segments_prior_audit": 667,
+            "route_entries_independent": 669,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:SMITH",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 38,
+            "segments_prior_audit": 38,
+            "route_entries_independent": 38,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:SMITH:PR",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 1,
+            "segments_prior_audit": 1,
+            "route_entries_independent": 1,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:SOMERVELL",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 215,
+            "segments_prior_audit": 215,
+            "route_entries_independent": 215,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:SOMERVELL:LOOP",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 7,
+            "segments_prior_audit": 7,
+            "route_entries_independent": 7,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:SOMERVELL:SPUR",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 3,
+            "segments_prior_audit": 3,
+            "route_entries_independent": 3,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:SPUR",
+            "independent_family": "state",
+            "independent_drop_reason": null,
+            "prior_audit_family": "state",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 3199,
+            "segments_prior_audit": 3199,
+            "route_entries_independent": 3200,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:STONEWALL",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 619,
+            "segments_prior_audit": 619,
+            "route_entries_independent": 619,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:SUTTON",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 164,
+            "segments_prior_audit": 164,
+            "route_entries_independent": 165,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:THC:TEXAS FOREST TRAIL",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 1446,
+            "segments_prior_audit": 1446,
+            "route_entries_independent": 1446,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:TOLL",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 517,
+            "segments_prior_audit": 517,
+            "route_entries_independent": 587,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:TRUNK",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 486,
+            "segments_prior_audit": 486,
+            "route_entries_independent": 486,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:UVALDE",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 223,
+            "segments_prior_audit": 223,
+            "route_entries_independent": 224,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:VAN_ZANDT",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 84,
+            "segments_prior_audit": 84,
+            "route_entries_independent": 85,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:WILSON",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 81,
+            "segments_prior_audit": 81,
+            "route_entries_independent": 82,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:WOOD",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 461,
+            "segments_prior_audit": 461,
+            "route_entries_independent": 462,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:TX:WOOD:PR",
+            "independent_family": null,
+            "independent_drop_reason": "unsupported_us_network",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "unsupported_us_network",
+            "segments_independent": 7,
+            "segments_prior_audit": 7,
+            "route_entries_independent": 7,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:US",
+            "independent_family": "us",
+            "independent_drop_reason": null,
+            "prior_audit_family": "us",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 32155,
+            "segments_prior_audit": 32155,
+            "route_entries_independent": 36700,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:US:ALTERNATE",
+            "independent_family": "us",
+            "independent_drop_reason": null,
+            "prior_audit_family": "us",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 1324,
+            "segments_prior_audit": 1324,
+            "route_entries_independent": 1738,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:US:BUSINESS",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 4856,
+            "segments_prior_audit": 4856,
+            "route_entries_independent": 5075,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:US:BUSINESS:ALTERNATE",
+            "independent_family": null,
+            "independent_drop_reason": "excluded_historic_business_or_scenic",
+            "prior_audit_family": null,
+            "prior_audit_drop_reason": "excluded_historic_business_or_scenic",
+            "segments_independent": 43,
+            "segments_prior_audit": 43,
+            "route_entries_independent": 43,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:US:EXPRESS",
+            "independent_family": "us",
+            "independent_drop_reason": null,
+            "prior_audit_family": "us",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 11,
+            "segments_prior_audit": 11,
+            "route_entries_independent": 11,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:US:SPUR",
+            "independent_family": "us",
+            "independent_drop_reason": null,
+            "prior_audit_family": "us",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 5,
+            "segments_prior_audit": 5,
+            "route_entries_independent": 5,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          },
+          {
+            "network_string": "US:US:TRUCK",
+            "independent_family": "us",
+            "independent_drop_reason": null,
+            "prior_audit_family": "us",
+            "prior_audit_drop_reason": null,
+            "segments_independent": 23,
+            "segments_prior_audit": 23,
+            "route_entries_independent": 23,
+            "present_in_prior_audit": true,
+            "classification_agrees": true
+          }
+        ]
+      },
+      "counterfactuals_diagnostic_only": {
+        "denominator_reinstates_missing_network": {
+          "added_route_km": 678.5365819280377,
+          "diagnostic_ratio": 1.175035323403856,
+          "adopted": false,
+          "note": "diagnostic only: the frozen filter and the frozen band are unchanged"
+        },
+        "denominator_reinstates_non_us_or_malformed": {
+          "added_route_km": 34.289633505856074,
+          "diagnostic_ratio": 1.1826108787169813,
+          "adopted": false,
+          "note": "diagnostic only: the frozen filter and the frozen band are unchanged"
+        },
+        "denominator_reinstates_excluded_historic_business_or_scenic": {
+          "added_route_km": 1322.3663510654915,
+          "diagnostic_ratio": 1.1675610174112436,
+          "adopted": false,
+          "note": "diagnostic only: the frozen filter and the frozen band are unchanged"
+        },
+        "denominator_reinstates_unsupported_us_network": {
+          "added_route_km": 2382.0142983153937,
+          "diagnostic_ratio": 1.1554643139131202,
+          "adopted": false,
+          "note": "diagnostic only: the frozen filter and the frozen band are unchanged"
+        },
+        "numerator_restricted_to_route_qualified_length": {
+          "diagnostic_ratio": 0.8258199201412845,
+          "adopted": false,
+          "note": "diagnostic only: measures how much of the excess is numerator-only length"
+        }
+      },
+      "prior_audit_snapshot": {
+        "L_named_km": 118176.3816858997,
+        "L_route_km": 99894.08394454684,
+        "ratio": 1.1830168216117956,
+        "dropped_network_entry_counts_by_reason": {
+          "excluded_historic_business_or_scenic": 9947,
+          "missing_network": 14736,
+          "non_us_or_malformed": 4212,
+          "unsupported_us_network": 17919
+        }
+      }
+    }
+  },
+  "diagnosis": {
+    "maricopa_ratio": 1.928540323621719,
+    "maricopa_band_pass": false,
+    "maricopa_status": "unresolved_out_of_band",
+    "unexplained_rule_or_implementation_mismatches": 0,
+    "mismatches_by_region": {
+      "maricopa-az": 0,
+      "northern-ca": 0,
+      "eastern-ok": 0,
+      "south-central-tx": 0
+    },
+    "excess_decomposition": {
+      "maricopa-az": {
+        "A_km": 11146.389312589543,
+        "B_km": 10967.323535348767,
+        "C_km": 320.16525050596636,
+        "B_minus_C_km": 10647.1582848428,
+        "ratio": 1.928540323621719
+      },
+      "northern-ca": {
+        "A_km": 7685.247273729365,
+        "B_km": 4518.400469089238,
+        "C_km": 431.4955998621097,
+        "B_minus_C_km": 4086.904869227128,
+        "ratio": 1.503515379614183
+      },
+      "eastern-ok": {
+        "A_km": 23841.67419991719,
+        "B_km": 4102.353564171241,
+        "C_km": 230.23676482665473,
+        "B_minus_C_km": 3872.116799344586,
+        "ratio": 1.160856228033402
+      },
+      "south-central-tx": {
+        "A_km": 82494.52442567244,
+        "B_km": 35681.85726022726,
+        "C_km": 17399.559518874405,
+        "B_minus_C_km": 18282.297741352857,
+        "ratio": 1.1830168216117956
+      }
+    },
+    "reading": "Maricopa: A (named and route-qualified) = 11146.389 km, B (named class with no kept network entry) = 10967.324 km, C (route-qualified but not named class) = 320.165 km; the ratio exceeds 1 exactly when B exceeds C, i.e. the numerator counts arterial-class length the denominator cannot see because every route entry on those segments was rejected by the frozen network filter. | maricopa-az: B-C = 10647.158 km, ratio 1.928540324, band FAIL | northern-ca: B-C = 4086.905 km, ratio 1.503515380, band PASS | eastern-ok: B-C = 3872.117 km, ratio 1.160856228, band PASS | south-central-tx: B-C = 18282.298 km, ratio 1.183016822, band PASS",
+    "band_action": "the frozen 0.6-1.7 band is kept unchanged and the Maricopa failure is reported as unresolved; no rule was relaxed and no excluded network system was added to force the ratio into band",
+    "conclusion": {
+      "requested_region_set": [
+        "eastern-ok",
+        "maricopa-az",
+        "northern-ca",
+        "south-central-tx"
+      ],
+      "mechanism": "definition plus provided-data coverage, not an implementation mismatch: L_named counts every arterial-class segment while L_route counts only segments carrying a kept routes[].network value, so the ratio is governed by how much arterial length carries no usable route reference",
+      "dominant_bucket": {
+        "bucket": "no_route_entries_at_all",
+        "km": 9895.26017147275,
+        "share_of_numerator_only_excess": 0.9022493172175826,
+        "meaning": "named-class segments whose routes array is empty, which the route denominator can never include without abandoning the meaning of a route-reference proxy"
+      },
+      "rejected_network_entry_km_of_excess": 1072.0633638760173,
+      "best_diagnostic_ratio_from_reinstating_any_single_rejected_category": 1.8212300370100665,
+      "reinstating_rejected_network_categories_alone_cannot_reach_the_band": true,
+      "cross_region_control": {
+        "maricopa-az": {
+          "B_over_C": 34.25519639628845,
+          "share_of_named_without_route_on_segments_without_any_route_entry": 0.9022493172175826,
+          "ratio": 1.928540323621719,
+          "band_pass": false
+        },
+        "northern-ca": {
+          "B_over_C": 10.471486778852796,
+          "share_of_named_without_route_on_segments_without_any_route_entry": 0.8771352696243048,
+          "ratio": 1.503515379614183,
+          "band_pass": true
+        },
+        "eastern-ok": {
+          "B_over_C": 17.81797779889716,
+          "share_of_named_without_route_on_segments_without_any_route_entry": 0.8988716776804613,
+          "ratio": 1.160856228033402,
+          "band_pass": true
+        },
+        "south-central-tx": {
+          "B_over_C": 2.0507333660671634,
+          "share_of_named_without_route_on_segments_without_any_route_entry": 0.8820586315045537,
+          "ratio": 1.1830168216117956,
+          "band_pass": true
+        }
+      },
+      "downstream_effect_on_the_frozen_transport_component": {
+        "maricopa-az": {
+          "defined_tracts": 692,
+          "clipped_to_zero": 679,
+          "share_clipped_to_zero": 0.9812138728323699
+        },
+        "northern-ca": {
+          "defined_tracts": 409,
+          "clipped_to_zero": 391,
+          "share_clipped_to_zero": 0.9559902200488998
+        },
+        "eastern-ok": {
+          "defined_tracts": 906,
+          "clipped_to_zero": 870,
+          "share_clipped_to_zero": 0.9602649006622517
+        },
+        "south-central-tx": {
+          "defined_tracts": 4728,
+          "clipped_to_zero": 3910,
+          "share_clipped_to_zero": 0.8269881556683587
+        }
+      },
+      "what_was_not_done": [
+        "band not relaxed",
+        "no network category reinstated",
+        "no external road data read",
+        "no per-tract estimate written",
+        "no scored candidate changed"
+      ],
+      "recommended_next_step": "the Maricopa transport component is near-degenerate (almost every defined tract clips to gap 0), so any future change to the route denominator must be a separately pre-registered candidate decision with its own hypothesis and operator authorization; this diagnostic adopts no change"
+    }
+  },
+  "acceptance": {
+    "all_requested_regions_recomputed": true,
+    "official_order_matches_frozen_cache_per_region": true,
+    "aggregates_reproducible_to_1e-9": true,
+    "independent_scan_reproduces_frozen_cache_to_1e-9": true,
+    "disjoint_class_ratio_identity_within_1e-12": true,
+    "sole_reason_partition_is_additive": true,
+    "every_route_network_string_classified": true,
+    "zero_unexplained_rule_or_implementation_mismatches": true,
+    "deduplication_documented": true,
+    "band_evaluated_and_not_relaxed": true,
+    "maricopa_band_status_recorded": true,
+    "no_per_tract_target_estimates_written": true,
+    "no_removed_reference_layer_or_label_or_lb_input_read": true,
+    "inputs_read_are_provided_layers_only": true,
+    "all_passed": true
+  },
+  "prohibitions": {
+    "removed_reference_layers_or_equivalents_read": false,
+    "labels_read": false,
+    "sample_score_placeholder_columns_read": false,
+    "leaderboard_feedback_used": false,
+    "per_geoid_target_estimates_written": false,
+    "scored_candidates_written": false,
+    "external_road_data_added_to_any_prediction": false,
+    "secrets_read_or_printed": false
+  },
+  "reproducibility": {
+    "command": "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/audit_maricopa_route_ratio.py",
+    "git_commit": "a64e8d713cdbede379fe5b0223c5c0cd14c422cf",
+    "script_sha256": "8fbcadb94245796be09523135fe16c7a20802fb5495354bb0109f312cf7ec589",
+    "python": "3.12.3",
+    "timings": "wall-clock timings are printed to stdout and deliberately not embedded, so repeated runs are byte-identical",
+    "inputs": {
+      "prior_audit": {
+        "path": "reports/transport-route-ref-audit.json",
+        "sha256": "bf904336963f553cc7442c5996a4d8d504fe30aad5c4f1a2e44da8fa773b1927"
+      },
+      "per_region": {
+        "maricopa-az": {
+          "sample": {
+            "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/maricopa-az-sample-submission.csv",
+            "sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+            "rows": 1593,
+            "columns_in_file": [
+              "GEOID",
+              "transport_gap",
+              "building_gap",
+              "poi_gap",
+              "coverage_gap_score"
+            ],
+            "columns_read": [
+              "GEOID"
+            ],
+            "score_placeholder_columns_read": false
+          },
+          "feature_cache": {
+            "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/maricopa-az-overture-tract-summary.parquet",
+            "sha256": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22",
+            "columns_used": [
+              "overture_named_road_km_5070",
+              "overture_route_core_km",
+              "overture_route_county_km",
+              "overture_route_fm_rm_km",
+              "overture_route_interstate_km",
+              "overture_route_km",
+              "overture_route_plus_fm_rm_km",
+              "overture_route_state_km",
+              "overture_route_us_km"
+            ]
+          },
+          "roads": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-roads.parquet",
+          "roads_object_bytes": 80052206,
+          "acs": {
+            "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-census-acs-housing.parquet",
+            "object_bytes": 3457173,
+            "source_rows": 1593,
+            "official_geometries_used": 1593,
+            "extra_geometries_excluded": 0,
+            "columns_read": [
+              "GEOID",
+              "geometry"
+            ]
+          }
+        },
+        "northern-ca": {
+          "sample": {
+            "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/northern-ca-sample-submission.csv",
+            "sha256": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+            "rows": 591,
+            "columns_in_file": [
+              "GEOID",
+              "transport_gap",
+              "building_gap",
+              "poi_gap",
+              "coverage_gap_score"
+            ],
+            "columns_read": [
+              "GEOID"
+            ],
+            "score_placeholder_columns_read": false
+          },
+          "feature_cache": {
+            "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/northern-ca-overture-tract-summary.parquet",
+            "sha256": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c",
+            "columns_used": [
+              "overture_named_road_km_5070",
+              "overture_route_core_km",
+              "overture_route_county_km",
+              "overture_route_fm_rm_km",
+              "overture_route_interstate_km",
+              "overture_route_km",
+              "overture_route_plus_fm_rm_km",
+              "overture_route_state_km",
+              "overture_route_us_km"
+            ]
+          },
+          "roads": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-roads.parquet",
+          "roads_object_bytes": 43515963,
+          "acs": {
+            "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-census-acs-housing.parquet",
+            "object_bytes": 3037540,
+            "source_rows": 591,
+            "official_geometries_used": 591,
+            "extra_geometries_excluded": 0,
+            "columns_read": [
+              "GEOID",
+              "geometry"
+            ]
+          }
+        },
+        "eastern-ok": {
+          "sample": {
+            "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/eastern-ok-sample-submission.csv",
+            "sha256": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+            "rows": 1192,
+            "columns_in_file": [
+              "GEOID",
+              "transport_gap",
+              "building_gap",
+              "poi_gap",
+              "coverage_gap_score"
+            ],
+            "columns_read": [
+              "GEOID"
+            ],
+            "score_placeholder_columns_read": false
+          },
+          "feature_cache": {
+            "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/eastern-ok-overture-tract-summary.parquet",
+            "sha256": "e5a06316c316f61bf25b80b48e89c1e7f0b1461a0b8cec5831aae24e0cf83fa6",
+            "columns_used": [
+              "overture_named_road_km_5070",
+              "overture_route_core_km",
+              "overture_route_county_km",
+              "overture_route_fm_rm_km",
+              "overture_route_interstate_km",
+              "overture_route_km",
+              "overture_route_plus_fm_rm_km",
+              "overture_route_state_km",
+              "overture_route_us_km"
+            ]
+          },
+          "roads": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-roads.parquet",
+          "roads_object_bytes": 82239229,
+          "acs": {
+            "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-census-acs-housing.parquet",
+            "object_bytes": 3650879,
+            "source_rows": 1192,
+            "official_geometries_used": 1192,
+            "extra_geometries_excluded": 0,
+            "columns_read": [
+              "GEOID",
+              "geometry"
+            ]
+          }
+        },
+        "south-central-tx": {
+          "sample": {
+            "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/south-central-tx-sample-submission.csv",
+            "sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e",
+            "rows": 6003,
+            "columns_in_file": [
+              "GEOID",
+              "transport_gap",
+              "building_gap",
+              "poi_gap",
+              "coverage_gap_score"
+            ],
+            "columns_read": [
+              "GEOID"
+            ],
+            "score_placeholder_columns_read": false
+          },
+          "feature_cache": {
+            "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/south-central-tx-overture-tract-summary.parquet",
+            "sha256": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746",
+            "columns_used": [
+              "overture_named_road_km_5070",
+              "overture_route_core_km",
+              "overture_route_county_km",
+              "overture_route_fm_rm_km",
+              "overture_route_interstate_km",
+              "overture_route_km",
+              "overture_route_plus_fm_rm_km",
+              "overture_route_state_km",
+              "overture_route_us_km"
+            ]
+          },
+          "roads": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-roads.parquet",
+          "roads_object_bytes": 299751270,
+          "acs": {
+            "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-census-acs-housing.parquet",
+            "object_bytes": 13758433,
+            "source_rows": 6010,
+            "official_geometries_used": 6003,
+            "extra_geometries_excluded": 7,
+            "columns_read": [
+              "GEOID",
+              "geometry"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "measure_after": {
+    "four_region_aggregates_recomputed": true,
+    "aggregates": {
+      "maricopa-az": {
+        "L_named_km": 22113.71284793831,
+        "L_route_km": 11466.55456309551,
+        "ratio": 1.928540323621719,
+        "band_pass": false
+      },
+      "northern-ca": {
+        "L_named_km": 12203.647742818603,
+        "L_route_km": 8116.742873591476,
+        "ratio": 1.503515379614183,
+        "band_pass": true
+      },
+      "eastern-ok": {
+        "L_named_km": 27944.02776408843,
+        "L_route_km": 24071.910964743845,
+        "ratio": 1.160856228033402,
+        "band_pass": true
+      },
+      "south-central-tx": {
+        "L_named_km": 118176.3816858997,
+        "L_route_km": 99894.08394454684,
+        "ratio": 1.1830168216117956,
+        "band_pass": true
+      }
+    },
+    "unexplained_rule_or_implementation_mismatches": 0,
+    "reasoned_pass_fail_per_rule": {
+      "maricopa-az": {
+        "ratio_in_band": "FAIL - outside the frozen 0.6-1.7 band; marked unresolved, band not relaxed",
+        "aggregates_reproduced": "PASS - within 1e-9 of the frozen audit and the frozen per-tract cache",
+        "membership_rules": "PASS - every distinct routes[].network string classified, agreement with the frozen audit is exact",
+        "deduplication": "PASS - one contribution per segment row; 10152 route-eligible segment rows, 0 duplicate segment ids, family columns overlap only for attribution",
+        "aggregation_formula": "PASS - sum(L_named)/sum(L_route) over official tracts, reproduced to 1e-9",
+        "numerator_only_share": "B-C = 10647.158 km of numerator-only excess over denominator-only length"
+      },
+      "northern-ca": {
+        "ratio_in_band": "PASS",
+        "aggregates_reproduced": "PASS - within 1e-9 of the frozen audit and the frozen per-tract cache",
+        "membership_rules": "PASS - every distinct routes[].network string classified, agreement with the frozen audit is exact",
+        "deduplication": "PASS - one contribution per segment row; 9374 route-eligible segment rows, 0 duplicate segment ids, family columns overlap only for attribution",
+        "aggregation_formula": "PASS - sum(L_named)/sum(L_route) over official tracts, reproduced to 1e-9",
+        "numerator_only_share": "B-C = 4086.905 km of numerator-only excess over denominator-only length"
+      },
+      "eastern-ok": {
+        "ratio_in_band": "PASS",
+        "aggregates_reproduced": "PASS - within 1e-9 of the frozen audit and the frozen per-tract cache",
+        "membership_rules": "PASS - every distinct routes[].network string classified, agreement with the frozen audit is exact",
+        "deduplication": "PASS - one contribution per segment row; 34763 route-eligible segment rows, 0 duplicate segment ids, family columns overlap only for attribution",
+        "aggregation_formula": "PASS - sum(L_named)/sum(L_route) over official tracts, reproduced to 1e-9",
+        "numerator_only_share": "B-C = 3872.117 km of numerator-only excess over denominator-only length"
+      },
+      "south-central-tx": {
+        "ratio_in_band": "PASS",
+        "aggregates_reproduced": "PASS - within 1e-9 of the frozen audit and the frozen per-tract cache",
+        "membership_rules": "PASS - every distinct routes[].network string classified, agreement with the frozen audit is exact",
+        "deduplication": "PASS - one contribution per segment row; 165977 route-eligible segment rows, 0 duplicate segment ids, family columns overlap only for attribution",
+        "aggregation_formula": "PASS - sum(L_named)/sum(L_route) over official tracts, reproduced to 1e-9",
+        "numerator_only_share": "B-C = 18282.298 km of numerator-only excess over denominator-only length"
+      }
+    }
+  }
+}
