@@ -1,0 +1,205 @@
+{
+  "all_scores_and_supports_finite_bounded_0_1": true,
+  "candidate_columns": [
+    "GEOID",
+    "region",
+    "urbanity",
+    "prior_candidate_id",
+    "prior_coverage_gap_score",
+    "neighbor_count_5km",
+    "population_support_5km",
+    "population_support_5km_missing",
+    "building_support_5km",
+    "building_support_5km_missing",
+    "neighbor_count_20km",
+    "population_support_20km",
+    "population_support_20km_missing",
+    "building_support_20km",
+    "building_support_20km_missing",
+    "density_context_support",
+    "density_context_support_missing",
+    "proposed_density_adjustment",
+    "candidate_delta",
+    "density_context_coverage_gap_score"
+  ],
+  "candidate_csv": "reports/candidates/density_context_candidate.csv",
+  "candidate_csv_sha256": "e4d57e62092a094386941f52778bfc342b95860370d603825918fac6205013ad",
+  "candidate_id": "DENSITY_C2_V1",
+  "candidate_rows": 9794,
+  "config_path": "config/density-context-preregistered.json",
+  "config_sha256": "497ce1280a8e13a5a575d80abc8078ba549851e3fba5f8f6385580ebe0ba803c",
+  "inputs_by_region": {
+    "eastern-ok": {
+      "overture_feature_cache": {
+        "official_projection_sha256": "56be6ebb63b956961f3af8f9a811b963365245efe70e1ec4987e48c7506ea15d",
+        "official_rows_matched_exact_order": true,
+        "path": "gap-estimator/features/eastern-ok-overture-tract-summary.parquet",
+        "rows": 1192,
+        "selected_columns": [
+          "GEOID",
+          "overture_buildings"
+        ]
+      },
+      "provided_acs_geometry": {
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "nonofficial_geometry_rows_used": 0,
+        "object_bytes": 3650879,
+        "official_geometries_used": 1192,
+        "official_wkb_projection_sha256": "15ee42fee6037b3575604375cdee7932285690f101f1be0c953298794d910cdb",
+        "projected_centroids_epsg5070_sha256": "892a690809a9a8048851910a692e449e8f9b2b43bddab2573d678b6409e8c906",
+        "source_rows": 1192,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-census-acs-housing.parquet"
+      },
+      "region_neighbor_domain": "exact official GEOID list for this region only",
+      "strata": {
+        "official_projection_sha256": "506a003a2c9df9919d8b541dbf6edbd5aed9b6582081c87a15c1a2e1c7c49e98",
+        "official_rows_used": 1192,
+        "other_rows_not_used": 0,
+        "path": "defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+        "selected_columns": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "ur_class"
+        ],
+        "table_rows": 1192
+      }
+    },
+    "maricopa-az": {
+      "overture_feature_cache": {
+        "official_projection_sha256": "ace8d1971d1e3679c1d662a652867b0e8844720896e8c3c27aabe598ea17b39b",
+        "official_rows_matched_exact_order": true,
+        "path": "gap-estimator/features/maricopa-az-overture-tract-summary.parquet",
+        "rows": 1593,
+        "selected_columns": [
+          "GEOID",
+          "overture_buildings"
+        ]
+      },
+      "provided_acs_geometry": {
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "nonofficial_geometry_rows_used": 0,
+        "object_bytes": 3457173,
+        "official_geometries_used": 1593,
+        "official_wkb_projection_sha256": "e265354c31cb9968cba7ecc175c17635529dfe364c7636f2edebde74e97afbc1",
+        "projected_centroids_epsg5070_sha256": "957563e920a240396ebb7cbb83703fcd55da364830571617684d47f5f7978939",
+        "source_rows": 1593,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-census-acs-housing.parquet"
+      },
+      "region_neighbor_domain": "exact official GEOID list for this region only",
+      "strata": {
+        "official_projection_sha256": "be747e93d34047045e621aae4f91651a47a2f63714fd936b0ca9a0ff49adc749",
+        "official_rows_used": 1593,
+        "other_rows_not_used": 0,
+        "path": "defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+        "selected_columns": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "ur_class"
+        ],
+        "table_rows": 1593
+      }
+    },
+    "northern-ca": {
+      "overture_feature_cache": {
+        "official_projection_sha256": "e8a4cb79e548eb24d979ec5c7aadc1db9f4bffd4113f739e1625d0ef2eaf99f7",
+        "official_rows_matched_exact_order": true,
+        "path": "gap-estimator/features/northern-ca-overture-tract-summary.parquet",
+        "rows": 591,
+        "selected_columns": [
+          "GEOID",
+          "overture_buildings"
+        ]
+      },
+      "provided_acs_geometry": {
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "nonofficial_geometry_rows_used": 0,
+        "object_bytes": 3037540,
+        "official_geometries_used": 591,
+        "official_wkb_projection_sha256": "8903a14553ff7c70cdbeeaa72fb028b4f1eae85dda91d20d12a97af5076c3ddb",
+        "projected_centroids_epsg5070_sha256": "0cc82efe807325322ccbc7b7db881c47f45dc2933ab6fbb3332a6caf3d99b8ca",
+        "source_rows": 591,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-census-acs-housing.parquet"
+      },
+      "region_neighbor_domain": "exact official GEOID list for this region only",
+      "strata": {
+        "official_projection_sha256": "3d8612cf5c249474a8e1d767be1bb954bab951d81969d79a86bc206b25e1247a",
+        "official_rows_used": 591,
+        "other_rows_not_used": 0,
+        "path": "defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+        "selected_columns": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "ur_class"
+        ],
+        "table_rows": 591
+      }
+    },
+    "south-central-tx": {
+      "overture_feature_cache": {
+        "official_projection_sha256": "3ea983f6e3646c68edd4ca762120ac660bd530af5c38cdcd1ee9e5af3a978b47",
+        "official_rows_matched_exact_order": true,
+        "path": "gap-estimator/features/south-central-tx-overture-tract-summary.parquet",
+        "rows": 6003,
+        "selected_columns": [
+          "GEOID",
+          "overture_buildings"
+        ]
+      },
+      "provided_acs_geometry": {
+        "columns_read": [
+          "GEOID",
+          "geometry"
+        ],
+        "nonofficial_geometry_rows_used": 0,
+        "object_bytes": 13758433,
+        "official_geometries_used": 6003,
+        "official_wkb_projection_sha256": "4af398cb0fd2b8551ec17e2e568401ef3f79c28e4e79513718bf745e7428959e",
+        "projected_centroids_epsg5070_sha256": "99e5df3e63ac075c46fc8936322df557966763fe84dcee722f11c991653d32d3",
+        "source_rows": 6010,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-census-acs-housing.parquet"
+      },
+      "region_neighbor_domain": "exact official GEOID list for this region only",
+      "strata": {
+        "official_projection_sha256": "d39043dad4d323e1c48ec8478e448539d607f638124e64fe32a30625ce3d9d96",
+        "official_rows_used": 6003,
+        "other_rows_not_used": 7,
+        "path": "defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+        "selected_columns": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "ur_class"
+        ],
+        "table_rows": 6010
+      }
+    }
+  },
+  "maximum_absolute_candidate_delta": 0.04719533172536923,
+  "no_upload": true,
+  "official_id_count": 9379,
+  "official_id_order_sha256": "945d8458e559d2314b295221e6dbe16ab7ce50f30a5cf01e628d443b5403c00b",
+  "prior_candidate_id": "C2",
+  "prior_candidate_sha256": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514",
+  "prior_official_prediction_projection_sha256": "8f4d83e8ced2784a807fcf208b48a30dcd4807690196c351ef063b3775599073",
+  "scope": {
+    "official_regions_only_for_neighbors": true,
+    "official_rows": 9379,
+    "template_only_region": "eastern-wa",
+    "template_only_rows": 415,
+    "template_order_exact": true
+  },
+  "template_id_order_sha256": "2e6d6b577ae863e2711fe203f299e4bc8db5a3d2aaa93fe3a660679dbd0e11f7",
+  "template_projection_sha256": "692a2ca7b66af02d874bfdedd7111aba4aa65346997497444f9e4728681701e6"
+}
