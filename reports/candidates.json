@@ -12,8 +12,8 @@
       "candidate_id": "C0",
       "name": "all-zero baseline",
       "artifact": "reports/candidates/C0_all_zero.csv",
-      "sha256": "7546520ee671aaaa10fabe3fd4f6edaa7b88a1a424c9957bac29dcf7a0810f73",
-      "rows": 9379,
+      "sha256": "0edf8140123e2135489e5728fd71bce6f1e28a97f447ca411ba45fdbc02bc214",
+      "rows": 9794,
       "columns": [
         "GEOID",
         "transport_gap",
@@ -22,7 +22,7 @@
         "coverage_gap_score"
       ],
       "pre_registered": true,
-      "description": "All score fields zero; target-RMS baseline.",
+      "description": "All score fields zero; target-RMS baseline. Eastern-WA template rows are unscored extras filled per eastern_wa_fill; no accuracy claim is made for those rows.",
       "column_checks": {
         "unique_columns": true,
         "all_rows_have_columns": true,
@@ -32,16 +32,29 @@
         "maricopa-az": 0.0,
         "northern-ca": 0.0,
         "eastern-ok": 0.0,
-        "south-central-tx": 0.0
+        "south-central-tx": 0.0,
+        "eastern-wa": 0.0
       },
-      "defined_rates": null
+      "defined_rates": null,
+      "eastern_wa_fill": {
+        "policy": "all-zero baseline; no eastern-WA feature or target inference",
+        "values": {
+          "transport_gap": 0.0,
+          "building_gap": 0.0,
+          "poi_gap": 0.0,
+          "coverage_gap_score": 0.0
+        },
+        "rows": 415,
+        "region": "eastern-wa",
+        "scored_target_claim": false
+      }
     },
     {
       "candidate_id": "C1",
       "name": "per-region v0 mean constants",
       "artifact": "reports/candidates/C1_region_constants.csv",
-      "sha256": "617b329b52c03dd12f5b06ab7d3dc880348e2cfdc45515347b76970e1df4c62e",
-      "rows": 9379,
+      "sha256": "dc2e368194b31408cb5c313fa8ce3f3fa59a1b5965bc2df8e4217bbc9e0c82e0",
+      "rows": 9794,
       "columns": [
         "GEOID",
         "transport_gap",
@@ -50,7 +63,7 @@
         "coverage_gap_score"
       ],
       "pre_registered": true,
-      "description": "Within each region all four official score columns equal that region's C2 coverage-score prediction mean.",
+      "description": "Within each region all four official score columns equal that region's C2 coverage-score prediction mean. Eastern-WA template rows are unscored extras filled per eastern_wa_fill; no accuracy claim is made for those rows.",
       "column_checks": {
         "unique_columns": true,
         "all_rows_have_columns": true,
@@ -60,7 +73,8 @@
         "maricopa-az": 0.196684352,
         "northern-ca": 0.153838999,
         "eastern-ok": 0.117341246,
-        "south-central-tx": 0.173366586
+        "south-central-tx": 0.173366586,
+        "eastern-wa": 0.16897616
       },
       "defined_rates": {
         "maricopa-az": {
@@ -98,15 +112,28 @@
           "ems_defined": 0.903215059,
           "schools_defined": 0.996668333,
           "cbp_defined": 0.999666833
-        }
+        },
+        "eastern-wa": null
+      },
+      "eastern_wa_fill": {
+        "policy": "all five score fields filled with the pooled mean C2 composite over the 9,379 official rows; no eastern-WA features",
+        "values": {
+          "transport_gap": 0.1689761598782756,
+          "building_gap": 0.1689761598782756,
+          "poi_gap": 0.1689761598782756,
+          "coverage_gap_score": 0.1689761598782756
+        },
+        "rows": 415,
+        "region": "eastern-wa",
+        "scored_target_claim": false
       }
     },
     {
       "candidate_id": "C2",
       "name": "component estimator v0",
       "artifact": "reports/candidates/C2_component_estimator_v0.csv",
-      "sha256": "0a2584b4a2d7c1c16bbce692accd9a47284669448b482a4b37a68cd68aff7d5c",
-      "rows": 9379,
+      "sha256": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514",
+      "rows": 9794,
       "columns": [
         "GEOID",
         "transport_gap",
@@ -115,7 +142,7 @@
         "coverage_gap_score"
       ],
       "pre_registered": true,
-      "description": "Official five score columns projected from the full component estimator output.",
+      "description": "Official five score columns projected from the full component estimator output. Eastern-WA template rows are unscored extras filled per eastern_wa_fill; no accuracy claim is made for those rows.",
       "column_checks": {
         "unique_columns": true,
         "all_rows_have_columns": true,
@@ -125,7 +152,8 @@
         "maricopa-az": 0.196684352,
         "northern-ca": 0.153838999,
         "eastern-ok": 0.117341246,
-        "south-central-tx": 0.173366586
+        "south-central-tx": 0.173366586,
+        "eastern-wa": 0.16897616
       },
       "defined_rates": {
         "maricopa-az": {
@@ -163,15 +191,28 @@
           "ems_defined": 0.903215059,
           "schools_defined": 0.996668333,
           "cbp_defined": 0.999666833
-        }
+        },
+        "eastern-wa": null
+      },
+      "eastern_wa_fill": {
+        "policy": "each score field filled with its unweighted four-region mean over the 9,379 official rows; no eastern-WA features",
+        "values": {
+          "transport_gap": 0.09682722322234288,
+          "building_gap": 0.0723800943190569,
+          "poi_gap": 0.2569898319976653,
+          "coverage_gap_score": 0.1689761598782756
+        },
+        "rows": 415,
+        "region": "eastern-wa",
+        "scored_target_claim": false
       }
     },
     {
       "candidate_id": "C3",
       "name": "denominator sensitivity x1.25",
       "artifact": "reports/candidates/C3_denominator_x125.csv",
-      "sha256": "589418abece58ad75ecf2fa1df9de84fb15a9e216b246bd5439d4f75ceb9795d",
-      "rows": 9379,
+      "sha256": "e5ee50f5c2cca149550f3408638d2b77431f6ed62cf104dfe8c07d8c8416f9e4",
+      "rows": 9794,
       "columns": [
         "GEOID",
         "transport_gap",
@@ -180,7 +221,7 @@
         "coverage_gap_score"
       ],
       "pre_registered": true,
-      "description": "Same v0 covariates and observed counts; multiply all expected-reference proxies by 1.25.",
+      "description": "Same v0 covariates and observed counts; multiply all expected-reference proxies by 1.25. Eastern-WA template rows are unscored extras filled per eastern_wa_fill; no accuracy claim is made for those rows.",
       "column_checks": {
         "unique_columns": true,
         "all_rows_have_columns": true,
@@ -190,7 +231,8 @@
         "maricopa-az": 0.256571148,
         "northern-ca": 0.203286274,
         "eastern-ok": 0.154567665,
-        "south-central-tx": 0.215741529
+        "south-central-tx": 0.215741529,
+        "eastern-wa": 0.214116759
       },
       "defined_rates": {
         "maricopa-az": {
@@ -228,10 +270,44 @@
           "ems_defined": 0.914542729,
           "schools_defined": 0.998001,
           "cbp_defined": 0.999666833
-        }
+        },
+        "eastern-wa": null
+      },
+      "eastern_wa_fill": {
+        "policy": "each score field filled with its unweighted four-region mean over the 9,379 official rows; no eastern-WA features",
+        "values": {
+          "transport_gap": 0.21042071662360717,
+          "building_gap": 0.1210667800401534,
+          "poi_gap": 0.27915860146744514,
+          "coverage_gap_score": 0.21411675888723994
+        },
+        "rows": 415,
+        "region": "eastern-wa",
+        "scored_target_claim": false
       }
     }
   ],
   "feature_source": "provided Overture buildings/roads/POIs plus provided ACS housing geometries and strata covariates",
-  "estimator_version": "v0"
+  "estimator_version": "v0",
+  "platform_template": {
+    "source": "$COMPETITION_WORKSPACE/SampleSubmission.csv",
+    "sha256": "32fb5c2984317d4abf8a98b88b7bb9d16e9eef1cda9a954c37da0a2cdd367f40",
+    "rows": 9794,
+    "columns_read": [
+      "GEOID",
+      "region"
+    ],
+    "sample_score_placeholders_read": false,
+    "region_counts": {
+      "maricopa-az": 1593,
+      "northern-ca": 591,
+      "eastern-ok": 1192,
+      "south-central-tx": 6003,
+      "eastern-wa": 415
+    },
+    "official_scored_region_count": 9379,
+    "extra_template_rows": 415,
+    "extra_template_region": "eastern-wa",
+    "interpretation": "Use the steward-confirmed 9,794-row Data-page template for platform processing. The authoritative four regional samples still define 9,379 scored IDs; the additional eastern-WA rows are template-only and filled with documented proxies, not target evidence."
+  }
 }

@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Validate and ledger a pre-registered Zindi candidate; dry-run is the default.
+"""Validate 9,379 official-region candidates locally; dry-run is the default.
 
-This lane-safe tool does not implement browser/API upload. Live mode is refused;
-operators use the official portal only after membership and authorization checks.
+This historical validator does not implement browser/API upload. Live mode is
+retired and refused; platform uploads must use the shared orchestrator tool.
+It intentionally validates the four authoritative regional samples, not the
+steward-directed 9,794-row Data-page platform template.
 """
 from __future__ import annotations
 
@@ -144,7 +146,7 @@ def main() -> int:
     modes.add_argument("--dry-run", action="store_true", default=True,
                        help="validate and ledger only (default)")
     modes.add_argument("--submit", action="store_true",
-                       help="refused: live upload must be done through reviewed official portal")
+                       help="retired: live upload must use the shared orchestrator tool")
     args = parser.parse_args()
 
     # The presence/path of the secret file is only inspected for live-mode
@@ -153,7 +155,7 @@ def main() -> int:
     if args.submit:
         configured = bool(token_file and Path(token_file).is_file())
         reason = ("ZINDI_AUTH_TOKEN_FILE is not configured or points to no file" if not configured
-                  else "live upload is intentionally disabled in this dry-run helper")
+                  else "live upload is retired here; use the shared orchestrator submit tool")
         print(f"STOP: {reason}; no token was read and no upload was attempted.", file=sys.stderr)
         return 3
 

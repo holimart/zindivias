@@ -1,0 +1,291 @@
+{
+  "method": "full platform-template ID completion; exact authoritative 9,379 candidate rows preserved; 415 eastern-WA rows use explicit pooled fills",
+  "input_template": {
+    "path": "$COMPETITION_WORKSPACE/SampleSubmission.csv",
+    "sha256": "32fb5c2984317d4abf8a98b88b7bb9d16e9eef1cda9a954c37da0a2cdd367f40",
+    "rows": 9794,
+    "columns_read": [
+      "GEOID",
+      "region"
+    ],
+    "score_placeholders_read": false,
+    "region_counts": {
+      "maricopa-az": 1593,
+      "northern-ca": 591,
+      "eastern-ok": 1192,
+      "south-central-tx": 6003,
+      "eastern-wa": 415
+    }
+  },
+  "official_samples": {
+    "maricopa-az": {
+      "rows": 1593,
+      "sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31"
+    },
+    "northern-ca": {
+      "rows": 591,
+      "sha256": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902"
+    },
+    "eastern-ok": {
+      "rows": 1192,
+      "sha256": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4"
+    },
+    "south-central-tx": {
+      "rows": 6003,
+      "sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e"
+    }
+  },
+  "official_ids": 9379,
+  "extra_ids": {
+    "count": 415,
+    "region": "eastern-wa",
+    "scored_target_claim": false
+  },
+  "manifest": {
+    "path": "reports/candidates.json",
+    "sha256": "3e51dd1e12ecc5bfaba4a47eb2cc3470ab47f695062dcc2b1f1dec1e4c45b974"
+  },
+  "candidate_results": {
+    "C0": {
+      "artifact": "reports/candidates/C0_all_zero.csv",
+      "sha256": "0edf8140123e2135489e5728fd71bce6f1e28a97f447ca411ba45fdbc02bc214",
+      "rows": 9794,
+      "unique_ids": 9794,
+      "exact_template_order_once": true,
+      "validity_rate": 1.0,
+      "per_region_rows": {
+        "maricopa-az": 1593,
+        "northern-ca": 591,
+        "eastern-ok": 1192,
+        "south-central-tx": 6003,
+        "eastern-wa": 415
+      },
+      "per_region_means": {
+        "maricopa-az": {
+          "transport_gap": 0.0,
+          "building_gap": 0.0,
+          "poi_gap": 0.0,
+          "coverage_gap_score": 0.0
+        },
+        "northern-ca": {
+          "transport_gap": 0.0,
+          "building_gap": 0.0,
+          "poi_gap": 0.0,
+          "coverage_gap_score": 0.0
+        },
+        "eastern-ok": {
+          "transport_gap": 0.0,
+          "building_gap": 0.0,
+          "poi_gap": 0.0,
+          "coverage_gap_score": 0.0
+        },
+        "south-central-tx": {
+          "transport_gap": 0.0,
+          "building_gap": 0.0,
+          "poi_gap": 0.0,
+          "coverage_gap_score": 0.0
+        },
+        "eastern-wa": {
+          "transport_gap": 0.0,
+          "building_gap": 0.0,
+          "poi_gap": 0.0,
+          "coverage_gap_score": 0.0
+        }
+      },
+      "official_source_projection_sha256": "7546520ee671aaaa10fabe3fd4f6edaa7b88a1a424c9957bac29dcf7a0810f73",
+      "eastern_wa_fill": {
+        "policy": "all-zero baseline; no eastern-WA feature or target inference",
+        "values": {
+          "transport_gap": 0.0,
+          "building_gap": 0.0,
+          "poi_gap": 0.0,
+          "coverage_gap_score": 0.0
+        },
+        "rows": 415,
+        "region": "eastern-wa",
+        "scored_target_claim": false
+      }
+    },
+    "C1": {
+      "artifact": "reports/candidates/C1_region_constants.csv",
+      "sha256": "dc2e368194b31408cb5c313fa8ce3f3fa59a1b5965bc2df8e4217bbc9e0c82e0",
+      "rows": 9794,
+      "unique_ids": 9794,
+      "exact_template_order_once": true,
+      "validity_rate": 1.0,
+      "per_region_rows": {
+        "maricopa-az": 1593,
+        "northern-ca": 591,
+        "eastern-ok": 1192,
+        "south-central-tx": 6003,
+        "eastern-wa": 415
+      },
+      "per_region_means": {
+        "maricopa-az": {
+          "transport_gap": 0.196684352,
+          "building_gap": 0.196684352,
+          "poi_gap": 0.196684352,
+          "coverage_gap_score": 0.196684352
+        },
+        "northern-ca": {
+          "transport_gap": 0.153838999,
+          "building_gap": 0.153838999,
+          "poi_gap": 0.153838999,
+          "coverage_gap_score": 0.153838999
+        },
+        "eastern-ok": {
+          "transport_gap": 0.117341246,
+          "building_gap": 0.117341246,
+          "poi_gap": 0.117341246,
+          "coverage_gap_score": 0.117341246
+        },
+        "south-central-tx": {
+          "transport_gap": 0.173366586,
+          "building_gap": 0.173366586,
+          "poi_gap": 0.173366586,
+          "coverage_gap_score": 0.173366586
+        },
+        "eastern-wa": {
+          "transport_gap": 0.16897616,
+          "building_gap": 0.16897616,
+          "poi_gap": 0.16897616,
+          "coverage_gap_score": 0.16897616
+        }
+      },
+      "official_source_projection_sha256": "617b329b52c03dd12f5b06ab7d3dc880348e2cfdc45515347b76970e1df4c62e",
+      "eastern_wa_fill": {
+        "policy": "all five score fields filled with the pooled mean C2 composite over the 9,379 official rows; no eastern-WA features",
+        "values": {
+          "transport_gap": 0.1689761598782756,
+          "building_gap": 0.1689761598782756,
+          "poi_gap": 0.1689761598782756,
+          "coverage_gap_score": 0.1689761598782756
+        },
+        "rows": 415,
+        "region": "eastern-wa",
+        "scored_target_claim": false
+      }
+    },
+    "C2": {
+      "artifact": "reports/candidates/C2_component_estimator_v0.csv",
+      "sha256": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514",
+      "rows": 9794,
+      "unique_ids": 9794,
+      "exact_template_order_once": true,
+      "validity_rate": 1.0,
+      "per_region_rows": {
+        "maricopa-az": 1593,
+        "northern-ca": 591,
+        "eastern-ok": 1192,
+        "south-central-tx": 6003,
+        "eastern-wa": 415
+      },
+      "per_region_means": {
+        "maricopa-az": {
+          "transport_gap": 0.153597574,
+          "building_gap": 0.049049862,
+          "poi_gap": 0.312851339,
+          "coverage_gap_score": 0.196684352
+        },
+        "northern-ca": {
+          "transport_gap": 0.119173423,
+          "building_gap": 0.046568799,
+          "poi_gap": 0.23368216,
+          "coverage_gap_score": 0.153838999
+        },
+        "eastern-ok": {
+          "transport_gap": 0.070506753,
+          "building_gap": 0.019220867,
+          "poi_gap": 0.199346205,
+          "coverage_gap_score": 0.117341246
+        },
+        "south-central-tx": {
+          "transport_gap": 0.084788614,
+          "building_gap": 0.091668006,
+          "poi_gap": 0.255906816,
+          "coverage_gap_score": 0.173366586
+        },
+        "eastern-wa": {
+          "transport_gap": 0.096827223,
+          "building_gap": 0.072380094,
+          "poi_gap": 0.256989832,
+          "coverage_gap_score": 0.16897616
+        }
+      },
+      "official_source_projection_sha256": "0a2584b4a2d7c1c16bbce692accd9a47284669448b482a4b37a68cd68aff7d5c",
+      "eastern_wa_fill": {
+        "policy": "each score field filled with its unweighted four-region mean over the 9,379 official rows; no eastern-WA features",
+        "values": {
+          "transport_gap": 0.09682722322234288,
+          "building_gap": 0.0723800943190569,
+          "poi_gap": 0.2569898319976653,
+          "coverage_gap_score": 0.1689761598782756
+        },
+        "rows": 415,
+        "region": "eastern-wa",
+        "scored_target_claim": false
+      }
+    },
+    "C3": {
+      "artifact": "reports/candidates/C3_denominator_x125.csv",
+      "sha256": "e5ee50f5c2cca149550f3408638d2b77431f6ed62cf104dfe8c07d8c8416f9e4",
+      "rows": 9794,
+      "unique_ids": 9794,
+      "exact_template_order_once": true,
+      "validity_rate": 1.0,
+      "per_region_rows": {
+        "maricopa-az": 1593,
+        "northern-ca": 591,
+        "eastern-ok": 1192,
+        "south-central-tx": 6003,
+        "eastern-wa": 415
+      },
+      "per_region_means": {
+        "maricopa-az": {
+          "transport_gap": 0.302952455,
+          "building_gap": 0.1049438,
+          "poi_gap": 0.339054537,
+          "coverage_gap_score": 0.256571148
+        },
+        "northern-ca": {
+          "transport_gap": 0.234956192,
+          "building_gap": 0.098016247,
+          "poi_gap": 0.256313313,
+          "coverage_gap_score": 0.203286274
+        },
+        "eastern-ok": {
+          "transport_gap": 0.185832123,
+          "building_gap": 0.03552708,
+          "poi_gap": 0.216317537,
+          "coverage_gap_score": 0.154567665
+        },
+        "south-central-tx": {
+          "transport_gap": 0.188332774,
+          "building_gap": 0.144600029,
+          "poi_gap": 0.2779915,
+          "coverage_gap_score": 0.215741529
+        },
+        "eastern-wa": {
+          "transport_gap": 0.210420717,
+          "building_gap": 0.12106678,
+          "poi_gap": 0.279158601,
+          "coverage_gap_score": 0.214116759
+        }
+      },
+      "official_source_projection_sha256": "589418abece58ad75ecf2fa1df9de84fb15a9e216b246bd5439d4f75ceb9795d",
+      "eastern_wa_fill": {
+        "policy": "each score field filled with its unweighted four-region mean over the 9,379 official rows; no eastern-WA features",
+        "values": {
+          "transport_gap": 0.21042071662360717,
+          "building_gap": 0.1210667800401534,
+          "poi_gap": 0.27915860146744514,
+          "coverage_gap_score": 0.21411675888723994
+        },
+        "rows": 415,
+        "region": "eastern-wa",
+        "scored_target_claim": false
+      }
+    }
+  },
+  "no_label_caveat": "No labels, removed references, external data, or sample score placeholders were used. Eastern-WA rows are outside the official four-region scored list; pooled fills only satisfy the steward-directed platform template and are not target estimates or accuracy claims."
+}

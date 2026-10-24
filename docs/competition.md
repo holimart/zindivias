@@ -4,7 +4,7 @@
 - **Deadline:** 2026-10-31 23:59 UTC
 - **Eligibility/team:** open to all; up to four people per team.
 - **Prizes:** leaderboard 1st/2nd/3rd: $4,500/$2,500/$1,500; Best Bias Discovery: $1,000; Best Documentation: $500. The two special prizes are judged from the methodology writeup, not a separate leaderboard.
-- **Rules source:** `$COMPETITION_WORKSPACE/RULES.md`, verbatim official page text captured 2026-10-24. This file and the official per-region sample files supersede earlier plan text and the stale workspace-level `SampleSubmission.csv`. Re-check the live official rules before any future submission.
+- **Rules source:** `$COMPETITION_WORKSPACE/RULES.md`, verbatim official page text captured 2026-10-24. The official per-region samples define the 9,379 scored IDs and supersede the Data-page template as a scoring-scope definition. A later steward directive uses that 9,794-row template only for platform processing; see the documented full-ID protocol below. Re-check the live official rules before any future submission.
 
 ## Objective and scoring
 
@@ -32,7 +32,7 @@ The official scored list is the four public bucket files `reference/<region>/<re
 
 All four authoritative files use the exact header `GEOID,transport_gap,building_gap,poi_gap,coverage_gap_score`. Read `GEOID` as text to retain leading zeros. The official page requires `GEOID` and `coverage_gap_score`, and says component scores may be included; the frozen local candidates use the five-column authoritative sample header. Maricopa includes 1,592 Arizona tracts plus New Mexico tract `35023970000`.
 
-The existing workspace-level `SampleSubmission.csv` is a conflicting legacy contract: 9,794 unique rows, 17 columns, and 415 additional `eastern-wa` GEOIDs. Reconciliation finds all 9,379 official IDs in that file and no official-only IDs; the exact 415 legacy-only IDs are listed in `reports/legacy-only-sample-ids.csv`, with the region/count table at `reports/sample-id-reconciliation.csv`. The legacy file also has `region` and component-defined columns not present in the official samples. A prior steward-recorded processing failure said Zindi expected the 415 `eastern-wa` IDs; it did not establish a corrected official column contract. **The actual platform contract is unresolved. Do not upload, infer scores for extra IDs, or change the scored-ID validator until the steward resolves this conflict.** Local validation must use the 9,379 official IDs and the official five-column schema, not legacy assumptions.
+The workspace-level `SampleSubmission.csv` has 9,794 unique rows, 17 columns, and 415 additional `eastern-wa` GEOIDs. The four official regional samples still define the 9,379 scored tracts; the eastern-WA rows are outside those regions and no eastern-WA feature inputs are present. The steward's 2026-10-24 `bias-bounty-full-id-candidates` directive reports that Zindi processing requires the full Data-page template. For that platform-processing path, C0-C3 are therefore extended to the template order while preserving all 9,379 official-region values byte-for-byte. Only `GEOID` and `region` are read from the legacy template; score placeholders are ignored. The 415 extra rows use the candidate-specific documented pooled fill in `reports/full-id-candidate-audit.json`; these are template-completion values, not labelled or accuracy-validated scores. This operational format does not redefine the official scored list, authorize target reconstruction, or permit external/reference data.
 
 Reproduce the contract audit from the competition repo:
 
@@ -51,7 +51,7 @@ It reads only GEOIDs and headers from the samples; dummy sample score values are
 - Maximum 10 submissions per day and 300 total. A processing failure does not count against the daily limit or receive a score.
 - Use the authoritative per-region lists for every local candidate check. Fill every included score field; blanks are rejected. The score field is required and component score columns are optional under the official rules.
 - Every submission automatically receives an equity Bias Scorecard. It does not affect the leaderboard rank; it reports five equity measures across urban/rural, SVI, CVI, tribal, and hazard-exposure strata.
-- No scored upload has been authorized after the sample-contract conflict was discovered. `scripts/submit_zindi.py` is a local validator/dry-run tool and refuses live submission. Resolve the platform contract with the steward before any upload.
+- `scripts/build_full_id_candidates.py` and `reports/full-id-candidate-audit.json` reproduce and validate the steward-directed 9,794-row platform template, including exact IDs/order, finite bounded fields, candidate hashes, official-sample lineage, and eastern-WA fill policy. The local `scripts/submit_zindi.py` remains a dry-run-only validator for the official 9,379-row contract and refuses live submission. All live uploads must go only through `$ORCHESTRATOR_ROOT/scripts/zindi_submit.py`; the full-ID candidate bundle is not an accuracy claim, and the official scored-region scope remains 9,379 IDs.
 
 ## Data use, tooling, and prizes
 
