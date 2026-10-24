@@ -575,7 +575,8 @@ def run(workspace: Path, candidate_path: Path, manifest_path: Path, report_path:
                             "sha256": sha256_file(CONFIG_PATH),
                             "registered_before_field_presence_measurement": True},
         "measure_before": {
-            "schema_missingness_summary_previously_available": False,
+            "cross_theme_optional_field_presence_matrix_previously_available": False,
+            "prior_partial_attribute_audits": "Focused building morphology/source and POI confidence/category audits report selected fields only; no complete optional-field presence/status matrix across the three themes and four regions was available.",
             "baseline": "Frozen C2 component-estimator-v0 coverage_gap_score, official 9,379 rows only; other candidate columns and eastern-WA template rows were not used.",
             "baseline_C2_moments_by_region_and_all": baseline_grouped,
             "C2_input": c2_metadata,
