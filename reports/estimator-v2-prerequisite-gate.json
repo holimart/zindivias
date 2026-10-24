@@ -1,0 +1,57 @@
+{
+  "backlog_item": "bias-est-v2-assembly-probe",
+  "state": "blocked",
+  "reason_code": "required_dependencies_not_completed",
+  "decision": "Do not assemble, preregister, or upload a v2 probe until the declared prerequisites produce their required outputs. Without region target means and validated route/facility-miss features, an assembled candidate would not meet the selected item's stated mechanism or calibration requirement.",
+  "required_dependencies_snapshot": [
+    {
+      "slug": "bias-probe-region-means",
+      "orchestrator_status": "open",
+      "required_for_v2": "measured per-region target means and global mean, including closure check",
+      "expected_artifacts_present": false,
+      "evidence": "No scripts/build_region_probes.py, no Phase 3 region-means results in reports/lb-score-algebra.json, and no region probe submissions are recorded in reports/submissions.jsonl."
+    },
+    {
+      "slug": "bias-est-transport-route-ref",
+      "orchestrator_status": "open",
+      "required_for_v2": "provided Overture route-reference transport feature and definedness audit",
+      "expected_artifacts_present": false,
+      "evidence": "No reports/transport-route-ref-audit.json or route-network feature cache is present; scripts/estimate_gaps.py remains the v0 estimator."
+    },
+    {
+      "slug": "bias-est-facility-miss-model",
+      "orchestrator_status": "open",
+      "required_for_v2": "facility-miss POI expectation model and its per-cell audit",
+      "expected_artifacts_present": false,
+      "evidence": "No reports/poi-facility-miss-audit.json or v2 POI implementation is present; scripts/estimate_gaps.py remains the v0 estimator."
+    }
+  ],
+  "repository_state_evidence": {
+    "existing_candidate_manifest_ids": ["C0", "C1", "C2", "C3", "P4", "P5", "P6"],
+    "v2_manifest_entry_present": false,
+    "v2_candidate_files_present": false,
+    "estimator_v2_audit_present": false,
+    "phase_4_preregistration_present": false,
+    "baseline_measure_before": {
+      "C2_inferred_E_py": 0.004396101562947799,
+      "C2_uncentred_correlation_proxy": 0.17858516630602533,
+      "P5_unconstrained_detail_beta": -0.2181321596482996,
+      "source": "reports/lb-score-algebra.json"
+    },
+    "baseline_candidate_sha256": {
+      "C2_component_estimator_v0.csv": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514",
+      "P4_c1_shrink_alpha.csv": "8b329802d882ea4bdff2bfd8c465c160d6ffd9269cfbe28dce8be9e702b07d37",
+      "P5_region_shrink_residual.csv": "9d5ad1d05bedfe5da23a39d9a4f6902217c2711da8fa0b408d992f196bb93b4b",
+      "P6_global_constant.csv": "68851dd2fee88f229bee08466d342f14313fa75e84bf42867baf28995445f6b3"
+    }
+  },
+  "submission_safeguards": {
+    "v2_candidate_preregistered": false,
+    "live_upload_attempted": false,
+    "reason": "All three required dependencies are open; no valid v2 artifact/prediction exists to register or dry-run.",
+    "scored_candidate_files_modified": false,
+    "labels_or_removed_reference_layers_used": false,
+    "template_score_placeholders_used": false
+  },
+  "next_step": "Complete the separately dispatched region-means, route-reference, and facility-miss prerequisite work; then derive the v2 affine-shrink beta from the resulting score algebra, preregister at most two hashed candidates with forecasts, and upload only through the shared orchestrator after all validation gates pass."
+}
