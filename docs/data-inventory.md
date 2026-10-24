@@ -40,6 +40,10 @@ Local checksums (SHA-256) from the authorized workspace:
 - The sample also contains 415 `eastern-wa` rows, outside the four requested package regions; these were not included in the bucket inventory or join acceptance.
 - Across the four requested sample regions: 9,379/9,379 IDs matched; zero unmatched. South-central Texas has seven additional ACS tracts not represented in its sample.
 
+## Current authoritative scored samples (2026-10-24 rules update)
+
+The official per-region sample files under `reference/<region>/<region>-sample-submission.csv` supersede the earlier workspace-level `SampleSubmission.csv` (9,794 rows, which includes 415 eastern-WA records outside the scored regions). The authoritative files have columns `GEOID, transport_gap, building_gap, poi_gap, coverage_gap_score` and exactly 9,379 rows total: Maricopa 1,593, Northern California 591, Eastern Oklahoma 1,192, and South-Central Texas 6,003. GEOID is read as text. For the defined-flag screen, these samples and the four matching `strata-tract-table.parquet` files were copied to `$COMPETITION_WORKSPACE/defined-flags-inputs`; byte sizes and SHA-256 hashes are in `reports/defined-flag-audit.json`. No sample score columns are used as labels.
+
 ## Parquet object inventory
 
 Each row gives exact S3 object, bytes, row groups, rows, region, Arrow schema and GeoParquet geometry metadata (when present). `geometry` is reported as the metadata column and encoding/type/bounds; non-spatial tables show `—`.
