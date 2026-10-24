@@ -1,0 +1,450 @@
+{
+  "all_candidate_adjustments_at_most_0_05": true,
+  "all_candidate_values_finite_and_bounded": true,
+  "builder_script_sha256": "66d10ab683b28c33c61b4fc720abe76f64b19d64c892c531960d52eeeebc387d",
+  "candidate_columns": [
+    "GEOID",
+    "region",
+    "urban_rural",
+    "overture_road_km",
+    "overture_named_road_km_5070",
+    "overture_route_km",
+    "route_reference_transport_gap",
+    "route_reference_transport_defined",
+    "topology_defined",
+    "connector_nodes",
+    "unique_local_edges",
+    "raw_local_adjacencies",
+    "duplicate_adjacencies_collapsed",
+    "cross_tract_adjacencies_touching_tract",
+    "connected_components",
+    "isolated_components_singleton",
+    "isolated_connector_nodes_degree_zero",
+    "dead_end_nodes_degree_one",
+    "dead_end_node_fraction",
+    "mean_node_degree",
+    "median_node_degree",
+    "maximum_node_degree",
+    "largest_component_nodes",
+    "largest_component_node_share",
+    "fragmentation",
+    "v0_transport_gap",
+    "v0_transport_defined",
+    "requested_adjustment",
+    "candidate_adjustment",
+    "topology_transport_gap",
+    "topology_transport_defined",
+    "candidate_id"
+  ],
+  "candidate_csv": "reports/candidates/road_topology_candidate.csv",
+  "candidate_csv_sha256": "612c2080c3d470fbcdc0cd752cd26847da05a35bf5d245c0b1599134cc82fda7",
+  "candidate_id": "ROAD_TOPOLOGY_ROUTE_REF_V1",
+  "candidate_rows": 9379,
+  "input_metadata_by_region": {
+    "eastern-ok": {
+      "edge_case_counts": {
+        "both_endpoints_outside_adjacencies": 8,
+        "connector_adjacencies": 889485,
+        "connector_occurrences": 1409820,
+        "connector_points_assigned_to_official_sample": 1409602,
+        "connector_points_outside_official_sample": 218,
+        "cross_tract_adjacencies": 35740,
+        "one_endpoint_in_sample_adjacencies": 218,
+        "segments_seen": 520550,
+        "segments_skipped_invalid_or_non_linestring_geometry": 215,
+        "valid_segments": 520335,
+        "within_tract_adjacencies": 853519
+      },
+      "official_sample": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "ordered_geoid_sha256": "d1886fe60e412888bc5dbc1057f918eb840caa40936037f45bce9ce1c9169964",
+        "path": "samples/eastern-ok-sample-submission.csv",
+        "rows": 1192
+      },
+      "provided_acs_geometry": {
+        "object_bytes": 3650879,
+        "row_groups": 1,
+        "rows": 1192,
+        "selected_column_compressed_bytes": 3612768,
+        "selected_columns": [
+          "GEOID",
+          "geometry"
+        ],
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-census-acs-housing.parquet"
+      },
+      "provided_overture_roads": {
+        "columns_read": [
+          "class",
+          "connectors",
+          "geometry"
+        ],
+        "object_bytes": 82239229,
+        "row_groups": 16,
+        "selected_column_compressed_bytes": {
+          "class": 97575,
+          "connectors": 21007599,
+          "geometry": 28212031
+        },
+        "source_rows": 520550,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-roads.parquet"
+      },
+      "region": "eastern-ok",
+      "segments_by_class": {
+        "motorway": 6780,
+        "primary": 15094,
+        "residential": 376535,
+        "secondary": 28055,
+        "tertiary": 38406,
+        "trunk": 9507,
+        "unclassified": 46173
+      },
+      "unique_connector_ids_encountered": 760335,
+      "within_package_boundary_adjacencies_with_one_endpoint_unassigned": 218
+    },
+    "maricopa-az": {
+      "edge_case_counts": {
+        "both_endpoints_outside_adjacencies": 5,
+        "connector_adjacencies": 856152,
+        "connector_occurrences": 1350498,
+        "connector_points_assigned_to_official_sample": 1350229,
+        "connector_points_outside_official_sample": 269,
+        "cross_tract_adjacencies": 31436,
+        "one_endpoint_in_sample_adjacencies": 263,
+        "segments_seen": 494492,
+        "segments_skipped_invalid_or_non_linestring_geometry": 146,
+        "valid_segments": 494346,
+        "within_tract_adjacencies": 824448
+      },
+      "official_sample": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "ordered_geoid_sha256": "f5dee76799fa137848f0fe7b3cbde36cbeed06ee372957e6df68ee3e526f30d5",
+        "path": "samples/maricopa-az-sample-submission.csv",
+        "rows": 1593
+      },
+      "provided_acs_geometry": {
+        "object_bytes": 3457173,
+        "row_groups": 1,
+        "rows": 1593,
+        "selected_column_compressed_bytes": 3409661,
+        "selected_columns": [
+          "GEOID",
+          "geometry"
+        ],
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-census-acs-housing.parquet"
+      },
+      "provided_overture_roads": {
+        "columns_read": [
+          "class",
+          "connectors",
+          "geometry"
+        ],
+        "object_bytes": 80052206,
+        "row_groups": 17,
+        "selected_column_compressed_bytes": {
+          "class": 82128,
+          "connectors": 20231561,
+          "geometry": 29036826
+        },
+        "source_rows": 494492,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-roads.parquet"
+      },
+      "region": "maricopa-az",
+      "segments_by_class": {
+        "motorway": 5621,
+        "primary": 17520,
+        "residential": 369076,
+        "secondary": 30275,
+        "tertiary": 46527,
+        "trunk": 4100,
+        "unclassified": 21373
+      },
+      "unique_connector_ids_encountered": 730955,
+      "within_package_boundary_adjacencies_with_one_endpoint_unassigned": 263
+    },
+    "northern-ca": {
+      "edge_case_counts": {
+        "both_endpoints_outside_adjacencies": 10,
+        "connector_adjacencies": 342400,
+        "connector_occurrences": 533859,
+        "connector_points_assigned_to_official_sample": 533402,
+        "connector_points_outside_official_sample": 457,
+        "cross_tract_adjacencies": 13055,
+        "one_endpoint_in_sample_adjacencies": 449,
+        "segments_seen": 191836,
+        "segments_skipped_invalid_or_non_linestring_geometry": 377,
+        "valid_segments": 191459,
+        "within_tract_adjacencies": 328886
+      },
+      "official_sample": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "ordered_geoid_sha256": "84c4bc3c03900cb37c5e6afbfbb7dde3c49849a68475b2bd5fdea3096ee3c915",
+        "path": "samples/northern-ca-sample-submission.csv",
+        "rows": 591
+      },
+      "provided_acs_geometry": {
+        "object_bytes": 3037540,
+        "row_groups": 1,
+        "rows": 591,
+        "selected_column_compressed_bytes": 3016786,
+        "selected_columns": [
+          "GEOID",
+          "geometry"
+        ],
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-census-acs-housing.parquet"
+      },
+      "provided_overture_roads": {
+        "columns_read": [
+          "class",
+          "connectors",
+          "geometry"
+        ],
+        "object_bytes": 43515963,
+        "row_groups": 9,
+        "selected_column_compressed_bytes": {
+          "class": 38132,
+          "connectors": 8352250,
+          "geometry": 23040783
+        },
+        "source_rows": 191836,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-roads.parquet"
+      },
+      "region": "northern-ca",
+      "segments_by_class": {
+        "motorway": 3291,
+        "primary": 6552,
+        "residential": 135280,
+        "secondary": 13866,
+        "tertiary": 20501,
+        "trunk": 2341,
+        "unclassified": 10005
+      },
+      "unique_connector_ids_encountered": 304024,
+      "within_package_boundary_adjacencies_with_one_endpoint_unassigned": 449
+    },
+    "south-central-tx": {
+      "edge_case_counts": {
+        "both_endpoints_outside_adjacencies": 3,
+        "connector_adjacencies": 3260709,
+        "connector_occurrences": 5197369,
+        "connector_points_assigned_to_official_sample": 5196722,
+        "connector_points_outside_official_sample": 647,
+        "cross_tract_adjacencies": 165587,
+        "one_endpoint_in_sample_adjacencies": 647,
+        "segments_seen": 1937009,
+        "segments_skipped_invalid_or_non_linestring_geometry": 349,
+        "valid_segments": 1936660,
+        "within_tract_adjacencies": 3094472
+      },
+      "official_sample": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "ordered_geoid_sha256": "10c6cef055d79af255b9a6890c1896565ffe8884c756815c5474ff7d6633883c",
+        "path": "samples/south-central-tx-sample-submission.csv",
+        "rows": 6003
+      },
+      "provided_acs_geometry": {
+        "object_bytes": 13758433,
+        "row_groups": 1,
+        "rows": 6010,
+        "selected_column_compressed_bytes": 13587215,
+        "selected_columns": [
+          "GEOID",
+          "geometry"
+        ],
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-census-acs-housing.parquet"
+      },
+      "provided_overture_roads": {
+        "columns_read": [
+          "class",
+          "connectors",
+          "geometry"
+        ],
+        "object_bytes": 299751270,
+        "row_groups": 60,
+        "selected_column_compressed_bytes": {
+          "class": 362223,
+          "connectors": 75951503,
+          "geometry": 101630089
+        },
+        "source_rows": 1937009,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-roads.parquet"
+      },
+      "region": "south-central-tx",
+      "segments_by_class": {
+        "motorway": 28983,
+        "primary": 71729,
+        "residential": 1335646,
+        "secondary": 219808,
+        "tertiary": 192909,
+        "trunk": 33270,
+        "unclassified": 54664
+      },
+      "unique_connector_ids_encountered": 2739968,
+      "within_package_boundary_adjacencies_with_one_endpoint_unassigned": 647
+    }
+  },
+  "max_candidate_adjustment": 0.04357864357864358,
+  "no_upload": true,
+  "official_ordered_geoid_sha256": "b04a211263a9ef61d71ba242a282487411ef6258e458ed258857d270d636fda8",
+  "preregistration_config": "config/road-topology-preregistered.json",
+  "preregistration_config_sha256": "ddecb49294d808612b4d0cccd7c8854b0d7ef7de4c63662cb7db3c6db8ced377",
+  "route_cache_metadata_by_region": {
+    "eastern-ok": {
+      "columns_read": [
+        "GEOID",
+        "overture_road_km",
+        "overture_named_road_km_5070",
+        "overture_route_km"
+      ],
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/eastern-ok-overture-tract-summary.parquet",
+      "provided_strata": {
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_rows_used": 1192,
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+        "rows_read": 1192,
+        "urban_rural_projection_sha256": "61c8c5ed99ea849d63198b04520650db95d40610e3ed03c15edcab94b1bf91bd"
+      },
+      "rows": 1192,
+      "sha256": "e5a06316c316f61bf25b80b48e89c1e7f0b1461a0b8cec5831aae24e0cf83fa6"
+    },
+    "maricopa-az": {
+      "columns_read": [
+        "GEOID",
+        "overture_road_km",
+        "overture_named_road_km_5070",
+        "overture_route_km"
+      ],
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/maricopa-az-overture-tract-summary.parquet",
+      "provided_strata": {
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_rows_used": 1593,
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+        "rows_read": 1593,
+        "urban_rural_projection_sha256": "7cd5552cd093778ace4c4451ed5a58dfa65063c0f08a321c9d22d26ab2b80b1a"
+      },
+      "rows": 1593,
+      "sha256": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22"
+    },
+    "northern-ca": {
+      "columns_read": [
+        "GEOID",
+        "overture_road_km",
+        "overture_named_road_km_5070",
+        "overture_route_km"
+      ],
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/northern-ca-overture-tract-summary.parquet",
+      "provided_strata": {
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_rows_used": 591,
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+        "rows_read": 591,
+        "urban_rural_projection_sha256": "4d2cc0dc4ae5bed9ae0a8556ba374baf25f71bb64830457d199f5a846fd87aeb"
+      },
+      "rows": 591,
+      "sha256": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c"
+    },
+    "south-central-tx": {
+      "columns_read": [
+        "GEOID",
+        "overture_road_km",
+        "overture_named_road_km_5070",
+        "overture_route_km"
+      ],
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/south-central-tx-overture-tract-summary.parquet",
+      "provided_strata": {
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_rows_used": 6003,
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+        "rows_read": 6010,
+        "urban_rural_projection_sha256": "996ef5f737ad19868aad3d55e36bfcc7699ec47d6db12b236a2c6f8c3136a850"
+      },
+      "rows": 6003,
+      "sha256": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746"
+    }
+  },
+  "route_reference_baseline_reconciliation": {
+    "eastern-ok": {
+      "checks": {
+        "defined_gap_mean_match": true,
+        "named_length_sum_match": true,
+        "route_length_sum_match": true,
+        "route_undefined_count_match": true
+      },
+      "frozen_audit_named_length_sum_km": 27944.02776408843,
+      "frozen_audit_route_length_sum_km": 24071.910964743845,
+      "frozen_audit_route_ref_gap_mean_defined": 0.0055239336559926855,
+      "frozen_audit_route_undefined_count": 286,
+      "named_length_sum_km": 27944.02776408843,
+      "recomputed_route_ref_gap_mean_defined": 0.0055239336559926855,
+      "route_length_sum_km": 24071.910964743845,
+      "route_undefined_count": 286
+    },
+    "maricopa-az": {
+      "checks": {
+        "defined_gap_mean_match": true,
+        "named_length_sum_match": true,
+        "route_length_sum_match": true,
+        "route_undefined_count_match": true
+      },
+      "frozen_audit_named_length_sum_km": 22113.71284793831,
+      "frozen_audit_route_length_sum_km": 11466.55456309551,
+      "frozen_audit_route_ref_gap_mean_defined": 0.003782990323819334,
+      "frozen_audit_route_undefined_count": 901,
+      "named_length_sum_km": 22113.71284793831,
+      "recomputed_route_ref_gap_mean_defined": 0.003782990323819334,
+      "route_length_sum_km": 11466.55456309551,
+      "route_undefined_count": 901
+    },
+    "northern-ca": {
+      "checks": {
+        "defined_gap_mean_match": true,
+        "named_length_sum_match": true,
+        "route_length_sum_match": true,
+        "route_undefined_count_match": true
+      },
+      "frozen_audit_named_length_sum_km": 12203.647742818603,
+      "frozen_audit_route_length_sum_km": 8116.742873591476,
+      "frozen_audit_route_ref_gap_mean_defined": 0.00684559360515558,
+      "frozen_audit_route_undefined_count": 182,
+      "named_length_sum_km": 12203.647742818604,
+      "recomputed_route_ref_gap_mean_defined": 0.00684559360515558,
+      "route_length_sum_km": 8116.742873591475,
+      "route_undefined_count": 182
+    },
+    "south-central-tx": {
+      "checks": {
+        "defined_gap_mean_match": true,
+        "named_length_sum_match": true,
+        "route_length_sum_match": true,
+        "route_undefined_count_match": true
+      },
+      "frozen_audit_named_length_sum_km": 118176.3816858997,
+      "frozen_audit_route_length_sum_km": 99894.08394454684,
+      "frozen_audit_route_ref_gap_mean_defined": 0.04289031411226795,
+      "frozen_audit_route_undefined_count": 1275,
+      "named_length_sum_km": 118176.3816858997,
+      "recomputed_route_ref_gap_mean_defined": 0.04289031411226795,
+      "route_length_sum_km": 99894.08394454684,
+      "route_undefined_count": 1275
+    }
+  }
+}

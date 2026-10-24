@@ -1,0 +1,4265 @@
+{
+  "analysis": "Provided Overture connector topology context sensitivity for the route-reference transport candidate; predictive accuracy unsupported and not measured",
+  "builder_script_sha256": "66d10ab683b28c33c61b4fc720abe76f64b19d64c892c531960d52eeeebc387d",
+  "candidate_csv": "reports/candidates/road_topology_candidate.csv",
+  "candidate_csv_sha256": "612c2080c3d470fbcdc0cd752cd26847da05a35bf5d245c0b1599134cc82fda7",
+  "candidate_id": "ROAD_TOPOLOGY_ROUTE_REF_V1",
+  "candidate_manifest": "reports/candidates/road_topology_candidate_manifest.json",
+  "candidate_manifest_sha256": "b269e4487905937d48418822aeb11a92e76f0371236d99e175e920d82852705f",
+  "candidate_rows": 9379,
+  "code_commit_at_run": "42f02681531b929582efe13a5bc52a5e74a95386",
+  "input_metadata_by_region": {
+    "eastern-ok": {
+      "edge_case_counts": {
+        "both_endpoints_outside_adjacencies": 8,
+        "connector_adjacencies": 889485,
+        "connector_occurrences": 1409820,
+        "connector_points_assigned_to_official_sample": 1409602,
+        "connector_points_outside_official_sample": 218,
+        "cross_tract_adjacencies": 35740,
+        "one_endpoint_in_sample_adjacencies": 218,
+        "segments_seen": 520550,
+        "segments_skipped_invalid_or_non_linestring_geometry": 215,
+        "valid_segments": 520335,
+        "within_tract_adjacencies": 853519
+      },
+      "official_sample": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "ordered_geoid_sha256": "d1886fe60e412888bc5dbc1057f918eb840caa40936037f45bce9ce1c9169964",
+        "path": "samples/eastern-ok-sample-submission.csv",
+        "rows": 1192
+      },
+      "provided_acs_geometry": {
+        "object_bytes": 3650879,
+        "row_groups": 1,
+        "rows": 1192,
+        "selected_column_compressed_bytes": 3612768,
+        "selected_columns": [
+          "GEOID",
+          "geometry"
+        ],
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-census-acs-housing.parquet"
+      },
+      "provided_overture_roads": {
+        "columns_read": [
+          "class",
+          "connectors",
+          "geometry"
+        ],
+        "object_bytes": 82239229,
+        "row_groups": 16,
+        "selected_column_compressed_bytes": {
+          "class": 97575,
+          "connectors": 21007599,
+          "geometry": 28212031
+        },
+        "source_rows": 520550,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-roads.parquet"
+      },
+      "region": "eastern-ok",
+      "segments_by_class": {
+        "motorway": 6780,
+        "primary": 15094,
+        "residential": 376535,
+        "secondary": 28055,
+        "tertiary": 38406,
+        "trunk": 9507,
+        "unclassified": 46173
+      },
+      "unique_connector_ids_encountered": 760335,
+      "within_package_boundary_adjacencies_with_one_endpoint_unassigned": 218
+    },
+    "maricopa-az": {
+      "edge_case_counts": {
+        "both_endpoints_outside_adjacencies": 5,
+        "connector_adjacencies": 856152,
+        "connector_occurrences": 1350498,
+        "connector_points_assigned_to_official_sample": 1350229,
+        "connector_points_outside_official_sample": 269,
+        "cross_tract_adjacencies": 31436,
+        "one_endpoint_in_sample_adjacencies": 263,
+        "segments_seen": 494492,
+        "segments_skipped_invalid_or_non_linestring_geometry": 146,
+        "valid_segments": 494346,
+        "within_tract_adjacencies": 824448
+      },
+      "official_sample": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "ordered_geoid_sha256": "f5dee76799fa137848f0fe7b3cbde36cbeed06ee372957e6df68ee3e526f30d5",
+        "path": "samples/maricopa-az-sample-submission.csv",
+        "rows": 1593
+      },
+      "provided_acs_geometry": {
+        "object_bytes": 3457173,
+        "row_groups": 1,
+        "rows": 1593,
+        "selected_column_compressed_bytes": 3409661,
+        "selected_columns": [
+          "GEOID",
+          "geometry"
+        ],
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-census-acs-housing.parquet"
+      },
+      "provided_overture_roads": {
+        "columns_read": [
+          "class",
+          "connectors",
+          "geometry"
+        ],
+        "object_bytes": 80052206,
+        "row_groups": 17,
+        "selected_column_compressed_bytes": {
+          "class": 82128,
+          "connectors": 20231561,
+          "geometry": 29036826
+        },
+        "source_rows": 494492,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-roads.parquet"
+      },
+      "region": "maricopa-az",
+      "segments_by_class": {
+        "motorway": 5621,
+        "primary": 17520,
+        "residential": 369076,
+        "secondary": 30275,
+        "tertiary": 46527,
+        "trunk": 4100,
+        "unclassified": 21373
+      },
+      "unique_connector_ids_encountered": 730955,
+      "within_package_boundary_adjacencies_with_one_endpoint_unassigned": 263
+    },
+    "northern-ca": {
+      "edge_case_counts": {
+        "both_endpoints_outside_adjacencies": 10,
+        "connector_adjacencies": 342400,
+        "connector_occurrences": 533859,
+        "connector_points_assigned_to_official_sample": 533402,
+        "connector_points_outside_official_sample": 457,
+        "cross_tract_adjacencies": 13055,
+        "one_endpoint_in_sample_adjacencies": 449,
+        "segments_seen": 191836,
+        "segments_skipped_invalid_or_non_linestring_geometry": 377,
+        "valid_segments": 191459,
+        "within_tract_adjacencies": 328886
+      },
+      "official_sample": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "ordered_geoid_sha256": "84c4bc3c03900cb37c5e6afbfbb7dde3c49849a68475b2bd5fdea3096ee3c915",
+        "path": "samples/northern-ca-sample-submission.csv",
+        "rows": 591
+      },
+      "provided_acs_geometry": {
+        "object_bytes": 3037540,
+        "row_groups": 1,
+        "rows": 591,
+        "selected_column_compressed_bytes": 3016786,
+        "selected_columns": [
+          "GEOID",
+          "geometry"
+        ],
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-census-acs-housing.parquet"
+      },
+      "provided_overture_roads": {
+        "columns_read": [
+          "class",
+          "connectors",
+          "geometry"
+        ],
+        "object_bytes": 43515963,
+        "row_groups": 9,
+        "selected_column_compressed_bytes": {
+          "class": 38132,
+          "connectors": 8352250,
+          "geometry": 23040783
+        },
+        "source_rows": 191836,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-roads.parquet"
+      },
+      "region": "northern-ca",
+      "segments_by_class": {
+        "motorway": 3291,
+        "primary": 6552,
+        "residential": 135280,
+        "secondary": 13866,
+        "tertiary": 20501,
+        "trunk": 2341,
+        "unclassified": 10005
+      },
+      "unique_connector_ids_encountered": 304024,
+      "within_package_boundary_adjacencies_with_one_endpoint_unassigned": 449
+    },
+    "south-central-tx": {
+      "edge_case_counts": {
+        "both_endpoints_outside_adjacencies": 3,
+        "connector_adjacencies": 3260709,
+        "connector_occurrences": 5197369,
+        "connector_points_assigned_to_official_sample": 5196722,
+        "connector_points_outside_official_sample": 647,
+        "cross_tract_adjacencies": 165587,
+        "one_endpoint_in_sample_adjacencies": 647,
+        "segments_seen": 1937009,
+        "segments_skipped_invalid_or_non_linestring_geometry": 349,
+        "valid_segments": 1936660,
+        "within_tract_adjacencies": 3094472
+      },
+      "official_sample": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "ordered_geoid_sha256": "10c6cef055d79af255b9a6890c1896565ffe8884c756815c5474ff7d6633883c",
+        "path": "samples/south-central-tx-sample-submission.csv",
+        "rows": 6003
+      },
+      "provided_acs_geometry": {
+        "object_bytes": 13758433,
+        "row_groups": 1,
+        "rows": 6010,
+        "selected_column_compressed_bytes": 13587215,
+        "selected_columns": [
+          "GEOID",
+          "geometry"
+        ],
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-census-acs-housing.parquet"
+      },
+      "provided_overture_roads": {
+        "columns_read": [
+          "class",
+          "connectors",
+          "geometry"
+        ],
+        "object_bytes": 299751270,
+        "row_groups": 60,
+        "selected_column_compressed_bytes": {
+          "class": 362223,
+          "connectors": 75951503,
+          "geometry": 101630089
+        },
+        "source_rows": 1937009,
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-roads.parquet"
+      },
+      "region": "south-central-tx",
+      "segments_by_class": {
+        "motorway": 28983,
+        "primary": 71729,
+        "residential": 1335646,
+        "secondary": 219808,
+        "tertiary": 192909,
+        "trunk": 33270,
+        "unclassified": 54664
+      },
+      "unique_connector_ids_encountered": 2739968,
+      "within_package_boundary_adjacencies_with_one_endpoint_unassigned": 647
+    }
+  },
+  "limitations": [
+    "Connector topology is evaluated on the simple graph induced by connector points assigned to each tract; cross-tract links are counted but excluded from the tract-local graph.",
+    "The source package may contain disconnected, stale, or mispositioned geometry/connector references; internal structure does not validate real-world network completeness.",
+    "Dead ends and isolated components can be legitimate cul-de-sacs, ramps, private roads, or package-boundary artifacts.",
+    "No labels or permitted local target reference exist, so predictive accuracy and RMSE are unsupported and not measured."
+  ],
+  "measure_after": {
+    "accuracy_claim_supported": false,
+    "adjustment_cap": 0.05,
+    "all_adjustments_within_cap": true,
+    "all_candidate_defined_flags_binary": true,
+    "all_candidate_values_finite_and_in_0_1": true,
+    "candidate_formula": {
+      "acceptance_adjustment": "Actual absolute candidate-minus-baseline transport-gap change must be <= 0.05 on every official row.",
+      "baseline_transport_gap": "Existing route-reference v2 candidate: clip(1 - overture_named_road_km_5070 / overture_route_km, 0, 1); defined iff overture_route_km > 0.",
+      "candidate_transport_gap": "If route-reference is defined, clip(baseline_transport_gap + requested_adjustment, 0, 1); otherwise preserve numeric gap 0 with defined=0 and adjustment=0.",
+      "interpretation": "Fragmentation is a model-context/uncertainty hypothesis, not evidence of hidden-reference incompleteness; degree-one endpoints may be legitimate road termini.",
+      "requested_adjustment": "0.05 * fragmentation, a fixed preregistered positive context sensitivity with no fit/tuning."
+    },
+    "candidate_transport_defined_fraction": 0.7180936133916196,
+    "candidate_transport_rows": 9379,
+    "deterministic_rerun": {
+      "method": "two complete builder invocations compared candidate CSV, manifest, and report byte-for-byte",
+      "verified": true
+    },
+    "diagnostic_fraction_all_official_tracts": 0.9997867576500693,
+    "diagnostics_and_candidate_by_region_and_urban_rural": {
+      "all": {
+        "baseline_route_reference_gap_defined_only": {
+          "max": 1.0,
+          "mean": 0.03165668390552693,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 6735,
+          "q05": 0.0,
+          "q95": 0.25875850923278804,
+          "std_population": 0.10708986105387729,
+          "variance_population": 0.011468238340538743
+        },
+        "candidate_adjustment_all_rows": {
+          "max": 0.04357864357864358,
+          "mean": 0.005131052924343042,
+          "median": 0.0014893617021276618,
+          "min": 0.0,
+          "n": 9379,
+          "q05": 0.0,
+          "q95": 0.024089945159561737,
+          "std_population": 0.007929552666634164,
+          "variance_population": 6.287780549292499e-05
+        },
+        "candidate_adjustment_fraction_positive": 0.6744855528307921,
+        "candidate_adjustment_max_abs": 0.04357864357864358,
+        "candidate_adjustment_within_0_05": true,
+        "official_rows": 9379,
+        "route_reference_defined_fraction": 0.7180936133916196,
+        "route_reference_defined_rows": 6735,
+        "topology_candidate_gap_defined_only": {
+          "max": 1.0,
+          "mean": 0.038802065550280214,
+          "median": 0.004581497797356826,
+          "min": 0.0,
+          "n": 6735,
+          "q05": 0.0,
+          "q95": 0.2641669684786698,
+          "std_population": 0.10765508382565993,
+          "variance_population": 0.011589617073509867
+        },
+        "topology_defined_rows": 9377,
+        "topology_diagnostic_fraction": 0.9997867576500693,
+        "topology_graph": {
+          "components_per_tract": {
+            "max": 241.0,
+            "mean": 10.115577353662438,
+            "median": 6.0,
+            "min": 0.0,
+            "n": 9379,
+            "q05": 1.0,
+            "q95": 34.0,
+            "std_population": 12.301672036419824,
+            "variance_population": 151.33113489163344
+          },
+          "connector_nodes_per_tract": {
+            "max": 5816.0,
+            "mean": 483.4317091374347,
+            "median": 342.0,
+            "min": 0.0,
+            "n": 9379,
+            "q05": 107.0,
+            "q95": 1342.1000000000004,
+            "std_population": 435.40947304015333,
+            "variance_population": 189581.40921310402
+          },
+          "dead_end_node_fraction": {
+            "max": 1.0,
+            "mean": 0.14542830245456168,
+            "median": 0.13829787234042554,
+            "min": 0.0,
+            "n": 9377,
+            "q05": 0.05218843605337206,
+            "q95": 0.265012048192771,
+            "std_population": 0.06650069708914653,
+            "variance_population": 0.004422342713342422
+          },
+          "dead_end_nodes_per_tract": {
+            "max": 1947.0,
+            "mean": 72.02452287024202,
+            "median": 44.0,
+            "min": 0.0,
+            "n": 9379,
+            "q05": 11.0,
+            "q95": 224.0,
+            "std_population": 89.83564642836043,
+            "variance_population": 8070.44336920139
+          },
+          "diagnostic_coverage_fraction": 0.9997867576500693,
+          "fragmentation": {
+            "max": 0.8715728715728716,
+            "mean": 0.1357394309766656,
+            "median": 0.0631808278867102,
+            "min": 0.0,
+            "n": 9379,
+            "q05": 0.0,
+            "q95": 0.5161440360090023,
+            "std_population": 0.16863036286162075,
+            "variance_population": 0.028436199278841882
+          },
+          "isolated_components_per_tract": {
+            "max": 75.0,
+            "mean": 3.3958844226463376,
+            "median": 2.0,
+            "min": 0.0,
+            "n": 9379,
+            "q05": 0.0,
+            "q95": 12.0,
+            "std_population": 4.824581223170064,
+            "variance_population": 23.276583978965153
+          },
+          "isolated_nodes_per_tract": {
+            "max": 75.0,
+            "mean": 3.3958844226463376,
+            "median": 2.0,
+            "min": 0.0,
+            "n": 9379,
+            "q05": 0.0,
+            "q95": 12.0,
+            "std_population": 4.824581223170064,
+            "variance_population": 23.276583978965153
+          },
+          "largest_component_node_share": {
+            "max": 1.0,
+            "mean": 0.8642316174543941,
+            "median": 0.9367816091954023,
+            "min": 0.12842712842712842,
+            "n": 9377,
+            "q05": 0.48384096024006,
+            "q95": 1.0,
+            "std_population": 0.16863669134102222,
+            "variance_population": 0.0284383336664472
+          },
+          "mean_degree_per_tract": {
+            "max": 3.309090909090909,
+            "mean": 2.240736492766408,
+            "median": 2.230366492146597,
+            "min": 0.0,
+            "n": 9377,
+            "q05": 1.9917175859759593,
+            "q95": 2.537339733052798,
+            "std_population": 0.17745339773533875,
+            "variance_population": 0.03148970836781633
+          },
+          "pooled_degree_histogram": {
+            "degree_0": 31850,
+            "degree_1": 675518,
+            "degree_2": 2332697,
+            "degree_3": 1207365,
+            "degree_4_plus": 286676
+          },
+          "tracts": 9379,
+          "tracts_with_connector_diagnostics": 9377,
+          "unique_local_edges_per_tract": {
+            "max": 6165.0,
+            "mean": 539.2058854888581,
+            "median": 389.0,
+            "min": 0.0,
+            "n": 9379,
+            "q05": 117.0,
+            "q95": 1461.0,
+            "std_population": 479.27173596030707,
+            "variance_population": 229701.3968904063
+          }
+        }
+      },
+      "eastern-ok": {
+        "baseline_route_reference_gap_defined_only": {
+          "max": 1.0,
+          "mean": 0.0055239336559926855,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 906,
+          "q05": 0.0,
+          "q95": 0.0,
+          "std_population": 0.04827626151418175,
+          "variance_population": 0.0023305974257856656
+        },
+        "candidate_adjustment_all_rows": {
+          "max": 0.0383399209486166,
+          "mean": 0.004734994072276809,
+          "median": 0.0020334745600977065,
+          "min": 0.0,
+          "n": 1192,
+          "q05": 0.0,
+          "q95": 0.022163220219158716,
+          "std_population": 0.006878461585193345,
+          "variance_population": 4.731323377898054e-05
+        },
+        "candidate_adjustment_fraction_positive": 0.7441275167785235,
+        "candidate_adjustment_max_abs": 0.0383399209486166,
+        "candidate_adjustment_within_0_05": true,
+        "official_rows": 1192,
+        "route_reference_defined_fraction": 0.7600671140939598,
+        "route_reference_defined_rows": 906,
+        "topology_candidate_gap_defined_only": {
+          "max": 1.0,
+          "mean": 0.011753638881328177,
+          "median": 0.0037515133171912825,
+          "min": 0.0,
+          "n": 906,
+          "q05": 0.0002631578947368429,
+          "q95": 0.02797304456024935,
+          "std_population": 0.04851154564427191,
+          "variance_population": 0.002353370060796277
+        },
+        "topology_defined_rows": 1192,
+        "topology_diagnostic_fraction": 1.0,
+        "topology_graph": {
+          "components_per_tract": {
+            "max": 153.0,
+            "mean": 13.385906040268456,
+            "median": 8.0,
+            "min": 1.0,
+            "n": 1192,
+            "q05": 2.0,
+            "q95": 42.0,
+            "std_population": 15.733105438197082,
+            "variance_population": 247.53060672942658
+          },
+          "connector_nodes_per_tract": {
+            "max": 5816.0,
+            "mean": 637.7315436241611,
+            "median": 449.0,
+            "min": 29.0,
+            "n": 1192,
+            "q05": 131.55,
+            "q95": 1679.8500000000006,
+            "std_population": 572.7282685025357,
+            "variance_population": 328017.66954191256
+          },
+          "dead_end_node_fraction": {
+            "max": 0.345679012345679,
+            "mean": 0.14819555178808624,
+            "median": 0.14341454561952724,
+            "min": 0.0,
+            "n": 1192,
+            "q05": 0.06248125619754758,
+            "q95": 0.2507039356401701,
+            "std_population": 0.057719305188021784,
+            "variance_population": 0.0033315181913879982
+          },
+          "dead_end_nodes_per_tract": {
+            "max": 1947.0,
+            "mean": 102.31543624161074,
+            "median": 59.0,
+            "min": 0.0,
+            "n": 1192,
+            "q05": 15.0,
+            "q95": 303.45000000000005,
+            "std_population": 131.37758546671773,
+            "variance_population": 17260.069963064725
+          },
+          "diagnostic_coverage_fraction": 1.0,
+          "fragmentation": {
+            "max": 0.7844311377245509,
+            "mean": 0.12863818938618693,
+            "median": 0.06810171214587663,
+            "min": 0.0,
+            "n": 1192,
+            "q05": 0.003297250487118431,
+            "q95": 0.48841532452093195,
+            "std_population": 0.15122430846040297,
+            "variance_population": 0.022868791469327108
+          },
+          "isolated_components_per_tract": {
+            "max": 75.0,
+            "mean": 4.677852348993288,
+            "median": 2.0,
+            "min": 0.0,
+            "n": 1192,
+            "q05": 0.0,
+            "q95": 18.0,
+            "std_population": 6.894719754150005,
+            "variance_population": 47.5371604882663
+          },
+          "isolated_nodes_per_tract": {
+            "max": 75.0,
+            "mean": 4.677852348993288,
+            "median": 2.0,
+            "min": 0.0,
+            "n": 1192,
+            "q05": 0.0,
+            "q95": 18.0,
+            "std_population": 6.894719754150005,
+            "variance_population": 47.5371604882663
+          },
+          "largest_component_node_share": {
+            "max": 1.0,
+            "mean": 0.871361810613813,
+            "median": 0.9318982878541233,
+            "min": 0.2155688622754491,
+            "n": 1192,
+            "q05": 0.5115846754790682,
+            "q95": 0.9967027495128816,
+            "std_population": 0.15122430846040297,
+            "variance_population": 0.022868791469327108
+          },
+          "mean_degree_per_tract": {
+            "max": 3.0659630606860158,
+            "mean": 2.245235441452463,
+            "median": 2.225202589763663,
+            "min": 1.7777777777777777,
+            "n": 1192,
+            "q05": 2.0210193831480843,
+            "q95": 2.5506377065964605,
+            "std_population": 0.16749140235536486,
+            "variance_population": 0.02805336986296672
+          },
+          "pooled_degree_histogram": {
+            "degree_0": 5576,
+            "degree_1": 121960,
+            "degree_2": 388447,
+            "degree_3": 185792,
+            "degree_4_plus": 58401
+          },
+          "tracts": 1192,
+          "tracts_with_connector_diagnostics": 1192,
+          "unique_local_edges_per_tract": {
+            "max": 6165.0,
+            "mean": 709.0494966442953,
+            "median": 508.5,
+            "min": 29.0,
+            "n": 1192,
+            "q05": 147.0,
+            "q95": 1854.5000000000005,
+            "std_population": 627.6804802618607,
+            "variance_population": 393982.7853017601
+          }
+        }
+      },
+      "eastern-ok:Rural": {
+        "baseline_route_reference_gap_defined_only": {
+          "max": 1.0,
+          "mean": 0.01053270098110041,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 405,
+          "q05": 0.0,
+          "q95": 0.032507003709847666,
+          "std_population": 0.06815673451402521,
+          "variance_population": 0.004645340459615315
+        },
+        "candidate_adjustment_all_rows": {
+          "max": 0.036138613861386136,
+          "mean": 0.0055643874587700546,
+          "median": 0.0033930857874519826,
+          "min": 0.0,
+          "n": 411,
+          "q05": 0.0005893487209644222,
+          "q95": 0.017881342794705234,
+          "std_population": 0.006181110678622939,
+          "variance_population": 3.8206129221386534e-05
+        },
+        "candidate_adjustment_fraction_positive": 0.9829683698296837,
+        "candidate_adjustment_max_abs": 0.036138613861386136,
+        "candidate_adjustment_within_0_05": true,
+        "official_rows": 411,
+        "route_reference_defined_fraction": 0.9854014598540146,
+        "route_reference_defined_rows": 405,
+        "topology_candidate_gap_defined_only": {
+          "max": 1.0,
+          "mean": 0.016179523809630017,
+          "median": 0.003973509933774833,
+          "min": 5.393743257821049e-05,
+          "n": 405,
+          "q05": 0.0007449735449735463,
+          "q95": 0.038670958440612954,
+          "std_population": 0.06807325423516132,
+          "variance_population": 0.004633967942164909
+        },
+        "topology_defined_rows": 411,
+        "topology_diagnostic_fraction": 1.0,
+        "topology_graph": {
+          "components_per_tract": {
+            "max": 153.0,
+            "mean": 25.92214111922141,
+            "median": 21.0,
+            "min": 2.0,
+            "n": 411,
+            "q05": 6.0,
+            "q95": 67.5,
+            "std_population": 20.51060544112713,
+            "variance_population": 420.6849355615939
+          },
+          "connector_nodes_per_tract": {
+            "max": 5816.0,
+            "mean": 1145.0486618004866,
+            "median": 987.0,
+            "min": 207.0,
+            "n": 411,
+            "q05": 459.0,
+            "q95": 2293.5,
+            "std_population": 671.061749104617,
+            "variance_population": 450323.87111134786
+          },
+          "dead_end_node_fraction": {
+            "max": 0.3347661623108666,
+            "mean": 0.1752892938099632,
+            "median": 0.1717974180734856,
+            "min": 0.04985337243401759,
+            "n": 411,
+            "q05": 0.10082434259188411,
+            "q95": 0.2732285776487587,
+            "std_population": 0.05182059054067541,
+            "variance_population": 0.0026853736039843374
+          },
+          "dead_end_nodes_per_tract": {
+            "max": 1947.0,
+            "mean": 207.4428223844282,
+            "median": 163.0,
+            "min": 17.0,
+            "n": 411,
+            "q05": 63.0,
+            "q95": 455.5,
+            "std_population": 176.52303811050172,
+            "variance_population": 31160.38298376164
+          },
+          "diagnostic_coverage_fraction": 1.0,
+          "fragmentation": {
+            "max": 0.7227722772277227,
+            "mean": 0.11318184020892087,
+            "median": 0.06934812760055475,
+            "min": 0.0010787486515642097,
+            "n": 411,
+            "q05": 0.013597038568361253,
+            "q95": 0.3576268558941047,
+            "std_population": 0.12339121776037387,
+            "variance_population": 0.015225392620388006
+          },
+          "isolated_components_per_tract": {
+            "max": 75.0,
+            "mean": 9.905109489051094,
+            "median": 7.0,
+            "min": 0.0,
+            "n": 411,
+            "q05": 1.0,
+            "q95": 29.0,
+            "std_population": 9.059589060315233,
+            "variance_population": 82.07615394178343
+          },
+          "isolated_nodes_per_tract": {
+            "max": 75.0,
+            "mean": 9.905109489051094,
+            "median": 7.0,
+            "min": 0.0,
+            "n": 411,
+            "q05": 1.0,
+            "q95": 29.0,
+            "std_population": 9.059589060315233,
+            "variance_population": 82.07615394178343
+          },
+          "largest_component_node_share": {
+            "max": 0.9989212513484358,
+            "mean": 0.8868181597910791,
+            "median": 0.9306518723994452,
+            "min": 0.27722772277227725,
+            "n": 411,
+            "q05": 0.6423731441058953,
+            "q95": 0.9864029614316387,
+            "std_population": 0.12339121776037387,
+            "variance_population": 0.015225392620388006
+          },
+          "mean_degree_per_tract": {
+            "max": 3.0659630606860158,
+            "mean": 2.203992708580171,
+            "median": 2.164924506387921,
+            "min": 1.8917378917378918,
+            "n": 411,
+            "q05": 1.9938372870175072,
+            "q95": 2.5355433375991883,
+            "std_population": 0.17244400009385957,
+            "variance_population": 0.029736933168371043
+          },
+          "pooled_degree_histogram": {
+            "degree_0": 4071,
+            "degree_1": 85259,
+            "degree_2": 232120,
+            "degree_3": 113014,
+            "degree_4_plus": 36151
+          },
+          "tracts": 411,
+          "tracts_with_connector_diagnostics": 411,
+          "unique_local_edges_per_tract": {
+            "max": 6165.0,
+            "mean": 1257.087591240876,
+            "median": 1083.0,
+            "min": 202.0,
+            "n": 411,
+            "q05": 509.0,
+            "q95": 2558.0,
+            "std_population": 737.9689409303728,
+            "variance_population": 544598.1577778962
+          }
+        }
+      },
+      "eastern-ok:Unknown": {
+        "baseline_route_reference_gap_defined_only": {
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 1,
+          "q05": 0.0,
+          "q95": 0.0,
+          "std_population": 0.0,
+          "variance_population": 0.0
+        },
+        "candidate_adjustment_all_rows": {
+          "max": 0.00625,
+          "mean": 0.00625,
+          "median": 0.00625,
+          "min": 0.00625,
+          "n": 1,
+          "q05": 0.00625,
+          "q95": 0.00625,
+          "std_population": 0.0,
+          "variance_population": 0.0
+        },
+        "candidate_adjustment_fraction_positive": 1.0,
+        "candidate_adjustment_max_abs": 0.00625,
+        "candidate_adjustment_within_0_05": true,
+        "official_rows": 1,
+        "route_reference_defined_fraction": 1.0,
+        "route_reference_defined_rows": 1,
+        "topology_candidate_gap_defined_only": {
+          "max": 0.00625,
+          "mean": 0.00625,
+          "median": 0.00625,
+          "min": 0.00625,
+          "n": 1,
+          "q05": 0.00625,
+          "q95": 0.00625,
+          "std_population": 0.0,
+          "variance_population": 0.0
+        },
+        "topology_defined_rows": 1,
+        "topology_diagnostic_fraction": 1.0,
+        "topology_graph": {
+          "components_per_tract": {
+            "max": 3.0,
+            "mean": 3.0,
+            "median": 3.0,
+            "min": 3.0,
+            "n": 1,
+            "q05": 3.0,
+            "q95": 3.0,
+            "std_population": 0.0,
+            "variance_population": 0.0
+          },
+          "connector_nodes_per_tract": {
+            "max": 32.0,
+            "mean": 32.0,
+            "median": 32.0,
+            "min": 32.0,
+            "n": 1,
+            "q05": 32.0,
+            "q95": 32.0,
+            "std_population": 0.0,
+            "variance_population": 0.0
+          },
+          "dead_end_node_fraction": {
+            "max": 0.09375,
+            "mean": 0.09375,
+            "median": 0.09375,
+            "min": 0.09375,
+            "n": 1,
+            "q05": 0.09375,
+            "q95": 0.09375,
+            "std_population": 0.0,
+            "variance_population": 0.0
+          },
+          "dead_end_nodes_per_tract": {
+            "max": 3.0,
+            "mean": 3.0,
+            "median": 3.0,
+            "min": 3.0,
+            "n": 1,
+            "q05": 3.0,
+            "q95": 3.0,
+            "std_population": 0.0,
+            "variance_population": 0.0
+          },
+          "diagnostic_coverage_fraction": 1.0,
+          "fragmentation": {
+            "max": 0.125,
+            "mean": 0.125,
+            "median": 0.125,
+            "min": 0.125,
+            "n": 1,
+            "q05": 0.125,
+            "q95": 0.125,
+            "std_population": 0.0,
+            "variance_population": 0.0
+          },
+          "isolated_components_per_tract": {
+            "max": 1.0,
+            "mean": 1.0,
+            "median": 1.0,
+            "min": 1.0,
+            "n": 1,
+            "q05": 1.0,
+            "q95": 1.0,
+            "std_population": 0.0,
+            "variance_population": 0.0
+          },
+          "isolated_nodes_per_tract": {
+            "max": 1.0,
+            "mean": 1.0,
+            "median": 1.0,
+            "min": 1.0,
+            "n": 1,
+            "q05": 1.0,
+            "q95": 1.0,
+            "std_population": 0.0,
+            "variance_population": 0.0
+          },
+          "largest_component_node_share": {
+            "max": 0.875,
+            "mean": 0.875,
+            "median": 0.875,
+            "min": 0.875,
+            "n": 1,
+            "q05": 0.875,
+            "q95": 0.875,
+            "std_population": 0.0,
+            "variance_population": 0.0
+          },
+          "mean_degree_per_tract": {
+            "max": 1.875,
+            "mean": 1.875,
+            "median": 1.875,
+            "min": 1.875,
+            "n": 1,
+            "q05": 1.875,
+            "q95": 1.875,
+            "std_population": 0.0,
+            "variance_population": 0.0
+          },
+          "pooled_degree_histogram": {
+            "degree_0": 1,
+            "degree_1": 3,
+            "degree_2": 27,
+            "degree_3": 1,
+            "degree_4_plus": 0
+          },
+          "tracts": 1,
+          "tracts_with_connector_diagnostics": 1,
+          "unique_local_edges_per_tract": {
+            "max": 30.0,
+            "mean": 30.0,
+            "median": 30.0,
+            "min": 30.0,
+            "n": 1,
+            "q05": 30.0,
+            "q95": 30.0,
+            "std_population": 0.0,
+            "variance_population": 0.0
+          }
+        }
+      },
+      "eastern-ok:Urban": {
+        "baseline_route_reference_gap_defined_only": {
+          "max": 0.3406965768513054,
+          "mean": 0.001477879989967414,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 500,
+          "q05": 0.0,
+          "q95": 0.0,
+          "std_population": 0.02058067315920374,
+          "variance_population": 0.0004235641076859693
+        },
+        "candidate_adjustment_all_rows": {
+          "max": 0.0383399209486166,
+          "mean": 0.004296025241794185,
+          "median": 0.0009420167951034232,
+          "min": 0.0,
+          "n": 780,
+          "q05": 0.0,
+          "q95": 0.022747137460527523,
+          "std_population": 0.007184325450006777,
+          "variance_population": 5.1614532171615075e-05
+        },
+        "candidate_adjustment_fraction_positive": 0.617948717948718,
+        "candidate_adjustment_max_abs": 0.0383399209486166,
+        "candidate_adjustment_within_0_05": true,
+        "official_rows": 780,
+        "route_reference_defined_fraction": 0.6410256410256411,
+        "route_reference_defined_rows": 500,
+        "topology_candidate_gap_defined_only": {
+          "max": 0.34426163923989717,
+          "mean": 0.00817967936716634,
+          "median": 0.0035879213391310037,
+          "min": 0.0,
+          "n": 500,
+          "q05": 0.00016746048928339697,
+          "q95": 0.025876340526942886,
+          "std_population": 0.02195659581596601,
+          "variance_population": 0.0004820920998256961
+        },
+        "topology_defined_rows": 780,
+        "topology_diagnostic_fraction": 1.0,
+        "topology_graph": {
+          "components_per_tract": {
+            "max": 43.0,
+            "mean": 6.793589743589743,
+            "median": 5.0,
+            "min": 1.0,
+            "n": 780,
+            "q05": 1.0,
+            "q95": 18.0,
+            "std_population": 5.495658886877937,
+            "variance_population": 30.202266600920446
+          },
+          "connector_nodes_per_tract": {
+            "max": 1807.0,
+            "mean": 371.19102564102565,
+            "median": 306.5,
+            "min": 29.0,
+            "n": 780,
+            "q05": 121.95,
+            "q95": 805.4999999999995,
+            "std_population": 238.4606040063025,
+            "variance_population": 56863.45966305062
+          },
+          "dead_end_node_fraction": {
+            "max": 0.345679012345679,
+            "mean": 0.13398903586603067,
+            "median": 0.12724262668105837,
+            "min": 0.0,
+            "n": 780,
+            "q05": 0.0541880164335503,
+            "q95": 0.22800081809505052,
+            "std_population": 0.055532274270867245,
+            "variance_population": 0.003083833485694824
+          },
+          "dead_end_nodes_per_tract": {
+            "max": 260.0,
+            "mean": 47.04871794871795,
+            "median": 39.0,
+            "min": 0.0,
+            "n": 780,
+            "q05": 12.950000000000003,
+            "q95": 108.0,
+            "std_population": 32.66979607036783,
+            "variance_population": 1067.3155752794214
+          },
+          "diagnostic_coverage_fraction": 1.0,
+          "fragmentation": {
+            "max": 0.7844311377245509,
+            "mean": 0.13678716079803638,
+            "median": 0.0665157028331258,
+            "min": 0.0,
+            "n": 780,
+            "q05": 0.0,
+            "q95": 0.5065851206434316,
+            "std_population": 0.1635031795217244,
+            "variance_population": 0.026733289713713245
+          },
+          "isolated_components_per_tract": {
+            "max": 27.0,
+            "mean": 1.9282051282051282,
+            "median": 1.0,
+            "min": 0.0,
+            "n": 780,
+            "q05": 0.0,
+            "q95": 7.0,
+            "std_population": 2.724527596591579,
+            "variance_population": 7.423050624589086
+          },
+          "isolated_nodes_per_tract": {
+            "max": 27.0,
+            "mean": 1.9282051282051282,
+            "median": 1.0,
+            "min": 0.0,
+            "n": 780,
+            "q05": 0.0,
+            "q95": 7.0,
+            "std_population": 2.724527596591579,
+            "variance_population": 7.423050624589086
+          },
+          "largest_component_node_share": {
+            "max": 1.0,
+            "mean": 0.8632128392019637,
+            "median": 0.9334842971668742,
+            "min": 0.2155688622754491,
+            "n": 780,
+            "q05": 0.49341487935656836,
+            "q95": 1.0,
+            "std_population": 0.1635031795217244,
+            "variance_population": 0.026733289713713245
+          },
+          "mean_degree_per_tract": {
+            "max": 3.045751633986928,
+            "mean": 2.267441849980623,
+            "median": 2.2438547097133488,
+            "min": 1.7777777777777777,
+            "n": 780,
+            "q05": 2.0508269981508116,
+            "q95": 2.5600623608017816,
+            "std_population": 0.16011586386232168,
+            "variance_population": 0.025637089860377535
+          },
+          "pooled_degree_histogram": {
+            "degree_0": 1504,
+            "degree_1": 36698,
+            "degree_2": 156300,
+            "degree_3": 72777,
+            "degree_4_plus": 22250
+          },
+          "tracts": 780,
+          "tracts_with_connector_diagnostics": 780,
+          "unique_local_edges_per_tract": {
+            "max": 1984.0,
+            "mean": 421.1461538461538,
+            "median": 353.0,
+            "min": 29.0,
+            "n": 780,
+            "q05": 130.0,
+            "q95": 924.05,
+            "std_population": 270.8995540465931,
+            "variance_population": 73386.568382643
+          }
+        }
+      },
+      "maricopa-az": {
+        "baseline_route_reference_gap_defined_only": {
+          "max": 0.4783939721938968,
+          "mean": 0.003782990323819334,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 692,
+          "q05": 0.0,
+          "q95": 0.0,
+          "std_population": 0.03712159666498973,
+          "variance_population": 0.0013780129389581765
+        },
+        "candidate_adjustment_all_rows": {
+          "max": 0.039218750000000004,
+          "mean": 0.0032127872688924243,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 1593,
+          "q05": 0.0,
+          "q95": 0.021160187007873994,
+          "std_population": 0.007020545279162642,
+          "variance_population": 4.9288056016772865e-05
+        },
+        "candidate_adjustment_fraction_positive": 0.39108600125549275,
+        "candidate_adjustment_max_abs": 0.039218750000000004,
+        "candidate_adjustment_within_0_05": true,
+        "official_rows": 1593,
+        "route_reference_defined_fraction": 0.43440050219711235,
+        "route_reference_defined_rows": 692,
+        "topology_candidate_gap_defined_only": {
+          "max": 0.49241266378268184,
+          "mean": 0.011178900900908399,
+          "median": 0.002893772893772895,
+          "min": 0.0,
+          "n": 692,
+          "q05": 0.0,
+          "q95": 0.02981643051771117,
+          "std_population": 0.03864086663873602,
+          "variance_population": 0.0014931165745925821
+        },
+        "topology_defined_rows": 1593,
+        "topology_diagnostic_fraction": 1.0,
+        "topology_graph": {
+          "components_per_tract": {
+            "max": 86.0,
+            "mean": 6.362209667294413,
+            "median": 4.0,
+            "min": 1.0,
+            "n": 1593,
+            "q05": 1.0,
+            "q95": 23.0,
+            "std_population": 8.007137628115784,
+            "variance_population": 64.11425299558765
+          },
+          "connector_nodes_per_tract": {
+            "max": 3424.0,
+            "mean": 458.72567482736974,
+            "median": 354.0,
+            "min": 1.0,
+            "n": 1593,
+            "q05": 128.0,
+            "q95": 1144.1999999999996,
+            "std_population": 375.9651610656943,
+            "variance_population": 141349.80233515348
+          },
+          "dead_end_node_fraction": {
+            "max": 0.5,
+            "mean": 0.13931960222973308,
+            "median": 0.13157894736842105,
+            "min": 0.0,
+            "n": 1593,
+            "q05": 0.04689498933901919,
+            "q95": 0.25940641281107146,
+            "std_population": 0.06602736167304962,
+            "variance_population": 0.004359612489503702
+          },
+          "dead_end_nodes_per_tract": {
+            "max": 753.0,
+            "mean": 62.70182046453233,
+            "median": 43.0,
+            "min": 0.0,
+            "n": 1593,
+            "q05": 13.0,
+            "q95": 178.0,
+            "std_population": 65.94798766956572,
+            "variance_population": 4349.137077665193
+          },
+          "diagnostic_coverage_fraction": 1.0,
+          "fragmentation": {
+            "max": 0.8116805721096544,
+            "mean": 0.11661962117106547,
+            "median": 0.03797468354430378,
+            "min": 0.0,
+            "n": 1593,
+            "q05": 0.0,
+            "q95": 0.5004106776180697,
+            "std_population": 0.16512266657818322,
+            "variance_population": 0.02726549501788987
+          },
+          "isolated_components_per_tract": {
+            "max": 20.0,
+            "mean": 1.5524168236032643,
+            "median": 1.0,
+            "min": 0.0,
+            "n": 1593,
+            "q05": 0.0,
+            "q95": 6.0,
+            "std_population": 2.4891318310980974,
+            "variance_population": 6.195777272585767
+          },
+          "isolated_nodes_per_tract": {
+            "max": 20.0,
+            "mean": 1.5524168236032643,
+            "median": 1.0,
+            "min": 0.0,
+            "n": 1593,
+            "q05": 0.0,
+            "q95": 6.0,
+            "std_population": 2.4891318310980974,
+            "variance_population": 6.195777272585767
+          },
+          "largest_component_node_share": {
+            "max": 1.0,
+            "mean": 0.8833803788289345,
+            "median": 0.9620253164556962,
+            "min": 0.18831942789034564,
+            "n": 1593,
+            "q05": 0.4995893223819302,
+            "q95": 1.0,
+            "std_population": 0.16512266657818322,
+            "variance_population": 0.02726549501788987
+          },
+          "mean_degree_per_tract": {
+            "max": 2.7770961145194275,
+            "mean": 2.2399117996974844,
+            "median": 2.230337078651685,
+            "min": 0.0,
+            "n": 1593,
+            "q05": 2.0335361411560267,
+            "q95": 2.479510820235991,
+            "std_population": 0.15899538733893148,
+            "variance_population": 0.025279533195056852
+          },
+          "pooled_degree_histogram": {
+            "degree_0": 2473,
+            "degree_1": 99884,
+            "degree_2": 391905,
+            "degree_3": 198567,
+            "degree_4_plus": 37921
+          },
+          "tracts": 1593,
+          "tracts_with_connector_diagnostics": 1593,
+          "unique_local_edges_per_tract": {
+            "max": 3768.0,
+            "mean": 512.3050847457627,
+            "median": 393.0,
+            "min": 0.0,
+            "n": 1593,
+            "q05": 144.20000000000002,
+            "q95": 1287.9999999999993,
+            "std_population": 412.74472071134596,
+            "variance_population": 170358.204475087
+          }
+        }
+      },
+      "maricopa-az:Rural": {
+        "baseline_route_reference_gap_defined_only": {
+          "max": 0.4783939721938968,
+          "mean": 0.018393908817137872,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 142,
+          "q05": 0.0,
+          "q95": 0.08685803831308653,
+          "std_population": 0.0802903945676278,
+          "variance_population": 0.006446547459825358
+        },
+        "candidate_adjustment_all_rows": {
+          "max": 0.039218750000000004,
+          "mean": 0.01062573090846636,
+          "median": 0.0062972292191435745,
+          "min": 0.0,
+          "n": 163,
+          "q05": 0.0,
+          "q95": 0.031003867791842478,
+          "std_population": 0.010757365224954624,
+          "variance_population": 0.00011572090658306307
+        },
+        "candidate_adjustment_fraction_positive": 0.8650306748466258,
+        "candidate_adjustment_max_abs": 0.039218750000000004,
+        "candidate_adjustment_within_0_05": true,
+        "official_rows": 163,
+        "route_reference_defined_fraction": 0.8711656441717791,
+        "route_reference_defined_rows": 142,
+        "topology_candidate_gap_defined_only": {
+          "max": 0.49241266378268184,
+          "mean": 0.030591050634602778,
+          "median": 0.008982221701863254,
+          "min": 0.0,
+          "n": 142,
+          "q05": 0.000703338632750396,
+          "q95": 0.11148465378398292,
+          "std_population": 0.08088213098856985,
+          "variance_population": 0.006541919113252172
+        },
+        "topology_defined_rows": 163,
+        "topology_diagnostic_fraction": 1.0,
+        "topology_graph": {
+          "components_per_tract": {
+            "max": 86.0,
+            "mean": 20.368098159509202,
+            "median": 16.0,
+            "min": 1.0,
+            "n": 163,
+            "q05": 3.0,
+            "q95": 47.900000000000006,
+            "std_population": 14.906233330004069,
+            "variance_population": 222.1957920885242
+          },
+          "connector_nodes_per_tract": {
+            "max": 3286.0,
+            "mean": 954.2883435582822,
+            "median": 772.0,
+            "min": 4.0,
+            "n": 163,
+            "q05": 224.7,
+            "q95": 2380.8000000000006,
+            "std_population": 652.3073226925791,
+            "variance_population": 425504.8432383605
+          },
+          "dead_end_node_fraction": {
+            "max": 0.5,
+            "mean": 0.18773937559166423,
+            "median": 0.18926974664679583,
+            "min": 0.04672897196261682,
+            "n": 163,
+            "q05": 0.08883069828722003,
+            "q95": 0.28327309590973204,
+            "std_population": 0.06779148813469202,
+            "variance_population": 0.004595685863516089
+          },
+          "dead_end_nodes_per_tract": {
+            "max": 753.0,
+            "mean": 169.49079754601226,
+            "median": 144.0,
+            "min": 2.0,
+            "n": 163,
+            "q05": 35.2,
+            "q95": 403.30000000000007,
+            "std_population": 123.9181586290493,
+            "variance_population": 15355.710038014227
+          },
+          "diagnostic_coverage_fraction": 1.0,
+          "fragmentation": {
+            "max": 0.784375,
+            "mean": 0.2450785933872123,
+            "median": 0.1585735963581184,
+            "min": 0.0,
+            "n": 163,
+            "q05": 0.01071025740307403,
+            "q95": 0.6505039206767378,
+            "std_population": 0.21633101676267508,
+            "variance_population": 0.046799108813572805
+          },
+          "isolated_components_per_tract": {
+            "max": 20.0,
+            "mean": 5.294478527607362,
+            "median": 4.0,
+            "min": 0.0,
+            "n": 163,
+            "q05": 0.0,
+            "q95": 12.0,
+            "std_population": 4.272802438562634,
+            "variance_population": 18.25684067898679
+          },
+          "isolated_nodes_per_tract": {
+            "max": 20.0,
+            "mean": 5.294478527607362,
+            "median": 4.0,
+            "min": 0.0,
+            "n": 163,
+            "q05": 0.0,
+            "q95": 12.0,
+            "std_population": 4.272802438562634,
+            "variance_population": 18.25684067898679
+          },
+          "largest_component_node_share": {
+            "max": 1.0,
+            "mean": 0.7549214066127877,
+            "median": 0.8414264036418816,
+            "min": 0.215625,
+            "n": 163,
+            "q05": 0.34949607932326215,
+            "q95": 0.989289742596926,
+            "std_population": 0.21633101676267505,
+            "variance_population": 0.0467991088135728
+          },
+          "mean_degree_per_tract": {
+            "max": 2.730769230769231,
+            "mean": 2.153665147295393,
+            "median": 2.142292490118577,
+            "min": 1.0,
+            "n": 163,
+            "q05": 1.984338283289817,
+            "q95": 2.4305024586830335,
+            "std_population": 0.1722346376692862,
+            "variance_population": 0.0296647704130703
+          },
+          "pooled_degree_histogram": {
+            "degree_0": 863,
+            "degree_1": 27627,
+            "degree_2": 78519,
+            "degree_3": 41049,
+            "degree_4_plus": 7491
+          },
+          "tracts": 163,
+          "tracts_with_connector_diagnostics": 163,
+          "unique_local_edges_per_tract": {
+            "max": 3636.0,
+            "mean": 1036.4478527607362,
+            "median": 848.0,
+            "min": 2.0,
+            "n": 163,
+            "q05": 228.1,
+            "q95": 2547.7000000000016,
+            "std_population": 714.9557123301756,
+            "variance_population": 511161.6705935488
+          }
+        }
+      },
+      "maricopa-az:Unknown": {
+        "baseline_route_reference_gap_defined_only": {
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 5,
+          "q05": 0.0,
+          "q95": 0.0,
+          "std_population": 0.0,
+          "variance_population": 0.0
+        },
+        "candidate_adjustment_all_rows": {
+          "max": 0.014473684210526317,
+          "mean": 0.0019306275518653979,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 11,
+          "q05": 0.0,
+          "q95": 0.009118562535370687,
+          "std_population": 0.004140670087905014,
+          "variance_population": 1.714514877687132e-05
+        },
+        "candidate_adjustment_fraction_positive": 0.36363636363636365,
+        "candidate_adjustment_max_abs": 0.014473684210526317,
+        "candidate_adjustment_within_0_05": true,
+        "official_rows": 11,
+        "route_reference_defined_fraction": 0.45454545454545453,
+        "route_reference_defined_rows": 5,
+        "topology_candidate_gap_defined_only": {
+          "max": 0.014473684210526317,
+          "mean": 0.004247380614103876,
+          "median": 0.0023504273504273534,
+          "min": 0.0,
+          "n": 5,
+          "q05": 0.00012987012987012992,
+          "q95": 0.012331635540464063,
+          "std_population": 0.0052800753086390175,
+          "variance_population": 2.7879195264899412e-05
+        },
+        "topology_defined_rows": 11,
+        "topology_diagnostic_fraction": 1.0,
+        "topology_graph": {
+          "components_per_tract": {
+            "max": 6.0,
+            "mean": 2.8181818181818183,
+            "median": 3.0,
+            "min": 1.0,
+            "n": 11,
+            "q05": 1.0,
+            "q95": 5.0,
+            "std_population": 1.4658650451451907,
+            "variance_population": 2.148760330578512
+          },
+          "connector_nodes_per_tract": {
+            "max": 546.0,
+            "mean": 124.9090909090909,
+            "median": 77.0,
+            "min": 1.0,
+            "n": 11,
+            "q05": 13.0,
+            "q95": 390.0,
+            "std_population": 150.12507182373852,
+            "variance_population": 22537.537190082647
+          },
+          "dead_end_node_fraction": {
+            "max": 0.24,
+            "mean": 0.09322358112104122,
+            "median": 0.07407407407407407,
+            "min": 0.0,
+            "n": 11,
+            "q05": 0.02356020942408377,
+            "q95": 0.19142857142857142,
+            "std_population": 0.06088374754845818,
+            "variance_population": 0.003706830715544387
+          },
+          "dead_end_nodes_per_tract": {
+            "max": 34.0,
+            "mean": 8.909090909090908,
+            "median": 6.0,
+            "min": 0.0,
+            "n": 11,
+            "q05": 2.0,
+            "q95": 25.0,
+            "std_population": 8.826144483650888,
+            "variance_population": 77.90082644628099
+          },
+          "diagnostic_coverage_fraction": 1.0,
+          "fragmentation": {
+            "max": 0.2894736842105263,
+            "mean": 0.10014495802426039,
+            "median": 0.047008547008547064,
+            "min": 0.0,
+            "n": 11,
+            "q05": 0.0,
+            "q95": 0.2659489633173844,
+            "std_population": 0.10728615043778983,
+            "variance_population": 0.011510318075760072
+          },
+          "isolated_components_per_tract": {
+            "max": 2.0,
+            "mean": 0.6363636363636364,
+            "median": 1.0,
+            "min": 0.0,
+            "n": 11,
+            "q05": 0.0,
+            "q95": 1.5,
+            "std_population": 0.642824346533225,
+            "variance_population": 0.4132231404958677
+          },
+          "isolated_nodes_per_tract": {
+            "max": 2.0,
+            "mean": 0.6363636363636364,
+            "median": 1.0,
+            "min": 0.0,
+            "n": 11,
+            "q05": 0.0,
+            "q95": 1.5,
+            "std_population": 0.642824346533225,
+            "variance_population": 0.4132231404958677
+          },
+          "largest_component_node_share": {
+            "max": 1.0,
+            "mean": 0.8998550419757396,
+            "median": 0.9529914529914529,
+            "min": 0.7105263157894737,
+            "n": 11,
+            "q05": 0.7340510366826156,
+            "q95": 1.0,
+            "std_population": 0.10728615043778982,
+            "variance_population": 0.011510318075760069
+          },
+          "mean_degree_per_tract": {
+            "max": 2.758241758241758,
+            "mean": 1.862593562325988,
+            "median": 2.074074074074074,
+            "min": 0.0,
+            "n": 11,
+            "q05": 0.84,
+            "q95": 2.515246533571141,
+            "std_population": 0.6519530251778478,
+            "variance_population": 0.42504274703854744
+          },
+          "pooled_degree_histogram": {
+            "degree_0": 7,
+            "degree_1": 98,
+            "degree_2": 741,
+            "degree_3": 466,
+            "degree_4_plus": 62
+          },
+          "tracts": 11,
+          "tracts_with_connector_diagnostics": 11,
+          "unique_local_edges_per_tract": {
+            "max": 753.0,
+            "mean": 146.8181818181818,
+            "median": 80.0,
+            "min": 0.0,
+            "n": 11,
+            "q05": 10.5,
+            "q95": 499.0,
+            "std_population": 206.38790405968265,
+            "variance_population": 42595.96694214877
+          }
+        }
+      },
+      "maricopa-az:Urban": {
+        "baseline_route_reference_gap_defined_only": {
+          "max": 0.005894252049401194,
+          "mean": 1.0815141375048062e-05,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 545,
+          "q05": 0.0,
+          "q95": 0.0,
+          "std_population": 0.00025225027637542524,
+          "variance_population": 6.363020193147841e-08
+        },
+        "candidate_adjustment_all_rows": {
+          "max": 0.037278106508875745,
+          "mean": 0.0023712044243799127,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 1419,
+          "q05": 0.0,
+          "q95": 0.01704177323103153,
+          "std_population": 0.005905321215830644,
+          "variance_population": 3.487281866213952e-05
+        },
+        "candidate_adjustment_fraction_positive": 0.3368569415081043,
+        "candidate_adjustment_max_abs": 0.037278106508875745,
+        "candidate_adjustment_within_0_05": true,
+        "official_rows": 1419,
+        "route_reference_defined_fraction": 0.38407329105003524,
+        "route_reference_defined_rows": 545,
+        "topology_candidate_gap_defined_only": {
+          "max": 0.037278106508875745,
+          "mean": 0.006184648312375223,
+          "median": 0.0020109689213893946,
+          "min": 0.0,
+          "n": 545,
+          "q05": 0.0,
+          "q95": 0.023991325212255426,
+          "std_population": 0.008217318246878765,
+          "variance_population": 6.75243191704867e-05
+        },
+        "topology_defined_rows": 1419,
+        "topology_diagnostic_fraction": 1.0,
+        "topology_graph": {
+          "components_per_tract": {
+            "max": 38.0,
+            "mean": 4.780831571529246,
+            "median": 3.0,
+            "min": 1.0,
+            "n": 1419,
+            "q05": 1.0,
+            "q95": 13.0,
+            "std_population": 4.615660951309006,
+            "variance_population": 21.304326017438754
+          },
+          "connector_nodes_per_tract": {
+            "max": 3424.0,
+            "mean": 404.38830162085975,
+            "median": 326.0,
+            "min": 23.0,
+            "n": 1419,
+            "q05": 132.0,
+            "q95": 894.0999999999999,
+            "std_population": 278.5744328182667,
+            "variance_population": 77603.71462001897
+          },
+          "dead_end_node_fraction": {
+            "max": 0.4,
+            "mean": 0.13411497444551942,
+            "median": 0.12672176308539945,
+            "min": 0.008767881864328565,
+            "n": 1419,
+            "q05": 0.0453562369826573,
+            "q95": 0.25273398188527324,
+            "std_population": 0.0634404164989498,
+            "variance_population": 0.004024686445560221
+          },
+          "dead_end_nodes_per_tract": {
+            "max": 496.0,
+            "mean": 50.85200845665962,
+            "median": 39.0,
+            "min": 2.0,
+            "n": 1419,
+            "q05": 13.0,
+            "q95": 128.0,
+            "std_population": 40.56004103382029,
+            "variance_population": 1645.1169286651857
+          },
+          "diagnostic_coverage_fraction": 1.0,
+          "fragmentation": {
+            "max": 0.8116805721096544,
+            "mean": 0.10199129757936916,
+            "median": 0.03125,
+            "min": 0.0,
+            "n": 1419,
+            "q05": 0.0,
+            "q95": 0.4597289537973216,
+            "std_population": 0.15176354117485236,
+            "variance_population": 0.023032172429931108
+          },
+          "isolated_components_per_tract": {
+            "max": 17.0,
+            "mean": 1.1296687808315715,
+            "median": 1.0,
+            "min": 0.0,
+            "n": 1419,
+            "q05": 0.0,
+            "q95": 4.0,
+            "std_population": 1.749688574791974,
+            "variance_population": 3.061410108757569
+          },
+          "isolated_nodes_per_tract": {
+            "max": 17.0,
+            "mean": 1.1296687808315715,
+            "median": 1.0,
+            "min": 0.0,
+            "n": 1419,
+            "q05": 0.0,
+            "q95": 4.0,
+            "std_population": 1.749688574791974,
+            "variance_population": 3.061410108757569
+          },
+          "largest_component_node_share": {
+            "max": 1.0,
+            "mean": 0.8980087024206309,
+            "median": 0.96875,
+            "min": 0.18831942789034564,
+            "n": 1419,
+            "q05": 0.5402710462026784,
+            "q95": 1.0,
+            "std_population": 0.15176354117485236,
+            "variance_population": 0.023032172429931108
+          },
+          "mean_degree_per_tract": {
+            "max": 2.7770961145194275,
+            "mean": 2.252743868022099,
+            "median": 2.2403560830860534,
+            "min": 1.6521739130434783,
+            "n": 1419,
+            "q05": 2.048063751317176,
+            "q95": 2.484666666666666,
+            "std_population": 0.13983600734643234,
+            "variance_population": 0.019554108950591478
+          },
+          "pooled_degree_histogram": {
+            "degree_0": 1603,
+            "degree_1": 72159,
+            "degree_2": 312645,
+            "degree_3": 157052,
+            "degree_4_plus": 30368
+          },
+          "tracts": 1419,
+          "tracts_with_connector_diagnostics": 1419,
+          "unique_local_edges_per_tract": {
+            "max": 3768.0,
+            "mean": 454.93023255813955,
+            "median": 372.0,
+            "min": 19.0,
+            "n": 1419,
+            "q05": 149.0,
+            "q95": 988.4999999999995,
+            "std_population": 310.3475921809806,
+            "variance_population": 96315.62797253225
+          }
+        }
+      },
+      "northern-ca": {
+        "baseline_route_reference_gap_defined_only": {
+          "max": 0.47826839153754097,
+          "mean": 0.00684559360515558,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 409,
+          "q05": 0.0,
+          "q95": 0.0,
+          "std_population": 0.038363009354093536,
+          "variance_population": 0.0014717204867022683
+        },
+        "candidate_adjustment_all_rows": {
+          "max": 0.041976744186046515,
+          "mean": 0.00519822350754803,
+          "median": 0.001632047477744808,
+          "min": 0.0,
+          "n": 591,
+          "q05": 0.0,
+          "q95": 0.023389326750081783,
+          "std_population": 0.007971208775298173,
+          "variance_population": 6.35401693393906e-05
+        },
+        "candidate_adjustment_fraction_positive": 0.6463620981387479,
+        "candidate_adjustment_max_abs": 0.041976744186046515,
+        "candidate_adjustment_within_0_05": true,
+        "official_rows": 591,
+        "route_reference_defined_fraction": 0.6920473773265652,
+        "route_reference_defined_rows": 409,
+        "topology_candidate_gap_defined_only": {
+          "max": 0.4798936305432771,
+          "mean": 0.014356963025597844,
+          "median": 0.004442148760330578,
+          "min": 0.0,
+          "n": 409,
+          "q05": 0.0,
+          "q95": 0.03623892002895183,
+          "std_population": 0.03937722114055801,
+          "variance_population": 0.0015505655447524084
+        },
+        "topology_defined_rows": 591,
+        "topology_diagnostic_fraction": 1.0,
+        "topology_graph": {
+          "components_per_tract": {
+            "max": 75.0,
+            "mean": 11.362098138747886,
+            "median": 7.0,
+            "min": 1.0,
+            "n": 591,
+            "q05": 1.0,
+            "q95": 35.5,
+            "std_population": 11.535754100646036,
+            "variance_population": 133.07362267057184
+          },
+          "connector_nodes_per_tract": {
+            "max": 2492.0,
+            "mean": 513.8646362098139,
+            "median": 389.0,
+            "min": 52.0,
+            "n": 591,
+            "q05": 131.0,
+            "q95": 1340.0,
+            "std_population": 397.5052983522352,
+            "variance_population": 158010.46221809948
+          },
+          "dead_end_node_fraction": {
+            "max": 0.41312741312741313,
+            "mean": 0.18001439134499267,
+            "median": 0.17757009345794392,
+            "min": 0.03208556149732621,
+            "n": 591,
+            "q05": 0.06432592175626231,
+            "q95": 0.31417981619559565,
+            "std_population": 0.07378657646623854,
+            "variance_population": 0.0054444588666080675
+          },
+          "dead_end_nodes_per_tract": {
+            "max": 537.0,
+            "mean": 91.82233502538071,
+            "median": 64.0,
+            "min": 6.0,
+            "n": 591,
+            "q05": 17.0,
+            "q95": 248.0,
+            "std_population": 84.0455152771549,
+            "variance_population": 7063.64863820248
+          },
+          "diagnostic_coverage_fraction": 1.0,
+          "fragmentation": {
+            "max": 0.8395348837209302,
+            "mean": 0.1437315636054788,
+            "median": 0.07811291569992262,
+            "min": 0.0,
+            "n": 591,
+            "q05": 0.0,
+            "q95": 0.5113285660112186,
+            "std_population": 0.16778321405976387,
+            "variance_population": 0.028151206920224547
+          },
+          "isolated_components_per_tract": {
+            "max": 27.0,
+            "mean": 3.571912013536379,
+            "median": 2.0,
+            "min": 0.0,
+            "n": 591,
+            "q05": 0.0,
+            "q95": 12.0,
+            "std_population": 4.389399193308167,
+            "variance_population": 19.266825278214387
+          },
+          "isolated_nodes_per_tract": {
+            "max": 27.0,
+            "mean": 3.571912013536379,
+            "median": 2.0,
+            "min": 0.0,
+            "n": 591,
+            "q05": 0.0,
+            "q95": 12.0,
+            "std_population": 4.389399193308167,
+            "variance_population": 19.266825278214387
+          },
+          "largest_component_node_share": {
+            "max": 1.0,
+            "mean": 0.8562684363945211,
+            "median": 0.9218870843000774,
+            "min": 0.16046511627906976,
+            "n": 591,
+            "q05": 0.48867143398878155,
+            "q95": 1.0,
+            "std_population": 0.16778321405976387,
+            "variance_population": 0.028151206920224547
+          },
+          "mean_degree_per_tract": {
+            "max": 2.757575757575758,
+            "mean": 2.1788311972600254,
+            "median": 2.174496644295302,
+            "min": 1.7841726618705036,
+            "n": 591,
+            "q05": 1.9729577250752706,
+            "q95": 2.4190613026819925,
+            "std_population": 0.1409169039477385,
+            "variance_population": 0.019857573818216158
+          },
+          "pooled_degree_histogram": {
+            "degree_0": 2111,
+            "degree_1": 54267,
+            "degree_2": 156335,
+            "degree_3": 77395,
+            "degree_4_plus": 13586
+          },
+          "tracts": 591,
+          "tracts_with_connector_diagnostics": 591,
+          "unique_local_edges_per_tract": {
+            "max": 2646.0,
+            "mean": 553.1167512690355,
+            "median": 420.0,
+            "min": 54.0,
+            "n": 591,
+            "q05": 143.5,
+            "q95": 1402.0,
+            "std_population": 417.75168699448534,
+            "variance_population": 174516.47198673847
+          }
+        }
+      },
+      "northern-ca:Rural": {
+        "baseline_route_reference_gap_defined_only": {
+          "max": 0.271580205449647,
+          "mean": 0.01457865095906001,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 136,
+          "q05": 0.0,
+          "q95": 0.12275800837584677,
+          "std_population": 0.04688946484531105,
+          "variance_population": 0.0021986219134796604
+        },
+        "candidate_adjustment_all_rows": {
+          "max": 0.041976744186046515,
+          "mean": 0.01056909333216107,
+          "median": 0.006156156156156157,
+          "min": 0.0,
+          "n": 147,
+          "q05": 0.0,
+          "q95": 0.0325061361383021,
+          "std_population": 0.01037998621133744,
+          "variance_population": 0.00010774411374755539
+        },
+        "candidate_adjustment_fraction_positive": 0.9183673469387755,
+        "candidate_adjustment_max_abs": 0.041976744186046515,
+        "candidate_adjustment_within_0_05": true,
+        "official_rows": 147,
+        "route_reference_defined_fraction": 0.9251700680272109,
+        "route_reference_defined_rows": 136,
+        "topology_candidate_gap_defined_only": {
+          "max": 0.2748101796098537,
+          "mean": 0.026002597428381166,
+          "median": 0.00887349317113804,
+          "min": 0.0,
+          "n": 136,
+          "q05": 0.0010055685757734995,
+          "q95": 0.12957667176879056,
+          "std_population": 0.04739932182487784,
+          "variance_population": 0.0022466957094583405
+        },
+        "topology_defined_rows": 147,
+        "topology_diagnostic_fraction": 1.0,
+        "topology_graph": {
+          "components_per_tract": {
+            "max": 75.0,
+            "mean": 24.17687074829932,
+            "median": 22.0,
+            "min": 1.0,
+            "n": 147,
+            "q05": 6.0,
+            "q95": 49.0,
+            "std_population": 14.009083875261448,
+            "variance_population": 196.25443102411032
+          },
+          "connector_nodes_per_tract": {
+            "max": 2492.0,
+            "mean": 948.4965986394558,
+            "median": 845.0,
+            "min": 202.0,
+            "n": 147,
+            "q05": 341.20000000000005,
+            "q95": 1892.5,
+            "std_population": 473.1686986005831,
+            "variance_population": 223888.6173353695
+          },
+          "dead_end_node_fraction": {
+            "max": 0.41312741312741313,
+            "mean": 0.21453288072822466,
+            "median": 0.2097130242825607,
+            "min": 0.07571428571428572,
+            "n": 147,
+            "q05": 0.10436182198615805,
+            "q95": 0.35022792607802866,
+            "std_population": 0.07357195558192954,
+            "variance_population": 0.005412832648149414
+          },
+          "dead_end_nodes_per_tract": {
+            "max": 537.0,
+            "mean": 191.9795918367347,
+            "median": 174.0,
+            "min": 34.0,
+            "n": 147,
+            "q05": 69.3,
+            "q95": 397.09999999999985,
+            "std_population": 101.69177582568662,
+            "variance_population": 10341.217270581701
+          },
+          "diagnostic_coverage_fraction": 1.0,
+          "fragmentation": {
+            "max": 0.8395348837209302,
+            "mean": 0.22922126289787823,
+            "median": 0.1597222222222222,
+            "min": 0.0,
+            "n": 147,
+            "q05": 0.015791315040103917,
+            "q95": 0.6634706675300133,
+            "std_population": 0.20492592912557886,
+            "variance_population": 0.04199463642798177
+          },
+          "isolated_components_per_tract": {
+            "max": 27.0,
+            "mean": 7.224489795918367,
+            "median": 6.0,
+            "min": 0.0,
+            "n": 147,
+            "q05": 1.0,
+            "q95": 19.69999999999999,
+            "std_population": 5.948527421235309,
+            "variance_population": 35.3849784811884
+          },
+          "isolated_nodes_per_tract": {
+            "max": 27.0,
+            "mean": 7.224489795918367,
+            "median": 6.0,
+            "min": 0.0,
+            "n": 147,
+            "q05": 1.0,
+            "q95": 19.69999999999999,
+            "std_population": 5.948527421235309,
+            "variance_population": 35.3849784811884
+          },
+          "largest_component_node_share": {
+            "max": 1.0,
+            "mean": 0.7707787371021217,
+            "median": 0.8402777777777778,
+            "min": 0.16046511627906976,
+            "n": 147,
+            "q05": 0.33652933246998645,
+            "q95": 0.9842086849598961,
+            "std_population": 0.2049259291255789,
+            "variance_population": 0.04199463642798178
+          },
+          "mean_degree_per_tract": {
+            "max": 2.61271676300578,
+            "mean": 2.0802330925291086,
+            "median": 2.0586145648312613,
+            "min": 1.83011583011583,
+            "n": 147,
+            "q05": 1.9192018348623854,
+            "q95": 2.2874106684276176,
+            "std_population": 0.12149866952631219,
+            "variance_population": 0.014761926696664021
+          },
+          "pooled_degree_histogram": {
+            "degree_0": 1062,
+            "degree_1": 28221,
+            "degree_2": 71792,
+            "degree_3": 34225,
+            "degree_4_plus": 4129
+          },
+          "tracts": 147,
+          "tracts_with_connector_diagnostics": 147,
+          "unique_local_edges_per_tract": {
+            "max": 2646.0,
+            "mean": 989.9047619047619,
+            "median": 889.0,
+            "min": 209.0,
+            "n": 147,
+            "q05": 348.0,
+            "q95": 2018.3999999999996,
+            "std_population": 502.0363069686686,
+            "variance_population": 252040.45351473926
+          }
+        }
+      },
+      "northern-ca:Urban": {
+        "baseline_route_reference_gap_defined_only": {
+          "max": 0.47826839153754097,
+          "mean": 0.0029932280369101487,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 273,
+          "q05": 0.0,
+          "q95": 0.0,
+          "std_population": 0.03263387519509728,
+          "variance_population": 0.0010649698102491855
+        },
+        "candidate_adjustment_all_rows": {
+          "max": 0.03590785907859079,
+          "mean": 0.003420030119669388,
+          "median": 0.00047283702213279656,
+          "min": 0.0,
+          "n": 444,
+          "q05": 0.0,
+          "q95": 0.017386005538579063,
+          "std_population": 0.0060160338016593835,
+          "variance_population": 3.6192662702708256e-05
+        },
+        "candidate_adjustment_fraction_positive": 0.5563063063063063,
+        "candidate_adjustment_max_abs": 0.03590785907859079,
+        "candidate_adjustment_within_0_05": true,
+        "official_rows": 444,
+        "route_reference_defined_fraction": 0.6148648648648649,
+        "route_reference_defined_rows": 273,
+        "topology_candidate_gap_defined_only": {
+          "max": 0.4798936305432771,
+          "mean": 0.00855547482494388,
+          "median": 0.002941176470588236,
+          "min": 0.0,
+          "n": 273,
+          "q05": 0.0,
+          "q95": 0.021191716269841246,
+          "std_population": 0.03320476095610177,
+          "variance_population": 0.0011025561501518605
+        },
+        "topology_defined_rows": 444,
+        "topology_diagnostic_fraction": 1.0,
+        "topology_graph": {
+          "components_per_tract": {
+            "max": 40.0,
+            "mean": 7.11936936936937,
+            "median": 5.0,
+            "min": 1.0,
+            "n": 444,
+            "q05": 1.0,
+            "q95": 19.0,
+            "std_population": 6.307558997203745,
+            "variance_population": 39.78530050320591
+          },
+          "connector_nodes_per_tract": {
+            "max": 1641.0,
+            "mean": 369.9662162162162,
+            "median": 318.0,
+            "min": 52.0,
+            "n": 444,
+            "q05": 123.45,
+            "q95": 819.3999999999999,
+            "std_population": 230.1083298215224,
+            "variance_population": 52949.84345325054
+          },
+          "dead_end_node_fraction": {
+            "max": 0.37745098039215685,
+            "mean": 0.1685859725627064,
+            "median": 0.16422623529279556,
+            "min": 0.03208556149732621,
+            "n": 444,
+            "q05": 0.06006800044958975,
+            "q95": 0.28530456159519246,
+            "std_population": 0.07021274243995228,
+            "variance_population": 0.004929829200939075
+          },
+          "dead_end_nodes_per_tract": {
+            "max": 270.0,
+            "mean": 58.66216216216216,
+            "median": 49.0,
+            "min": 6.0,
+            "n": 444,
+            "q05": 17.0,
+            "q95": 142.69999999999993,
+            "std_population": 39.46743795064633,
+            "variance_population": 1557.6786583881178
+          },
+          "diagnostic_coverage_fraction": 1.0,
+          "fragmentation": {
+            "max": 0.7181571815718157,
+            "mean": 0.1154275415424547,
+            "median": 0.05838923202939944,
+            "min": 0.0,
+            "n": 444,
+            "q05": 0.0,
+            "q95": 0.4286976744186043,
+            "std_population": 0.14264322385956166,
+            "variance_population": 0.02034708931304902
+          },
+          "isolated_components_per_tract": {
+            "max": 15.0,
+            "mean": 2.3626126126126126,
+            "median": 1.0,
+            "min": 0.0,
+            "n": 444,
+            "q05": 0.0,
+            "q95": 9.0,
+            "std_population": 2.8374186377069366,
+            "variance_population": 8.050944525606688
+          },
+          "isolated_nodes_per_tract": {
+            "max": 15.0,
+            "mean": 2.3626126126126126,
+            "median": 1.0,
+            "min": 0.0,
+            "n": 444,
+            "q05": 0.0,
+            "q95": 9.0,
+            "std_population": 2.8374186377069366,
+            "variance_population": 8.050944525606688
+          },
+          "largest_component_node_share": {
+            "max": 1.0,
+            "mean": 0.8845724584575454,
+            "median": 0.9416107679706005,
+            "min": 0.28184281842818426,
+            "n": 444,
+            "q05": 0.5713023255813954,
+            "q95": 1.0,
+            "std_population": 0.14264322385956166,
+            "variance_population": 0.02034708931304902
+          },
+          "mean_degree_per_tract": {
+            "max": 2.757575757575758,
+            "mean": 2.211475164366883,
+            "median": 2.206118637535944,
+            "min": 1.7841726618705036,
+            "n": 444,
+            "q05": 2.0033871533871532,
+            "q95": 2.432134496701426,
+            "std_population": 0.13137878177209283,
+            "variance_population": 0.01726038429991919
+          },
+          "pooled_degree_histogram": {
+            "degree_0": 1049,
+            "degree_1": 26046,
+            "degree_2": 84543,
+            "degree_3": 43170,
+            "degree_4_plus": 9457
+          },
+          "tracts": 444,
+          "tracts_with_connector_diagnostics": 444,
+          "unique_local_edges_per_tract": {
+            "max": 1956.0,
+            "mean": 408.5045045045045,
+            "median": 356.0,
+            "min": 54.0,
+            "n": 444,
+            "q05": 130.45000000000002,
+            "q95": 903.55,
+            "std_population": 254.50373451210956,
+            "variance_population": 64772.150880610345
+          }
+        }
+      },
+      "south-central-tx": {
+        "baseline_route_reference_gap_defined_only": {
+          "max": 1.0,
+          "mean": 0.04289031411226795,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 4728,
+          "q05": 0.0,
+          "q95": 0.3232980359578433,
+          "std_population": 0.12303166942727349,
+          "variance_population": 0.015136791682061904
+        },
+        "candidate_adjustment_all_rows": {
+          "max": 0.04357864357864358,
+          "mean": 0.0057121293071719014,
+          "median": 0.001987767584097855,
+          "min": 0.0,
+          "n": 6003,
+          "q05": 0.0,
+          "q95": 0.025,
+          "std_population": 0.008256134783396854,
+          "variance_population": 6.816376156161542e-05
+        },
+        "candidate_adjustment_fraction_positive": 0.7386306846576711,
+        "candidate_adjustment_max_abs": 0.04357864357864358,
+        "candidate_adjustment_within_0_05": true,
+        "official_rows": 6003,
+        "route_reference_defined_fraction": 0.7876061969015492,
+        "route_reference_defined_rows": 4728,
+        "topology_candidate_gap_defined_only": {
+          "max": 1.0,
+          "mean": 0.0501428336196607,
+          "median": 0.005113493979081763,
+          "min": 0.0,
+          "n": 4728,
+          "q05": 0.0,
+          "q95": 0.32737545655722117,
+          "std_population": 0.12358603461798562,
+          "variance_population": 0.015273507952597938
+        },
+        "topology_defined_rows": 6001,
+        "topology_diagnostic_fraction": 0.9996668332500417,
+        "topology_graph": {
+          "components_per_tract": {
+            "max": 241.0,
+            "mean": 10.339496918207562,
+            "median": 6.0,
+            "min": 0.0,
+            "n": 6003,
+            "q05": 1.0,
+            "q95": 34.0,
+            "std_population": 12.292509832459967,
+            "variance_population": 151.10579798112497
+          },
+          "connector_nodes_per_tract": {
+            "max": 4404.0,
+            "mean": 456.3528235882059,
+            "median": 320.0,
+            "min": 0.0,
+            "n": 6003,
+            "q05": 98.0,
+            "q95": 1301.0,
+            "std_population": 415.0731930340547,
+            "variance_population": 172285.75557548564
+          },
+          "dead_end_node_fraction": {
+            "max": 1.0,
+            "mean": 0.14309406144778714,
+            "median": 0.1349206349206349,
+            "min": 0.0,
+            "n": 6001,
+            "q05": 0.05167173252279635,
+            "q95": 0.2646048109965636,
+            "std_population": 0.06648553322020606,
+            "variance_population": 0.0044203261275751245
+          },
+          "dead_end_nodes_per_tract": {
+            "max": 1497.0,
+            "mean": 66.53456605030819,
+            "median": 41.0,
+            "min": 0.0,
+            "n": 6003,
+            "q05": 10.0,
+            "q95": 206.89999999999964,
+            "std_population": 84.01387443378269,
+            "variance_population": 7058.331097375405
+          },
+          "diagnostic_coverage_fraction": 0.9996668332500417,
+          "fragmentation": {
+            "max": 0.8715728715728716,
+            "mean": 0.14143644690412566,
+            "median": 0.06756756756756754,
+            "min": 0.0,
+            "n": 6003,
+            "q05": 0.0,
+            "q95": 0.5281128488723751,
+            "std_population": 0.1724374145602218,
+            "variance_population": 0.029734661940213795
+          },
+          "isolated_components_per_tract": {
+            "max": 55.0,
+            "mean": 3.613193403298351,
+            "median": 2.0,
+            "min": 0.0,
+            "n": 6003,
+            "q05": 0.0,
+            "q95": 12.0,
+            "std_population": 4.701941271561764,
+            "variance_population": 22.108251721215858
+          },
+          "isolated_nodes_per_tract": {
+            "max": 55.0,
+            "mean": 3.613193403298351,
+            "median": 2.0,
+            "min": 0.0,
+            "n": 6003,
+            "q05": 0.0,
+            "q95": 12.0,
+            "std_population": 4.701941271561764,
+            "variance_population": 22.108251721215858
+          },
+          "largest_component_node_share": {
+            "max": 1.0,
+            "mean": 0.8585164154698438,
+            "median": 0.9323671497584541,
+            "min": 0.12842712842712842,
+            "n": 6001,
+            "q05": 0.47183098591549294,
+            "q95": 1.0,
+            "std_population": 0.17244681105270243,
+            "variance_population": 0.029737902642246457
+          },
+          "mean_degree_per_tract": {
+            "max": 3.309090909090909,
+            "mean": 2.246158425589153,
+            "median": 2.2371134020618557,
+            "min": 0.0,
+            "n": 6001,
+            "q05": 1.979020979020979,
+            "q95": 2.555407209612817,
+            "std_population": 0.18589074208395207,
+            "variance_population": 0.03455536799252239
+          },
+          "pooled_degree_histogram": {
+            "degree_0": 21690,
+            "degree_1": 399407,
+            "degree_2": 1396010,
+            "degree_3": 745611,
+            "degree_4_plus": 176768
+          },
+          "tracts": 6003,
+          "tracts_with_connector_diagnostics": 6001,
+          "unique_local_edges_per_tract": {
+            "max": 5057.0,
+            "mean": 511.24954189571883,
+            "median": 368.0,
+            "min": 0.0,
+            "n": 6003,
+            "q05": 104.0,
+            "q95": 1418.8999999999996,
+            "std_population": 459.93535136363425,
+            "variance_population": 211540.52743398972
+          }
+        }
+      },
+      "south-central-tx:Rural": {
+        "baseline_route_reference_gap_defined_only": {
+          "max": 1.0,
+          "mean": 0.16039629850688658,
+          "median": 0.11326627433128911,
+          "min": 0.0,
+          "n": 982,
+          "q05": 0.0,
+          "q95": 0.5000663722419605,
+          "std_population": 0.18830642973862488,
+          "variance_population": 0.03545931148090767
+        },
+        "candidate_adjustment_all_rows": {
+          "max": 0.04252049180327869,
+          "mean": 0.009647493823620536,
+          "median": 0.005449591280653955,
+          "min": 0.0,
+          "n": 991,
+          "q05": 0.00047286804384015784,
+          "q95": 0.02990330622839661,
+          "std_population": 0.00964328558003612,
+          "variance_population": 9.299295677813257e-05
+        },
+        "candidate_adjustment_fraction_positive": 0.9747729566094854,
+        "candidate_adjustment_max_abs": 0.04252049180327869,
+        "candidate_adjustment_within_0_05": true,
+        "official_rows": 991,
+        "route_reference_defined_fraction": 0.9909182643794148,
+        "route_reference_defined_rows": 982,
+        "topology_candidate_gap_defined_only": {
+          "max": 1.0,
+          "mean": 0.1701322113166706,
+          "median": 0.11924172069775225,
+          "min": 0.0,
+          "n": 982,
+          "q05": 0.0020994531620952936,
+          "q95": 0.5130672906126346,
+          "std_population": 0.1870104911291485,
+          "variance_population": 0.03497292379236533
+        },
+        "topology_defined_rows": 991,
+        "topology_diagnostic_fraction": 1.0,
+        "topology_graph": {
+          "components_per_tract": {
+            "max": 241.0,
+            "mean": 25.955600403632694,
+            "median": 21.0,
+            "min": 1.0,
+            "n": 991,
+            "q05": 4.5,
+            "q95": 61.0,
+            "std_population": 19.96970577541314,
+            "variance_population": 398.7891487565689
+          },
+          "connector_nodes_per_tract": {
+            "max": 4404.0,
+            "mean": 982.4046417759838,
+            "median": 855.0,
+            "min": 1.0,
+            "n": 991,
+            "q05": 263.0,
+            "q95": 2098.0,
+            "std_population": 588.3608031221169,
+            "variance_population": 346168.43465050234
+          },
+          "dead_end_node_fraction": {
+            "max": 1.0,
+            "mean": 0.1768971777895959,
+            "median": 0.16724336793540945,
+            "min": 0.0,
+            "n": 991,
+            "q05": 0.08737775198864277,
+            "q95": 0.29062764041003075,
+            "std_population": 0.06835204075052533,
+            "variance_population": 0.004672001474761475
+          },
+          "dead_end_nodes_per_tract": {
+            "max": 1497.0,
+            "mean": 174.68819374369323,
+            "median": 138.0,
+            "min": 0.0,
+            "n": 991,
+            "q05": 38.5,
+            "q95": 454.5,
+            "std_population": 143.8856643713019,
+            "variance_population": 20703.08441157094
+          },
+          "diagnostic_coverage_fraction": 1.0,
+          "fragmentation": {
+            "max": 0.8504098360655737,
+            "mean": 0.197280570093173,
+            "median": 0.11363636363636365,
+            "min": 0.0,
+            "n": 991,
+            "q05": 0.013330941887032155,
+            "q95": 0.6057458611820914,
+            "std_population": 0.19446491838329405,
+            "variance_population": 0.03781660448182121
+          },
+          "isolated_components_per_tract": {
+            "max": 55.0,
+            "mean": 9.014127144298689,
+            "median": 7.0,
+            "min": 0.0,
+            "n": 991,
+            "q05": 1.0,
+            "q95": 23.5,
+            "std_population": 7.374226410708265,
+            "variance_population": 54.3792151563873
+          },
+          "isolated_nodes_per_tract": {
+            "max": 55.0,
+            "mean": 9.014127144298689,
+            "median": 7.0,
+            "min": 0.0,
+            "n": 991,
+            "q05": 1.0,
+            "q95": 23.5,
+            "std_population": 7.374226410708265,
+            "variance_population": 54.3792151563873
+          },
+          "largest_component_node_share": {
+            "max": 1.0,
+            "mean": 0.8027194299068269,
+            "median": 0.8863636363636364,
+            "min": 0.14959016393442623,
+            "n": 991,
+            "q05": 0.3942541388179086,
+            "q95": 0.9866690581129678,
+            "std_population": 0.19446491838329405,
+            "variance_population": 0.03781660448182121
+          },
+          "mean_degree_per_tract": {
+            "max": 2.973621103117506,
+            "mean": 2.176769413302834,
+            "median": 2.146153846153846,
+            "min": 0.0,
+            "n": 991,
+            "q05": 1.9541959709974308,
+            "q95": 2.5234261501210655,
+            "std_population": 0.20131140187246727,
+            "variance_population": 0.04052628052385802
+          },
+          "pooled_degree_histogram": {
+            "degree_0": 8933,
+            "degree_1": 173116,
+            "degree_2": 480086,
+            "degree_3": 263673,
+            "degree_4_plus": 47755
+          },
+          "tracts": 991,
+          "tracts_with_connector_diagnostics": 991,
+          "unique_local_edges_per_tract": {
+            "max": 5057.0,
+            "mean": 1067.476286579213,
+            "median": 924.0,
+            "min": 0.0,
+            "n": 991,
+            "q05": 282.5,
+            "q95": 2278.5,
+            "std_population": 650.6829798412049,
+            "variance_population": 423388.34025502985
+          }
+        }
+      },
+      "south-central-tx:Unknown": {
+        "baseline_route_reference_gap_defined_only": {
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 9,
+          "q05": 0.0,
+          "q95": 0.0,
+          "std_population": 0.0,
+          "variance_population": 0.0
+        },
+        "candidate_adjustment_all_rows": {
+          "max": 0.0325,
+          "mean": 0.01127569583785341,
+          "median": 0.007469935245143387,
+          "min": 0.0,
+          "n": 14,
+          "q05": 0.0,
+          "q95": 0.02975614754098361,
+          "std_population": 0.011839624990434413,
+          "variance_population": 0.00014017671991411906
+        },
+        "candidate_adjustment_fraction_positive": 0.5714285714285714,
+        "candidate_adjustment_max_abs": 0.0325,
+        "candidate_adjustment_within_0_05": true,
+        "official_rows": 14,
+        "route_reference_defined_fraction": 0.6428571428571429,
+        "route_reference_defined_rows": 9,
+        "topology_candidate_gap_defined_only": {
+          "max": 0.0325,
+          "mean": 0.01753997130332753,
+          "median": 0.02027027027027027,
+          "min": 0.0,
+          "n": 9,
+          "q05": 0.0008695652173913038,
+          "q95": 0.030811475409836066,
+          "std_population": 0.010400839558487973,
+          "variance_population": 0.00010817746352140831
+        },
+        "topology_defined_rows": 12,
+        "topology_diagnostic_fraction": 0.8571428571428571,
+        "topology_graph": {
+          "components_per_tract": {
+            "max": 9.0,
+            "mean": 3.7857142857142856,
+            "median": 3.0,
+            "min": 0.0,
+            "n": 14,
+            "q05": 0.0,
+            "q95": 8.35,
+            "std_population": 2.7039276043925287,
+            "variance_population": 7.311224489795919
+          },
+          "connector_nodes_per_tract": {
+            "max": 164.0,
+            "mean": 57.642857142857146,
+            "median": 42.0,
+            "min": 0.0,
+            "n": 14,
+            "q05": 0.0,
+            "q95": 136.7,
+            "std_population": 49.54883181966935,
+            "variance_population": 2455.086734693878
+          },
+          "dead_end_node_fraction": {
+            "max": 0.4444444444444444,
+            "mean": 0.18811847727294215,
+            "median": 0.1553030303030303,
+            "min": 0.06382978723404255,
+            "n": 12,
+            "q05": 0.08573559937727036,
+            "q95": 0.3787499999999999,
+            "std_population": 0.10446343253361462,
+            "variance_population": 0.010912608736705054
+          },
+          "dead_end_nodes_per_tract": {
+            "max": 17.0,
+            "mean": 8.357142857142858,
+            "median": 8.5,
+            "min": 0.0,
+            "n": 14,
+            "q05": 0.0,
+            "q95": 17.0,
+            "std_population": 5.899238968558849,
+            "variance_population": 34.80102040816327
+          },
+          "diagnostic_coverage_fraction": 0.8571428571428571,
+          "fragmentation": {
+            "max": 0.65,
+            "mean": 0.2900882313313828,
+            "median": 0.28924494032174364,
+            "min": 0.0,
+            "n": 14,
+            "q05": 0.0,
+            "q95": 0.5951229508196721,
+            "std_population": 0.21568909908976053,
+            "variance_population": 0.046521787466152535
+          },
+          "isolated_components_per_tract": {
+            "max": 5.0,
+            "mean": 0.8571428571428571,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 14,
+            "q05": 0.0,
+            "q95": 3.6999999999999993,
+            "std_population": 1.4568627181693672,
+            "variance_population": 2.122448979591837
+          },
+          "isolated_nodes_per_tract": {
+            "max": 5.0,
+            "mean": 0.8571428571428571,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 14,
+            "q05": 0.0,
+            "q95": 3.6999999999999993,
+            "std_population": 1.4568627181693672,
+            "variance_population": 2.122448979591837
+          },
+          "largest_component_node_share": {
+            "max": 1.0,
+            "mean": 0.6615637301133868,
+            "median": 0.6357119314436388,
+            "min": 0.35,
+            "n": 12,
+            "q05": 0.3964344262295082,
+            "q95": 0.9760869565217392,
+            "std_population": 0.19471180982555972,
+            "variance_population": 0.03791268888554493
+          },
+          "mean_degree_per_tract": {
+            "max": 2.4444444444444446,
+            "mean": 1.9113725572510092,
+            "median": 1.9836065573770492,
+            "min": 1.0,
+            "n": 12,
+            "q05": 1.3055555555555556,
+            "q95": 2.3554347826086954,
+            "std_population": 0.3538847860320901,
+            "variance_population": 0.1252344417849782
+          },
+          "pooled_degree_histogram": {
+            "degree_0": 12,
+            "degree_1": 117,
+            "degree_2": 512,
+            "degree_3": 138,
+            "degree_4_plus": 28
+          },
+          "tracts": 14,
+          "tracts_with_connector_diagnostics": 12,
+          "unique_local_edges_per_tract": {
+            "max": 169.0,
+            "mean": 59.57142857142857,
+            "median": 40.5,
+            "min": 0.0,
+            "n": 14,
+            "q05": 0.0,
+            "q95": 141.04999999999998,
+            "std_population": 53.4077499535605,
+            "variance_population": 2852.387755102041
+          }
+        }
+      },
+      "south-central-tx:Urban": {
+        "baseline_route_reference_gap_defined_only": {
+          "max": 1.0,
+          "mean": 0.012115664968969837,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 3737,
+          "q05": 0.0,
+          "q95": 0.0,
+          "std_population": 0.07247820503881876,
+          "variance_population": 0.005253090205649053
+        },
+        "candidate_adjustment_all_rows": {
+          "max": 0.04357864357864358,
+          "mean": 0.0049162437194908,
+          "median": 0.001348693559694564,
+          "min": 0.0,
+          "n": 4998,
+          "q05": 0.0,
+          "q95": 0.02332471804511277,
+          "std_population": 0.007697273596884033,
+          "variance_population": 5.924802082528806e-05
+        },
+        "candidate_adjustment_fraction_positive": 0.6922769107643058,
+        "candidate_adjustment_max_abs": 0.04357864357864358,
+        "candidate_adjustment_within_0_05": true,
+        "official_rows": 4998,
+        "route_reference_defined_fraction": 0.7476990796318528,
+        "route_reference_defined_rows": 3737,
+        "topology_candidate_gap_defined_only": {
+          "max": 1.0,
+          "mean": 0.018690828498543026,
+          "median": 0.003194888178913741,
+          "min": 0.0,
+          "n": 3737,
+          "q05": 0.0,
+          "q95": 0.0343571775403902,
+          "std_population": 0.07320074468456204,
+          "variance_population": 0.005358349022374439
+        },
+        "topology_defined_rows": 4998,
+        "topology_diagnostic_fraction": 1.0,
+        "topology_graph": {
+          "components_per_tract": {
+            "max": 90.0,
+            "mean": 7.261504601840736,
+            "median": 6.0,
+            "min": 1.0,
+            "n": 4998,
+            "q05": 1.0,
+            "q95": 20.0,
+            "std_population": 6.667145043141731,
+            "variance_population": 44.45082302628935
+          },
+          "connector_nodes_per_tract": {
+            "max": 4264.0,
+            "mean": 353.1644657863145,
+            "median": 286.0,
+            "min": 3.0,
+            "n": 4998,
+            "q05": 93.0,
+            "q95": 833.1499999999996,
+            "std_population": 268.9257655725465,
+            "variance_population": 72321.06738878024
+          },
+          "dead_end_node_fraction": {
+            "max": 0.6666666666666666,
+            "mean": 0.1362835009666678,
+            "median": 0.12721802467015828,
+            "min": 0.0,
+            "n": 4998,
+            "q05": 0.049019607843137254,
+            "q95": 0.2561204268292682,
+            "std_population": 0.06385155796172538,
+            "variance_population": 0.004077021454139576
+          },
+          "dead_end_nodes_per_tract": {
+            "max": 692.0,
+            "mean": 45.252901160464184,
+            "median": 35.0,
+            "min": 0.0,
+            "n": 4998,
+            "q05": 9.0,
+            "q95": 114.14999999999964,
+            "std_population": 39.88519020821906,
+            "variance_population": 1590.8283979458133
+          },
+          "diagnostic_coverage_fraction": 1.0,
+          "fragmentation": {
+            "max": 0.8715728715728716,
+            "mean": 0.12994732104131504,
+            "median": 0.05817579654788957,
+            "min": 0.0,
+            "n": 4998,
+            "q05": 0.0,
+            "q95": 0.5066145227932054,
+            "std_population": 0.16514512610363305,
+            "variance_population": 0.02727291267578486
+          },
+          "isolated_components_per_tract": {
+            "max": 32.0,
+            "mean": 2.550020008003201,
+            "median": 2.0,
+            "min": 0.0,
+            "n": 4998,
+            "q05": 0.0,
+            "q95": 8.0,
+            "std_population": 2.9715536427970886,
+            "variance_population": 8.830131052020647
+          },
+          "isolated_nodes_per_tract": {
+            "max": 32.0,
+            "mean": 2.550020008003201,
+            "median": 2.0,
+            "min": 0.0,
+            "n": 4998,
+            "q05": 0.0,
+            "q95": 8.0,
+            "std_population": 2.9715536427970886,
+            "variance_population": 8.830131052020647
+          },
+          "largest_component_node_share": {
+            "max": 1.0,
+            "mean": 0.8700526789586848,
+            "median": 0.9418242034521105,
+            "min": 0.12842712842712842,
+            "n": 4998,
+            "q05": 0.4933854772067945,
+            "q95": 1.0,
+            "std_population": 0.16514512610363305,
+            "variance_population": 0.02727291267578486
+          },
+          "mean_degree_per_tract": {
+            "max": 3.309090909090909,
+            "mean": 2.260720638793595,
+            "median": 2.25,
+            "min": 0.6666666666666666,
+            "n": 4998,
+            "q05": 2.0,
+            "q95": 2.5588709677419352,
+            "std_population": 0.17809519658160353,
+            "variance_population": 0.03171789904544
+          },
+          "pooled_degree_histogram": {
+            "degree_0": 12745,
+            "degree_1": 226174,
+            "degree_2": 915412,
+            "degree_3": 481800,
+            "degree_4_plus": 128985
+          },
+          "tracts": 4998,
+          "tracts_with_connector_diagnostics": 4998,
+          "unique_local_edges_per_tract": {
+            "max": 5024.0,
+            "mean": 402.2264905962385,
+            "median": 325.0,
+            "min": 1.0,
+            "n": 4998,
+            "q05": 97.0,
+            "q95": 945.7499999999982,
+            "std_population": 310.35025509070067,
+            "variance_population": 96317.28083486296
+          }
+        }
+      }
+    },
+    "edge_case_audit_by_region": {
+      "eastern-ok": {
+        "both_endpoints_outside_adjacencies": 8,
+        "connector_adjacencies": 889485,
+        "connector_occurrences": 1409820,
+        "connector_points_assigned_to_official_sample": 1409602,
+        "connector_points_outside_official_sample": 218,
+        "cross_tract_adjacencies": 35740,
+        "one_endpoint_in_sample_adjacencies": 218,
+        "segments_seen": 520550,
+        "segments_skipped_invalid_or_non_linestring_geometry": 215,
+        "valid_segments": 520335,
+        "within_tract_adjacencies": 853519
+      },
+      "maricopa-az": {
+        "both_endpoints_outside_adjacencies": 5,
+        "connector_adjacencies": 856152,
+        "connector_occurrences": 1350498,
+        "connector_points_assigned_to_official_sample": 1350229,
+        "connector_points_outside_official_sample": 269,
+        "cross_tract_adjacencies": 31436,
+        "one_endpoint_in_sample_adjacencies": 263,
+        "segments_seen": 494492,
+        "segments_skipped_invalid_or_non_linestring_geometry": 146,
+        "valid_segments": 494346,
+        "within_tract_adjacencies": 824448
+      },
+      "northern-ca": {
+        "both_endpoints_outside_adjacencies": 10,
+        "connector_adjacencies": 342400,
+        "connector_occurrences": 533859,
+        "connector_points_assigned_to_official_sample": 533402,
+        "connector_points_outside_official_sample": 457,
+        "cross_tract_adjacencies": 13055,
+        "one_endpoint_in_sample_adjacencies": 449,
+        "segments_seen": 191836,
+        "segments_skipped_invalid_or_non_linestring_geometry": 377,
+        "valid_segments": 191459,
+        "within_tract_adjacencies": 328886
+      },
+      "south-central-tx": {
+        "both_endpoints_outside_adjacencies": 3,
+        "connector_adjacencies": 3260709,
+        "connector_occurrences": 5197369,
+        "connector_points_assigned_to_official_sample": 5196722,
+        "connector_points_outside_official_sample": 647,
+        "cross_tract_adjacencies": 165587,
+        "one_endpoint_in_sample_adjacencies": 647,
+        "segments_seen": 1937009,
+        "segments_skipped_invalid_or_non_linestring_geometry": 349,
+        "valid_segments": 1936660,
+        "within_tract_adjacencies": 3094472
+      }
+    },
+    "exact_official_ids_and_order": true,
+    "graph_definition": {
+      "components": "Connected components include all assigned tract nodes, including degree-zero isolated connector vertices. Compute component count, singleton component count, largest component node share, and degree distribution.",
+      "connector_semantics": "Use each segment connectors[] list of unique connector_id and relative at position; require finite at in [0,1], sort by at, and interpolate its point along the provided WGS84 LineString geometry with normalized linear distance.",
+      "degree": "Degree is the number of distinct local connector neighbors in the simple induced tract graph; dead end means degree one, isolated node means degree zero. These are structural diagnostics, not road service/access measures.",
+      "fragmentation": "If at least one tract-local connector node exists, fragmentation = 1 - (largest connected-component node count / tract-local unique connector node count); otherwise fragmentation=0 and topology_defined=0.",
+      "segment_edges": "Undirected adjacency between successive valid connector references on each segment.",
+      "tract_graph": "For each tract, nodes are unique connector IDs with an assigned connector point in that tract. Keep an undirected simple edge only when successive connector endpoints both assign to the same tract; count cross-tract/outside adjacencies separately. Duplicate unordered connector pairs are collapsed for degree and components.",
+      "tract_node_assignment": "Assign interpolated connector points to official provided tract polygons; deterministic lowest ordered tract index resolves boundary matches."
+    },
+    "labels_available_or_used": false,
+    "maximum_absolute_adjustment": 0.04357864357864358,
+    "ordered_official_geoid_sha256": "b04a211263a9ef61d71ba242a282487411ef6258e458ed258857d270d636fda8",
+    "target_rmse_computed": false
+  },
+  "measure_before_route_reference_and_road_lengths": {
+    "by_region_and_urban_rural": {
+      "all": {
+        "road_lengths_km": {
+          "overture_named_road_km_5070": {
+            "max": 482.53438441465477,
+            "mean": 19.238487049871527,
+            "median": 7.779709874548673,
+            "min": 0.0,
+            "n": 9379,
+            "q05": 1.0103171544560745,
+            "q95": 78.49735013954589,
+            "std_population": 35.40990920959755,
+            "variance_population": 1253.8616702319414
+          },
+          "overture_road_km": {
+            "max": 482.53439330779565,
+            "mean": 19.241131650321115,
+            "median": 7.781175934481846,
+            "min": 0.0,
+            "n": 9379,
+            "q05": 1.0090017948882315,
+            "q95": 78.46811223125114,
+            "std_population": 35.41055143750662,
+            "variance_population": 1253.907153108302
+          },
+          "overture_route_km": {
+            "max": 578.4184068400216,
+            "mean": 15.305394215372393,
+            "median": 2.3298327754619343,
+            "min": 0.0,
+            "n": 9379,
+            "q05": 0.0,
+            "q95": 83.21348107883492,
+            "std_population": 39.32700003850704,
+            "variance_population": 1546.6129320287325
+          }
+        },
+        "route_reference_candidate": {
+          "defined_fraction": 0.7180936133916196,
+          "defined_rows": 6735,
+          "gap": {
+            "max": 1.0,
+            "mean": 0.02273246253371616,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 9379,
+            "q05": 0.0,
+            "q95": 0.19056508934956737,
+            "std_population": 0.09185933941179336,
+            "variance_population": 0.008438138237171053
+          }
+        },
+        "rows": 9379,
+        "v0_transport": {
+          "defined_fraction": 0.6305576287450688,
+          "defined_rows": 5914,
+          "gap": {
+            "max": 1.0,
+            "mean": 0.09682722322234288,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 9379,
+            "q05": 0.0,
+            "q95": 0.6638197403926894,
+            "std_population": 0.2233430688196987,
+            "variance_population": 0.04988212638980068
+          }
+        }
+      },
+      "eastern-ok": {
+        "road_lengths_km": {
+          "overture_named_road_km_5070": {
+            "max": 253.29612921134037,
+            "mean": 23.442976312154723,
+            "median": 8.908656962442876,
+            "min": 0.0,
+            "n": 1192,
+            "q05": 0.7199209392737838,
+            "q95": 89.8425533625389,
+            "std_population": 33.37788864840368,
+            "variance_population": 1114.0834506252354
+          },
+          "overture_road_km": {
+            "max": 253.2957546234284,
+            "mean": 23.444041777158258,
+            "median": 8.908714088110603,
+            "min": 0.0,
+            "n": 1192,
+            "q05": 0.7199225660396614,
+            "q95": 89.84253499925354,
+            "std_population": 33.3797487428007,
+            "variance_population": 1114.207626132505
+          },
+          "overture_route_km": {
+            "max": 242.16244374329955,
+            "mean": 20.19455617847638,
+            "median": 4.701426344779664,
+            "min": 0.0,
+            "n": 1192,
+            "q05": 0.0,
+            "q95": 87.26847312677644,
+            "std_population": 33.186091496713864,
+            "variance_population": 1101.316668828264
+          }
+        },
+        "route_reference_candidate": {
+          "defined_fraction": 0.7600671140939598,
+          "defined_rows": 906,
+          "gap": {
+            "max": 1.0,
+            "mean": 0.004198560312356857,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 1192,
+            "q05": 0.0,
+            "q95": 0.0,
+            "std_population": 0.04215418270410859,
+            "variance_population": 0.0017769751194513677
+          }
+        },
+        "rows": 1192,
+        "v0_transport": {
+          "defined_fraction": 0.5931208053691275,
+          "defined_rows": 707,
+          "gap": {
+            "max": 1.0,
+            "mean": 0.07050675251856243,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 1192,
+            "q05": 0.0,
+            "q95": 0.565828996387426,
+            "std_population": 0.20155877990133736,
+            "variance_population": 0.04062594175531575
+          }
+        }
+      },
+      "eastern-ok:Rural": {
+        "road_lengths_km": {
+          "overture_named_road_km_5070": {
+            "max": 253.29612921134037,
+            "mean": 51.63728932826632,
+            "median": 43.26734246427146,
+            "min": 0.0,
+            "n": 411,
+            "q05": 5.179765557977632,
+            "q95": 127.91974363105321,
+            "std_population": 41.90599906227004,
+            "variance_population": 1756.1127574069776
+          },
+          "overture_road_km": {
+            "max": 253.2957546234284,
+            "mean": 51.639198905816734,
+            "median": 43.26734247193497,
+            "min": 0.0,
+            "n": 411,
+            "q05": 5.179747570043606,
+            "q95": 127.91968474792748,
+            "std_population": 41.91014242031662,
+            "variance_population": 1756.4600376912224
+          },
+          "overture_route_km": {
+            "max": 242.16244374329955,
+            "mean": 49.80721819174242,
+            "median": 41.014660195165405,
+            "min": 0.0,
+            "n": 411,
+            "q05": 4.960290638379149,
+            "q95": 127.93603852968715,
+            "std_population": 40.94956609456895,
+            "variance_population": 1676.8669633334707
+          }
+        },
+        "route_reference_candidate": {
+          "defined_fraction": 0.9854014598540146,
+          "defined_rows": 405,
+          "gap": {
+            "max": 1.0,
+            "mean": 0.010378938922982155,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 411,
+            "q05": 0.0,
+            "q95": 0.029679415139250265,
+            "std_population": 0.06766920390719644,
+            "variance_population": 0.0045791211574337295
+          }
+        },
+        "rows": 411,
+        "v0_transport": {
+          "defined_fraction": 0.9124087591240876,
+          "defined_rows": 375,
+          "gap": {
+            "max": 1.0,
+            "mean": 0.024667433959957488,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 411,
+            "q05": 0.0,
+            "q95": 0.0,
+            "std_population": 0.1277668220014842,
+            "variance_population": 0.016324360804358947
+          }
+        }
+      },
+      "eastern-ok:Unknown": {
+        "road_lengths_km": {
+          "overture_named_road_km_5070": {
+            "max": 1.766216710452152,
+            "mean": 1.766216710452152,
+            "median": 1.766216710452152,
+            "min": 1.766216710452152,
+            "n": 1,
+            "q05": 1.766216710452152,
+            "q95": 1.766216710452152,
+            "std_population": 0.0,
+            "variance_population": 0.0
+          },
+          "overture_road_km": {
+            "max": 1.7661213644434384,
+            "mean": 1.7661213644434384,
+            "median": 1.7661213644434384,
+            "min": 1.7661213644434384,
+            "n": 1,
+            "q05": 1.7661213644434384,
+            "q95": 1.7661213644434384,
+            "std_population": 0.0,
+            "variance_population": 0.0
+          },
+          "overture_route_km": {
+            "max": 1.479894828959169,
+            "mean": 1.479894828959169,
+            "median": 1.479894828959169,
+            "min": 1.479894828959169,
+            "n": 1,
+            "q05": 1.479894828959169,
+            "q95": 1.479894828959169,
+            "std_population": 0.0,
+            "variance_population": 0.0
+          }
+        },
+        "route_reference_candidate": {
+          "defined_fraction": 1.0,
+          "defined_rows": 1,
+          "gap": {
+            "max": 0.0,
+            "mean": 0.0,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 1,
+            "q05": 0.0,
+            "q95": 0.0,
+            "std_population": 0.0,
+            "variance_population": 0.0
+          }
+        },
+        "rows": 1,
+        "v0_transport": {
+          "defined_fraction": 0.0,
+          "defined_rows": 0,
+          "gap": {
+            "max": 0.0,
+            "mean": 0.0,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 1,
+            "q05": 0.0,
+            "q95": 0.0,
+            "std_population": 0.0,
+            "variance_population": 0.0
+          }
+        }
+      },
+      "eastern-ok:Urban": {
+        "road_lengths_km": {
+          "overture_named_road_km_5070": {
+            "max": 108.98136206663551,
+            "mean": 8.614532863410924,
+            "median": 4.944748282364113,
+            "min": 0.0,
+            "n": 780,
+            "q05": 0.41052701320441265,
+            "q95": 28.375494642236387,
+            "std_population": 11.741602991140335,
+            "variance_population": 137.86524080155567
+          },
+          "overture_road_km": {
+            "max": 108.95952370072342,
+            "mean": 8.615155034253236,
+            "median": 4.944903220692359,
+            "min": 0.0,
+            "n": 780,
+            "q05": 0.41051549836994666,
+            "q95": 28.375508772707555,
+            "std_population": 11.740260813426946,
+            "variance_population": 137.83372396728836
+          },
+          "overture_route_km": {
+            "max": 101.75763471540378,
+            "mean": 4.614954350139426,
+            "median": 1.5927053629312578,
+            "min": 0.0,
+            "n": 780,
+            "q05": 0.0,
+            "q95": 17.813662413177553,
+            "std_population": 9.706744037495735,
+            "variance_population": 94.220879809459
+          }
+        },
+        "route_reference_candidate": {
+          "defined_fraction": 0.6410256410256411,
+          "defined_rows": 500,
+          "gap": {
+            "max": 0.3406965768513054,
+            "mean": 0.0009473589679278295,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 780,
+            "q05": 0.0,
+            "q95": 0.0,
+            "std_population": 0.01649296963838701,
+            "variance_population": 0.00027201804749275567
+          }
+        },
+        "rows": 780,
+        "v0_transport": {
+          "defined_fraction": 0.4256410256410256,
+          "defined_rows": 332,
+          "gap": {
+            "max": 1.0,
+            "mean": 0.09475094056997935,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 780,
+            "q05": 0.0,
+            "q95": 0.6414718158545268,
+            "std_population": 0.22755602084138793,
+            "variance_population": 0.05178174262116618
+          }
+        }
+      },
+      "maricopa-az": {
+        "road_lengths_km": {
+          "overture_named_road_km_5070": {
+            "max": 464.29739352767086,
+            "mean": 13.88180341992361,
+            "median": 5.52902905050868,
+            "min": 0.0,
+            "n": 1593,
+            "q05": 0.7479714632480345,
+            "q95": 55.180901492117464,
+            "std_population": 31.551950827066197,
+            "variance_population": 995.5256009936032
+          },
+          "overture_road_km": {
+            "max": 464.29739457957135,
+            "mean": 13.881847975032322,
+            "median": 5.5291404366359345,
+            "min": 0.0,
+            "n": 1593,
+            "q05": 0.748087255220846,
+            "q95": 55.17887562972087,
+            "std_population": 31.552405386610793,
+            "variance_population": 995.5542856810257
+          },
+          "overture_route_km": {
+            "max": 461.75830446530716,
+            "mean": 7.1980882379758375,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 1593,
+            "q05": 0.0,
+            "q95": 39.609676226593244,
+            "std_population": 26.91554881809416,
+            "variance_population": 724.4467681792099
+          }
+        },
+        "route_reference_candidate": {
+          "defined_fraction": 0.43440050219711235,
+          "defined_rows": 692,
+          "gap": {
+            "max": 0.4783939721938968,
+            "mean": 0.0016433328964739352,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 1593,
+            "q05": 0.0,
+            "q95": 0.0,
+            "std_population": 0.024538249370219794,
+            "variance_population": 0.0006021256821550921
+          }
+        },
+        "rows": 1593,
+        "v0_transport": {
+          "defined_fraction": 0.6346516007532956,
+          "defined_rows": 1011,
+          "gap": {
+            "max": 1.0,
+            "mean": 0.15359757435586058,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 1593,
+            "q05": 0.0,
+            "q95": 0.7638840840136698,
+            "std_population": 0.26951611926167657,
+            "variance_population": 0.07263893854187427
+          }
+        }
+      },
+      "maricopa-az:Rural": {
+        "road_lengths_km": {
+          "overture_named_road_km_5070": {
+            "max": 464.29739352767086,
+            "mean": 64.84105335293779,
+            "median": 41.67912235904688,
+            "min": 0.0,
+            "n": 163,
+            "q05": 0.8351921562483903,
+            "q95": 206.25214120153265,
+            "std_population": 75.82722720838402,
+            "variance_population": 5749.768386111893
+          },
+          "overture_road_km": {
+            "max": 464.29739457957135,
+            "mean": 64.84151125962026,
+            "median": 41.675787053733515,
+            "min": 0.0,
+            "n": 163,
+            "q05": 0.8351922668639207,
+            "q95": 206.25233057388346,
+            "std_population": 75.8287375518996,
+            "variance_population": 5749.997438714868
+          },
+          "overture_route_km": {
+            "max": 461.75830446530716,
+            "mean": 52.21502896403455,
+            "median": 32.111040486408605,
+            "min": 0.0,
+            "n": 163,
+            "q05": 0.0,
+            "q95": 173.79729946071413,
+            "std_population": 66.52135845459254,
+            "variance_population": 4425.091130644391
+          }
+        },
+        "route_reference_candidate": {
+          "defined_fraction": 0.8711656441717791,
+          "defined_rows": 142,
+          "gap": {
+            "max": 0.4783939721938968,
+            "mean": 0.016024141423518882,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 163,
+            "q05": 0.0,
+            "q95": 0.07710265489141242,
+            "std_population": 0.07519297944874176,
+            "variance_population": 0.0056539841583789
+          }
+        },
+        "rows": 163,
+        "v0_transport": {
+          "defined_fraction": 0.901840490797546,
+          "defined_rows": 147,
+          "gap": {
+            "max": 1.0,
+            "mean": 0.07536520780702327,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 163,
+            "q05": 0.0,
+            "q95": 0.6524589403018994,
+            "std_population": 0.22633491463336805,
+            "variance_population": 0.051227493582094004
+          }
+        }
+      },
+      "maricopa-az:Unknown": {
+        "road_lengths_km": {
+          "overture_named_road_km_5070": {
+            "max": 14.163367649588281,
+            "mean": 3.102724960385611,
+            "median": 2.6040156289383622,
+            "min": 0.0,
+            "n": 11,
+            "q05": 0.0,
+            "q95": 10.483754566963366,
+            "std_population": 4.036580408913297,
+            "variance_population": 16.29398139762264
+          },
+          "overture_road_km": {
+            "max": 14.163373806522403,
+            "mean": 3.1027914879548346,
+            "median": 2.604015379639578,
+            "min": 0.0,
+            "n": 11,
+            "q05": 0.0,
+            "q95": 10.48412032715085,
+            "std_population": 4.0366422287858335,
+            "variance_population": 16.294480483217058
+          },
+          "overture_route_km": {
+            "max": 6.495953343991223,
+            "mean": 1.0326806192335853,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 11,
+            "q05": 0.0,
+            "q95": 4.614491245011641,
+            "std_population": 1.8968904771405686,
+            "variance_population": 3.598193482266574
+          }
+        },
+        "route_reference_candidate": {
+          "defined_fraction": 0.45454545454545453,
+          "defined_rows": 5,
+          "gap": {
+            "max": 0.0,
+            "mean": 0.0,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 11,
+            "q05": 0.0,
+            "q95": 0.0,
+            "std_population": 0.0,
+            "variance_population": 0.0
+          }
+        },
+        "rows": 11,
+        "v0_transport": {
+          "defined_fraction": 0.2727272727272727,
+          "defined_rows": 3,
+          "gap": {
+            "max": 1.0,
+            "mean": 0.2727272727272727,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 11,
+            "q05": 0.0,
+            "q95": 1.0,
+            "std_population": 0.4453617714151233,
+            "variance_population": 0.1983471074380165
+          }
+        }
+      },
+      "maricopa-az:Urban": {
+        "road_lengths_km": {
+          "overture_named_road_km_5070": {
+            "max": 211.93248855507682,
+            "mean": 8.111692161272169,
+            "median": 5.1032771135881525,
+            "min": 0.0,
+            "n": 1419,
+            "q05": 0.78885663966217,
+            "q95": 26.477955345560634,
+            "std_population": 11.158178509924698,
+            "variance_population": 124.50494765934536
+          },
+          "overture_road_km": {
+            "max": 211.9324889304883,
+            "mean": 8.111689064510838,
+            "median": 5.103323740402451,
+            "min": 0.0,
+            "n": 1419,
+            "q05": 0.7888569771285067,
+            "q95": 26.47790805900019,
+            "std_population": 11.158200981415549,
+            "variance_population": 124.50544914166292
+          },
+          "overture_route_km": {
+            "max": 158.83880338563847,
+            "mean": 2.074802928221501,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 1419,
+            "q05": 0.0,
+            "q95": 9.394023202896376,
+            "std_population": 6.75383006664012,
+            "variance_population": 45.61422056905209
+          }
+        },
+        "route_reference_candidate": {
+          "defined_fraction": 0.38407329105003524,
+          "defined_rows": 545,
+          "gap": {
+            "max": 0.005894252049401194,
+            "mean": 4.153806941086113e-06,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 1419,
+            "q05": 0.0,
+            "q95": 0.0,
+            "std_population": 0.00015641716965605128,
+            "variance_population": 2.446633096320993e-08
+          }
+        },
+        "rows": 1419,
+        "v0_transport": {
+          "defined_fraction": 0.6067653276955602,
+          "defined_rows": 861,
+          "gap": {
+            "max": 1.0,
+            "mean": 0.16166061104745677,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 1419,
+            "q05": 0.0,
+            "q95": 0.76280603613506,
+            "std_population": 0.27063982926489705,
+            "variance_population": 0.07324591718453263
+          }
+        }
+      },
+      "northern-ca": {
+        "road_lengths_km": {
+          "overture_named_road_km_5070": {
+            "max": 268.4226203335922,
+            "mean": 20.649150157053473,
+            "median": 7.654126717127474,
+            "min": 0.0,
+            "n": 591,
+            "q05": 1.117060401685971,
+            "q95": 93.93755242844483,
+            "std_population": 36.040384389191864,
+            "variance_population": 1298.9093069207045
+          },
+          "overture_road_km": {
+            "max": 268.4226214312099,
+            "mean": 20.65077626574613,
+            "median": 7.654152624974314,
+            "min": 0.0,
+            "n": 591,
+            "q05": 1.1169235594335625,
+            "q95": 93.9375642171903,
+            "std_population": 36.04380359312664,
+            "variance_population": 1299.1557774598887
+          },
+          "overture_route_km": {
+            "max": 259.185646828354,
+            "mean": 13.733913491694546,
+            "median": 2.2392144749179193,
+            "min": 0.0,
+            "n": 591,
+            "q05": 0.0,
+            "q95": 72.43112054472212,
+            "std_population": 31.953985927221996,
+            "variance_population": 1021.0572166371013
+          }
+        },
+        "route_reference_candidate": {
+          "defined_fraction": 0.6920473773265652,
+          "defined_rows": 409,
+          "gap": {
+            "max": 0.47826839153754097,
+            "mean": 0.0047374751006914245,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 591,
+            "q05": 0.0,
+            "q95": 0.0,
+            "std_population": 0.032070039942355646,
+            "variance_population": 0.0010284874619042865
+          }
+        },
+        "rows": 591,
+        "v0_transport": {
+          "defined_fraction": 0.6954314720812182,
+          "defined_rows": 411,
+          "gap": {
+            "max": 1.0,
+            "mean": 0.11917342325417449,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 591,
+            "q05": 0.0,
+            "q95": 0.7105532011947019,
+            "std_population": 0.24372151310734272,
+            "variance_population": 0.05940017595133263
+          }
+        }
+      },
+      "northern-ca:Rural": {
+        "road_lengths_km": {
+          "overture_named_road_km_5070": {
+            "max": 268.4226203335922,
+            "mean": 56.47935067966247,
+            "median": 36.850736477903816,
+            "min": 0.0,
+            "n": 147,
+            "q05": 4.398661264464987,
+            "q95": 177.34624323407184,
+            "std_population": 56.516051396088805,
+            "variance_population": 3194.0640654053514
+          },
+          "overture_road_km": {
+            "max": 268.4226214312099,
+            "mean": 56.48354668171117,
+            "median": 36.85073806256706,
+            "min": 0.0,
+            "n": 147,
+            "q05": 4.398631313460188,
+            "q95": 177.34622375337338,
+            "std_population": 56.522811850456044,
+            "variance_population": 3194.828259482054
+          },
+          "overture_route_km": {
+            "max": 259.185646828354,
+            "mean": 44.57991948409401,
+            "median": 25.2222712945686,
+            "min": 0.0,
+            "n": 147,
+            "q05": 0.0,
+            "q95": 153.73654624647497,
+            "std_population": 51.72279428569672,
+            "variance_population": 2675.247448720502
+          }
+        },
+        "route_reference_candidate": {
+          "defined_fraction": 0.9251700680272109,
+          "defined_rows": 136,
+          "gap": {
+            "max": 0.271580205449647,
+            "mean": 0.013487731499538514,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 147,
+            "q05": 0.0,
+            "q95": 0.1208307882765444,
+            "std_population": 0.04526381793461243,
+            "variance_population": 0.0020488132140177415
+          }
+        },
+        "rows": 147,
+        "v0_transport": {
+          "defined_fraction": 0.891156462585034,
+          "defined_rows": 131,
+          "gap": {
+            "max": 1.0,
+            "mean": 0.03780920752675546,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 147,
+            "q05": 0.0,
+            "q95": 0.26195365349039634,
+            "std_population": 0.15831673404148458,
+            "variance_population": 0.025064188277562162
+          }
+        }
+      },
+      "northern-ca:Urban": {
+        "road_lengths_km": {
+          "overture_named_road_km_5070": {
+            "max": 76.84119419576005,
+            "mean": 8.786448632676175,
+            "median": 5.629540955008054,
+            "min": 0.0,
+            "n": 444,
+            "q05": 1.0614476395873313,
+            "q95": 26.398669784474457,
+            "std_population": 10.28069836396783,
+            "variance_population": 105.6927588508908
+          },
+          "overture_road_km": {
+            "max": 76.84119573411769,
+            "mean": 8.787223898298247,
+            "median": 5.629541295915984,
+            "min": 0.0,
+            "n": 444,
+            "q05": 1.0614515515794518,
+            "q95": 26.3987161772067,
+            "std_population": 10.280401726616375,
+            "variance_population": 105.68665966061694
+          },
+          "overture_route_km": {
+            "max": 66.92761322699461,
+            "mean": 3.521384480697421,
+            "median": 1.2231324508673715,
+            "min": 0.0,
+            "n": 444,
+            "q05": 0.0,
+            "q95": 13.220492488515236,
+            "std_population": 7.353546519465021,
+            "variance_population": 54.07464641393613
+          }
+        },
+        "route_reference_candidate": {
+          "defined_fraction": 0.6148648648648649,
+          "defined_rows": 273,
+          "gap": {
+            "max": 0.47826839153754097,
+            "mean": 0.0018404307524244833,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 444,
+            "q05": 0.0,
+            "q95": 0.0,
+            "std_population": 0.025630726912003594,
+            "variance_population": 0.0006569341620377053
+          }
+        },
+        "rows": 444,
+        "v0_transport": {
+          "defined_fraction": 0.6306306306306306,
+          "defined_rows": 280,
+          "gap": {
+            "max": 1.0,
+            "mean": 0.14611157575852268,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 444,
+            "q05": 0.0,
+            "q95": 0.7604876569474511,
+            "std_population": 0.26048168104176117,
+            "variance_population": 0.0678507061583418
+          }
+        }
+      },
+      "south-central-tx": {
+        "road_lengths_km": {
+          "overture_named_road_km_5070": {
+            "max": 482.53438441465477,
+            "mean": 19.686220504064586,
+            "median": 8.368623626033777,
+            "min": 0.0,
+            "n": 6003,
+            "q05": 1.1218959501839851,
+            "q95": 78.25176371468774,
+            "std_population": 36.52690754310199,
+            "variance_population": 1334.2149746623213
+          },
+          "overture_road_km": {
+            "max": 482.53439330779565,
+            "mean": 19.68996890766394,
+            "median": 8.371053878049537,
+            "min": 0.0,
+            "n": 6003,
+            "q05": 1.1268198505035998,
+            "q95": 78.23952040479867,
+            "std_population": 36.52703160409469,
+            "variance_population": 1334.2240378065321
+          },
+          "overture_route_km": {
+            "max": 578.4184068400216,
+            "mean": 16.64069364393584,
+            "median": 2.7281361202225933,
+            "min": 0.0,
+            "n": 6003,
+            "q05": 0.0,
+            "q95": 92.74547441225141,
+            "std_population": 43.367462226517695,
+            "variance_population": 1880.7367799684391
+          }
+        },
+        "route_reference_candidate": {
+          "defined_fraction": 0.7876061969015492,
+          "defined_rows": 4728,
+          "gap": {
+            "max": 1.0,
+            "mean": 0.03378067718187621,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 6003,
+            "q05": 0.0,
+            "q95": 0.270238163125399,
+            "std_population": 0.11058734391597187,
+            "variance_population": 0.012229560634389442
+          }
+        },
+        "rows": 6003,
+        "v0_transport": {
+          "defined_fraction": 0.6305180742961852,
+          "defined_rows": 3785,
+          "gap": {
+            "max": 1.0,
+            "mean": 0.0847886137777985,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 6003,
+            "q05": 0.0,
+            "q95": 0.6249154927589253,
+            "std_population": 0.20870369759920004,
+            "variance_population": 0.04355723339157833
+          }
+        }
+      },
+      "south-central-tx:Rural": {
+        "road_lengths_km": {
+          "overture_named_road_km_5070": {
+            "max": 482.53438441465477,
+            "mean": 65.21006530425035,
+            "median": 44.424636054773835,
+            "min": 0.0,
+            "n": 991,
+            "q05": 5.084363286545303,
+            "q95": 206.46525131969227,
+            "std_population": 68.99113782846952,
+            "variance_population": 4759.777098866877
+          },
+          "overture_road_km": {
+            "max": 482.53439330779565,
+            "mean": 65.2082057978205,
+            "median": 44.45930558760766,
+            "min": 0.0,
+            "n": 991,
+            "q05": 5.083205714570809,
+            "q95": 206.46525164951896,
+            "std_population": 68.99141217581311,
+            "variance_population": 4759.814954012934
+          },
+          "overture_route_km": {
+            "max": 578.4184068400216,
+            "mean": 77.09498689248234,
+            "median": 50.9553012707236,
+            "min": 0.0,
+            "n": 991,
+            "q05": 4.812033138026188,
+            "q95": 249.49261823057157,
+            "std_population": 80.36940630177934,
+            "variance_population": 6459.2414693004885
+          }
+        },
+        "route_reference_candidate": {
+          "defined_fraction": 0.9909182643794148,
+          "defined_rows": 982,
+          "gap": {
+            "max": 1.0,
+            "mean": 0.15893962172932657,
+            "median": 0.1092576494723978,
+            "min": 0.0,
+            "n": 991,
+            "q05": 0.0,
+            "q95": 0.49956689927103265,
+            "std_population": 0.18806595397561296,
+            "variance_population": 0.03536880304475737
+          }
+        },
+        "rows": 991,
+        "v0_transport": {
+          "defined_fraction": 0.8768920282542886,
+          "defined_rows": 869,
+          "gap": {
+            "max": 1.0,
+            "mean": 0.018279262691001205,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 991,
+            "q05": 0.0,
+            "q95": 0.0,
+            "std_population": 0.11325045594196508,
+            "variance_population": 0.012825665771062974
+          }
+        }
+      },
+      "south-central-tx:Unknown": {
+        "road_lengths_km": {
+          "overture_named_road_km_5070": {
+            "max": 18.20021471452465,
+            "mean": 3.9694576996358877,
+            "median": 1.2105788953780459,
+            "min": 0.0,
+            "n": 14,
+            "q05": 0.0,
+            "q95": 14.688947767628344,
+            "std_population": 5.329186940309906,
+            "variance_population": 28.400233444769665
+          },
+          "overture_road_km": {
+            "max": 18.20021738089328,
+            "mean": 4.023107990420786,
+            "median": 1.500328102163702,
+            "min": 0.0,
+            "n": 14,
+            "q05": 0.0,
+            "q95": 14.688950982071027,
+            "std_population": 5.305170809645008,
+            "variance_population": 28.144837319509474
+          },
+          "overture_route_km": {
+            "max": 11.689116113664968,
+            "mean": 1.9758095128694129,
+            "median": 0.6446904608605644,
+            "min": 0.0,
+            "n": 14,
+            "q05": 0.0,
+            "q95": 7.229531407879575,
+            "std_population": 3.0754375363241753,
+            "variance_population": 9.458316039831713
+          }
+        },
+        "route_reference_candidate": {
+          "defined_fraction": 0.6428571428571429,
+          "defined_rows": 9,
+          "gap": {
+            "max": 0.0,
+            "mean": 0.0,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 14,
+            "q05": 0.0,
+            "q95": 0.0,
+            "std_population": 0.0,
+            "variance_population": 0.0
+          }
+        },
+        "rows": 14,
+        "v0_transport": {
+          "defined_fraction": 0.0,
+          "defined_rows": 0,
+          "gap": {
+            "max": 0.0,
+            "mean": 0.0,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 14,
+            "q05": 0.0,
+            "q95": 0.0,
+            "std_population": 0.0,
+            "variance_population": 0.0
+          }
+        }
+      },
+      "south-central-tx:Urban": {
+        "road_lengths_km": {
+          "overture_named_road_km_5070": {
+            "max": 201.02333110524984,
+            "mean": 10.703808435692817,
+            "median": 6.990484530261545,
+            "min": 0.0,
+            "n": 4998,
+            "q05": 1.0443982642094776,
+            "q95": 32.65222897520939,
+            "std_population": 12.898095570809758,
+            "variance_population": 166.3608693537423
+          },
+          "overture_road_km": {
+            "max": 201.0233793741712,
+            "mean": 10.708528990636378,
+            "median": 6.990536660651108,
+            "min": 0.0,
+            "n": 4998,
+            "q05": 1.0444008936363292,
+            "q95": 32.682271214529976,
+            "std_population": 12.903024742224495,
+            "variance_population": 166.48804749845752
+          },
+          "overture_route_km": {
+            "max": 215.83532862471802,
+            "mean": 4.694936094621182,
+            "median": 1.8831357406224347,
+            "min": 0.0,
+            "n": 4998,
+            "q05": 0.0,
+            "q95": 18.287697473780916,
+            "std_population": 10.497451634934599,
+            "variance_population": 110.1964908277911
+          }
+        },
+        "route_reference_candidate": {
+          "defined_fraction": 0.7476990796318528,
+          "defined_rows": 3737,
+          "gap": {
+            "max": 1.0,
+            "mean": 0.009058871546426624,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 4998,
+            "q05": 0.0,
+            "q95": 0.0,
+            "std_population": 0.0628921442705341,
+            "variance_population": 0.003955421810945677
+          }
+        },
+        "rows": 4998,
+        "v0_transport": {
+          "defined_fraction": 0.5834333733493398,
+          "defined_rows": 2916,
+          "gap": {
+            "max": 1.0,
+            "mean": 0.09821354525437018,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 4998,
+            "q05": 0.0,
+            "q95": 0.6614320294013974,
+            "std_population": 0.22066994103582563,
+            "variance_population": 0.04869522287675476
+          }
+        }
+      }
+    },
+    "definition": "Existing route-reference v2 transport values are recomputed from the provided per-tract named/route length feature columns using the pinned implementation; v0 transport is read only for historical comparison. No references or scores are read.",
+    "route_reference_audit_reconciliation": {
+      "eastern-ok": {
+        "checks": {
+          "defined_gap_mean_match": true,
+          "named_length_sum_match": true,
+          "route_length_sum_match": true,
+          "route_undefined_count_match": true
+        },
+        "frozen_audit_named_length_sum_km": 27944.02776408843,
+        "frozen_audit_route_length_sum_km": 24071.910964743845,
+        "frozen_audit_route_ref_gap_mean_defined": 0.0055239336559926855,
+        "frozen_audit_route_undefined_count": 286,
+        "named_length_sum_km": 27944.02776408843,
+        "recomputed_route_ref_gap_mean_defined": 0.0055239336559926855,
+        "route_length_sum_km": 24071.910964743845,
+        "route_undefined_count": 286
+      },
+      "maricopa-az": {
+        "checks": {
+          "defined_gap_mean_match": true,
+          "named_length_sum_match": true,
+          "route_length_sum_match": true,
+          "route_undefined_count_match": true
+        },
+        "frozen_audit_named_length_sum_km": 22113.71284793831,
+        "frozen_audit_route_length_sum_km": 11466.55456309551,
+        "frozen_audit_route_ref_gap_mean_defined": 0.003782990323819334,
+        "frozen_audit_route_undefined_count": 901,
+        "named_length_sum_km": 22113.71284793831,
+        "recomputed_route_ref_gap_mean_defined": 0.003782990323819334,
+        "route_length_sum_km": 11466.55456309551,
+        "route_undefined_count": 901
+      },
+      "northern-ca": {
+        "checks": {
+          "defined_gap_mean_match": true,
+          "named_length_sum_match": true,
+          "route_length_sum_match": true,
+          "route_undefined_count_match": true
+        },
+        "frozen_audit_named_length_sum_km": 12203.647742818603,
+        "frozen_audit_route_length_sum_km": 8116.742873591476,
+        "frozen_audit_route_ref_gap_mean_defined": 0.00684559360515558,
+        "frozen_audit_route_undefined_count": 182,
+        "named_length_sum_km": 12203.647742818604,
+        "recomputed_route_ref_gap_mean_defined": 0.00684559360515558,
+        "route_length_sum_km": 8116.742873591475,
+        "route_undefined_count": 182
+      },
+      "south-central-tx": {
+        "checks": {
+          "defined_gap_mean_match": true,
+          "named_length_sum_match": true,
+          "route_length_sum_match": true,
+          "route_undefined_count_match": true
+        },
+        "frozen_audit_named_length_sum_km": 118176.3816858997,
+        "frozen_audit_route_length_sum_km": 99894.08394454684,
+        "frozen_audit_route_ref_gap_mean_defined": 0.04289031411226795,
+        "frozen_audit_route_undefined_count": 1275,
+        "named_length_sum_km": 118176.3816858997,
+        "recomputed_route_ref_gap_mean_defined": 0.04289031411226795,
+        "route_length_sum_km": 99894.08394454684,
+        "route_undefined_count": 1275
+      }
+    }
+  },
+  "no_predictive_accuracy_caveat": "There are no labels and no permitted local target reference; connector components/degrees are internal Overture structure only, not evidence that the organizer's removed road reference is incomplete.",
+  "preregistration": {
+    "path": "config/road-topology-preregistered.json",
+    "registered_before_topology_measurement": true,
+    "sha256": "ddecb49294d808612b4d0cccd7c8854b0d7ef7de4c63662cb7db3c6db8ced377"
+  },
+  "restrictions": {
+    "external_road_layers_used": false,
+    "public_leaderboard_fitting_or_information_probes_used": false,
+    "removed_reference_layers_or_equivalents_used": false,
+    "route_reference_ratio_replaced_or_refit": false,
+    "sample_score_placeholders_read": false,
+    "target_reconstruction_or_labels_used": false,
+    "tiger_or_mtfcc_values_used": false,
+    "upload_or_submission_made": false
+  },
+  "route_cache_metadata_by_region": {
+    "eastern-ok": {
+      "columns_read": [
+        "GEOID",
+        "overture_road_km",
+        "overture_named_road_km_5070",
+        "overture_route_km"
+      ],
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/eastern-ok-overture-tract-summary.parquet",
+      "provided_strata": {
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_rows_used": 1192,
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+        "rows_read": 1192,
+        "urban_rural_projection_sha256": "61c8c5ed99ea849d63198b04520650db95d40610e3ed03c15edcab94b1bf91bd"
+      },
+      "rows": 1192,
+      "sha256": "e5a06316c316f61bf25b80b48e89c1e7f0b1461a0b8cec5831aae24e0cf83fa6"
+    },
+    "maricopa-az": {
+      "columns_read": [
+        "GEOID",
+        "overture_road_km",
+        "overture_named_road_km_5070",
+        "overture_route_km"
+      ],
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/maricopa-az-overture-tract-summary.parquet",
+      "provided_strata": {
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_rows_used": 1593,
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+        "rows_read": 1593,
+        "urban_rural_projection_sha256": "7cd5552cd093778ace4c4451ed5a58dfa65063c0f08a321c9d22d26ab2b80b1a"
+      },
+      "rows": 1593,
+      "sha256": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22"
+    },
+    "northern-ca": {
+      "columns_read": [
+        "GEOID",
+        "overture_road_km",
+        "overture_named_road_km_5070",
+        "overture_route_km"
+      ],
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/northern-ca-overture-tract-summary.parquet",
+      "provided_strata": {
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_rows_used": 591,
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+        "rows_read": 591,
+        "urban_rural_projection_sha256": "4d2cc0dc4ae5bed9ae0a8556ba374baf25f71bb64830457d199f5a846fd87aeb"
+      },
+      "rows": 591,
+      "sha256": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c"
+    },
+    "south-central-tx": {
+      "columns_read": [
+        "GEOID",
+        "overture_road_km",
+        "overture_named_road_km_5070",
+        "overture_route_km"
+      ],
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/south-central-tx-overture-tract-summary.parquet",
+      "provided_strata": {
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_rows_used": 6003,
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+        "rows_read": 6010,
+        "urban_rural_projection_sha256": "996ef5f737ad19868aad3d55e36bfcc7699ec47d6db12b236a2c6f8c3136a850"
+      },
+      "rows": 6003,
+      "sha256": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746"
+    }
+  },
+  "runtime": {
+    "numpy": "2.5.4",
+    "pyarrow": "26.0.0",
+    "python": "3.12.3",
+    "shapely": "2.2.0"
+  }
+}
