@@ -1,0 +1,335 @@
+{
+  "aggregation_rule": {
+    "base_component_combine": "arithmetic mean over only components with existing *_defined == 1 flags; same deterministic defined-component rule as scripts/estimate_gaps.py",
+    "building_candidates": "replace only the building component and its defined flag as specified by each already-validated feature-only component artifact",
+    "envelope_aggregation": "equal-weight arithmetic mean of the six frozen full-score candidates; no weights are estimated or adjusted",
+    "facility_candidate": "mean the 5 km facility catchment candidate with the existing v0 cbp_gap only when defined; if one half is undefined use the other; if neither exists the POI component is undefined",
+    "no_defined_component_fallback": "if a component replacement leaves no defined outer component for a row, preserve that row's frozen C2 full-score prediction; count and disclose this no-new-defined-signal fallback by candidate",
+    "operator_review_rule": "flag operator review if official-scope p95 candidate spread exceeds 0.10",
+    "p95_acceptance_threshold": 0.1,
+    "spread": "per official tract max(candidate score) - min(candidate score)",
+    "spread_alert_threshold": 0.05
+  },
+  "baseline_component_hash": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852",
+  "candidate_id": "CANDIDATE_STABILITY_ENVELOPE_V1",
+  "candidate_order": [
+    "C2_V0_MECHANISTIC",
+    "XTS_C2_V2",
+    "DENSITY_C2_V1",
+    "FACILITY_CATCHMENT_5KM",
+    "BUILDING_MORPH_BETA_0.02",
+    "BUILDING_SOURCE_PRIMARY_BETA_0.02"
+  ],
+  "candidate_predictions_are_analysis_only": true,
+  "envelope_csv": "reports/candidates/candidate_stability_envelope.csv",
+  "envelope_csv_rows": 9379,
+  "envelope_csv_sha256": "a1c3c54a9633766f402b7fd31c301ebd3bf48ba9a23262e31f46d7ca9ffc76f0",
+  "inputs": {
+    "candidate_sources": {
+      "BUILDING_MORPH_BETA_0.02": {
+        "nonofficial_rows_ignored_by_GEOID_only": 0,
+        "official_id_coverage": 1.0,
+        "official_rows_selected": 9379,
+        "required_columns_read_for_official_rows": [
+          "building_gap_morph_beta_0.02",
+          "building_defined",
+          "valid_geometry_count",
+          "morphology_support"
+        ],
+        "rows_in_source": 9379,
+        "source_path": "reports/candidates/building_morphology.csv",
+        "source_sha256": "ed0928651e1ddc0de89e6fd6544c30bd510456f6e9b72eea9d09277919194b75"
+      },
+      "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+        "nonofficial_rows_ignored_by_GEOID_only": 0,
+        "official_id_coverage": 1.0,
+        "official_rows_selected": 9379,
+        "required_columns_read_for_official_rows": [
+          "building_gap_primary_beta_0.02",
+          "building_defined",
+          "source_mix_defined",
+          "source_prior_support_primary"
+        ],
+        "rows_in_source": 9379,
+        "source_path": "reports/candidates/building_source_prior.csv",
+        "source_sha256": "c3efc27237973b9cdcdaf3e5d42edc4c1ad9716f7de28639b9630ab3ae6d079e"
+      },
+      "C2_V0_MECHANISTIC": {
+        "nonofficial_rows_ignored_by_GEOID_only": 415,
+        "official_id_coverage": 1.0,
+        "official_rows_selected": 9379,
+        "required_columns_read_for_official_rows": [
+          "coverage_gap_score"
+        ],
+        "rows_in_source": 9794,
+        "source_path": "reports/candidates/C2_component_estimator_v0.csv",
+        "source_sha256": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514"
+      },
+      "DENSITY_C2_V1": {
+        "nonofficial_rows_ignored_by_GEOID_only": 415,
+        "official_id_coverage": 1.0,
+        "official_rows_selected": 9379,
+        "required_columns_read_for_official_rows": [
+          "density_context_coverage_gap_score",
+          "density_context_support_missing",
+          "population_support_5km_missing",
+          "building_support_5km_missing",
+          "population_support_20km_missing",
+          "building_support_20km_missing",
+          "prior_coverage_gap_score"
+        ],
+        "rows_in_source": 9794,
+        "source_path": "reports/candidates/density_context_candidate.csv",
+        "source_sha256": "e4d57e62092a094386941f52778bfc342b95860370d603825918fac6205013ad"
+      },
+      "FACILITY_CATCHMENT_5KM": {
+        "nonofficial_rows_ignored_by_GEOID_only": 0,
+        "official_id_coverage": 1.0,
+        "official_rows_selected": 9379,
+        "required_columns_read_for_official_rows": [
+          "facility_catchment_gap_5km",
+          "fire_nearest_distance_5km_missing",
+          "ems_nearest_distance_5km_missing",
+          "schools_nearest_distance_5km_missing",
+          "urbanity_source",
+          "fire_p_ref_present",
+          "ems_p_ref_present",
+          "schools_p_ref_present"
+        ],
+        "rows_in_source": 9379,
+        "source_path": "reports/candidates/facility_catchment_candidate.csv",
+        "source_sha256": "d646129188b006a971d4a98292d1a9221959036a9d5ba0329969dd1913ee876c"
+      },
+      "XTS_C2_V2": {
+        "nonofficial_rows_ignored_by_GEOID_only": 0,
+        "official_id_coverage": 1.0,
+        "official_rows_selected": 9379,
+        "required_columns_read_for_official_rows": [
+          "adjusted_coverage_gap_score",
+          "building_source_support_missing",
+          "road_route_support_missing",
+          "place_confidence_support_missing",
+          "prior_coverage_gap_score"
+        ],
+        "rows_in_source": 9379,
+        "source_path": "reports/candidates/cross_theme_support.csv",
+        "source_sha256": "8c4830f2cb528cc9fd5fe2f8d3692fc36e4d682ec6f7621309c22704828e75be"
+      }
+    },
+    "config_path": "config/candidate-stability-envelope-preregistered.json",
+    "config_sha256": "c66ea1cd8fd7de1fce13f532ec2d787dffd8f61623f538fcc296dd25e9faa435",
+    "feature_coverage": {
+      "BUILDING_MORPH_BETA_0.02": {
+        "building_defined_share": 0.9997867576500693,
+        "morphology_support_finite_share": 1.0,
+        "prediction_rows_with_finite_score": 9379,
+        "tracts_with_valid_building_geometry_share": 0.9997867576500693
+      },
+      "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+        "building_defined_share": 0.9997867576500693,
+        "prediction_rows_with_finite_score": 9379,
+        "primary_source_support_finite_share": 1.0,
+        "source_mix_defined_share": 0.9997867576500693
+      },
+      "C2_V0_MECHANISTIC": {
+        "baseline_component_defined_share": {
+          "building_defined": 1.0,
+          "cbp_defined": 0.9997867576500693,
+          "ems_defined": 0.8927390979848598,
+          "fire_defined": 0.9377332338202367,
+          "poi_defined": 0.9997867576500693,
+          "schools_defined": 0.9956285318264207,
+          "transport_defined": 0.6305576287450688
+        },
+        "interpretation": "definedness coverage from the frozen feature-derived component report; numeric scores remain present for every official tract",
+        "prediction_rows_with_finite_score": 9379
+      },
+      "DENSITY_C2_V1": {
+        "prediction_rows_with_finite_score": 9379,
+        "support_feature_missingness": {
+          "building_support_20km_missing": {
+            "available_share": 0.97547712975797,
+            "missing_rows": 230,
+            "missing_share": 0.02452287024203007
+          },
+          "building_support_5km_missing": {
+            "available_share": 0.816504957884636,
+            "missing_rows": 1721,
+            "missing_share": 0.1834950421153641
+          },
+          "density_context_support_missing": {
+            "available_share": 0.97547712975797,
+            "missing_rows": 230,
+            "missing_share": 0.02452287024203007
+          },
+          "population_support_20km_missing": {
+            "available_share": 0.97547712975797,
+            "missing_rows": 230,
+            "missing_share": 0.02452287024203007
+          },
+          "population_support_5km_missing": {
+            "available_share": 0.816504957884636,
+            "missing_rows": 1721,
+            "missing_share": 0.1834950421153641
+          }
+        }
+      },
+      "FACILITY_CATCHMENT_5KM": {
+        "nearest_distance_missingness": {
+          "ems_nearest_distance_5km_missing": {
+            "available_share": 1.0,
+            "missing_rows": 0,
+            "missing_share": 0.0
+          },
+          "fire_nearest_distance_5km_missing": {
+            "available_share": 1.0,
+            "missing_rows": 0,
+            "missing_share": 0.0
+          },
+          "schools_nearest_distance_5km_missing": {
+            "available_share": 1.0,
+            "missing_rows": 0,
+            "missing_share": 0.0
+          }
+        },
+        "prediction_rows_with_finite_score": 9379,
+        "presence_probability_coverage": {
+          "ems": 1.0,
+          "fire": 1.0,
+          "schools": 1.0
+        }
+      },
+      "XTS_C2_V2": {
+        "prediction_rows_with_finite_score": 9379,
+        "support_feature_missingness": {
+          "building_source_support_missing": {
+            "available_share": 0.9997867576500693,
+            "missing_rows": 2,
+            "missing_share": 0.00021324234993069622
+          },
+          "place_confidence_support_missing": {
+            "available_share": 0.9997867576500693,
+            "missing_rows": 2,
+            "missing_share": 0.00021324234993069622
+          },
+          "road_route_support_missing": {
+            "available_share": 0.9873120801791235,
+            "missing_rows": 119,
+            "missing_share": 0.012687919820876426
+          }
+        }
+      }
+    },
+    "official_samples": {
+      "eastern-ok": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "geoid_projection_sha256": "105eee64b224fb23a26470e92d181b33f6aff7fa4188e92fc8605962fd473843",
+        "geoids_sha256": "105eee64b224fb23a26470e92d181b33f6aff7fa4188e92fc8605962fd473843",
+        "rows": 1192,
+        "sample_score_placeholders_read": false
+      },
+      "maricopa-az": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "geoid_projection_sha256": "c9ff3d6c690910977605f7e81555d7310527a000613bc3f2cc4bbd80fa4c64e3",
+        "geoids_sha256": "c9ff3d6c690910977605f7e81555d7310527a000613bc3f2cc4bbd80fa4c64e3",
+        "rows": 1593,
+        "sample_score_placeholders_read": false
+      },
+      "northern-ca": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "geoid_projection_sha256": "918a944cf8ca1100e6cb9ba07d1db6786a852b122a04babd14800f08ce1f3e21",
+        "geoids_sha256": "918a944cf8ca1100e6cb9ba07d1db6786a852b122a04babd14800f08ce1f3e21",
+        "rows": 591,
+        "sample_score_placeholders_read": false
+      },
+      "south-central-tx": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "geoid_projection_sha256": "967358059f15fe3817877ea053b43e539b89c8d1c408d9d5661de033c870bbca",
+        "geoids_sha256": "967358059f15fe3817877ea053b43e539b89c8d1c408d9d5661de033c870bbca",
+        "rows": 6003,
+        "sample_score_placeholders_read": false
+      }
+    },
+    "urbanity_source": {
+      "columns_read": [
+        "GEOID",
+        "ur_class"
+      ],
+      "official_geoid_urbanity_projection_sha256": "fa711fc955ffe065f1dbbaad1360fcb570dbaa6171ab24fd5ec4bb591b70551d",
+      "path_pattern": "$COMPETITION_WORKSPACE/defined-flags-inputs/<region>-strata-tract-table.parquet"
+    },
+    "v0_component_baseline": {
+      "columns_read": [
+        "GEOID",
+        "transport_gap",
+        "transport_defined",
+        "building_gap",
+        "building_defined",
+        "poi_gap",
+        "poi_defined",
+        "fire_gap",
+        "fire_defined",
+        "ems_gap",
+        "ems_defined",
+        "schools_gap",
+        "schools_defined",
+        "cbp_gap",
+        "cbp_defined"
+      ],
+      "path": "reports/gap-estimates.csv",
+      "schema": {
+        "nonofficial_rows_ignored_by_GEOID_only": 0,
+        "official_id_coverage": 1.0,
+        "official_rows_selected": 9379,
+        "required_columns_read_for_official_rows": [
+          "transport_gap",
+          "transport_defined",
+          "building_gap",
+          "building_defined",
+          "poi_gap",
+          "poi_defined",
+          "fire_gap",
+          "fire_defined",
+          "ems_gap",
+          "ems_defined",
+          "schools_gap",
+          "schools_defined",
+          "cbp_gap",
+          "cbp_defined"
+        ],
+        "rows_in_source": 9379
+      },
+      "sha256": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852"
+    }
+  },
+  "member_csv": "reports/candidates/candidate_stability_members.csv",
+  "member_csv_rows": 56274,
+  "member_csv_sha256": "cf24488cdf2f7eca8791d6d4bc1bd3c9a811d10a31858ac3238951d312f81bf4",
+  "no_upload": true,
+  "official_id_order_sha256": "b04a211263a9ef61d71ba242a282487411ef6258e458ed258857d270d636fda8",
+  "official_rows": 9379,
+  "report_hashes": {
+    "building_morphology": "e7f6f50d0b00fd2675f47878d524d78544f021f8bfa9bd2766722fff621cccdd",
+    "building_source_prior": "4066d3a86223dca5cdd2cf63e6660afbc6577915172a48f265c4f70da08f51d4",
+    "cross_theme": "77c010a8c74f62487816b142e489b651f38dfcc93793c87fbe9c91711d1d352d",
+    "density_context": "8da97e44bb3af4a06fb98f83065c8719fc746b5c1596cb11ef8bd611c72dd7b7",
+    "facility_catchment": "53cdbfa4450223d84db7647dc4fb16d058d6bd239740e9153f51000e884e6794",
+    "facility_miss": "b559c8d3d85709d0e5f2d2102bb39da4d8255a3c62f728cf736da522025a289c"
+  },
+  "source_artifact_hashes": {
+    "BUILDING_MORPH_BETA_0.02": "ed0928651e1ddc0de89e6fd6544c30bd510456f6e9b72eea9d09277919194b75",
+    "BUILDING_SOURCE_PRIMARY_BETA_0.02": "c3efc27237973b9cdcdaf3e5d42edc4c1ad9716f7de28639b9630ab3ae6d079e",
+    "C2_V0_MECHANISTIC": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514",
+    "DENSITY_C2_V1": "e4d57e62092a094386941f52778bfc342b95860370d603825918fac6205013ad",
+    "FACILITY_CATCHMENT_5KM": "d646129188b006a971d4a98292d1a9221959036a9d5ba0329969dd1913ee876c",
+    "XTS_C2_V2": "8c4830f2cb528cc9fd5fe2f8d3692fc36e4d682ec6f7621309c22704828e75be"
+  }
+}

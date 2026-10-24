@@ -1,0 +1,2999 @@
+{
+  "aggregation_rule": {
+    "base_component_combine": "arithmetic mean over only components with existing *_defined == 1 flags; same deterministic defined-component rule as scripts/estimate_gaps.py",
+    "building_candidates": "replace only the building component and its defined flag as specified by each already-validated feature-only component artifact",
+    "envelope_aggregation": "equal-weight arithmetic mean of the six frozen full-score candidates; no weights are estimated or adjusted",
+    "facility_candidate": "mean the 5 km facility catchment candidate with the existing v0 cbp_gap only when defined; if one half is undefined use the other; if neither exists the POI component is undefined",
+    "no_defined_component_fallback": "if a component replacement leaves no defined outer component for a row, preserve that row's frozen C2 full-score prediction; count and disclose this no-new-defined-signal fallback by candidate",
+    "operator_review_rule": "flag operator review if official-scope p95 candidate spread exceeds 0.10",
+    "p95_acceptance_threshold": 0.1,
+    "spread": "per official tract max(candidate score) - min(candidate score)",
+    "spread_alert_threshold": 0.05
+  },
+  "analysis": "Frozen feature-derived candidate ensemble/envelope stability screen; no labels or accuracy measurement",
+  "candidate_id": "CANDIDATE_STABILITY_ENVELOPE_V1",
+  "candidate_order": [
+    "C2_V0_MECHANISTIC",
+    "XTS_C2_V2",
+    "DENSITY_C2_V1",
+    "FACILITY_CATCHMENT_5KM",
+    "BUILDING_MORPH_BETA_0.02",
+    "BUILDING_SOURCE_PRIMARY_BETA_0.02"
+  ],
+  "code_commit_at_run": "026ad94fffba8309386f4d4a806114ed4757df02",
+  "inputs": {
+    "candidate_sources": {
+      "BUILDING_MORPH_BETA_0.02": {
+        "nonofficial_rows_ignored_by_GEOID_only": 0,
+        "official_id_coverage": 1.0,
+        "official_rows_selected": 9379,
+        "required_columns_read_for_official_rows": [
+          "building_gap_morph_beta_0.02",
+          "building_defined",
+          "valid_geometry_count",
+          "morphology_support"
+        ],
+        "rows_in_source": 9379,
+        "source_path": "reports/candidates/building_morphology.csv",
+        "source_sha256": "ed0928651e1ddc0de89e6fd6544c30bd510456f6e9b72eea9d09277919194b75"
+      },
+      "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+        "nonofficial_rows_ignored_by_GEOID_only": 0,
+        "official_id_coverage": 1.0,
+        "official_rows_selected": 9379,
+        "required_columns_read_for_official_rows": [
+          "building_gap_primary_beta_0.02",
+          "building_defined",
+          "source_mix_defined",
+          "source_prior_support_primary"
+        ],
+        "rows_in_source": 9379,
+        "source_path": "reports/candidates/building_source_prior.csv",
+        "source_sha256": "c3efc27237973b9cdcdaf3e5d42edc4c1ad9716f7de28639b9630ab3ae6d079e"
+      },
+      "C2_V0_MECHANISTIC": {
+        "nonofficial_rows_ignored_by_GEOID_only": 415,
+        "official_id_coverage": 1.0,
+        "official_rows_selected": 9379,
+        "required_columns_read_for_official_rows": [
+          "coverage_gap_score"
+        ],
+        "rows_in_source": 9794,
+        "source_path": "reports/candidates/C2_component_estimator_v0.csv",
+        "source_sha256": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514"
+      },
+      "DENSITY_C2_V1": {
+        "nonofficial_rows_ignored_by_GEOID_only": 415,
+        "official_id_coverage": 1.0,
+        "official_rows_selected": 9379,
+        "required_columns_read_for_official_rows": [
+          "density_context_coverage_gap_score",
+          "density_context_support_missing",
+          "population_support_5km_missing",
+          "building_support_5km_missing",
+          "population_support_20km_missing",
+          "building_support_20km_missing",
+          "prior_coverage_gap_score"
+        ],
+        "rows_in_source": 9794,
+        "source_path": "reports/candidates/density_context_candidate.csv",
+        "source_sha256": "e4d57e62092a094386941f52778bfc342b95860370d603825918fac6205013ad"
+      },
+      "FACILITY_CATCHMENT_5KM": {
+        "nonofficial_rows_ignored_by_GEOID_only": 0,
+        "official_id_coverage": 1.0,
+        "official_rows_selected": 9379,
+        "required_columns_read_for_official_rows": [
+          "facility_catchment_gap_5km",
+          "fire_nearest_distance_5km_missing",
+          "ems_nearest_distance_5km_missing",
+          "schools_nearest_distance_5km_missing",
+          "urbanity_source",
+          "fire_p_ref_present",
+          "ems_p_ref_present",
+          "schools_p_ref_present"
+        ],
+        "rows_in_source": 9379,
+        "source_path": "reports/candidates/facility_catchment_candidate.csv",
+        "source_sha256": "d646129188b006a971d4a98292d1a9221959036a9d5ba0329969dd1913ee876c"
+      },
+      "XTS_C2_V2": {
+        "nonofficial_rows_ignored_by_GEOID_only": 0,
+        "official_id_coverage": 1.0,
+        "official_rows_selected": 9379,
+        "required_columns_read_for_official_rows": [
+          "adjusted_coverage_gap_score",
+          "building_source_support_missing",
+          "road_route_support_missing",
+          "place_confidence_support_missing",
+          "prior_coverage_gap_score"
+        ],
+        "rows_in_source": 9379,
+        "source_path": "reports/candidates/cross_theme_support.csv",
+        "source_sha256": "8c4830f2cb528cc9fd5fe2f8d3692fc36e4d682ec6f7621309c22704828e75be"
+      }
+    },
+    "config_path": "config/candidate-stability-envelope-preregistered.json",
+    "config_sha256": "c66ea1cd8fd7de1fce13f532ec2d787dffd8f61623f538fcc296dd25e9faa435",
+    "feature_coverage": {
+      "BUILDING_MORPH_BETA_0.02": {
+        "building_defined_share": 0.9997867576500693,
+        "morphology_support_finite_share": 1.0,
+        "prediction_rows_with_finite_score": 9379,
+        "tracts_with_valid_building_geometry_share": 0.9997867576500693
+      },
+      "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+        "building_defined_share": 0.9997867576500693,
+        "prediction_rows_with_finite_score": 9379,
+        "primary_source_support_finite_share": 1.0,
+        "source_mix_defined_share": 0.9997867576500693
+      },
+      "C2_V0_MECHANISTIC": {
+        "baseline_component_defined_share": {
+          "building_defined": 1.0,
+          "cbp_defined": 0.9997867576500693,
+          "ems_defined": 0.8927390979848598,
+          "fire_defined": 0.9377332338202367,
+          "poi_defined": 0.9997867576500693,
+          "schools_defined": 0.9956285318264207,
+          "transport_defined": 0.6305576287450688
+        },
+        "interpretation": "definedness coverage from the frozen feature-derived component report; numeric scores remain present for every official tract",
+        "prediction_rows_with_finite_score": 9379
+      },
+      "DENSITY_C2_V1": {
+        "prediction_rows_with_finite_score": 9379,
+        "support_feature_missingness": {
+          "building_support_20km_missing": {
+            "available_share": 0.97547712975797,
+            "missing_rows": 230,
+            "missing_share": 0.02452287024203007
+          },
+          "building_support_5km_missing": {
+            "available_share": 0.816504957884636,
+            "missing_rows": 1721,
+            "missing_share": 0.1834950421153641
+          },
+          "density_context_support_missing": {
+            "available_share": 0.97547712975797,
+            "missing_rows": 230,
+            "missing_share": 0.02452287024203007
+          },
+          "population_support_20km_missing": {
+            "available_share": 0.97547712975797,
+            "missing_rows": 230,
+            "missing_share": 0.02452287024203007
+          },
+          "population_support_5km_missing": {
+            "available_share": 0.816504957884636,
+            "missing_rows": 1721,
+            "missing_share": 0.1834950421153641
+          }
+        }
+      },
+      "FACILITY_CATCHMENT_5KM": {
+        "nearest_distance_missingness": {
+          "ems_nearest_distance_5km_missing": {
+            "available_share": 1.0,
+            "missing_rows": 0,
+            "missing_share": 0.0
+          },
+          "fire_nearest_distance_5km_missing": {
+            "available_share": 1.0,
+            "missing_rows": 0,
+            "missing_share": 0.0
+          },
+          "schools_nearest_distance_5km_missing": {
+            "available_share": 1.0,
+            "missing_rows": 0,
+            "missing_share": 0.0
+          }
+        },
+        "prediction_rows_with_finite_score": 9379,
+        "presence_probability_coverage": {
+          "ems": 1.0,
+          "fire": 1.0,
+          "schools": 1.0
+        }
+      },
+      "XTS_C2_V2": {
+        "prediction_rows_with_finite_score": 9379,
+        "support_feature_missingness": {
+          "building_source_support_missing": {
+            "available_share": 0.9997867576500693,
+            "missing_rows": 2,
+            "missing_share": 0.00021324234993069622
+          },
+          "place_confidence_support_missing": {
+            "available_share": 0.9997867576500693,
+            "missing_rows": 2,
+            "missing_share": 0.00021324234993069622
+          },
+          "road_route_support_missing": {
+            "available_share": 0.9873120801791235,
+            "missing_rows": 119,
+            "missing_share": 0.012687919820876426
+          }
+        }
+      }
+    },
+    "official_samples": {
+      "eastern-ok": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "geoid_projection_sha256": "105eee64b224fb23a26470e92d181b33f6aff7fa4188e92fc8605962fd473843",
+        "geoids_sha256": "105eee64b224fb23a26470e92d181b33f6aff7fa4188e92fc8605962fd473843",
+        "rows": 1192,
+        "sample_score_placeholders_read": false
+      },
+      "maricopa-az": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "geoid_projection_sha256": "c9ff3d6c690910977605f7e81555d7310527a000613bc3f2cc4bbd80fa4c64e3",
+        "geoids_sha256": "c9ff3d6c690910977605f7e81555d7310527a000613bc3f2cc4bbd80fa4c64e3",
+        "rows": 1593,
+        "sample_score_placeholders_read": false
+      },
+      "northern-ca": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "geoid_projection_sha256": "918a944cf8ca1100e6cb9ba07d1db6786a852b122a04babd14800f08ce1f3e21",
+        "geoids_sha256": "918a944cf8ca1100e6cb9ba07d1db6786a852b122a04babd14800f08ce1f3e21",
+        "rows": 591,
+        "sample_score_placeholders_read": false
+      },
+      "south-central-tx": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "geoid_projection_sha256": "967358059f15fe3817877ea053b43e539b89c8d1c408d9d5661de033c870bbca",
+        "geoids_sha256": "967358059f15fe3817877ea053b43e539b89c8d1c408d9d5661de033c870bbca",
+        "rows": 6003,
+        "sample_score_placeholders_read": false
+      }
+    },
+    "urbanity_source": {
+      "columns_read": [
+        "GEOID",
+        "ur_class"
+      ],
+      "official_geoid_urbanity_projection_sha256": "fa711fc955ffe065f1dbbaad1360fcb570dbaa6171ab24fd5ec4bb591b70551d",
+      "path_pattern": "$COMPETITION_WORKSPACE/defined-flags-inputs/<region>-strata-tract-table.parquet"
+    },
+    "v0_component_baseline": {
+      "columns_read": [
+        "GEOID",
+        "transport_gap",
+        "transport_defined",
+        "building_gap",
+        "building_defined",
+        "poi_gap",
+        "poi_defined",
+        "fire_gap",
+        "fire_defined",
+        "ems_gap",
+        "ems_defined",
+        "schools_gap",
+        "schools_defined",
+        "cbp_gap",
+        "cbp_defined"
+      ],
+      "path": "reports/gap-estimates.csv",
+      "schema": {
+        "nonofficial_rows_ignored_by_GEOID_only": 0,
+        "official_id_coverage": 1.0,
+        "official_rows_selected": 9379,
+        "required_columns_read_for_official_rows": [
+          "transport_gap",
+          "transport_defined",
+          "building_gap",
+          "building_defined",
+          "poi_gap",
+          "poi_defined",
+          "fire_gap",
+          "fire_defined",
+          "ems_gap",
+          "ems_defined",
+          "schools_gap",
+          "schools_defined",
+          "cbp_gap",
+          "cbp_defined"
+        ],
+        "rows_in_source": 9379
+      },
+      "sha256": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852"
+    }
+  },
+  "limitations": [
+    "The equal-weight envelope mean is a declared diagnostic aggregation, not an accuracy-optimized prediction or submission proposal.",
+    "Candidate spread measures model-specification sensitivity only; no labels or authorized holdout scores are available to rank candidates.",
+    "Building morphology/source-prior and facility-catchment candidates remain analysis-only; this envelope does not satisfy approvals or prerequisites for a scored v2 assembly.",
+    "The existing v0 CBP component is retained only to make the facility-half replacement comparable; no new establishments sensitivity is incorporated.",
+    "A deterministic C2 fallback is used only if a component replacement leaves no defined full-score component; the fallback preserves an existing model prediction without target input."
+  ],
+  "measure_after": {
+    "by_region": {
+      "eastern-ok": {
+        "candidate_distributions": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.6259389003737096,
+            "mean": 0.1174137676258185,
+            "median": 0.10295086997696094,
+            "min": 0.006662759696033333,
+            "n": 1192,
+            "q05": 0.007742282514860001,
+            "q95": 0.3276225267138616,
+            "std_population": 0.11046807326774652
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.6243285416983428,
+            "mean": 0.11496425920227686,
+            "median": 0.10040581252165086,
+            "min": 0.004245637555933333,
+            "n": 1192,
+            "q05": 0.0047789488090500005,
+            "q95": 0.32656968889622645,
+            "std_population": 0.1108373743449632
+          },
+          "C2_V0_MECHANISTIC": {
+            "max": 0.7386529299496558,
+            "mean": 0.11734124649737128,
+            "median": 0.10065355953659273,
+            "min": 0.0,
+            "n": 1192,
+            "q05": 0.0,
+            "q95": 0.35924699967619744,
+            "std_population": 0.1225835525103261
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.759228450217,
+            "mean": 0.13209906831995713,
+            "median": 0.1127646168035,
+            "min": 0.0,
+            "n": 1192,
+            "q05": 0.0084933776905335,
+            "q95": 0.3715589455105501,
+            "std_population": 0.11919367238729342
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.6474189796153839,
+            "mean": 0.058732460613412016,
+            "median": 0.024420669127587502,
+            "min": 0.0025141101217666666,
+            "n": 1192,
+            "q05": 0.004433922375309166,
+            "q95": 0.2612698593973684,
+            "std_population": 0.08828817485762341
+          },
+          "XTS_C2_V2": {
+            "max": 0.757076811855,
+            "mean": 0.14203710405821451,
+            "median": 0.1225744295665,
+            "min": 0.0131241832001,
+            "n": 1192,
+            "q05": 0.017715260024475,
+            "q95": 0.39252552556635006,
+            "std_population": 0.12577013247562827
+          }
+        },
+        "candidate_pair_deltas_vs_C2": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.012285751180749996,
+            "mean": 7.25211284472054e-05,
+            "median": 0.008202743384249998,
+            "min": -0.33541634240864937,
+            "n": 1192,
+            "q05": -0.03237783756848819,
+            "q95": 0.010954026101482502,
+            "std_population": 0.04026469425858326
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.011642414756,
+            "mean": -0.00237698729509442,
+            "median": 0.005119787149066617,
+            "min": -0.3367307238811994,
+            "n": 1192,
+            "q05": -0.03359026579090819,
+            "q95": 0.010988673797412505,
+            "std_population": 0.0402435589845833
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.04484850195160822,
+            "mean": 0.014757821822585854,
+            "median": 0.011196920768738669,
+            "min": 0.0,
+            "n": 1192,
+            "q05": 0.005798343327892319,
+            "q95": 0.03362298599419,
+            "std_population": 0.009389692669068849
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.0296939408625,
+            "mean": -0.058608785883959263,
+            "median": -0.05296367872381465,
+            "min": -0.21037253493919655,
+            "n": 1192,
+            "q05": -0.14358300167642188,
+            "q95": 0.012135013297532504,
+            "std_population": 0.06079415459282942
+          },
+          "XTS_C2_V2": {
+            "max": 0.04122879036661459,
+            "mean": 0.024695857560843235,
+            "median": 0.021655572036098247,
+            "min": 0.00550986322016267,
+            "n": 1192,
+            "q05": 0.017511648399050898,
+            "q95": 0.03702616420174799,
+            "std_population": 0.0071638216030163425
+          }
+        },
+        "equal_weight_ensemble": {
+          "max": 0.6256440872129592,
+          "mean": 0.1137646510528417,
+          "median": 0.09667787906714914,
+          "min": 0.005699891891333333,
+          "n": 1192,
+          "q05": 0.008689965881662778,
+          "q95": 0.33389901509215186,
+          "std_population": 0.1097169926410457
+        },
+        "rows": 1192,
+        "spread": {
+          "max": 0.3727402398268036,
+          "mean": 0.09246371339707621,
+          "median": 0.0854091147033,
+          "min": 0.0160208128766,
+          "n": 1192,
+          "q05": 0.01858060554445,
+          "q95": 0.20209151635807227,
+          "std_population": 0.06434014757970498
+        },
+        "spread_share_gt_0_05": 0.6241610738255033
+      },
+      "maricopa-az": {
+        "candidate_distributions": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.642471184616882,
+            "mean": 0.18443954621492425,
+            "median": 0.1723762702189056,
+            "min": 0.005396526820433334,
+            "n": 1593,
+            "q05": 0.00842926954704,
+            "q95": 0.42136083493081794,
+            "std_population": 0.12370066705971028
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.641603502517782,
+            "mean": 0.18438349643337906,
+            "median": 0.17224657455865658,
+            "min": 0.0047527649167666665,
+            "n": 1593,
+            "q05": 0.006581076530066667,
+            "q95": 0.42055642164219764,
+            "std_population": 0.12399186900215889
+          },
+          "C2_V0_MECHANISTIC": {
+            "max": 0.9573070337624167,
+            "mean": 0.19668435231946868,
+            "median": 0.16536526486167027,
+            "min": 0.0,
+            "n": 1593,
+            "q05": 0.0,
+            "q95": 0.46211092360665557,
+            "std_population": 0.14616445045965254
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.975186912179,
+            "mean": 0.20463432580549393,
+            "median": 0.17205226124,
+            "min": 0.0,
+            "n": 1593,
+            "q05": 0.00641041096044,
+            "q95": 0.46493363426199974,
+            "std_population": 0.14565171017776968
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.8499032480059897,
+            "mean": 0.11663998457726286,
+            "median": 0.05589922895606523,
+            "min": 0.00219239631105,
+            "n": 1593,
+            "q05": 0.008419769962183334,
+            "q95": 0.3744113129230711,
+            "std_population": 0.12652424818229072
+          },
+          "XTS_C2_V2": {
+            "max": 0.987681667825,
+            "mean": 0.23132059538893443,
+            "median": 0.202507531501,
+            "min": 0.0151179482822,
+            "n": 1593,
+            "q05": 0.02722193930798,
+            "q95": 0.49990854749099994,
+            "std_population": 0.14799336598342788
+          }
+        },
+        "candidate_pair_deltas_vs_C2": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.012522457277150012,
+            "mean": -0.01224480610454444,
+            "median": 0.006680206843666658,
+            "min": -0.4569994888185032,
+            "n": 1593,
+            "q05": -0.11820820029665532,
+            "q95": 0.010237295047699988,
+            "std_population": 0.05887925734475729
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.013014975656850003,
+            "mean": -0.012300855886089654,
+            "median": 0.006810794175333326,
+            "min": -0.45997130157550326,
+            "n": 1593,
+            "q05": -0.11795193880622332,
+            "q95": 0.010891681532360009,
+            "std_population": 0.058809398822760484
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.0426534955867,
+            "mean": 0.007949973486025235,
+            "median": 0.00612906605620412,
+            "min": -3.33288951992472e-13,
+            "n": 1593,
+            "q05": 0.003628913056002242,
+            "q95": 0.01846928944681853,
+            "std_population": 0.005583835332690125
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.03735488557650002,
+            "mean": -0.08004436774220583,
+            "median": -0.0847384007794005,
+            "min": -0.21664595439275,
+            "n": 1593,
+            "q05": -0.17154650351881748,
+            "q95": 0.013176684275870003,
+            "std_population": 0.053441649513901436
+          },
+          "XTS_C2_V2": {
+            "max": 0.044755189804713436,
+            "mean": 0.03463624306946571,
+            "median": 0.03664327029329115,
+            "min": 0.0151179482822,
+            "n": 1593,
+            "q05": 0.020204011501026672,
+            "q95": 0.04134489282676261,
+            "std_population": 0.006600163595301963
+          }
+        },
+        "equal_weight_ensemble": {
+          "max": 0.8405633089686785,
+          "mean": 0.1863503834565772,
+          "median": 0.15456756916548484,
+          "min": 0.005986325937002778,
+          "n": 1593,
+          "q05": 0.010813906757908111,
+          "q95": 0.42767925907324944,
+          "std_population": 0.13184143567319395
+        },
+        "rows": 1593,
+        "spread": {
+          "max": 0.4969482135521285,
+          "mean": 0.12447150911420526,
+          "median": 0.12379492971468206,
+          "min": 0.0151179482822,
+          "n": 1593,
+          "q05": 0.02614005116348,
+          "q95": 0.2203415377086384,
+          "std_population": 0.06318304581259518
+        },
+        "spread_share_gt_0_05": 0.8512241054613936
+      },
+      "northern-ca": {
+        "candidate_distributions": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.5596069762364964,
+            "mean": 0.1418937018393662,
+            "median": 0.11576587908688828,
+            "min": 0.006326918204100001,
+            "n": 591,
+            "q05": 0.007576315862966667,
+            "q95": 0.3989695793113163,
+            "std_population": 0.12582570248976602
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.5577490789162297,
+            "mean": 0.13943305305649226,
+            "median": 0.11361439635215376,
+            "min": 0.0042840584228666665,
+            "n": 591,
+            "q05": 0.004799600056466667,
+            "q95": 0.39648652354252467,
+            "std_population": 0.12595475720853405
+          },
+          "C2_V0_MECHANISTIC": {
+            "max": 0.7256224042682669,
+            "mean": 0.15383899870291118,
+            "median": 0.1309129395819498,
+            "min": 0.0,
+            "n": 591,
+            "q05": 0.0,
+            "q95": 0.4209583289310247,
+            "std_population": 0.1451326228747632
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.734096473396,
+            "mean": 0.16462920296093883,
+            "median": 0.138932569323,
+            "min": 0.0,
+            "n": 591,
+            "q05": 0.00187516255699,
+            "q95": 0.4268292924195,
+            "std_population": 0.14247412417019004
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.6231159819931321,
+            "mean": 0.0959291302559489,
+            "median": 0.03956714688775,
+            "min": 0.0022352648374166667,
+            "n": 591,
+            "q05": 0.0048357233535,
+            "q95": 0.33473763054451855,
+            "std_population": 0.11537503675448733
+          },
+          "XTS_C2_V2": {
+            "max": 0.74441657861,
+            "mean": 0.18098025188251268,
+            "median": 0.158375723117,
+            "min": 0.0166998052212,
+            "n": 591,
+            "q05": 0.01885883590945,
+            "q95": 0.4525112555925,
+            "std_population": 0.1477625396431841
+          }
+        },
+        "candidate_pair_deltas_vs_C2": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.01222899472445,
+            "mean": -0.011945296863545013,
+            "median": 0.0071736194616,
+            "min": -0.4047136749392441,
+            "n": 591,
+            "q05": -0.14105034876260866,
+            "q95": 0.01038111548492499,
+            "std_population": 0.055528393404934935
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.0102911728565,
+            "mean": -0.014405945646418927,
+            "median": 0.004847892140733333,
+            "min": -0.40565905055624407,
+            "n": 591,
+            "q05": -0.14437178236935866,
+            "q95": 0.0075220716955,
+            "std_population": 0.05549052881068497
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.0471953317254,
+            "mean": 0.010790204258027647,
+            "median": 0.00713887629038417,
+            "min": 0.0,
+            "n": 591,
+            "q05": 1.8818280267396403e-13,
+            "q95": 0.03036287654335506,
+            "std_population": 0.008885086648213672
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.0287593784,
+            "mean": -0.05790986844696227,
+            "median": -0.052674388094261726,
+            "min": -0.203087163219,
+            "n": 591,
+            "q05": -0.1445677039611997,
+            "q95": 0.013309596530458347,
+            "std_population": 0.05602123782158533
+          },
+          "XTS_C2_V2": {
+            "max": 0.041868949705092195,
+            "mean": 0.027141253179601504,
+            "median": 0.026118073658753016,
+            "min": 0.015083013561660752,
+            "n": 591,
+            "q05": 0.0180281145079,
+            "q95": 0.03579498340902068,
+            "std_population": 0.006401019897580814
+          }
+        },
+        "equal_weight_ensemble": {
+          "max": 0.6574345822366875,
+          "mean": 0.14611738978302832,
+          "median": 0.1237503878136078,
+          "min": 0.005499847717602778,
+          "n": 591,
+          "q05": 0.007627145853326389,
+          "q95": 0.3981690184531288,
+          "std_population": 0.1302525433746212
+        },
+        "rows": 591,
+        "spread": {
+          "max": 0.43886332748169044,
+          "mean": 0.09707089494314039,
+          "median": 0.09830033282945233,
+          "min": 0.0166998052212,
+          "n": 591,
+          "q05": 0.0198486226254,
+          "q95": 0.20835517634913694,
+          "std_population": 0.06540097473731922
+        },
+        "spread_share_gt_0_05": 0.6869712351945855
+      },
+      "south-central-tx": {
+        "candidate_distributions": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 1.0,
+            "mean": 0.14061099248823739,
+            "median": 0.11808244091480967,
+            "min": 0.005703717006366667,
+            "n": 6003,
+            "q05": 0.007428929864393334,
+            "q95": 0.36454590010789517,
+            "std_population": 0.11208888195592163
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 1.0,
+            "mean": 0.139025718216921,
+            "median": 0.11691992754615524,
+            "min": 0.004132594667966667,
+            "n": 6003,
+            "q05": 0.0049781634091133325,
+            "q95": 0.3627988594698597,
+            "std_population": 0.11235040039450968
+          },
+          "C2_V0_MECHANISTIC": {
+            "max": 1.0,
+            "mean": 0.17336658607282127,
+            "median": 0.1457330724418495,
+            "min": 0.0,
+            "n": 6003,
+            "q05": 0.0,
+            "q95": 0.5202248837846378,
+            "std_population": 0.16186545356268323
+          },
+          "DENSITY_C2_V1": {
+            "max": 1.0,
+            "mean": 0.1834351804206039,
+            "median": 0.15327871594,
+            "min": 0.0,
+            "n": 6003,
+            "q05": 0.008524354597573001,
+            "q95": 0.5265494355467,
+            "std_population": 0.15948195360307957
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.8172660375353556,
+            "mean": 0.10452128124344717,
+            "median": 0.0377023036165,
+            "min": 0.001976087524883333,
+            "n": 6003,
+            "q05": 0.006345285308845,
+            "q95": 0.41417935398313815,
+            "std_population": 0.1342118753981371
+          },
+          "XTS_C2_V2": {
+            "max": 1.0,
+            "mean": 0.20150121416730807,
+            "median": 0.174682137991,
+            "min": 0.00761551425589,
+            "n": 6003,
+            "q05": 0.017337453488050002,
+            "q95": 0.5527051995182999,
+            "std_population": 0.1646617936978147
+          }
+        },
+        "candidate_pair_deltas_vs_C2": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.01277634359915,
+            "mean": -0.032755593584583895,
+            "median": 0.006950438656700003,
+            "min": -0.4782960394281863,
+            "n": 6003,
+            "q05": -0.30272205625266724,
+            "q95": 0.01054892449709,
+            "std_population": 0.09839549703047894
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.012759946158750007,
+            "mean": -0.0343408678559003,
+            "median": 0.005119788053633333,
+            "min": -0.4819290211032364,
+            "n": 6003,
+            "q05": -0.3030125934227488,
+            "q95": 0.009392829068880004,
+            "std_population": 0.09808165513315058
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.0455139445387,
+            "mean": 0.010068594347782607,
+            "median": 0.007199545341953953,
+            "min": -4.2349457274326596e-13,
+            "n": 6003,
+            "q05": 0.004540614869050051,
+            "q95": 0.02602318529668999,
+            "std_population": 0.00704580402029192
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.03738361252775,
+            "mean": -0.06884530482937412,
+            "median": -0.08285059293189034,
+            "min": -0.42474253038800003,
+            "n": 6003,
+            "q05": -0.15318216638368412,
+            "q95": 0.013467623512370004,
+            "std_population": 0.0563302017286935
+          },
+          "XTS_C2_V2": {
+            "max": 0.04616545893703117,
+            "mean": 0.028134628094486743,
+            "median": 0.028367352603659482,
+            "min": 0.0,
+            "n": 6003,
+            "q05": 0.015994133281163392,
+            "q95": 0.039727036979924586,
+            "std_population": 0.007889353727317618
+          }
+        },
+        "equal_weight_ensemble": {
+          "max": 0.9293895399649167,
+          "mean": 0.15707682876822313,
+          "median": 0.1343707405084882,
+          "min": 0.005271949600966667,
+          "n": 6003,
+          "q05": 0.009433444978048888,
+          "q95": 0.4289146203014186,
+          "std_population": 0.13363598407708138
+        },
+        "rows": 6003,
+        "spread": {
+          "max": 0.5149933324465659,
+          "mean": 0.12283748464939484,
+          "median": 0.11523414716683333,
+          "min": 0.011507220507447818,
+          "n": 6003,
+          "q05": 0.020266004911168443,
+          "q95": 0.33936012355237,
+          "std_population": 0.09206760519695865
+        },
+        "spread_share_gt_0_05": 0.7697817757787773
+      }
+    },
+    "by_region_and_urbanity": {
+      "eastern-ok:Rural": {
+        "candidate_distributions": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.39041668785422495,
+            "mean": 0.03463258314333132,
+            "median": 0.008374431478733334,
+            "min": 0.0068622048526,
+            "n": 411,
+            "q05": 0.007651492002949999,
+            "q95": 0.1720290339288542,
+            "std_population": 0.06588730124067087
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.387300833068525,
+            "mean": 0.031505171323585705,
+            "median": 0.005076968859533334,
+            "min": 0.004473988496233333,
+            "n": 411,
+            "q05": 0.004708784762633334,
+            "q95": 0.16967805676284797,
+            "std_population": 0.0659789572857989
+          },
+          "C2_V0_MECHANISTIC": {
+            "max": 0.3825925972796583,
+            "mean": 0.026444878000453934,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 411,
+            "q05": 0.0,
+            "q95": 0.16533140145085568,
+            "std_population": 0.06634723997751342
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.411061291581,
+            "mean": 0.048443020033795234,
+            "median": 0.0280400692178,
+            "min": 0.0,
+            "n": 411,
+            "q05": 0.0,
+            "q95": 0.1890206590265,
+            "std_population": 0.06632119923671541
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.3501115941875,
+            "mean": 0.018897172482225014,
+            "median": 0.0077941652119,
+            "min": 0.0025141101217666666,
+            "n": 411,
+            "q05": 0.0034987135700833335,
+            "q95": 0.055792416308349926,
+            "std_population": 0.045351960082163696
+          },
+          "XTS_C2_V2": {
+            "max": 0.400524144899,
+            "mean": 0.0453841739931455,
+            "median": 0.0185780008627,
+            "min": 0.0131241832001,
+            "n": 411,
+            "q05": 0.017399399941449997,
+            "q95": 0.185698277822,
+            "std_population": 0.06697321473095058
+          }
+        },
+        "candidate_pair_deltas_vs_C2": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.01188686870325,
+            "mean": 0.008187705142877394,
+            "median": 0.008201163635633333,
+            "min": -0.08604111148355793,
+            "n": 411,
+            "q05": 0.007562891788233333,
+            "q95": 0.011444044815125001,
+            "std_population": 0.004758844321410563
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.011642414756,
+            "mean": 0.0050602933231317735,
+            "median": 0.004966021287233333,
+            "min": -0.08911062058045792,
+            "n": 411,
+            "q05": 0.004681706546416666,
+            "q95": 0.007156511553175,
+            "std_population": 0.0047553888626595455
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.04484850195160822,
+            "mean": 0.0219981420333413,
+            "median": 0.023022708169146318,
+            "min": 0.0,
+            "n": 411,
+            "q05": 0.0,
+            "q95": 0.0381581909059,
+            "std_population": 0.010734909029227484
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.02286999531025,
+            "mean": -0.007547705518228916,
+            "median": 0.005963325157033334,
+            "min": -0.21037253493919655,
+            "n": 411,
+            "q05": -0.13655213351225057,
+            "q95": 0.011650524056966666,
+            "std_population": 0.039329178333923125
+          },
+          "XTS_C2_V2": {
+            "max": 0.040135716525062495,
+            "mean": 0.018939295992691566,
+            "median": 0.0182906101608,
+            "min": 0.00550986322016267,
+            "n": 411,
+            "q05": 0.0173186375905,
+            "q95": 0.02331006091674854,
+            "std_population": 0.002631238467875424
+          }
+        },
+        "equal_weight_ensemble": {
+          "max": 0.387001191478318,
+          "mean": 0.03421783316275612,
+          "median": 0.01128349143933611,
+          "min": 0.005699891891333333,
+          "n": 411,
+          "q05": 0.0065022609546333335,
+          "q95": 0.1517347714677889,
+          "std_population": 0.061411163704364
+        },
+        "rows": 411,
+        "spread": {
+          "max": 0.23156858025474997,
+          "mean": 0.03889306712715594,
+          "median": 0.0272875334417,
+          "min": 0.0160208128766,
+          "n": 411,
+          "q05": 0.01796515764615,
+          "q95": 0.15559076986844722,
+          "std_population": 0.037027784320474204
+        },
+        "spread_share_gt_0_05": 0.145985401459854
+      },
+      "eastern-ok:Unknown": {
+        "candidate_distributions": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.01106831694035,
+            "mean": 0.01106831694035,
+            "median": 0.01106831694035,
+            "min": 0.01106831694035,
+            "n": 1,
+            "q05": 0.01106831694035,
+            "q95": 0.01106831694035,
+            "std_population": 0.0
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.0109741935484,
+            "mean": 0.0109741935484,
+            "median": 0.0109741935484,
+            "min": 0.0109741935484,
+            "n": 1,
+            "q05": 0.0109741935484,
+            "q95": 0.0109741935484,
+            "std_population": 0.0
+          },
+          "C2_V0_MECHANISTIC": {
+            "max": 0.0,
+            "mean": 0.0,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 1,
+            "q05": 0.0,
+            "q95": 0.0,
+            "std_population": 0.0
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.00596148406665,
+            "mean": 0.00596148406665,
+            "median": 0.00596148406665,
+            "min": 0.00596148406665,
+            "n": 1,
+            "q05": 0.00596148406665,
+            "q95": 0.00596148406665,
+            "std_population": 0.0
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.021586664197825,
+            "mean": 0.021586664197825,
+            "median": 0.021586664197825,
+            "min": 0.021586664197825,
+            "n": 1,
+            "q05": 0.021586664197825,
+            "q95": 0.021586664197825,
+            "std_population": 0.0
+          },
+          "XTS_C2_V2": {
+            "max": 0.0262560122804,
+            "mean": 0.0262560122804,
+            "median": 0.0262560122804,
+            "min": 0.0262560122804,
+            "n": 1,
+            "q05": 0.0262560122804,
+            "q95": 0.0262560122804,
+            "std_population": 0.0
+          }
+        },
+        "candidate_pair_deltas_vs_C2": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.01106831694035,
+            "mean": 0.01106831694035,
+            "median": 0.01106831694035,
+            "min": 0.01106831694035,
+            "n": 1,
+            "q05": 0.01106831694035,
+            "q95": 0.01106831694035,
+            "std_population": 0.0
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.0109741935484,
+            "mean": 0.0109741935484,
+            "median": 0.0109741935484,
+            "min": 0.0109741935484,
+            "n": 1,
+            "q05": 0.0109741935484,
+            "q95": 0.0109741935484,
+            "std_population": 0.0
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.00596148406665,
+            "mean": 0.00596148406665,
+            "median": 0.00596148406665,
+            "min": 0.00596148406665,
+            "n": 1,
+            "q05": 0.00596148406665,
+            "q95": 0.00596148406665,
+            "std_population": 0.0
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.021586664197825,
+            "mean": 0.021586664197825,
+            "median": 0.021586664197825,
+            "min": 0.021586664197825,
+            "n": 1,
+            "q05": 0.021586664197825,
+            "q95": 0.021586664197825,
+            "std_population": 0.0
+          },
+          "XTS_C2_V2": {
+            "max": 0.0262560122804,
+            "mean": 0.0262560122804,
+            "median": 0.0262560122804,
+            "min": 0.0262560122804,
+            "n": 1,
+            "q05": 0.0262560122804,
+            "q95": 0.0262560122804,
+            "std_population": 0.0
+          }
+        },
+        "equal_weight_ensemble": {
+          "max": 0.0126411118389375,
+          "mean": 0.0126411118389375,
+          "median": 0.0126411118389375,
+          "min": 0.0126411118389375,
+          "n": 1,
+          "q05": 0.0126411118389375,
+          "q95": 0.0126411118389375,
+          "std_population": 0.0
+        },
+        "rows": 1,
+        "spread": {
+          "max": 0.0262560122804,
+          "mean": 0.0262560122804,
+          "median": 0.0262560122804,
+          "min": 0.0262560122804,
+          "n": 1,
+          "q05": 0.0262560122804,
+          "q95": 0.0262560122804,
+          "std_population": 0.0
+        },
+        "spread_share_gt_0_05": 0.0
+      },
+      "eastern-ok:Urban": {
+        "candidate_distributions": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.6259389003737096,
+            "mean": 0.16116942438605913,
+            "median": 0.16765423090348225,
+            "min": 0.006662759696033333,
+            "n": 780,
+            "q05": 0.009634696221665,
+            "q95": 0.3626946486100347,
+            "std_population": 0.10402704055557359
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.6243285416983428,
+            "mean": 0.15907409918150242,
+            "median": 0.16497196035474487,
+            "min": 0.004245637555933333,
+            "n": 780,
+            "q05": 0.0063180373804975,
+            "q95": 0.36088769102930635,
+            "std_population": 0.10416471293223918
+          },
+          "C2_V0_MECHANISTIC": {
+            "max": 0.7386529299496558,
+            "mean": 0.16538707816241024,
+            "median": 0.15959959081788153,
+            "min": 0.0,
+            "n": 780,
+            "q05": 0.0,
+            "q95": 0.399452351708135,
+            "std_population": 0.1181729985905884
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.759228450217,
+            "mean": 0.17634108553773387,
+            "median": 0.1679345126565,
+            "min": 0.00562003144537,
+            "n": 780,
+            "q05": 0.014650902602965001,
+            "q95": 0.40813016716219996,
+            "std_population": 0.11716825949583799
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.6474189796153839,
+            "mean": 0.07977021602153182,
+            "median": 0.0371493921535,
+            "min": 0.0044173599785,
+            "n": 780,
+            "q05": 0.009670671073618332,
+            "q95": 0.28400621843124924,
+            "std_population": 0.09771272414862284
+          },
+          "XTS_C2_V2": {
+            "max": 0.757076811855,
+            "mean": 0.1931142006588827,
+            "median": 0.186715691165,
+            "min": 0.0173085667085,
+            "n": 780,
+            "q05": 0.022862054556965,
+            "q95": 0.4297328402888999,
+            "std_population": 0.11942116484411644
+          }
+        },
+        "candidate_pair_deltas_vs_C2": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.012285751180749996,
+            "mean": -0.004217653776351141,
+            "median": 0.008443819996050001,
+            "min": -0.33541634240864937,
+            "n": 780,
+            "q05": -0.11970198056161865,
+            "q95": 0.010797334373192522,
+            "std_population": 0.04911619958763885
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.0115480612212,
+            "mean": -0.006312978980907829,
+            "median": 0.006373074926641659,
+            "min": -0.3367307238811994,
+            "n": 780,
+            "q05": -0.12335278679991535,
+            "q95": 0.011069453554379993,
+            "std_population": 0.04917533407518867
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.040274386403787873,
+            "mean": 0.010954007375323609,
+            "median": 0.008699374872188928,
+            "min": 3.6137759451548845e-14,
+            "n": 780,
+            "q05": 0.006026607230555099,
+            "q95": 0.023332861903068474,
+            "std_population": 0.0056412623022509744
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.0296939408625,
+            "mean": -0.08561686214087842,
+            "median": -0.09159908711964582,
+            "min": -0.20513589451528436,
+            "n": 780,
+            "q05": -0.16805178559139997,
+            "q95": 0.012715648339878741,
+            "std_population": 0.05216903779552764
+          },
+          "XTS_C2_V2": {
+            "max": 0.04122879036661459,
+            "mean": 0.027727122496472443,
+            "median": 0.027297266101975033,
+            "min": 0.017000773373551548,
+            "n": 780,
+            "q05": 0.017661397864478106,
+            "q95": 0.0373154466847224,
+            "std_population": 0.00693736505361149
+          }
+        },
+        "equal_weight_ensemble": {
+          "max": 0.6256440872129592,
+          "mean": 0.15580935065802004,
+          "median": 0.14862594199477647,
+          "min": 0.0083053233834,
+          "n": 780,
+          "q05": 0.011269349873363541,
+          "q95": 0.36965139942974057,
+          "std_population": 0.10627313123145105
+        },
+        "rows": 780,
+        "spread": {
+          "max": 0.3727402398268036,
+          "mean": 0.12077620483047866,
+          "median": 0.12017073981332924,
+          "min": 0.017490872185463052,
+          "n": 780,
+          "q05": 0.02392951091128,
+          "q95": 0.2134026325573135,
+          "std_population": 0.057309786349368015
+        },
+        "spread_share_gt_0_05": 0.8769230769230769
+      },
+      "maricopa-az:Rural": {
+        "candidate_distributions": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.573123189186677,
+            "mean": 0.07548188205133939,
+            "median": 0.0089305069743,
+            "min": 0.007307930270733333,
+            "n": 163,
+            "q05": 0.00789034340518,
+            "q95": 0.37857019046003415,
+            "std_population": 0.12612269000795392
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.571729122188977,
+            "mean": 0.07346868454753663,
+            "median": 0.007766547914833334,
+            "min": 0.004985496657166666,
+            "n": 163,
+            "q05": 0.00533992581564,
+            "q95": 0.3773504297091041,
+            "std_population": 0.1262568007220882
+          },
+          "C2_V0_MECHANISTIC": {
+            "max": 0.9540247098959314,
+            "mean": 0.07946464489344565,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 163,
+            "q05": 0.0,
+            "q95": 0.4158650703009599,
+            "std_population": 0.1650730214182542
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.964527439734,
+            "mean": 0.09100381247345098,
+            "median": 0.0214263482621,
+            "min": 0.0,
+            "n": 163,
+            "q05": 0.0,
+            "q95": 0.42630233284350016,
+            "std_population": 0.16665517413447006
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.7551405147216814,
+            "mean": 0.060746418974129815,
+            "median": 0.0107656849417,
+            "min": 0.00219239631105,
+            "n": 163,
+            "q05": 0.004478107148961667,
+            "q95": 0.3366269423534649,
+            "std_population": 0.1325551016335423
+          },
+          "XTS_C2_V2": {
+            "max": 0.987681667825,
+            "mean": 0.1050817658567092,
+            "median": 0.0305156595439,
+            "min": 0.0151179482822,
+            "n": 163,
+            "q05": 0.01838054547811,
+            "q95": 0.4368730105661002,
+            "std_population": 0.16645854512875655
+          }
+        },
+        "candidate_pair_deltas_vs_C2": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.01244436428365,
+            "mean": -0.003982762842106271,
+            "median": 0.008414535528233333,
+            "min": -0.45427931745553873,
+            "n": 163,
+            "q05": -0.031078067382277943,
+            "q95": 0.01116848834024,
+            "std_population": 0.06102820189457833
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.01247657287955,
+            "mean": -0.00599596034590903,
+            "median": 0.006169858800066667,
+            "min": -0.4581107968486887,
+            "n": 163,
+            "q05": -0.033450434317267935,
+            "q95": 0.009150546917905001,
+            "std_population": 0.061152928882897986
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.0426534955867,
+            "mean": 0.011539167580005326,
+            "median": 0.010879479132111639,
+            "min": -3.33288951992472e-13,
+            "n": 163,
+            "q05": 0.0,
+            "q95": 0.030979925451189695,
+            "std_population": 0.011341944427372621
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.03140113207275,
+            "mean": -0.018718225919315847,
+            "median": 0.005560280388649999,
+            "min": -0.21664595439275,
+            "n": 163,
+            "q05": -0.14250047711344338,
+            "q95": 0.014801335985765008,
+            "std_population": 0.054622337240588806
+          },
+          "XTS_C2_V2": {
+            "max": 0.04235064935086996,
+            "mean": 0.02561712096326354,
+            "median": 0.0236066937766716,
+            "min": 0.0151179482822,
+            "n": 163,
+            "q05": 0.01830224370966461,
+            "q95": 0.037900809397683165,
+            "std_population": 0.006376960166448045
+          }
+        },
+        "equal_weight_ensemble": {
+          "max": 0.7761722729440413,
+          "mean": 0.08087453479943527,
+          "median": 0.013560531694627778,
+          "min": 0.005986325937002778,
+          "n": 163,
+          "q05": 0.006797428191786945,
+          "q95": 0.39202559018550676,
+          "std_population": 0.1444873431969044
+        },
+        "rows": 163,
+        "spread": {
+          "max": 0.49176775477775736,
+          "mean": 0.059552182418707994,
+          "median": 0.0292632752454,
+          "min": 0.0151179482822,
+          "n": 163,
+          "q05": 0.018940745830559998,
+          "q95": 0.22788913511345008,
+          "std_population": 0.07381072708692879
+        },
+        "spread_share_gt_0_05": 0.2822085889570552
+      },
+      "maricopa-az:Unknown": {
+        "candidate_distributions": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.3426970256149667,
+            "mean": 0.10141364033825756,
+            "median": 0.011085370004,
+            "min": 0.0105277856197,
+            "n": 11,
+            "q05": 0.0106012645087,
+            "q95": 0.34238801085791665,
+            "std_population": 0.1474462674274944
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.3415911111111,
+            "mean": 0.10096580685226363,
+            "median": 0.01171315789475,
+            "min": 0.0086,
+            "n": 11,
+            "q05": 0.00958,
+            "q95": 0.3415391452991333,
+            "std_population": 0.14682136968474518
+          },
+          "C2_V0_MECHANISTIC": {
+            "max": 0.6169320478397484,
+            "mean": 0.15604806089849965,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 11,
+            "q05": 0.0,
+            "q95": 0.5249310016084148,
+            "std_population": 0.2179229950995553
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.61693204784,
+            "mean": 0.16370457965538818,
+            "median": 0.00629011986457,
+            "min": 0.00486866424761,
+            "n": 11,
+            "q05": 0.005134945474715,
+            "q95": 0.5311246162145,
+            "std_population": 0.21867699303913277
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.6423826099190818,
+            "mean": 0.18238179833296025,
+            "median": 0.03297577935025,
+            "min": 0.01664104614105,
+            "n": 11,
+            "q05": 0.016995285545225003,
+            "q95": 0.5563337254363314,
+            "std_population": 0.21942689079991295
+          },
+          "XTS_C2_V2": {
+            "max": 0.653470509378,
+            "mean": 0.18629504091647273,
+            "median": 0.0392601431981,
+            "min": 0.0296458145087,
+            "n": 11,
+            "q05": 0.0305577866006,
+            "q95": 0.551533565711,
+            "std_population": 0.21419735758512748
+          }
+        },
+        "candidate_pair_deltas_vs_C2": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.0114474731247,
+            "mean": -0.05463442056024208,
+            "median": 0.0106747433977,
+            "min": -0.4202571567277811,
+            "n": 11,
+            "q05": -0.34724608947628144,
+            "q95": 0.01126642156435,
+            "std_population": 0.1414108221542293
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.01218854415275,
+            "mean": -0.05508225404623602,
+            "median": 0.01065161290325,
+            "min": -0.42432995537708107,
+            "n": 11,
+            "q05": -0.3498874118648314,
+            "q95": 0.012065877014649999,
+            "std_population": 0.14256291885488304
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.0154221365736667,
+            "mean": 0.007656518756888534,
+            "median": 0.00608844122471,
+            "min": 2.5157653738006047e-13,
+            "n": 11,
+            "q05": 0.0024343321239307884,
+            "q95": 0.014235671913166686,
+            "std_population": 0.0042631321944505045
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.03735488557650002,
+            "mean": 0.026333737434460606,
+            "median": 0.025292417676166634,
+            "min": 0.01664104614105,
+            "n": 11,
+            "q05": 0.016995285545225003,
+            "q95": 0.03686541496612501,
+            "std_population": 0.006861226064004022
+          },
+          "XTS_C2_V2": {
+            "max": 0.0396709025741,
+            "mean": 0.03024698001797308,
+            "median": 0.0322172621147,
+            "min": 0.01666666666691896,
+            "n": 11,
+            "q05": 0.017922794117792823,
+            "q95": 0.0394655228861,
+            "std_population": 0.00778104807298359
+          }
+        },
+        "equal_weight_ensemble": {
+          "max": 0.5356502366798273,
+          "mean": 0.14846815449897366,
+          "median": 0.016901038875685,
+          "min": 0.01254460227937,
+          "n": 11,
+          "q05": 0.012882703549219167,
+          "q95": 0.44069008517692476,
+          "std_population": 0.18512487710180833
+        },
+        "rows": 11,
+        "spread": {
+          "max": 0.4616848409535811,
+          "mean": 0.09675622977685888,
+          "median": 0.0329822595227,
+          "min": 0.024771240346666668,
+          "n": 11,
+          "q05": 0.02503182901141665,
+          "q95": 0.3868340854222072,
+          "std_population": 0.14049246472200477
+        },
+        "spread_share_gt_0_05": 0.18181818181818182
+      },
+      "maricopa-az:Urban": {
+        "candidate_distributions": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.642471184616882,
+            "mean": 0.19759908407490145,
+            "median": 0.1741563512549661,
+            "min": 0.005396526820433334,
+            "n": 1419,
+            "q05": 0.010638831130938843,
+            "q95": 0.42303880321022513,
+            "std_population": 0.11658525971181385
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.641603502517782,
+            "mean": 0.19777088820419272,
+            "median": 0.17463876321848895,
+            "min": 0.0047527649167666665,
+            "n": 1419,
+            "q05": 0.01062759572767,
+            "q95": 0.42346673029093407,
+            "std_population": 0.11668182378240598
+          },
+          "C2_V0_MECHANISTIC": {
+            "max": 0.9573070337624167,
+            "mean": 0.2104643463406614,
+            "median": 0.17324784800950377,
+            "min": 0.0,
+            "n": 1419,
+            "q05": 0.019414421227598726,
+            "q95": 0.4634735287723415,
+            "std_population": 0.13676421950216866
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.975186912179,
+            "mean": 0.2180043052845455,
+            "median": 0.180994597454,
+            "min": 0.0,
+            "n": 1419,
+            "q05": 0.028926545816500004,
+            "q95": 0.4688871109737998,
+            "std_population": 0.1363075980619057
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.8499032480059897,
+            "mean": 0.12255083111848768,
+            "median": 0.06779580163697241,
+            "min": 0.0022883307935,
+            "n": 1419,
+            "q05": 0.0133039655983425,
+            "q95": 0.3742905158708277,
+            "std_population": 0.12309530670569674
+          },
+          "XTS_C2_V2": {
+            "max": 0.97690797273,
+            "mean": 0.246170637892775,
+            "median": 0.207648538538,
+            "min": 0.01909340955,
+            "n": 1419,
+            "q05": 0.04930025325078001,
+            "q95": 0.5003542544622,
+            "std_population": 0.13777643868170844
+          }
+        },
+        "candidate_pair_deltas_vs_C2": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.012522457277150012,
+            "mean": -0.012865262265759906,
+            "median": 0.0065579945724,
+            "min": -0.4569994888185032,
+            "n": 1419,
+            "q05": -0.11940314742316561,
+            "q95": 0.010129735776084997,
+            "std_population": 0.05733123975879688
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.013014975656850003,
+            "mean": -0.012693458136468678,
+            "median": 0.006881147042433339,
+            "min": -0.45997130157550326,
+            "n": 1419,
+            "q05": -0.11874919317034933,
+            "q95": 0.010890521899650002,
+            "std_population": 0.05724160822535101
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.039265338305844756,
+            "mean": 0.0075399589438841135,
+            "median": 0.006098528893606847,
+            "min": 0.0,
+            "n": 1419,
+            "q05": 0.003989037559973446,
+            "q95": 0.016052109623552784,
+            "std_population": 0.004293741326802979
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.036782823963,
+            "mean": -0.0879135152221737,
+            "median": -0.08694241899057513,
+            "min": -0.20563631885058,
+            "n": 1419,
+            "q05": -0.17192247673862668,
+            "q95": 0.010730942313813326,
+            "std_population": 0.04776472502743283
+          },
+          "XTS_C2_V2": {
+            "max": 0.044755189804713436,
+            "mean": 0.035706291552113606,
+            "median": 0.037689709500333346,
+            "min": 0.016929236758960062,
+            "n": 1419,
+            "q05": 0.022502533505246208,
+            "q95": 0.04141392635015839,
+            "std_population": 0.0057554206407011725
+          }
+        },
+        "equal_weight_ensemble": {
+          "max": 0.8405633089686785,
+          "mean": 0.19876001548592725,
+          "median": 0.16397414927675613,
+          "min": 0.006784812703519444,
+          "n": 1419,
+          "q05": 0.02550367828660395,
+          "q95": 0.4285499711162343,
+          "std_population": 0.12412401756993303
+        },
+        "rows": 1419,
+        "spread": {
+          "max": 0.4969482135521285,
+          "mean": 0.13214361505083447,
+          "median": 0.12602126161266666,
+          "min": 0.0191796857228,
+          "n": 1419,
+          "q05": 0.03889925257467431,
+          "q95": 0.21972138344712205,
+          "std_population": 0.056159213992933325
+        },
+        "spread_share_gt_0_05": 0.9217758985200846
+      },
+      "northern-ca:Rural": {
+        "candidate_distributions": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.39711167005256964,
+            "mean": 0.034802815994432135,
+            "median": 0.008443957134,
+            "min": 0.007252968703966667,
+            "n": 147,
+            "q05": 0.00757264909242,
+            "q95": 0.17340469505300266,
+            "std_population": 0.07019501948155107
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.3944879866247029,
+            "mean": 0.03182828808471762,
+            "median": 0.005453857277933333,
+            "min": 0.0044598445612,
+            "n": 147,
+            "q05": 0.004672035569533333,
+            "q95": 0.17025786908408264,
+            "std_population": 0.07021250545858505
+          },
+          "C2_V0_MECHANISTIC": {
+            "max": 0.39012221101020295,
+            "mean": 0.027348656987583066,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 147,
+            "q05": 0.0,
+            "q95": 0.17966785459367515,
+            "std_population": 0.07255881976143091
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.411973317755,
+            "mean": 0.044966577317967764,
+            "median": 0.0199665397401,
+            "min": 0.0,
+            "n": 147,
+            "q05": 0.0,
+            "q95": 0.19600695396179993,
+            "std_population": 0.07509755614033241
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.4026273031173529,
+            "mean": 0.02589028802159403,
+            "median": 0.007896860555766666,
+            "min": 0.0022352648374166667,
+            "n": 147,
+            "q05": 0.0031934930906850002,
+            "q95": 0.14767717233103372,
+            "std_population": 0.062412471217570153
+          },
+          "XTS_C2_V2": {
+            "max": 0.40768173482,
+            "mean": 0.04929893874585919,
+            "median": 0.0224115876877,
+            "min": 0.0166998052212,
+            "n": 147,
+            "q05": 0.01776902899236,
+            "q95": 0.2010397348994999,
+            "std_population": 0.07204542126390455
+          }
+        },
+        "candidate_pair_deltas_vs_C2": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.01222899472445,
+            "mean": 0.007454159006849066,
+            "median": 0.008169540478466658,
+            "min": -0.13595193558340424,
+            "n": 147,
+            "q05": 0.007445372758536666,
+            "q95": 0.011262060967625,
+            "std_population": 0.011916278407216397
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.0102911728565,
+            "mean": 0.004479631097134551,
+            "median": 0.005173593244233333,
+            "min": -0.13932341574980428,
+            "n": 147,
+            "q05": 0.004587088307006667,
+            "q95": 0.00752441207802,
+            "std_population": 0.011939422038589742
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.0471953317254,
+            "mean": 0.017617920330384687,
+            "median": 0.0174950650867,
+            "min": 0.0,
+            "n": 147,
+            "q05": 0.0,
+            "q95": 0.04052301289547,
+            "std_population": 0.012522055891537195
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.0287593784,
+            "mean": -0.0014583689659890405,
+            "median": 0.005836965927116667,
+            "min": -0.14211942365416666,
+            "n": 147,
+            "q05": -0.06225902200316278,
+            "q95": 0.015938774863494994,
+            "std_population": 0.0286904674477499
+          },
+          "XTS_C2_V2": {
+            "max": 0.0355317779645,
+            "mean": 0.021950281758276114,
+            "median": 0.0208164796464,
+            "min": 0.016044252318023033,
+            "n": 147,
+            "q05": 0.017429500097659107,
+            "q95": 0.03396344864282999,
+            "std_population": 0.004470283032829423
+          }
+        },
+        "equal_weight_ensemble": {
+          "max": 0.40066737056330476,
+          "mean": 0.0356892608586923,
+          "median": 0.010976147305777778,
+          "min": 0.005499847717602778,
+          "n": 147,
+          "q05": 0.006355608091092499,
+          "q95": 0.17150235151761767,
+          "std_population": 0.06929809019533864
+        },
+        "rows": 147,
+        "spread": {
+          "max": 0.1694647907548273,
+          "mean": 0.03468802549435568,
+          "median": 0.0248358932155,
+          "min": 0.0166998052212,
+          "n": 147,
+          "q05": 0.018270487447720002,
+          "q95": 0.0982398109639935,
+          "std_population": 0.029191158460887063
+        },
+        "spread_share_gt_0_05": 0.09523809523809523
+      },
+      "northern-ca:Urban": {
+        "candidate_distributions": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.5596069762364964,
+            "mean": 0.17734946809883756,
+            "median": 0.16939357249037285,
+            "min": 0.006326918204100001,
+            "n": 444,
+            "q05": 0.007916787814348333,
+            "q95": 0.41369207753257303,
+            "std_population": 0.1199515258735544
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.5577490789162297,
+            "mean": 0.175058954972823,
+            "median": 0.16650746555127774,
+            "min": 0.0042840584228666665,
+            "n": 444,
+            "q05": 0.005787826121223334,
+            "q95": 0.4123962560870947,
+            "std_population": 0.11992575292516827
+          },
+          "C2_V0_MECHANISTIC": {
+            "max": 0.7256224042682669,
+            "mean": 0.19571755778433736,
+            "median": 0.1645413555332867,
+            "min": 0.0,
+            "n": 444,
+            "q05": 0.0,
+            "q95": 0.4529077419286737,
+            "std_population": 0.13871943115648205
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.734096473396,
+            "mean": 0.2042472344238144,
+            "median": 0.17450190925550002,
+            "min": 0.00402356142836,
+            "n": 444,
+            "q05": 0.014661233857370002,
+            "q95": 0.46049614806649997,
+            "std_population": 0.13726574489851018
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.6231159819931321,
+            "mean": 0.11911766586056644,
+            "median": 0.06049048735660341,
+            "min": 0.00527443852485,
+            "n": 444,
+            "q05": 0.010285782116876667,
+            "q95": 0.34012486931154523,
+            "std_population": 0.1194448806919448
+          },
+          "XTS_C2_V2": {
+            "max": 0.74441657861,
+            "mean": 0.22457744339397231,
+            "median": 0.1960235458165,
+            "min": 0.0170689301661,
+            "n": 444,
+            "q05": 0.03071319366272,
+            "q95": 0.48658657291425,
+            "std_population": 0.14036514753968088
+          }
+        },
+        "candidate_pair_deltas_vs_C2": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.011345005180049994,
+            "mean": -0.01836808968549981,
+            "median": 0.006761919229366656,
+            "min": -0.4047136749392441,
+            "n": 444,
+            "q05": -0.16664116306783494,
+            "q95": 0.010242974743154989,
+            "std_population": 0.06238104676948088
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.009389051436699991,
+            "mean": -0.020658602811514337,
+            "median": 0.004664317979049981,
+            "min": -0.40565905055624407,
+            "n": 444,
+            "q05": -0.16787020236345837,
+            "q95": 0.007499787646474998,
+            "std_population": 0.06240422222398858
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.03649926232153408,
+            "mean": 0.00852967663947701,
+            "median": 0.006221119786947688,
+            "min": 3.7636560534792807e-13,
+            "n": 444,
+            "q05": 0.004080557870227099,
+            "q95": 0.019802909383822155,
+            "std_population": 0.005711700250273621
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.02828354397425,
+            "mean": -0.07659989192377097,
+            "median": -0.08387221723068408,
+            "min": -0.203087163219,
+            "n": 444,
+            "q05": -0.15076510149056976,
+            "q95": 0.012224622379267497,
+            "std_population": 0.05000513124933117
+          },
+          "XTS_C2_V2": {
+            "max": 0.041868949705092195,
+            "mean": 0.028859885609634914,
+            "median": 0.0295492633147713,
+            "min": 0.015083013561660752,
+            "n": 444,
+            "q05": 0.018755398439121065,
+            "q95": 0.03603071633329458,
+            "std_population": 0.006003936568552453
+          }
+        },
+        "equal_weight_ensemble": {
+          "max": 0.6574345822366875,
+          "mean": 0.18267805408905852,
+          "median": 0.15262477023920068,
+          "min": 0.008205971594693334,
+          "n": 444,
+          "q05": 0.012777132734821126,
+          "q95": 0.411904762719267,
+          "std_population": 0.12497528466360866
+        },
+        "rows": 444,
+        "spread": {
+          "max": 0.43886332748169044,
+          "mean": 0.11772468280118398,
+          "median": 0.11520971338770002,
+          "min": 0.018013396095616988,
+          "n": 444,
+          "q05": 0.028419623024555002,
+          "q95": 0.21796290193336174,
+          "std_population": 0.0607969811265354
+        },
+        "spread_share_gt_0_05": 0.8828828828828829
+      },
+      "south-central-tx:Rural": {
+        "candidate_distributions": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.659847671541241,
+            "mean": 0.044655576297143576,
+            "median": 0.008565670319466668,
+            "min": 0.0068085003851333335,
+            "n": 991,
+            "q05": 0.00757230606245,
+            "q95": 0.1750959845788,
+            "std_population": 0.07611528339357006
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.656886931378841,
+            "mean": 0.04181195162301502,
+            "median": 0.0061425344390666665,
+            "min": 0.004403417128166667,
+            "n": 991,
+            "q05": 0.004752338425416667,
+            "q95": 0.1729372059073333,
+            "std_population": 0.07614277433592374
+          },
+          "C2_V0_MECHANISTIC": {
+            "max": 0.9700660884010934,
+            "mean": 0.039281320411622515,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 991,
+            "q05": 0.0,
+            "q95": 0.17534149593031256,
+            "std_population": 0.09481327277864367
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.99385125105,
+            "mean": 0.05889306644051772,
+            "median": 0.0269622043009,
+            "min": 0.0,
+            "n": 991,
+            "q05": 0.0,
+            "q95": 0.19724127772299999,
+            "std_population": 0.095140640366153
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.8172660375353556,
+            "mean": 0.023161423378933056,
+            "median": 0.00934806183175,
+            "min": 0.001976087524883333,
+            "n": 991,
+            "q05": 0.00411876028725,
+            "q95": 0.06656618524412083,
+            "std_population": 0.06866421778506548
+          },
+          "XTS_C2_V2": {
+            "max": 0.986362384697,
+            "mean": 0.05785889770176694,
+            "median": 0.0202670662348,
+            "min": 0.00761551425589,
+            "n": 991,
+            "q05": 0.01384510220405,
+            "q95": 0.20341688883800002,
+            "std_population": 0.09507219059884973
+          }
+        },
+        "candidate_pair_deltas_vs_C2": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.01223412183280001,
+            "mean": 0.005374255885521066,
+            "median": 0.008092673183033305,
+            "min": -0.4782960394281863,
+            "n": 991,
+            "q05": 0.0073757234553500015,
+            "q95": 0.011268220626649995,
+            "std_population": 0.03311883425103287
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.01138685281400001,
+            "mean": 0.0025306312113925083,
+            "median": 0.005139792104733333,
+            "min": -0.4819290211032364,
+            "n": 991,
+            "q05": 0.0046340318455500035,
+            "q95": 0.007554986873475,
+            "std_population": 0.033166311669572075
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.0455139445387,
+            "mean": 0.019611746028895205,
+            "median": 0.019883132595,
+            "min": -4.2349457274326596e-13,
+            "n": 991,
+            "q05": 0.0,
+            "q95": 0.03577825363596918,
+            "std_population": 0.009602500707821725
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.0314442471735,
+            "mean": -0.016119897032689456,
+            "median": 0.0055536068926333336,
+            "min": -0.21442935271000008,
+            "n": 991,
+            "q05": -0.13843777214307562,
+            "q95": 0.013448445541812501,
+            "std_population": 0.04783014050095706
+          },
+          "XTS_C2_V2": {
+            "max": 0.0416235159375,
+            "mean": 0.018577577290144427,
+            "median": 0.0178901773311,
+            "min": 0.00023310023320954887,
+            "n": 991,
+            "q05": 0.013240423711069189,
+            "q95": 0.027221145124929028,
+            "std_population": 0.0045295859701520134
+          }
+        },
+        "equal_weight_ensemble": {
+          "max": 0.8445823200466044,
+          "mean": 0.04427703930883314,
+          "median": 0.011325536687486112,
+          "min": 0.005271949600966667,
+          "n": 991,
+          "q05": 0.0064313587838041655,
+          "q95": 0.1647084150906622,
+          "std_population": 0.0817829504139724
+        },
+        "rows": 991,
+        "spread": {
+          "max": 0.5149933324465659,
+          "mean": 0.04736797750896535,
+          "median": 0.026530402453,
+          "min": 0.011507220507447818,
+          "n": 991,
+          "q05": 0.01658416653085,
+          "q95": 0.16122007149908335,
+          "std_population": 0.0534507010653094
+        },
+        "spread_share_gt_0_05": 0.23713420787083753
+      },
+      "south-central-tx:Unknown": {
+        "candidate_distributions": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 1.0,
+            "mean": 0.15306790573844292,
+            "median": 0.0119467728438,
+            "min": 0.0113137745015,
+            "n": 14,
+            "q05": 0.0113568429611875,
+            "q95": 1.0,
+            "std_population": 0.3457588025528383
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 1.0,
+            "mean": 0.15219554386368567,
+            "median": 0.011188373919875,
+            "min": 0.009185971223,
+            "n": 14,
+            "q05": 0.0093878485487475,
+            "q95": 1.0,
+            "std_population": 0.34611551543863184
+          },
+          "C2_V0_MECHANISTIC": {
+            "max": 1.0,
+            "mean": 0.14285714285714285,
+            "median": 0.0,
+            "min": 0.0,
+            "n": 14,
+            "q05": 0.0,
+            "q95": 1.0,
+            "std_population": 0.34992710611188266
+          },
+          "DENSITY_C2_V1": {
+            "max": 1.0,
+            "mean": 0.152452849654555,
+            "median": 0.0120589427595,
+            "min": 0.00553329011629,
+            "n": 14,
+            "q05": 0.005769797684379,
+            "q95": 1.0,
+            "std_population": 0.3460253098781578
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.5763372397895,
+            "mean": 0.10640782869007857,
+            "median": 0.03279964537875,
+            "min": 0.011855099506825,
+            "n": 14,
+            "q05": 0.0138577487176925,
+            "q95": 0.5756353891741249,
+            "std_population": 0.19181695252621825
+          },
+          "XTS_C2_V2": {
+            "max": 1.0,
+            "mean": 0.17256317957089284,
+            "median": 0.03656123104155,
+            "min": 0.0272824858385,
+            "n": 14,
+            "q05": 0.027870774203645,
+            "q95": 1.0,
+            "std_population": 0.3378268819371829
+          }
+        },
+        "candidate_pair_deltas_vs_C2": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.01277634359915,
+            "mean": 0.0102107628813,
+            "median": 0.0117583560168,
+            "min": 0.0,
+            "n": 14,
+            "q05": 0.0,
+            "q95": 0.0124996868150775,
+            "std_population": 0.004186976733214059
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.01211020408165,
+            "mean": 0.009338401006542858,
+            "median": 0.01103846153845,
+            "min": 0.0,
+            "n": 14,
+            "q05": 0.0,
+            "q95": 0.01174857142858,
+            "std_population": 0.0038839424314794117
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.0159123171112,
+            "mean": 0.009595706797412144,
+            "median": 0.011230853051200002,
+            "min": 0.0,
+            "n": 14,
+            "q05": 0.0,
+            "q95": 0.015670261070935,
+            "std_population": 0.005115271056821353
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.03738361252775,
+            "mean": -0.03644931416706428,
+            "median": 0.031369167217375,
+            "min": -0.42474253038800003,
+            "n": 14,
+            "q05": -0.424040679772625,
+            "q95": 0.0369711707796875,
+            "std_population": 0.1585289554698954
+          },
+          "XTS_C2_V2": {
+            "max": 0.043287314926,
+            "mean": 0.029706036713749998,
+            "median": 0.03409394933305,
+            "min": 0.0,
+            "n": 14,
+            "q05": 0.0,
+            "q95": 0.040299369747924994,
+            "std_population": 0.012863188898326302
+          }
+        },
+        "equal_weight_ensemble": {
+          "max": 0.9293895399649167,
+          "mean": 0.14659074172913297,
+          "median": 0.0171756420129375,
+          "min": 0.012052288392864166,
+          "n": 14,
+          "q05": 0.01267954081809325,
+          "q95": 0.9292725648623541,
+          "std_population": 0.31954536396897276
+        },
+        "rows": 14,
+        "spread": {
+          "max": 0.42474253038800003,
+          "mean": 0.09104828911359644,
+          "median": 0.03681019371435,
+          "min": 0.0272824858385,
+          "n": 14,
+          "q05": 0.02932345939663,
+          "q95": 0.424040679772625,
+          "std_population": 0.1360635226810265
+        },
+        "spread_share_gt_0_05": 0.14285714285714285
+      },
+      "south-central-tx:Urban": {
+        "candidate_distributions": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.6119929901454789,
+            "mean": 0.1596020730524373,
+            "median": 0.1578020822299907,
+            "min": 0.005703717006366667,
+            "n": 4998,
+            "q05": 0.007297721625365,
+            "q95": 0.37701966528941194,
+            "std_population": 0.10686404631107867
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.6113845710300123,
+            "mean": 0.15826430667940722,
+            "median": 0.15664846954853215,
+            "min": 0.004132594667966667,
+            "n": 4998,
+            "q05": 0.006058976166230001,
+            "q95": 0.376161917435633,
+            "std_population": 0.10691674609219973
+          },
+          "C2_V0_MECHANISTIC": {
+            "max": 0.9221168216109689,
+            "mean": 0.20003838088579998,
+            "median": 0.1641321790749836,
+            "min": 0.0,
+            "n": 4998,
+            "q05": 0.0,
+            "q95": 0.5387082162948101,
+            "std_population": 0.15831788502469724
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.926539195267,
+            "mean": 0.20821609030155427,
+            "median": 0.170603173728,
+            "min": 0.0,
+            "n": 4998,
+            "q05": 0.010493158712405004,
+            "q95": 0.5440954207882,
+            "std_population": 0.15724652817819768
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.7728286703489688,
+            "mean": 0.12064797341621242,
+            "median": 0.048635382479489675,
+            "min": 0.0033470121385,
+            "n": 4998,
+            "q05": 0.010377910292478334,
+            "q95": 0.4309358807367144,
+            "std_population": 0.1379288698259196
+          },
+          "XTS_C2_V2": {
+            "max": 0.968282280548,
+            "mean": 0.23006357273107378,
+            "median": 0.19410423317499997,
+            "min": 0.0130619366676,
+            "n": 4998,
+            "q05": 0.029004661330990004,
+            "q95": 0.5680924836647495,
+            "std_population": 0.15982600870093516
+          }
+        },
+        "candidate_pair_deltas_vs_C2": {
+          "BUILDING_MORPH_BETA_0.02": {
+            "max": 0.012721341327399993,
+            "mean": -0.04043630783336268,
+            "median": 0.006674993642233328,
+            "min": -0.46743958374433003,
+            "n": 4998,
+            "q05": -0.330386725514363,
+            "q95": 0.01041686768013499,
+            "std_population": 0.10515938312785783
+          },
+          "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+            "max": 0.012759946158750007,
+            "mean": -0.04177407420639277,
+            "median": 0.0051048711977333405,
+            "min": -0.46860250980333,
+            "n": 4998,
+            "q05": -0.3303742261551357,
+            "q95": 0.009471173419279999,
+            "std_population": 0.10490995075289958
+          },
+          "DENSITY_C2_V1": {
+            "max": 0.0447230526099,
+            "mean": 0.008177709415754318,
+            "median": 0.006706864582078016,
+            "min": -9.904577158437178e-14,
+            "n": 4998,
+            "q05": 0.004568961039756557,
+            "q95": 0.01668090243800109,
+            "std_population": 0.004431219884653133
+          },
+          "FACILITY_CATCHMENT_5KM": {
+            "max": 0.036971941899,
+            "mean": -0.07939040746958756,
+            "median": -0.08586358705744516,
+            "min": -0.20584882062775,
+            "n": 4998,
+            "q05": -0.15846754891298126,
+            "q95": 0.013360322373326244,
+            "std_population": 0.051203367637797384
+          },
+          "XTS_C2_V2": {
+            "max": 0.04616545893703117,
+            "mean": 0.03002519184527377,
+            "median": 0.030486567248071996,
+            "min": 0.0037802313355225214,
+            "n": 4998,
+            "q05": 0.01827393408897332,
+            "q95": 0.04004220085440901,
+            "std_population": 0.006966670466248032
+          }
+        },
+        "equal_weight_ensemble": {
+          "max": 0.7575952472863374,
+          "mean": 0.17947206617774747,
+          "median": 0.15182139684249543,
+          "min": 0.00577604112745,
+          "n": 4998,
+          "q05": 0.011028321431190084,
+          "q95": 0.4428007728629104,
+          "std_population": 0.12966366202181848
+        },
+        "rows": 4998,
+        "spread": {
+          "max": 0.5041138734395396,
+          "mean": 0.13789057194704724,
+          "median": 0.12105470124915449,
+          "min": 0.013059857279366871,
+          "n": 4998,
+          "q05": 0.026347371439731915,
+          "q95": 0.3623015607572036,
+          "std_population": 0.09057482262183411
+        },
+        "spread_share_gt_0_05": 0.8771508603441377
+      }
+    },
+    "candidate_distributions": {
+      "BUILDING_MORPH_BETA_0.02": {
+        "max": 1.0,
+        "mean": 0.14518779974670054,
+        "median": 0.1265894561377787,
+        "min": 0.005396526820433334,
+        "n": 9379,
+        "q05": 0.00761495183029,
+        "q95": 0.3802529912707352,
+        "std_population": 0.11645967892699162
+      },
+      "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+        "max": 1.0,
+        "mean": 0.14369726277855321,
+        "median": 0.12533617321726856,
+        "min": 0.004132594667966667,
+        "n": 9379,
+        "q05": 0.004938712076356666,
+        "q95": 0.3791217174615978,
+        "std_population": 0.11684389589234376
+      },
+      "C2_V0_MECHANISTIC": {
+        "max": 1.0,
+        "mean": 0.1689761598782756,
+        "median": 0.14841629960706507,
+        "min": 0.0,
+        "n": 9379,
+        "q05": 0.0,
+        "q95": 0.4854390069685591,
+        "std_population": 0.15534225176618424
+      },
+      "DENSITY_C2_V1": {
+        "max": 1.0,
+        "mean": 0.179326347953976,
+        "median": 0.157040620294,
+        "min": 0.0,
+        "n": 9379,
+        "q05": 0.008088096412168,
+        "q95": 0.4935145081327001,
+        "std_population": 0.15291786219400041
+      },
+      "FACILITY_CATCHMENT_5KM": {
+        "max": 0.8499032480059897,
+        "mean": 0.10021878193500866,
+        "median": 0.03770481453225,
+        "min": 0.001976087524883333,
+        "n": 9379,
+        "q05": 0.005962724586548334,
+        "q95": 0.3900921394506201,
+        "std_population": 0.12788683005339435
+      },
+      "XTS_C2_V2": {
+        "max": 1.0,
+        "mean": 0.1977154338416547,
+        "median": 0.177598584619,
+        "min": 0.00761551425589,
+        "n": 9379,
+        "q05": 0.017848523472309998,
+        "q95": 0.5160206560230003,
+        "std_population": 0.15834370269548417
+      }
+    },
+    "candidate_order": [
+      "C2_V0_MECHANISTIC",
+      "XTS_C2_V2",
+      "DENSITY_C2_V1",
+      "FACILITY_CATCHMENT_5KM",
+      "BUILDING_MORPH_BETA_0.02",
+      "BUILDING_SOURCE_PRIMARY_BETA_0.02"
+    ],
+    "candidate_pair_deltas_vs_C2": {
+      "BUILDING_MORPH_BETA_0.02": {
+        "max": 0.01277634359915,
+        "mean": -0.02378836013157505,
+        "median": 0.007131715069533333,
+        "min": -0.4782960394281863,
+        "n": 9379,
+        "q05": -0.23319878764567314,
+        "q95": 0.010584381776379987,
+        "std_population": 0.08568072729756486
+      },
+      "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+        "max": 0.013014975656850003,
+        "mean": -0.025278897099722406,
+        "median": 0.005270602467,
+        "min": -0.4819290211032364,
+        "n": 9379,
+        "q05": -0.2354609613544181,
+        "q95": 0.009945468891409997,
+        "std_population": 0.08543899695673426
+      },
+      "DENSITY_C2_V1": {
+        "max": 0.0471953317254,
+        "mean": 0.01035018807570038,
+        "median": 0.007350475026801952,
+        "min": -4.2349457274326596e-13,
+        "n": 9379,
+        "q05": 0.00429728744341186,
+        "q95": 0.027446698543167888,
+        "std_population": 0.0075339313995902
+      },
+      "FACILITY_CATCHMENT_5KM": {
+        "max": 0.03738361252775,
+        "mean": -0.06875737794326696,
+        "median": -0.08253932472206926,
+        "min": -0.42474253038800003,
+        "n": 9379,
+        "q05": -0.15366318204449592,
+        "q95": 0.013358626925192504,
+        "std_population": 0.05679475956244884
+      },
+      "XTS_C2_V2": {
+        "max": 0.04616545893703117,
+        "mean": 0.028739273963379088,
+        "median": 0.02915446581264046,
+        "min": 0.0,
+        "n": 9379,
+        "q05": 0.01698450679682,
+        "q95": 0.04044389857471168,
+        "std_population": 0.00804487569202544
+      }
+    },
+    "candidate_spread": {
+      "max": 0.5149933324465659,
+      "mean": 0.1176311098891094,
+      "median": 0.11513503272522108,
+      "min": 0.011507220507447818,
+      "n": 9379,
+      "q05": 0.020122825746039998,
+      "q95": 0.27016255895845265,
+      "std_population": 0.08385372658085816
+    },
+    "deterministic_rerun": {
+      "method": "two complete builder invocations compared member CSV, envelope CSV, report, and manifest byte-for-byte",
+      "verified": true
+    },
+    "envelope_csv": "reports/candidates/candidate_stability_envelope.csv",
+    "envelope_csv_sha256": "a1c3c54a9633766f402b7fd31c301ebd3bf48ba9a23262e31f46d7ca9ffc76f0",
+    "equal_weight_ensemble_distribution": {
+      "max": 0.9293895399649167,
+      "mean": 0.15585363102236144,
+      "median": 0.13843719873061364,
+      "min": 0.005271949600966667,
+      "n": 9379,
+      "q05": 0.009361373753183057,
+      "q95": 0.4195906025126807,
+      "std_population": 0.13180160521867368
+    },
+    "manifest": "reports/candidates/candidate_stability_envelope_manifest.json",
+    "manifest_sha256": "83b76b78504cdd19ab3922de0bd5ba1619ab642b627f14265d6a14fb0f7f2056",
+    "member_csv": "reports/candidates/candidate_stability_members.csv",
+    "member_csv_sha256": "cf24488cdf2f7eca8791d6d4bc1bd3c9a811d10a31858ac3238951d312f81bf4",
+    "no_new_defined_component_fallback_rows": {
+      "BUILDING_MORPH_BETA_0.02": 2,
+      "BUILDING_SOURCE_PRIMARY_BETA_0.02": 2,
+      "C2_V0_MECHANISTIC": 0,
+      "DENSITY_C2_V1": 0,
+      "FACILITY_CATCHMENT_5KM": 0,
+      "XTS_C2_V2": 0
+    },
+    "official_rows": 9379,
+    "operator_review_required": true,
+    "p95_spread": 0.27016255895845265,
+    "p95_spread_limit": 0.1,
+    "schema_bounds_alignment_determinism_checks": {
+      "all_candidate_rows_aligned": true,
+      "all_envelope_scores_finite_and_in_0_1": true,
+      "all_member_scores_finite_and_in_0_1": true,
+      "candidate_count": 6,
+      "deterministic_build_has_no_randomness_or_time_dependent_fields": true,
+      "exact_official_sample_order": true,
+      "no_accuracy_claim": true,
+      "no_upload": true,
+      "official_id_count": 9379,
+      "p95_at_most_0_10_or_flagged": true,
+      "spread_gt_0_05_share_recomputed": true,
+      "unique_official_id_count": 9379
+    },
+    "spread_share_gt_0_05": 0.759889113978036
+  },
+  "measure_before": {
+    "candidate_and_component_distributions": {
+      "BUILDING_MORPH_BETA_0.02": {
+        "component_input_distribution": {
+          "max": 0.0280910768449,
+          "mean": 0.020449187228039768,
+          "median": 0.0201523987359,
+          "min": 0.0,
+          "n": 9379,
+          "q05": 0.01686746503004,
+          "q95": 0.02495236541754,
+          "std_population": 0.0023965441838165154
+        },
+        "official_candidate_distribution": {
+          "max": 0.0280910768449,
+          "mean": 0.020449187228039768,
+          "median": 0.0201523987359,
+          "min": 0.0,
+          "n": 9379,
+          "q05": 0.01686746503004,
+          "q95": 0.02495236541754,
+          "std_population": 0.0023965441838165154
+        },
+        "source_artifact_sha256": "ed0928651e1ddc0de89e6fd6544c30bd510456f6e9b72eea9d09277919194b75",
+        "source_column": "building_gap_morph_beta_0.02",
+        "source_path": "reports/candidates/building_morphology.csv"
+      },
+      "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+        "component_input_distribution": {
+          "max": 0.0260299513137,
+          "mean": 0.016506402340621795,
+          "median": 0.0157382813479,
+          "min": 0.0,
+          "n": 9379,
+          "q05": 0.01283706371754,
+          "q95": 0.021594775962150002,
+          "std_population": 0.0028095043394266188
+        },
+        "official_candidate_distribution": {
+          "max": 0.0260299513137,
+          "mean": 0.016506402340621795,
+          "median": 0.0157382813479,
+          "min": 0.0,
+          "n": 9379,
+          "q05": 0.01283706371754,
+          "q95": 0.021594775962150002,
+          "std_population": 0.0028095043394266188
+        },
+        "source_artifact_sha256": "c3efc27237973b9cdcdaf3e5d42edc4c1ad9716f7de28639b9630ab3ae6d079e",
+        "source_column": "building_gap_primary_beta_0.02",
+        "source_path": "reports/candidates/building_source_prior.csv"
+      },
+      "C2_V0_MECHANISTIC": {
+        "official_candidate_distribution": {
+          "max": 1.0,
+          "mean": 0.1689761598782756,
+          "median": 0.14841629960706507,
+          "min": 0.0,
+          "n": 9379,
+          "q05": 0.0,
+          "q95": 0.4854390069685591,
+          "std_population": 0.15534225176618424
+        },
+        "source_artifact_sha256": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514",
+        "source_column": "coverage_gap_score",
+        "source_path": "reports/candidates/C2_component_estimator_v0.csv"
+      },
+      "DENSITY_C2_V1": {
+        "official_candidate_distribution": {
+          "max": 1.0,
+          "mean": 0.179326347953976,
+          "median": 0.157040620294,
+          "min": 0.0,
+          "n": 9379,
+          "q05": 0.008088096412168,
+          "q95": 0.4935145081327001,
+          "std_population": 0.15291786219400041
+        },
+        "source_artifact_sha256": "e4d57e62092a094386941f52778bfc342b95860370d603825918fac6205013ad",
+        "source_column": "density_context_coverage_gap_score",
+        "source_path": "reports/candidates/density_context_candidate.csv"
+      },
+      "FACILITY_CATCHMENT_5KM": {
+        "component_input_distribution": {
+          "max": 0.402847394952,
+          "mean": 0.12750631961963088,
+          "median": 0.126600287215,
+          "min": 0.0118565251493,
+          "n": 9379,
+          "q05": 0.03471671601454,
+          "q95": 0.24764333757400006,
+          "std_population": 0.06403042148998538
+        },
+        "official_candidate_distribution": {
+          "max": 0.402847394952,
+          "mean": 0.12750631961963088,
+          "median": 0.126600287215,
+          "min": 0.0118565251493,
+          "n": 9379,
+          "q05": 0.03471671601454,
+          "q95": 0.24764333757400006,
+          "std_population": 0.06403042148998538
+        },
+        "source_artifact_sha256": "d646129188b006a971d4a98292d1a9221959036a9d5ba0329969dd1913ee876c",
+        "source_column": "facility_catchment_gap_5km",
+        "source_path": "reports/candidates/facility_catchment_candidate.csv"
+      },
+      "XTS_C2_V2": {
+        "official_candidate_distribution": {
+          "max": 1.0,
+          "mean": 0.1977154338416547,
+          "median": 0.177598584619,
+          "min": 0.00761551425589,
+          "n": 9379,
+          "q05": 0.017848523472309998,
+          "q95": 0.5160206560230003,
+          "std_population": 0.15834370269548417
+        },
+        "source_artifact_sha256": "8c4830f2cb528cc9fd5fe2f8d3692fc36e4d682ec6f7621309c22704828e75be",
+        "source_column": "adjusted_coverage_gap_score",
+        "source_path": "reports/candidates/cross_theme_support.csv"
+      },
+      "v0_component_inputs": {
+        "building_gap": {
+          "max": 1.0,
+          "mean": 0.0723800943190569,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 9379,
+          "q05": 0.0,
+          "q95": 0.5715347079960473,
+          "std_population": 0.18687559131606515
+        },
+        "cbp_gap": {
+          "max": 0.9606962380685008,
+          "mean": 0.0492103157481924,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 9379,
+          "q05": 0.0,
+          "q95": 0.434949505208808,
+          "std_population": 0.1469007302807395
+        },
+        "ems_gap": {
+          "max": 1.0,
+          "mean": 0.6532362848137714,
+          "median": 0.9777075401703151,
+          "min": 0.0,
+          "n": 9379,
+          "q05": 0.0,
+          "q95": 0.9979517984385461,
+          "std_population": 0.46275076173072555
+        },
+        "fire_gap": {
+          "max": 1.0,
+          "mean": 0.5437863690111296,
+          "median": 0.933561983918399,
+          "min": 0.0,
+          "n": 9379,
+          "q05": 0.0,
+          "q95": 0.9964002981929738,
+          "std_population": 0.4811004418585566
+        },
+        "poi_gap": {
+          "max": 0.9803481190342505,
+          "mean": 0.2569898319976653,
+          "median": 0.3181690179229555,
+          "min": 0.0,
+          "n": 9379,
+          "q05": 0.0,
+          "q95": 0.5826286440599484,
+          "std_population": 0.19157380644263222
+        },
+        "schools_gap": {
+          "max": 1.0,
+          "mean": 0.15872838055954414,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 9379,
+          "q05": 0.0,
+          "q95": 0.9662741160649374,
+          "std_population": 0.3106219334192513
+        },
+        "transport_gap": {
+          "max": 1.0,
+          "mean": 0.09682722322234288,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 9379,
+          "q05": 0.0,
+          "q95": 0.6638197403926894,
+          "std_population": 0.2233430688196987
+        }
+      }
+    },
+    "component_candidate_hashes": {
+      "BUILDING_MORPH_BETA_0.02": "ed0928651e1ddc0de89e6fd6544c30bd510456f6e9b72eea9d09277919194b75",
+      "BUILDING_SOURCE_PRIMARY_BETA_0.02": "c3efc27237973b9cdcdaf3e5d42edc4c1ad9716f7de28639b9630ab3ae6d079e",
+      "C2_V0_MECHANISTIC": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514",
+      "DENSITY_C2_V1": "e4d57e62092a094386941f52778bfc342b95860370d603825918fac6205013ad",
+      "FACILITY_CATCHMENT_5KM": "d646129188b006a971d4a98292d1a9221959036a9d5ba0329969dd1913ee876c",
+      "XTS_C2_V2": "8c4830f2cb528cc9fd5fe2f8d3692fc36e4d682ec6f7621309c22704828e75be"
+    },
+    "definition": "Existing source candidate distributions and feature/definedness availability before the frozen composition/envelope step.",
+    "feature_coverage": {
+      "BUILDING_MORPH_BETA_0.02": {
+        "building_defined_share": 0.9997867576500693,
+        "morphology_support_finite_share": 1.0,
+        "prediction_rows_with_finite_score": 9379,
+        "tracts_with_valid_building_geometry_share": 0.9997867576500693
+      },
+      "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+        "building_defined_share": 0.9997867576500693,
+        "prediction_rows_with_finite_score": 9379,
+        "primary_source_support_finite_share": 1.0,
+        "source_mix_defined_share": 0.9997867576500693
+      },
+      "C2_V0_MECHANISTIC": {
+        "baseline_component_defined_share": {
+          "building_defined": 1.0,
+          "cbp_defined": 0.9997867576500693,
+          "ems_defined": 0.8927390979848598,
+          "fire_defined": 0.9377332338202367,
+          "poi_defined": 0.9997867576500693,
+          "schools_defined": 0.9956285318264207,
+          "transport_defined": 0.6305576287450688
+        },
+        "interpretation": "definedness coverage from the frozen feature-derived component report; numeric scores remain present for every official tract",
+        "prediction_rows_with_finite_score": 9379
+      },
+      "DENSITY_C2_V1": {
+        "prediction_rows_with_finite_score": 9379,
+        "support_feature_missingness": {
+          "building_support_20km_missing": {
+            "available_share": 0.97547712975797,
+            "missing_rows": 230,
+            "missing_share": 0.02452287024203007
+          },
+          "building_support_5km_missing": {
+            "available_share": 0.816504957884636,
+            "missing_rows": 1721,
+            "missing_share": 0.1834950421153641
+          },
+          "density_context_support_missing": {
+            "available_share": 0.97547712975797,
+            "missing_rows": 230,
+            "missing_share": 0.02452287024203007
+          },
+          "population_support_20km_missing": {
+            "available_share": 0.97547712975797,
+            "missing_rows": 230,
+            "missing_share": 0.02452287024203007
+          },
+          "population_support_5km_missing": {
+            "available_share": 0.816504957884636,
+            "missing_rows": 1721,
+            "missing_share": 0.1834950421153641
+          }
+        }
+      },
+      "FACILITY_CATCHMENT_5KM": {
+        "nearest_distance_missingness": {
+          "ems_nearest_distance_5km_missing": {
+            "available_share": 1.0,
+            "missing_rows": 0,
+            "missing_share": 0.0
+          },
+          "fire_nearest_distance_5km_missing": {
+            "available_share": 1.0,
+            "missing_rows": 0,
+            "missing_share": 0.0
+          },
+          "schools_nearest_distance_5km_missing": {
+            "available_share": 1.0,
+            "missing_rows": 0,
+            "missing_share": 0.0
+          }
+        },
+        "prediction_rows_with_finite_score": 9379,
+        "presence_probability_coverage": {
+          "ems": 1.0,
+          "fire": 1.0,
+          "schools": 1.0
+        }
+      },
+      "XTS_C2_V2": {
+        "prediction_rows_with_finite_score": 9379,
+        "support_feature_missingness": {
+          "building_source_support_missing": {
+            "available_share": 0.9997867576500693,
+            "missing_rows": 2,
+            "missing_share": 0.00021324234993069622
+          },
+          "place_confidence_support_missing": {
+            "available_share": 0.9997867576500693,
+            "missing_rows": 2,
+            "missing_share": 0.00021324234993069622
+          },
+          "road_route_support_missing": {
+            "available_share": 0.9873120801791235,
+            "missing_rows": 119,
+            "missing_share": 0.012687919820876426
+          }
+        }
+      }
+    },
+    "provenance_report_hashes": {
+      "building_morphology": "e7f6f50d0b00fd2675f47878d524d78544f021f8bfa9bd2766722fff621cccdd",
+      "building_source_prior": "4066d3a86223dca5cdd2cf63e6660afbc6577915172a48f265c4f70da08f51d4",
+      "cross_theme": "77c010a8c74f62487816b142e489b651f38dfcc93793c87fbe9c91711d1d352d",
+      "density_context": "8da97e44bb3af4a06fb98f83065c8719fc746b5c1596cb11ef8bd611c72dd7b7",
+      "facility_catchment": "53cdbfa4450223d84db7647dc4fb16d058d6bd239740e9153f51000e884e6794",
+      "facility_miss": "b559c8d3d85709d0e5f2d2102bb39da4d8255a3c62f728cf736da522025a289c"
+    },
+    "source_schema_and_alignment": {
+      "BUILDING_MORPH_BETA_0.02": {
+        "nonofficial_rows_ignored_by_GEOID_only": 0,
+        "official_id_coverage": 1.0,
+        "official_rows_selected": 9379,
+        "required_columns_read_for_official_rows": [
+          "building_gap_morph_beta_0.02",
+          "building_defined",
+          "valid_geometry_count",
+          "morphology_support"
+        ],
+        "rows_in_source": 9379,
+        "source_path": "reports/candidates/building_morphology.csv",
+        "source_sha256": "ed0928651e1ddc0de89e6fd6544c30bd510456f6e9b72eea9d09277919194b75"
+      },
+      "BUILDING_SOURCE_PRIMARY_BETA_0.02": {
+        "nonofficial_rows_ignored_by_GEOID_only": 0,
+        "official_id_coverage": 1.0,
+        "official_rows_selected": 9379,
+        "required_columns_read_for_official_rows": [
+          "building_gap_primary_beta_0.02",
+          "building_defined",
+          "source_mix_defined",
+          "source_prior_support_primary"
+        ],
+        "rows_in_source": 9379,
+        "source_path": "reports/candidates/building_source_prior.csv",
+        "source_sha256": "c3efc27237973b9cdcdaf3e5d42edc4c1ad9716f7de28639b9630ab3ae6d079e"
+      },
+      "C2_V0_MECHANISTIC": {
+        "nonofficial_rows_ignored_by_GEOID_only": 415,
+        "official_id_coverage": 1.0,
+        "official_rows_selected": 9379,
+        "required_columns_read_for_official_rows": [
+          "coverage_gap_score"
+        ],
+        "rows_in_source": 9794,
+        "source_path": "reports/candidates/C2_component_estimator_v0.csv",
+        "source_sha256": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514"
+      },
+      "DENSITY_C2_V1": {
+        "nonofficial_rows_ignored_by_GEOID_only": 415,
+        "official_id_coverage": 1.0,
+        "official_rows_selected": 9379,
+        "required_columns_read_for_official_rows": [
+          "density_context_coverage_gap_score",
+          "density_context_support_missing",
+          "population_support_5km_missing",
+          "building_support_5km_missing",
+          "population_support_20km_missing",
+          "building_support_20km_missing",
+          "prior_coverage_gap_score"
+        ],
+        "rows_in_source": 9794,
+        "source_path": "reports/candidates/density_context_candidate.csv",
+        "source_sha256": "e4d57e62092a094386941f52778bfc342b95860370d603825918fac6205013ad"
+      },
+      "FACILITY_CATCHMENT_5KM": {
+        "nonofficial_rows_ignored_by_GEOID_only": 0,
+        "official_id_coverage": 1.0,
+        "official_rows_selected": 9379,
+        "required_columns_read_for_official_rows": [
+          "facility_catchment_gap_5km",
+          "fire_nearest_distance_5km_missing",
+          "ems_nearest_distance_5km_missing",
+          "schools_nearest_distance_5km_missing",
+          "urbanity_source",
+          "fire_p_ref_present",
+          "ems_p_ref_present",
+          "schools_p_ref_present"
+        ],
+        "rows_in_source": 9379,
+        "source_path": "reports/candidates/facility_catchment_candidate.csv",
+        "source_sha256": "d646129188b006a971d4a98292d1a9221959036a9d5ba0329969dd1913ee876c"
+      },
+      "XTS_C2_V2": {
+        "nonofficial_rows_ignored_by_GEOID_only": 0,
+        "official_id_coverage": 1.0,
+        "official_rows_selected": 9379,
+        "required_columns_read_for_official_rows": [
+          "adjusted_coverage_gap_score",
+          "building_source_support_missing",
+          "road_route_support_missing",
+          "place_confidence_support_missing",
+          "prior_coverage_gap_score"
+        ],
+        "rows_in_source": 9379,
+        "source_path": "reports/candidates/cross_theme_support.csv",
+        "source_sha256": "8c4830f2cb528cc9fd5fe2f8d3692fc36e4d682ec6f7621309c22704828e75be"
+      }
+    }
+  },
+  "preregistration": {
+    "path": "config/candidate-stability-envelope-preregistered.json",
+    "registered_before_candidate_distribution_and_spread_measurement": true,
+    "sha256": "c66ea1cd8fd7de1fce13f532ec2d787dffd8f61623f538fcc296dd25e9faa435"
+  },
+  "restrictions": {
+    "external_data_used": false,
+    "labels_or_target_reconstruction_used": false,
+    "leaderboard_information_or_probes_used": false,
+    "new_establishments_sensitivity_added": false,
+    "removed_reference_layers_or_equivalents_read": false,
+    "sample_score_placeholders_read": false,
+    "scored_candidate_promotion": false,
+    "upload_or_submission_made": false
+  },
+  "runtime": {
+    "numpy": "2.5.4",
+    "pyarrow": "26.0.0",
+    "python": "3.12.3"
+  },
+  "script_sha256_at_run": "d6e27aab077b1139d2d75606cd30ed5fc33e8d858b2037df16b70ccacbe94825"
+}
