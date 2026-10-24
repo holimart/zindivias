@@ -1,0 +1,101 @@
+{
+  "candidate_id": "ROAD_TOPOLOGY_ROUTE_REF_V1",
+  "registered_utc": "2026-10-25",
+  "status": "preregistered_before_topology_measurement",
+  "purpose": "analysis-only connector-graph continuity context added to the provided-data route-reference transport component; no target fit, RMSE, accuracy claim, promotion, or upload",
+  "scope": {
+    "official_regions_order": ["maricopa-az", "northern-ca", "eastern-ok", "south-central-tx"],
+    "official_rows": 9379,
+    "input_roads": "all provided Overture roads/transportation segment rows in each official region package; no external or non-package road data",
+    "candidate_csv": "reports/candidates/road_topology_candidate.csv",
+    "candidate_id": "ROAD_TOPOLOGY_ROUTE_REF_V1"
+  },
+  "frozen_inputs": {
+    "route_reference_audit": {
+      "path": "reports/transport-route-ref-audit.json",
+      "sha256": "bf904336963f553cc7442c5996a4d8d504fe30aad5c4f1a2e44da8fa773b1927",
+      "role": "frozen route-reference candidate and existing route length summary; provides aggregate reconciliation, not labels"
+    },
+    "v0_transport_candidate": {
+      "path": "reports/gap-estimates.csv",
+      "sha256": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852",
+      "columns_read": ["GEOID", "transport_gap", "transport_defined"],
+      "role": "measure-before legacy transport moments only; not a target"
+    },
+    "route_reference_implementation": {
+      "path": "scripts/estimate_gaps.py",
+      "sha256": "4f59982e0349af048ba11efbd5dbc629076eef8d3c8dc08d5747da5833bfc4fe",
+      "function": "estimate_transport_route_v2"
+    },
+    "tract_geometry_assignment": {
+      "path": "scripts/audit_poi_categories.py",
+      "sha256": "56682d59d20868895007e5db2c7d669425e6b2fe886f2823cf7788a24b35a514",
+      "functions": ["read_sample_geoids", "load_sample_tracts", "assign_points"],
+      "geometry_fields_read": ["GEOID", "geometry"]
+    },
+    "feature_cache": {
+      "path_pattern": "$COMPETITION_WORKSPACE/gap-estimator/features/<region>-overture-tract-summary.parquet",
+      "columns_read": ["GEOID", "overture_road_km", "overture_named_road_km_5070", "overture_route_km"],
+      "role": "measure-before road-length moments and route-reference baseline only"
+    },
+    "strata": {
+      "path_pattern": "$COMPETITION_WORKSPACE/defined-flags-inputs/<region>-strata-tract-table.parquet",
+      "columns_read": ["GEOID", "pct_urban"],
+      "urbanity_rule": "Rural if finite pct_urban < 0.5; Urban if finite pct_urban >= 0.5; Unknown if missing/nonfinite"
+    },
+    "provided_overture_roads": {
+      "source_uri_pattern": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/<region>/<region>-overture-roads.parquet",
+      "columns_read": ["class", "connectors", "geometry"],
+      "other_road_fields_read": false,
+      "policy": "Challenge-provided layer only. TIGER/MTFCC values, public road layers, targets, sample score placeholders, and leaderboard values are not read."
+    }
+  },
+  "graph_definition": {
+    "connector_semantics": "Use each segment connectors[] list of unique connector_id and relative at position; require finite at in [0,1], sort by at, and interpolate its point along the provided WGS84 LineString geometry with normalized linear distance.",
+    "segment_edges": "Undirected adjacency between successive valid connector references on each segment.",
+    "tract_node_assignment": "Assign interpolated connector points to official provided tract polygons; deterministic lowest ordered tract index resolves boundary matches.",
+    "tract_graph": "For each tract, nodes are unique connector IDs with an assigned connector point in that tract. Keep an undirected simple edge only when successive connector endpoints both assign to the same tract; count cross-tract/outside adjacencies separately. Duplicate unordered connector pairs are collapsed for degree and components.",
+    "components": "Connected components include all assigned tract nodes, including degree-zero isolated connector vertices. Compute component count, singleton component count, largest component node share, and degree distribution.",
+    "degree": "Degree is the number of distinct local connector neighbors in the simple induced tract graph; dead end means degree one, isolated node means degree zero. These are structural diagnostics, not road service/access measures.",
+    "fragmentation": "If at least one tract-local connector node exists, fragmentation = 1 - (largest connected-component node count / tract-local unique connector node count); otherwise fragmentation=0 and topology_defined=0."
+  },
+  "candidate_formula": {
+    "baseline_transport_gap": "Existing route-reference v2 candidate: clip(1 - overture_named_road_km_5070 / overture_route_km, 0, 1); defined iff overture_route_km > 0.",
+    "requested_adjustment": "0.05 * fragmentation, a fixed preregistered positive context sensitivity with no fit/tuning.",
+    "candidate_transport_gap": "If route-reference is defined, clip(baseline_transport_gap + requested_adjustment, 0, 1); otherwise preserve numeric gap 0 with defined=0 and adjustment=0.",
+    "acceptance_adjustment": "Actual absolute candidate-minus-baseline transport-gap change must be <= 0.05 on every official row.",
+    "interpretation": "Fragmentation is a model-context/uncertainty hypothesis, not evidence of hidden-reference incompleteness; degree-one endpoints may be legitimate road termini."
+  },
+  "measurement_plan": {
+    "measure_before": "Report v0 transport moments, exact route-reference candidate moments/defined fractions, and existing legacy/named/route length moments by region and provided urban/rural strata. Reconcile route length totals, zero counts, and defined-only gap means to the pinned route-reference audit.",
+    "measure_after": "Report segment and connector edge-case accounting; diagnostic coverage; node/edge/component/isolated/dead-end/degree distributions and largest-component support by region and urbanity; bounded candidate adjustment quantiles and route-defined fractions; exact IDs/order, schema/bounds and SHA-256.",
+    "determinism": "Run the complete builder twice and byte-compare candidate CSV, manifest, and report.",
+    "target_rmse_or_labels": false
+  },
+  "restrictions": {
+    "tiger_or_mtfcc_values_used": false,
+    "external_road_layers_used": false,
+    "removed_reference_layers_or_equivalents_used": false,
+    "target_reconstruction_or_labels_used": false,
+    "sample_score_placeholders_read": false,
+    "public_leaderboard_fitting_or_information_probes_used": false,
+    "upload_or_submission_made": false,
+    "route_reference_ratio_replaced_or_refit": false,
+    "topology_adjustment_exceeds_0_05": false
+  },
+  "limitations": [
+    "Connector topology is evaluated on the simple graph induced by connector points assigned to each tract; cross-tract links are counted but excluded from the tract-local graph.",
+    "The source package may contain disconnected, stale, or mispositioned geometry/connector references; internal structure does not validate real-world network completeness.",
+    "Dead ends and isolated components can be legitimate cul-de-sacs, ramps, private roads, or package-boundary artifacts.",
+    "No labels or permitted local target reference exist, so predictive accuracy and RMSE are unsupported and not measured."
+  ],
+  "acceptance": {
+    "exact_9379_official_ids_and_order": true,
+    "component_degree_and_edge_case_diagnostics_reported": true,
+    "region_and_urban_rural_summaries_reported": true,
+    "all_output_scores_finite_and_in_0_1": true,
+    "all_candidate_adjustments_at_most_0_05": true,
+    "deterministic_full_rerun": true,
+    "no_predictive_accuracy_claim": true
+  }
+}
