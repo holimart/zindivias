@@ -1,0 +1,245 @@
+{
+  "analysis": "post-fire building-count disagreement in Northern California using challenge-provided Overture, USFS WRC strata fields, MTBS burn summary, and ACS tract geometry",
+  "no_labels_or_removed_references_used": true,
+  "external_public_data_used": [],
+  "sample_score_placeholders_used": false,
+  "interpretation": "The observed ratio supports the hypothesis that a 2018-vintage Microsoft-footprint derivative may be stale after wildfire, leaving a provided risk-building count above the Overture count. This tract-level analysis does not independently verify the supplied count vintage and does not claim that the hidden organiser target uses a 2018 Microsoft release or this USFS WRC field.",
+  "ratio_definition": "Overture feature-cache overture_buildings / provided strata usfs_BuildingCount_sum; ratio<0.8 is the prespecified disagreement indicator, not an organiser score or validated coverage gap.",
+  "burn_definition": "Provided mtbs_wildfire_burned_pct_land and mtbs_wildfire_last_year; categories require burned percentage in [0,100]. Values >100 can occur with repeated burns and are listed as excluded from the categorical table, not clipped.",
+  "focal_butte_2018_burn_geoids": [
+    {
+      "GEOID": "06007001800",
+      "county_fips": "007",
+      "overture_buildings": 1087,
+      "provided_usfs_wrc_building_count": 1753.4217144878567,
+      "overture_to_usfs_ratio": 0.6199307280265395,
+      "mtbs_burned_pct_land": 100.00000000000004,
+      "mtbs_last_burn_year": 2018,
+      "pop_total": 840
+    },
+    {
+      "GEOID": "06007002100",
+      "county_fips": "007",
+      "overture_buildings": 1058,
+      "provided_usfs_wrc_building_count": 1646.3367367003593,
+      "overture_to_usfs_ratio": 0.6426388820797848,
+      "mtbs_burned_pct_land": 100.1048772244015,
+      "mtbs_last_burn_year": 2018,
+      "pop_total": 926
+    },
+    {
+      "GEOID": "06007002000",
+      "county_fips": "007",
+      "overture_buildings": 1135,
+      "provided_usfs_wrc_building_count": 1714.4834485678002,
+      "overture_to_usfs_ratio": 0.6620069741403023,
+      "mtbs_burned_pct_land": 100.03091468259105,
+      "mtbs_last_burn_year": 2018,
+      "pop_total": 886
+    },
+    {
+      "GEOID": "06007001900",
+      "county_fips": "007",
+      "overture_buildings": 818,
+      "provided_usfs_wrc_building_count": 1208.1931527456836,
+      "overture_to_usfs_ratio": 0.6770440621526874,
+      "mtbs_burned_pct_land": 100.34906093532197,
+      "mtbs_last_burn_year": 2018,
+      "pop_total": 675
+    },
+    {
+      "GEOID": "06007002300",
+      "county_fips": "007",
+      "overture_buildings": 1721,
+      "provided_usfs_wrc_building_count": 2389.9375788554316,
+      "overture_to_usfs_ratio": 0.72010248938142,
+      "mtbs_burned_pct_land": 64.37728044846199,
+      "mtbs_last_burn_year": 2018,
+      "pop_total": 1851
+    },
+    {
+      "GEOID": "06007002200",
+      "county_fips": "007",
+      "overture_buildings": 2266,
+      "provided_usfs_wrc_building_count": 3032.0893966698204,
+      "overture_to_usfs_ratio": 0.7473394427251302,
+      "mtbs_burned_pct_land": 153.75399315989537,
+      "mtbs_last_burn_year": 2018,
+      "pop_total": 1799
+    }
+  ],
+  "additional_named_examples": [
+    {
+      "GEOID": "06089010603",
+      "county_fips": "089",
+      "overture_to_usfs_ratio": 0.6908862626014252,
+      "mtbs_burned_pct_land": 91.76674620414911,
+      "mtbs_last_burn_year": 2018,
+      "pop_total": 906
+    },
+    {
+      "GEOID": "06033000704",
+      "county_fips": "033",
+      "overture_to_usfs_ratio": 0.7981012619718721,
+      "mtbs_burned_pct_land": 94.28100485933821,
+      "mtbs_last_burn_year": 2017,
+      "pop_total": 2158
+    }
+  ],
+  "northern_ca_burn_class_table": [
+    {
+      "class": "0% (unburned)",
+      "n": 449,
+      "below_ratio_cutoff_n": 7,
+      "share_ratio_below_0_8": 0.015590200445434299
+    },
+    {
+      "class": ">0–5%",
+      "n": 28,
+      "below_ratio_cutoff_n": 0,
+      "share_ratio_below_0_8": 0.0
+    },
+    {
+      "class": ">5–20%",
+      "n": 32,
+      "below_ratio_cutoff_n": 0,
+      "share_ratio_below_0_8": 0.0
+    },
+    {
+      "class": ">20–<50%",
+      "n": 32,
+      "below_ratio_cutoff_n": 0,
+      "share_ratio_below_0_8": 0.0
+    },
+    {
+      "class": "50–100%",
+      "n": 36,
+      "below_ratio_cutoff_n": 4,
+      "share_ratio_below_0_8": 0.1111111111111111
+    }
+  ],
+  "burn_class_exclusions": {
+    "official_northern_ca_rows": 591,
+    "included_in_mutually_exclusive_0_to_100_bins": 577,
+    "burn_percentage_over_100_n": 14,
+    "burn_percentage_negative_n": 0,
+    "burn_percentage_missing_n": 0
+  },
+  "high_burn_vs_unburned_below_0_8": {
+    "high_burn_class": "50–100%",
+    "high_burn_n": 36,
+    "high_burn_below_cutoff_n": 4,
+    "high_burn_share_below_cutoff": 0.1111111111111111,
+    "unburned_n": 449,
+    "unburned_below_cutoff_n": 7,
+    "unburned_share_below_cutoff": 0.015590200445434299,
+    "difference_high_burn_minus_unburned": 0.0955209106656768,
+    "bootstrap_95_percentile_ci": [
+      0.005506062855728779,
+      0.2088591932689928
+    ],
+    "replicates": 50000,
+    "seed": 20261024,
+    "method": "independent within-group tract bootstrap; exact Binomial resampling for binary below-0.8 indicator"
+  },
+  "butte_county_summary": {
+    "county": "Butte County, California (provided COUNTYFP 007)",
+    "tracts": 54,
+    "below_ratio_0_8_n": 6,
+    "below_ratio_0_8_population_sum": 6977,
+    "below_ratio_0_8_geoids": [
+      "06007001800",
+      "06007001900",
+      "06007002000",
+      "06007002100",
+      "06007002200",
+      "06007002300"
+    ],
+    "below_ratio_0_8_population_is_tract_total_not_people_confirmed_affected": true
+  },
+  "provided_data_narrative": {
+    "potential_impact": "If emergency or recovery planners treat this provided building-count ratio as current-map completeness, post-fire removed structures could be misread as missing mapped buildings, potentially distorting address inventories, dispatch geocoding, evacuation planning, or recovery-resource estimates.",
+    "observed_impact": "No dispatch outcomes, evacuation routes, recovery decisions, or affected individuals were observed. The 6,977 value is summed provided tract population for six flagged tracts, not a count of people confirmed affected.",
+    "causal_limit": "The analysis is descriptive and does not prove that fire caused the ratio difference or that the hidden organiser score uses the provided USFS WRC attribute."
+  },
+  "map": {
+    "path": "reports/discovery-postfire-map.png",
+    "sha256": "916589e0d3dc765a77c133dbcfe454740906dabb26ab74fcc0db92f9ffa43da1",
+    "description": "Two-panel tract map: all NorCal sample polygons and Butte County tracts; fill is provided MTBS burn percentage (display clipped to 100), purple outline is Overture/USFS ratio<0.8, numbered markers are the six focal GEOIDs in report order.",
+    "geometry_source": {
+      "uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-census-acs-housing.parquet",
+      "object_bytes": 3037540,
+      "rows": 591,
+      "read_columns": [
+        "GEOID",
+        "geometry"
+      ],
+      "housing_units_column_read": false,
+      "selected_geoid_geometry_sha256_in_official_sample_order": "8903a14553ff7c70cdbeeaa72fb028b4f1eae85dda91d20d12a97af5076c3ddb",
+      "crs": "EPSG:4326 per GeoParquet default when CRS metadata is absent"
+    }
+  },
+  "scored_candidate_csvs_changed": false,
+  "scored_candidate_csv_sha256": {
+    "C0_all_zero.csv": "0edf8140123e2135489e5728fd71bce6f1e28a97f447ca411ba45fdbc02bc214",
+    "C1_region_constants.csv": "dc2e368194b31408cb5c313fa8ce3f3fa59a1b5965bc2df8e4217bbc9e0c82e0",
+    "C2_component_estimator_v0.csv": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514",
+    "C3_denominator_x125.csv": "e5ee50f5c2cca149550f3408638d2b77431f6ed62cf104dfe8c07d8c8416f9e4",
+    "P4_c1_shrink_alpha.csv": "8b329802d882ea4bdff2bfd8c465c160d6ffd9269cfbe28dce8be9e702b07d37",
+    "P5_region_shrink_residual.csv": "9d5ad1d05bedfe5da23a39d9a4f6902217c2711da8fa0b408d992f196bb93b4b",
+    "P6_global_constant.csv": "68851dd2fee88f229bee08466d342f14313fa75e84bf42867baf28995445f6b3"
+  },
+  "inputs": {
+    "official_sample": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/northern-ca-sample-submission.csv",
+      "rows": 591,
+      "geoid_sequence_sha256": "324f2cb00cf3ae6eb8d69ad682df5888d731c21440f0af64af66ec88c415106f",
+      "placeholder_score_columns_accessed": false
+    },
+    "provided_strata": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+      "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+      "read_columns": [
+        "GEOID",
+        "COUNTYFP",
+        "pop_total",
+        "usfs_BuildingCount_sum",
+        "usfs_edition",
+        "mtbs_wildfire_burned_pct_land",
+        "mtbs_wildfire_last_year",
+        "mtbs_wildfire_ever",
+        "mtbs_covered"
+      ],
+      "provided_usfs_edition_values": [
+        "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+      ]
+    },
+    "provided_overture_feature_cache": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/northern-ca-overture-tract-summary.parquet",
+      "sha256": "0a9f7cebb26058a6f2e5ab8d6d70df6443ad62f558dcd65e742b161737cbeef2",
+      "read_columns": [
+        "GEOID",
+        "overture_buildings"
+      ]
+    },
+    "challenge_geometry": {
+      "uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-census-acs-housing.parquet",
+      "object_bytes": 3037540,
+      "rows": 591,
+      "read_columns": [
+        "GEOID",
+        "geometry"
+      ],
+      "housing_units_column_read": false,
+      "selected_geoid_geometry_sha256_in_official_sample_order": "8903a14553ff7c70cdbeeaa72fb028b4f1eae85dda91d20d12a97af5076c3ddb",
+      "crs": "EPSG:4326 per GeoParquet default when CRS metadata is absent"
+    }
+  },
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "pyarrow": "26.0.0",
+    "matplotlib": "3.11.2",
+    "shapely": "2.2.0"
+  }
+}
