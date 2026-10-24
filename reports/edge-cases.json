@@ -1,0 +1,3222 @@
+{
+  "excluded_non_scored_template_rows": 415,
+  "feature_read_columns": [
+    "GEOID",
+    "overture_named_road_km_5070",
+    "overture_route_km",
+    "overture_buildings",
+    "overture_poi_all",
+    "overture_poi_fire",
+    "overture_poi_ems",
+    "overture_poi_schools",
+    "overture_poi_unclassified",
+    "overture_unclassified_fire_share",
+    "overture_unclassified_ems_share",
+    "overture_unclassified_schools_share"
+  ],
+  "geometry_method": "provided ACS housing-tract geometry, WKB assumed EPSG:4326, projected to EPSG:5070; water proxy=max(0,min(1,1-ALAND/geometry_area)); water-dominated means >0.50",
+  "geometry_read_columns": [
+    "GEOID",
+    "geometry"
+  ],
+  "regions": {
+    "eastern-ok": {
+      "acs_extra_geometries_excluded": 0,
+      "acs_geometry_rows": 1192,
+      "acs_geometry_source_bytes": 3650879,
+      "acs_geometry_source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-census-acs-housing.parquet",
+      "feature_cache_bytes": 194636,
+      "feature_cache_rows": 1192,
+      "feature_cache_sha256": "e5a06316c316f61bf25b80b48e89c1e7f0b1461a0b8cec5831aae24e0cf83fa6",
+      "missing_pct_urban": 1,
+      "new_mexico_geoid_35023970000_present": null,
+      "no_overture_roads_buildings_or_places": 0,
+      "official_sample_bytes": 33436,
+      "official_sample_sha256": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+      "official_tracts": 1192,
+      "strata_extra_rows_excluded": 0,
+      "strata_source_bytes": 638464,
+      "strata_source_sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54",
+      "v2_edge_case_predictions": {
+        "all_official": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 1192,
+              "max": 0.372877763369966,
+              "mean": 0.04563298792185295,
+              "median": 0.03888677962424408,
+              "min": 0.008173956058081735,
+              "nonfinite_predictions": 0,
+              "q10": 0.014750943473348405,
+              "q90": 0.085296554683987,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 1192,
+              "max": 0.01,
+              "mean": 0.01,
+              "median": 0.01,
+              "min": 0.01,
+              "nonfinite_predictions": 0,
+              "q10": 0.01,
+              "q90": 0.01,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 1192,
+              "max": 0.3054049884063558,
+              "mean": 0.10284611616479715,
+              "median": 0.09844356711358995,
+              "min": 0.014521868174245207,
+              "nonfinite_predictions": 0,
+              "q10": 0.033429439613826106,
+              "q90": 0.177169095385611,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 1192,
+              "max": 0.16302440264356427,
+              "mean": 0.08760643309912423,
+              "median": 0.09311861996787155,
+              "min": 0.039222463707509696,
+              "nonfinite_predictions": 0,
+              "q10": 0.03979531822164674,
+              "q90": 0.13294059189904797,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 1192,
+              "max": 0.28027982342349556,
+              "mean": 0.14401084728698635,
+              "median": 0.15301378964374335,
+              "min": 0.05742196020418456,
+              "nonfinite_predictions": 0,
+              "q10": 0.05841022304586789,
+              "q90": 0.22613834238578595,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 1192,
+              "max": 0.5302838833744494,
+              "mean": 0.3849202292665062,
+              "median": 0.40455137260893925,
+              "min": 0.2691784827851589,
+              "nonfinite_predictions": 0,
+              "q10": 0.27155293191953445,
+              "q90": 0.4824661631553139,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 906,
+              "max": 1.0,
+              "mean": 0.0055239336559926855,
+              "median": 0.0,
+              "min": 0.0,
+              "nonfinite_predictions": 0,
+              "q10": 0.0,
+              "q90": 0.0,
+              "undefined_predictions": 286
+            }
+          },
+          "tracts": 1192,
+          "urbanity_source_counts": {
+            "neutral_missing_urbanity_prior": 1,
+            "pct_urban": 1191
+          }
+        },
+        "missing_pct_urban": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 1,
+              "max": 0.03192623971651,
+              "mean": 0.03192623971651,
+              "median": 0.03192623971651,
+              "min": 0.03192623971651,
+              "nonfinite_predictions": 0,
+              "q10": 0.03192623971651,
+              "q90": 0.03192623971651,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 1,
+              "max": 0.01,
+              "mean": 0.01,
+              "median": 0.01,
+              "min": 0.01,
+              "nonfinite_predictions": 0,
+              "q10": 0.01,
+              "q90": 0.01,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 1,
+              "max": 0.08577871914953,
+              "mean": 0.08577871914953,
+              "median": 0.08577871914953,
+              "min": 0.08577871914953,
+              "nonfinite_predictions": 0,
+              "q10": 0.08577871914953,
+              "q90": 0.08577871914953,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 1,
+              "max": 0.05215356307841772,
+              "mean": 0.05215356307841772,
+              "median": 0.05215356307841772,
+              "min": 0.05215356307841772,
+              "nonfinite_predictions": 0,
+              "q10": 0.05215356307841772,
+              "q90": 0.05215356307841772,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 1,
+              "max": 0.0794385491839784,
+              "mean": 0.0794385491839784,
+              "median": 0.0794385491839784,
+              "min": 0.0794385491839784,
+              "nonfinite_predictions": 0,
+              "q10": 0.0794385491839784,
+              "q90": 0.0794385491839784,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 1,
+              "max": 0.3047033306524346,
+              "mean": 0.3047033306524346,
+              "median": 0.3047033306524346,
+              "min": 0.3047033306524346,
+              "nonfinite_predictions": 0,
+              "q10": 0.3047033306524346,
+              "q90": 0.3047033306524346,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 1,
+              "max": 0.0,
+              "mean": 0.0,
+              "median": 0.0,
+              "min": 0.0,
+              "nonfinite_predictions": 0,
+              "q10": 0.0,
+              "q90": 0.0,
+              "undefined_predictions": 0
+            }
+          },
+          "tracts": 1,
+          "urbanity_source_counts": {
+            "neutral_missing_urbanity_prior": 1
+          }
+        },
+        "water_gt_50": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 1,
+              "max": 0.027914485567165054,
+              "mean": 0.027914485567165054,
+              "median": 0.027914485567165054,
+              "min": 0.027914485567165054,
+              "nonfinite_predictions": 0,
+              "q10": 0.027914485567165054,
+              "q90": 0.027914485567165054,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 1,
+              "max": 0.01,
+              "mean": 0.01,
+              "median": 0.01,
+              "min": 0.01,
+              "nonfinite_predictions": 0,
+              "q10": 0.01,
+              "q90": 0.01,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 1,
+              "max": 0.07374345670149517,
+              "mean": 0.07374345670149517,
+              "median": 0.07374345670149517,
+              "min": 0.07374345670149517,
+              "nonfinite_predictions": 0,
+              "q10": 0.07374345670149517,
+              "q90": 0.07374345670149517,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 1,
+              "max": 0.09513247151431607,
+              "mean": 0.09513247151431607,
+              "median": 0.09513247151431607,
+              "min": 0.09513247151431607,
+              "nonfinite_predictions": 0,
+              "q10": 0.09513247151431607,
+              "q90": 0.09513247151431607,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 1,
+              "max": 0.15669574222529675,
+              "mean": 0.15669574222529675,
+              "median": 0.15669574222529675,
+              "min": 0.15669574222529675,
+              "nonfinite_predictions": 0,
+              "q10": 0.15669574222529675,
+              "q90": 0.15669574222529675,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 1,
+              "max": 0.40805432300433536,
+              "mean": 0.40805432300433536,
+              "median": 0.40805432300433536,
+              "min": 0.40805432300433536,
+              "nonfinite_predictions": 0,
+              "q10": 0.40805432300433536,
+              "q90": 0.40805432300433536,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 1,
+              "max": 0.0,
+              "mean": 0.0,
+              "median": 0.0,
+              "min": 0.0,
+              "nonfinite_predictions": 0,
+              "q10": 0.0,
+              "q90": 0.0,
+              "undefined_predictions": 0
+            }
+          },
+          "tracts": 1,
+          "urbanity_source_counts": {
+            "pct_urban": 1
+          }
+        },
+        "zero_ALAND": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            }
+          },
+          "tracts": 0,
+          "urbanity_source_counts": {}
+        },
+        "zero_buildings": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            }
+          },
+          "tracts": 0,
+          "urbanity_source_counts": {}
+        },
+        "zero_named_roads": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 28,
+              "max": 0.372877763369966,
+              "mean": 0.09802448980306952,
+              "median": 0.08662477745821325,
+              "min": 0.03932090200378704,
+              "nonfinite_predictions": 0,
+              "q10": 0.05197181916622814,
+              "q90": 0.1327022547928675,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 28,
+              "max": 0.01,
+              "mean": 0.01,
+              "median": 0.01,
+              "min": 0.01,
+              "nonfinite_predictions": 0,
+              "q10": 0.01,
+              "q90": 0.01,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 28,
+              "max": 0.27167836408455726,
+              "mean": 0.16365175686935213,
+              "median": 0.15155610947651116,
+              "min": 0.06864180400757408,
+              "nonfinite_predictions": 0,
+              "q10": 0.09394363833245628,
+              "q90": 0.24664369117868382,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 28,
+              "max": 0.16302440264356427,
+              "mean": 0.10059133543193896,
+              "median": 0.10195301892861267,
+              "min": 0.04162326395626236,
+              "nonfinite_predictions": 0,
+              "q10": 0.04936417981804443,
+              "q90": 0.13147690795931496,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 28,
+              "max": 0.28027982342349556,
+              "mean": 0.16720926926842308,
+              "median": 0.16939153583488908,
+              "min": 0.06157782792204449,
+              "nonfinite_predictions": 0,
+              "q10": 0.07500002000222988,
+              "q90": 0.223469943368815,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 28,
+              "max": 0.5302838833744494,
+              "mean": 0.41671207252570364,
+              "median": 0.4242071551415567,
+              "min": 0.279032585976492,
+              "nonfinite_predictions": 0,
+              "q10": 0.3045275564335157,
+              "q90": 0.47991363668583703,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 1,
+              "max": 1.0,
+              "mean": 1.0,
+              "median": 1.0,
+              "min": 1.0,
+              "nonfinite_predictions": 0,
+              "q10": 1.0,
+              "q90": 1.0,
+              "undefined_predictions": 27
+            }
+          },
+          "tracts": 28,
+          "urbanity_source_counts": {
+            "pct_urban": 28
+          }
+        },
+        "zero_places": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            }
+          },
+          "tracts": 0,
+          "urbanity_source_counts": {}
+        },
+        "zero_population": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 1,
+              "max": 0.03192623971651,
+              "mean": 0.03192623971651,
+              "median": 0.03192623971651,
+              "min": 0.03192623971651,
+              "nonfinite_predictions": 0,
+              "q10": 0.03192623971651,
+              "q90": 0.03192623971651,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 1,
+              "max": 0.01,
+              "mean": 0.01,
+              "median": 0.01,
+              "min": 0.01,
+              "nonfinite_predictions": 0,
+              "q10": 0.01,
+              "q90": 0.01,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 1,
+              "max": 0.08577871914953,
+              "mean": 0.08577871914953,
+              "median": 0.08577871914953,
+              "min": 0.08577871914953,
+              "nonfinite_predictions": 0,
+              "q10": 0.08577871914953,
+              "q90": 0.08577871914953,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 1,
+              "max": 0.05215356307841772,
+              "mean": 0.05215356307841772,
+              "median": 0.05215356307841772,
+              "min": 0.05215356307841772,
+              "nonfinite_predictions": 0,
+              "q10": 0.05215356307841772,
+              "q90": 0.05215356307841772,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 1,
+              "max": 0.0794385491839784,
+              "mean": 0.0794385491839784,
+              "median": 0.0794385491839784,
+              "min": 0.0794385491839784,
+              "nonfinite_predictions": 0,
+              "q10": 0.0794385491839784,
+              "q90": 0.0794385491839784,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 1,
+              "max": 0.3047033306524346,
+              "mean": 0.3047033306524346,
+              "median": 0.3047033306524346,
+              "min": 0.3047033306524346,
+              "nonfinite_predictions": 0,
+              "q10": 0.3047033306524346,
+              "q90": 0.3047033306524346,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 1,
+              "max": 0.0,
+              "mean": 0.0,
+              "median": 0.0,
+              "min": 0.0,
+              "nonfinite_predictions": 0,
+              "q10": 0.0,
+              "q90": 0.0,
+              "undefined_predictions": 0
+            }
+          },
+          "tracts": 1,
+          "urbanity_source_counts": {
+            "neutral_missing_urbanity_prior": 1
+          }
+        },
+        "zero_route_network": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 286,
+              "max": 0.15770249420317792,
+              "mean": 0.08274933722999496,
+              "median": 0.07950922162627604,
+              "min": 0.02431297243711206,
+              "nonfinite_predictions": 0,
+              "q10": 0.05613925374400356,
+              "q90": 0.11239069035317953,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 286,
+              "max": 0.01,
+              "mean": 0.01,
+              "median": 0.01,
+              "min": 0.01,
+              "nonfinite_predictions": 0,
+              "q10": 0.01,
+              "q90": 0.01,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 286,
+              "max": 0.3054049884063558,
+              "mean": 0.15549867445998994,
+              "median": 0.14901844325255206,
+              "min": 0.03862594487422412,
+              "nonfinite_predictions": 0,
+              "q10": 0.10227850748800713,
+              "q90": 0.21478138070635905,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 286,
+              "max": 0.16302440264356427,
+              "mean": 0.12259789782313704,
+              "median": 0.12637745514235194,
+              "min": 0.04162326395626236,
+              "nonfinite_predictions": 0,
+              "q10": 0.09929653584870246,
+              "q90": 0.14217594783507112,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 286,
+              "max": 0.28027982342349556,
+              "mean": 0.2072033193235174,
+              "median": 0.2141565401550925,
+              "min": 0.06157782792204449,
+              "nonfinite_predictions": 0,
+              "q10": 0.16442251126247087,
+              "q90": 0.24290829777447803,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 286,
+              "max": 0.5302838833744494,
+              "mean": 0.46198782792149834,
+              "median": 0.470858004460627,
+              "min": 0.279032585976492,
+              "nonfinite_predictions": 0,
+              "q10": 0.4180003938846093,
+              "q90": 0.49803327152478516,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 286
+            }
+          },
+          "tracts": 286,
+          "urbanity_source_counts": {
+            "pct_urban": 286
+          }
+        }
+      },
+      "water_dominated_over_50pct": 1,
+      "water_share_max": 0.6028434363031173,
+      "water_share_unavailable": 0,
+      "zero_land_area": 0,
+      "zero_overture_buildings": 0,
+      "zero_overture_named_roads": 28,
+      "zero_overture_places": 0,
+      "zero_overture_route_network": 286,
+      "zero_population": 1
+    },
+    "maricopa-az": {
+      "acs_extra_geometries_excluded": 0,
+      "acs_geometry_rows": 1593,
+      "acs_geometry_source_bytes": 3457173,
+      "acs_geometry_source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-census-acs-housing.parquet",
+      "feature_cache_bytes": 239311,
+      "feature_cache_rows": 1593,
+      "feature_cache_sha256": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22",
+      "missing_pct_urban": 11,
+      "new_mexico_geoid_35023970000_present": true,
+      "no_overture_roads_buildings_or_places": 0,
+      "official_sample_bytes": 44664,
+      "official_sample_sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+      "official_tracts": 1593,
+      "strata_extra_rows_excluded": 0,
+      "strata_source_bytes": 793492,
+      "strata_source_sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd",
+      "v2_edge_case_predictions": {
+        "all_official": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 1593,
+              "max": 0.1870265624136046,
+              "mean": 0.06750336127113886,
+              "median": 0.06593003440958228,
+              "min": 0.007597858744604598,
+              "nonfinite_predictions": 0,
+              "q10": 0.02596379417559893,
+              "q90": 0.10637023908221523,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 1593,
+              "max": 0.01,
+              "mean": 0.009999999999999997,
+              "median": 0.01,
+              "min": 0.01,
+              "nonfinite_predictions": 0,
+              "q10": 0.01,
+              "q90": 0.01,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 1593,
+              "max": 0.3640531248272092,
+              "mean": 0.1428225568305931,
+              "median": 0.14310395421533695,
+              "min": 0.012793576233813794,
+              "nonfinite_predictions": 0,
+              "q10": 0.06251016218975475,
+              "q90": 0.21924027306580793,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 1593,
+              "max": 0.20382610570814283,
+              "mean": 0.11564573557718723,
+              "median": 0.12592339509622696,
+              "min": 0.03916575509624078,
+              "nonfinite_predictions": 0,
+              "q10": 0.05239565349556937,
+              "q90": 0.14885608676982073,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 1593,
+              "max": 0.3509056959956896,
+              "mean": 0.19462774445982897,
+              "median": 0.21332588096189467,
+              "min": 0.057324231556191325,
+              "nonfinite_predictions": 0,
+              "q10": 0.07990267449778676,
+              "q90": 0.25496184699691793,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 1593,
+              "max": 0.5841807258110978,
+              "mean": 0.4444911983727035,
+              "median": 0.47003708935995847,
+              "min": 0.2689415563721208,
+              "nonfinite_predictions": 0,
+              "q10": 0.30952843385471424,
+              "q90": 0.5087788284601036,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 692,
+              "max": 0.4783939721938968,
+              "mean": 0.003782990323819334,
+              "median": 0.0,
+              "min": 0.0,
+              "nonfinite_predictions": 0,
+              "q10": 0.0,
+              "q90": 0.0,
+              "undefined_predictions": 901
+            }
+          },
+          "tracts": 1593,
+          "urbanity_source_counts": {
+            "neutral_missing_urbanity_prior": 11,
+            "pct_urban": 1582
+          }
+        },
+        "missing_pct_urban": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 11,
+              "max": 0.07771590715247179,
+              "mean": 0.05593500296575147,
+              "median": 0.07010394122110945,
+              "min": 0.025333155728752086,
+              "nonfinite_predictions": 0,
+              "q10": 0.02621183361733513,
+              "q90": 0.07771590715247179,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 11,
+              "max": 0.01,
+              "mean": 0.009999999999999998,
+              "median": 0.01,
+              "min": 0.01,
+              "nonfinite_predictions": 0,
+              "q10": 0.01,
+              "q90": 0.01,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 11,
+              "max": 0.14543181430494356,
+              "mean": 0.11629140813947746,
+              "median": 0.1302078824422189,
+              "min": 0.06599946718625627,
+              "nonfinite_predictions": 0,
+              "q10": 0.0686355008520054,
+              "q90": 0.14543181430494356,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 11,
+              "max": 0.05215356307841772,
+              "mean": 0.05215356307841772,
+              "median": 0.05215356307841772,
+              "min": 0.05215356307841772,
+              "nonfinite_predictions": 0,
+              "q10": 0.05215356307841772,
+              "q90": 0.05215356307841772,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 11,
+              "max": 0.0794385491839784,
+              "mean": 0.0794385491839784,
+              "median": 0.0794385491839784,
+              "min": 0.0794385491839784,
+              "nonfinite_predictions": 0,
+              "q10": 0.0794385491839784,
+              "q90": 0.0794385491839784,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 11,
+              "max": 0.3047033306524346,
+              "mean": 0.30470333065243466,
+              "median": 0.3047033306524346,
+              "min": 0.3047033306524346,
+              "nonfinite_predictions": 0,
+              "q10": 0.3047033306524346,
+              "q90": 0.3047033306524346,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 5,
+              "max": 0.0,
+              "mean": 0.0,
+              "median": 0.0,
+              "min": 0.0,
+              "nonfinite_predictions": 0,
+              "q10": 0.0,
+              "q90": 0.0,
+              "undefined_predictions": 6
+            }
+          },
+          "tracts": 11,
+          "urbanity_source_counts": {
+            "neutral_missing_urbanity_prior": 11
+          }
+        },
+        "water_gt_50": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            }
+          },
+          "tracts": 0,
+          "urbanity_source_counts": {}
+        },
+        "zero_ALAND": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            }
+          },
+          "tracts": 0,
+          "urbanity_source_counts": {}
+        },
+        "zero_buildings": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            }
+          },
+          "tracts": 0,
+          "urbanity_source_counts": {}
+        },
+        "zero_named_roads": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 33,
+              "max": 0.17845626065414766,
+              "mean": 0.08673395543343418,
+              "median": 0.07771590715247179,
+              "min": 0.01884700883041782,
+              "nonfinite_predictions": 0,
+              "q10": 0.06001905915752071,
+              "q90": 0.1304907826196675,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 33,
+              "max": 0.01,
+              "mean": 0.01,
+              "median": 0.01,
+              "min": 0.01,
+              "nonfinite_predictions": 0,
+              "q10": 0.01,
+              "q90": 0.01,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 33,
+              "max": 0.3469125213082953,
+              "mean": 0.16346791086686838,
+              "median": 0.14543181430494356,
+              "min": 0.027694017660835638,
+              "nonfinite_predictions": 0,
+              "q10": 0.11003811831504143,
+              "q90": 0.250981565239335,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 33,
+              "max": 0.18203301836684227,
+              "mean": 0.09083361131225672,
+              "median": 0.09364370380206469,
+              "min": 0.039187293424887255,
+              "nonfinite_predictions": 0,
+              "q10": 0.04529177598493063,
+              "q90": 0.1321545216913726,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 33,
+              "max": 0.31363909222354835,
+              "mean": 0.14955074113122077,
+              "median": 0.15400913291847199,
+              "min": 0.05736134714391004,
+              "nonfinite_predictions": 0,
+              "q10": 0.06799354452087338,
+              "q90": 0.22471125041711118,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 33,
+              "max": 0.5567279215592165,
+              "mean": 0.39269515392699517,
+              "median": 0.40535985782623457,
+              "min": 0.2690315658886964,
+              "nonfinite_predictions": 0,
+              "q10": 0.2934570446390741,
+              "q90": 0.4811524862121183,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 33
+            }
+          },
+          "tracts": 33,
+          "urbanity_source_counts": {
+            "neutral_missing_urbanity_prior": 4,
+            "pct_urban": 29
+          }
+        },
+        "zero_places": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            }
+          },
+          "tracts": 0,
+          "urbanity_source_counts": {}
+        },
+        "zero_population": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 11,
+              "max": 0.07771590715247179,
+              "mean": 0.05593500296575147,
+              "median": 0.07010394122110945,
+              "min": 0.025333155728752086,
+              "nonfinite_predictions": 0,
+              "q10": 0.02621183361733513,
+              "q90": 0.07771590715247179,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 11,
+              "max": 0.01,
+              "mean": 0.009999999999999998,
+              "median": 0.01,
+              "min": 0.01,
+              "nonfinite_predictions": 0,
+              "q10": 0.01,
+              "q90": 0.01,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 11,
+              "max": 0.14543181430494356,
+              "mean": 0.11629140813947746,
+              "median": 0.1302078824422189,
+              "min": 0.06599946718625627,
+              "nonfinite_predictions": 0,
+              "q10": 0.0686355008520054,
+              "q90": 0.14543181430494356,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 11,
+              "max": 0.05215356307841772,
+              "mean": 0.05215356307841772,
+              "median": 0.05215356307841772,
+              "min": 0.05215356307841772,
+              "nonfinite_predictions": 0,
+              "q10": 0.05215356307841772,
+              "q90": 0.05215356307841772,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 11,
+              "max": 0.0794385491839784,
+              "mean": 0.0794385491839784,
+              "median": 0.0794385491839784,
+              "min": 0.0794385491839784,
+              "nonfinite_predictions": 0,
+              "q10": 0.0794385491839784,
+              "q90": 0.0794385491839784,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 11,
+              "max": 0.3047033306524346,
+              "mean": 0.30470333065243466,
+              "median": 0.3047033306524346,
+              "min": 0.3047033306524346,
+              "nonfinite_predictions": 0,
+              "q10": 0.3047033306524346,
+              "q90": 0.3047033306524346,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 5,
+              "max": 0.0,
+              "mean": 0.0,
+              "median": 0.0,
+              "min": 0.0,
+              "nonfinite_predictions": 0,
+              "q10": 0.0,
+              "q90": 0.0,
+              "undefined_predictions": 6
+            }
+          },
+          "tracts": 11,
+          "urbanity_source_counts": {
+            "neutral_missing_urbanity_prior": 11
+          }
+        },
+        "zero_route_network": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 901,
+              "max": 0.1870265624136046,
+              "mean": 0.08494384148674226,
+              "median": 0.08198916573001491,
+              "min": 0.017065895275470668,
+              "nonfinite_predictions": 0,
+              "q10": 0.05195047561751866,
+              "q90": 0.12037166280374534,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 901,
+              "max": 0.01,
+              "mean": 0.009999999999999998,
+              "median": 0.01,
+              "min": 0.01,
+              "nonfinite_predictions": 0,
+              "q10": 0.01,
+              "q90": 0.01,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 901,
+              "max": 0.3640531248272092,
+              "mean": 0.15988768297348452,
+              "median": 0.15397833146002982,
+              "min": 0.024131790550941334,
+              "nonfinite_predictions": 0,
+              "q10": 0.09390095123503732,
+              "q90": 0.23074332560749067,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 901,
+              "max": 0.20382610570814283,
+              "mean": 0.12768183029749985,
+              "median": 0.13315152616431075,
+              "min": 0.039187293424887255,
+              "nonfinite_predictions": 0,
+              "q10": 0.09700860323558139,
+              "q90": 0.15245021738153672,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 901,
+              "max": 0.3509056959956896,
+              "mean": 0.21641807556159834,
+              "median": 0.22652260570515817,
+              "min": 0.05736134714391004,
+              "nonfinite_predictions": 0,
+              "q10": 0.16028778008226766,
+              "q90": 0.2614175556128617,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 901,
+              "max": 0.5841807258110978,
+              "mean": 0.4699928399368472,
+              "median": 0.48283146887228207,
+              "min": 0.2690315658886964,
+              "nonfinite_predictions": 0,
+              "q10": 0.4133460473621631,
+              "q90": 0.5143937261655394,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 901
+            }
+          },
+          "tracts": 901,
+          "urbanity_source_counts": {
+            "neutral_missing_urbanity_prior": 6,
+            "pct_urban": 895
+          }
+        }
+      },
+      "water_dominated_over_50pct": 0,
+      "water_share_max": 0.1196161896461897,
+      "water_share_unavailable": 0,
+      "zero_land_area": 0,
+      "zero_overture_buildings": 0,
+      "zero_overture_named_roads": 33,
+      "zero_overture_places": 0,
+      "zero_overture_route_network": 901,
+      "zero_population": 11
+    },
+    "northern-ca": {
+      "acs_extra_geometries_excluded": 0,
+      "acs_geometry_rows": 591,
+      "acs_geometry_source_bytes": 3037540,
+      "acs_geometry_source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-census-acs-housing.parquet",
+      "feature_cache_bytes": 100099,
+      "feature_cache_rows": 591,
+      "feature_cache_sha256": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c",
+      "missing_pct_urban": 0,
+      "new_mexico_geoid_35023970000_present": null,
+      "no_overture_roads_buildings_or_places": 0,
+      "official_sample_bytes": 16608,
+      "official_sample_sha256": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+      "official_tracts": 591,
+      "strata_extra_rows_excluded": 0,
+      "strata_source_bytes": 354711,
+      "strata_source_sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+      "v2_edge_case_predictions": {
+        "all_official": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 591,
+              "max": 0.18580266467968198,
+              "mean": 0.05064319044901101,
+              "median": 0.04504448840068742,
+              "min": 0.007611773064131238,
+              "nonfinite_predictions": 0,
+              "q10": 0.016397043277296037,
+              "q90": 0.09253254006516397,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 591,
+              "max": 0.01,
+              "mean": 0.01,
+              "median": 0.01,
+              "min": 0.01,
+              "nonfinite_predictions": 0,
+              "q10": 0.01,
+              "q90": 0.01,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 591,
+              "max": 0.3436643888389588,
+              "mean": 0.11278030306259533,
+              "median": 0.10806782292548502,
+              "min": 0.012835319192393715,
+              "nonfinite_predictions": 0,
+              "q10": 0.03445240795735662,
+              "q90": 0.19072900456308797,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 591,
+              "max": 0.1826338979609818,
+              "mean": 0.10336537576225542,
+              "median": 0.11560819959095371,
+              "min": 0.039186034604760174,
+              "nonfinite_predictions": 0,
+              "q10": 0.04004222847893015,
+              "q90": 0.14957771491543376,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 591,
+              "max": 0.31468116950575065,
+              "mean": 0.17252310748004626,
+              "median": 0.19448891721792683,
+              "min": 0.05735917781960421,
+              "nonfinite_predictions": 0,
+              "q10": 0.05881696430439904,
+              "q90": 0.2562597382733804,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 591,
+              "max": 0.5575234738778386,
+              "mean": 0.4172521569313171,
+              "median": 0.4509448110178187,
+              "min": 0.26902630601241795,
+              "nonfinite_predictions": 0,
+              "q10": 0.2725338040800594,
+              "q90": 0.509915311524432,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 409,
+              "max": 0.47826839153754097,
+              "mean": 0.00684559360515558,
+              "median": 0.0,
+              "min": 0.0,
+              "nonfinite_predictions": 0,
+              "q10": 0.0,
+              "q90": 0.0,
+              "undefined_predictions": 182
+            }
+          },
+          "tracts": 591,
+          "urbanity_source_counts": {
+            "pct_urban": 591
+          }
+        },
+        "missing_pct_urban": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            }
+          },
+          "tracts": 0,
+          "urbanity_source_counts": {}
+        },
+        "water_gt_50": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 2,
+              "max": 0.08078290147465178,
+              "mean": 0.07364455902341009,
+              "median": 0.07364455902341009,
+              "min": 0.0665062165721684,
+              "nonfinite_predictions": 0,
+              "q10": 0.06793388506241674,
+              "q90": 0.07935523298440345,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 2,
+              "max": 0.01,
+              "mean": 0.01,
+              "median": 0.01,
+              "min": 0.01,
+              "nonfinite_predictions": 0,
+              "q10": 0.01,
+              "q90": 0.01,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 2,
+              "max": 0.1895186497165052,
+              "mean": 0.1705422263329044,
+              "median": 0.1705422263329044,
+              "min": 0.15156580294930355,
+              "nonfinite_predictions": 0,
+              "q10": 0.15536108762602371,
+              "q90": 0.18572336503978504,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 2,
+              "max": 0.101014555409725,
+              "mean": 0.09777878288498879,
+              "median": 0.09777878288498879,
+              "min": 0.09454301036025259,
+              "nonfinite_predictions": 0,
+              "q10": 0.09519016486519982,
+              "q90": 0.10036740090477776,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 2,
+              "max": 0.16763353219858593,
+              "mean": 0.16170641800754362,
+              "median": 0.16170641800754362,
+              "min": 0.15577930381650132,
+              "nonfinite_predictions": 0,
+              "q10": 0.15696472665470979,
+              "q90": 0.16644810936037746,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 2,
+              "max": 0.4220932823611098,
+              "mean": 0.4154217358517116,
+              "median": 0.4154217358517116,
+              "min": 0.40875018934231344,
+              "nonfinite_predictions": 0,
+              "q10": 0.41008449864419305,
+              "q90": 0.4207589730592302,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 1,
+              "max": 0.0,
+              "mean": 0.0,
+              "median": 0.0,
+              "min": 0.0,
+              "nonfinite_predictions": 0,
+              "q10": 0.0,
+              "q90": 0.0,
+              "undefined_predictions": 1
+            }
+          },
+          "tracts": 2,
+          "urbanity_source_counts": {
+            "pct_urban": 2
+          }
+        },
+        "zero_ALAND": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            }
+          },
+          "tracts": 0,
+          "urbanity_source_counts": {}
+        },
+        "zero_buildings": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            }
+          },
+          "tracts": 0,
+          "urbanity_source_counts": {}
+        },
+        "zero_named_roads": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 7,
+              "max": 0.12175804862094873,
+              "mean": 0.06693283440453958,
+              "median": 0.0572607336953435,
+              "min": 0.03863711469957254,
+              "nonfinite_predictions": 0,
+              "q10": 0.04045022557686131,
+              "q90": 0.099346881195071,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 7,
+              "max": 0.01,
+              "mean": 0.01,
+              "median": 0.01,
+              "min": 0.01,
+              "nonfinite_predictions": 0,
+              "q10": 0.01,
+              "q90": 0.01,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 7,
+              "max": 0.23351609724189745,
+              "mean": 0.12386566880907915,
+              "median": 0.104521467390687,
+              "min": 0.06727422939914508,
+              "nonfinite_predictions": 0,
+              "q10": 0.07090045115372262,
+              "q90": 0.188693762390142,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 7,
+              "max": 0.1607747930980454,
+              "mean": 0.09178119379531195,
+              "median": 0.0898380373634076,
+              "min": 0.03959099553206999,
+              "nonfinite_predictions": 0,
+              "q10": 0.04006929042642046,
+              "q90": 0.14539644048563555,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 7,
+              "max": 0.2762840635943079,
+              "mean": 0.15173147008549073,
+              "median": 0.14726349679042888,
+              "min": 0.05805757075214658,
+              "nonfinite_predictions": 0,
+              "q10": 0.05888425130928044,
+              "q90": 0.24860362101436087,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 7,
+              "max": 0.526978870066678,
+              "mean": 0.3926834011735306,
+              "median": 0.3998290249919219,
+              "min": 0.2707134143708026,
+              "nonfinite_predictions": 0,
+              "q10": 0.27268871018119883,
+              "q90": 0.5025471781980714,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 7
+            }
+          },
+          "tracts": 7,
+          "urbanity_source_counts": {
+            "pct_urban": 7
+          }
+        },
+        "zero_places": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            }
+          },
+          "tracts": 0,
+          "urbanity_source_counts": {}
+        },
+        "zero_population": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 0
+            }
+          },
+          "tracts": 0,
+          "urbanity_source_counts": {}
+        },
+        "zero_route_network": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 182,
+              "max": 0.17194631606575836,
+              "mean": 0.07927126248128602,
+              "median": 0.07907216789247942,
+              "min": 0.01846588217908463,
+              "nonfinite_predictions": 0,
+              "q10": 0.04129814209931939,
+              "q90": 0.11586986371150451,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 182,
+              "max": 0.01,
+              "mean": 0.009999999999999998,
+              "median": 0.01,
+              "min": 0.01,
+              "nonfinite_predictions": 0,
+              "q10": 0.01,
+              "q90": 0.01,
+              "undefined_predictions": 0
+            },
+            "facility_half_gap": {
+              "defined_predictions": 182,
+              "max": 0.3338926321315167,
+              "mean": 0.148542524962572,
+              "median": 0.14814433578495884,
+              "min": 0.026931764358169255,
+              "nonfinite_predictions": 0,
+              "q10": 0.07259628419863878,
+              "q90": 0.22173972742300901,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 182,
+              "max": 0.1826338979609818,
+              "mean": 0.1279802519885059,
+              "median": 0.1363502641542088,
+              "min": 0.03957416672271505,
+              "nonfinite_predictions": 0,
+              "q10": 0.08150406002170514,
+              "q90": 0.15682093605945882,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 182,
+              "max": 0.31468116950575065,
+              "mean": 0.21701564166706436,
+              "median": 0.23234299564581548,
+              "min": 0.058028527063787784,
+              "nonfinite_predictions": 0,
+              "q10": 0.13240299769156091,
+              "q90": 0.2692384706024843,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 182,
+              "max": 0.5575234738778386,
+              "mean": 0.46924263619209194,
+              "median": 0.48831404525965155,
+              "min": 0.27064350233015017,
+              "nonfinite_predictions": 0,
+              "q10": 0.38586191502721706,
+              "q90": 0.5210725531819079,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 182
+            }
+          },
+          "tracts": 182,
+          "urbanity_source_counts": {
+            "pct_urban": 182
+          }
+        }
+      },
+      "water_dominated_over_50pct": 2,
+      "water_share_max": 0.7605741034480038,
+      "water_share_unavailable": 0,
+      "zero_land_area": 0,
+      "zero_overture_buildings": 0,
+      "zero_overture_named_roads": 7,
+      "zero_overture_places": 0,
+      "zero_overture_route_network": 182,
+      "zero_population": 0
+    },
+    "south-central-tx": {
+      "acs_extra_geometries_excluded": 7,
+      "acs_geometry_rows": 6010,
+      "acs_geometry_source_bytes": 13758433,
+      "acs_geometry_source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-census-acs-housing.parquet",
+      "feature_cache_bytes": 921462,
+      "feature_cache_rows": 6003,
+      "feature_cache_sha256": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746",
+      "missing_pct_urban": 14,
+      "new_mexico_geoid_35023970000_present": null,
+      "no_overture_roads_buildings_or_places": 2,
+      "official_sample_bytes": 168144,
+      "official_sample_sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e",
+      "official_tracts": 6003,
+      "strata_extra_rows_excluded": 7,
+      "strata_source_bytes": 2800838,
+      "strata_source_sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354",
+      "v2_edge_case_predictions": {
+        "all_official": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 6003,
+              "max": 0.4122528708141931,
+              "mean": 0.06320360308597137,
+              "median": 0.053069137235513326,
+              "min": 0.007192497429261836,
+              "nonfinite_predictions": 0,
+              "q10": 0.02517424396038525,
+              "q90": 0.10775738167456508,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 6001,
+              "max": 0.01,
+              "mean": 0.01,
+              "median": 0.01,
+              "min": 0.01,
+              "nonfinite_predictions": 0,
+              "q10": 0.01,
+              "q90": 0.01,
+              "undefined_predictions": 2
+            },
+            "facility_half_gap": {
+              "defined_predictions": 6003,
+              "max": 0.3993755551171654,
+              "mean": 0.1268972305106017,
+              "median": 0.12480470901974973,
+              "min": 0.011577492287785507,
+              "nonfinite_predictions": 0,
+              "q10": 0.047963172711272276,
+              "q90": 0.2016018020281419,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 6003,
+              "max": 0.2331303728969773,
+              "mean": 0.1111784846265051,
+              "median": 0.12262303804056315,
+              "min": 0.03916636401077146,
+              "nonfinite_predictions": 0,
+              "q10": 0.043797455820941404,
+              "q90": 0.14840167901181361,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 6003,
+              "max": 0.39918483981350655,
+              "mean": 0.1865738799158456,
+              "median": 0.20728219488587663,
+              "min": 0.05732528081756738,
+              "nonfinite_predictions": 0,
+              "q10": 0.06532687224535445,
+              "q90": 0.254144139446951,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 6003,
+              "max": 0.6171396000094393,
+              "mean": 0.4348608115425293,
+              "median": 0.46403291519420675,
+              "min": 0.2689441014402912,
+              "nonfinite_predictions": 0,
+              "q10": 0.2858453061613022,
+              "q90": 0.5080608372187545,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 4728,
+              "max": 1.0,
+              "mean": 0.04289031411226795,
+              "median": 0.0,
+              "min": 0.0,
+              "nonfinite_predictions": 0,
+              "q10": 0.0,
+              "q90": 0.17517007547352995,
+              "undefined_predictions": 1275
+            }
+          },
+          "tracts": 6003,
+          "urbanity_source_counts": {
+            "neutral_missing_urbanity_prior": 14,
+            "pct_urban": 5989
+          }
+        },
+        "missing_pct_urban": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 14,
+              "max": 0.14543181430494356,
+              "mean": 0.060658951177425466,
+              "median": 0.04886889746915249,
+              "min": 0.018928013049575528,
+              "nonfinite_predictions": 0,
+              "q10": 0.023615028158794307,
+              "q90": 0.1251170421592021,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 12,
+              "max": 0.01,
+              "mean": 0.009999999999999998,
+              "median": 0.01,
+              "min": 0.01,
+              "nonfinite_predictions": 0,
+              "q10": 0.01,
+              "q90": 0.01,
+              "undefined_predictions": 2
+            },
+            "facility_half_gap": {
+              "defined_predictions": 14,
+              "max": 0.14543181430494356,
+              "mean": 0.11583043519086901,
+              "median": 0.13001250269186646,
+              "min": 0.04678403914872658,
+              "nonfinite_predictions": 0,
+              "q10": 0.06084508447638293,
+              "q90": 0.14543181430494356,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 14,
+              "max": 0.05215356307841772,
+              "mean": 0.05215356307841771,
+              "median": 0.05215356307841772,
+              "min": 0.05215356307841772,
+              "nonfinite_predictions": 0,
+              "q10": 0.05215356307841772,
+              "q90": 0.05215356307841772,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 14,
+              "max": 0.0794385491839784,
+              "mean": 0.0794385491839784,
+              "median": 0.0794385491839784,
+              "min": 0.0794385491839784,
+              "nonfinite_predictions": 0,
+              "q10": 0.0794385491839784,
+              "q90": 0.0794385491839784,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 14,
+              "max": 0.3047033306524346,
+              "mean": 0.30470333065243466,
+              "median": 0.3047033306524346,
+              "min": 0.3047033306524346,
+              "nonfinite_predictions": 0,
+              "q10": 0.3047033306524346,
+              "q90": 0.3047033306524346,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 9,
+              "max": 0.0,
+              "mean": 0.0,
+              "median": 0.0,
+              "min": 0.0,
+              "nonfinite_predictions": 0,
+              "q10": 0.0,
+              "q90": 0.0,
+              "undefined_predictions": 5
+            }
+          },
+          "tracts": 14,
+          "urbanity_source_counts": {
+            "neutral_missing_urbanity_prior": 14
+          }
+        },
+        "water_gt_50": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 40,
+              "max": 0.40947621407617424,
+              "mean": 0.10030890990321222,
+              "median": 0.06905819887972423,
+              "min": 0.02378217873287242,
+              "nonfinite_predictions": 0,
+              "q10": 0.032451795387188356,
+              "q90": 0.1846351696994051,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 38,
+              "max": 0.01,
+              "mean": 0.010000000000000002,
+              "median": 0.01,
+              "min": 0.01,
+              "nonfinite_predictions": 0,
+              "q10": 0.01,
+              "q90": 0.01,
+              "undefined_predictions": 2
+            },
+            "facility_half_gap": {
+              "defined_predictions": 40,
+              "max": 0.28517621931895115,
+              "mean": 0.14051250215141714,
+              "median": 0.1345139983345463,
+              "min": 0.056361811984405236,
+              "nonfinite_predictions": 0,
+              "q10": 0.06659753633552354,
+              "q90": 0.24047080999907142,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 40,
+              "max": 0.14736203302404585,
+              "mean": 0.09688818210240127,
+              "median": 0.10811882277866758,
+              "min": 0.039453907715059126,
+              "nonfinite_predictions": 0,
+              "q10": 0.04951078370250757,
+              "q90": 0.1332148800429334,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 40,
+              "max": 0.2522720389444735,
+              "mean": 0.16053379742810242,
+              "median": 0.18065593759792342,
+              "min": 0.0578210327058317,
+              "nonfinite_predictions": 0,
+              "q10": 0.07538827100220986,
+              "q90": 0.22663492651224487,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 40,
+              "max": 0.5064111155281183,
+              "mean": 0.4078735052654606,
+              "median": 0.4361654968553889,
+              "min": 0.27014340987710816,
+              "nonfinite_predictions": 0,
+              "q10": 0.30594763418221144,
+              "q90": 0.4829161187296867,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 29,
+              "max": 1.0,
+              "mean": 0.1657318887817712,
+              "median": 0.0,
+              "min": 0.0,
+              "nonfinite_predictions": 0,
+              "q10": 0.0,
+              "q90": 0.6327342322071849,
+              "undefined_predictions": 11
+            }
+          },
+          "tracts": 40,
+          "urbanity_source_counts": {
+            "neutral_missing_urbanity_prior": 2,
+            "pct_urban": 38
+          }
+        },
+        "zero_ALAND": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 2,
+              "max": 0.14543181430494356,
+              "mean": 0.14543181430494356,
+              "median": 0.14543181430494356,
+              "min": 0.14543181430494356,
+              "nonfinite_predictions": 0,
+              "q10": 0.14543181430494356,
+              "q90": 0.14543181430494356,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 2
+            },
+            "facility_half_gap": {
+              "defined_predictions": 2,
+              "max": 0.14543181430494356,
+              "mean": 0.14543181430494356,
+              "median": 0.14543181430494356,
+              "min": 0.14543181430494356,
+              "nonfinite_predictions": 0,
+              "q10": 0.14543181430494356,
+              "q90": 0.14543181430494356,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 2,
+              "max": 0.05215356307841772,
+              "mean": 0.05215356307841772,
+              "median": 0.05215356307841772,
+              "min": 0.05215356307841772,
+              "nonfinite_predictions": 0,
+              "q10": 0.05215356307841772,
+              "q90": 0.05215356307841772,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 2,
+              "max": 0.0794385491839784,
+              "mean": 0.0794385491839784,
+              "median": 0.0794385491839784,
+              "min": 0.0794385491839784,
+              "nonfinite_predictions": 0,
+              "q10": 0.0794385491839784,
+              "q90": 0.0794385491839784,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 2,
+              "max": 0.3047033306524346,
+              "mean": 0.3047033306524346,
+              "median": 0.3047033306524346,
+              "min": 0.3047033306524346,
+              "nonfinite_predictions": 0,
+              "q10": 0.3047033306524346,
+              "q90": 0.3047033306524346,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 2
+            }
+          },
+          "tracts": 2,
+          "urbanity_source_counts": {
+            "neutral_missing_urbanity_prior": 2
+          }
+        },
+        "zero_buildings": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 2,
+              "max": 0.14543181430494356,
+              "mean": 0.14543181430494356,
+              "median": 0.14543181430494356,
+              "min": 0.14543181430494356,
+              "nonfinite_predictions": 0,
+              "q10": 0.14543181430494356,
+              "q90": 0.14543181430494356,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 2
+            },
+            "facility_half_gap": {
+              "defined_predictions": 2,
+              "max": 0.14543181430494356,
+              "mean": 0.14543181430494356,
+              "median": 0.14543181430494356,
+              "min": 0.14543181430494356,
+              "nonfinite_predictions": 0,
+              "q10": 0.14543181430494356,
+              "q90": 0.14543181430494356,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 2,
+              "max": 0.05215356307841772,
+              "mean": 0.05215356307841772,
+              "median": 0.05215356307841772,
+              "min": 0.05215356307841772,
+              "nonfinite_predictions": 0,
+              "q10": 0.05215356307841772,
+              "q90": 0.05215356307841772,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 2,
+              "max": 0.0794385491839784,
+              "mean": 0.0794385491839784,
+              "median": 0.0794385491839784,
+              "min": 0.0794385491839784,
+              "nonfinite_predictions": 0,
+              "q10": 0.0794385491839784,
+              "q90": 0.0794385491839784,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 2,
+              "max": 0.3047033306524346,
+              "mean": 0.3047033306524346,
+              "median": 0.3047033306524346,
+              "min": 0.3047033306524346,
+              "nonfinite_predictions": 0,
+              "q10": 0.3047033306524346,
+              "q90": 0.3047033306524346,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 2
+            }
+          },
+          "tracts": 2,
+          "urbanity_source_counts": {
+            "neutral_missing_urbanity_prior": 2
+          }
+        },
+        "zero_named_roads": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 64,
+              "max": 0.4122528708141931,
+              "mean": 0.15380495458561383,
+              "median": 0.10223397092960579,
+              "min": 0.03875402265863816,
+              "nonfinite_predictions": 0,
+              "q10": 0.06406747006484627,
+              "q90": 0.3840030156639178,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 62,
+              "max": 0.01,
+              "mean": 0.010000000000000002,
+              "median": 0.01,
+              "min": 0.01,
+              "nonfinite_predictions": 0,
+              "q10": 0.01,
+              "q90": 0.01,
+              "undefined_predictions": 2
+            },
+            "facility_half_gap": {
+              "defined_predictions": 64,
+              "max": 0.38838335339957086,
+              "mean": 0.17802329603872846,
+              "median": 0.15912432518037378,
+              "min": 0.04741892306369289,
+              "nonfinite_predictions": 0,
+              "q10": 0.10946328908922483,
+              "q90": 0.28306406082075886,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 64,
+              "max": 0.2106313306465426,
+              "mean": 0.11045367999862418,
+              "median": 0.11474615067804178,
+              "min": 0.03916636401077146,
+              "nonfinite_predictions": 0,
+              "q10": 0.04688268264925241,
+              "q90": 0.1577444102335111,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 64,
+              "max": 0.36231072398053665,
+              "mean": 0.1849877647460786,
+              "median": 0.19283008778797794,
+              "min": 0.05732528081756738,
+              "nonfinite_predictions": 0,
+              "q10": 0.07076936041922859,
+              "q90": 0.27087547064903406,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 64,
+              "max": 0.5922080055716333,
+              "mean": 0.4317947118374449,
+              "median": 0.4491266320870255,
+              "min": 0.2689441014402912,
+              "nonfinite_predictions": 0,
+              "q10": 0.29886690490885776,
+              "q90": 0.5224120662912674,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 12,
+              "max": 1.0,
+              "mean": 1.0,
+              "median": 1.0,
+              "min": 1.0,
+              "nonfinite_predictions": 0,
+              "q10": 1.0,
+              "q90": 1.0,
+              "undefined_predictions": 52
+            }
+          },
+          "tracts": 64,
+          "urbanity_source_counts": {
+            "neutral_missing_urbanity_prior": 3,
+            "pct_urban": 61
+          }
+        },
+        "zero_places": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 2,
+              "max": 0.14543181430494356,
+              "mean": 0.14543181430494356,
+              "median": 0.14543181430494356,
+              "min": 0.14543181430494356,
+              "nonfinite_predictions": 0,
+              "q10": 0.14543181430494356,
+              "q90": 0.14543181430494356,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 2
+            },
+            "facility_half_gap": {
+              "defined_predictions": 2,
+              "max": 0.14543181430494356,
+              "mean": 0.14543181430494356,
+              "median": 0.14543181430494356,
+              "min": 0.14543181430494356,
+              "nonfinite_predictions": 0,
+              "q10": 0.14543181430494356,
+              "q90": 0.14543181430494356,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 2,
+              "max": 0.05215356307841772,
+              "mean": 0.05215356307841772,
+              "median": 0.05215356307841772,
+              "min": 0.05215356307841772,
+              "nonfinite_predictions": 0,
+              "q10": 0.05215356307841772,
+              "q90": 0.05215356307841772,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 2,
+              "max": 0.0794385491839784,
+              "mean": 0.0794385491839784,
+              "median": 0.0794385491839784,
+              "min": 0.0794385491839784,
+              "nonfinite_predictions": 0,
+              "q10": 0.0794385491839784,
+              "q90": 0.0794385491839784,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 2,
+              "max": 0.3047033306524346,
+              "mean": 0.3047033306524346,
+              "median": 0.3047033306524346,
+              "min": 0.3047033306524346,
+              "nonfinite_predictions": 0,
+              "q10": 0.3047033306524346,
+              "q90": 0.3047033306524346,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 2
+            }
+          },
+          "tracts": 2,
+          "urbanity_source_counts": {
+            "neutral_missing_urbanity_prior": 2
+          }
+        },
+        "zero_population": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 14,
+              "max": 0.14543181430494356,
+              "mean": 0.060658951177425466,
+              "median": 0.04886889746915249,
+              "min": 0.018928013049575528,
+              "nonfinite_predictions": 0,
+              "q10": 0.023615028158794307,
+              "q90": 0.1251170421592021,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 12,
+              "max": 0.01,
+              "mean": 0.009999999999999998,
+              "median": 0.01,
+              "min": 0.01,
+              "nonfinite_predictions": 0,
+              "q10": 0.01,
+              "q90": 0.01,
+              "undefined_predictions": 2
+            },
+            "facility_half_gap": {
+              "defined_predictions": 14,
+              "max": 0.14543181430494356,
+              "mean": 0.11583043519086901,
+              "median": 0.13001250269186646,
+              "min": 0.04678403914872658,
+              "nonfinite_predictions": 0,
+              "q10": 0.06084508447638293,
+              "q90": 0.14543181430494356,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 14,
+              "max": 0.05215356307841772,
+              "mean": 0.05215356307841771,
+              "median": 0.05215356307841772,
+              "min": 0.05215356307841772,
+              "nonfinite_predictions": 0,
+              "q10": 0.05215356307841772,
+              "q90": 0.05215356307841772,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 14,
+              "max": 0.0794385491839784,
+              "mean": 0.0794385491839784,
+              "median": 0.0794385491839784,
+              "min": 0.0794385491839784,
+              "nonfinite_predictions": 0,
+              "q10": 0.0794385491839784,
+              "q90": 0.0794385491839784,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 14,
+              "max": 0.3047033306524346,
+              "mean": 0.30470333065243466,
+              "median": 0.3047033306524346,
+              "min": 0.3047033306524346,
+              "nonfinite_predictions": 0,
+              "q10": 0.3047033306524346,
+              "q90": 0.3047033306524346,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 9,
+              "max": 0.0,
+              "mean": 0.0,
+              "median": 0.0,
+              "min": 0.0,
+              "nonfinite_predictions": 0,
+              "q10": 0.0,
+              "q90": 0.0,
+              "undefined_predictions": 5
+            }
+          },
+          "tracts": 14,
+          "urbanity_source_counts": {
+            "neutral_missing_urbanity_prior": 14
+          }
+        },
+        "zero_route_network": {
+          "predictions": {
+            "available_component_mean_excluding_establishments_half": {
+              "defined_predictions": 1275,
+              "max": 0.2046877775585827,
+              "mean": 0.08892811330878699,
+              "median": 0.08412534453402641,
+              "min": 0.02543763212382121,
+              "nonfinite_predictions": 0,
+              "q10": 0.055268202711349614,
+              "q90": 0.1348598800980077,
+              "undefined_predictions": 0
+            },
+            "building_gap": {
+              "defined_predictions": 1273,
+              "max": 0.01,
+              "mean": 0.01,
+              "median": 0.01,
+              "min": 0.01,
+              "nonfinite_predictions": 0,
+              "q10": 0.01,
+              "q90": 0.01,
+              "undefined_predictions": 2
+            },
+            "facility_half_gap": {
+              "defined_predictions": 1275,
+              "max": 0.3993755551171654,
+              "mean": 0.16764378455591913,
+              "median": 0.15821954823496803,
+              "min": 0.040875264247642415,
+              "nonfinite_predictions": 0,
+              "q10": 0.10053640542269923,
+              "q90": 0.25659545672371675,
+              "undefined_predictions": 0
+            },
+            "p_reference_ems": {
+              "defined_predictions": 1275,
+              "max": 0.2331303728969773,
+              "mean": 0.13867694992576007,
+              "median": 0.13903062820187204,
+              "min": 0.03916636401077146,
+              "nonfinite_predictions": 0,
+              "q10": 0.11730636926888202,
+              "q90": 0.16107405549851153,
+              "undefined_predictions": 0
+            },
+            "p_reference_fire": {
+              "defined_predictions": 1275,
+              "max": 0.39918483981350655,
+              "mean": 0.2363267754371097,
+              "median": 0.23720987856829845,
+              "min": 0.05732528081756738,
+              "nonfinite_predictions": 0,
+              "q10": 0.1975263622786124,
+              "q90": 0.27681616200790443,
+              "undefined_predictions": 0
+            },
+            "p_reference_schools": {
+              "defined_predictions": 1275,
+              "max": 0.6171396000094393,
+              "mean": 0.4900707436046666,
+              "median": 0.4928275569650676,
+              "min": 0.2689441014402912,
+              "nonfinite_predictions": 0,
+              "q10": 0.4542521603361909,
+              "q90": 0.5274208154052716,
+              "undefined_predictions": 0
+            },
+            "transport_gap": {
+              "defined_predictions": 0,
+              "max": null,
+              "mean": null,
+              "median": null,
+              "min": null,
+              "nonfinite_predictions": 0,
+              "q10": null,
+              "q90": null,
+              "undefined_predictions": 1275
+            }
+          },
+          "tracts": 1275,
+          "urbanity_source_counts": {
+            "neutral_missing_urbanity_prior": 5,
+            "pct_urban": 1270
+          }
+        }
+      },
+      "water_dominated_over_50pct": 40,
+      "water_share_max": 1.0,
+      "water_share_unavailable": 0,
+      "zero_land_area": 2,
+      "zero_overture_buildings": 2,
+      "zero_overture_named_roads": 64,
+      "zero_overture_places": 2,
+      "zero_overture_route_network": 1275,
+      "zero_population": 14
+    }
+  },
+  "strata_read_columns": [
+    "GEOID",
+    "ALAND",
+    "pop_total",
+    "pop_urban",
+    "pct_urban",
+    "ur_class"
+  ],
+  "title": "Score-free aggregate edge-case audit for methodology documentation",
+  "uses_external_data": false,
+  "uses_removed_reference_layers_or_equivalent_copies": false,
+  "uses_target_labels_or_score_placeholders": false,
+  "v2_policy": {
+    "building": "fixed gap 0.01 when provided Overture building count is positive; undefined at zero",
+    "candidate_or_target_claim": "component distributions only; no assembled candidate, hidden-score accuracy claim, or leaderboard probe",
+    "facility_poi_half": "mean of defined type expectations P(reference present) * clip(1 - observed / (observed + 1), 0, 1), using fixed pooled priors; establishments half is deliberately excluded",
+    "facility_priors": {
+      "ems": {
+        "intercept": -3.2,
+        "log_density": 0.25,
+        "urban_fraction": 0.6
+      },
+      "fire": {
+        "intercept": -2.8,
+        "log_density": 0.3,
+        "urban_fraction": 0.7
+      },
+      "schools": {
+        "intercept": -1.0,
+        "log_density": 0.2,
+        "urban_fraction": 0.35
+      }
+    },
+    "nonfinite_prediction_policy": "all reported v2 prediction values are finite and bounded; undefined terms are counted and omitted, never filled into means",
+    "partial_composite": "diagnostic mean of available v2 transport, building, and facility-half terms; not a complete POI/composite candidate because establishments-half scored use is gated",
+    "transport": "clip(1 - named_road_km / selected_route_km, 0, 1), undefined when route length is zero",
+    "urbanity": "finite pct_urban, else pop_urban/pop_total for positive population, else neutral 0.5"
+  }
+}

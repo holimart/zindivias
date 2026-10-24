@@ -6,14 +6,14 @@ import sys
 
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
-from audit_writeup_edge_cases import water_proxy_share
+from audit_edge_cases import summarize_finite, water_proxy_share
 from render_probe_log import EVENTS_PATH, render, score_display
 
 
 class WriteupArtifactTests(unittest.TestCase):
     def test_sample_id_reader_does_not_parse_placeholders(self):
         # Import locally so the fixture can prove nonnumeric placeholders are not consumed.
-        from audit_writeup_edge_cases import csv_ids
+        from audit_edge_cases import csv_ids
 
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "sample.csv"
@@ -25,10 +25,25 @@ class WriteupArtifactTests(unittest.TestCase):
             self.assertEqual(csv_ids(path), ["00001000100"])
 
     def test_generated_edge_report_records_named_scope_edges(self):
-        report = json.loads((REPO / "reports/writeup-edge-cases.json").read_text(encoding="utf-8"))
+        report = json.loads((REPO / "reports/edge-cases.json").read_text(encoding="utf-8"))
         self.assertTrue(report["regions"]["maricopa-az"]["new_mexico_geoid_35023970000_present"])
         self.assertEqual(report["regions"]["south-central-tx"]["strata_extra_rows_excluded"], 7)
         self.assertEqual(report["regions"]["south-central-tx"]["zero_population"], 14)
+        for region in report["regions"].values():
+            for group in region["v2_edge_case_predictions"].values():
+                for prediction in group["predictions"].values():
+                    self.assertEqual(prediction["nonfinite_predictions"], 0)
+        maricopa_zero = report["regions"]["maricopa-az"]["v2_edge_case_predictions"]["zero_population"]
+        self.assertEqual(maricopa_zero["tracts"], 11)
+        self.assertEqual(maricopa_zero["urbanity_source_counts"]["neutral_missing_urbanity_prior"], 11)
+        self.assertTrue(0 <= maricopa_zero["predictions"]["facility_half_gap"]["mean"] <= 1)
+
+    def test_prediction_summary_tracks_undefined_and_finite_values(self):
+        result = summarize_finite([0.0, 0.2, 0.4], undefined=2, nonfinite=0)
+        self.assertEqual(result["defined_predictions"], 3)
+        self.assertEqual(result["undefined_predictions"], 2)
+        self.assertEqual(result["nonfinite_predictions"], 0)
+        self.assertAlmostEqual(result["mean"], 0.2)
 
     def test_water_proxy_bounds_and_zero_area(self):
         self.assertEqual(water_proxy_share(50, 100), 0.5)

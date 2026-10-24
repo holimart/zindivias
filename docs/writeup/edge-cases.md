@@ -14,6 +14,26 @@ This table makes the handling explicit for low-information and structurally unus
 
 Water is an approximation, not an independently observed water mask: for the provided ACS tract geometry, project WKB geometry from EPSG:4326 to EPSG:5070, then calculate `max(0, min(1, 1 - ALAND / projected_geometry_area))`. A tract is listed as water-proxy-dominated when that value exceeds 0.50. This can be affected by polygon/land-area measurement differences; it is not used to alter any gap estimate. The two zero-`ALAND` Texas tracts are separately disclosed; the clamped proxy reaches 1.0 in those rows. Maximum proxy shares by region were 0.1196, 0.7606, 0.6028, and 1.0 respectively. Geometry was used only for this score-free audit and spatial feature aggregation, not as an external target proxy.
 
+## Model-only v2 predictions for edge groups
+
+The audit now applies the fixed provided-feature v2 component functions to every official tract and summarizes their output by edge-case group. The facility-half expectation is `P(reference type present) × clip(1 − observed/(observed+1), 0, 1)` for fire/EMS/schools, using the frozen pooled priors and the existing unclassified-category shares. This expected-gap form gives smaller values when the prior probability of a reference facility is low, even when Overture has zero facilities. Urbanity uses finite `pct_urban`, otherwise `pop_urban/pop_total` for positive population, otherwise the neutral 0.5 prior; all 26 zero-population tracts have missing `pct_urban` and use 0.5. The density-area denominator floors `ALAND` at 0.01 km², so zero-area tracts remain finite.
+
+The transport and building columns below are component-level v2 predictions only. The `partial mean` is a diagnostic mean of whichever v2 transport, building, and facility-half terms are defined; it deliberately excludes the establishments half, whose scored-use anchor remains unapproved. It is **not** an assembled candidate, full POI estimate, hidden-score prediction, or accuracy claim. Full distributions (n, mean, min, q10, median, q90, max, undefined and non-finite counts) by region and edge group are in `reports/edge-cases.json`; all reported non-finite counts are zero.
+
+| Edge group | Region | n | Facility-half v2 mean [q10–q90] | Partial available-component mean |
+|---|---|---:|---:|---:|
+| Population 0 | Maricopa AZ | 11 | 0.1163 [0.0686–0.1454] | 0.0559 |
+| Population 0 | Northern CA | 0 | — | — |
+| Population 0 | Eastern OK | 1 | 0.0858 [0.0858–0.0858] | 0.0319 |
+| Population 0 | South-Central TX | 14 | 0.1158 [0.0608–0.1454] | 0.0607 |
+| Water proxy >50% | Maricopa AZ | 0 | — | — |
+| Water proxy >50% | Northern CA | 2 | 0.1705 [0.1554–0.1857] | 0.0736 |
+| Water proxy >50% | Eastern OK | 1 | 0.0737 [0.0737–0.0737] | 0.0279 |
+| Water proxy >50% | South-Central TX | 40 | 0.1405 [0.0666–0.2405] | 0.1003 |
+| `ALAND` 0 | South-Central TX | 2 | 0.1454 [0.1454–0.1454] | 0.1454 |
+
+No water-specific correction is applied. Missing/undefined transport or building components are omitted from the partial diagnostic rather than replaced with zero. The audit asserts finite bounded results and serializes with `allow_nan=False`; it writes no per-GEOID predictions.
+
 ### Handling policy
 
 | Case | Method behavior | Explicit limitation / safeguard |
@@ -35,9 +55,9 @@ From the competition repository, with the authorized workspace available:
 
 ```sh
 uv run --with-requirements requirements.txt \
-  python scripts/audit_writeup_edge_cases.py \
+  python scripts/audit_edge_cases.py \
   --workspace "$COMPETITION_WORKSPACE" \
-  --out reports/writeup-edge-cases.json
+  --out reports/edge-cases.json
 ```
 
 The audit reads only sample GEOID column 0 (not score-placeholder cells), the listed strata columns, aggregate provided-feature columns, and the provided ACS `GEOID`/`geometry` columns. It reads no labels, hidden organizer results, removed reference layers or equivalent copies, leaderboard information, or additional public data. It writes counts only, with no per-GEOID score/prediction output. The JSON records source URIs, object/cache bytes, and SHA-256 for the local sample, strata, and feature-cache files. SHA-256 of the remote Overture/ACS source objects is not published in the source inventory and is not claimed here.

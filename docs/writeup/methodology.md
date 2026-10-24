@@ -10,7 +10,7 @@
 |---|---|
 | Data sources, source footprints, URIs, byte sizes, hashes, exact scope | Complete below; source-level byte/row inventory and local SHA-256s are distinguished explicitly. |
 | Component calculations and defined/undefined handling | Complete below; detailed POI categories, fixed facility priors, and route sensitivity follow. |
-| Zero-population, water, no-Overture, missingness, and template edge cases | Complete in [`edge-cases.md`](edge-cases.md), backed by `reports/writeup-edge-cases.json`. |
+| Zero-population, water, no-Overture, missingness, and template edge cases | Complete in [`edge-cases.md`](edge-cases.md), backed by `reports/edge-cases.json`. |
 | Alternative aggregation/weighting history | Complete in “Alternative components and aggregation choices.” |
 | Historical leaderboard calibration, parameters, results, and inferred moments | Complete in the generated [`probe-log.md`](probe-log.md), including failed/cancelled probes and score IDs. |
 | Accuracy claims | None absent a successful scored submission ID. Historical public RMSEs appear only in the ledger-derived probe log and do not validate v2 or a hidden/private score. |
@@ -88,7 +88,7 @@ V2 replaces v0's proxy rates with separately audited, fixed, challenge-feature-d
 
 ## Edge cases, bias discovery, and interpretation
 
-The full edge-case table and calculation policy are in [`edge-cases.md`](edge-cases.md), backed by `reports/writeup-edge-cases.json`. The audit finds 26 zero-population tracts, 2 zero-`ALAND` tracts, 43 tracts with a >50% water proxy, 132 with no selected named roads, 2,644 with no selected route-network km, 2 with no Overture buildings, 2 with no Overture places, and 26 missing `pct_urban` values. These are covariate/coverage characteristics, not hidden-score outcomes. The water statistic is only `max(0,min(1,1−ALAND/geometry_area))` after projecting provided tract geometry to EPSG:5070; it is not an external water mask or a scoring correction.
+The full edge-case table and calculation policy are in [`edge-cases.md`](edge-cases.md), backed by `reports/edge-cases.json`. The audit finds 26 zero-population tracts, 2 zero-`ALAND` tracts, 43 tracts with a >50% water proxy, 132 with no selected named roads, 2,644 with no selected route-network km, 2 with no Overture buildings, 2 with no Overture places, and 26 missing `pct_urban` values. These are covariate/coverage characteristics, not hidden-score outcomes. The audit also reports fixed-prior v2 component distributions for zero-population, water-proxy, and other edge groups. The expected facility gap is `P(reference present) × conditional gap`, so low prior presence yields proportionally small expected gaps; missing `pct_urban` falls back to `pop_urban/pop_total`, or neutral 0.5 at zero population. These are component diagnostics, not an assembled candidate (the establishments half remains approval-gated). The water statistic is only `max(0,min(1,1−ALAND/geometry_area))` after projecting provided tract geometry to EPSG:5070; it is not an external water mask or a scoring correction.
 
 Exploratory SVI/rural comparisons below are strata of C2/C3 **predictions** only. Their bootstrap intervals quantify tract-resampling variation in those proxies; they are not confidence intervals for the hidden organiser score. The analysis does not establish a causal mechanism, actual service access, or measured equity disparity. Avoid naming a high predicted gap as a confirmed underserved tract. For any future disparity assessment, compare within region or use common region weights: region composition confounds pooled comparisons, as documented in `reports/discovery-strata-confound.json`.
 
@@ -102,8 +102,8 @@ The broad source and method checks are available as deterministic repository scr
 
 ```sh
 uv run --with-requirements requirements.txt \
-  python scripts/audit_writeup_edge_cases.py \
-  --workspace "$COMPETITION_WORKSPACE" --out reports/writeup-edge-cases.json
+  python scripts/audit_edge_cases.py \
+  --workspace "$COMPETITION_WORKSPACE" --out reports/edge-cases.json
 uv run --with-requirements requirements.txt \
   python scripts/render_probe_log.py --out docs/writeup/probe-log.md
 ```
