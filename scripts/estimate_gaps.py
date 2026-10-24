@@ -299,6 +299,42 @@ def load_sample_and_strata(region: str, data_root: Path) -> tuple[list[dict], di
     return sample, strata
 
 
+def component_gap(observed: float, expected: float, defined: int) -> float:
+    """Return a bounded gap; undefined components are excluded from means."""
+    if not defined:
+        return 0.0
+    return min(1.0, max(0.0, 1.0 - observed / max(expected, 0.5)))
+
+
+def combine_poi_gap(facility_gaps, cbp_gap: float, cbp_defined: int) -> tuple[float | None, int]:
+    """Combine facility and establishment halves with equal half weight."""
+    defined_facilities = [float(value) for value, defined in facility_gaps if defined]
+    halves = []
+    if defined_facilities:
+        halves.append(sum(defined_facilities) / len(defined_facilities))
+    if cbp_defined:
+        halves.append(float(cbp_gap))
+    if not halves:
+        return None, 0
+    return sum(halves) / len(halves), 1
+
+
+def composite_mean(components) -> float | None:
+    """Mean only defined components; return None when no composite exists."""
+    values = [float(value) for value, defined in components if defined]
+    return sum(values) / len(values) if values else None
+
+
+def validate_exact_geoid_coverage(actual_ids, expected_ids) -> None:
+    """Require exact ordered coverage with no missing, extra, or duplicate IDs."""
+    actual, expected = list(actual_ids), list(expected_ids)
+    if actual != expected or len(actual) != len(set(actual)):
+        raise ValueError(
+            f"GEOID coverage mismatch: actual={len(actual)} unique={len(set(actual))}; "
+            f"expected={len(expected)}"
+        )
+
+
 def urban_fraction(row: dict) -> tuple[float, str]:
     value = row.get("pct_urban")
     if value is not None and math.isfinite(float(value)):
@@ -343,36 +379,24 @@ def estimate_one(features: dict, covariates: dict, scale: float = 1.0) -> dict:
         "schools_defined": int(schools > 0 or exp_schools >= 0.50),
         "cbp_defined": int(poi_all > 0 or exp_cbp >= 1.0),
     }
-    def gap(observed: float, expected: float, defined: int) -> float:
-        if not defined:
-            return 0.0
-        return min(1.0, max(0.0, 1.0 - observed / max(expected, 0.5)))
-
-    transport_gap = gap(road, exp_road, flags["transport_defined"])
-    building_gap = gap(buildings, exp_building, flags["building_defined"])
+    transport_gap = component_gap(road, exp_road, flags["transport_defined"])
+    building_gap = component_gap(buildings, exp_building, flags["building_defined"])
     # Apportion uncategorized POIs by the in-sample category share among
     # categorized Overture POIs; unknown types are never treated as zero.
     fire_observed = fire + unclassified_pois * fire_unknown_share
     ems_observed = ems + unclassified_pois * ems_unknown_share
     schools_observed = schools + unclassified_pois * schools_unknown_share
-    fire_gap = gap(fire_observed, exp_fire, flags["fire_defined"])
-    ems_gap = gap(ems_observed, exp_ems, flags["ems_defined"])
-    schools_gap = gap(schools_observed, exp_schools, flags["schools_defined"])
-    cbp_gap = gap(poi_all, exp_cbp, flags["cbp_defined"])
-    facilities = [value for value, name in ((fire_gap, "fire_defined"),
-        (ems_gap, "ems_defined"), (schools_gap, "schools_defined")) if flags[name]]
-    poi_halves = []
-    if facilities:
-        poi_halves.append(sum(facilities) / len(facilities))
-    if flags["cbp_defined"]:
-        poi_halves.append(cbp_gap)
-    flags["poi_defined"] = int(bool(poi_halves))
-    poi_gap = sum(poi_halves) / len(poi_halves) if poi_halves else 0.0
-    components = [(transport_gap, flags["transport_defined"]),
-                  (building_gap, flags["building_defined"]),
-                  (poi_gap, flags["poi_defined"])]
-    included = [value for value, defined in components if defined]
-    score = sum(included) / len(included) if included else 0.5
+    fire_gap = component_gap(fire_observed, exp_fire, flags["fire_defined"])
+    ems_gap = component_gap(ems_observed, exp_ems, flags["ems_defined"])
+    schools_gap = component_gap(schools_observed, exp_schools, flags["schools_defined"])
+    cbp_gap = component_gap(poi_all, exp_cbp, flags["cbp_defined"])
+    poi_gap_value, flags["poi_defined"] = combine_poi_gap(
+        ((fire_gap, flags["fire_defined"]), (ems_gap, flags["ems_defined"]),
+         (schools_gap, flags["schools_defined"])), cbp_gap, flags["cbp_defined"])
+    poi_gap = poi_gap_value if poi_gap_value is not None else 0.0
+    score = composite_mean(((transport_gap, flags["transport_defined"]),
+                            (building_gap, flags["building_defined"]),
+                            (poi_gap, flags["poi_defined"])))
     return {"transport_gap": transport_gap, "transport_defined": flags["transport_defined"],
             "building_gap": building_gap, "building_defined": flags["building_defined"],
             "poi_gap": poi_gap, "poi_defined": flags["poi_defined"],
@@ -470,14 +494,16 @@ def main() -> int:
         region_info[region] = info
         input_hashes.update(info["source_hashes"])
         input_hashes[feature_path.name] = sha256(feature_path)
-    if len(all_records) != 9379 or len({row["GEOID"] for row in all_records}) != 9379:
-        raise ValueError(f"expected 9,379 unique authoritative IDs, got {len(all_records)}")
+    expected_ids = [row["GEOID"] for region in REGIONS for row in region_data[region]["sample"]]
+    validate_exact_geoid_coverage((row["GEOID"] for row in all_records), expected_ids)
+    if len(all_records) != 9379:
+        raise ValueError(f"expected 9,379 authoritative rows, got {len(all_records)}")
     for row in all_records:
         for column in OUTPUT_COLUMNS[1:]:
             if column.endswith("_defined"):
                 if row[column] not in (0, 1):
                     raise ValueError(f"invalid defined flag {column}: {row[column]}")
-            elif not math.isfinite(float(row[column])) or not 0 <= float(row[column]) <= 1:
+            elif row[column] is None or not math.isfinite(float(row[column])) or not 0 <= float(row[column]) <= 1:
                 raise ValueError(f"invalid score {column}: {row[column]}")
         defined_values = [row["transport_gap"] for _ in [0] if row["transport_defined"]]
         defined_values += [row["building_gap"] for _ in [0] if row["building_defined"]]

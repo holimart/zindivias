@@ -1,0 +1,99 @@
+{
+  "suite": "provided-data gap-estimator semantic invariants; no labels used",
+  "case_count": 309,
+  "passed_count": 309,
+  "component_cases": {
+    "transport": {
+      "defined": 16,
+      "undefined": 16
+    },
+    "building": {
+      "defined": 16,
+      "undefined": 16
+    },
+    "poi": {
+      "defined": 16,
+      "undefined": 16
+    },
+    "fire": {
+      "defined": 16,
+      "undefined": 16
+    },
+    "ems": {
+      "defined": 16,
+      "undefined": 16
+    },
+    "schools": {
+      "defined": 16,
+      "undefined": 16
+    },
+    "cbp": {
+      "defined": 16,
+      "undefined": 16
+    }
+  },
+  "component_passed": {
+    "transport": {
+      "defined": 16,
+      "undefined": 16
+    },
+    "building": {
+      "defined": 16,
+      "undefined": 16
+    },
+    "poi": {
+      "defined": 16,
+      "undefined": 16
+    },
+    "fire": {
+      "defined": 16,
+      "undefined": 16
+    },
+    "ems": {
+      "defined": 16,
+      "undefined": 16
+    },
+    "schools": {
+      "defined": 16,
+      "undefined": 16
+    },
+    "cbp": {
+      "defined": 16,
+      "undefined": 16
+    }
+  },
+  "poi_half_cases": {
+    "count": 64,
+    "passed": 64
+  },
+  "composite_cases": {
+    "count": 16,
+    "passed": 16,
+    "all_undefined_returns_none": true
+  },
+  "coverage": {
+    "case_count": 5,
+    "passed": 5,
+    "authoritative_rows": 9379,
+    "output_rows": 9379,
+    "exact_ordered_ids": true,
+    "duplicates": 0,
+    "finite_bounded_outputs": true,
+    "null_free": true,
+    "columns_match_estimator": true,
+    "composite_matches_defined_mean": true,
+    "ordered_geoid_sha256": "706a3a3e53f3752ca1165bb8bb11aba95ef84f843017d6007401c99a9dd6ccc0",
+    "authoritative_region_counts": {
+      "maricopa-az": 1593,
+      "northern-ca": 591,
+      "eastern-ok": 1192,
+      "south-central-tx": 6003
+    }
+  },
+  "pass_rate": 1.0,
+  "deterministic_rerun": true,
+  "commands": [
+    "uv run --with pytest --with pyarrow --with shapely --with pyproj pytest -q tests/test_gap_estimator.py",
+    "uv run --with pytest --with pyarrow --with shapely --with pyproj python scripts/audit_gap_invariants.py --out reports/gap-invariant-audit.json"
+  ]
+}
