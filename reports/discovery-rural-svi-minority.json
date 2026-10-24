@@ -1,0 +1,261 @@
+{
+  "analysis": "rural x upper-quartile provided svi_minority field, South-Central Texas",
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "pyarrow": "26.0.0"
+  },
+  "interpretation": "screen of C2/C3 proxy predictions, not organiser targets or measured ground truth",
+  "fixed_scorecard_novelty": "joint rural x SVI minority-domain subgroup; the official description lists dimensions separately and does not specify this cross-tab",
+  "group_definition": {
+    "region": "south-central-tx",
+    "rural_rule": "provided pct_urban < 0.5",
+    "svi_field": "provided strata field svi_minority",
+    "upper_quartile_cutoff_inclusive": 0.6549,
+    "high_group_rule": "rural rows with svi_minority >= regional rural q75",
+    "comparison_rule": "rural rows with svi_minority < regional rural q75",
+    "rural_rows_total": 991,
+    "rural_rows_with_nonmissing_svi": 987,
+    "rural_rows_missing_svi": 4,
+    "all_region_rows_missing_urbanity": 14,
+    "high_group_n": 248,
+    "comparison_group_n": 739
+  },
+  "composite_results": {
+    "c2": {
+      "high_group_mean": 0.06521641135758396,
+      "comparison_group_mean": 0.03033935748024866,
+      "mean_difference_high_minus_comparison": 0.03487705387733531,
+      "bootstrap_95_percentile_ci": [
+        0.01675570256032317,
+        0.055088504164793564
+      ],
+      "bootstrap_replicates": 50000,
+      "bootstrap_seed": 20263059
+    },
+    "c3": {
+      "high_group_mean": 0.08578002334702182,
+      "comparison_group_mean": 0.03930881502104263,
+      "mean_difference_high_minus_comparison": 0.046471208325979195,
+      "bootstrap_95_percentile_ci": [
+        0.02678281128058281,
+        0.06807660320612337
+      ],
+      "bootstrap_replicates": 50000,
+      "bootstrap_seed": 20263060
+    }
+  },
+  "C2_component_results_defined_only": {
+    "transport": {
+      "high_group_defined_n": 210,
+      "high_group_defined_rate": 0.8467741935483871,
+      "comparison_defined_n": 657,
+      "comparison_defined_rate": 0.8890392422192152,
+      "high_group_defined_mean": 0.03353332172878398,
+      "comparison_defined_mean": 0.015331433430346358,
+      "mean_difference_defined_only": 0.018201888298437625,
+      "bootstrap_95_percentile_ci_defined_only": [
+        -0.0019214823797437356,
+        0.04113621524609637
+      ],
+      "bootstrap_replicates": 50000,
+      "bootstrap_seed": 20262029
+    },
+    "building": {
+      "high_group_defined_n": 248,
+      "high_group_defined_rate": 1.0,
+      "comparison_defined_n": 739,
+      "comparison_defined_rate": 1.0,
+      "high_group_defined_mean": 0.028562462359979092,
+      "comparison_defined_mean": 0.0,
+      "mean_difference_defined_only": 0.028562462359979092,
+      "bootstrap_95_percentile_ci_defined_only": [
+        0.011872565056490493,
+        0.04827639136934408
+      ],
+      "bootstrap_replicates": 50000,
+      "bootstrap_seed": 20261870
+    },
+    "poi": {
+      "high_group_defined_n": 248,
+      "high_group_defined_rate": 1.0,
+      "comparison_defined_n": 739,
+      "comparison_defined_rate": 1.0,
+      "high_group_defined_mean": 0.11782996853357294,
+      "comparison_defined_mean": 0.07152785871525534,
+      "mean_difference_defined_only": 0.0463021098183176,
+      "bootstrap_95_percentile_ci_defined_only": [
+        0.0196086527737235,
+        0.07449725873167486
+      ],
+      "bootstrap_replicates": 50000,
+      "bootstrap_seed": 20261352
+    }
+  },
+  "named_high_group_tracts_sorted_by_C2_estimate": [
+    {
+      "GEOID": "48253020102",
+      "svi_minority": 0.8039,
+      "pct_urban": 0.0,
+      "epht_heat_days_summer": 13.88888888888889,
+      "C2_coverage_gap_score": 0.9700660884010934,
+      "C2_transport_gap": 0.0,
+      "C2_building_gap": 0.9690817218807642,
+      "C2_poi_gap": 0.9710504549214227
+    },
+    {
+      "GEOID": "48001950402",
+      "svi_minority": 0.7942,
+      "pct_urban": 0.0,
+      "epht_heat_days_summer": 14.222222222222221,
+      "C2_coverage_gap_score": 0.959905189471189,
+      "C2_transport_gap": 1.0,
+      "C2_building_gap": 0.9239012887109439,
+      "C2_poi_gap": 0.9558142797026231
+    },
+    {
+      "GEOID": "48169980000",
+      "svi_minority": 0.9353,
+      "pct_urban": 0.0,
+      "epht_heat_days_summer": 14.777777777777779,
+      "C2_coverage_gap_score": 0.9396273654326706,
+      "C2_transport_gap": 0.0,
+      "C2_building_gap": 0.9774589957362728,
+      "C2_poi_gap": 0.9017957351290684
+    },
+    {
+      "GEOID": "48001950401",
+      "svi_minority": 0.8334,
+      "pct_urban": 0.0,
+      "epht_heat_days_summer": 14.222222222222221,
+      "C2_coverage_gap_score": 0.9391568340443115,
+      "C2_transport_gap": 1.0,
+      "C2_building_gap": 0.865779680876896,
+      "C2_poi_gap": 0.9516908212560387
+    },
+    {
+      "GEOID": "48185180400",
+      "svi_minority": 0.7483,
+      "pct_urban": 0.0,
+      "epht_heat_days_summer": 15.777777777777779,
+      "C2_coverage_gap_score": 0.8739121222557904,
+      "C2_transport_gap": 0.0,
+      "C2_building_gap": 0.8261240207979341,
+      "C2_poi_gap": 0.9217002237136466
+    },
+    {
+      "GEOID": "48473980000",
+      "svi_minority": 0.9754,
+      "pct_urban": 0.0,
+      "epht_heat_days_summer": 15.333333333333334,
+      "C2_coverage_gap_score": 0.5554479169943797,
+      "C2_transport_gap": 0.0,
+      "C2_building_gap": 0.8858744847146347,
+      "C2_poi_gap": 0.22502134927412465
+    },
+    {
+      "GEOID": "48025950201",
+      "svi_minority": 0.8317,
+      "pct_urban": 0.0,
+      "epht_heat_days_summer": 15.666666666666666,
+      "C2_coverage_gap_score": 0.44993971417239303,
+      "C2_transport_gap": 0.0,
+      "C2_building_gap": 0.6097807182632522,
+      "C2_poi_gap": 0.7400384242539269
+    },
+    {
+      "GEOID": "48251130411",
+      "svi_minority": 0.7506,
+      "pct_urban": 0.0,
+      "epht_heat_days_summer": 12.88888888888889,
+      "C2_coverage_gap_score": 0.39060145735789503,
+      "C2_transport_gap": 0.6248800552417724,
+      "C2_building_gap": 0.0,
+      "C2_poi_gap": 0.5469243168319128
+    },
+    {
+      "GEOID": "48215023525",
+      "svi_minority": 0.9776,
+      "pct_urban": 0.0,
+      "epht_heat_days_summer": 14.333333333333334,
+      "C2_coverage_gap_score": 0.3725492777019851,
+      "C2_transport_gap": 0.0,
+      "C2_building_gap": 0.0,
+      "C2_poi_gap": 0.7450985554039702
+    },
+    {
+      "GEOID": "48215024211",
+      "svi_minority": 0.9954,
+      "pct_urban": 0.07403237156931738,
+      "epht_heat_days_summer": 13.88888888888889,
+      "C2_coverage_gap_score": 0.3519274933640035,
+      "C2_transport_gap": 0.5774380542199998,
+      "C2_building_gap": 0.0,
+      "C2_poi_gap": 0.47834442587201054
+    }
+  ],
+  "uncertainty_note": "Percentile intervals resample tracts independently within each comparison group. They quantify empirical tract-resampling variability only; they do not account for spatial dependence, proxy-model uncertainty, or hidden-target error.",
+  "causal_and_accuracy_limitations": [
+    "No labels or removed reference layers were read; the audit does not estimate RMSE or validate true coverage gaps.",
+    "The estimator does not use svi_minority as an input, but its predictions are still proxies and may share other covariate structure with strata.",
+    "The pattern is descriptive and does not establish that vulnerability causes mapping gaps or that the estimate reflects organiser scores."
+  ],
+  "inputs": {
+    "official_sample": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/south-central-tx-sample-submission.csv",
+      "sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e",
+      "rows": 6003,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ]
+    },
+    "provided_strata": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+      "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354",
+      "read_columns": [
+        "GEOID",
+        "pct_urban",
+        "svi_minority",
+        "epht_heat_days_summer"
+      ]
+    },
+    "C2_estimates": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/gap-estimates.csv",
+      "sha256": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852",
+      "read_columns": [
+        "GEOID",
+        "coverage_gap_score",
+        "transport_gap",
+        "transport_defined",
+        "building_gap",
+        "building_defined",
+        "poi_gap",
+        "poi_defined",
+        "fire_gap",
+        "fire_defined",
+        "ems_gap",
+        "ems_defined",
+        "schools_gap",
+        "schools_defined",
+        "cbp_gap",
+        "cbp_defined"
+      ]
+    },
+    "C3_sensitivity": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/candidates/C3_denominator_x125.csv",
+      "sha256": "589418abece58ad75ecf2fa1df9de84fb15a9e216b246bd5439d4f75ceb9795d",
+      "read_columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ]
+    },
+    "external_public_data_used": []
+  }
+}
