@@ -1,0 +1,335 @@
+{
+  "analysis": "Fixed near-zero building component v2 and aggregate level diagnostics",
+  "building_v2_rule": {
+    "acs_housing_units_used_as_denominator_floor": false,
+    "defined_when": "provided overture_buildings count > 0",
+    "fixed_gap": 0.01,
+    "inputs_to_scored_component": [
+      "overture_buildings",
+      "fixed constant 0.01"
+    ],
+    "leaderboard_calibration_used": false,
+    "undefined_when": "provided overture_buildings count == 0; serialized numeric placeholder 0 is excluded by building_defined=0",
+    "usfs_or_carbonplan_input_to_scored_component": false
+  },
+  "inputs": {
+    "eastern-ok": {
+      "feature_cache": {
+        "read_columns": [
+          "GEOID",
+          "overture_buildings"
+        ],
+        "rows": 1192,
+        "sha256": "ea0a37ff31f584c0939f5e935fe25c2c3d2086c7fb65d86f115dfbf2b3c196bb"
+      },
+      "official_sample": {
+        "rows": 1192,
+        "score_placeholder_values_read": false,
+        "sha256": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4"
+      },
+      "provided_strata": {
+        "read_columns": [
+          "GEOID",
+          "usfs_covered",
+          "usfs_BuildingCount_sum",
+          "carbonplan_covered",
+          "carbonplan_buildings"
+        ],
+        "rows": 1192,
+        "sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54"
+      }
+    },
+    "maricopa-az": {
+      "feature_cache": {
+        "read_columns": [
+          "GEOID",
+          "overture_buildings"
+        ],
+        "rows": 1593,
+        "sha256": "e3bad28882ef49ff3ed911c37524e1dc35e2ee28c38d8075539776d3a499fd58"
+      },
+      "official_sample": {
+        "rows": 1593,
+        "score_placeholder_values_read": false,
+        "sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31"
+      },
+      "provided_strata": {
+        "read_columns": [
+          "GEOID",
+          "usfs_covered",
+          "usfs_BuildingCount_sum",
+          "carbonplan_covered",
+          "carbonplan_buildings"
+        ],
+        "rows": 1593,
+        "sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd"
+      }
+    },
+    "northern-ca": {
+      "feature_cache": {
+        "read_columns": [
+          "GEOID",
+          "overture_buildings"
+        ],
+        "rows": 591,
+        "sha256": "3f3e22ee3b18ca931a3bd4d1bc0dc22a38ad5998eb803d0fd739b24680792785"
+      },
+      "official_sample": {
+        "rows": 591,
+        "score_placeholder_values_read": false,
+        "sha256": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902"
+      },
+      "provided_strata": {
+        "read_columns": [
+          "GEOID",
+          "usfs_covered",
+          "usfs_BuildingCount_sum",
+          "carbonplan_covered",
+          "carbonplan_buildings"
+        ],
+        "rows": 591,
+        "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243"
+      }
+    },
+    "south-central-tx": {
+      "feature_cache": {
+        "read_columns": [
+          "GEOID",
+          "overture_buildings"
+        ],
+        "rows": 6003,
+        "sha256": "c25eedbbe904255fc8331268ff503a72ed76d39662c4637defec156e5d1482a3"
+      },
+      "official_sample": {
+        "rows": 6003,
+        "score_placeholder_values_read": false,
+        "sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e"
+      },
+      "provided_strata": {
+        "read_columns": [
+          "GEOID",
+          "usfs_covered",
+          "usfs_BuildingCount_sum",
+          "carbonplan_covered",
+          "carbonplan_buildings"
+        ],
+        "rows": 6010,
+        "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354"
+      }
+    }
+  },
+  "interpretation_limitations": [
+    "The USFS and CarbonPlan strata columns are Microsoft-footprint derivatives and are used here only for aggregate level diagnostics; they are never model inputs or per-tract scored predictions.",
+    "Overture source attribution and aggregate count ratios do not establish exact geometric identity, completeness, or matching vintage with the hidden reference.",
+    "Using a positive Overture building count as the definedness proxy may miss a reference footprint that Overture entirely omits; this limitation is explicit and not calibrated from leaderboard feedback.",
+    "The fixed 0.01 prior is a model-derived near-zero level, not a fitted hidden-target value or accuracy claim."
+  ],
+  "region_results": {
+    "eastern-ok": {
+      "official_tracts": 1192,
+      "provided_footprint_level_diagnostics": {
+        "overture_to_carbonplan_buildings": {
+          "diagnostic_only_not_used_for_scoring": true,
+          "n_positive_denominator_pairs": 1192,
+          "ratio_definition": "overture_buildings / carbonplan_buildings",
+          "ratio_quantiles": {
+            "median": 0.9980423974765557,
+            "q10": 0.9894635198649883,
+            "q90": 1.0024613575573695
+          },
+          "share_ratio_below_0_8": 0.0,
+          "share_within_1_percent_of_1": 0.8481543624161074
+        },
+        "overture_to_usfs_building_count": {
+          "diagnostic_only_not_used_for_scoring": true,
+          "n_positive_denominator_pairs": 1192,
+          "ratio_definition": "overture_buildings / usfs_BuildingCount_sum",
+          "ratio_quantiles": {
+            "median": 1.0238942074917448,
+            "q10": 0.9302103844609361,
+            "q90": 1.4235347849027946
+          },
+          "share_ratio_below_0_8": 0.012583892617449664,
+          "share_within_1_percent_of_1": 0.13506711409395974
+        },
+        "per_tract_values_exported": false,
+        "use_in_scored_predictions": false
+      },
+      "v0": {
+        "building_defined_tracts": 1192,
+        "building_gap_mean_all_tracts": 0.019220866645622267,
+        "building_gap_mean_defined_only": 0.019220866645622267,
+        "fraction_zero_among_defined": 0.9328859060402684
+      },
+      "v2": {
+        "building_defined_share": 1.0,
+        "building_defined_tracts": 1192,
+        "building_gap_fixed_when_defined": 0.01,
+        "building_gap_mean_all_tracts_numeric_with_undefined_placeholder": 0.01,
+        "building_gap_mean_defined_only": 0.01,
+        "overture_buildings_zero_count": 0
+      }
+    },
+    "maricopa-az": {
+      "official_tracts": 1593,
+      "provided_footprint_level_diagnostics": {
+        "overture_to_carbonplan_buildings": {
+          "diagnostic_only_not_used_for_scoring": true,
+          "n_positive_denominator_pairs": 1593,
+          "ratio_definition": "overture_buildings / carbonplan_buildings",
+          "ratio_quantiles": {
+            "median": 0.9992389649923896,
+            "q10": 0.9914294696975237,
+            "q90": 1.0069014831370022
+          },
+          "share_ratio_below_0_8": 0.0,
+          "share_within_1_percent_of_1": 0.8361581920903954
+        },
+        "overture_to_usfs_building_count": {
+          "diagnostic_only_not_used_for_scoring": true,
+          "n_positive_denominator_pairs": 1593,
+          "ratio_definition": "overture_buildings / usfs_BuildingCount_sum",
+          "ratio_quantiles": {
+            "median": 1.008161431484473,
+            "q10": 0.9441986837020111,
+            "q90": 1.2083323710843252
+          },
+          "share_ratio_below_0_8": 0.015065913370998116,
+          "share_within_1_percent_of_1": 0.21594475831763968
+        },
+        "per_tract_values_exported": false,
+        "use_in_scored_predictions": false
+      },
+      "v0": {
+        "building_defined_tracts": 1593,
+        "building_gap_mean_all_tracts": 0.049049862437284805,
+        "building_gap_mean_defined_only": 0.049049862437284805,
+        "fraction_zero_among_defined": 0.7928436911487758
+      },
+      "v2": {
+        "building_defined_share": 1.0,
+        "building_defined_tracts": 1593,
+        "building_gap_fixed_when_defined": 0.01,
+        "building_gap_mean_all_tracts_numeric_with_undefined_placeholder": 0.009999999999999997,
+        "building_gap_mean_defined_only": 0.009999999999999997,
+        "overture_buildings_zero_count": 0
+      }
+    },
+    "northern-ca": {
+      "official_tracts": 591,
+      "provided_footprint_level_diagnostics": {
+        "overture_to_carbonplan_buildings": {
+          "diagnostic_only_not_used_for_scoring": true,
+          "n_positive_denominator_pairs": 591,
+          "ratio_definition": "overture_buildings / carbonplan_buildings",
+          "ratio_quantiles": {
+            "median": 0.9973474801061007,
+            "q10": 0.9871959026888605,
+            "q90": 1.0088954781319497
+          },
+          "share_ratio_below_0_8": 0.0,
+          "share_within_1_percent_of_1": 0.7478849407783418
+        },
+        "overture_to_usfs_building_count": {
+          "diagnostic_only_not_used_for_scoring": true,
+          "n_positive_denominator_pairs": 591,
+          "ratio_definition": "overture_buildings / usfs_BuildingCount_sum",
+          "ratio_quantiles": {
+            "median": 1.0197101447106138,
+            "q10": 0.9319331096796183,
+            "q90": 1.1601394713624698
+          },
+          "share_ratio_below_0_8": 0.02707275803722504,
+          "share_within_1_percent_of_1": 0.13874788494077833
+        },
+        "per_tract_values_exported": false,
+        "use_in_scored_predictions": false
+      },
+      "v0": {
+        "building_defined_tracts": 591,
+        "building_gap_mean_all_tracts": 0.04656879862317408,
+        "building_gap_mean_defined_only": 0.04656879862317408,
+        "fraction_zero_among_defined": 0.7868020304568528
+      },
+      "v2": {
+        "building_defined_share": 1.0,
+        "building_defined_tracts": 591,
+        "building_gap_fixed_when_defined": 0.01,
+        "building_gap_mean_all_tracts_numeric_with_undefined_placeholder": 0.01,
+        "building_gap_mean_defined_only": 0.01,
+        "overture_buildings_zero_count": 0
+      }
+    },
+    "south-central-tx": {
+      "official_tracts": 6003,
+      "provided_footprint_level_diagnostics": {
+        "overture_to_carbonplan_buildings": {
+          "diagnostic_only_not_used_for_scoring": true,
+          "n_positive_denominator_pairs": 6001,
+          "ratio_definition": "overture_buildings / carbonplan_buildings",
+          "ratio_quantiles": {
+            "median": 0.9979830576845502,
+            "q10": 0.9874396135265701,
+            "q90": 1.0049570389953735
+          },
+          "share_ratio_below_0_8": 0.00016663889351774705,
+          "share_within_1_percent_of_1": 0.7835360773204466
+        },
+        "overture_to_usfs_building_count": {
+          "diagnostic_only_not_used_for_scoring": true,
+          "n_positive_denominator_pairs": 6001,
+          "ratio_definition": "overture_buildings / usfs_BuildingCount_sum",
+          "ratio_quantiles": {
+            "median": 1.0217563440803161,
+            "q10": 0.9068049479948367,
+            "q90": 1.3395539523068238
+          },
+          "share_ratio_below_0_8": 0.0339943342776204,
+          "share_within_1_percent_of_1": 0.12381269788368605
+        },
+        "per_tract_values_exported": false,
+        "use_in_scored_predictions": false
+      },
+      "v0": {
+        "building_defined_tracts": 6003,
+        "building_gap_mean_all_tracts": 0.09166800611826792,
+        "building_gap_mean_defined_only": 0.09166800611826792,
+        "fraction_zero_among_defined": 0.7454606030318174
+      },
+      "v2": {
+        "building_defined_share": 0.9996668332500417,
+        "building_defined_tracts": 6001,
+        "building_gap_fixed_when_defined": 0.01,
+        "building_gap_mean_all_tracts_numeric_with_undefined_placeholder": 0.009996668332500415,
+        "building_gap_mean_defined_only": 0.01,
+        "overture_buildings_zero_count": 2
+      }
+    }
+  },
+  "restrictions": {
+    "external_data_used": [],
+    "labels_or_sample_score_placeholders_used": false,
+    "leaderboard_or_score_probe_performed": false,
+    "per_tract_diagnostic_rows_written": false,
+    "per_tract_usfs_or_carbonplan_values_used_in_scored_component": false,
+    "provided_usfs_and_carbonplan_strata_fields_used_only_for_aggregated_region_level_diagnostics": true,
+    "removed_reference_layer_files_or_equivalents_read": false,
+    "scored_candidate_files_modified": false
+  },
+  "v0_before": {
+    "building_defined_tracts": 9379,
+    "building_gap_mean_all_tracts": 0.0723800943190569,
+    "building_gap_mean_defined_only": 0.0723800943190569,
+    "fraction_zero_among_defined": 0.7799338948715215,
+    "input_path": "reports/gap-estimates.csv",
+    "input_sha256": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852",
+    "official_tracts": 9379
+  },
+  "v2_after": {
+    "building_defined_share": 0.9997867576500693,
+    "building_defined_tracts": 9377,
+    "building_gap_mean_all_tracts_numeric_with_undefined_placeholder": 0.009997867576500693,
+    "building_gap_mean_defined_only": 0.01,
+    "official_tracts": 9379
+  }
+}
