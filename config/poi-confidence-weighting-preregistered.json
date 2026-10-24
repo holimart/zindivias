@@ -1,0 +1,110 @@
+{
+  "candidate_id": "POI_CONFIDENCE_WEIGHTED_V1",
+  "registered_utc": "2026-10-24",
+  "status": "preregistered_before_confidence_threshold_candidate_measurement",
+  "purpose": "analysis-only fixed-threshold sensitivity of the provided Overture POI facility component; no target fit, target RMSE, score claim, scored promotion, or upload",
+  "scope": {
+    "official_regions_order": ["maricopa-az", "northern-ca", "eastern-ok", "south-central-tx"],
+    "official_rows": 9379,
+    "thresholds": [0.5, 0.7, 0.9],
+    "candidate_ids": ["POI_CONFIDENCE_T050", "POI_CONFIDENCE_T070", "POI_CONFIDENCE_T090"],
+    "row_order": "authoritative per-region sample GEOID order; read only GEOID from sample files; no sample score placeholders"
+  },
+  "frozen_inputs": {
+    "category_contract": {
+      "path": "config/poi-category-definitions.json",
+      "sha256": "8309a0bb08613b92621f4977eb78998e469951c0cd0ed012d93ea2f5cf59654f",
+      "matching_rule": "union of categories.primary and categories.alternate; a POI contributes at most once to each selected family",
+      "selected_sets_source": "selected_sets.fire, selected_sets.ems, selected_sets.schools",
+      "hospitals": "excluded per organizer methodology"
+    },
+    "v0_poi_candidate": {
+      "path": "reports/gap-estimates.csv",
+      "sha256": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852",
+      "columns": ["GEOID", "poi_gap", "poi_defined"],
+      "role": "frozen feature-derived v0 POI output for measure-before comparison; not a target"
+    },
+    "v2_poi_baseline": {
+      "audit_report": "reports/poi-facility-miss-audit.json",
+      "audit_report_sha256": "b559c8d3d85709d0e5f2d2102bb39da4d8255a3c62f728cf736da522025a289c",
+      "source_implementation": "scripts/estimate_gaps.py",
+      "source_implementation_sha256": "4f59982e0349af048ba11efbd5dbc629076eef8d3c8dc08d5747da5833bfc4fe",
+      "establishments_implementation": "scripts/estimator_v2_establishments.py",
+      "establishments_implementation_sha256": "ec99e39e9330b5af57d08ff221c81e7485fe92ea2016c38239feb5a4706b2179",
+      "facility_presence_priors": {
+        "fire": {"intercept": -2.8, "log_density": 0.3, "urban_fraction": 0.7},
+        "ems": {"intercept": -3.2, "log_density": 0.25, "urban_fraction": 0.6},
+        "schools": {"intercept": -1.0, "log_density": 0.2, "urban_fraction": 0.35}
+      },
+      "establishments_k_pop": 0.024,
+      "role": "existing fixed v2 analysis-only prior/composition used as the raw-count baseline; no fitted or score-derived values"
+    },
+    "spatial_assignment_implementation": {
+      "path": "scripts/audit_poi_categories.py",
+      "sha256": "56682d59d20868895007e5db2c7d669425e6b2fe886f2823cf7788a24b35a514",
+      "functions_reused": ["read_sample_geoids", "load_sample_tracts", "assign_points", "category_tags"]
+    },
+    "provided_category_confidence_sources": {
+      "source_uri_pattern": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/<region>/<region>-overture-pois.parquet",
+      "columns_read": ["bbox", "categories", "confidence", "sources"],
+      "purpose": "bbox only for spatial assignment; selected categories for family counts; confidence for threshold weights; sources for provenance/missingness diagnostics only",
+      "names_or_overture_geometry_read": false
+    },
+    "provided_tract_inputs": {
+      "geometry_source_uri_pattern": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/<region>/<region>-census-acs-housing.parquet",
+      "geometry_columns_read": ["GEOID", "geometry"],
+      "strata_path_pattern": "$COMPETITION_WORKSPACE/defined-flags-inputs/<region>-strata-tract-table.parquet",
+      "strata_columns_read": ["GEOID", "ALAND", "pop_total", "pop_urban", "pct_urban", "ur_class"],
+      "usage": "provided strata supply fixed v2 prior covariates; ur_class is descriptive only"
+    },
+    "prior_audit": {
+      "path": "reports/poi-category-audit.json",
+      "sha256": "cd48fa40d0fb1b3cdd1e431734acb646791916df02ee021a60243020b17d9de8",
+      "use": "category/source/confidence semantics and expected input lineage; not a target"
+    }
+  },
+  "count_and_candidate_rules": {
+    "raw_family_count": "count each provided POI once per exact selected category family matched by primary or any alternate category",
+    "weighted_family_count": "sum confidence for selected-family POIs with valid finite confidence in [0,1] and confidence >= threshold; otherwise contribute zero; each POI counts at most once per family",
+    "missing_or_invalid_confidence": "zero weight for the weighted numerator, retain the raw count, and report missing/invalid counts; do not impute confidence",
+    "unclassified_category_rows": "retain the existing fixed v2 treatment: no-category rows are allocated by the region-level family-share ratios computed from all categorized POIs; keep this allocation identical across raw and threshold variants so the sensitivity isolates weighting of selected categorized POIs",
+    "sources": "report dataset presence/source mix for matched family records; no source-dependent weight or source-defined quality ranking is imposed",
+    "facility_gap": "for each type apply the existing pooled v2 logistic presence prior and expected-miss function to (threshold-weighted selected family count + unchanged v2 unclassified allocation); average the defined fire, EMS, and school type gaps",
+    "establishments_half": "hold the existing provided-feature-only v2 establishments component fixed at preregistered analysis sensitivity k_pop=0.024; do not use removed CBP values",
+    "poi_gap": "equal mean of whichever facility and establishments halves are defined, matching the existing v2 POI composition",
+    "candidate_defined": "the v2 POI definedness flag from the preceding component-composition rule; weighted count equal to zero is observed absence under the fixed presence prior, not an undefined score",
+    "no_accuracy_tuning": true
+  },
+  "measurement_plan": {
+    "measure_before": "Report raw selected category count distribution/zero tracts by type, region, and provided ur_class; report frozen v0 and independently recomputed v2 raw-count candidate moments and defined fractions by the same groups; verify v2 all/region means against the frozen audit report.",
+    "measure_after": "For thresholds 0.5, 0.7, 0.9 report weighted count deltas versus raw, POI score deltas versus v2 raw, score mean/variance/std and candidate-defined fraction by region and ur_class, source-metadata coverage, exact official IDs/order, schema/bounds, and deterministic hashes.",
+    "within_region_dispersion": "population variance and standard deviation of candidate POI scores for each region and urbanity group",
+    "fixed_no_score_threshold_selection": true,
+    "target_rmse_or_labels": false
+  },
+  "restrictions": {
+    "sample_score_placeholders_read": false,
+    "labels_or_target_reconstruction_used": false,
+    "removed_reference_layers_or_equivalents_used": false,
+    "external_facility_lists_or_usgs_used": false,
+    "leaderboard_information_or_probes_used": false,
+    "upload_or_submission_made": false,
+    "source_fields_used_as_truth_or_source_weights": false,
+    "scored_promotion": false
+  },
+  "limitations": [
+    "Confidence thresholds are fixed sensitivities, not learned calibration; confidence is an Overture attribute, not validation against the organizer reference.",
+    "The v2 logistic presence prior and k_pop=0.024 are existing qualitative analysis-only assumptions; these candidates do not establish accuracy or authorize scored integration.",
+    "No unclassified category is treated as a selected core facility; the same fixed v2 region-share allocation is retained for all variants.",
+    "Source dataset membership is descriptive provenance only; it is not a truth/completeness rating or model weight."
+  ],
+  "acceptance": {
+    "exact_9379_official_ids_and_order_for_every_candidate": true,
+    "zero_missing_duplicate_nonfinite_or_out_of_0_1_poi_scores": true,
+    "candidate_defined_fraction_reported": true,
+    "raw_vs_weighted_feature_deltas_reported": true,
+    "within_region_and_urbanity_dispersion_reported": true,
+    "deterministic_rerun_and_hashes": true,
+    "no_predictive_accuracy_measurement_possible_explicit": true
+  }
+}
