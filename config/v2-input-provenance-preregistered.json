@@ -1,0 +1,230 @@
+{
+  "schema_version": 1,
+  "audit_id": "v2-input-provenance",
+  "backlog_item": "bias-v2-provided-input-provenance-audit",
+  "status": "preregistered_before_audit",
+  "intent": "validation screen before any authorized candidate evaluation; no accuracy claim, no upload",
+  "candidate": {
+    "id": "V2_model",
+    "build_script": "scripts/build_estimator_v2_candidates.py",
+    "artifact": "reports/candidates/V2_model.csv",
+    "manifest": "reports/candidates.json",
+    "build_audit": "reports/estimator-v2-audit.json",
+    "mask_config": "config/v2-component-mask-audit-preregistered.json",
+    "key_column": "GEOID",
+    "score_columns": ["transport_gap", "building_gap", "poi_gap", "coverage_gap_score"]
+  },
+  "provenance_classes": {
+    "official_challenge_provided_local": "file in $COMPETITION_WORKSPACE that is a byte-identical copy of an organiser-provided object",
+    "official_challenge_provided_hosted": "public organiser-hosted challenge object read directly from the challenge bucket",
+    "documented_public_methodology": "a fixed rule or constant whose value comes from the organiser's published method or cited public literature, never from leaderboard algebra",
+    "derived_from_allowed_inputs": "repo- or workspace-internal artifact produced by a committed script from allowed inputs only",
+    "platform_format_metadata": "row-population or region labels needed only to satisfy the platform file contract",
+    "reconciliation_control_only": "artifact used only to cross-check a directly measured quantity; never a feature input",
+    "historical_disclosure_not_model_input": "historical public score or probe constant quoted for detection or background, never used on the score path"
+  },
+  "hosted_allowlist": {
+    "bucket": "us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge",
+    "allowed_prefixes": ["reference/", "strata/"],
+    "allowed_object_basenames": [
+      "{region}-overture-buildings.parquet",
+      "{region}-overture-roads.parquet",
+      "{region}-overture-pois.parquet",
+      "{region}-census-acs-housing.parquet",
+      "{region}-strata-tract-table.parquet",
+      "{region}-sample-submission.csv"
+    ]
+  },
+  "allowed_local_input_prefixes": [
+    "samples/",
+    "SampleSubmission.csv",
+    "defined-flags-inputs/",
+    "gap-estimator/features/"
+  ],
+  "declaration_sources": [
+    "reports/candidates/road_topology_candidate_manifest.json",
+    "reports/building-morphology-candidate.json",
+    "reports/candidates/poi_confidence_weighted_manifest.json",
+    "reports/gap-estimator-audit.json",
+    "reports/transport-route-ref-audit.json",
+    "reports/building-source-mix.json",
+    "reports/building-source-prior.json",
+    "reports/source-freshness-candidate.json",
+    "reports/maricopa-route-ratio-diagnostic.json",
+    "reports/poi-facility-miss-audit.json",
+    "reports/poi-category-audit.json",
+    "reports/establishments-sensitivity.json",
+    "reports/confidence-by-stratum.json",
+    "reports/edge-cases.json",
+    "reports/building-v2-audit.json",
+    "reports/schema-presence-candidate.json",
+    "reports/cross-theme-support.json",
+    "reports/facility-catchment-candidate.json",
+    "reports/density-context-candidate.json",
+    "reports/candidates.json"
+  ],
+  "file_access_callables": ["open", "open_input_file", "open_input_stream", "read_table", "read",
+                            "read_row_group", "ParquetFile", "read_text", "write_text",
+                            "write_bytes", "from_csv", "from_parquet"],
+  "path_constant_name_tokens": ["PATH", "URI", "_KEY", "BUCKET", "TEMPLATE", "ROOT"],
+  "hit_classification_rule": "a prohibited token counts as a dependency only when it appears in a string the script can hand to a file-access callable, or in a module-level path/url constant; naming that mirrors the organiser's own component names and explicit false-valued restriction keys are disclosed as prose and are not dependencies",
+  "allowed_strata_columns": ["GEOID", "ALAND", "pop_total", "pop_urban", "pct_urban", "ur_class", "tribal_any"],
+  "allowed_sample_columns": ["GEOID"],
+  "allowed_template_columns": ["GEOID", "region"],
+  "prohibited": {
+    "uri_tokens": ["tiger", "ms-buildings", "ms_buildings", "msbuilding", "usgs", "cbp", "carbonplan",
+                   "usfs", "ntad", "openrailwaymap", "mapillary", "maxar", "google", "bing"],
+    "file_tokens": ["calibration.json", "submissions.jsonl", "lb-score-algebra", "lb-subset-algebra",
+                    "lb-calibration", "data/ledger", "labels", "label_", "-target", "auth_token",
+                    "storage_state", "zindi_auth"],
+    "strata_column_prefixes": ["tiger", "ms_", "usgs", "cbp", "usfs", "carbonplan", "mtbs", "nifc",
+                               "fod", "svi_", "cvi_", "ruca", "rucc", "nchs", "ghcn", "cdcw", "gehe",
+                               "uhe", "pmdi", "spi", "epht", "drought", "usdm"],
+    "score_placeholder_columns_in_provided_samples": ["coverage_gap_score", "transport_gap", "building_gap", "poi_gap"],
+    "scored_path_constant_names": ["alpha_c1_from_P4", "beta_constrained_from_P5",
+                                   "beta_unconstrained_from_P5", "global_constant_c_from_P6"]
+  },
+  "code_scan": {
+    "chain_scripts": [
+      "scripts/build_estimator_v2_candidates.py",
+      "scripts/audit_v2_component_masks.py",
+      "scripts/estimate_gaps.py",
+      "scripts/estimator_v2_building.py",
+      "scripts/estimator_v2_establishments.py",
+      "scripts/build_road_topology_candidate.py",
+      "scripts/build_building_morphology_candidate.py",
+      "scripts/build_poi_confidence_candidate.py"
+    ],
+    "score_path_functions": {
+      "scripts/build_estimator_v2_candidates.py": ["build_official_rows", "exact_defined_mean", "read_rows",
+                                                   "csv_bytes", "template_order", "verify_frozen_inputs",
+                                                   "assemble", "anti_probe_scan"],
+      "scripts/audit_v2_component_masks.py": ["composite_mean", "presence_probability", "official_scored_ids",
+                                              "clip01", "urbanity", "parse_float", "parse_flag"],
+      "scripts/estimate_gaps.py": ["estimate_transport_route_v2", "classify_route_network",
+                                   "facility_reference_presence_probability_v2", "urban_fraction",
+                                   "expected_facility_miss_gap_v2", "composite_mean", "open_source"],
+      "scripts/estimator_v2_building.py": ["estimate_building_component_v2"],
+      "scripts/estimator_v2_establishments.py": ["estimate_establishments_component_v2", "facility_half_v2",
+                                                 "combine_poi_halves_v2"]
+    },
+    "retired_lb_constants": {
+      "alpha_c1_from_P4": 0.3288136427728255,
+      "beta_constrained_from_P5": -0.04967993197091435,
+      "beta_unconstrained_from_P5": -0.2181321596482996,
+      "global_constant_c_from_P6": 0.05652688955988315,
+      "c0_public_rmse": 0.107246299,
+      "c1_public_rmse": 0.146449112,
+      "p4_public_rmse": 0.091440198
+    },
+    "prohibited_module_tokens": ["lb_score_algebra", "lb_subset_algebra", "build_region_probes",
+                                 "submit_zindi", "record_reproduce_run", "render_probe_log"]
+  },
+  "fixed_rules": [
+    {
+      "rule_id": "building_fixed_level",
+      "value": 0.01,
+      "module": "scripts/estimator_v2_building.py",
+      "constant": "BUILDING_GAP_V2",
+      "basis": ["docs/decisions/building-component.md", "docs/writeup/methodology.md",
+                "reports/building-v2-audit.json"],
+      "provenance_class": "documented_public_methodology",
+      "note": "fixed building gap when overture_buildings > 0; organiser component structure, not a fitted level"
+    },
+    {
+      "rule_id": "establishments_k_pop",
+      "value": 0.024,
+      "module": "scripts/estimate_gaps.py",
+      "constant": "FACILITY_MISS_K_POP_ANALYSIS",
+      "basis": ["docs/decisions/establishments-half.md", "docs/writeup/methodology.md",
+                "reports/establishments-sensitivity.json"],
+      "provenance_class": "documented_public_methodology",
+      "note": "places-per-population anchor for the establishments half; no CBP source is read"
+    },
+    {
+      "rule_id": "facility_presence_priors",
+      "value": {"fire": {"intercept": -2.8, "log_density": 0.30, "urban_fraction": 0.70},
+                "ems": {"intercept": -3.2, "log_density": 0.25, "urban_fraction": 0.60},
+                "schools": {"intercept": -1.0, "log_density": 0.20, "urban_fraction": 0.35}},
+      "module": "scripts/estimate_gaps.py",
+      "constant": "FACILITY_MISS_PRIORS",
+      "basis": ["docs/writeup/methodology.md", "reports/poi-facility-miss-audit.json",
+                "docs/literature/completeness-prior-art.md"],
+      "provenance_class": "documented_public_methodology",
+      "note": "pooled qualitative logistic priors set before any score was seen; never region-fitted"
+    },
+    {
+      "rule_id": "transport_definedness",
+      "value": "clip(1 - named_km / route_km, 0, 1) iff route_km > 0",
+      "module": "scripts/estimate_gaps.py",
+      "constant": null,
+      "function": "estimate_transport_route_v2",
+      "basis": ["docs/writeup/methodology.md", "reports/transport-route-ref-audit.json"],
+      "provenance_class": "documented_public_methodology",
+      "note": "organiser stated component form with the frozen named-class and route-qualified definitions"
+    },
+    {
+      "rule_id": "equal_defined_component_mean",
+      "value": "mean of defined components only; undefined never zero-filled",
+      "module": "scripts/audit_v2_component_masks.py",
+      "constant": null,
+      "function": "composite_mean",
+      "basis": ["docs/writeup/methodology.md", "reports/v2-defined-mask-audit.json"],
+      "provenance_class": "documented_public_methodology",
+      "note": "organiser-disclosed defined-component aggregation"
+    },
+    {
+      "rule_id": "template_only_fill",
+      "value": 0.0,
+      "module": "scripts/build_estimator_v2_candidates.py",
+      "constant": null,
+      "basis": ["docs/decisions/", "reports/candidates.json"],
+      "provenance_class": "platform_format_metadata",
+      "note": "deterministic placeholder for the 415 eastern-WA template-only rows, which are not scored"
+    }
+  ],
+  "derived_inputs": {
+    "gap-estimator/features/{region}-overture-tract-summary.parquet": {
+      "producer": "scripts/estimate_gaps.py",
+      "provenance_class": "derived_from_allowed_inputs",
+      "independent_recomputation_evidence": "reports/maricopa-route-ratio-diagnostic.json"
+    },
+    "gap-estimator/features/poi-confidence-by-tract.parquet": {
+      "producer": "scripts/discovery_confidence_by_stratum.py",
+      "provenance_class": "reconciliation_control_only",
+      "independent_recomputation_evidence": "reports/candidates/poi_confidence_weighted_manifest.json"
+    },
+    "reports/candidates/road_topology_candidate.csv": {
+      "producer": "scripts/build_road_topology_candidate.py",
+      "provenance_class": "derived_from_allowed_inputs",
+      "manifest": "reports/candidates/road_topology_candidate_manifest.json",
+      "independent_recomputation_evidence": "reports/maricopa-route-ratio-diagnostic.json"
+    },
+    "reports/candidates/building_morphology.csv": {
+      "producer": "scripts/build_building_morphology_candidate.py",
+      "provenance_class": "derived_from_allowed_inputs",
+      "manifest": "reports/building-morphology-candidate.json",
+      "independent_recomputation_evidence": "reports/building-v2-audit.json"
+    },
+    "reports/candidates/poi_confidence_weighted.csv": {
+      "producer": "scripts/build_poi_confidence_candidate.py",
+      "provenance_class": "derived_from_allowed_inputs",
+      "manifest": "reports/candidates/poi_confidence_weighted_manifest.json",
+      "independent_recomputation_evidence": "reports/poi-facility-miss-audit.json"
+    }
+  },
+  "acceptance": {
+    "fraction_fields_with_manifest_entry": 1.0,
+    "prohibited_source_dependencies": 0,
+    "unclassified_input_sources": 0,
+    "all_listed_inputs_hashed": true,
+    "local_provided_copies_byte_identical_to_hosted": true,
+    "declared_columns_cover_code_requested_columns": true,
+    "no_strata_column_outside_permitted_subset": true,
+    "retired_constants_absent_from_score_path": true,
+    "sample_placeholder_columns_never_read": true,
+    "input_hashes_reproducible_within_run": true,
+    "no_upload": true
+  },
+  "determinism_protocol": "no wall-clock value is serialized; three independent runs of the audit command must produce byte-identical reports and manifests, and each run must reproduce its own input hashes on re-hashing"
+}

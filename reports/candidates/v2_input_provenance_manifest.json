@@ -1,0 +1,560 @@
+{
+  "manifest_type": "v2_input_provenance",
+  "audit_id": "v2-input-provenance",
+  "backlog_item": "bias-v2-provided-input-provenance-audit",
+  "candidate_id": "V2_model",
+  "candidate_artifact": {
+    "path": "reports/candidates/V2_model.csv",
+    "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12",
+    "rows": 9794,
+    "columns": [
+      "GEOID",
+      "transport_gap",
+      "building_gap",
+      "poi_gap",
+      "coverage_gap_score"
+    ],
+    "pinned_in_candidates_json": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12",
+    "pinned_in_build_audit": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12",
+    "tie_verified": true
+  },
+  "build": {
+    "script": "scripts/build_estimator_v2_candidates.py",
+    "sha256": "f1a21bd5854fcb97153e1fab9256b3a65dd7df21a15171a685ee2a4e9492b5dc",
+    "mask_config": "config/v2-component-mask-audit-preregistered.json",
+    "mask_config_sha256": "58b993e5e279e222a1f25eba99aece761e4dc062fda2fed100a3bb143fec37f4"
+  },
+  "inputs": [
+    {
+      "id": "SampleSubmission.csv",
+      "kind": "local_provided",
+      "path": "$COMPETITION_WORKSPACE/SampleSubmission.csv",
+      "sha256": "32fb5c2984317d4abf8a98b88b7bb9d16e9eef1cda9a954c37da0a2cdd367f40",
+      "columns_read": [
+        "GEOID",
+        "region"
+      ],
+      "hosted_uri": null,
+      "hosted_sha256": null,
+      "provenance_class": "platform_format_metadata"
+    },
+    {
+      "id": "defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+      "kind": "local_provided",
+      "path": "$COMPETITION_WORKSPACE/defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+      "sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54",
+      "columns_read": [
+        "GEOID",
+        "pop_total",
+        "pop_urban",
+        "pct_urban",
+        "ALAND"
+      ],
+      "hosted_uri": "us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/strata/eastern-ok/eastern-ok-strata-tract-table.parquet",
+      "hosted_sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54",
+      "provenance_class": "official_challenge_provided_local"
+    },
+    {
+      "id": "defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+      "kind": "local_provided",
+      "path": "$COMPETITION_WORKSPACE/defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+      "sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd",
+      "columns_read": [
+        "GEOID",
+        "pop_total",
+        "pop_urban",
+        "pct_urban",
+        "ALAND"
+      ],
+      "hosted_uri": "us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/strata/maricopa-az/maricopa-az-strata-tract-table.parquet",
+      "hosted_sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd",
+      "provenance_class": "official_challenge_provided_local"
+    },
+    {
+      "id": "defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+      "kind": "local_provided",
+      "path": "$COMPETITION_WORKSPACE/defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+      "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+      "columns_read": [
+        "GEOID",
+        "pop_total",
+        "pop_urban",
+        "pct_urban",
+        "ALAND"
+      ],
+      "hosted_uri": "us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/strata/northern-ca/northern-ca-strata-tract-table.parquet",
+      "hosted_sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+      "provenance_class": "official_challenge_provided_local"
+    },
+    {
+      "id": "defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+      "kind": "local_provided",
+      "path": "$COMPETITION_WORKSPACE/defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+      "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354",
+      "columns_read": [
+        "GEOID",
+        "pop_total",
+        "pop_urban",
+        "pct_urban",
+        "ALAND"
+      ],
+      "hosted_uri": "us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/strata/south-central-tx/south-central-tx-strata-tract-table.parquet",
+      "hosted_sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354",
+      "provenance_class": "official_challenge_provided_local"
+    },
+    {
+      "id": "samples/eastern-ok-sample-submission.csv",
+      "kind": "local_provided",
+      "path": "$COMPETITION_WORKSPACE/samples/eastern-ok-sample-submission.csv",
+      "sha256": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+      "columns_read": [
+        "GEOID"
+      ],
+      "hosted_uri": "us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-sample-submission.csv",
+      "hosted_sha256": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+      "provenance_class": "official_challenge_provided_local"
+    },
+    {
+      "id": "samples/maricopa-az-sample-submission.csv",
+      "kind": "local_provided",
+      "path": "$COMPETITION_WORKSPACE/samples/maricopa-az-sample-submission.csv",
+      "sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+      "columns_read": [
+        "GEOID"
+      ],
+      "hosted_uri": "us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-sample-submission.csv",
+      "hosted_sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+      "provenance_class": "official_challenge_provided_local"
+    },
+    {
+      "id": "samples/northern-ca-sample-submission.csv",
+      "kind": "local_provided",
+      "path": "$COMPETITION_WORKSPACE/samples/northern-ca-sample-submission.csv",
+      "sha256": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+      "columns_read": [
+        "GEOID"
+      ],
+      "hosted_uri": "us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-sample-submission.csv",
+      "hosted_sha256": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+      "provenance_class": "official_challenge_provided_local"
+    },
+    {
+      "id": "samples/south-central-tx-sample-submission.csv",
+      "kind": "local_provided",
+      "path": "$COMPETITION_WORKSPACE/samples/south-central-tx-sample-submission.csv",
+      "sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e",
+      "columns_read": [
+        "GEOID"
+      ],
+      "hosted_uri": "us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-sample-submission.csv",
+      "hosted_sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e",
+      "provenance_class": "official_challenge_provided_local"
+    },
+    {
+      "id": "eastern-ok/census-acs-housing",
+      "kind": "hosted_object",
+      "path": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-census-acs-housing.parquet",
+      "sha256": "d4c733d51ac8aeb26f6b829cd290fc654fb7c2f866c2b296f2046713d3910669",
+      "hash_kind": "parquet_footer_fingerprint",
+      "rows": 1192,
+      "columns_read": [
+        "GEOID",
+        "geometry"
+      ],
+      "provenance_class": "official_challenge_provided_hosted"
+    },
+    {
+      "id": "eastern-ok/overture-buildings",
+      "kind": "hosted_object",
+      "path": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-buildings.parquet",
+      "sha256": "99a5e142beae9f30b8b4cbbecc8fb0906b70235943d0bfebbd1a203b37c2338c",
+      "hash_kind": "parquet_footer_fingerprint",
+      "rows": 2551694,
+      "columns_read": [
+        "bbox",
+        "geometry",
+        "subtype",
+        "has_parts",
+        "num_floors",
+        "height"
+      ],
+      "provenance_class": "official_challenge_provided_hosted"
+    },
+    {
+      "id": "eastern-ok/overture-pois",
+      "kind": "hosted_object",
+      "path": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-pois.parquet",
+      "sha256": "9debcb38056aac480673c657651e91204ac50d1a681bbc2d0a2d36aef06e6c81",
+      "hash_kind": "parquet_footer_fingerprint",
+      "rows": 207369,
+      "columns_read": [
+        "bbox",
+        "categories",
+        "confidence",
+        "sources"
+      ],
+      "provenance_class": "official_challenge_provided_hosted"
+    },
+    {
+      "id": "eastern-ok/overture-roads",
+      "kind": "hosted_object",
+      "path": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-roads.parquet",
+      "sha256": "fdbccb68fd470c766c6d586623c7ed6a2cf04afa91d8873d7974ec06ff271885",
+      "hash_kind": "parquet_footer_fingerprint",
+      "rows": 520550,
+      "columns_read": [
+        "class",
+        "routes",
+        "geometry",
+        "connectors"
+      ],
+      "provenance_class": "official_challenge_provided_hosted"
+    },
+    {
+      "id": "maricopa-az/census-acs-housing",
+      "kind": "hosted_object",
+      "path": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-census-acs-housing.parquet",
+      "sha256": "254d6983b497d72f5bebf4820c0cfa7b614f68cd91aef08be34ff7ccd5ca6440",
+      "hash_kind": "parquet_footer_fingerprint",
+      "rows": 1593,
+      "columns_read": [
+        "GEOID",
+        "geometry"
+      ],
+      "provenance_class": "official_challenge_provided_hosted"
+    },
+    {
+      "id": "maricopa-az/overture-buildings",
+      "kind": "hosted_object",
+      "path": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-buildings.parquet",
+      "sha256": "5bb6ae30cbaaa65eca7d1f969e245ca7d5da169db002d643495a6382069f8e5d",
+      "hash_kind": "parquet_footer_fingerprint",
+      "rows": 2908224,
+      "columns_read": [
+        "bbox",
+        "geometry",
+        "subtype",
+        "has_parts",
+        "num_floors",
+        "height"
+      ],
+      "provenance_class": "official_challenge_provided_hosted"
+    },
+    {
+      "id": "maricopa-az/overture-pois",
+      "kind": "hosted_object",
+      "path": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-pois.parquet",
+      "sha256": "0441adcd37e0d29be16de19cf0b8ca2843eb694b7c56144c4a66d7a04c9598a9",
+      "hash_kind": "parquet_footer_fingerprint",
+      "rows": 300046,
+      "columns_read": [
+        "bbox",
+        "categories",
+        "confidence",
+        "sources"
+      ],
+      "provenance_class": "official_challenge_provided_hosted"
+    },
+    {
+      "id": "maricopa-az/overture-roads",
+      "kind": "hosted_object",
+      "path": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-roads.parquet",
+      "sha256": "3f6e2afac4ff8de26751d0687aff7e8140faeb4832eb875fddced7b66f782391",
+      "hash_kind": "parquet_footer_fingerprint",
+      "rows": 494492,
+      "columns_read": [
+        "class",
+        "routes",
+        "geometry",
+        "connectors"
+      ],
+      "provenance_class": "official_challenge_provided_hosted"
+    },
+    {
+      "id": "northern-ca/census-acs-housing",
+      "kind": "hosted_object",
+      "path": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-census-acs-housing.parquet",
+      "sha256": "e28fad8aa5052f85856e000cb4afbd9985f34dd1b6d3365d4de65b803afdbc70",
+      "hash_kind": "parquet_footer_fingerprint",
+      "rows": 591,
+      "columns_read": [
+        "GEOID",
+        "geometry"
+      ],
+      "provenance_class": "official_challenge_provided_hosted"
+    },
+    {
+      "id": "northern-ca/overture-buildings",
+      "kind": "hosted_object",
+      "path": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-buildings.parquet",
+      "sha256": "638012f2cdf7dd7612c0dd1a83b5e8816163ac154ef04a0ec9a29c0a9c37231a",
+      "hash_kind": "parquet_footer_fingerprint",
+      "rows": 1164724,
+      "columns_read": [
+        "bbox",
+        "geometry",
+        "subtype",
+        "has_parts",
+        "num_floors",
+        "height"
+      ],
+      "provenance_class": "official_challenge_provided_hosted"
+    },
+    {
+      "id": "northern-ca/overture-pois",
+      "kind": "hosted_object",
+      "path": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-pois.parquet",
+      "sha256": "64166748d59c60fb92672d5441545d310b0146bec0f3c8a92d8285595c73e755",
+      "hash_kind": "parquet_footer_fingerprint",
+      "rows": 116897,
+      "columns_read": [
+        "bbox",
+        "categories",
+        "confidence",
+        "sources"
+      ],
+      "provenance_class": "official_challenge_provided_hosted"
+    },
+    {
+      "id": "northern-ca/overture-roads",
+      "kind": "hosted_object",
+      "path": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-roads.parquet",
+      "sha256": "4566e71f2d4808e1da07d4601eb98d0a9cbebdf8916a00ddbc7dbb7689f0a8fe",
+      "hash_kind": "parquet_footer_fingerprint",
+      "rows": 191836,
+      "columns_read": [
+        "class",
+        "routes",
+        "geometry",
+        "connectors"
+      ],
+      "provenance_class": "official_challenge_provided_hosted"
+    },
+    {
+      "id": "south-central-tx/census-acs-housing",
+      "kind": "hosted_object",
+      "path": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-census-acs-housing.parquet",
+      "sha256": "b81716844620ed75474b2ba585b9dfe69d9b38b2f9a1bc5458ebdec4349395c4",
+      "hash_kind": "parquet_footer_fingerprint",
+      "rows": 6010,
+      "columns_read": [
+        "GEOID",
+        "geometry"
+      ],
+      "provenance_class": "official_challenge_provided_hosted"
+    },
+    {
+      "id": "south-central-tx/overture-buildings",
+      "kind": "hosted_object",
+      "path": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-buildings.parquet",
+      "sha256": "a3c07e39587f3ca85c92d848905de3c5e0212b7d23acfc96ef768b8d04b3c21a",
+      "hash_kind": "parquet_footer_fingerprint",
+      "rows": 11463801,
+      "columns_read": [
+        "bbox",
+        "geometry",
+        "subtype",
+        "has_parts",
+        "num_floors",
+        "height"
+      ],
+      "provenance_class": "official_challenge_provided_hosted"
+    },
+    {
+      "id": "south-central-tx/overture-pois",
+      "kind": "hosted_object",
+      "path": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-pois.parquet",
+      "sha256": "d8d5f0f768b30698e145749011dc104261dba1e49c8bed2bea67fc21bc977055",
+      "hash_kind": "parquet_footer_fingerprint",
+      "rows": 1300334,
+      "columns_read": [
+        "bbox",
+        "categories",
+        "confidence",
+        "sources"
+      ],
+      "provenance_class": "official_challenge_provided_hosted"
+    },
+    {
+      "id": "south-central-tx/overture-roads",
+      "kind": "hosted_object",
+      "path": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-roads.parquet",
+      "sha256": "90acd4075593851bc1c122c9f33ac107eb8a0a08d6fc47caac6f48d6604042cb",
+      "hash_kind": "parquet_footer_fingerprint",
+      "rows": 1937009,
+      "columns_read": [
+        "class",
+        "routes",
+        "geometry",
+        "connectors"
+      ],
+      "provenance_class": "official_challenge_provided_hosted"
+    },
+    {
+      "id": "reports/candidates/building_morphology.csv",
+      "kind": "derived",
+      "path": "reports/candidates/building_morphology.csv",
+      "sha256": "ed0928651e1ddc0de89e6fd6544c30bd510456f6e9b72eea9d09277919194b75",
+      "producer": "scripts/build_building_morphology_candidate.py",
+      "producer_sha256": "cdbd39940e238f73aa9262d051840b8020ba37423b2889eeed23273aeb3158f5",
+      "provenance_class": "derived_from_allowed_inputs"
+    },
+    {
+      "id": "reports/candidates/poi_confidence_weighted.csv",
+      "kind": "derived",
+      "path": "reports/candidates/poi_confidence_weighted.csv",
+      "sha256": "28558424db768222ec7639986970af7a37b74228ef8f4e3190e5e58b6e19071c",
+      "producer": "scripts/build_poi_confidence_candidate.py",
+      "producer_sha256": "87abea44ed12236c3999d4faf3cd4c245a25429946a13b5c1c2f94dae9ccadd3",
+      "provenance_class": "derived_from_allowed_inputs"
+    },
+    {
+      "id": "reports/candidates/road_topology_candidate.csv",
+      "kind": "derived",
+      "path": "reports/candidates/road_topology_candidate.csv",
+      "sha256": "612c2080c3d470fbcdc0cd752cd26847da05a35bf5d245c0b1599134cc82fda7",
+      "producer": "scripts/build_road_topology_candidate.py",
+      "producer_sha256": "66d10ab683b28c33c61b4fc720abe76f64b19d64c892c531960d52eeeebc387d",
+      "provenance_class": "derived_from_allowed_inputs"
+    },
+    {
+      "id": "workspace:gap-estimator/features/eastern-ok-overture-tract-summary.parquet",
+      "kind": "derived",
+      "path": "$COMPETITION_WORKSPACE/gap-estimator/features/eastern-ok-overture-tract-summary.parquet",
+      "sha256": "e5a06316c316f61bf25b80b48e89c1e7f0b1461a0b8cec5831aae24e0cf83fa6",
+      "producer": "scripts/estimate_gaps.py",
+      "producer_sha256": "4f59982e0349af048ba11efbd5dbc629076eef8d3c8dc08d5747da5833bfc4fe",
+      "provenance_class": "derived_from_allowed_inputs"
+    },
+    {
+      "id": "workspace:gap-estimator/features/maricopa-az-overture-tract-summary.parquet",
+      "kind": "derived",
+      "path": "$COMPETITION_WORKSPACE/gap-estimator/features/maricopa-az-overture-tract-summary.parquet",
+      "sha256": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22",
+      "producer": "scripts/estimate_gaps.py",
+      "producer_sha256": "4f59982e0349af048ba11efbd5dbc629076eef8d3c8dc08d5747da5833bfc4fe",
+      "provenance_class": "derived_from_allowed_inputs"
+    },
+    {
+      "id": "workspace:gap-estimator/features/northern-ca-overture-tract-summary.parquet",
+      "kind": "derived",
+      "path": "$COMPETITION_WORKSPACE/gap-estimator/features/northern-ca-overture-tract-summary.parquet",
+      "sha256": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c",
+      "producer": "scripts/estimate_gaps.py",
+      "producer_sha256": "4f59982e0349af048ba11efbd5dbc629076eef8d3c8dc08d5747da5833bfc4fe",
+      "provenance_class": "derived_from_allowed_inputs"
+    },
+    {
+      "id": "workspace:gap-estimator/features/poi-confidence-by-tract.parquet",
+      "kind": "derived",
+      "path": "$COMPETITION_WORKSPACE/gap-estimator/features/poi-confidence-by-tract.parquet",
+      "sha256": "66eb8f093c8e02395cdab7e675b00bf304209da34362774c94c750ce6bf8b3cb",
+      "producer": "scripts/discovery_confidence_by_stratum.py",
+      "producer_sha256": "35a30e0a87ad016d3e936be4437084cffc91f708ef5c6692886c38805026d9a1",
+      "provenance_class": "reconciliation_control_only"
+    },
+    {
+      "id": "workspace:gap-estimator/features/south-central-tx-overture-tract-summary.parquet",
+      "kind": "derived",
+      "path": "$COMPETITION_WORKSPACE/gap-estimator/features/south-central-tx-overture-tract-summary.parquet",
+      "sha256": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746",
+      "producer": "scripts/estimate_gaps.py",
+      "producer_sha256": "4f59982e0349af048ba11efbd5dbc629076eef8d3c8dc08d5747da5833bfc4fe",
+      "provenance_class": "derived_from_allowed_inputs"
+    },
+    {
+      "id": "code:scripts/build_estimator_v2_candidates.py",
+      "kind": "code",
+      "path": "scripts/build_estimator_v2_candidates.py",
+      "sha256": "f1a21bd5854fcb97153e1fab9256b3a65dd7df21a15171a685ee2a4e9492b5dc",
+      "provenance_class": "derived_from_allowed_inputs"
+    },
+    {
+      "id": "code:scripts/build_estimator_v2_candidates.py",
+      "kind": "code",
+      "path": "scripts/build_estimator_v2_candidates.py",
+      "sha256": "f1a21bd5854fcb97153e1fab9256b3a65dd7df21a15171a685ee2a4e9492b5dc",
+      "provenance_class": "derived_from_allowed_inputs"
+    },
+    {
+      "id": "code:scripts/audit_v2_component_masks.py",
+      "kind": "code",
+      "path": "scripts/audit_v2_component_masks.py",
+      "sha256": "fd8a49cdd460a2bbb6e731244c0941d2a4c27f060ec8b54693c977d1bf0eeb9a",
+      "provenance_class": "derived_from_allowed_inputs"
+    },
+    {
+      "id": "code:scripts/estimate_gaps.py",
+      "kind": "code",
+      "path": "scripts/estimate_gaps.py",
+      "sha256": "4f59982e0349af048ba11efbd5dbc629076eef8d3c8dc08d5747da5833bfc4fe",
+      "provenance_class": "derived_from_allowed_inputs"
+    },
+    {
+      "id": "code:scripts/estimator_v2_building.py",
+      "kind": "code",
+      "path": "scripts/estimator_v2_building.py",
+      "sha256": "dc13042d273cfa1291692c7fc28b1c0b3f0e70f5476ae1104c3ab65debb7c24a",
+      "provenance_class": "derived_from_allowed_inputs"
+    },
+    {
+      "id": "code:scripts/estimator_v2_establishments.py",
+      "kind": "code",
+      "path": "scripts/estimator_v2_establishments.py",
+      "sha256": "ec99e39e9330b5af57d08ff221c81e7485fe92ea2016c38239feb5a4706b2179",
+      "provenance_class": "derived_from_allowed_inputs"
+    },
+    {
+      "id": "code:scripts/build_road_topology_candidate.py",
+      "kind": "code",
+      "path": "scripts/build_road_topology_candidate.py",
+      "sha256": "66d10ab683b28c33c61b4fc720abe76f64b19d64c892c531960d52eeeebc387d",
+      "provenance_class": "derived_from_allowed_inputs"
+    },
+    {
+      "id": "code:scripts/build_building_morphology_candidate.py",
+      "kind": "code",
+      "path": "scripts/build_building_morphology_candidate.py",
+      "sha256": "cdbd39940e238f73aa9262d051840b8020ba37423b2889eeed23273aeb3158f5",
+      "provenance_class": "derived_from_allowed_inputs"
+    },
+    {
+      "id": "code:scripts/build_poi_confidence_candidate.py",
+      "kind": "code",
+      "path": "scripts/build_poi_confidence_candidate.py",
+      "sha256": "87abea44ed12236c3999d4faf3cd4c245a25429946a13b5c1c2f94dae9ccadd3",
+      "provenance_class": "derived_from_allowed_inputs"
+    },
+    {
+      "id": "evidence:v2_defined_mask_audit",
+      "kind": "evidence",
+      "path": "reports/v2-defined-mask-audit.json",
+      "sha256": "fea33ef7daeeeac2fd187803481e050085698afd6f44ed182e9c5af5028054d2",
+      "provenance_class": "derived_from_allowed_inputs"
+    },
+    {
+      "id": "evidence:v2_prior_envelope",
+      "kind": "evidence",
+      "path": "reports/v2-prior-envelope.json",
+      "sha256": "c50569cf0f36ec3695e59dce68012422edd3baa09399bf1afe35b434f07d3cfd",
+      "provenance_class": "derived_from_allowed_inputs"
+    },
+    {
+      "id": "evidence:maricopa_route_ratio_diagnostic",
+      "kind": "evidence",
+      "path": "reports/maricopa-route-ratio-diagnostic.json",
+      "sha256": "7043b4c27af9928125b5d2df111ba4df414952c57910a7fa98330e60dbe54752",
+      "provenance_class": "derived_from_allowed_inputs"
+    },
+    {
+      "id": "evidence:writeup_methodology",
+      "kind": "evidence",
+      "path": "docs/writeup/methodology.md",
+      "sha256": "40db6738db68ca0973ef743d45756c29c5f29feffcd0500353e652c37d5c87e3",
+      "provenance_class": "derived_from_allowed_inputs"
+    }
+  ],
+  "input_count": 46,
+  "inputs_without_hash": [],
+  "acceptance_all_passed": true
+}
