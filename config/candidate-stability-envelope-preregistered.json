@@ -1,0 +1,127 @@
+{
+  "candidate_id": "CANDIDATE_STABILITY_ENVELOPE_V1",
+  "registered_utc": "2026-10-24",
+  "status": "preregistered_before_candidate_distribution_and_spread_measurement",
+  "purpose": "analysis-only frozen sensitivity envelope of existing mechanistic and provided-feature candidates; no target fit, accuracy claim, scored promotion, or upload",
+  "scope": {
+    "official_rows": 9379,
+    "regions_order": ["maricopa-az", "northern-ca", "eastern-ok", "south-central-tx"],
+    "candidate_order": ["C2_V0_MECHANISTIC", "XTS_C2_V2", "DENSITY_C2_V1", "FACILITY_CATCHMENT_5KM", "BUILDING_MORPH_BETA_0.02", "BUILDING_SOURCE_PRIMARY_BETA_0.02"],
+    "row_order": "concatenated authoritative regional sample order; GEOID read as text; only official 9,379 IDs are evaluated; 415 template-only eastern-WA rows are not read as candidate values or used"
+  },
+  "frozen_inputs": {
+    "official_component_baseline": {
+      "path": "reports/gap-estimates.csv",
+      "sha256": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852",
+      "role": "existing v0 model output and definedness flags, not targets",
+      "columns": ["GEOID", "transport_gap", "transport_defined", "building_gap", "building_defined", "poi_gap", "poi_defined", "fire_gap", "fire_defined", "ems_gap", "ems_defined", "schools_gap", "schools_defined", "cbp_gap", "cbp_defined"]
+    },
+    "candidates": [
+      {
+        "candidate_id": "C2_V0_MECHANISTIC",
+        "path": "reports/candidates/C2_component_estimator_v0.csv",
+        "sha256": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514",
+        "score_column": "coverage_gap_score",
+        "role": "frozen feature-derived mechanistic anchor; template-only rows ignored"
+      },
+      {
+        "candidate_id": "XTS_C2_V2",
+        "path": "reports/candidates/cross_theme_support.csv",
+        "sha256": "8c4830f2cb528cc9fd5fe2f8d3692fc36e4d682ec6f7621309c22704828e75be",
+        "score_column": "adjusted_coverage_gap_score",
+        "feature_coverage_columns": ["building_source_support_missing", "road_route_support_missing", "place_confidence_support_missing"]
+      },
+      {
+        "candidate_id": "DENSITY_C2_V1",
+        "path": "reports/candidates/density_context_candidate.csv",
+        "sha256": "e4d57e62092a094386941f52778bfc342b95860370d603825918fac6205013ad",
+        "score_column": "density_context_coverage_gap_score",
+        "feature_coverage_columns": ["density_context_support_missing", "population_support_5km_missing", "building_support_5km_missing", "population_support_20km_missing", "building_support_20km_missing"]
+      },
+      {
+        "candidate_id": "FACILITY_CATCHMENT_5KM",
+        "path": "reports/candidates/facility_catchment_candidate.csv",
+        "sha256": "d646129188b006a971d4a98292d1a9221959036a9d5ba0329969dd1913ee876c",
+        "score_column": "facility_catchment_gap_5km",
+        "composition": "Use the provided v0 component outputs/flags; replace facility half with the 5 km pooled-logistic catchment facility half; retain v0 cbp_gap/cbp_defined as the other POI half; combine defined POI halves equally; then use the existing defined-component mean over transport, building and POI.",
+        "feature_coverage_columns": ["fire_nearest_distance_5km_missing", "ems_nearest_distance_5km_missing", "schools_nearest_distance_5km_missing", "urbanity_source"]
+      },
+      {
+        "candidate_id": "BUILDING_MORPH_BETA_0.02",
+        "path": "reports/candidates/building_morphology.csv",
+        "sha256": "ed0928651e1ddc0de89e6fd6544c30bd510456f6e9b72eea9d09277919194b75",
+        "score_column": "building_gap_morph_beta_0.02",
+        "composition": "Replace only v0 building_gap/building_defined with the fixed primary-beta morphology building component; retain v0 transport and POI components/flags; apply the existing defined-component mean.",
+        "feature_coverage_columns": ["building_defined", "valid_geometry_count", "morphology_support"]
+      },
+      {
+        "candidate_id": "BUILDING_SOURCE_PRIMARY_BETA_0.02",
+        "path": "reports/candidates/building_source_prior.csv",
+        "sha256": "c3efc27237973b9cdcdaf3e5d42edc4c1ad9716f7de28639b9630ab3ae6d079e",
+        "score_column": "building_gap_primary_beta_0.02",
+        "composition": "Replace only v0 building_gap/building_defined with the preregistered primary-profile/beta-0.02 source-prior building component; retain v0 transport and POI components/flags; apply the existing defined-component mean.",
+        "feature_coverage_columns": ["building_defined", "source_mix_defined", "source_prior_support_primary"]
+      }
+    ],
+    "provenance_reports": {
+      "facility_miss": {"path": "reports/poi-facility-miss-audit.json", "sha256": "b559c8d3d85709d0e5f2d2102bb39da4d8255a3c62f728cf736da522025a289c"},
+      "cross_theme": {"path": "reports/cross-theme-support.json", "sha256": "77c010a8c74f62487816b142e489b651f38dfcc93793c87fbe9c91711d1d352d"},
+      "density_context": {"path": "reports/density-context-candidate.json", "sha256": "8da97e44bb3af4a06fb98f83065c8719fc746b5c1596cb11ef8bd611c72dd7b7"},
+      "facility_catchment": {"path": "reports/facility-catchment-candidate.json", "sha256": "53cdbfa4450223d84db7647dc4fb16d058d6bd239740e9153f51000e884e6794"},
+      "building_morphology": {"path": "reports/building-morphology-candidate.json", "sha256": "e7f6f50d0b00fd2675f47878d524d78544f021f8bfa9bd2766722fff621cccdd"},
+      "building_source_prior": {"path": "reports/building-source-prior.json", "sha256": "4066d3a86223dca5cdd2cf63e6660afbc6577915172a48f265c4f70da08f51d4"}
+    },
+    "sample_ids": {
+      "source": "$COMPETITION_WORKSPACE/samples/<region>-sample-submission.csv",
+      "columns_read": ["GEOID"],
+      "score_placeholders_read": false
+    },
+    "urbanity": {
+      "source": "$COMPETITION_WORKSPACE/defined-flags-inputs/<region>-strata-tract-table.parquet",
+      "columns_read": ["GEOID", "ur_class"],
+      "usage": "descriptive region/urbanity grouping only; no score/model inputs"
+    }
+  },
+  "composition": {
+    "base_component_combine": "arithmetic mean over only components with existing *_defined == 1 flags; same deterministic defined-component rule as scripts/estimate_gaps.py",
+    "facility_candidate": "mean the 5 km facility catchment candidate with the existing v0 cbp_gap only when defined; if one half is undefined use the other; if neither exists the POI component is undefined",
+    "building_candidates": "replace only the building component and its defined flag as specified by each already-validated feature-only component artifact",
+    "envelope_aggregation": "equal-weight arithmetic mean of the six frozen full-score candidates; no weights are estimated or adjusted",
+    "spread": "per official tract max(candidate score) - min(candidate score)",
+    "spread_alert_threshold": 0.05,
+    "p95_acceptance_threshold": 0.10,
+    "operator_review_rule": "flag operator review if official-scope p95 candidate spread exceeds 0.10"
+  },
+  "reporting_plan": {
+    "measure_before": "Record every pinned component artifact hash, official-scope candidate/component distribution, row alignment, boundedness and input feature-availability rates from its fixed missing/defined flags.",
+    "measure_after": "Report six aligned full-score candidate distributions, equal-weight ensemble distribution, per-tract median/p95/max spread and share >0.05, region and provided urbanity-class summaries, schema/bounds/hash/determinism checks.",
+    "determinism": "Run the full build twice and require byte-identical member CSV, envelope CSV, report, and manifest.",
+    "accuracy_claim": false,
+    "local_rmse": null,
+    "target_or_leaderboard_feedback": false
+  },
+  "restrictions": {
+    "labels_or_target_reconstruction": false,
+    "sample_score_placeholders": false,
+    "removed_reference_layers_or_equivalents": false,
+    "external_data": false,
+    "leaderboard_information_or_probes": false,
+    "upload": false,
+    "scored_promotion": false,
+    "approval_gated_building_or_establishments_components_added": false
+  },
+  "limitations": [
+    "The equal-weight envelope mean is a declared diagnostic aggregation, not an accuracy-optimized prediction or submission proposal.",
+    "Candidate spread measures model-specification sensitivity only; no labels or authorized holdout scores are available to rank candidates.",
+    "Building morphology/source-prior and facility-catchment candidates remain analysis-only; this envelope does not satisfy approvals or prerequisites for a scored v2 assembly.",
+    "The existing v0 CBP component is retained only to make the facility-half replacement comparable; no new establishments sensitivity is incorporated."
+  ],
+  "acceptance": {
+    "exact_ordered_official_ids_for_all_members": true,
+    "100_percent_row_alignment": true,
+    "zero_invalid_candidate_or_envelope_outputs": true,
+    "deterministic_hashes": true,
+    "report_p95_spread_and_flag_over_0_10": true,
+    "no_empirical_accuracy_claim": true
+  }
+}
