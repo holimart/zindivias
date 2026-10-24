@@ -105,3 +105,44 @@ The four new CSVs have exact 9,794 template order, preserve the 9,379 official-r
 After successful status refreshes, infer `E[y] = (E[y²] + c² - RMSE(P6)²)/(2c)` and, for each region under each denominator scenario, `E[y 1_r] = (E[y²] + c_r² P(r) - RMSE(R-r)²)/(2c_r)` and `E[y|r] = E[y 1_r]/P(r)`. Compare the four region contributions with the P6 global mean: near-zero closure under the official-only denominator supports the 9,379 scope; an appreciable residual under the all-template denominator is evidence of a nonzero eastern-WA contribution, not proof of its exact component values. Report the closure residual and all assumptions in `reports/lb-score-algebra.json`. R-AZ is intentionally the only score-column-only probe; its processing status tests whether optional component columns are needed.
 
 **Upload gate / current disposition:** the shared orchestrator dry-run validated P6 and all four indicators, but reported `submissions_today_before=5` and `daily_cap=5` for each. Five prior submissions have already reached the platform's observed daily limit; P5 was explicitly rejected with the same 5/day message. No live upload was attempted. Keep these preregistered files frozen and defer the five calibration uploads until the limit resets; upload only through `$ORCHESTRATOR_ROOT/scripts/zindi_submit.py`, then poll `--status` for actual public RMSEs. No local held-out score exists because the competition has no labels.
+
+## How a subset probe is read
+
+For a preregistered candidate `p = base + delta * 1_S`, use its public RMSE and the public RMSE of the already-scored `base` to infer the residual cell moment:
+
+```text
+E[(y-base) 1_S] = (MSE(base) - MSE(p) + delta^2 * P(S)) / (2 * delta)
+```
+
+`P(S)` is currently proxied by the full official-sample share `n_S / 9,379`; the public 30% may have a different composition. If the relative public-share error is bounded by `eps`, the corresponding absolute moment error is bounded by `|delta| * P(S) * eps / 2`. `eps` must be recorded as a stated sensitivity assumption, not described as a measured guarantee. Eastern-WA template-only rows do not enter official cells or their share denominators.
+
+Use `scripts/lb_subset_algebra.py` for every later subset-probe row, including after a probe's `--status` score refresh. It reads `reports/submissions.jsonl`, the frozen candidate artifacts referenced by `reports/candidates.json`, and a cell-definition JSON; it verifies the candidate hashes and `p=base+delta*1_S` identity on official IDs, then writes `reports/lb-subset-moments.json`. `reports/region-subset-cell-definitions.json` records the four preregistered region probes from Phase 3; they currently show `awaiting_public_score`, not inferred means. The report also regenerates the phase-1 C0–C3 moments and phase-2 residual moments from the ledger and verifies exact equality with the existing algebra report.
+
+Reproduce the current measurement report and tests:
+
+```sh
+uv run python scripts/lb_subset_algebra.py \\
+  --workspace "$COMPETITION_WORKSPACE" \\
+  --cells reports/region-subset-cell-definitions.json \\
+  --out reports/lb-subset-moments.json
+uv run --with pytest pytest -q tests/test_lb_subset_algebra.py
+```
+
+A new cell must be specified by a categorical value from provided challenge metadata (the built-in `template` source or an explicitly supplied `--metadata NAME=PATH` table). Additional metadata tables must be challenge-provided or derived from challenge data, live under `$COMPETITION_WORKSPACE` or this repo, and have one row per official GEOID. The template source is restricted to GEOID/region metadata; score placeholder columns cannot define cells. The cell-definition template is:
+
+```json
+{
+  "public_share_relative_error_eps": 0.10,
+  "cells": [{
+    "cell_id": "region-x-facility-zero-road-present",
+    "selector": {"source": "provided-metadata", "field": "provided_flag", "equals": "1"},
+    "base_candidate_id": "already-scored-candidate",
+    "probe_candidate_id": "preregistered-probe",
+    "delta": 0.05,
+    "min_official_rows": 250,
+    "public_share_relative_error_eps": 0.10
+  }]
+}
+```
+
+Before preregistration, verify `min_official_rows >= 250` using the 9,379 authoritative sample IDs. ID lists, GEOID selectors, per-GEOID cells, removed reference layers and external data are forbidden. Candidate hashes and all probe parameters must be committed before any permitted upload. The subset tool itself never uploads; a future probe row must use its report after the shared orchestrator returns actual public scores.

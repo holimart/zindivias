@@ -1,0 +1,234 @@
+{
+  "method": "public score-algebra subset moments for preregistered probe-as-candidate pairs",
+  "formula": "E[(y-base)1_S] = (MSE(base)-MSE(probe)+delta^2*P(S))/(2*delta), for probe=base+delta*1_S",
+  "score_identity": "MSE(p)=E[y^2]-2E[p*y]+E[p^2]",
+  "no_labels_or_removed_references_used": true,
+  "sample_score_placeholders_read": false,
+  "official_scored_rows": 9379,
+  "platform_template_rows": 9794,
+  "eastern_wa_template_rows_excluded_from_cells": 415,
+  "composition_assumption": "P(S) is proxied by the full authoritative official-row share. Public-slice moments are estimates under representative composition; every cell reports a conditional bound for its configured relative-share error eps.",
+  "input_lineage": {
+    "candidate_manifest_sha256": "5e7e5266e6f14b5ab214f9140111a3b8e5cffe8a8f3b78a0082a09a6e3e312fc",
+    "submissions_ledger_sha256": "4bcb1ea00f5eaf71972a54385ff739043277eda7ccea25270ea1421608eb6650",
+    "cell_definitions_sha256": "7b19c5144ae1ad04bbd19709798d84df13e24de25e0b160be921ebb035e65851",
+    "official_geoid_sequence_sha256": "b04a211263a9ef61d71ba242a282487411ef6258e458ed258857d270d636fda8",
+    "metadata_projection_sha256": {
+      "template": "f78df8af22d0f6ff35cc21c3ec0b538c72da85d70cc0b67ed1e3d388b7c1188d"
+    },
+    "metadata_source_paths": {
+      "template": "$COMPETITION_WORKSPACE/SampleSubmission.csv"
+    }
+  },
+  "legacy_reproduction": {
+    "source_report": "reports/lb-score-algebra.json",
+    "phase1_and_phase2_inferred_moments_equal": true,
+    "canonical_phase1_sha256": "00188596ec8a631c57c932421295cedc874749821abdc37e898c7067126b47e1",
+    "reference_phase1_sha256": "00188596ec8a631c57c932421295cedc874749821abdc37e898c7067126b47e1",
+    "canonical_P5_residual_sha256": "4fc600b10ce09ba37eb56056e9167aacf6940033db7e3bb87fe158597912eed3",
+    "reference_P5_residual_sha256": "4fc600b10ce09ba37eb56056e9167aacf6940033db7e3bb87fe158597912eed3",
+    "moments": {
+      "phase1": {
+        "C0_target_second_moment_proxy": 0.011501768649197401,
+        "rmse0": 0.107246299,
+        "candidates": {
+          "C0": {
+            "public_rmse": 0.107246299,
+            "public_mse": 0.011501768649197401,
+            "E_p2_all_official_rows": 0.0,
+            "inferred_E_py": 0.0,
+            "uncentred_correlation_proxy": null,
+            "unconstrained_optimal_global_scale": null,
+            "predicted_rmse_at_unconstrained_scale": 0.107246299
+          },
+          "C1": {
+            "public_rmse": 0.146449112,
+            "public_mse": 0.021447342405588543,
+            "E_p2_all_official_rows": 0.02904896721177603,
+            "inferred_E_py": 0.009551696727692443,
+            "uncentred_correlation_proxy": 0.5225560290199255,
+            "unconstrained_optimal_global_scale": 0.3288136427728255,
+            "predicted_rmse_at_unconstrained_scale": 0.09143872513056803
+          },
+          "C2": {
+            "public_rmse": 0.235358712,
+            "public_mse": 0.05539372331429894,
+            "E_p2_all_official_rows": 0.05268415779099713,
+            "inferred_E_py": 0.004396101562947799,
+            "uncentred_correlation_proxy": 0.17858516630602533,
+            "unconstrained_optimal_global_scale": 0.08344257073231645,
+            "predicted_rmse_at_unconstrained_scale": 0.10552225657928607
+          },
+          "C3": {
+            "public_rmse": 0.349409867,
+            "public_mse": 0.12208725515695767,
+            "E_p2_all_official_rows": 0.07720486186417602,
+            "inferred_E_py": -0.016690312321792126,
+            "uncentred_correlation_proxy": -0.5600925868620702,
+            "unconstrained_optimal_global_scale": -0.21618214084956003,
+            "predicted_rmse_at_unconstrained_scale": 0.08884605337337494
+          }
+        }
+      },
+      "P5_residual_moments": {
+        "E_q2": 0.02904896721177603,
+        "E_d2": 0.023635190579221102,
+        "E_qd": -1.3378903012653048e-19,
+        "inferred_E_qy": 0.009551696727692443,
+        "inferred_E_dy": -0.005155595164744644
+      }
+    }
+  },
+  "scored_candidate_moments": {
+    "C0": {
+      "public_rmse": 0.107246299,
+      "submission_id": "uRRw9KpB",
+      "sha256": "0edf8140123e2135489e5728fd71bce6f1e28a97f447ca411ba45fdbc02bc214",
+      "E_p2_all_official_rows": 0.0,
+      "inferred_E_py": 0.0,
+      "score_source": "zindi_api_status"
+    },
+    "C1": {
+      "public_rmse": 0.146449112,
+      "submission_id": "BvyKrR6v",
+      "sha256": "dc2e368194b31408cb5c313fa8ce3f3fa59a1b5965bc2df8e4217bbc9e0c82e0",
+      "E_p2_all_official_rows": 0.02904896721177603,
+      "inferred_E_py": 0.009551696727692443,
+      "score_source": "zindi_api_status"
+    },
+    "C2": {
+      "public_rmse": 0.235358712,
+      "submission_id": "rTARuUaG",
+      "sha256": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514",
+      "E_p2_all_official_rows": 0.05268415779099713,
+      "inferred_E_py": 0.004396101562947799,
+      "score_source": "zindi_api_status"
+    },
+    "C3": {
+      "public_rmse": 0.349409867,
+      "submission_id": "TM83xxU6",
+      "sha256": "e5ee50f5c2cca149550f3408638d2b77431f6ed62cf104dfe8c07d8c8416f9e4",
+      "E_p2_all_official_rows": 0.07720486186417602,
+      "inferred_E_py": -0.016690312321792126,
+      "score_source": "zindi_api_status"
+    },
+    "P4": {
+      "public_rmse": 0.091440198,
+      "submission_id": "ySXi73rd",
+      "sha256": "8b329802d882ea4bdff2bfd8c465c160d6ffd9269cfbe28dce8be9e702b07d37",
+      "E_p2_all_official_rows": 0.0031407281956938294,
+      "inferred_E_py": 0.0031405935173060137,
+      "score_source": "zindi_api_status"
+    }
+  },
+  "subset_probe_moments": [
+    {
+      "cell_id": "R-AZ",
+      "status": "awaiting_public_score",
+      "selector": {
+        "source": "template",
+        "field": "region",
+        "equals": "maricopa-az"
+      },
+      "official_rows": 1593,
+      "official_total_rows": 9379,
+      "official_share_proxy": 0.16984753171979955,
+      "min_official_rows": 250,
+      "base_candidate_id": "C0",
+      "base_rmse": 0.107246299,
+      "base_submission_id": "uRRw9KpB",
+      "probe_candidate_id": "R-AZ",
+      "probe_sha256": "ff493d94f17fa9977be69113b4c4cca7cd0d207e3d65a8b7f68b9c4ca7f0373d",
+      "probe_predicted_rmse": 0.10473932500233933,
+      "probe_rmse": null,
+      "probe_submission_id": null,
+      "delta": 0.06467249836257832,
+      "E[(y-base)1_S]_public_estimate": null,
+      "public_share_relative_error_eps_assumption": 0.1,
+      "composition_error_bound_abs": 0.0005492232108518353,
+      "composition_error_bound_interpretation": "Conditional on the public cell share differing from the official share by at most eps in relative terms.",
+      "metadata_projection_sha256": "f78df8af22d0f6ff35cc21c3ec0b538c72da85d70cc0b67ed1e3d388b7c1188d"
+    },
+    {
+      "cell_id": "R-CA",
+      "status": "awaiting_public_score",
+      "selector": {
+        "source": "template",
+        "field": "region",
+        "equals": "northern-ca"
+      },
+      "official_rows": 591,
+      "official_total_rows": 9379,
+      "official_share_proxy": 0.06301311440452073,
+      "min_official_rows": 250,
+      "base_candidate_id": "C0",
+      "base_rmse": 0.107246299,
+      "base_submission_id": "uRRw9KpB",
+      "probe_candidate_id": "R-CA",
+      "probe_sha256": "3e3d171e2c676a3cc7bc462acc67a46f1ca084903e26b3ccb0f5b6faba227189",
+      "probe_predicted_rmse": 0.1063139160454831,
+      "probe_rmse": null,
+      "probe_submission_id": null,
+      "delta": 0.0505843615640282,
+      "E[(y-base)1_S]_public_estimate": null,
+      "public_share_relative_error_eps_assumption": 0.1,
+      "composition_error_bound_abs": 0.00015937390811568753,
+      "composition_error_bound_interpretation": "Conditional on the public cell share differing from the official share by at most eps in relative terms.",
+      "metadata_projection_sha256": "f78df8af22d0f6ff35cc21c3ec0b538c72da85d70cc0b67ed1e3d388b7c1188d"
+    },
+    {
+      "cell_id": "R-OK",
+      "status": "awaiting_public_score",
+      "selector": {
+        "source": "template",
+        "field": "region",
+        "equals": "eastern-ok"
+      },
+      "official_rows": 1192,
+      "official_total_rows": 9379,
+      "official_share_proxy": 0.12709244055869495,
+      "min_official_rows": 250,
+      "base_candidate_id": "C0",
+      "base_rmse": 0.107246299,
+      "base_submission_id": "uRRw9KpB",
+      "probe_candidate_id": "R-OK",
+      "probe_sha256": "49a1b8527caca4054d1b05c1a0bc3383af8b510aa973392f60d6b0552e0c0713",
+      "probe_predicted_rmse": 0.10553004942399961,
+      "probe_rmse": null,
+      "probe_submission_id": null,
+      "delta": 0.0385834027083047,
+      "E[(y-base)1_S]_public_estimate": null,
+      "public_share_relative_error_eps_assumption": 0.1,
+      "composition_error_bound_abs": 0.00024518294076287026,
+      "composition_error_bound_interpretation": "Conditional on the public cell share differing from the official share by at most eps in relative terms.",
+      "metadata_projection_sha256": "f78df8af22d0f6ff35cc21c3ec0b538c72da85d70cc0b67ed1e3d388b7c1188d"
+    },
+    {
+      "cell_id": "R-TX",
+      "status": "awaiting_public_score",
+      "selector": {
+        "source": "template",
+        "field": "region",
+        "equals": "south-central-tx"
+      },
+      "official_rows": 6003,
+      "official_total_rows": 9379,
+      "official_share_proxy": 0.6400469133169847,
+      "min_official_rows": 250,
+      "base_candidate_id": "C0",
+      "base_rmse": 0.107246299,
+      "base_submission_id": "uRRw9KpB",
+      "probe_candidate_id": "R-TX",
+      "probe_sha256": "b7046ce5e169e8a8fe81e8f7cbb2993a9cd6749f074ac137390d9158be701b35",
+      "probe_predicted_rmse": 0.09724597741188211,
+      "probe_rmse": null,
+      "probe_submission_id": null,
+      "delta": 0.057005298701692964,
+      "E[(y-base)1_S]_public_estimate": null,
+      "public_share_relative_error_eps_assumption": 0.1,
+      "composition_error_bound_abs": 0.001824303273836565,
+      "composition_error_bound_interpretation": "Conditional on the public cell share differing from the official share by at most eps in relative terms.",
+      "metadata_projection_sha256": "f78df8af22d0f6ff35cc21c3ec0b538c72da85d70cc0b67ed1e3d388b7c1188d"
+    }
+  ]
+}
