@@ -314,6 +314,30 @@ The report intentionally leaves region-mean-constrained predicted RMSE null. The
   --poi-audit-out reports/poi-facility-miss-audit.json
 ```
 
+## POI confidence-weighted count sensitivity (fixed thresholds)
+
+The frozen, analysis-only builder is `scripts/build_poi_confidence_candidate.py`; its thresholds, category sets, v2 formula, and source-use rules are preregistered in `config/poi-confidence-weighting-preregistered.json`. It reads the four official sample GEOID columns, the provided tract geometry for bbox-center assignment, `ALAND`/population/urbanity strata, and only Overture `bbox`, `categories`, `confidence`, and `sources` columns. Exact fire/EMS/school category sets come from `config/poi-category-definitions.json`. A matched POI contributes once per selected family. At threshold τ, its selected-family count contribution is `confidence` when valid confidence is at least τ, and zero otherwise; raw counts remain separately reported. The existing v2 region-share allocation for no-category POIs and the establishments half are held fixed to isolate the confidence sensitivity. Existing pooled v2 priors and `k_pop=0.024` are analysis-only; source dataset membership is reported as provenance and receives no weight. Hospitals remain excluded.
+
+Before weighting, raw core counts are 5,242 fire, 2,739 EMS, and 39,438 school POI-family rows (overlap between families is possible). Zero-tract counts are 5,892, 7,282, and 1,088 respectively. V0 POI score mean is `0.25699` over all official rows (`0.25704` among its 9,377 defined rows); the raw-count v2 POI mean is `0.12148` over all 9,379. The re-created raw v2 candidate matches the frozen v2 audit's means, variances, and defined counts overall and in each region. Every selected core POI has valid confidence and a dataset source in this input; source identity is descriptive, not a truth or completeness assessment.
+
+| Confidence threshold | Mean POI candidate | Variance | Std. dev. | Mean Δ vs. raw v2 | Mean fire / EMS / school count Δ vs. raw | Defined tracts |
+|---:|---:|---:|---:|---:|---:|---:|
+| 0.5 | 0.12410 | 0.015889 | 0.12605 | +0.00261 | −0.09289 / −0.05209 / −0.72571 | 9,379 / 9,379 |
+| 0.7 | 0.12563 | 0.015886 | 0.12604 | +0.00415 | −0.12614 / −0.07082 / −1.01624 | 9,379 / 9,379 |
+| 0.9 | 0.12789 | 0.015841 | 0.12586 | +0.00641 | −0.19037 / −0.10017 / −1.44350 | 9,379 / 9,379 |
+
+The outputs are deterministic, finite and in `[0,1]`, with exact official ID/order coverage; two complete builds were byte-identical. Regional and `ur_class` weighted-count/output moments, deltas, source coverage, and the v0/v2 measure-before tables are in `reports/poi-confidence-candidate.json`; the per-tract CSV and hash manifest are under `reports/candidates/`. Candidate SHA-256 is `28558424db768222ec7639986970af7a37b74228ef8f4e3190e5e58b6e19071c`; manifest SHA-256 is `061932cb63ce52b53924f73279540f603d2395b0e543f632888b501ebb0cf777`. Reproduce using:
+
+```sh
+uv run --with-requirements requirements.txt python scripts/build_poi_confidence_candidate.py \
+  --workspace "$COMPETITION_WORKSPACE" \
+  --candidate reports/candidates/poi_confidence_weighted.csv \
+  --manifest reports/candidates/poi_confidence_weighted_manifest.json \
+  --out reports/poi-confidence-candidate.json
+```
+
+This is a fixed-threshold sensitivity, not an accuracy test: no labels or target RMSE exist, confidence is not validation, and no candidate was promoted or uploaded.
+
 ## Overture POI confidence by SVI and urbanity
 
 The deterministic diagnostic in `scripts/discovery_confidence_by_stratum.py`

@@ -1,0 +1,669 @@
+{
+  "aggregation": {
+    "candidate_defined": "the v2 POI definedness flag from the preceding component-composition rule; weighted count equal to zero is observed absence under the fixed presence prior, not an undefined score",
+    "establishments_half": "hold the existing provided-feature-only v2 establishments component fixed at preregistered analysis sensitivity k_pop=0.024; do not use removed CBP values",
+    "facility_gap": "for each type apply the existing pooled v2 logistic presence prior and expected-miss function to (threshold-weighted selected family count + unchanged v2 unclassified allocation); average the defined fire, EMS, and school type gaps",
+    "missing_or_invalid_confidence": "zero weight for the weighted numerator, retain the raw count, and report missing/invalid counts; do not impute confidence",
+    "no_accuracy_tuning": true,
+    "poi_gap": "equal mean of whichever facility and establishments halves are defined, matching the existing v2 POI composition",
+    "raw_family_count": "count each provided POI once per exact selected category family matched by primary or any alternate category",
+    "sources": "report dataset presence/source mix for matched family records; no source-dependent weight or source-defined quality ranking is imposed",
+    "unclassified_category_rows": "retain the existing fixed v2 treatment: no-category rows are allocated by the region-level family-share ratios computed from all categorized POIs; keep this allocation identical across raw and threshold variants so the sensitivity isolates weighting of selected categorized POIs",
+    "weighted_family_count": "sum confidence for selected-family POIs with valid finite confidence in [0,1] and confidence >= threshold; otherwise contribute zero; each POI counts at most once per family"
+  },
+  "candidate_columns": [
+    "GEOID",
+    "region",
+    "ur_class",
+    "all_overture_poi_count",
+    "unclassified_category_count",
+    "v0_poi_gap",
+    "v0_poi_defined",
+    "v2_raw_facility_gap",
+    "v2_raw_establishments_gap",
+    "v2_raw_poi_gap",
+    "v2_raw_poi_defined",
+    "raw_fire_count",
+    "fire_confidence_valid_count",
+    "fire_confidence_missing_count",
+    "fire_confidence_invalid_count",
+    "fire_source_known_count",
+    "fire_source_missing_count",
+    "v2_raw_fire_gap",
+    "raw_ems_count",
+    "ems_confidence_valid_count",
+    "ems_confidence_missing_count",
+    "ems_confidence_invalid_count",
+    "ems_source_known_count",
+    "ems_source_missing_count",
+    "v2_raw_ems_gap",
+    "raw_schools_count",
+    "schools_confidence_valid_count",
+    "schools_confidence_missing_count",
+    "schools_confidence_invalid_count",
+    "schools_source_known_count",
+    "schools_source_missing_count",
+    "v2_raw_schools_gap",
+    "fire_confidence_weighted_count_t050",
+    "fire_count_delta_vs_raw_t050",
+    "fire_gap_t050",
+    "ems_confidence_weighted_count_t050",
+    "ems_count_delta_vs_raw_t050",
+    "ems_gap_t050",
+    "schools_confidence_weighted_count_t050",
+    "schools_count_delta_vs_raw_t050",
+    "schools_gap_t050",
+    "facility_gap_t050",
+    "poi_gap_t050",
+    "poi_defined_t050",
+    "poi_delta_vs_v2_raw_t050",
+    "candidate_id_t050",
+    "fire_confidence_weighted_count_t070",
+    "fire_count_delta_vs_raw_t070",
+    "fire_gap_t070",
+    "ems_confidence_weighted_count_t070",
+    "ems_count_delta_vs_raw_t070",
+    "ems_gap_t070",
+    "schools_confidence_weighted_count_t070",
+    "schools_count_delta_vs_raw_t070",
+    "schools_gap_t070",
+    "facility_gap_t070",
+    "poi_gap_t070",
+    "poi_defined_t070",
+    "poi_delta_vs_v2_raw_t070",
+    "candidate_id_t070",
+    "fire_confidence_weighted_count_t090",
+    "fire_count_delta_vs_raw_t090",
+    "fire_gap_t090",
+    "ems_confidence_weighted_count_t090",
+    "ems_count_delta_vs_raw_t090",
+    "ems_gap_t090",
+    "schools_confidence_weighted_count_t090",
+    "schools_count_delta_vs_raw_t090",
+    "schools_gap_t090",
+    "facility_gap_t090",
+    "poi_gap_t090",
+    "poi_defined_t090",
+    "poi_delta_vs_v2_raw_t090",
+    "candidate_id_t090"
+  ],
+  "candidate_csv": "reports/candidates/poi_confidence_weighted.csv",
+  "candidate_csv_sha256": "28558424db768222ec7639986970af7a37b74228ef8f4e3190e5e58b6e19071c",
+  "candidate_id": "POI_CONFIDENCE_WEIGHTED_V1",
+  "candidate_ids_by_threshold": {
+    "0.5": "POI_CONFIDENCE_T050",
+    "0.7": "POI_CONFIDENCE_T070",
+    "0.9": "POI_CONFIDENCE_T090"
+  },
+  "candidate_rows": 9379,
+  "category_contract_sha256": "8309a0bb08613b92621f4977eb78998e469951c0cd0ed012d93ea2f5cf59654f",
+  "confidence_cache_reconciliation": {
+    "eastern-ok": {
+      "cache_invalid_confidence_rows": 0,
+      "cache_missing_confidence_rows": 0,
+      "cache_valid_confidence_rows": 207369,
+      "confidence_cache_poi_rows": 207369,
+      "counts_match": true,
+      "raw_invalid_confidence_rows": 0,
+      "raw_missing_confidence_rows": 0,
+      "raw_overture_poi_rows": 207369,
+      "raw_valid_confidence_rows": 207369
+    },
+    "maricopa-az": {
+      "cache_invalid_confidence_rows": 0,
+      "cache_missing_confidence_rows": 0,
+      "cache_valid_confidence_rows": 300046,
+      "confidence_cache_poi_rows": 300046,
+      "counts_match": true,
+      "raw_invalid_confidence_rows": 0,
+      "raw_missing_confidence_rows": 0,
+      "raw_overture_poi_rows": 300046,
+      "raw_valid_confidence_rows": 300046
+    },
+    "northern-ca": {
+      "cache_invalid_confidence_rows": 0,
+      "cache_missing_confidence_rows": 0,
+      "cache_valid_confidence_rows": 116897,
+      "confidence_cache_poi_rows": 116897,
+      "counts_match": true,
+      "raw_invalid_confidence_rows": 0,
+      "raw_missing_confidence_rows": 0,
+      "raw_overture_poi_rows": 116897,
+      "raw_valid_confidence_rows": 116897
+    },
+    "south-central-tx": {
+      "cache_invalid_confidence_rows": 0,
+      "cache_missing_confidence_rows": 0,
+      "cache_valid_confidence_rows": 1300331,
+      "confidence_cache_poi_rows": 1300331,
+      "counts_match": true,
+      "raw_invalid_confidence_rows": 0,
+      "raw_missing_confidence_rows": 0,
+      "raw_overture_poi_rows": 1300331,
+      "raw_valid_confidence_rows": 1300331
+    }
+  },
+  "frozen_v0_sha256": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852",
+  "frozen_v2_audit_sha256": "b559c8d3d85709d0e5f2d2102bb39da4d8255a3c62f728cf736da522025a289c",
+  "input_metadata_by_region": {
+    "eastern-ok": {
+      "category_weight_shares_for_unclassified": {
+        "ems": 0.0023683218101822755,
+        "fire": 0.004354494028912634,
+        "schools": 0.024316781898177247
+      },
+      "classified_poi_rows": 198875,
+      "family_source_metadata": {
+        "ems": {
+          "dataset_mentions": {
+            "BrightQuery": 14,
+            "Foursquare": 8,
+            "Microsoft": 9,
+            "Overture": 471,
+            "Overture-signals": 276,
+            "meta": 440
+          },
+          "known_count": 471,
+          "missing_count": 0
+        },
+        "fire": {
+          "dataset_mentions": {
+            "BrightQuery": 26,
+            "Foursquare": 23,
+            "Microsoft": 33,
+            "Overture": 866,
+            "Overture-signals": 535,
+            "meta": 784
+          },
+          "known_count": 866,
+          "missing_count": 0
+        },
+        "schools": {
+          "dataset_mentions": {
+            "BrightQuery": 170,
+            "Foursquare": 195,
+            "Microsoft": 73,
+            "Overture": 4836,
+            "Overture-signals": 2994,
+            "meta": 4398
+          },
+          "known_count": 4836,
+          "missing_count": 0
+        }
+      },
+      "global_confidence_counts": {
+        "invalid": 0,
+        "missing": 0,
+        "valid": 207369
+      },
+      "official_sample": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "ordered_geoid_sha256": "d1886fe60e412888bc5dbc1057f918eb840caa40936037f45bce9ce1c9169964",
+        "path": "samples/eastern-ok-sample-submission.csv",
+        "rows": 1192
+      },
+      "poi_source": {
+        "assigned_to_official_sample": 207369,
+        "columns_read": [
+          "bbox",
+          "categories",
+          "confidence",
+          "sources"
+        ],
+        "input_rows": 207369,
+        "names_column_read": false,
+        "object_bytes": 28848614,
+        "overture_geometry_read": false,
+        "row_groups": 6,
+        "selected_column_compressed_bytes": {
+          "bbox": 4929340,
+          "categories": 731218,
+          "confidence": 446583,
+          "sources": 6527047
+        },
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-pois.parquet",
+        "unmatched_outside_sample": 0
+      },
+      "provided_strata": {
+        "columns_read": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban",
+          "ur_class"
+        ],
+        "official_projection_sha256": "66bbf73dcb3f2281b443183060e7adabef594d7b48602c69743ff7945e95f0d4",
+        "official_rows_used": 1192,
+        "rows_read": 1192
+      },
+      "provided_tract_geometry": {
+        "object_bytes": 3650879,
+        "row_groups": 1,
+        "rows": 1192,
+        "selected_column_compressed_bytes": 3612768,
+        "selected_columns": [
+          "GEOID",
+          "geometry"
+        ],
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-census-acs-housing.parquet"
+      },
+      "raw_selected_family_rows": {
+        "ems": 471,
+        "fire": 866,
+        "schools": 4836
+      },
+      "region": "eastern-ok"
+    },
+    "maricopa-az": {
+      "category_weight_shares_for_unclassified": {
+        "ems": 0.0010655450403084473,
+        "fire": 0.002509638976515948,
+        "schools": 0.019565369786189977
+      },
+      "classified_poi_rows": 285300,
+      "family_source_metadata": {
+        "ems": {
+          "dataset_mentions": {
+            "BrightQuery": 27,
+            "Foursquare": 2,
+            "Microsoft": 7,
+            "Overture": 304,
+            "Overture-signals": 201,
+            "meta": 268
+          },
+          "known_count": 304,
+          "missing_count": 0
+        },
+        "fire": {
+          "dataset_mentions": {
+            "BrightQuery": 47,
+            "Foursquare": 39,
+            "Microsoft": 63,
+            "Overture": 716,
+            "Overture-signals": 497,
+            "meta": 567
+          },
+          "known_count": 716,
+          "missing_count": 0
+        },
+        "schools": {
+          "dataset_mentions": {
+            "AllThePlaces": 4,
+            "BrightQuery": 469,
+            "Foursquare": 196,
+            "Microsoft": 198,
+            "Overture": 5582,
+            "Overture-signals": 3609,
+            "meta": 4715
+          },
+          "known_count": 5582,
+          "missing_count": 0
+        }
+      },
+      "global_confidence_counts": {
+        "invalid": 0,
+        "missing": 0,
+        "valid": 300046
+      },
+      "official_sample": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "ordered_geoid_sha256": "f5dee76799fa137848f0fe7b3cbde36cbeed06ee372957e6df68ee3e526f30d5",
+        "path": "samples/maricopa-az-sample-submission.csv",
+        "rows": 1593
+      },
+      "poi_source": {
+        "assigned_to_official_sample": 300046,
+        "columns_read": [
+          "bbox",
+          "categories",
+          "confidence",
+          "sources"
+        ],
+        "input_rows": 300046,
+        "names_column_read": false,
+        "object_bytes": 40987154,
+        "overture_geometry_read": false,
+        "row_groups": 9,
+        "selected_column_compressed_bytes": {
+          "bbox": 6605884,
+          "categories": 1053656,
+          "confidence": 620258,
+          "sources": 9320478
+        },
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-pois.parquet",
+        "unmatched_outside_sample": 0
+      },
+      "provided_strata": {
+        "columns_read": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban",
+          "ur_class"
+        ],
+        "official_projection_sha256": "086b403a3aad57c9fd084cc476cd528e7f6141e6ba1637cf69006746698a09bf",
+        "official_rows_used": 1593,
+        "rows_read": 1593
+      },
+      "provided_tract_geometry": {
+        "object_bytes": 3457173,
+        "row_groups": 1,
+        "rows": 1593,
+        "selected_column_compressed_bytes": 3409661,
+        "selected_columns": [
+          "GEOID",
+          "geometry"
+        ],
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-census-acs-housing.parquet"
+      },
+      "raw_selected_family_rows": {
+        "ems": 304,
+        "fire": 716,
+        "schools": 5582
+      },
+      "region": "maricopa-az"
+    },
+    "northern-ca": {
+      "category_weight_shares_for_unclassified": {
+        "ems": 0.001578919198587001,
+        "fire": 0.004379939697775241,
+        "schools": 0.02473640077786302
+      },
+      "classified_poi_rows": 112102,
+      "family_source_metadata": {
+        "ems": {
+          "dataset_mentions": {
+            "BrightQuery": 12,
+            "Microsoft": 2,
+            "Overture": 177,
+            "Overture-signals": 118,
+            "meta": 163
+          },
+          "known_count": 177,
+          "missing_count": 0
+        },
+        "fire": {
+          "dataset_mentions": {
+            "BrightQuery": 40,
+            "Foursquare": 16,
+            "Microsoft": 31,
+            "Overture": 491,
+            "Overture-signals": 318,
+            "meta": 404
+          },
+          "known_count": 491,
+          "missing_count": 0
+        },
+        "schools": {
+          "dataset_mentions": {
+            "AllThePlaces": 1,
+            "BrightQuery": 157,
+            "Foursquare": 100,
+            "Microsoft": 68,
+            "Overture": 2773,
+            "Overture-signals": 1767,
+            "meta": 2447
+          },
+          "known_count": 2773,
+          "missing_count": 0
+        }
+      },
+      "global_confidence_counts": {
+        "invalid": 0,
+        "missing": 0,
+        "valid": 116897
+      },
+      "official_sample": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "ordered_geoid_sha256": "84c4bc3c03900cb37c5e6afbfbb7dde3c49849a68475b2bd5fdea3096ee3c915",
+        "path": "samples/northern-ca-sample-submission.csv",
+        "rows": 591
+      },
+      "poi_source": {
+        "assigned_to_official_sample": 116897,
+        "columns_read": [
+          "bbox",
+          "categories",
+          "confidence",
+          "sources"
+        ],
+        "input_rows": 116897,
+        "names_column_read": false,
+        "object_bytes": 16168720,
+        "overture_geometry_read": false,
+        "row_groups": 4,
+        "selected_column_compressed_bytes": {
+          "bbox": 2712042,
+          "categories": 420646,
+          "confidence": 244408,
+          "sources": 3642952
+        },
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-pois.parquet",
+        "unmatched_outside_sample": 0
+      },
+      "provided_strata": {
+        "columns_read": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban",
+          "ur_class"
+        ],
+        "official_projection_sha256": "50e3a5cd34b12176311106a1ad33aca67d60461f635422f5133b1bcdf5bc1e36",
+        "official_rows_used": 591,
+        "rows_read": 591
+      },
+      "provided_tract_geometry": {
+        "object_bytes": 3037540,
+        "row_groups": 1,
+        "rows": 591,
+        "selected_column_compressed_bytes": 3016786,
+        "selected_columns": [
+          "GEOID",
+          "geometry"
+        ],
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-census-acs-housing.parquet"
+      },
+      "raw_selected_family_rows": {
+        "ems": 177,
+        "fire": 491,
+        "schools": 2773
+      },
+      "region": "northern-ca"
+    },
+    "south-central-tx": {
+      "category_weight_shares_for_unclassified": {
+        "ems": 0.001463281221852103,
+        "fire": 0.0025949290386397955,
+        "schools": 0.021492301191915024
+      },
+      "classified_poi_rows": 1221228,
+      "family_source_metadata": {
+        "ems": {
+          "dataset_mentions": {
+            "BrightQuery": 182,
+            "Foursquare": 29,
+            "Microsoft": 34,
+            "Overture": 1787,
+            "Overture-signals": 1137,
+            "meta": 1542
+          },
+          "known_count": 1787,
+          "missing_count": 0
+        },
+        "fire": {
+          "dataset_mentions": {
+            "BrightQuery": 186,
+            "Foursquare": 114,
+            "Microsoft": 161,
+            "Overture": 3169,
+            "Overture-signals": 2063,
+            "meta": 2708
+          },
+          "known_count": 3169,
+          "missing_count": 0
+        },
+        "schools": {
+          "dataset_mentions": {
+            "AllThePlaces": 25,
+            "BrightQuery": 1379,
+            "DAC": 26,
+            "Foursquare": 812,
+            "Microsoft": 631,
+            "Overture": 26247,
+            "Overture-signals": 17308,
+            "meta": 23374
+          },
+          "known_count": 26247,
+          "missing_count": 0
+        }
+      },
+      "global_confidence_counts": {
+        "invalid": 0,
+        "missing": 0,
+        "valid": 1300331
+      },
+      "official_sample": {
+        "columns_read": [
+          "GEOID"
+        ],
+        "ordered_geoid_sha256": "10c6cef055d79af255b9a6890c1896565ffe8884c756815c5474ff7d6633883c",
+        "path": "samples/south-central-tx-sample-submission.csv",
+        "rows": 6003
+      },
+      "poi_source": {
+        "assigned_to_official_sample": 1300331,
+        "columns_read": [
+          "bbox",
+          "categories",
+          "confidence",
+          "sources"
+        ],
+        "input_rows": 1300334,
+        "names_column_read": false,
+        "object_bytes": 179937096,
+        "overture_geometry_read": false,
+        "row_groups": 36,
+        "selected_column_compressed_bytes": {
+          "bbox": 29922404,
+          "categories": 4513051,
+          "confidence": 2772882,
+          "sources": 40260294
+        },
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-pois.parquet",
+        "unmatched_outside_sample": 3
+      },
+      "provided_strata": {
+        "columns_read": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban",
+          "ur_class"
+        ],
+        "official_projection_sha256": "bdb519e0196dca6c6b9c7ac1c60051006a5644faceaf921d45714d152eee73cf",
+        "official_rows_used": 6003,
+        "rows_read": 6010
+      },
+      "provided_tract_geometry": {
+        "object_bytes": 13758433,
+        "row_groups": 1,
+        "rows": 6010,
+        "selected_column_compressed_bytes": 13587215,
+        "selected_columns": [
+          "GEOID",
+          "geometry"
+        ],
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-census-acs-housing.parquet"
+      },
+      "raw_selected_family_rows": {
+        "ems": 1787,
+        "fire": 3169,
+        "schools": 26247
+      },
+      "region": "south-central-tx"
+    }
+  },
+  "no_upload": true,
+  "official_scope": {
+    "regions": [
+      "maricopa-az",
+      "northern-ca",
+      "eastern-ok",
+      "south-central-tx"
+    ],
+    "rows": 9379,
+    "sample_score_placeholders_read": false,
+    "template_only_rows_used": 0
+  },
+  "ordered_official_geoid_sha256": "b04a211263a9ef61d71ba242a282487411ef6258e458ed258857d270d636fda8",
+  "preregistration_config": "config/poi-confidence-weighting-preregistered.json",
+  "preregistration_config_sha256": "f93ffa0153c6e2207dc99ae1a0d44753371a2ce173f71eb64feb5d17e0e46296",
+  "v2_raw_baseline_reconciliation": {
+    "all": {
+      "defined_count_match": true,
+      "frozen_audit_defined_rows": 9379,
+      "frozen_audit_mean": 0.12148479000148199,
+      "frozen_audit_variance_from_second_moment": 0.015929153379858594,
+      "mean_match": true,
+      "recomputed_defined_rows": 9379,
+      "recomputed_mean": 0.12148479000148199,
+      "recomputed_variance": 0.015929153379858594,
+      "variance_match": true
+    },
+    "eastern-ok": {
+      "defined_count_match": true,
+      "frozen_audit_defined_rows": 1192,
+      "frozen_audit_mean": 0.08458626577704631,
+      "frozen_audit_variance_from_second_moment": 0.009069915426655174,
+      "mean_match": true,
+      "recomputed_defined_rows": 1192,
+      "recomputed_mean": 0.08458626577704631,
+      "recomputed_variance": 0.009069915426655176,
+      "variance_match": true
+    },
+    "maricopa-az": {
+      "defined_count_match": true,
+      "frozen_audit_defined_rows": 1593,
+      "frozen_audit_mean": 0.15787683068984798,
+      "frozen_audit_variance_from_second_moment": 0.02084598832684749,
+      "mean_match": true,
+      "recomputed_defined_rows": 1593,
+      "recomputed_mean": 0.15787683068984798,
+      "recomputed_variance": 0.020845988326847486,
+      "variance_match": true
+    },
+    "northern-ca": {
+      "defined_count_match": true,
+      "frozen_audit_defined_rows": 591,
+      "frozen_audit_mean": 0.1257639923878525,
+      "frozen_audit_variance_from_second_moment": 0.018791798286447278,
+      "mean_match": true,
+      "recomputed_defined_rows": 591,
+      "recomputed_mean": 0.1257639923878525,
+      "recomputed_variance": 0.018791798286447274,
+      "variance_match": true
+    },
+    "south-central-tx": {
+      "defined_count_match": true,
+      "frozen_audit_defined_rows": 6003,
+      "frozen_audit_mean": 0.11873308442903742,
+      "frozen_audit_variance_from_second_moment": 0.015073405693305515,
+      "mean_match": true,
+      "recomputed_defined_rows": 6003,
+      "recomputed_mean": 0.11873308442903742,
+      "recomputed_variance": 0.015073405693305512,
+      "variance_match": true
+    }
+  }
+}
