@@ -50,7 +50,7 @@ describes a single pre-registered evaluation of a finished model candidate.
   P4 `0.091440198`, and negative against the per-region-constant candidate C1
   (`0.146449112`), i.e. v2 should beat the region-constant candidate at any
   non-negative correlation. With the protocol's pairwise public sampling guard
-  the candidate must land at or below `0.088944` to be called better than P4.
+  the candidate must land at or below `0.089003419` to be called better than P4.
   If the actual public RMSE is above `0.107246299`, the v2 tract detail is not
   informative at its current level: report that and stop adding tract detail.
 - **Upload.** At most one evaluation, comment `model-only v2`, only through

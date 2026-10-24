@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "protocol_frozen_waiting_for_eligible_candidates",
+  "status": "protocol_frozen; one model-only candidate registered and locally validated, no scored eligible candidate yet",
   "prepared_utc": "2026-10-24",
   "protocol": {
     "path": "docs/final-two-protocol.md",
@@ -45,7 +45,7 @@
     "public_se_at_historical_scale": 0.0012188776492865093,
     "private_se_at_historical_scale": 0.0007980034974201783,
     "public_private_shift_se_at_historical_scale": 0.001456870723786103,
-    "conservative_pairwise_public_guard_at_historical_scale": 0.0024377552985730186,
+    "conservative_pairwise_public_guard_at_historical_scale": 0.0024377552985730185,
     "pairwise_guard_rule": "SE_public(candidate_1)+SE_public(candidate_2); a smaller public RMSE difference is a tie, not a selection reason",
     "scorecard_cell_results_used": false
   },
@@ -53,13 +53,41 @@
     "steward_observed_platform_ceiling_per_day": 5,
     "effective_lane_ceiling_per_day": 2,
     "dates_with_upload_budget": [
-      {"date_utc": "2026-10-25", "lane_max": 2, "purpose": "authorized finished-model evaluation only"},
-      {"date_utc": "2026-10-26", "lane_max": 2, "purpose": "authorized finished-model evaluation only"},
-      {"date_utc": "2026-10-27", "lane_max": 2, "purpose": "authorized finished-model evaluation only"},
-      {"date_utc": "2026-10-28", "lane_max": 2, "purpose": "authorized finished-model evaluation only"},
-      {"date_utc": "2026-10-29", "lane_max": 2, "purpose": "authorized finished-model evaluation only"},
-      {"date_utc": "2026-10-30", "lane_max": 2, "purpose": "two final candidate uploads by 12:00Z; reserved"},
-      {"date_utc": "2026-10-31", "lane_max": 0, "purpose": "UI selection/writeup only"}
+      {
+        "date_utc": "2026-10-25",
+        "lane_max": 2,
+        "purpose": "authorized finished-model evaluation only"
+      },
+      {
+        "date_utc": "2026-10-26",
+        "lane_max": 2,
+        "purpose": "authorized finished-model evaluation only"
+      },
+      {
+        "date_utc": "2026-10-27",
+        "lane_max": 2,
+        "purpose": "authorized finished-model evaluation only"
+      },
+      {
+        "date_utc": "2026-10-28",
+        "lane_max": 2,
+        "purpose": "authorized finished-model evaluation only"
+      },
+      {
+        "date_utc": "2026-10-29",
+        "lane_max": 2,
+        "purpose": "authorized finished-model evaluation only"
+      },
+      {
+        "date_utc": "2026-10-30",
+        "lane_max": 2,
+        "purpose": "two final candidate uploads by 12:00Z; reserved"
+      },
+      {
+        "date_utc": "2026-10-31",
+        "lane_max": 0,
+        "purpose": "UI selection/writeup only"
+      }
     ],
     "official_capacity_estimate_oct25_to_oct30": 30,
     "lane_capacity_estimate_oct25_to_oct30": 12,
@@ -68,7 +96,73 @@
     "remaining_total_account_capacity_verified": false,
     "queued_uploads": []
   },
-  "candidate_registrations": [],
+  "candidate_registrations": [
+    {
+      "candidate_id": "V2_model",
+      "registered_utc": "2026-10-25",
+      "preregistration_commit": "5c48f4fad9b51ece8a92222cdef7408fba14aacd",
+      "preregistered_card_sha256": "542ec4564285ade5c438d04fa1e05bf851a28fa5330c4a0d9b4fec502844c9de",
+      "artifact": "reports/candidates/V2_model.csv",
+      "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "hypothesis": "The v0 detail failed because its component levels were uncentred proxies whose uncentred correlation with the target was 0.1786 and whose region-mean-removed detail was anti-informative (unconstrained beta -0.218). v2 replaces each proxy with a mechanism estimated from the provided Overture counts themselves - route/named-road ratio, fixed building residual prior calibrated against the Overture building presence rate, and the organiser's facility/establishments halves with fixed presence priors - so the composite should track the same completeness mechanism the organiser scored, giving centred correlation above the 0.30 forecast assumption and a public RMSE below the 0.091440198 P4 benchmark.",
+      "parameter_provenance": {
+        "composite": "mean of defined components (equal weights, undefined excluded)",
+        "building_gap_constant": "0.01 (fixed residual prior BUILDING_GAP_V2) when defined",
+        "establishments_cbp_k": 0.024,
+        "facility_presence_priors": {
+          "fire": {
+            "intercept": -2.8,
+            "log_density": 0.3,
+            "urban_fraction": 0.7
+          },
+          "ems": {
+            "intercept": -3.2,
+            "log_density": 0.25,
+            "urban_fraction": 0.6
+          },
+          "schools": {
+            "intercept": -1.0,
+            "log_density": 0.2,
+            "urban_fraction": 0.35
+          }
+        },
+        "transport": "ratio of provided Overture route and named-road lengths (no prior)",
+        "lb_derived_constants_used": []
+      },
+      "predicted_public_rmse": 0.09135719597637867,
+      "prediction_written_before_any_upload": true,
+      "prediction_basis": "model-side moments of the frozen artifact (mu_v, sd_v, E[v^2]) with the all-zero candidate C0 platform RMSE as the E[y^2] anchor, assumed target mean equal to the model's own mean and assumed centred correlation 0.3; no LB-derived model parameter",
+      "local_invariants": {
+        "report": "reports/estimator-v2-audit.json",
+        "report_sha256": "131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0",
+        "all_gates_passed": true,
+        "mask_audit": "reports/v2-defined-mask-audit.json",
+        "prior_envelope": "reports/v2-prior-envelope.json"
+      },
+      "reproduction_command": "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v2_candidates.py --workspace \"$COMPETITION_WORKSPACE\"",
+      "code_commit_at_build": "b45733aa31903c71ec4f3fb432c2bc9d519f3ff9",
+      "official_id_order_verified_against_authoritative_samples": true,
+      "template_only_rows": {
+        "count": 415,
+        "region": "eastern-wa",
+        "fill": 0.0,
+        "policy": "uniform platform-only scalar 0.0 per b750a35; no eastern-WA features, regional-mean transfer, or target inference"
+      },
+      "upload_authorized": false,
+      "upload_performed": false,
+      "submission_id": null,
+      "public_rmse": null,
+      "eligibility": "eligible model candidate under the protocol's four gates; not uploaded and not selected. Evaluating it requires operator authorization through the orchestrator submission gate; the two reserved final A/B uploads remain untouched."
+    }
+  ],
   "final_candidates": [
     {
       "slot": "A",
@@ -97,7 +191,8 @@
     "A and B candidate IDs, artifact paths, SHA-256 hashes, successful submission IDs, and public RMSEs after actual successful scoring",
     "candidate-specific mechanism-based rationale and local invariant report",
     "operator's Zindi UI selection confirmation",
-    "operator's methodology-form submission confirmation"
+    "operator's methodology-form submission confirmation",
+    "operator decision on authorizing one finished-model evaluation of V2_model (comment 'model-only v2'), then actual vs predicted public RMSE and the pre-registered Phase 4 decision rule"
   ],
   "operator_acknowledgement": "requested in lane closeout; not yet recorded"
 }
