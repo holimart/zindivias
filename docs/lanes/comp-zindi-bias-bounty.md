@@ -28,3 +28,12 @@
 - Observed: 9,379 unique authoritative IDs covered exactly once (region counts: 1,593 / 591 / 1,192 / 6,003); all seven binary flag outputs and the composite had zero nulls; every component was within `{0,1}`; maximum composite inclusion error `0.0`; two repeated runs were byte-identical. Missing `pct_urban` values: 11 / 0 / 1 / 14 by region, handled without zero imputation. `python -m py_compile scripts/estimate_defined_flags.py` passed under the PyArrow uv environment.
 - Report SHA-256: `c94d90dc9b8b676ea30a881446392483a87cb25f31e7d96b64d0767eec98bf9b`; script SHA-256: `361087228da0d033db3326d7b1c42b1aebe7f0ba490845d15592a39a548389fc`.
 - Not submitted; the flags are estimates, not organiser definedness labels.
+
+## 2026-10-24 — LB probe plan and C0 dry-run
+
+- Item: `bias-bounty-lb-probe-plan` (P0).
+- Deliverables: `docs/lb-probe-plan.md`, `scripts/build_c0_candidate.py`, `scripts/submit_zindi.py`, `reports/candidates.json`, `reports/candidates/C0_all_zero.csv`, and `reports/submissions.jsonl`.
+- Candidate definitions and stop/final-two rules are pre-registered in the plan. Only C0 is currently artifact-frozen; C1–C3 require the gap estimator v0 and exact hashes before any probe. Plan states public RMSE on 30% is noisy and does not reveal each region's mean; it proposes at most four scored probes.
+- Candidate source commit: `45bcb12`. Build command: `uv run python scripts/build_c0_candidate.py --sample-dir "$COMPETITION_WORKSPACE/defined-flags-inputs" --out reports/candidates/C0_all_zero.csv`; observed 9,379 rows, five columns. C0 SHA-256 `7546520ee671aaaa10fabe3fd4f6edaa7b88a1a424c9957bac29dcf7a0810f73`; candidate manifest SHA-256 `44770babc5a807e0b9ae237ac394fcbb67226f6d1ef67acdd34a8dc296722ee1`.
+- Exact dry-run command: `uv run python scripts/submit_zindi.py --candidate C0 --dry-run`. Output: `DRY RUN PASS C0: 9379 rows, 9379 unique IDs, SHA-256 7546520ee671aaaa10fabe3fd4f6edaa7b88a1a424c9957bac29dcf7a0810f73`. Ledger row SHA-256 `0c1c85e379d2401f18de5dbbe4cd06f4cbdf05f1c1d8b5f26c975cae2bd72256`; required submission fields present, platform ID/score/rank null, status `dry_run_validated`.
+- `uv run python -m py_compile scripts/build_c0_candidate.py scripts/submit_zindi.py` passed. C0 rebuilt independently with an identical SHA. `--submit` guard test returned code 3, read no token, and attempted no upload. No real submission; account membership not verified. Token content was never read or printed. All four authorized sample region counts are recorded in the ledger.
