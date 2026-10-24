@@ -43,4 +43,17 @@ python3 -I "$ORCHESTRATOR_ROOT/scripts/zindi_submit.py" \
   --repo "$COMPETITION_REPO" --candidate C0
 ```
 
-The shared command without `--live` performs the orchestrator dry-run and appends its own ledger row; the local 9,379-row validator must not be used on these 9,794-row artifacts. Only after the dry-run, frozen hashes and existing-membership check may an authorized single probe use the same command with `--live`. Then poll `--status` for the final score; never treat an `initial` response's 0.0 as a score. Keep the original steward failure/correction rows in `reports/submissions.jsonl`.
+The shared command without `--live` performs the orchestrator dry-run and appends its own ledger row; the local 9,379-row validator must not be used on these 9,794-row artifacts. Only after the dry-run, frozen hashes and existing-membership check may an authorized probe use the same command with `--live`. Then poll `--status` for the final score; never treat an `initial` response's 0.0 as a score. Keep the original steward failure/correction rows in `reports/submissions.jsonl`.
+
+## Platform probe results (2026-10-24)
+
+All four pre-registered full-template candidates passed orchestrator dry-run and later reported `successful` status. Scores below are the public RMSE returned by the shared orchestrator `--status`; each is recorded with its upload and score-refresh rows in `reports/submissions.jsonl`.
+
+| Candidate | Submission ID | Public RMSE | Candidate SHA-256 |
+|---|---|---:|---|
+| C0 | `uRRw9KpB` | 0.107246299 | `0edf8140123e2135489e5728fd71bce6f1e28a97f447ca411ba45fdbc02bc214` |
+| C1 | `BvyKrR6v` | 0.146449112 | `dc2e368194b31408cb5c313fa8ce3f3fa59a1b5965bc2df8e4217bbc9e0c82e0` |
+| C2 | `rTARuUaG` | 0.235358712 | `5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514` |
+| C3 | `TM83xxU6` | 0.349409867 | `e5ee50f5c2cca149550f3408638d2b77431f6ed62cf104dfe8c07d8c8416f9e4` |
+
+C0 had the lowest public RMSE among these four. This is public-only platform feedback, not a local accuracy estimate; no labels are available, the private 70% remains unobserved, and no claim is made that eastern-WA template extras were scored or ignored. The prior submission `ggVY44Ui` remains a separately recorded processing failure; its 0.0 was not a score. No further candidate variants or tuning are authorized by this probe set; final-two selection remains the operator's decision.
