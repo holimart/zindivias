@@ -59,6 +59,47 @@ MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig \
 
 A repeated run produced byte-identical JSON and PNG in the recorded environment. No external public data was used, so no DINS manifest or external-source licence/retrieval record is applicable. All statements about emergency-planning consequences are hypothetical, and the pattern is descriptive rather than causal.
 
+## Section 2 — Scorecard strata are strongly region-composition confounded
+
+### Impact
+
+An all-region tribal-versus-non-tribal or rural-versus-urban comparison can be mistaken for a coverage disparity when its groups have very different regional composition. That can misdirect mapping audits or investment: an apparent tribal “priority” could largely track Eastern Oklahoma rather than represent tribal communities across regions, while the much larger non-tribal group mostly represents South-Central Texas. If regional road-taxonomy differences affect the road metric, that artifact could likewise divert route-mapping work from communities with actual access needs. These are plausible decision risks, not observed dispatch failures or evidence of a true coverage gap.
+
+### Novelty
+
+The automated scorecard reports marginal tribal and rural comparisons but does not make region composition the comparison itself. The provided sample shows that `tribal_any` is nearly an Eastern Oklahoma indicator, while the non-tribal comparison is dominated by Texas. The official rules also warn that Overture/TIGER named-road length ratios vary from 0.71 to 1.59 across regions because primary/secondary conventions differ. Those facts make a pooled road-equity result vulnerable to both stratum-mix and taxonomy effects. They do not establish the size or direction of a hidden-score disparity.
+
+### Evidence
+
+The script joins only official sample GEOIDs to the provided `tribal_any` and `pct_urban` strata. Composition cells below are `tract count (% of that row's stratum)`; the sample row is the 9,379-tract denominator. Rural is strictly `pct_urban < 0.5`, urban is `>=0.5`.
+
+| Stratum | Total | Eastern OK | Maricopa AZ | Northern CA | South-Central TX |
+|---|---:|---:|---:|---:|---:|
+| All official sample tracts | 9,379 | 1,192 (12.71%) | 1,593 (16.98%) | 591 (6.30%) | 6,003 (64.00%) |
+| `tribal_any = true` | 858 | 805 (93.82%) | 37 (4.31%) | 15 (1.75%) | 1 (0.12%) |
+| `tribal_any = false` | 8,521 | 387 (4.54%) | 1,556 (18.26%) | 576 (6.76%) | 6,002 (70.44%) |
+| Rural, `pct_urban < 0.5` | 1,712 | 411 (24.01%) | 163 (9.52%) | 147 (8.59%) | 991 (57.89%) |
+| Urban, `pct_urban >= 0.5` | 7,641 | 780 (10.21%) | 1,419 (18.57%) | 444 (5.81%) | 4,998 (65.41%) |
+
+Within-region tribal prevalence is 67.53% in Eastern Oklahoma, 2.32% in Maricopa, 2.54% in Northern California, and 0.017% in South-Central Texas. The official sample contains 858 `tribal_any` tracts, of which 805 (93.82%) are in Eastern Oklahoma; 6,002 of 8,521 non-tribal tracts (70.44%) are in South-Central Texas. Thus a pooled tribal contrast is also a comparison of sharply different region mixtures. The rural group is less concentrated but still 57.89% Texas; 26 official tracts have missing `pct_urban` and were excluded rather than imputed.
+
+The earlier backlog measurement listed rural counts of 412/174/147/1,005 for Oklahoma/Arizona/California/Texas. Those counts equal the strict threshold counts above plus the corresponding missing `pct_urban` rows (1/11/0/14). A missing value is not `<0.5`, so this report does not silently treat it as rural. Input paths, hashes, exact selected columns, counts and the region-composition table are in `reports/discovery-strata-confound.json`.
+
+The rules disclose a 0.71–1.59 cross-region Overture/TIGER named-road ratio range but do not map the endpoints to individual regions. The separate prerequisite `bias-est-transport-route-ref` is still open, and neither its per-region audit nor route-network feature cache exists. Accordingly, per-region `L_named/L_route` entries are explicitly unavailable in this report; no values are inferred from the overall range. The road-taxonomy part of this finding remains unquantified until that prerequisite is completed.
+
+### Reproducibility
+
+`scripts/discovery_strata_confound.py` reads only `GEOID` from each official sample CSV and `GEOID`, `tribal_any`, and `pct_urban` from each provided strata Parquet. It excludes the seven Texas strata rows outside the official sample and does not use sample score-placeholder values, candidate scores, labels, external data, or removed road references. Reproduce with:
+
+```sh
+/home/martin/hddProjects/langywrap/uv run --with pyarrow==26.0.0 \
+  python scripts/discovery_strata_confound.py \
+  --workspace "$COMPETITION_WORKSPACE" \
+  --out reports/discovery-strata-confound.json
+```
+
+The script asserts 9,379 unique official IDs and deterministic cohort accounting. A repeated run produced byte-identical JSON. This establishes composition confounding in the provided sample; it does not estimate hidden coverage scores or validate the scorecard's accuracy.
+
 ## Secondary exploratory lead — rural × SVI minority-domain screen in South-Central Texas
 
 **Draft for operator review; not a claim about true organiser scores.** The competition has no training labels, and the reference layers used to calculate the hidden target are removed. Every score below is a C2/C3 provided-data proxy. The analysis identifies a subgroup for follow-up; it does not establish an observed real-world mapping disparity or causation.

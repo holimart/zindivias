@@ -1,0 +1,407 @@
+{
+  "definitions": {
+    "composition_share": "Within each named stratum, fraction of valid official sample tracts in each region.",
+    "rural": "Provided pct_urban < 0.5; pct_urban >= 0.5 is urban.",
+    "sample_scope": "Official four-region sample GEOIDs only; sample score-placeholder values are not used.",
+    "tribal_any": "Provided boolean tribal_any column; no legal-status inference."
+  },
+  "input_manifest": {
+    "eastern-ok": {
+      "sample": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/eastern-ok-sample-submission.csv",
+        "read_columns": [
+          "GEOID"
+        ],
+        "rows": 1192,
+        "sha256": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4"
+      },
+      "strata": {
+        "extra_strata_rows_excluded": 0,
+        "official_sample_rows_joined": 1192,
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+        "read_columns": [
+          "GEOID",
+          "tribal_any",
+          "pct_urban"
+        ],
+        "sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54",
+        "table_rows": 1192
+      }
+    },
+    "maricopa-az": {
+      "sample": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/maricopa-az-sample-submission.csv",
+        "read_columns": [
+          "GEOID"
+        ],
+        "rows": 1593,
+        "sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31"
+      },
+      "strata": {
+        "extra_strata_rows_excluded": 0,
+        "official_sample_rows_joined": 1593,
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+        "read_columns": [
+          "GEOID",
+          "tribal_any",
+          "pct_urban"
+        ],
+        "sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd",
+        "table_rows": 1593
+      }
+    },
+    "northern-ca": {
+      "sample": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/northern-ca-sample-submission.csv",
+        "read_columns": [
+          "GEOID"
+        ],
+        "rows": 591,
+        "sha256": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902"
+      },
+      "strata": {
+        "extra_strata_rows_excluded": 0,
+        "official_sample_rows_joined": 591,
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+        "read_columns": [
+          "GEOID",
+          "tribal_any",
+          "pct_urban"
+        ],
+        "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+        "table_rows": 591
+      }
+    },
+    "south-central-tx": {
+      "sample": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/south-central-tx-sample-submission.csv",
+        "read_columns": [
+          "GEOID"
+        ],
+        "rows": 6003,
+        "sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e"
+      },
+      "strata": {
+        "extra_strata_rows_excluded": 7,
+        "official_sample_rows_joined": 6003,
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+        "read_columns": [
+          "GEOID",
+          "tribal_any",
+          "pct_urban"
+        ],
+        "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354",
+        "table_rows": 6010
+      }
+    }
+  },
+  "interpretation": {
+    "composition_finding": "The tribal_any stratum is heavily concentrated in Eastern Oklahoma, while non-tribal tracts are concentrated in South-Central Texas; unstratified tribal contrasts therefore also compare different regional mixtures.",
+    "proposed_metric_fix": "Report stratum metrics within each region and show region-by-stratum counts; where a pooled summary is needed, standardize both groups to the same predeclared region weights. Report transport ratios within region under one fixed route taxonomy, not as a cross-region coverage comparison.",
+    "road_taxonomy_caveat": "The official 0.71-1.59 range establishes that named-road length ratios vary across regions, but without the route-reference audit this analysis cannot quantify the per-region ratios or attribute scorecard disparity to the taxonomy."
+  },
+  "missing": {
+    "pct_urban_by_region": {
+      "eastern-ok": 1,
+      "maricopa-az": 11,
+      "northern-ca": 0,
+      "south-central-tx": 14
+    },
+    "tribal_any_by_region": {
+      "eastern-ok": 0,
+      "maricopa-az": 0,
+      "northern-ca": 0,
+      "south-central-tx": 0
+    }
+  },
+  "purpose": "Quantify region composition of the official tribal and rural strata; no target-score analysis.",
+  "regional_counts_and_prevalence": {
+    "eastern-ok": {
+      "label": "Eastern Oklahoma",
+      "non_tribal": {
+        "share_of_region": 0.32466443,
+        "tracts": 387,
+        "valid_tracts": 1192
+      },
+      "official_sample_tracts": 1192,
+      "rural_pct_urban_lt_0_5": {
+        "share_of_region": 0.34508816,
+        "tracts": 411,
+        "valid_tracts": 1191
+      },
+      "tribal_any": {
+        "share_of_region": 0.67533557,
+        "tracts": 805,
+        "valid_tracts": 1192
+      },
+      "urban_pct_urban_ge_0_5": {
+        "share_of_region": 0.65491184,
+        "tracts": 780,
+        "valid_tracts": 1191
+      }
+    },
+    "maricopa-az": {
+      "label": "Maricopa, Arizona",
+      "non_tribal": {
+        "share_of_region": 0.97677338,
+        "tracts": 1556,
+        "valid_tracts": 1593
+      },
+      "official_sample_tracts": 1593,
+      "rural_pct_urban_lt_0_5": {
+        "share_of_region": 0.10303413,
+        "tracts": 163,
+        "valid_tracts": 1582
+      },
+      "tribal_any": {
+        "share_of_region": 0.02322662,
+        "tracts": 37,
+        "valid_tracts": 1593
+      },
+      "urban_pct_urban_ge_0_5": {
+        "share_of_region": 0.89696587,
+        "tracts": 1419,
+        "valid_tracts": 1582
+      }
+    },
+    "northern-ca": {
+      "label": "Northern California",
+      "non_tribal": {
+        "share_of_region": 0.97461929,
+        "tracts": 576,
+        "valid_tracts": 591
+      },
+      "official_sample_tracts": 591,
+      "rural_pct_urban_lt_0_5": {
+        "share_of_region": 0.24873096,
+        "tracts": 147,
+        "valid_tracts": 591
+      },
+      "tribal_any": {
+        "share_of_region": 0.02538071,
+        "tracts": 15,
+        "valid_tracts": 591
+      },
+      "urban_pct_urban_ge_0_5": {
+        "share_of_region": 0.75126904,
+        "tracts": 444,
+        "valid_tracts": 591
+      }
+    },
+    "south-central-tx": {
+      "label": "South-Central Texas",
+      "non_tribal": {
+        "share_of_region": 0.99983342,
+        "tracts": 6002,
+        "valid_tracts": 6003
+      },
+      "official_sample_tracts": 6003,
+      "rural_pct_urban_lt_0_5": {
+        "share_of_region": 0.16547003,
+        "tracts": 991,
+        "valid_tracts": 5989
+      },
+      "tribal_any": {
+        "share_of_region": 0.00016658,
+        "tracts": 1,
+        "valid_tracts": 6003
+      },
+      "urban_pct_urban_ge_0_5": {
+        "share_of_region": 0.83452997,
+        "tracts": 4998,
+        "valid_tracts": 5989
+      }
+    }
+  },
+  "rural_measure_before_reconciliation": {
+    "counts_listed_equal_strict_plus_missing": {
+      "eastern-ok": true,
+      "maricopa-az": true,
+      "northern-ca": true,
+      "south-central-tx": true
+    },
+    "counts_listed_in_backlog": {
+      "eastern-ok": 412,
+      "maricopa-az": 174,
+      "northern-ca": 147,
+      "south-central-tx": 1005
+    },
+    "interpretation": "Missing pct_urban is not less than 0.5 and was excluded from strict rural composition; the listed prior counts equal strict-rural counts plus every missing row, so missing values must not silently be treated as rural.",
+    "pct_urban_missing_counts": {
+      "eastern-ok": 1,
+      "maricopa-az": 11,
+      "northern-ca": 0,
+      "south-central-tx": 14
+    },
+    "strict_pct_urban_lt_0_5_counts": {
+      "eastern-ok": 411,
+      "maricopa-az": 163,
+      "northern-ca": 147,
+      "south-central-tx": 991
+    }
+  },
+  "schema_version": 1,
+  "stratum_composition": {
+    "all_sample": {
+      "by_region": {
+        "eastern-ok": {
+          "label": "Eastern Oklahoma",
+          "share_of_stratum": 0.12709244,
+          "tracts": 1192
+        },
+        "maricopa-az": {
+          "label": "Maricopa, Arizona",
+          "share_of_stratum": 0.16984753,
+          "tracts": 1593
+        },
+        "northern-ca": {
+          "label": "Northern California",
+          "share_of_stratum": 0.06301311,
+          "tracts": 591
+        },
+        "south-central-tx": {
+          "label": "South-Central Texas",
+          "share_of_stratum": 0.64004691,
+          "tracts": 6003
+        }
+      },
+      "dominant_region": "south-central-tx",
+      "dominant_region_share": 0.64004691,
+      "label": "All official sample tracts",
+      "total_tracts": 9379
+    },
+    "non_tribal": {
+      "by_region": {
+        "eastern-ok": {
+          "label": "Eastern Oklahoma",
+          "share_of_stratum": 0.0454172,
+          "tracts": 387
+        },
+        "maricopa-az": {
+          "label": "Maricopa, Arizona",
+          "share_of_stratum": 0.18260768,
+          "tracts": 1556
+        },
+        "northern-ca": {
+          "label": "Northern California",
+          "share_of_stratum": 0.0675977,
+          "tracts": 576
+        },
+        "south-central-tx": {
+          "label": "South-Central Texas",
+          "share_of_stratum": 0.70437742,
+          "tracts": 6002
+        }
+      },
+      "dominant_region": "south-central-tx",
+      "dominant_region_share": 0.70437742,
+      "label": "tribal_any = false",
+      "total_tracts": 8521
+    },
+    "rural": {
+      "by_region": {
+        "eastern-ok": {
+          "label": "Eastern Oklahoma",
+          "share_of_stratum": 0.24007009,
+          "tracts": 411
+        },
+        "maricopa-az": {
+          "label": "Maricopa, Arizona",
+          "share_of_stratum": 0.09521028,
+          "tracts": 163
+        },
+        "northern-ca": {
+          "label": "Northern California",
+          "share_of_stratum": 0.08586449,
+          "tracts": 147
+        },
+        "south-central-tx": {
+          "label": "South-Central Texas",
+          "share_of_stratum": 0.57885514,
+          "tracts": 991
+        }
+      },
+      "dominant_region": "south-central-tx",
+      "dominant_region_share": 0.57885514,
+      "label": "pct_urban < 0.5",
+      "total_tracts": 1712
+    },
+    "tribal_any": {
+      "by_region": {
+        "eastern-ok": {
+          "label": "Eastern Oklahoma",
+          "share_of_stratum": 0.93822844,
+          "tracts": 805
+        },
+        "maricopa-az": {
+          "label": "Maricopa, Arizona",
+          "share_of_stratum": 0.04312354,
+          "tracts": 37
+        },
+        "northern-ca": {
+          "label": "Northern California",
+          "share_of_stratum": 0.01748252,
+          "tracts": 15
+        },
+        "south-central-tx": {
+          "label": "South-Central Texas",
+          "share_of_stratum": 0.0011655,
+          "tracts": 1
+        }
+      },
+      "dominant_region": "eastern-ok",
+      "dominant_region_share": 0.93822844,
+      "label": "tribal_any = true",
+      "total_tracts": 858
+    },
+    "urban": {
+      "by_region": {
+        "eastern-ok": {
+          "label": "Eastern Oklahoma",
+          "share_of_stratum": 0.10208088,
+          "tracts": 780
+        },
+        "maricopa-az": {
+          "label": "Maricopa, Arizona",
+          "share_of_stratum": 0.18570868,
+          "tracts": 1419
+        },
+        "northern-ca": {
+          "label": "Northern California",
+          "share_of_stratum": 0.05810758,
+          "tracts": 444
+        },
+        "south-central-tx": {
+          "label": "South-Central Texas",
+          "share_of_stratum": 0.65410287,
+          "tracts": 4998
+        }
+      },
+      "dominant_region": "south-central-tx",
+      "dominant_region_share": 0.65410287,
+      "label": "pct_urban >= 0.5",
+      "total_tracts": 7641
+    }
+  },
+  "total_tracts": 9379,
+  "transport_road_taxonomy_context": {
+    "organizer_disclosed_overture_to_tiger_named_road_length_ratio_range": [
+      0.71,
+      1.59
+    ],
+    "per_region_l_named_over_l_route": {
+      "eastern-ok": null,
+      "maricopa-az": null,
+      "northern-ca": null,
+      "south-central-tx": null
+    },
+    "route_ref_audit_path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/transport-route-ref-audit.json",
+    "route_ref_audit_present": false,
+    "route_ref_dependency": "bias-est-transport-route-ref",
+    "source": "Official competition rules describe the cross-region range but do not map values to regions.",
+    "status": "Per-region ratio measurement is pending the route-reference prerequisite; this report does not infer region-specific values from the disclosed range."
+  },
+  "unique_official_geoid_count": 9379,
+  "valid_tribal_tracts": 9379,
+  "valid_urbanity_tracts": 9353
+}
