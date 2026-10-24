@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "audit_id": "v2-prior-envelope-audit",
+  "backlog_item": "bias-v2-prior-envelope-audit",
+  "intent": "Sensitivity screen only. Quantify how a small preregistered perturbation envelope around the mechanism-derived v2 component priors moves the per-tract score distribution, so candidate uncertainty is transparent before any authorized evaluation. Nothing is promoted, ranked, selected or uploaded.",
+  "measurement": {
+    "primary_metric": "maximum absolute per-tract |score_variant - score_baseline| over the 9,379 official scored GEOIDs, per variant",
+    "secondary_metric": "mean absolute per-tract delta and the same mean delta within region, urban/rural and tribal strata, per variant",
+    "envelope": "per-tract minimum and maximum score across all preregistered variants, plus the envelope width distribution",
+    "quantiles_reported": ["p50", "p90", "p95", "p99", "max"],
+    "no_winner_policy": "every preregistered variant is reported with identical fields; the report emits no ranking, no best variant, no score-based ordering and no promotion decision"
+  },
+  "frozen_inputs": {
+    "official_samples": {
+      "path_template": "samples/{region}-sample-submission.csv",
+      "columns_read": ["GEOID"],
+      "score_placeholders_read": false,
+      "sha256": {
+        "maricopa-az": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+        "northern-ca": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+        "eastern-ok": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+        "south-central-tx": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e"
+      }
+    },
+    "provided_strata": {
+      "path_template": "defined-flags-inputs/{region}-strata-tract-table.parquet",
+      "columns_read": ["GEOID", "pop_total", "pop_urban", "pct_urban", "ALAND", "tribal_any"],
+      "role": "provided ACS strata covariates, used only to recompute the frozen presence prior and to assign the urban/rural and tribal strata"
+    },
+    "transport_component": {
+      "path": "reports/candidates/road_topology_candidate.csv",
+      "sha256": "612c2080c3d470fbcdc0cd752cd26847da05a35bf5d245c0b1599134cc82fda7",
+      "gap_column": "route_reference_transport_gap",
+      "defined_column": "route_reference_transport_defined",
+      "perturbed": false,
+      "perturbation_reason": "The transport component is a pure ratio of two provided Overture road measures with no mechanism-derived prior, so no prior perturbation is defined for it and its per-tract delta is exactly zero."
+    },
+    "building_component": {
+      "path": "reports/candidates/building_morphology.csv",
+      "sha256": "ed0928651e1ddc0de89e6fd6544c30bd510456f6e9b72eea9d09277919194b75",
+      "gap_column": "building_gap_constant_0_01",
+      "defined_column": "building_defined",
+      "input_columns": ["overture_building_count"]
+    },
+    "poi_component": {
+      "path": "reports/candidates/poi_confidence_weighted.csv",
+      "sha256": "28558424db768222ec7639986970af7a37b74228ef8f4e3190e5e58b6e19071c",
+      "gap_column": "v2_raw_poi_gap",
+      "defined_column": "v2_raw_poi_defined",
+      "facility_half_column": "v2_raw_facility_gap",
+      "establishments_half_column": "v2_raw_establishments_gap",
+      "family_gap_columns": ["v2_raw_fire_gap", "v2_raw_ems_gap", "v2_raw_schools_gap"],
+      "family_count_columns": ["raw_fire_count", "raw_ems_count", "raw_schools_count"],
+      "input_columns": ["all_overture_poi_count", "unclassified_category_count"]
+    },
+    "frozen_rule_authority": "config/v2-component-mask-audit-preregistered.json"
+  },
+  "central_priors": {
+    "note": "These are the mechanism-derived v2 scalars carried by the frozen estimator, not leaderboard-derived values. They are declared here verbatim before any variant is computed.",
+    "building_gap": 0.01,
+    "building_gap_source": "scripts/estimator_v2_building.py BUILDING_GAP_V2",
+    "establishments_cbp_k": 0.024,
+    "establishments_cbp_k_source": "scripts/estimator_v2_establishments.py explicit caller-supplied cbp_k parameter",
+    "facility_presence_prior": {
+      "fire": {"intercept": -2.8, "log_density": 0.3, "urban_fraction": 0.7},
+      "ems": {"intercept": -3.2, "log_density": 0.25, "urban_fraction": 0.6},
+      "schools": {"intercept": -1.0, "log_density": 0.2, "urban_fraction": 0.35}
+    },
+    "facility_presence_prior_source": "config/v2-component-mask-audit-preregistered.json frozen_rules.facility_family.presence_prior"
+  },
+  "perturbation_rule": {
+    "kind": "fixed multiplicative relative perturbation of the prior scalar only",
+    "factors": [0.9, 1.1],
+    "applies_to": {
+      "building_gap": "the emitted building gap becomes clip(building_gap_central * factor, 0, 1) on defined rows",
+      "establishments_cbp_k": "gap recomputed as clip(1 - all_overture_poi_count / (factor * cbp_k * pop_total), 0, 1); the zero-population branch keeps gap 0",
+      "facility_presence_prior_probability": "p_variant = clip(p_central * factor, 0, 1); because the frozen family gap is p * clip(1 - n/(n+1), 0, 1) with the prior entering multiplicatively and n unchanged, the emitted family gap is scaled by p_variant / p_central",
+      "facility_presence_prior_coefficient": "one coefficient of one family's logistic prior is multiplied by the factor, p is recomputed with the frozen formula, and the emitted family gap is scaled by p_variant / p_central"
+    },
+    "never_perturbed": [
+      "any provided-feature input (Overture counts, road kilometres, population, land area)",
+      "every model-defined flag and therefore every definedness mask",
+      "the transport component, which carries no prior",
+      "the combiners: equal-weight means over defined components only"
+    ],
+    "logit_clamp": [-30, 30],
+    "clip": [0, 1],
+    "presence_prior_reproduction_check": "for tracts whose raw family counts and unclassified count are all zero the emitted family gap equals p_central exactly, which verifies the multiplicative transfer rule used for the presence-prior variants"
+  },
+  "variant_grid": [
+    "baseline",
+    "building_gap.x0.90",
+    "building_gap.x1.10",
+    "establishments_cbp_k.x0.90",
+    "establishments_cbp_k.x1.10",
+    "presence_fire.x0.90",
+    "presence_fire.x1.10",
+    "presence_ems.x0.90",
+    "presence_ems.x1.10",
+    "presence_schools.x0.90",
+    "presence_schools.x1.10",
+    "all_priors.x0.90",
+    "all_priors.x1.10",
+    "presence_fire.intercept.x0.90",
+    "presence_fire.intercept.x1.10",
+    "presence_fire.log_density.x0.90",
+    "presence_fire.log_density.x1.10",
+    "presence_fire.urban_fraction.x0.90",
+    "presence_fire.urban_fraction.x1.10",
+    "presence_ems.intercept.x0.90",
+    "presence_ems.intercept.x1.10",
+    "presence_ems.log_density.x0.90",
+    "presence_ems.log_density.x1.10",
+    "presence_ems.urban_fraction.x0.90",
+    "presence_ems.urban_fraction.x1.10",
+    "presence_schools.intercept.x0.90",
+    "presence_schools.intercept.x1.10",
+    "presence_schools.log_density.x0.90",
+    "presence_schools.log_density.x1.10",
+    "presence_schools.urban_fraction.x0.90",
+    "presence_schools.urban_fraction.x1.10"
+  ],
+  "strata": {
+    "region": "official region of the scored GEOID (four regions)",
+    "urban_rural": "urban when the frozen urbanity value is >= 0.5, rural when < 0.5; the repo's provided-field rule pct_urban < 0.5 for rural, with the frozen pop_urban/pop_total then neutral-0.5 fallback",
+    "tribal": "provided tribal_any boolean (1 true, 0 false, null unknown); values outside the boolean domain abort the audit",
+    "missing_pct_urban_fallback_reported": true
+  },
+  "gates": {
+    "official_geoids_per_variant": 9379,
+    "max_abs_baseline_vs_frozen_composite_residual": 1e-11,
+    "require_finite_scores": true,
+    "require_scores_in_zero_one": true,
+    "require_identical_definedness_masks": true,
+    "require_all_preregistered_variants": true,
+    "require_no_winner_selected": true
+  },
+  "prohibitions": {
+    "central_priors_changed_from_leaderboard": false,
+    "labels_used": false,
+    "sample_score_placeholders_read": false,
+    "removed_reference_layers_or_equivalents_used": false,
+    "per_geoid_tuning": false,
+    "upload_attempted": false,
+    "candidate_promotion_or_submission": false
+  }
+}

@@ -1,0 +1,3529 @@
+{
+  "schema_version": 1,
+  "audit_id": "v2-prior-envelope-audit",
+  "backlog_item": "bias-v2-prior-envelope-audit",
+  "intent": "Sensitivity screen only. Quantify how a small preregistered perturbation envelope around the mechanism-derived v2 component priors moves the per-tract score distribution, so candidate uncertainty is transparent before any authorized evaluation. Nothing is promoted, ranked, selected or uploaded.",
+  "disposition": "sensitivity screen only; no promotion, no ranking, no submission, no upload",
+  "preregistration": {
+    "declared_before_outputs": true,
+    "config": "config/v2-prior-envelope-preregistered.json",
+    "config_sha256": "7c0bc11cc60aea331ecfc445f6a6fd7c4652d99c390d60affab257c4f515667b",
+    "frozen_rule_authority": "config/v2-component-mask-audit-preregistered.json",
+    "central_priors": {
+      "note": "These are the mechanism-derived v2 scalars carried by the frozen estimator, not leaderboard-derived values. They are declared here verbatim before any variant is computed.",
+      "building_gap": 0.01,
+      "building_gap_source": "scripts/estimator_v2_building.py BUILDING_GAP_V2",
+      "establishments_cbp_k": 0.024,
+      "establishments_cbp_k_source": "scripts/estimator_v2_establishments.py explicit caller-supplied cbp_k parameter",
+      "facility_presence_prior": {
+        "fire": {
+          "intercept": -2.8,
+          "log_density": 0.3,
+          "urban_fraction": 0.7
+        },
+        "ems": {
+          "intercept": -3.2,
+          "log_density": 0.25,
+          "urban_fraction": 0.6
+        },
+        "schools": {
+          "intercept": -1.0,
+          "log_density": 0.2,
+          "urban_fraction": 0.35
+        }
+      },
+      "facility_presence_prior_source": "config/v2-component-mask-audit-preregistered.json frozen_rules.facility_family.presence_prior"
+    },
+    "perturbation_rule": {
+      "kind": "fixed multiplicative relative perturbation of the prior scalar only",
+      "factors": [
+        0.9,
+        1.1
+      ],
+      "applies_to": {
+        "building_gap": "the emitted building gap becomes clip(building_gap_central * factor, 0, 1) on defined rows",
+        "establishments_cbp_k": "gap recomputed as clip(1 - all_overture_poi_count / (factor * cbp_k * pop_total), 0, 1); the zero-population branch keeps gap 0",
+        "facility_presence_prior_probability": "p_variant = clip(p_central * factor, 0, 1); because the frozen family gap is p * clip(1 - n/(n+1), 0, 1) with the prior entering multiplicatively and n unchanged, the emitted family gap is scaled by p_variant / p_central",
+        "facility_presence_prior_coefficient": "one coefficient of one family's logistic prior is multiplied by the factor, p is recomputed with the frozen formula, and the emitted family gap is scaled by p_variant / p_central"
+      },
+      "never_perturbed": [
+        "any provided-feature input (Overture counts, road kilometres, population, land area)",
+        "every model-defined flag and therefore every definedness mask",
+        "the transport component, which carries no prior",
+        "the combiners: equal-weight means over defined components only"
+      ],
+      "logit_clamp": [
+        -30,
+        30
+      ],
+      "clip": [
+        0,
+        1
+      ],
+      "presence_prior_reproduction_check": "for tracts whose raw family counts and unclassified count are all zero the emitted family gap equals p_central exactly, which verifies the multiplicative transfer rule used for the presence-prior variants"
+    },
+    "variant_grid": [
+      "baseline",
+      "building_gap.x0.90",
+      "building_gap.x1.10",
+      "establishments_cbp_k.x0.90",
+      "establishments_cbp_k.x1.10",
+      "presence_fire.x0.90",
+      "presence_fire.x1.10",
+      "presence_ems.x0.90",
+      "presence_ems.x1.10",
+      "presence_schools.x0.90",
+      "presence_schools.x1.10",
+      "all_priors.x0.90",
+      "all_priors.x1.10",
+      "presence_fire.intercept.x0.90",
+      "presence_fire.intercept.x1.10",
+      "presence_fire.log_density.x0.90",
+      "presence_fire.log_density.x1.10",
+      "presence_fire.urban_fraction.x0.90",
+      "presence_fire.urban_fraction.x1.10",
+      "presence_ems.intercept.x0.90",
+      "presence_ems.intercept.x1.10",
+      "presence_ems.log_density.x0.90",
+      "presence_ems.log_density.x1.10",
+      "presence_ems.urban_fraction.x0.90",
+      "presence_ems.urban_fraction.x1.10",
+      "presence_schools.intercept.x0.90",
+      "presence_schools.intercept.x1.10",
+      "presence_schools.log_density.x0.90",
+      "presence_schools.log_density.x1.10",
+      "presence_schools.urban_fraction.x0.90",
+      "presence_schools.urban_fraction.x1.10"
+    ],
+    "variant_count": 31,
+    "strata": {
+      "region": "official region of the scored GEOID (four regions)",
+      "urban_rural": "urban when the frozen urbanity value is >= 0.5, rural when < 0.5; the repo's provided-field rule pct_urban < 0.5 for rural, with the frozen pop_urban/pop_total then neutral-0.5 fallback",
+      "tribal": "provided tribal_any boolean (1 true, 0 false, null unknown); values outside the boolean domain abort the audit",
+      "missing_pct_urban_fallback_reported": true
+    },
+    "measurement": {
+      "primary_metric": "maximum absolute per-tract |score_variant - score_baseline| over the 9,379 official scored GEOIDs, per variant",
+      "secondary_metric": "mean absolute per-tract delta and the same mean delta within region, urban/rural and tribal strata, per variant",
+      "envelope": "per-tract minimum and maximum score across all preregistered variants, plus the envelope width distribution",
+      "quantiles_reported": [
+        "p50",
+        "p90",
+        "p95",
+        "p99",
+        "max"
+      ],
+      "no_winner_policy": "every preregistered variant is reported with identical fields; the report emits no ranking, no best variant, no score-based ordering and no promotion decision"
+    },
+    "gates": {
+      "official_geoids_per_variant": 9379,
+      "max_abs_baseline_vs_frozen_composite_residual": 1e-11,
+      "require_finite_scores": true,
+      "require_scores_in_zero_one": true,
+      "require_identical_definedness_masks": true,
+      "require_all_preregistered_variants": true,
+      "require_no_winner_selected": true
+    },
+    "prohibitions": {
+      "central_priors_changed_from_leaderboard": false,
+      "labels_used": false,
+      "sample_score_placeholders_read": false,
+      "removed_reference_layers_or_equivalents_used": false,
+      "per_geoid_tuning": false,
+      "upload_attempted": false,
+      "candidate_promotion_or_submission": false
+    },
+    "input_values": {
+      "official_samples": {
+        "path_template": "samples/{region}-sample-submission.csv",
+        "columns_read": [
+          "GEOID"
+        ],
+        "score_placeholders_read": false,
+        "sha256": {
+          "maricopa-az": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+          "northern-ca": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+          "eastern-ok": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+          "south-central-tx": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e"
+        }
+      },
+      "provided_strata": {
+        "path_template": "defined-flags-inputs/{region}-strata-tract-table.parquet",
+        "columns_read": [
+          "GEOID",
+          "pop_total",
+          "pop_urban",
+          "pct_urban",
+          "ALAND",
+          "tribal_any"
+        ],
+        "role": "provided ACS strata covariates, used only to recompute the frozen presence prior and to assign the urban/rural and tribal strata"
+      },
+      "component_artifacts": {
+        "transport_component": {
+          "path": "reports/candidates/road_topology_candidate.csv",
+          "sha256": "612c2080c3d470fbcdc0cd752cd26847da05a35bf5d245c0b1599134cc82fda7",
+          "gap_column": "route_reference_transport_gap",
+          "defined_column": "route_reference_transport_defined",
+          "perturbed": false,
+          "perturbation_reason": "The transport component is a pure ratio of two provided Overture road measures with no mechanism-derived prior, so no prior perturbation is defined for it and its per-tract delta is exactly zero."
+        },
+        "building_component": {
+          "path": "reports/candidates/building_morphology.csv",
+          "sha256": "ed0928651e1ddc0de89e6fd6544c30bd510456f6e9b72eea9d09277919194b75",
+          "gap_column": "building_gap_constant_0_01",
+          "defined_column": "building_defined",
+          "input_columns": [
+            "overture_building_count"
+          ]
+        },
+        "poi_component": {
+          "path": "reports/candidates/poi_confidence_weighted.csv",
+          "sha256": "28558424db768222ec7639986970af7a37b74228ef8f4e3190e5e58b6e19071c",
+          "gap_column": "v2_raw_poi_gap",
+          "defined_column": "v2_raw_poi_defined",
+          "facility_half_column": "v2_raw_facility_gap",
+          "establishments_half_column": "v2_raw_establishments_gap",
+          "family_gap_columns": [
+            "v2_raw_fire_gap",
+            "v2_raw_ems_gap",
+            "v2_raw_schools_gap"
+          ],
+          "family_count_columns": [
+            "raw_fire_count",
+            "raw_ems_count",
+            "raw_schools_count"
+          ],
+          "input_columns": [
+            "all_overture_poi_count",
+            "unclassified_category_count"
+          ]
+        }
+      }
+    }
+  },
+  "input_verification": {
+    "sha256_verified": {
+      "reports/candidates/road_topology_candidate.csv": "612c2080c3d470fbcdc0cd752cd26847da05a35bf5d245c0b1599134cc82fda7",
+      "reports/candidates/building_morphology.csv": "ed0928651e1ddc0de89e6fd6544c30bd510456f6e9b72eea9d09277919194b75",
+      "reports/candidates/poi_confidence_weighted.csv": "28558424db768222ec7639986970af7a37b74228ef8f4e3190e5e58b6e19071c",
+      "samples/maricopa-az-sample-submission.csv": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+      "samples/northern-ca-sample-submission.csv": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+      "samples/eastern-ok-sample-submission.csv": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+      "samples/south-central-tx-sample-submission.csv": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e",
+      "config/v2-component-mask-audit-preregistered.json": "58b993e5e279e222a1f25eba99aece761e4dc062fda2fed100a3bb143fec37f4",
+      "config/v2-prior-envelope-preregistered.json": "7c0bc11cc60aea331ecfc445f6a6fd7c4652d99c390d60affab257c4f515667b"
+    },
+    "id_coverage_and_order": {
+      "transport": {
+        "path": "reports/candidates/road_topology_candidate.csv",
+        "rows_read": 9379,
+        "unique_geoids": 9379,
+        "duplicate_ids": 0,
+        "missing_official_ids": 0,
+        "extra_non_official_ids": 0,
+        "row_order_matches_official_order": true
+      },
+      "building": {
+        "path": "reports/candidates/building_morphology.csv",
+        "rows_read": 9379,
+        "unique_geoids": 9379,
+        "duplicate_ids": 0,
+        "missing_official_ids": 0,
+        "extra_non_official_ids": 0,
+        "row_order_matches_official_order": true
+      },
+      "poi": {
+        "path": "reports/candidates/poi_confidence_weighted.csv",
+        "rows_read": 9379,
+        "unique_geoids": 9379,
+        "duplicate_ids": 0,
+        "missing_official_ids": 0,
+        "extra_non_official_ids": 0,
+        "row_order_matches_official_order": true
+      }
+    },
+    "presence_prior_transfer_verification": {
+      "rule": "for tracts whose raw family counts and unclassified count are all zero the emitted family gap equals p_central exactly, which verifies the multiplicative transfer rule used for the presence-prior variants",
+      "zero_count_rows_checked": 920,
+      "max_abs_gap_minus_presence": 4.997668945350142e-13,
+      "geoid_of_max": "04019980400"
+    },
+    "baseline_variant_vs_frozen_emitted_composite": {
+      "gate": 1e-11,
+      "max_abs_per_tract_delta": 4.166944567174369e-13,
+      "geoid_of_max": "06067007437",
+      "note": "The baseline variant applies no perturbation, so this residual is the 12-significant-digit round-trip floor of the frozen component artifacts, measured independently by the mask audit at 1.85e-12."
+    }
+  },
+  "scope": {
+    "official_scored_geoids": 9379,
+    "unique_official_geoids": 9379,
+    "region_rows": {
+      "maricopa-az": 1593,
+      "northern-ca": 591,
+      "eastern-ok": 1192,
+      "south-central-tx": 6003
+    },
+    "expected_region_rows": {
+      "maricopa-az": 1593,
+      "northern-ca": 591,
+      "eastern-ok": 1192,
+      "south-central-tx": 6003
+    },
+    "urban_rows": 7667,
+    "rural_rows": 1712,
+    "pct_urban_missing_fallback_rows": 26,
+    "tribal_true_rows": 858,
+    "tribal_false_rows": 8521,
+    "tribal_unknown_rows": 0,
+    "establishments_half_defined_rows": 9377,
+    "zero_defined_rows": 0,
+    "central_score_reference": "the composite emitted by the frozen artifacts for each tract",
+    "candidate_score_csv": null,
+    "candidate_note": "No assembled v2 candidate CSV exists yet; the envelope is measured on the frozen component artifacts' own composite, which is the same arithmetic a candidate is emitted with. Rerun unchanged after candidate generation."
+  },
+  "variants": [
+    {
+      "variant": "baseline",
+      "perturbed_prior": "none",
+      "factor": 1.0,
+      "family": null,
+      "coefficient": null,
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 4.166944567174369e-13,
+      "geoid_of_max_abs_delta": "06067007437",
+      "mean_abs_per_tract_delta": 4.71678367425949e-14,
+      "mean_signed_per_tract_delta": -2.716987015831566e-15,
+      "delta_quantiles": {
+        "p50": 2.2218338280310945e-14,
+        "p90": 1.4999113062685865e-13,
+        "p95": 1.6669998714746725e-13,
+        "p99": 2.5002222514558525e-13,
+        "max": 4.166944567174369e-13
+      },
+      "score_mean": 0.06050063616205997,
+      "score_min": 0.005262915381296667,
+      "score_max": 0.5282167800987833,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": -1.812186446764805e-15,
+          "mean_abs_delta": 3.698123235911933e-14,
+          "max_abs_per_tract_delta": 3.4167113582839193e-13
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": -5.652969417462593e-15,
+          "mean_abs_delta": 6.15718481814918e-14,
+          "max_abs_per_tract_delta": 4.1666670114182125e-13
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": -5.04237444240962e-15,
+          "mean_abs_delta": 4.9581241185461514e-14,
+          "max_abs_per_tract_delta": 4.166944567174369e-13
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": -1.888600932776714e-15,
+          "mean_abs_delta": 4.5130608719474123e-14,
+          "max_abs_per_tract_delta": 4.1666670114182125e-13
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": -1.497727206806452e-15,
+          "mean_abs_delta": 2.261476922692315e-14,
+          "max_abs_per_tract_delta": 3.583383589855771e-13
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": -3.1965810047346988e-15,
+          "mean_abs_delta": 5.3203307823606354e-14,
+          "max_abs_per_tract_delta": 4.166944567174369e-13
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": -9.063591679349358e-16,
+          "mean_abs_delta": 2.081966882092666e-14,
+          "max_abs_per_tract_delta": 2.5000834735777744e-13
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": -1.8940818345790962e-16,
+          "mean_abs_delta": 4.5383856875333614e-14,
+          "max_abs_per_tract_delta": 3.4167113582839193e-13
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": -2.9369978988900117e-15,
+          "mean_abs_delta": 4.8529410716121134e-14,
+          "max_abs_per_tract_delta": 4.166944567174369e-13
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": -5.320071387441343e-16,
+          "mean_abs_delta": 3.364572505446316e-14,
+          "max_abs_per_tract_delta": 3.4167113582839193e-13
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": -1.3561028517028761e-15,
+          "mean_abs_delta": 2.2184867844645953e-14,
+          "max_abs_per_tract_delta": 3.583383589855771e-13
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": -3.0208651544761883e-15,
+          "mean_abs_delta": 5.27463997728921e-14,
+          "max_abs_per_tract_delta": 4.166944567174369e-13
+        }
+      }
+    },
+    {
+      "variant": "building_gap.x0.90",
+      "perturbed_prior": "building_gap",
+      "factor": 0.9,
+      "family": null,
+      "coefficient": null,
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.0005000000004166949,
+      "geoid_of_max_abs_delta": "06067007437",
+      "mean_abs_per_tract_delta": 0.00038021110992914785,
+      "mean_signed_per_tract_delta": -0.00038021110992914785,
+      "delta_quantiles": {
+        "p50": 0.00033333333334444396,
+        "p90": 0.0005000000000249943,
+        "p95": 0.0005000000000833366,
+        "p99": 0.0005000000002499949,
+        "max": 0.0005000000004166949
+      },
+      "score_mean": 0.06012042505213354,
+      "score_min": 0.004929582047963334,
+      "score_max": 0.52788344676545,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": -0.0003733221476528183,
+          "mean_abs_delta": 0.0003733221476528183,
+          "max_abs_per_tract_delta": 0.0005000000003333449
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": -0.0004275999163061337,
+          "mean_abs_delta": 0.0004275999163061337,
+          "max_abs_per_tract_delta": 0.0005000000004166671
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": -0.00038465877045061456,
+          "mean_abs_delta": 0.00038465877045061456,
+          "max_abs_per_tract_delta": 0.0005000000004166949
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": -0.00036856571714331734,
+          "mean_abs_delta": 0.00036856571714331734,
+          "max_abs_per_tract_delta": 0.0005000000004166671
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": -0.0003385816692283279,
+          "mean_abs_delta": 0.0003385816692283279,
+          "max_abs_per_tract_delta": 0.0005000000003583388
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": -0.00039017407766861597,
+          "mean_abs_delta": 0.00039017407766861597,
+          "max_abs_per_tract_delta": 0.0005000000004166949
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": -0.0003357723577244831,
+          "mean_abs_delta": 0.0003357723577244831,
+          "max_abs_per_tract_delta": 0.0005000000000500021
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": -0.0003813244047620935,
+          "mean_abs_delta": 0.0003813244047620935,
+          "max_abs_per_tract_delta": 0.0005000000003333449
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": -0.00038229081094061986,
+          "mean_abs_delta": 0.00038229081094061986,
+          "max_abs_per_tract_delta": 0.0005000000004166949
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": -0.000359557109557641,
+          "mean_abs_delta": 0.000359557109557641,
+          "max_abs_per_tract_delta": 0.0005000000003333449
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": -0.0003379088785060286,
+          "mean_abs_delta": 0.0003379088785060286,
+          "max_abs_per_tract_delta": 0.0005000000003583388
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": -0.00038965697143904487,
+          "mean_abs_delta": 0.00038965697143904487,
+          "max_abs_per_tract_delta": 0.0005000000004166949
+        }
+      }
+    },
+    {
+      "variant": "building_gap.x1.10",
+      "perturbed_prior": "building_gap",
+      "factor": 1.1,
+      "family": null,
+      "coefficient": null,
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.0005000000004166671,
+      "geoid_of_max_abs_delta": "48029191813",
+      "mean_abs_per_tract_delta": 0.0003802111099238001,
+      "mean_signed_per_tract_delta": 0.0003802111099237148,
+      "delta_quantiles": {
+        "p50": 0.0003333333333444457,
+        "p90": 0.0005000000000166677,
+        "p95": 0.0005000000000833227,
+        "p99": 0.0005000000002499672,
+        "max": 0.0005000000004166671
+      },
+      "score_mean": 0.060880847271986414,
+      "score_min": 0.00559624871463,
+      "score_max": 0.5285501134321167,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": 0.0003733221476491949,
+          "mean_abs_delta": 0.0003733221476491949,
+          "max_abs_per_tract_delta": 0.0005000000003416716
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": 0.0004275999162948287,
+          "mean_abs_delta": 0.0004275999162948287,
+          "max_abs_per_tract_delta": 0.0005000000003583388
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": 0.00038465877044053056,
+          "mean_abs_delta": 0.00038465877044053056,
+          "max_abs_per_tract_delta": 0.0005000000003333172
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": 0.00036856571713954106,
+          "mean_abs_delta": 0.0003685657171396743,
+          "max_abs_per_tract_delta": 0.0005000000004166671
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": 0.0003385816692253333,
+          "mean_abs_delta": 0.0003385816692253333,
+          "max_abs_per_tract_delta": 0.0005000000002750027
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": 0.0003901740776622238,
+          "mean_abs_delta": 0.00039017407766233454,
+          "max_abs_per_tract_delta": 0.0005000000004166671
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": 0.00033577235772267144,
+          "mean_abs_delta": 0.00033577235772267144,
+          "max_abs_per_tract_delta": 0.0005000000000416685
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": 0.0003813244047617155,
+          "mean_abs_delta": 0.0003813244047617155,
+          "max_abs_per_tract_delta": 0.0005000000003416716
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": 0.0003822908109347468,
+          "mean_abs_delta": 0.00038229081093484063,
+          "max_abs_per_tract_delta": 0.0005000000004166671
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": 0.0003595571095565779,
+          "mean_abs_delta": 0.0003595571095565779,
+          "max_abs_per_tract_delta": 0.0005000000003416716
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": 0.00033790887850331734,
+          "mean_abs_delta": 0.00033790887850331734,
+          "max_abs_per_tract_delta": 0.0005000000002750027
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": 0.000389656971433004,
+          "mean_abs_delta": 0.0003896569714331083,
+          "max_abs_per_tract_delta": 0.0005000000004166671
+        }
+      }
+    },
+    {
+      "variant": "establishments_cbp_k.x0.90",
+      "perturbed_prior": "establishments_cbp_k",
+      "factor": 0.9,
+      "family": null,
+      "coefficient": null,
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.024990912395617154,
+      "geoid_of_max_abs_delta": "48029130600",
+      "mean_abs_per_tract_delta": 0.0036481358892632705,
+      "mean_signed_per_tract_delta": -0.0036481358892472325,
+      "delta_quantiles": {
+        "p50": 2.7769453403436728e-14,
+        "p90": 0.014345331246785845,
+        "p95": 0.016534391534415334,
+        "p99": 0.023010613447267764,
+        "max": 0.024990912395617154
+      },
+      "score_mean": 0.05685250027281546,
+      "score_min": 0.005262915381296667,
+      "score_max": 0.5275767096398888,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": -0.0026131387046224868,
+          "mean_abs_delta": 0.00261313870463927,
+          "max_abs_per_tract_delta": 0.024879935965833343
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": -0.004974307939441578,
+          "mean_abs_delta": 0.004974307939458909,
+          "max_abs_per_tract_delta": 0.024971033601311476
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": -0.003876239195174829,
+          "mean_abs_delta": 0.003876239195188276,
+          "max_abs_per_tract_delta": 0.024785118784310986
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": -0.0034792729064569428,
+          "mean_abs_delta": 0.0034792729064727457,
+          "max_abs_per_tract_delta": 0.024990912395617154
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": -0.0022931009970790445,
+          "mean_abs_delta": 0.002293100997086929,
+          "max_abs_per_tract_delta": 0.024935707933794807
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": -0.003996852609949981,
+          "mean_abs_delta": 0.003996852609967784,
+          "max_abs_per_tract_delta": 0.024990912395617154
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": -0.0026521034823539743,
+          "mean_abs_delta": 0.0026521034823613105,
+          "max_abs_per_tract_delta": 0.01708350416830015
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": -0.0028785883662027618,
+          "mean_abs_delta": 0.0028785883662220202,
+          "max_abs_per_tract_delta": 0.024879935965833343
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": -0.0037365211230402325,
+          "mean_abs_delta": 0.0037365211230565203,
+          "max_abs_per_tract_delta": 0.024990912395617154
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": -0.002770361323804157,
+          "mean_abs_delta": 0.002770361323817718,
+          "max_abs_per_tract_delta": 0.024879935965833343
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": -0.002379077059557269,
+          "mean_abs_delta": 0.002379077059565022,
+          "max_abs_per_tract_delta": 0.024935707933794807
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": -0.003931509922953925,
+          "mean_abs_delta": 0.003931509922971814,
+          "max_abs_per_tract_delta": 0.024990912395617154
+        }
+      }
+    },
+    {
+      "variant": "establishments_cbp_k.x1.10",
+      "perturbed_prior": "establishments_cbp_k",
+      "factor": 1.1,
+      "family": null,
+      "coefficient": null,
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.022716146451402373,
+      "geoid_of_max_abs_delta": "04013103605",
+      "mean_abs_per_tract_delta": 0.0037127739679815963,
+      "mean_signed_per_tract_delta": 0.0037127739679660775,
+      "delta_quantiles": {
+        "p50": 3.332750742046642e-14,
+        "p90": 0.013437692520707041,
+        "p95": 0.015214124718340313,
+        "p99": 0.021017082684812914,
+        "max": 0.022716146451402373
+      },
+      "score_mean": 0.06421341013002876,
+      "score_min": 0.005262915381296667,
+      "score_max": 0.5287404741107181,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": 0.0028089785479803934,
+          "mean_abs_delta": 0.002808978547995658,
+          "max_abs_per_tract_delta": 0.022512972031439295
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": 0.004899727924975261,
+          "mean_abs_delta": 0.004899727924991736,
+          "max_abs_per_tract_delta": 0.022716146451402373
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": 0.00406592754139277,
+          "mean_abs_delta": 0.004065927541407462,
+          "max_abs_per_tract_delta": 0.02241942392120963
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": 0.003542491230203647,
+          "mean_abs_delta": 0.003542491230219044,
+          "max_abs_per_tract_delta": 0.02271405727583179
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": 0.0026105984450154776,
+          "mean_abs_delta": 0.0026105984450230124,
+          "max_abs_per_tract_delta": 0.02252306361716045
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": 0.0040004122300805025,
+          "mean_abs_delta": 0.004000412230097832,
+          "max_abs_per_tract_delta": 0.022716146451402373
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": 0.0031856526623917905,
+          "mean_abs_delta": 0.0031856526623986357,
+          "max_abs_per_tract_delta": 0.022202961821616143
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": 0.002763424976812302,
+          "mean_abs_delta": 0.0027634249768297746,
+          "max_abs_per_tract_delta": 0.0223089793639675
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": 0.0037880501190425183,
+          "mean_abs_delta": 0.003788050119058351,
+          "max_abs_per_tract_delta": 0.022716146451402373
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": 0.0029651887892687004,
+          "mean_abs_delta": 0.0029651887892810955,
+          "max_abs_per_tract_delta": 0.0223089793639675
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": 0.0027483158685693843,
+          "mean_abs_delta": 0.002748315868576754,
+          "max_abs_per_tract_delta": 0.02252306361716045
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": 0.003928132291452074,
+          "mean_abs_delta": 0.003928132291469413,
+          "max_abs_per_tract_delta": 0.022716146451402373
+        }
+      }
+    },
+    {
+      "variant": "presence_fire.x0.90",
+      "perturbed_prior": "presence_fire",
+      "factor": 0.9,
+      "family": "fire",
+      "coefficient": null,
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.0031391500645416293,
+      "geoid_of_max_abs_delta": "48201421402",
+      "mean_abs_per_tract_delta": 0.0009715554818362086,
+      "mean_signed_per_tract_delta": -0.0009715554818362086,
+      "delta_quantiles": {
+        "p50": 0.0009536941461111281,
+        "p90": 0.0019273814971500006,
+        "p95": 0.002068925906308361,
+        "p99": 0.002402225719441674,
+        "max": 0.0031391500645416293
+      },
+      "score_mean": 0.05952908068022648,
+      "score_min": 0.005205884114808333,
+      "score_max": 0.5276023861866722,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": -0.0007460246697221827,
+          "mean_abs_delta": 0.0007460246697221827,
+          "max_abs_per_tract_delta": 0.00224758147418333
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": -0.001202564711256632,
+          "mean_abs_delta": 0.001202564711256632,
+          "max_abs_per_tract_delta": 0.0028951509983166784
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": -0.0008824867575305838,
+          "mean_abs_delta": 0.0008824867575305838,
+          "max_abs_per_tract_delta": 0.002577191309533322
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": -0.0009638051306181191,
+          "mean_abs_delta": 0.0009638051306181191,
+          "max_abs_per_tract_delta": 0.0031391500645416293
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": -0.00023146512300933433,
+          "mean_abs_delta": 0.00023146512300933433,
+          "max_abs_per_tract_delta": 0.0010453434319500077
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": -0.0011519717922070874,
+          "mean_abs_delta": 0.0011519717922070874,
+          "max_abs_per_tract_delta": 0.0031391500645416293
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": -0.00019828153424913584,
+          "mean_abs_delta": 0.00019828153424913584,
+          "max_abs_per_tract_delta": 0.0006401622906858223
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": -0.0009229274040145959,
+          "mean_abs_delta": 0.0009229274040145959,
+          "max_abs_per_tract_delta": 0.002173294840933329
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": -0.0010113193238001543,
+          "mean_abs_delta": 0.0010113193238001543,
+          "max_abs_per_tract_delta": 0.0031391500645416293
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": -0.0005766514056418236,
+          "mean_abs_delta": 0.0005766514056418236,
+          "max_abs_per_tract_delta": 0.002173294840933329
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": -0.0002235181186917634,
+          "mean_abs_delta": 0.0002235181186917634,
+          "max_abs_per_tract_delta": 0.0010453434319500077
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": -0.0011385882150699753,
+          "mean_abs_delta": 0.0011385882150699753,
+          "max_abs_per_tract_delta": 0.0031391500645416293
+        }
+      }
+    },
+    {
+      "variant": "presence_fire.x1.10",
+      "perturbed_prior": "presence_fire",
+      "factor": 1.1,
+      "family": "fire",
+      "coefficient": null,
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.0031391500645416848,
+      "geoid_of_max_abs_delta": "48201421402",
+      "mean_abs_per_tract_delta": 0.0009715554818307755,
+      "mean_signed_per_tract_delta": 0.0009715554818307755,
+      "delta_quantiles": {
+        "p50": 0.0009536941459999948,
+        "p90": 0.001927381497183335,
+        "p95": 0.00206892590664165,
+        "p99": 0.0024022257195749977,
+        "max": 0.0031391500645416848
+      },
+      "score_mean": 0.06147219164389347,
+      "score_min": 0.005319946647785001,
+      "score_max": 0.5288311740108944,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": 0.000746024669718559,
+          "mean_abs_delta": 0.000746024669718559,
+          "max_abs_per_tract_delta": 0.002247581474250006
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": 0.001202564711245327,
+          "mean_abs_delta": 0.001202564711245327,
+          "max_abs_per_tract_delta": 0.002895150997983334
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": 0.0008824867575204996,
+          "mean_abs_delta": 0.0008824867575204996,
+          "max_abs_per_tract_delta": 0.0025771913086999887
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": 0.0009638051306143427,
+          "mean_abs_delta": 0.0009638051306143427,
+          "max_abs_per_tract_delta": 0.0031391500645416848
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": 0.00023146512300633928,
+          "mean_abs_delta": 0.00023146512300633928,
+          "max_abs_per_tract_delta": 0.0010453434316000099
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": 0.001151971792200695,
+          "mean_abs_delta": 0.001151971792200695,
+          "max_abs_per_tract_delta": 0.0031391500645416848
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": 0.00019828153424732294,
+          "mean_abs_delta": 0.00019828153424732294,
+          "max_abs_per_tract_delta": 0.0006401622905858467
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": 0.0009229274040142177,
+          "mean_abs_delta": 0.0009229274040142177,
+          "max_abs_per_tract_delta": 0.0021732948412666736
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": 0.0010113193237942812,
+          "mean_abs_delta": 0.0010113193237942812,
+          "max_abs_per_tract_delta": 0.0031391500645416848
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": 0.0005766514056407599,
+          "mean_abs_delta": 0.0005766514056407599,
+          "max_abs_per_tract_delta": 0.0021732948412666736
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": 0.00022351811868905148,
+          "mean_abs_delta": 0.00022351811868905148,
+          "max_abs_per_tract_delta": 0.0010453434316000099
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": 0.0011385882150639346,
+          "mean_abs_delta": 0.0011385882150639346,
+          "max_abs_per_tract_delta": 0.0031391500645416848
+        }
+      }
+    },
+    {
+      "variant": "presence_ems.x0.90",
+      "perturbed_prior": "presence_ems",
+      "factor": 0.9,
+      "family": "ems",
+      "coefficient": null,
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.0018276344051499915,
+      "geoid_of_max_abs_delta": "48201421402",
+      "mean_abs_per_tract_delta": 0.0006328631844484311,
+      "mean_signed_per_tract_delta": -0.0006328631844484311,
+      "delta_quantiles": {
+        "p50": 0.0006412071568222197,
+        "p90": 0.0011499983164000027,
+        "p95": 0.001222983613408335,
+        "p99": 0.0014023006456583276,
+        "max": 0.0018276344051499915
+      },
+      "score_mean": 0.05986777297761426,
+      "score_min": 0.005216597580602,
+      "score_max": 0.5278340815700439,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": -0.0004996761584452062,
+          "mean_abs_delta": 0.0004996761584452062,
+          "max_abs_per_tract_delta": 0.0013301839556000006
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": -0.0007824449346880049,
+          "mean_abs_delta": 0.0007824449346880049,
+          "max_abs_per_tract_delta": 0.0016913420764250037
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": -0.0006146586474921256,
+          "mean_abs_delta": 0.0006146586474921256,
+          "max_abs_per_tract_delta": 0.001512397337325
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": -0.0006214079267781628,
+          "mean_abs_delta": 0.0006214079267781628,
+          "max_abs_per_tract_delta": 0.0018276344051499915
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": -0.00019056803681103267,
+          "mean_abs_delta": 0.00019056803681103267,
+          "max_abs_per_tract_delta": 0.0006410284418408296
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": -0.0007405833520604276,
+          "mean_abs_delta": 0.0007405833520604276,
+          "max_abs_per_tract_delta": 0.0018276344051499915
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": -0.0001759907838999247,
+          "mean_abs_delta": 0.0001759907838999247,
+          "max_abs_per_tract_delta": 0.00038316039561416687
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": -0.0006006178193988283,
+          "mean_abs_delta": 0.0006006178193988283,
+          "max_abs_per_tract_delta": 0.0012675275447583262
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": -0.0006565415799145865,
+          "mean_abs_delta": 0.0006565415799145865,
+          "max_abs_per_tract_delta": 0.0018276344051499915
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": -0.00039770746444014473,
+          "mean_abs_delta": 0.00039770746444014473,
+          "max_abs_per_tract_delta": 0.0012675275447583262
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": -0.00018707698909283508,
+          "mean_abs_delta": 0.00018707698909283508,
+          "max_abs_per_tract_delta": 0.0006410284418408296
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": -0.0007324048521735884,
+          "mean_abs_delta": 0.0007324048521735884,
+          "max_abs_per_tract_delta": 0.0018276344051499915
+        }
+      }
+    },
+    {
+      "variant": "presence_ems.x1.10",
+      "perturbed_prior": "presence_ems",
+      "factor": 1.1,
+      "family": "ems",
+      "coefficient": null,
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.0018276344051499915,
+      "geoid_of_max_abs_delta": "48201421402",
+      "mean_abs_per_tract_delta": 0.0006328631844429977,
+      "mean_signed_per_tract_delta": 0.0006328631844429977,
+      "delta_quantiles": {
+        "p50": 0.0006412071567666704,
+        "p90": 0.0011499983163999958,
+        "p95": 0.0012229836127416738,
+        "p99": 0.0014023006453250109,
+        "max": 0.0018276344051499915
+      },
+      "score_mean": 0.06113349934650569,
+      "score_min": 0.005309233181991333,
+      "score_max": 0.5285994786275228,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": 0.0004996761584415823,
+          "mean_abs_delta": 0.0004996761584415823,
+          "max_abs_per_tract_delta": 0.0013301839556666695
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": 0.0007824449346766996,
+          "mean_abs_delta": 0.0007824449346766996,
+          "max_abs_per_tract_delta": 0.0016913420760916592
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": 0.0006146586474820406,
+          "mean_abs_delta": 0.0006146586474820406,
+          "max_abs_per_tract_delta": 0.0015123973364916665
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": 0.0006214079267743863,
+          "mean_abs_delta": 0.0006214079267743863,
+          "max_abs_per_tract_delta": 0.0018276344051499915
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": 0.00019056803680803767,
+          "mean_abs_delta": 0.00019056803680803767,
+          "max_abs_per_tract_delta": 0.0006410284414908318
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": 0.0007405833520540351,
+          "mean_abs_delta": 0.0007405833520540351,
+          "max_abs_per_tract_delta": 0.0018276344051499915
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": 0.000175990783898112,
+          "mean_abs_delta": 0.000175990783898112,
+          "max_abs_per_tract_delta": 0.000383160395514167
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": 0.0006006178193984499,
+          "mean_abs_delta": 0.0006006178193984499,
+          "max_abs_per_tract_delta": 0.0012675275450916706
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": 0.000656541579908713,
+          "mean_abs_delta": 0.000656541579908713,
+          "max_abs_per_tract_delta": 0.0018276344051499915
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": 0.000397707464439081,
+          "mean_abs_delta": 0.000397707464439081,
+          "max_abs_per_tract_delta": 0.0012675275450916706
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": 0.00018707698909012325,
+          "mean_abs_delta": 0.00018707698909012325,
+          "max_abs_per_tract_delta": 0.0006410284414908318
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": 0.0007324048521675472,
+          "mean_abs_delta": 0.0007324048521675472,
+          "max_abs_per_tract_delta": 0.0018276344051499915
+        }
+      }
+    },
+    {
+      "variant": "presence_schools.x0.90",
+      "perturbed_prior": "presence_schools",
+      "factor": 0.9,
+      "family": "schools",
+      "coefficient": null,
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.01015677768859996,
+      "geoid_of_max_abs_delta": "48039990000",
+      "mean_abs_per_tract_delta": 0.0008736191802365607,
+      "mean_signed_per_tract_delta": -0.0008736191802365607,
+      "delta_quantiles": {
+        "p50": 0.0006019501063722205,
+        "p90": 0.0019455218405083352,
+        "p95": 0.002566740809094442,
+        "p99": 0.004135821178533339,
+        "max": 0.01015677768859996
+      },
+      "score_mean": 0.05962701698182613,
+      "score_min": 0.005173306243683334,
+      "score_max": 0.5261494644500222,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": -0.0007793114888991577,
+          "mean_abs_delta": 0.0007793114888991577,
+          "max_abs_per_tract_delta": 0.004195467185516666
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": -0.0011489695778710276,
+          "mean_abs_delta": 0.0011489695778710276,
+          "max_abs_per_tract_delta": 0.0045503696807749905
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": -0.0007637268138752384,
+          "mean_abs_delta": 0.0007637268138752384,
+          "max_abs_per_tract_delta": 0.004430645358450017
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": -0.0008300956042182397,
+          "mean_abs_delta": 0.0008300956042182397,
+          "max_abs_per_tract_delta": 0.01015677768859996
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": -0.000588407162417896,
+          "mean_abs_delta": 0.000588407162417896,
+          "max_abs_per_tract_delta": 0.0032885229940916583
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": -0.0009488229075465837,
+          "mean_abs_delta": 0.0009488229075465837,
+          "max_abs_per_tract_delta": 0.01015677768859996
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": -0.0005004961094509545,
+          "mean_abs_delta": 0.0005004961094509545,
+          "max_abs_per_tract_delta": 0.002241929715700003
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": -0.0008321700703502743,
+          "mean_abs_delta": 0.0008321700703502743,
+          "max_abs_per_tract_delta": 0.003992248746475011
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": -0.0008937517539076269,
+          "mean_abs_delta": 0.0008937517539076269,
+          "max_abs_per_tract_delta": 0.01015677768859996
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": -0.0006736778512725107,
+          "mean_abs_delta": 0.0006736778512725107,
+          "max_abs_per_tract_delta": 0.003992248746475011
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": -0.0005673536976302523,
+          "mean_abs_delta": 0.0005673536976302523,
+          "max_abs_per_tract_delta": 0.0032885229940916583
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": -0.0009420066207246264,
+          "mean_abs_delta": 0.0009420066207246264,
+          "max_abs_per_tract_delta": 0.01015677768859996
+        }
+      }
+    },
+    {
+      "variant": "presence_schools.x1.10",
+      "perturbed_prior": "presence_schools",
+      "factor": 1.1,
+      "family": "schools",
+      "coefficient": null,
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.01015677768820003,
+      "geoid_of_max_abs_delta": "48039990000",
+      "mean_abs_per_tract_delta": 0.0008736191802311274,
+      "mean_signed_per_tract_delta": 0.0008736191802311274,
+      "delta_quantiles": {
+        "p50": 0.0006019501063277803,
+        "p90": 0.0019455218405416697,
+        "p95": 0.002566740809316674,
+        "p99": 0.004135821178866683,
+        "max": 0.01015677768820003
+      },
+      "score_mean": 0.06137425534229382,
+      "score_min": 0.00535252451891,
+      "score_max": 0.5302840957475444,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": 0.0007793114888955338,
+          "mean_abs_delta": 0.0007793114888955338,
+          "max_abs_per_tract_delta": 0.004195467185183349
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": 0.0011489695778597226,
+          "mean_abs_delta": 0.0011489695778597226,
+          "max_abs_per_tract_delta": 0.0045503696809416905
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": 0.0007637268138651539,
+          "mean_abs_delta": 0.0007637268138651539,
+          "max_abs_per_tract_delta": 0.004430645358283344
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": 0.0008300956042144633,
+          "mean_abs_delta": 0.0008300956042144633,
+          "max_abs_per_tract_delta": 0.01015677768820003
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": 0.0005884071624149009,
+          "mean_abs_delta": 0.0005884071624149009,
+          "max_abs_per_tract_delta": 0.0032885229937416605
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": 0.0009488229075401914,
+          "mean_abs_delta": 0.0009488229075401914,
+          "max_abs_per_tract_delta": 0.01015677768820003
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": 0.0005004961094491419,
+          "mean_abs_delta": 0.0005004961094491419,
+          "max_abs_per_tract_delta": 0.002241929715783332
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": 0.0008321700703498963,
+          "mean_abs_delta": 0.0008321700703498963,
+          "max_abs_per_tract_delta": 0.003992248746475011
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": 0.0008937517539017536,
+          "mean_abs_delta": 0.0008937517539017536,
+          "max_abs_per_tract_delta": 0.01015677768820003
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": 0.0006736778512714472,
+          "mean_abs_delta": 0.0006736778512714472,
+          "max_abs_per_tract_delta": 0.003992248746475011
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": 0.0005673536976275404,
+          "mean_abs_delta": 0.0005673536976275404,
+          "max_abs_per_tract_delta": 0.0032885229937416605
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": 0.0009420066207185855,
+          "mean_abs_delta": 0.0009420066207185855,
+          "max_abs_per_tract_delta": 0.01015677768820003
+        }
+      }
+    },
+    {
+      "variant": "all_priors.x0.90",
+      "perturbed_prior": "all_priors",
+      "factor": 0.9,
+      "family": null,
+      "coefficient": null,
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.03363243458760265,
+      "geoid_of_max_abs_delta": "06067005509",
+      "mean_abs_per_tract_delta": 0.006506384845686712,
+      "mean_signed_per_tract_delta": -0.006506384845686712,
+      "delta_quantiles": {
+        "p50": 0.003022114221044994,
+        "p90": 0.01751355957109859,
+        "p95": 0.020971987748270776,
+        "p99": 0.027857139061589535,
+        "max": 0.03363243458760265
+      },
+      "score_mean": 0.05399425131637598,
+      "score_min": 0.004736623843167,
+      "score_max": 0.5241789682169438,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": -0.005011473169334603,
+          "mean_abs_delta": 0.005011473169334603,
+          "max_abs_per_tract_delta": 0.03159115084668733
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": -0.008535887079540764,
+          "mean_abs_delta": 0.008535887079540764,
+          "max_abs_per_tract_delta": 0.033004211370830996
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": -0.006521770184503221,
+          "mean_abs_delta": 0.006521770184503221,
+          "max_abs_per_tract_delta": 0.03363243458760265
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": -0.006263147285207228,
+          "mean_abs_delta": 0.006263147285207228,
+          "max_abs_per_tract_delta": 0.03233636107298449
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": -0.0036421229885396445,
+          "mean_abs_delta": 0.0036421229885396445,
+          "max_abs_per_tract_delta": 0.02908126805982647
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": -0.007228404739419908,
+          "mean_abs_delta": 0.007228404739419908,
+          "max_abs_per_tract_delta": 0.03363243458760265
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": -0.0038626442676748473,
+          "mean_abs_delta": 0.0038626442676748473,
+          "max_abs_per_tract_delta": 0.01968870178269516
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": -0.005615628064727796,
+          "mean_abs_delta": 0.005615628064727796,
+          "max_abs_per_tract_delta": 0.030808012271524188
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": -0.006680424591591472,
+          "mean_abs_delta": 0.006680424591591472,
+          "max_abs_per_tract_delta": 0.03363243458760265
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": -0.004777955154714149,
+          "mean_abs_delta": 0.004777955154714149,
+          "max_abs_per_tract_delta": 0.030808012271524188
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": -0.0036949347434727243,
+          "mean_abs_delta": 0.0036949347434727243,
+          "max_abs_per_tract_delta": 0.02908126805982647
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": -0.007134166582349077,
+          "mean_abs_delta": 0.007134166582349077,
+          "max_abs_per_tract_delta": 0.03363243458760265
+        }
+      }
+    },
+    {
+      "variant": "all_priors.x1.10",
+      "perturbed_prior": "all_priors",
+      "factor": 1.1,
+      "family": null,
+      "coefficient": null,
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.03120212555860878,
+      "geoid_of_max_abs_delta": "04013619100",
+      "mean_abs_per_tract_delta": 0.006571022924405561,
+      "mean_signed_per_tract_delta": 0.006571022924405561,
+      "delta_quantiles": {
+        "p50": 0.003234596387094446,
+        "p90": 0.016385756082081114,
+        "p95": 0.019741819052919718,
+        "p99": 0.025830128867699365,
+        "max": 0.03120212555860878
+      },
+      "score_mean": 0.06707165908646825,
+      "score_min": 0.005789206919426334,
+      "score_max": 0.532138215533663,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": 0.005207313012692513,
+          "mean_abs_delta": 0.005207313012692513,
+          "max_abs_per_tract_delta": 0.02806746349585834
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": 0.008461307065074452,
+          "mean_abs_delta": 0.008461307065074452,
+          "max_abs_per_tract_delta": 0.03120212555860878
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": 0.006711458530721165,
+          "mean_abs_delta": 0.006711458530721165,
+          "max_abs_per_tract_delta": 0.029126049353749364
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": 0.0063263656089539355,
+          "mean_abs_delta": 0.0063263656089539355,
+          "max_abs_per_tract_delta": 0.030613232828493042
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": 0.003959620436476081,
+          "mean_abs_delta": 0.003959620436476081,
+          "max_abs_per_tract_delta": 0.024895622945550255
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": 0.007231964359550434,
+          "mean_abs_delta": 0.007231964359550434,
+          "max_abs_per_tract_delta": 0.03120212555860878
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": 0.004396193447712664,
+          "mean_abs_delta": 0.004396193447712664,
+          "max_abs_per_tract_delta": 0.025068540288017235
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": 0.00550046467533734,
+          "mean_abs_delta": 0.00550046467533734,
+          "max_abs_per_tract_delta": 0.02806746349585834
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": 0.006731953587593761,
+          "mean_abs_delta": 0.006731953587593761,
+          "max_abs_per_tract_delta": 0.03120212555860878
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": 0.004972782620178695,
+          "mean_abs_delta": 0.004972782620178695,
+          "max_abs_per_tract_delta": 0.02806746349585834
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": 0.004064173552484842,
+          "mean_abs_delta": 0.004064173552484842,
+          "max_abs_per_tract_delta": 0.025068540288017235
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": 0.00713078895084723,
+          "mean_abs_delta": 0.00713078895084723,
+          "max_abs_per_tract_delta": 0.03120212555860878
+        }
+      }
+    },
+    {
+      "variant": "presence_fire.intercept.x0.90",
+      "perturbed_prior": "presence_fire.intercept",
+      "factor": 0.9,
+      "family": "fire",
+      "coefficient": "intercept",
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.007679494753175087,
+      "geoid_of_max_abs_delta": "48039990000",
+      "mean_abs_per_tract_delta": 0.00230121370731408,
+      "mean_signed_per_tract_delta": 0.00230121370731408,
+      "delta_quantiles": {
+        "p50": 0.0023201744393167995,
+        "p90": 0.004428497763846254,
+        "p95": 0.004627195799514067,
+        "p99": 0.005036252422615142,
+        "max": 0.007679494753175087
+      },
+      "score_mean": 0.06280184986937677,
+      "score_min": 0.005432368752207167,
+      "score_max": 0.5299215931241256,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": 0.0018446839979722033,
+          "mean_abs_delta": 0.0018446839979722033,
+          "max_abs_per_tract_delta": 0.004792960952085909
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": 0.0028322339757112175,
+          "mean_abs_delta": 0.0028322339757112175,
+          "max_abs_per_tract_delta": 0.005453928925428661
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": 0.0020911382521284897,
+          "mean_abs_delta": 0.0020911382521284897,
+          "max_abs_per_tract_delta": 0.005180357789288825
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": 0.002271632284690985,
+          "mean_abs_delta": 0.002271632284690985,
+          "max_abs_per_tract_delta": 0.007679494753175087
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": 0.000680804063166091,
+          "mean_abs_delta": 0.000680804063166091,
+          "max_abs_per_tract_delta": 0.002839022544599057
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": 0.00269246142190682,
+          "mean_abs_delta": 0.00269246142190682,
+          "max_abs_per_tract_delta": 0.007679494753175087
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": 0.0005869725862206104,
+          "mean_abs_delta": 0.0005869725862206104,
+          "max_abs_per_tract_delta": 0.0018616523582049016
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": 0.0022748631820551867,
+          "mean_abs_delta": 0.0022748631820551867,
+          "max_abs_per_tract_delta": 0.004787652298079398
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": 0.002385082255015559,
+          "mean_abs_delta": 0.002385082255015559,
+          "max_abs_per_tract_delta": 0.007679494753175087
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": 0.0014682954148148883,
+          "mean_abs_delta": 0.0014682954148148883,
+          "max_abs_per_tract_delta": 0.004787652298079398
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": 0.0006583327398321851,
+          "mean_abs_delta": 0.0006583327398321851,
+          "max_abs_per_tract_delta": 0.002839022544599057
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": 0.002668060220465118,
+          "mean_abs_delta": 0.002668060220465118,
+          "max_abs_per_tract_delta": 0.007679494753175087
+        }
+      }
+    },
+    {
+      "variant": "presence_fire.intercept.x1.10",
+      "perturbed_prior": "presence_fire.intercept",
+      "factor": 1.1,
+      "family": "fire",
+      "coefficient": "intercept",
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.006070795454891753,
+      "geoid_of_max_abs_delta": "48039990000",
+      "mean_abs_per_tract_delta": 0.001961172040954682,
+      "mean_signed_per_tract_delta": -0.001961172040954682,
+      "delta_quantiles": {
+        "p50": 0.001959288182079383,
+        "p90": 0.0038218108518564553,
+        "p95": 0.004031084019020276,
+        "p99": 0.004478102118954233,
+        "max": 0.006070795454891753
+      },
+      "score_mean": 0.058539464121108005,
+      "score_min": 0.005130267602050226,
+      "score_max": 0.526845223236133,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": -0.0015479144531279577,
+          "mean_abs_delta": 0.0015479144531279577,
+          "max_abs_per_tract_delta": 0.004240792345076155
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": -0.002419407021201687,
+          "mean_abs_delta": 0.002419407021201687,
+          "max_abs_per_tract_delta": 0.005019533851976274
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": -0.001781482740333569,
+          "mean_abs_delta": 0.001781482740333569,
+          "max_abs_per_tract_delta": 0.004672418598770545
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": -0.0019393214825377334,
+          "mean_abs_delta": 0.0019393214825377334,
+          "max_abs_per_tract_delta": 0.006070795454891753
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": -0.000535087388788816,
+          "mean_abs_delta": 0.000535087388788816,
+          "max_abs_per_tract_delta": 0.0023032185225062007
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": -0.0023066473281015505,
+          "mean_abs_delta": 0.0023066473281015505,
+          "max_abs_per_tract_delta": 0.006070795454891753
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": -0.0004601563737544827,
+          "mean_abs_delta": 0.0004601563737544827,
+          "max_abs_per_tract_delta": 0.001470055661547981
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": -0.001912494681041292,
+          "mean_abs_delta": 0.001912494681041292,
+          "max_abs_per_tract_delta": 0.004190235691549332
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": -0.0020359547989400456,
+          "mean_abs_delta": 0.0020359547989400456,
+          "max_abs_per_tract_delta": 0.006070795454891753
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": -0.0012184868652049378,
+          "mean_abs_delta": 0.0012184868652049378,
+          "max_abs_per_tract_delta": 0.004190235691549332
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": -0.0005171424611228834,
+          "mean_abs_delta": 0.0005171424611228834,
+          "max_abs_per_tract_delta": 0.0023032185225062007
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": -0.002283616105213459,
+          "mean_abs_delta": 0.002283616105213459,
+          "max_abs_per_tract_delta": 0.006070795454891753
+        }
+      }
+    },
+    {
+      "variant": "presence_fire.log_density.x0.90",
+      "perturbed_prior": "presence_fire.log_density",
+      "factor": 0.9,
+      "family": "fire",
+      "coefficient": "log_density",
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.0030569399304685163,
+      "geoid_of_max_abs_delta": "48201421402",
+      "mean_abs_per_tract_delta": 0.0005909985391928402,
+      "mean_signed_per_tract_delta": -0.0005909985391928035,
+      "delta_quantiles": {
+        "p50": 0.0005074186493833725,
+        "p90": 0.001342201112250016,
+        "p95": 0.001537635970401123,
+        "p99": 0.0020082844898131613,
+        "max": 0.0030569399304685163
+      },
+      "score_mean": 0.05990963762286988,
+      "score_min": 0.005258461518597924,
+      "score_max": 0.5278366664239763,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": -0.00038099312545668436,
+          "mean_abs_delta": 0.00038099312545668436,
+          "max_abs_per_tract_delta": 0.001823101598368744
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": -0.0007456186828890125,
+          "mean_abs_delta": 0.0007456186828891799,
+          "max_abs_per_tract_delta": 0.002725196378499481
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": -0.0005369889431646551,
+          "mean_abs_delta": 0.0005369889431646551,
+          "max_abs_per_tract_delta": 0.0022753003666057814
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": -0.0005969849185894433,
+          "mean_abs_delta": 0.0005969849185894563,
+          "max_abs_per_tract_delta": 0.0030569399304685163
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": -2.533756819019649e-05,
+          "mean_abs_delta": 2.533756819019649e-05,
+          "max_abs_per_tract_delta": 0.0010228038113802296
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": -0.0007331141989341544,
+          "mean_abs_delta": 0.0007331141989342022,
+          "max_abs_per_tract_delta": 0.0030569399304685163
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": -1.388317397985927e-05,
+          "mean_abs_delta": 1.388317397985927e-05,
+          "max_abs_per_tract_delta": 0.0001297807624745101
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": -0.0004730854505988055,
+          "mean_abs_delta": 0.0004730854505988055,
+          "max_abs_per_tract_delta": 0.0016564728469526668
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": -0.0006249666607075809,
+          "mean_abs_delta": 0.0006249666607076213,
+          "max_abs_per_tract_delta": 0.0030569399304685163
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": -0.0002536531272727356,
+          "mean_abs_delta": 0.0002536531272727356,
+          "max_abs_per_tract_delta": 0.0016564728469526668
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": -2.2594401352440497e-05,
+          "mean_abs_delta": 2.2594401352440497e-05,
+          "max_abs_per_tract_delta": 0.0010228038113802296
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": -0.0007179201361645919,
+          "mean_abs_delta": 0.0007179201361646367,
+          "max_abs_per_tract_delta": 0.0030569399304685163
+        }
+      }
+    },
+    {
+      "variant": "presence_fire.log_density.x1.10",
+      "perturbed_prior": "presence_fire.log_density",
+      "factor": 1.1,
+      "family": "fire",
+      "coefficient": "log_density",
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.003179437271824681,
+      "geoid_of_max_abs_delta": "48201421402",
+      "mean_abs_per_tract_delta": 0.0006190731218803617,
+      "mean_signed_per_tract_delta": 0.0006190731218802018,
+      "delta_quantiles": {
+        "p50": 0.000530258091804181,
+        "p90": 0.0014098891879778253,
+        "p95": 0.0016170406837349716,
+        "p99": 0.002112432813659304,
+        "max": 0.003179437271824681
+      },
+      "score_mean": 0.0611197092839429,
+      "score_min": 0.005267401964209008,
+      "score_max": 0.5286186660551041,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": 0.0003979356095052959,
+          "mean_abs_delta": 0.00039793560950533317,
+          "max_abs_per_tract_delta": 0.0019180969236920198
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": 0.000781342537054021,
+          "mean_abs_delta": 0.0007813425370542163,
+          "max_abs_per_tract_delta": 0.002848366598271715
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": 0.00056276022763779,
+          "mean_abs_delta": 0.00056276022763779,
+          "max_abs_per_tract_delta": 0.002389387189994041
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": 0.0006254668678199419,
+          "mean_abs_delta": 0.0006254668678201325,
+          "max_abs_per_tract_delta": 0.003179437271824681
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": 2.592785354534735e-05,
+          "mean_abs_delta": 2.592785354534735e-05,
+          "max_abs_per_tract_delta": 0.0011105657738505192
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": 0.0007682108351597294,
+          "mean_abs_delta": 0.0007682108351599373,
+          "max_abs_per_tract_delta": 0.003179437271824681
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": 1.4061991762161556e-05,
+          "mean_abs_delta": 1.4061991762161556e-05,
+          "max_abs_per_tract_delta": 0.00013319194583491512
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": 0.0004934136365129415,
+          "mean_abs_delta": 0.0004934136365129415,
+          "max_abs_per_tract_delta": 0.0017424245613403694
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": 0.0006547907621563348,
+          "mean_abs_delta": 0.0006547907621565109,
+          "max_abs_per_tract_delta": 0.003179437271824681
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": 0.00026435282724974834,
+          "mean_abs_delta": 0.00026435282724974834,
+          "max_abs_per_tract_delta": 0.0017424245613403694
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": 2.3086145992131127e-05,
+          "mean_abs_delta": 2.3086145992131127e-05,
+          "max_abs_per_tract_delta": 0.0011105657738505192
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": 0.0007521538187264752,
+          "mean_abs_delta": 0.0007521538187266707,
+          "max_abs_per_tract_delta": 0.003179437271824681
+        }
+      }
+    },
+    {
+      "variant": "presence_fire.urban_fraction.x0.90",
+      "perturbed_prior": "presence_fire.urban_fraction",
+      "factor": 0.9,
+      "family": "fire",
+      "coefficient": "urban_fraction",
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.0013573770151142917,
+      "geoid_of_max_abs_delta": "48201421402",
+      "mean_abs_per_tract_delta": 0.000491676683691849,
+      "mean_signed_per_tract_delta": -0.0004916766836895028,
+      "delta_quantiles": {
+        "p50": 0.0005170031810605505,
+        "p90": 0.0010128232669294468,
+        "p95": 0.0010641992223698882,
+        "p99": 0.0011730225132859096,
+        "max": 0.0013573770151142917
+      },
+      "score_mean": 0.060008959478373196,
+      "score_min": 0.005262882245144086,
+      "score_max": 0.5282167800987833,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": -0.00036576479976874264,
+          "mean_abs_delta": 0.0003657647997740306,
+          "max_abs_per_tract_delta": 0.0011147404977472214
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": -0.0006218250737346807,
+          "mean_abs_delta": 0.0006218250737367891,
+          "max_abs_per_tract_delta": 0.0013013452548531201
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": -0.0004376318364093969,
+          "mean_abs_delta": 0.0004376318364112826,
+          "max_abs_per_tract_delta": 0.0012200138744087041
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": -0.00048746230505117554,
+          "mean_abs_delta": 0.0004874623050530459,
+          "max_abs_per_tract_delta": 0.0013573770151142917
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": -1.4167379571732903e-05,
+          "mean_abs_delta": 1.4167379583772517e-05,
+          "max_abs_per_tract_delta": 0.00023361523660662964
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": -0.0006051717141088192,
+          "mean_abs_delta": 0.0006051717141088192,
+          "max_abs_per_tract_delta": 0.0013573770151142917
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": -8.20739427279671e-06,
+          "mean_abs_delta": 8.207394288233161e-06,
+          "max_abs_per_tract_delta": 0.00017020382079840912
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": -0.0004930581524956225,
+          "mean_abs_delta": 0.0004930581524956225,
+          "max_abs_per_tract_delta": 0.0011055928910166796
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": -0.0005148668621469268,
+          "mean_abs_delta": 0.0005148668621487663,
+          "max_abs_per_tract_delta": 0.0013573770151142917
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": -0.0002613695617364633,
+          "mean_abs_delta": 0.0002613695617438397,
+          "max_abs_per_tract_delta": 0.0011055928910166796
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": -1.2740046643833464e-05,
+          "mean_abs_delta": 1.2740046656686573e-05,
+          "max_abs_per_tract_delta": 0.00023361523660662964
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": -0.000598620667336586,
+          "mean_abs_delta": 0.000598620667336586,
+          "max_abs_per_tract_delta": 0.0013573770151142917
+        }
+      }
+    },
+    {
+      "variant": "presence_fire.urban_fraction.x1.10",
+      "perturbed_prior": "presence_fire.urban_fraction",
+      "factor": 1.1,
+      "family": "fire",
+      "coefficient": "urban_fraction",
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.0013810027060063845,
+      "geoid_of_max_abs_delta": "48201421402",
+      "mean_abs_per_tract_delta": 0.0005108221311405832,
+      "mean_signed_per_tract_delta": 0.0005108221311374238,
+      "delta_quantiles": {
+        "p50": 0.0005384697525305515,
+        "p90": 0.0010509967124498407,
+        "p95": 0.0011017327909144947,
+        "p99": 0.00120818955851551,
+        "max": 0.0013810027060063845
+      },
+      "score_mean": 0.06101145829320012,
+      "score_min": 0.005262948519247254,
+      "score_max": 0.5282167800987833,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": 0.00038092986393221457,
+          "mean_abs_delta": 0.00038092986393705515,
+          "max_abs_per_tract_delta": 0.0011495520371539864
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": 0.0006461284352864268,
+          "mean_abs_delta": 0.0006461284352894054,
+          "max_abs_per_tract_delta": 0.0013287836582011742
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": 0.0004544079928491273,
+          "mean_abs_delta": 0.0004544079928533358,
+          "max_abs_per_tract_delta": 0.0012520694364531182
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": 0.000506262643502513,
+          "mean_abs_delta": 0.0005062626435052833,
+          "max_abs_per_tract_delta": 0.0013810027060063845
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": 1.444935219764351e-05,
+          "mean_abs_delta": 1.4449352215330178e-05,
+          "max_abs_per_tract_delta": 0.0002403154128924334
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": 0.0006286844935589184,
+          "mean_abs_delta": 0.0006286844935589184,
+          "max_abs_per_tract_delta": 0.0013810027060063845
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": 8.3689285617961e-06,
+          "mean_abs_delta": 8.368928577901764e-06,
+          "max_abs_per_tract_delta": 0.00017501399440841836
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": 0.0005140247581794605,
+          "mean_abs_delta": 0.0005140247581794605,
+          "max_abs_per_tract_delta": 0.0011432325839400154
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": 0.0005348299983057344,
+          "mean_abs_delta": 0.000534829998308437,
+          "max_abs_per_tract_delta": 0.0013810027060063845
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": 0.00027239435008710337,
+          "mean_abs_delta": 0.0002723943500947995,
+          "max_abs_per_tract_delta": 0.0011432325839400154
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": 1.2993175976441737e-05,
+          "mean_abs_delta": 1.2993175993749775e-05,
+          "max_abs_per_tract_delta": 0.0002403154128924334
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": 0.0006219846681448062,
+          "mean_abs_delta": 0.0006219846681448062,
+          "max_abs_per_tract_delta": 0.0013810027060063845
+        }
+      }
+    },
+    {
+      "variant": "presence_ems.intercept.x0.90",
+      "perturbed_prior": "presence_ems.intercept",
+      "factor": 0.9,
+      "family": "ems",
+      "coefficient": "intercept",
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.006094389271264378,
+      "geoid_of_max_abs_delta": "48039990000",
+      "mean_abs_per_tract_delta": 0.0019935414365066435,
+      "mean_signed_per_tract_delta": 0.0019935414365066435,
+      "delta_quantiles": {
+        "p50": 0.0020440524870815394,
+        "p90": 0.0035470847079321077,
+        "p95": 0.0037237106872669568,
+        "p99": 0.004127441083630751,
+        "max": 0.006094389271264378
+      },
+      "score_mean": 0.06249417759856934,
+      "score_min": 0.00542767182443767,
+      "score_max": 0.529526594993777,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": 0.001611983633831271,
+          "mean_abs_delta": 0.001611983633831271,
+          "max_abs_per_tract_delta": 0.003955494374231663
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": 0.00245534617912974,
+          "mean_abs_delta": 0.00245534617912974,
+          "max_abs_per_tract_delta": 0.004715906938503364
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": 0.0019398633280633024,
+          "mean_abs_delta": 0.0019398633280633024,
+          "max_abs_per_tract_delta": 0.00436157736078982
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": 0.0019520431369698225,
+          "mean_abs_delta": 0.0019520431369698225,
+          "max_abs_per_tract_delta": 0.006094389271264378
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": 0.0006743615008798932,
+          "mean_abs_delta": 0.0006743615008798932,
+          "max_abs_per_tract_delta": 0.002168622528188169
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": 0.00231326576706971,
+          "mean_abs_delta": 0.00231326576706971,
+          "max_abs_per_tract_delta": 0.006094389271264378
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": 0.0006251557382936477,
+          "mean_abs_delta": 0.0006251557382936477,
+          "max_abs_per_tract_delta": 0.0013550670940590398
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": 0.0019277389144498995,
+          "mean_abs_delta": 0.0019277389144498995,
+          "max_abs_per_tract_delta": 0.003833231076233193
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": 0.0020628428877622175,
+          "mean_abs_delta": 0.0020628428877622175,
+          "max_abs_per_tract_delta": 0.006094389271264378
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": 0.0013052924083612478,
+          "mean_abs_delta": 0.0013052924083612478,
+          "max_abs_per_tract_delta": 0.003833231076233193
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": 0.0006625774105408975,
+          "mean_abs_delta": 0.0006625774105408975,
+          "max_abs_per_tract_delta": 0.002168622528188169
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": 0.0022907385686904646,
+          "mean_abs_delta": 0.0022907385686904646,
+          "max_abs_per_tract_delta": 0.006094389271264378
+        }
+      }
+    },
+    {
+      "variant": "presence_ems.intercept.x1.10",
+      "perturbed_prior": "presence_ems.intercept",
+      "factor": 1.1,
+      "family": "ems",
+      "coefficient": "intercept",
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.004577859192482547,
+      "geoid_of_max_abs_delta": "48039990000",
+      "mean_abs_per_tract_delta": 0.0015690984627057022,
+      "mean_signed_per_tract_delta": -0.0015690984627057022,
+      "delta_quantiles": {
+        "p50": 0.0016013184515357298,
+        "p90": 0.0028173050830126375,
+        "p95": 0.002974623772002194,
+        "p99": 0.00334562225162692,
+        "max": 0.004577859192482547
+      },
+      "score_mean": 0.058931537699356995,
+      "score_min": 0.0051399770555440654,
+      "score_max": 0.5272221879606017,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": -0.0012557438413724337,
+          "mean_abs_delta": 0.0012557438413724337,
+          "max_abs_per_tract_delta": 0.0031913446992643466
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": -0.0019359619834747447,
+          "mean_abs_delta": 0.0019359619834747447,
+          "max_abs_per_tract_delta": 0.00390569144858037
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": -0.001525476645598253,
+          "mean_abs_delta": 0.001525476645598253,
+          "max_abs_per_tract_delta": 0.0035635249855734963
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": -0.0015382614835210736,
+          "mean_abs_delta": 0.0015382614835210736,
+          "max_abs_per_tract_delta": 0.004577859192482547
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": -0.0005043779794595336,
+          "mean_abs_delta": 0.0005043779794595336,
+          "max_abs_per_tract_delta": 0.0016552961130136823
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": -0.0018276823159990912,
+          "mean_abs_delta": 0.0018276823159990912,
+          "max_abs_per_tract_delta": 0.004577859192482547
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": -0.000466768407977658,
+          "mean_abs_delta": 0.000466768407977658,
+          "max_abs_per_tract_delta": 0.001013808267798972
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": -0.00150549255801828,
+          "mean_abs_delta": 0.00150549255801828,
+          "max_abs_per_tract_delta": 0.00307108701151243
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": -0.0016254827800086552,
+          "mean_abs_delta": 0.0016254827800086552,
+          "max_abs_per_tract_delta": 0.004577859192482547
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": -0.0010091325329405934,
+          "mean_abs_delta": 0.0010091325329405934,
+          "max_abs_per_tract_delta": 0.00307108701151243
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": -0.0004953710143266078,
+          "mean_abs_delta": 0.0004953710143266078,
+          "max_abs_per_tract_delta": 0.0016552961130136823
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": -0.0018088560460662096,
+          "mean_abs_delta": 0.0018088560460662096,
+          "max_abs_per_tract_delta": 0.004577859192482547
+        }
+      }
+    },
+    {
+      "variant": "presence_ems.log_density.x0.90",
+      "perturbed_prior": "presence_ems.log_density",
+      "factor": 0.9,
+      "family": "ems",
+      "coefficient": "log_density",
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.0018272174601525748,
+      "geoid_of_max_abs_delta": "48201421402",
+      "mean_abs_per_tract_delta": 0.00035095788064554796,
+      "mean_signed_per_tract_delta": -0.00035095788064551126,
+      "delta_quantiles": {
+        "p50": 0.00032546312571129707,
+        "p90": 0.0007587851604966486,
+        "p95": 0.0008617777179397712,
+        "p99": 0.0011325586531588383,
+        "max": 0.0018272174601525748
+      },
+      "score_mean": 0.060149678281417186,
+      "score_min": 0.005259834839580108,
+      "score_max": 0.528009761014233,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": -0.00022614466217392068,
+          "mean_abs_delta": 0.00022614466217392068,
+          "max_abs_per_tract_delta": 0.0010388149313713194
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": -0.00044486734232797645,
+          "mean_abs_delta": 0.00044486734232814385,
+          "max_abs_per_tract_delta": 0.0016054641295609046
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": -0.0003372483010243233,
+          "mean_abs_delta": 0.0003372483010243233,
+          "max_abs_per_tract_delta": 0.001314259164838294
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": -0.000352170931705663,
+          "mean_abs_delta": 0.000352170931705676,
+          "max_abs_per_tract_delta": 0.0018272174601525748
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": -1.67601807455337e-05,
+          "mean_abs_delta": 1.67601807455337e-05,
+          "max_abs_per_tract_delta": 0.0005477838448230965
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": -0.00043506324736319977,
+          "mean_abs_delta": 0.00043506324736324747,
+          "max_abs_per_tract_delta": 0.0018272174601525748
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": -9.340194752715682e-06,
+          "mean_abs_delta": 9.340194752715682e-06,
+          "max_abs_per_tract_delta": 7.333430554500898e-05
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": -0.000279600769375028,
+          "mean_abs_delta": 0.000279600769375028,
+          "max_abs_per_tract_delta": 0.0009189148202115999
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": -0.00037114697078343204,
+          "mean_abs_delta": 0.0003711469707834724,
+          "max_abs_per_tract_delta": 0.0018272174601525748
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": -0.0001504552733433869,
+          "mean_abs_delta": 0.0001504552733433869,
+          "max_abs_per_tract_delta": 0.0009189148202115999
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": -1.498319811874901e-05,
+          "mean_abs_delta": 1.498319811874901e-05,
+          "max_abs_per_tract_delta": 0.0005477838448230965
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": -0.000425979226215593,
+          "mean_abs_delta": 0.00042597922621563796,
+          "max_abs_per_tract_delta": 0.0018272174601525748
+        }
+      }
+    },
+    {
+      "variant": "presence_ems.log_density.x1.10",
+      "perturbed_prior": "presence_ems.log_density",
+      "factor": 1.1,
+      "family": "ems",
+      "coefficient": "log_density",
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.0019687526085505613,
+      "geoid_of_max_abs_delta": "48201421402",
+      "mean_abs_per_tract_delta": 0.00037014656317376865,
+      "mean_signed_per_tract_delta": 0.00037014656317360873,
+      "delta_quantiles": {
+        "p50": 0.0003404087471013395,
+        "p90": 0.0008030679674103369,
+        "p95": 0.0009149978544211526,
+        "p99": 0.0012105171712454288,
+        "max": 0.0019687526085505613
+      },
+      "score_mean": 0.0608707827252363,
+      "score_min": 0.005266015640880024,
+      "score_max": 0.5284347161524671,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": 0.00023716108774366054,
+          "mean_abs_delta": 0.00023716108774369783,
+          "max_abs_per_tract_delta": 0.0011085236488819483
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": 0.000469325914442511,
+          "mean_abs_delta": 0.0004693259144427063,
+          "max_abs_per_tract_delta": 0.0017274602600082234
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": 0.00035589191474063984,
+          "mean_abs_delta": 0.00035589191474063984,
+          "max_abs_per_tract_delta": 0.0014093662530269002
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": 0.0003716375639007487,
+          "mean_abs_delta": 0.00037163756390093936,
+          "max_abs_per_tract_delta": 0.0019687526085505613
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": 1.7095993659590652e-05,
+          "mean_abs_delta": 1.7095993659590652e-05,
+          "max_abs_per_tract_delta": 0.0005961834122069354
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": 0.0004591221449136981,
+          "mean_abs_delta": 0.0004591221449139058,
+          "max_abs_per_tract_delta": 0.0019687526085505613
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": 9.43963990421613e-06,
+          "mean_abs_delta": 9.43963990421613e-06,
+          "max_abs_per_tract_delta": 7.518629555453363e-05
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": 0.0002925728030530677,
+          "mean_abs_delta": 0.0002925728030530677,
+          "max_abs_per_tract_delta": 0.0009770404615353223
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": 0.000391581005501323,
+          "mean_abs_delta": 0.000391581005501499,
+          "max_abs_per_tract_delta": 0.0019687526085505613
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": 0.00015727607007984024,
+          "mean_abs_delta": 0.00015727607007984024,
+          "max_abs_per_tract_delta": 0.0009770404615353223
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": 1.5262404267240446e-05,
+          "mean_abs_delta": 1.5262404267240446e-05,
+          "max_abs_per_tract_delta": 0.0005961834122069354
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": 0.0004493902934524274,
+          "mean_abs_delta": 0.00044939029345262297,
+          "max_abs_per_tract_delta": 0.0019687526085505613
+        }
+      }
+    },
+    {
+      "variant": "presence_ems.urban_fraction.x0.90",
+      "perturbed_prior": "presence_ems.urban_fraction",
+      "factor": 0.9,
+      "family": "ems",
+      "coefficient": "urban_fraction",
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.0008416559844774962,
+      "geoid_of_max_abs_delta": "48201421402",
+      "mean_abs_per_tract_delta": 0.0003027533568235058,
+      "mean_signed_per_tract_delta": -0.00030275335682115965,
+      "delta_quantiles": {
+        "p50": 0.00033047669792124826,
+        "p90": 0.0005810131135314811,
+        "p95": 0.0006121476867308462,
+        "p99": 0.0006836684629986933,
+        "max": 0.0008416559844774962
+      },
+      "score_mean": 0.06019788280524154,
+      "score_min": 0.00526289181865397,
+      "score_max": 0.5282167800987833,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": -0.0002237309358457555,
+          "mean_abs_delta": 0.00022373093585104347,
+          "max_abs_per_tract_delta": 0.0006545681384537982
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": -0.0003852224399887764,
+          "mean_abs_delta": 0.0003852224399908849,
+          "max_abs_per_tract_delta": 0.00079362039423099
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": -0.0002862078314644557,
+          "mean_abs_delta": 0.0002862078314663414,
+          "max_abs_per_tract_delta": 0.0007276355018957514
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": -0.00029818895265698846,
+          "mean_abs_delta": 0.0002981889526588589,
+          "max_abs_per_tract_delta": 0.0008416559844774962
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": -9.546448399341017e-06,
+          "mean_abs_delta": 9.546448411380633e-06,
+          "max_abs_per_tract_delta": 0.00013493592761963658
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": -0.0003726278003341351,
+          "mean_abs_delta": 0.0003726278003341351,
+          "max_abs_per_tract_delta": 0.0008416559844774962
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": -5.462764510182e-06,
+          "mean_abs_delta": 5.46276452561845e-06,
+          "max_abs_per_tract_delta": 9.749391967345256e-05
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": -0.0003010143610455772,
+          "mean_abs_delta": 0.0003010143610455772,
+          "max_abs_per_tract_delta": 0.0006314688641025773
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": -0.000317149344728091,
+          "mean_abs_delta": 0.00031714934472993066,
+          "max_abs_per_tract_delta": 0.0008416559844774962
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": -0.00015978341165220656,
+          "mean_abs_delta": 0.00015978341165958295,
+          "max_abs_per_tract_delta": 0.0006314688641025773
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": -8.56846335579242e-06,
+          "mean_abs_delta": 8.56846336864553e-06,
+          "max_abs_per_tract_delta": 0.00013493592761963658
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": -0.00036844326651370025,
+          "mean_abs_delta": 0.00036844326651370025,
+          "max_abs_per_tract_delta": 0.0008416559844774962
+        }
+      }
+    },
+    {
+      "variant": "presence_ems.urban_fraction.x1.10",
+      "perturbed_prior": "presence_ems.urban_fraction",
+      "factor": 1.1,
+      "family": "ems",
+      "coefficient": "urban_fraction",
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.0008704814999904165,
+      "geoid_of_max_abs_delta": "48201421402",
+      "mean_abs_per_tract_delta": 0.00031626186842967,
+      "mean_signed_per_tract_delta": 0.00031626186842651063,
+      "delta_quantiles": {
+        "p50": 0.0003458777577889788,
+        "p90": 0.0006067737216075286,
+        "p95": 0.0006385290681326927,
+        "p99": 0.0007114602316824481,
+        "max": 0.0008704814999904165
+      },
+      "score_mean": 0.06081689803048921,
+      "score_min": 0.005262938945085679,
+      "score_max": 0.5282167800987833,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": 0.000233905730635398,
+          "mean_abs_delta": 0.0002339057306402386,
+          "max_abs_per_tract_delta": 0.0006815748927458121
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": 0.0004024804635655214,
+          "mean_abs_delta": 0.0004024804635684998,
+          "max_abs_per_tract_delta": 0.0008223278838367237
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": 0.0002988591799060283,
+          "mean_abs_delta": 0.0002988591799102368,
+          "max_abs_per_tract_delta": 0.0007558760052811808
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": 0.00031144882213401807,
+          "mean_abs_delta": 0.00031144882213678826,
+          "max_abs_per_tract_delta": 0.0008704814999904165
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": 9.717588100162897e-06,
+          "mean_abs_delta": 9.717588117849563e-06,
+          "max_abs_per_tract_delta": 0.00013851608262667459
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": 0.0003892850414325501,
+          "mean_abs_delta": 0.0003892850414325501,
+          "max_abs_per_tract_delta": 0.0008704814999904165
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": 5.557561266571916e-06,
+          "mean_abs_delta": 5.557561282677579e-06,
+          "max_abs_per_tract_delta": 0.00010007172779546991
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": 0.0003148224331360659,
+          "mean_abs_delta": 0.0003148224331360659,
+          "max_abs_per_tract_delta": 0.0006583849426508026
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": 0.00033128752655885353,
+          "mean_abs_delta": 0.00033128752656155606,
+          "max_abs_per_tract_delta": 0.0008704814999904165
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": 0.0001670385200049557,
+          "mean_abs_delta": 0.0001670385200126519,
+          "max_abs_per_tract_delta": 0.0006583849426508026
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": 8.721319991651037e-06,
+          "mean_abs_delta": 8.721320008959075e-06,
+          "max_abs_per_tract_delta": 0.00013851608262667459
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": 0.00038493402427892747,
+          "mean_abs_delta": 0.00038493402427892747,
+          "max_abs_per_tract_delta": 0.0008704814999904165
+        }
+      }
+    },
+    {
+      "variant": "presence_schools.intercept.x0.90",
+      "perturbed_prior": "presence_schools.intercept",
+      "factor": 0.9,
+      "family": "schools",
+      "coefficient": "intercept",
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.007196523297471086,
+      "geoid_of_max_abs_delta": "48039990000",
+      "mean_abs_per_tract_delta": 0.0004826455547987183,
+      "mean_signed_per_tract_delta": 0.0004826455547987183,
+      "delta_quantiles": {
+        "p50": 0.0003370334386048196,
+        "p90": 0.0010751017034528014,
+        "p95": 0.001331347906194373,
+        "p99": 0.0020273194741833173,
+        "max": 0.007196523297471086
+      },
+      "score_mean": 0.060983281716861404,
+      "score_min": 0.0053288195879179845,
+      "score_max": 0.5295305187371754,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": 0.00046158842516836604,
+          "mean_abs_delta": 0.00046158842516836604,
+          "max_abs_per_tract_delta": 0.0020815193496949713
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": 0.0006272031084776544,
+          "mean_abs_delta": 0.0006272031084776544,
+          "max_abs_per_tract_delta": 0.0020828985948599943
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": 0.00042693329928206837,
+          "mean_abs_delta": 0.00042693329928206837,
+          "max_abs_per_tract_delta": 0.0020800125369208056
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": 0.0004539508785567016,
+          "mean_abs_delta": 0.0004539508785567016,
+          "max_abs_per_tract_delta": 0.007196523297471086
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": 0.00042731069052682775,
+          "mean_abs_delta": 0.00042731069052682775,
+          "max_abs_per_tract_delta": 0.002010306050525934
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": 0.0004999785063614613,
+          "mean_abs_delta": 0.0004999785063614613,
+          "max_abs_per_tract_delta": 0.007196523297471086
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": 0.00036740358823320653,
+          "mean_abs_delta": 0.00036740358823320653,
+          "max_abs_per_tract_delta": 0.0016760958636310094
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": 0.0004696290865898309,
+          "mean_abs_delta": 0.0004696290865898309,
+          "max_abs_per_tract_delta": 0.0020815193496949713
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": 0.000488874939149081,
+          "mean_abs_delta": 0.000488874939149081,
+          "max_abs_per_tract_delta": 0.007196523297471086
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": 0.0004207800722236118,
+          "mean_abs_delta": 0.0004207800722236118,
+          "max_abs_per_tract_delta": 0.0020815193496949713
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": 0.0004129637793466965,
+          "mean_abs_delta": 0.0004129637793466965,
+          "max_abs_per_tract_delta": 0.002010306050525934
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": 0.0004982051217184862,
+          "mean_abs_delta": 0.0004982051217184862,
+          "max_abs_per_tract_delta": 0.007196523297471086
+        }
+      }
+    },
+    {
+      "variant": "presence_schools.intercept.x1.10",
+      "perturbed_prior": "presence_schools.intercept",
+      "factor": 1.1,
+      "family": "schools",
+      "coefficient": "intercept",
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.006921041489571567,
+      "geoid_of_max_abs_delta": "48039990000",
+      "mean_abs_per_tract_delta": 0.0004768804039808224,
+      "mean_signed_per_tract_delta": -0.0004768804039808224,
+      "delta_quantiles": {
+        "p50": 0.00033486887567619333,
+        "p90": 0.0010399498678809738,
+        "p95": 0.0013304584883786497,
+        "p99": 0.002028924991675285,
+        "max": 0.006921041489571567
+      },
+      "score_mean": 0.060023755758081866,
+      "score_min": 0.005199845000385918,
+      "score_max": 0.5269361909302631,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": -0.0004526405386811133,
+          "mean_abs_delta": 0.0004526405386811133,
+          "max_abs_per_tract_delta": 0.002082218531816199
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": -0.000620817184514963,
+          "mean_abs_delta": 0.000620817184514963,
+          "max_abs_per_tract_delta": 0.002082881967216413
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": -0.00042122835489507524,
+          "mean_abs_delta": 0.00042122835489507524,
+          "max_abs_per_tract_delta": 0.0020825614709760187
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": -0.00044897652076510413,
+          "mean_abs_delta": 0.00044897652076510413,
+          "max_abs_per_tract_delta": 0.006921041489571567
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": -0.0004095695909012618,
+          "mean_abs_delta": 0.0004095695909012618,
+          "max_abs_per_tract_delta": 0.0019684142976603702
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": -0.0004969544942932272,
+          "mean_abs_delta": 0.0004969544942932272,
+          "max_abs_per_tract_delta": 0.006921041489571567
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": -0.0003516771416583219,
+          "mean_abs_delta": 0.0003516771416583219,
+          "max_abs_per_tract_delta": 0.0016004802994546638
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": -0.0004636151321427924,
+          "mean_abs_delta": 0.0004636151321427924,
+          "max_abs_per_tract_delta": 0.0020709992778308872
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": -0.0004836021713010503,
+          "mean_abs_delta": 0.0004836021713010503,
+          "max_abs_per_tract_delta": 0.006921041489571567
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": -0.0004101249502096538,
+          "mean_abs_delta": 0.0004101249502096538,
+          "max_abs_per_tract_delta": 0.0020709992778308872
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": -0.00039570516088396896,
+          "mean_abs_delta": 0.00039570516088396896,
+          "max_abs_per_tract_delta": 0.0019684142976603702
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": -0.0004950064006133792,
+          "mean_abs_delta": 0.0004950064006133792,
+          "max_abs_per_tract_delta": 0.006921041489571567
+        }
+      }
+    },
+    {
+      "variant": "presence_schools.log_density.x0.90",
+      "perturbed_prior": "presence_schools.log_density",
+      "factor": 0.9,
+      "family": "schools",
+      "coefficient": "log_density",
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.0021460606851686492,
+      "geoid_of_max_abs_delta": "48201421402",
+      "mean_abs_per_tract_delta": 0.00021897040119501455,
+      "mean_signed_per_tract_delta": -0.00021897040119497785,
+      "delta_quantiles": {
+        "p50": 0.00013200515616371145,
+        "p90": 0.0005129808918187817,
+        "p95": 0.0007754808465227289,
+        "p99": 0.0014225866458987824,
+        "max": 0.0021460606851686492
+      },
+      "score_mean": 0.060281665760867714,
+      "score_min": 0.005259325883894181,
+      "score_max": 0.5276016759511847,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": -0.00015472411477563197,
+          "mean_abs_delta": 0.00015472411477563197,
+          "max_abs_per_tract_delta": 0.0014436463507867536
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": -0.00029483709638150764,
+          "mean_abs_delta": 0.00029483709638167504,
+          "max_abs_per_tract_delta": 0.0018725823664919455
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": -0.00018541359902533015,
+          "mean_abs_delta": 0.00018541359902533015,
+          "max_abs_per_tract_delta": 0.0016787389737254882
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": -0.00021489877002089488,
+          "mean_abs_delta": 0.00021489877002090786,
+          "max_abs_per_tract_delta": 0.0021460606851686492
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": -2.849956550421692e-05,
+          "mean_abs_delta": 2.849956550421692e-05,
+          "max_abs_per_tract_delta": 0.0011871189688813233
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": -0.0002667049756028639,
+          "mean_abs_delta": 0.0002667049756029116,
+          "max_abs_per_tract_delta": 0.0021460606851686492
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": -1.5913954482946827e-05,
+          "mean_abs_delta": 1.5913954482946827e-05,
+          "max_abs_per_tract_delta": 0.00019567585567160234
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": -0.00018917191586188416,
+          "mean_abs_delta": 0.00018917191586188416,
+          "max_abs_per_tract_delta": 0.0013707099897071612
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": -0.00023030743494467374,
+          "mean_abs_delta": 0.00023030743494471416,
+          "max_abs_per_tract_delta": 0.0021460606851686492
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": -0.00010637964993488614,
+          "mean_abs_delta": 0.00010637964993488614,
+          "max_abs_per_tract_delta": 0.0013707099897071612
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": -2.5485488098422093e-05,
+          "mean_abs_delta": 2.5485488098422093e-05,
+          "max_abs_per_tract_delta": 0.0011871189688813233
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": -0.00026217454508715255,
+          "mean_abs_delta": 0.00026217454508719744,
+          "max_abs_per_tract_delta": 0.0021460606851686492
+        }
+      }
+    },
+    {
+      "variant": "presence_schools.log_density.x1.10",
+      "perturbed_prior": "presence_schools.log_density",
+      "factor": 1.1,
+      "family": "schools",
+      "coefficient": "log_density",
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.0020999602091262837,
+      "geoid_of_max_abs_delta": "48201421402",
+      "mean_abs_per_tract_delta": 0.00021909312363552116,
+      "mean_signed_per_tract_delta": 0.0002190931236353612,
+      "delta_quantiles": {
+        "p50": 0.00013237596477529145,
+        "p90": 0.0005134175715616474,
+        "p95": 0.0007765430350873681,
+        "p99": 0.0014181559987556103,
+        "max": 0.0020999602091262837
+      },
+      "score_mean": 0.06071972928569806,
+      "score_min": 0.005266513684440765,
+      "score_max": 0.528839430839844,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": 0.0001551609875171408,
+          "mean_abs_delta": 0.0001551609875171781,
+          "max_abs_per_tract_delta": 0.0014405778911025235
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": 0.0002951649548086849,
+          "mean_abs_delta": 0.0002951649548088802,
+          "max_abs_per_tract_delta": 0.0018416548299658164
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": 0.0001855422052284371,
+          "mean_abs_delta": 0.0001855422052284371,
+          "max_abs_per_tract_delta": 0.0016663027932789926
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": 0.00021490409681082452,
+          "mean_abs_delta": 0.00021490409681101518,
+          "max_abs_per_tract_delta": 0.0020999602091262837
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": 2.8657442212279083e-05,
+          "mean_abs_delta": 2.8657442212279083e-05,
+          "max_abs_per_tract_delta": 0.0011941898152482144
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": 0.00026679176224923693,
+          "mean_abs_delta": 0.0002667917622494447,
+          "max_abs_per_tract_delta": 0.0020999602091262837
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": 1.5970763327355762e-05,
+          "mean_abs_delta": 1.5970763327355762e-05,
+          "max_abs_per_tract_delta": 0.00019699906371666714
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": 0.00018983185753171475,
+          "mean_abs_delta": 0.00018983185753171475,
+          "max_abs_per_tract_delta": 0.001368000327362548
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": 0.00023040508407905515,
+          "mean_abs_delta": 0.00023040508407923117,
+          "max_abs_per_tract_delta": 0.0020999602091262837
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": 0.00010675138128021454,
+          "mean_abs_delta": 0.00010675138128021454,
+          "max_abs_per_tract_delta": 0.001368000327362548
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": 2.5619160469978525e-05,
+          "mean_abs_delta": 2.5619160469978525e-05,
+          "max_abs_per_tract_delta": 0.0011941898152482144
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": 0.00026229482246660355,
+          "mean_abs_delta": 0.0002622948224667992,
+          "max_abs_per_tract_delta": 0.0020999602091262837
+        }
+      }
+    },
+    {
+      "variant": "presence_schools.urban_fraction.x0.90",
+      "perturbed_prior": "presence_schools.urban_fraction",
+      "factor": 0.9,
+      "family": "schools",
+      "coefficient": "urban_fraction",
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.001231604720692392,
+      "geoid_of_max_abs_delta": "48039990000",
+      "mean_abs_per_tract_delta": 0.00014001105634416037,
+      "mean_signed_per_tract_delta": -0.00014001105634181424,
+      "delta_quantiles": {
+        "p50": 9.428301909876133e-05,
+        "p90": 0.000348866673046698,
+        "p95": 0.000461181669151961,
+        "p99": 0.0007100017241581658,
+        "max": 0.001231604720692392
+      },
+      "score_mean": 0.06036062510572088,
+      "score_min": 0.00526289540050084,
+      "score_max": 0.5282167800987833,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": -0.00011410798299918044,
+          "mean_abs_delta": 0.00011410798300446843,
+          "max_abs_per_tract_delta": 0.0007291455960442839
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": -0.00019658494505076724,
+          "mean_abs_delta": 0.0001965849450528758,
+          "max_abs_per_tract_delta": 0.0007290180369214222
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": -0.00011874753088375154,
+          "mean_abs_delta": 0.00011874753088563723,
+          "max_abs_per_tract_delta": 0.0007291390874036852
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": -0.00013223511135710198,
+          "mean_abs_delta": 0.00013223511135897236,
+          "max_abs_per_tract_delta": 0.001231604720692392
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": -9.875294217738161e-06,
+          "mean_abs_delta": 9.875294229777777e-06,
+          "max_abs_per_tract_delta": 0.00027900625634171006
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": -0.0001701895270649751,
+          "mean_abs_delta": 0.0001701895270649751,
+          "max_abs_per_tract_delta": 0.001231604720692392
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": -5.6778090755174805e-06,
+          "mean_abs_delta": 5.67780909095393e-06,
+          "max_abs_per_tract_delta": 0.00017436794425789576
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": -0.00015486599722179265,
+          "mean_abs_delta": 0.00015486599722179265,
+          "max_abs_per_tract_delta": 0.0007265726108103832
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": -0.0001456936778492607,
+          "mean_abs_delta": 0.00014569367785110033,
+          "max_abs_per_tract_delta": 0.001231604720692392
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": -8.35756042847614e-05,
+          "mean_abs_delta": 8.357560429213778e-05,
+          "max_abs_per_tract_delta": 0.0007265726108103832
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": -8.870055369425966e-06,
+          "mean_abs_delta": 8.870055382279076e-06,
+          "max_abs_per_tract_delta": 0.00027900625634171006
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": -0.00016929413885971285,
+          "mean_abs_delta": 0.00016929413885971285,
+          "max_abs_per_tract_delta": 0.001231604720692392
+        }
+      }
+    },
+    {
+      "variant": "presence_schools.urban_fraction.x1.10",
+      "perturbed_prior": "presence_schools.urban_fraction",
+      "factor": 1.1,
+      "family": "schools",
+      "coefficient": "urban_fraction",
+      "rows": 9379,
+      "nonfinite_scores": 0,
+      "scores_outside_zero_one": 0,
+      "definedness_flag_mismatches": 0,
+      "zero_defined_rows": 0,
+      "prior_clip_events": 0,
+      "max_abs_per_tract_delta": 0.0012400518649469394,
+      "geoid_of_max_abs_delta": "48039990000",
+      "mean_abs_per_tract_delta": 0.00014027604981751627,
+      "mean_signed_per_tract_delta": 0.00014027604981435693,
+      "delta_quantiles": {
+        "p50": 9.454889618459861e-05,
+        "p90": 0.00034949694925642816,
+        "p95": 0.0004624297081020079,
+        "p99": 0.0007098652449343268,
+        "max": 0.0012400518649469394
+      },
+      "score_mean": 0.060640912211877056,
+      "score_min": 0.005262935362364681,
+      "score_max": 0.5282167800987833,
+      "stratum_mean_delta": {
+        "region|region:eastern-ok": {
+          "tracts": 1192,
+          "mean_signed_delta": 0.0001144802834401429,
+          "mean_abs_delta": 0.00011448028344498351,
+          "max_abs_per_tract_delta": 0.0007289692369672196
+        },
+        "region|region:maricopa-az": {
+          "tracts": 1593,
+          "mean_signed_delta": 0.00019701910476892785,
+          "mean_abs_delta": 0.00019701910477190628,
+          "max_abs_per_tract_delta": 0.0007291314470838361
+        },
+        "region|region:northern-ca": {
+          "tracts": 591,
+          "mean_signed_delta": 0.0001189746346020483,
+          "mean_abs_delta": 0.00011897463460625676,
+          "max_abs_per_tract_delta": 0.0007288263865387057
+        },
+        "region|region:south-central-tx": {
+          "tracts": 6003,
+          "mean_signed_delta": 0.00013243763624879072,
+          "mean_abs_delta": 0.00013243763625156094,
+          "max_abs_per_tract_delta": 0.0012400518649469394
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+          "tracts": 1302,
+          "mean_signed_delta": 9.916762090738165e-06,
+          "mean_abs_delta": 9.916762108424831e-06,
+          "max_abs_per_tract_delta": 0.00028067510475718316
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+          "tracts": 7219,
+          "mean_signed_delta": 0.00017048741006544979,
+          "mean_abs_delta": 0.00017048741006544979,
+          "max_abs_per_tract_delta": 0.0012400518649469394
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+          "tracts": 410,
+          "mean_signed_delta": 5.701004881910619e-06,
+          "mean_abs_delta": 5.701004898016282e-06,
+          "max_abs_per_tract_delta": 0.0001754816197430155
+        },
+        "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+          "tracts": 448,
+          "mean_signed_delta": 0.00015547192344340872,
+          "mean_abs_delta": 0.00015547192344340872,
+          "max_abs_per_tract_delta": 0.0007278631970808469
+        },
+        "tribal|tribal:tribal_any_false": {
+          "tracts": 8521,
+          "mean_signed_delta": 0.0001459523808830681,
+          "mean_abs_delta": 0.0001459523808857706,
+          "max_abs_per_tract_delta": 0.0012400518649469394
+        },
+        "tribal|tribal:tribal_any_true": {
+          "tracts": 858,
+          "mean_signed_delta": 8.390306958535019e-05,
+          "mean_abs_delta": 8.390306959304639e-05,
+          "max_abs_per_tract_delta": 0.0007278631970808469
+        },
+        "urban_rural|urban_rural:rural": {
+          "tracts": 1712,
+          "mean_signed_delta": 8.90714733862409e-06,
+          "mean_abs_delta": 8.90714735593213e-06,
+          "max_abs_per_tract_delta": 0.00028067510475718316
+        },
+        "urban_rural|urban_rural:urban": {
+          "tracts": 7667,
+          "mean_signed_delta": 0.00016961002151625527,
+          "mean_abs_delta": 0.00016961002151625527,
+          "max_abs_per_tract_delta": 0.0012400518649469394
+        }
+      }
+    }
+  ],
+  "envelope": {
+    "variants_included": 31,
+    "per_tract_envelope_width_quantiles": {
+      "p50": 0.006506008706400678,
+      "p90": 0.0328939269467462,
+      "p95": 0.039864247189745544,
+      "p99": 0.05188189130199816,
+      "max": 0.06275848394135201
+    },
+    "mean_per_tract_envelope_width": 0.013140354889338051,
+    "widest_tract": {
+      "geoid": "06067005509",
+      "width": 0.06275848394135201,
+      "lower": 0.08177465438839736,
+      "upper": 0.14453313832974937
+    },
+    "global_score_lower": 0.004736623843167,
+    "global_score_upper": 0.532138215533663,
+    "stratum_max_abs_mean_delta": {
+      "region|region:eastern-ok": {
+        "max_abs_mean_delta": 0.005207313012692513,
+        "variant": "all_priors.x1.10"
+      },
+      "region|region:maricopa-az": {
+        "max_abs_mean_delta": 0.008535887079540764,
+        "variant": "all_priors.x0.90"
+      },
+      "region|region:northern-ca": {
+        "max_abs_mean_delta": 0.006711458530721165,
+        "variant": "all_priors.x1.10"
+      },
+      "region|region:south-central-tx": {
+        "max_abs_mean_delta": 0.0063263656089539355,
+        "variant": "all_priors.x1.10"
+      },
+      "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:rural": {
+        "max_abs_mean_delta": 0.003959620436476081,
+        "variant": "all_priors.x1.10"
+      },
+      "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_false:urban": {
+        "max_abs_mean_delta": 0.007231964359550434,
+        "variant": "all_priors.x1.10"
+      },
+      "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:rural": {
+        "max_abs_mean_delta": 0.004396193447712664,
+        "variant": "all_priors.x1.10"
+      },
+      "tribal_within_urban_rural|tribal_within_urban_rural:tribal_any_true:urban": {
+        "max_abs_mean_delta": 0.005615628064727796,
+        "variant": "all_priors.x0.90"
+      },
+      "tribal|tribal:tribal_any_false": {
+        "max_abs_mean_delta": 0.006731953587593761,
+        "variant": "all_priors.x1.10"
+      },
+      "tribal|tribal:tribal_any_true": {
+        "max_abs_mean_delta": 0.004972782620178695,
+        "variant": "all_priors.x1.10"
+      },
+      "urban_rural|urban_rural:rural": {
+        "max_abs_mean_delta": 0.004064173552484842,
+        "variant": "all_priors.x1.10"
+      },
+      "urban_rural|urban_rural:urban": {
+        "max_abs_mean_delta": 0.007134166582349077,
+        "variant": "all_priors.x0.90"
+      }
+    }
+  },
+  "no_selection": {
+    "winner_selected": false,
+    "variants_expected": 31,
+    "variants_reported": 31,
+    "ranking_emitted": false,
+    "ordering": "variants are emitted in preregistered grid order, never by score",
+    "note": "every preregistered variant is reported with identical fields; the report emits no ranking, no best variant, no score-based ordering and no promotion decision"
+  },
+  "acceptance": {
+    "every_variant_has_all_official_geoids": true,
+    "all_variant_scores_finite": true,
+    "all_variant_scores_in_zero_one": true,
+    "definedness_masks_identical_to_frozen": true,
+    "all_preregistered_variants_reported": true,
+    "baseline_reproduces_frozen_composite": true,
+    "max_delta_quantified": true,
+    "stratum_shifts_quantified": true,
+    "no_winner_selected": true,
+    "zero_defined_rows_allowed": true,
+    "declared_inputs_verified_by_sha256": true,
+    "prior_transfer_rule_verified_on_zero_count_rows": true,
+    "all_passed": true
+  },
+  "prohibitions": {
+    "central_priors_changed_from_leaderboard": false,
+    "labels_used": false,
+    "sample_score_placeholders_read": false,
+    "removed_reference_layers_or_equivalents_used": false,
+    "per_geoid_tuning": false,
+    "upload_attempted": false,
+    "candidate_promotion_or_submission": false
+  },
+  "reproducibility": {
+    "command": "uv run --with pyarrow==26.0.0 --with numpy==2.5.4 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/audit_v2_prior_envelope.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/v2-prior-envelope.json",
+    "config": "config/v2-prior-envelope-preregistered.json",
+    "config_sha256": "7c0bc11cc60aea331ecfc445f6a6fd7c4652d99c390d60affab257c4f515667b",
+    "script_sha256": "79cf35e2d8eca858c8102b72a9ef160d91c42d278fcc515acd5e6dfe5be46daf",
+    "reused_rule_module": "scripts/audit_v2_component_masks.py",
+    "reused_rule_module_sha256": "fd8a49cdd460a2bbb6e731244c0941d2a4c27f060ec8b54693c977d1bf0eeb9a",
+    "git_commit": "aa0def208f2378edaaac6b2b9f12c3f36443904b"
+  }
+}
