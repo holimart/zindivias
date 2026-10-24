@@ -1,0 +1,80 @@
+{
+  "candidate_id": "B_SOURCE_V1",
+  "registered_utc": "2026-10-24",
+  "status": "preregistered_before_source-prior_candidate_scan",
+  "purpose": "analysis-only near-zero building source-prior sensitivity; no upload, target RMSE, or accuracy claim",
+  "allowed_inputs": [
+    "official sample GEOID only",
+    "provided feature-cache GEOID and overture_buildings count",
+    "provided Overture-derived mutually exclusive building source-class shares from bbox/sources",
+    "provided strata ALAND and pop_total"
+  ],
+  "forbidden_inputs": [
+    "sample score placeholders or hidden labels",
+    "MS, USFS, CarbonPlan, or any reference footprint counts, per-tract values, or external footprints",
+    "ACS housing-unit counts as a denominator or floor",
+    "external imagery or external footprint data",
+    "leaderboard or score-derived calibration"
+  ],
+  "source_class_order": [
+    "microsoft_only",
+    "microsoft_osm",
+    "osm_only",
+    "esri_only",
+    "other_or_mixed",
+    "no_dataset"
+  ],
+  "source_class_semantics": "exclusive Overture source-dataset membership classes; class shares form a partition among assigned buildings. Source attribution is not proof of geometric identity, completeness, vintage, or reference match.",
+  "context": {
+    "land_area_floor_km2": 0.01,
+    "population_density_scale_per_km2": 10000.0,
+    "context_weight": 0.2,
+    "source_weight": 0.8,
+    "formula": "clip(log1p(pop_total / max(ALAND_km2, 0.01)) / log1p(10000), 0, 1)"
+  },
+  "source_mixture_profiles": {
+    "conservative": {
+      "microsoft_only": 0.7,
+      "microsoft_osm": 0.6,
+      "osm_only": 0.3,
+      "esri_only": 0.2,
+      "other_or_mixed": 0.1,
+      "no_dataset": 0.0
+    },
+    "primary": {
+      "microsoft_only": 0.9,
+      "microsoft_osm": 0.8,
+      "osm_only": 0.45,
+      "esri_only": 0.35,
+      "other_or_mixed": 0.2,
+      "no_dataset": 0.0
+    },
+    "microsoft_heavy": {
+      "microsoft_only": 1.0,
+      "microsoft_osm": 0.95,
+      "osm_only": 0.35,
+      "esri_only": 0.25,
+      "other_or_mixed": 0.1,
+      "no_dataset": 0.0
+    }
+  },
+  "component_rule": {
+    "baseline_gap_value": 0.01,
+    "baseline_defined_when": "provided overture_buildings > 0; otherwise undefined with numeric placeholder 0",
+    "source_support_formula": "sum(profile[class] * exclusive_source_class_share[class])",
+    "total_support_formula": "clip(0.8 * source_support + 0.2 * population_context, 0, 1)",
+    "candidate_formula": "0.01 + beta * (1 - total_support) when building_defined=1; otherwise numeric placeholder 0 and building_defined=0",
+    "sensitivity_betas": [0.01, 0.02, 0.05],
+    "primary_profile": "primary",
+    "primary_beta": 0.02,
+    "clip_range": [0.0, 0.1],
+    "coefficient_rationale": "predeclared qualitative source-attribution ordering and bounded perturbation around the constant 0.01 prior; coefficients are not fitted to any target, reference count, or leaderboard score"
+  },
+  "acceptance": {
+    "official_ordered_ids": 9379,
+    "complete_source_mix_for_all_building_defined_rows": true,
+    "deterministic_rerun_and_sha256": true,
+    "all_candidate_outputs_finite_and_within_clip_range": true,
+    "no_accuracy_claim_or_upload": true
+  }
+}
