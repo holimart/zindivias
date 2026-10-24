@@ -24,6 +24,8 @@ import pyarrow.parquet as pq
 import shapely
 from pyproj import Transformer
 
+from estimator_v2_establishments import estimate_establishments_component_v2
+
 REGIONS = ("maricopa-az", "northern-ca", "eastern-ok", "south-central-tx")
 BUCKET = "us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge"
 ROAD_CLASSES = {"motorway", "trunk", "primary", "secondary"}
@@ -33,6 +35,14 @@ with POI_CATEGORY_CONFIG.open("r", encoding="utf-8") as _stream:
 FIRE_CATEGORIES = set(_poi_category_definitions["fire"])
 EMS_CATEGORIES = set(_poi_category_definitions["ems"])
 SCHOOL_CATEGORIES = set(_poi_category_definitions["schools"])
+# Fixed, region-pooled, model-derived logistic priors for facility reference
+# presence. These are design assumptions, not fitted to reference or LB scores.
+FACILITY_MISS_PRIORS = {
+    "fire": {"intercept": -2.8, "log_density": 0.30, "urban_fraction": 0.70},
+    "ems": {"intercept": -3.2, "log_density": 0.25, "urban_fraction": 0.60},
+    "schools": {"intercept": -1.0, "log_density": 0.20, "urban_fraction": 0.35},
+}
+FACILITY_MISS_K_POP_ANALYSIS = 0.024
 OUTPUT_COLUMNS = [
     "GEOID", "coverage_gap_score", "transport_gap", "transport_defined",
     "building_gap", "building_defined", "poi_gap", "poi_defined",
@@ -623,6 +633,120 @@ def urban_fraction(row: dict) -> tuple[float, str]:
     return 0.5, "neutral_missing_urbanity_prior"
 
 
+def facility_reference_presence_probability_v2(
+    facility_type: str, covariates: dict, prior: dict | None = None
+) -> tuple[float, float, str]:
+    """Return fixed-prior P(reference type present), urbanity, and density index.
+
+    The three coefficients are set by qualitative domain assumptions before
+    looking at any target/leaderboard score. Region is deliberately pooled:
+    there is no defensible region-specific reference prior without labels.
+    Regional outputs are diagnostics only, never inputs to these coefficients.
+    """
+    if facility_type not in FACILITY_MISS_PRIORS and prior is None:
+        raise ValueError(f"unknown facility type: {facility_type}")
+    coefficients = prior or FACILITY_MISS_PRIORS[facility_type]
+    urban, source = urban_fraction(covariates)
+    population = float(covariates["pop_total"])
+    land_area = float(covariates["ALAND"])
+    if not math.isfinite(population) or population < 0:
+        raise ValueError("pop_total must be finite and nonnegative")
+    if not math.isfinite(land_area) or land_area < 0:
+        raise ValueError("ALAND must be finite and nonnegative")
+    area_km2 = max(land_area / 1_000_000.0, 0.01)
+    density_index = math.log1p((population / area_km2) / 100.0)
+    logit = (float(coefficients["intercept"])
+             + float(coefficients["log_density"]) * density_index
+             + float(coefficients["urban_fraction"]) * urban)
+    probability = 1.0 / (1.0 + math.exp(-max(-30.0, min(30.0, logit))))
+    return probability, urban, source
+
+
+def expected_facility_miss_gap_v2(
+    probability_present: float, overture_count: float
+) -> dict[str, int | float]:
+    """Return E[gap] under a one-count-ahead reference-count prior.
+
+    Conditional on the reference being present, use n_ref_prior=n_overture+1;
+    this makes the mechanism exact at n_overture=0 (gap 1) and yields a
+    shrinking positive-count gap otherwise. The expected gap is P(present)
+    times that conditional gap. P(present)=0 means the reference is certainly
+    absent, so the component is undefined, not a fabricated zero observation.
+    """
+    try:
+        probability = float(probability_present)
+        observed = float(overture_count)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("probability and Overture count must be finite numbers") from exc
+    if not math.isfinite(probability) or not 0.0 <= probability <= 1.0:
+        raise ValueError("reference-presence probability must be finite and in [0, 1]")
+    if not math.isfinite(observed) or observed < 0:
+        raise ValueError("Overture count must be finite and nonnegative")
+    if probability == 0.0:
+        return {"gap": 0.0, "defined": 0, "conditional_gap_if_present": 0.0}
+    n_ref_prior = observed + 1.0
+    conditional_gap = min(1.0, max(0.0, 1.0 - observed / n_ref_prior))
+    return {"gap": probability * conditional_gap, "defined": 1,
+            "conditional_gap_if_present": conditional_gap}
+
+
+def estimate_poi_facility_miss_v2(
+    features: dict, covariates: dict, k_pop: float = FACILITY_MISS_K_POP_ANALYSIS
+) -> dict:
+    """Model POI as an expectation from provided features and explicit task scalars."""
+    type_columns = {
+        "fire": "overture_poi_fire",
+        "ems": "overture_poi_ems",
+        "schools": "overture_poi_schools",
+    }
+    expected_gaps = []
+    type_results = {}
+    unclassified = float(features.get("overture_poi_unclassified", 0.0))
+    for facility_type, column in type_columns.items():
+        try:
+            raw_observed = float(features[column])
+            unknown_share = float(features.get(f"overture_unclassified_{facility_type}_share", 0.0))
+            observed = raw_observed + unclassified * unknown_share
+        except (KeyError, TypeError, ValueError) as exc:
+            raise ValueError(f"missing/invalid provided count for {column}") from exc
+        if not math.isfinite(unknown_share) or not 0.0 <= unknown_share <= 1.0:
+            raise ValueError(f"invalid unclassified {facility_type} share")
+        probability, _, _ = facility_reference_presence_probability_v2(
+            facility_type, covariates)
+        estimate = expected_facility_miss_gap_v2(probability, observed)
+        type_results[facility_type] = {
+            "reference_presence_probability": probability,
+            "raw_selected_category_count": raw_observed,
+            "observed_overture_count_after_unclassified_share": observed,
+            **estimate,
+        }
+        expected_gaps.append((float(estimate["gap"]), int(estimate["defined"])))
+    facility_values = [gap for gap, defined in expected_gaps if defined]
+    facility_gap = sum(facility_values) / len(facility_values) if facility_values else 0.0
+    facility_defined = int(bool(facility_values))
+    establishment = estimate_establishments_component_v2(
+        float(features["overture_poi_all"]), float(covariates["pop_total"]), k_pop)
+    poi_gap, poi_defined = combine_poi_gap(
+        expected_gaps, float(establishment["establishments_gap"]),
+        int(establishment["establishments_defined"]))
+    urban, urban_source = urban_fraction(covariates)
+    population = float(covariates["pop_total"])
+    area_km2 = max(float(covariates["ALAND"]) / 1_000_000.0, 0.01)
+    density_index = math.log1p((population / area_km2) / 100.0)
+    return {
+        "poi_gap": float(poi_gap) if poi_gap is not None else 0.0,
+        "poi_defined": int(poi_defined),
+        "facility_gap": facility_gap,
+        "facility_defined": facility_defined,
+        "establishments_gap": float(establishment["establishments_gap"]),
+        "establishments_defined": int(establishment["establishments_defined"]),
+        "facility_types": type_results,
+        "urban_fraction": urban,
+        "urbanity_source": urban_source,
+        "log_density_index": density_index,
+    }
+
+
 def estimate_one(features: dict, covariates: dict, scale: float = 1.0) -> dict:
     pop = float(covariates["pop_total"])
     land_km2 = max(float(covariates["ALAND"]) / 1_000_000.0, 0.01)
@@ -685,6 +809,236 @@ def estimate_one(features: dict, covariates: dict, scale: float = 1.0) -> dict:
                 (fire_unknown_share + ems_unknown_share + schools_unknown_share)}
 
 
+def _poi_v2_group_summary(records: list[dict], baseline_by_geoid: dict[str, dict]) -> dict:
+    if not records:
+        return {"tracts": 0}
+    poi_values = [float(row["poi_gap"]) for row in records if row["poi_defined"]]
+    v0_poi_values = [float(baseline_by_geoid[row["GEOID"]]["poi_gap"])
+                     for row in records
+                     if baseline_by_geoid[row["GEOID"]]["poi_defined"] == "1"]
+    composite_values = [float(row["composite_gap"]) for row in records
+                        if row["composite_gap"] is not None]
+    v0_composite_values = [float(baseline_by_geoid[row["GEOID"]]["coverage_gap_score"])
+                           for row in records
+                           if baseline_by_geoid[row["GEOID"]].get("coverage_gap_score", "") not in ("", None)]
+    result = {
+        "tracts": len(records),
+        "poi_defined_tracts": len(poi_values),
+        "poi_v2_mean_defined": float(np.mean(poi_values)) if poi_values else None,
+        "poi_v2_E_p_squared_defined": float(np.mean(np.square(poi_values))) if poi_values else None,
+        "poi_v2_share_gt_0_25_defined": (sum(value > 0.25 for value in poi_values) / len(poi_values)
+                                          if poi_values else None),
+        "facility_half_mean_defined": float(np.mean([row["facility_gap"] for row in records
+                                                       if row["facility_defined"]]))
+        if any(row["facility_defined"] for row in records) else None,
+        "establishments_half_mean_defined": float(np.mean([row["establishments_gap"] for row in records
+                                                            if row["establishments_defined"]]))
+        if any(row["establishments_defined"] for row in records) else None,
+        "v0_poi_defined_tracts": len(v0_poi_values),
+        "v0_poi_mean_defined": float(np.mean(v0_poi_values)) if v0_poi_values else None,
+        "v0_poi_E_p_squared_defined": float(np.mean(np.square(v0_poi_values))) if v0_poi_values else None,
+        "v0_composite_mean_defined": float(np.mean(v0_composite_values)) if v0_composite_values else None,
+        "v0_composite_E_p_squared_defined": (float(np.mean(np.square(v0_composite_values)))
+                                              if v0_composite_values else None),
+        "v2_poi_with_v0_transport_building_composite_tracts": len(composite_values),
+        "v2_poi_with_v0_transport_building_composite_mean": (
+            float(np.mean(composite_values)) if composite_values else None),
+        "v2_poi_with_v0_transport_building_composite_E_p_squared": (
+            float(np.mean(np.square(composite_values))) if composite_values else None),
+        "prior_probability_mean_by_type": {
+            name: float(np.mean([row["facility_types"][name]["reference_presence_probability"]
+                                 for row in records]))
+            for name in ("fire", "ems", "schools")
+        },
+        "expected_facility_gap_mean_by_type": {
+            name: float(np.mean([row["facility_types"][name]["gap"] for row in records]))
+            for name in ("fire", "ems", "schools")
+        },
+        "observed_overture_zero_counts": {
+            "fire0": sum(row["overture_poi_fire"] == 0 for row in records),
+            "ems0": sum(row["overture_poi_ems"] == 0 for row in records),
+            "sch0": sum(row["overture_poi_schools"] == 0 for row in records),
+        },
+        "urbanity_fallback_tracts": sum(row["urbanity_source"] != "pct_urban" for row in records),
+    }
+    return result
+
+
+def run_poi_facility_miss_audit(
+    workspace: Path,
+    data_root: Path,
+    feature_root: Path,
+    v0_path: Path,
+    out_path: Path,
+    k_pop: float = FACILITY_MISS_K_POP_ANALYSIS,
+) -> dict:
+    """Run the score-free facility-miss POI model and write aggregate diagnostics."""
+    if not math.isfinite(k_pop) or k_pop <= 0:
+        raise ValueError("analysis k_pop must be finite and positive")
+    with v0_path.open("r", newline="", encoding="utf-8-sig") as stream:
+        v0_rows = list(csv.DictReader(stream))
+    baseline_by_geoid = {row["GEOID"]: row for row in v0_rows}
+    if len(baseline_by_geoid) != len(v0_rows):
+        raise ValueError("duplicate GEOID in v0 gap estimates")
+
+    regional_rows: dict[str, list[dict]] = {}
+    input_manifest = {}
+    official_ids = []
+    for region in REGIONS:
+        sample, strata = load_sample_and_strata(region, data_root)
+        ids = [row["GEOID"] for row in sample]
+        if set(official_ids) & set(ids):
+            raise ValueError(f"official GEOID repeated across regions: {region}")
+        official_ids.extend(ids)
+        feature_path = feature_root / f"{region}-overture-tract-summary.parquet"
+        if not feature_path.is_file():
+            raise FileNotFoundError(f"provided Overture feature cache missing: {feature_path}")
+        table = pq.read_table(feature_path, columns=[
+            "GEOID", "overture_poi_all", "overture_poi_fire", "overture_poi_ems",
+            "overture_poi_schools", "overture_poi_unclassified",
+            "overture_unclassified_fire_share", "overture_unclassified_ems_share",
+            "overture_unclassified_schools_share",
+        ])
+        feature_rows = table.to_pylist()
+        if [str(row["GEOID"]) for row in feature_rows] != ids:
+            raise ValueError(f"feature cache order/IDs do not match {region} official sample")
+        if set(ids) - set(baseline_by_geoid):
+            raise ValueError(f"v0 estimates missing official IDs for {region}")
+        regional_rows[region] = []
+        for feature in feature_rows:
+            geoid = str(feature["GEOID"])
+            estimate = estimate_poi_facility_miss_v2(feature, strata[geoid], k_pop)
+            base = baseline_by_geoid[geoid]
+            composite = composite_mean((
+                (float(base["transport_gap"]), int(base["transport_defined"])),
+                (float(base["building_gap"]), int(base["building_defined"])),
+                (float(estimate["poi_gap"]), int(estimate["poi_defined"])),
+            ))
+            regional_rows[region].append({
+                "GEOID": geoid,
+                "region": region,
+                "cell": "rural" if estimate["urban_fraction"] < 0.5 else "urban",
+                "urbanity_source": estimate["urbanity_source"],
+                "overture_poi_fire": float(feature["overture_poi_fire"]),
+                "overture_poi_ems": float(feature["overture_poi_ems"]),
+                "overture_poi_schools": float(feature["overture_poi_schools"]),
+                "poi_gap": float(estimate["poi_gap"]),
+                "poi_defined": int(estimate["poi_defined"]),
+                "facility_gap": float(estimate["facility_gap"]),
+                "facility_defined": int(estimate["facility_defined"]),
+                "establishments_gap": float(estimate["establishments_gap"]),
+                "establishments_defined": int(estimate["establishments_defined"]),
+                "facility_types": estimate["facility_types"],
+                "composite_gap": composite,
+            })
+        sample_path = data_root / f"{region}-sample-submission.csv"
+        strata_path = data_root / f"{region}-strata-tract-table.parquet"
+        input_manifest[region] = {
+            "official_sample": {"rows": len(sample), "sha256": sha256(sample_path),
+                                "score_placeholder_values_used": False},
+            "provided_strata": {"rows": len(strata), "sha256": sha256(strata_path),
+                                 "columns_used": ["GEOID", "ALAND", "pop_total", "pop_urban", "pct_urban"]},
+            "provided_overture_poi_summary": {
+                "rows": table.num_rows, "sha256": sha256(feature_path),
+                "columns_used": ["GEOID", "overture_poi_all", "overture_poi_fire",
+                                  "overture_poi_ems", "overture_poi_schools",
+                                  "overture_poi_unclassified", "overture_unclassified_fire_share",
+                                  "overture_unclassified_ems_share", "overture_unclassified_schools_share"],
+            },
+        }
+    if len(official_ids) != 9379 or set(official_ids) != set(baseline_by_geoid):
+        raise ValueError("v0 baseline and official feature IDs must exactly match 9,379 tracts")
+
+    groups: dict[str, list[dict]] = {"all": []}
+    for region in REGIONS:
+        groups[region] = regional_rows[region]
+        for cell in ("rural", "urban"):
+            groups[f"{region}:{cell}"] = [row for row in regional_rows[region] if row["cell"] == cell]
+        groups["all"].extend(regional_rows[region])
+    summaries = {key: _poi_v2_group_summary(rows, baseline_by_geoid)
+                 for key, rows in groups.items()}
+    regional_mean_checks = {
+        region: {
+            "mean": summaries[region]["poi_v2_mean_defined"],
+            "within_required_0_02_to_0_20": (
+                summaries[region]["poi_v2_mean_defined"] is not None and
+                0.02 <= summaries[region]["poi_v2_mean_defined"] <= 0.20
+            ),
+        }
+        for region in REGIONS
+    }
+    if not all(item["within_required_0_02_to_0_20"] for item in regional_mean_checks.values()):
+        raise ValueError(f"facility-miss POI region means outside required range: {regional_mean_checks}")
+    report = {
+        "analysis": "fixed-prior facility-miss POI v2 model-only audit",
+        "model": {
+            "prior_coefficients_fixed_before_any_target_or_leaderboard_score_viewed": True,
+            "prior_type": "region-pooled logistic prior for reference presence; coefficients are subjective monotonic domain assumptions, not fitted to hidden scores, organizer region/cell moments, or leaderboard feedback",
+            "logistic_formula": "P(ref_t present) = sigmoid(intercept_t + beta_density_t * log1p((pop_total / ALAND_km2) / 100) + beta_urban_t * urban_fraction)",
+            "region_handling": "fully pooled; region is used only for audit tables because no allowed target evidence supports region-specific intercepts",
+            "parameters_per_type": FACILITY_MISS_PRIORS,
+            "feature_transforms": {
+                "ALAND_km2": "max(ALAND / 1,000,000, 0.01)",
+                "density_index": "log1p((pop_total / ALAND_km2) / 100)",
+                "urban_fraction": "pct_urban, else pop_urban/pop_total when population > 0, else neutral 0.5",
+            },
+            "overture_type_count": "selected exact-category count plus the provided-summary unclassified count times the region's in-sample selected-category share, matching v0 handling of unclassified POIs",
+            "conditional_gap_if_reference_present": "clip(1 - n_overture / (n_overture + 1), 0, 1); one-count-ahead model prior, not a measured reference denominator",
+            "expected_type_gap": "P(ref_t present) * conditional_gap_if_reference_present",
+            "undefined_rule": "P(ref_t present) == 0 means reference absence is certain: return numeric placeholder 0 with defined=0",
+            "facility_half": "mean of defined expected fire, EMS, and school type gaps",
+            "establishments_half": {
+                "formula": "clip(1 - overture_poi_all / (k_pop * pop_total), 0, 1)",
+                "analysis_k_pop": k_pop,
+                "source": "task-specified approximate national-rate sensitivity anchor; no CBP data/table read",
+                "scored_use_authorized": False,
+                "zero_population": "positive POI count -> zero gap, defined; zero POIs -> undefined",
+            },
+            "poi_v2": "equal mean of defined facilities and establishments halves",
+            "score_or_reference_data_used_for_fit": False,
+            "region_or_cell_target_means_used_for_fit": False,
+        },
+        "comparison": {
+            "v0_poi_mean_overall": summaries["all"]["v0_poi_mean_defined"],
+            "v0_poi_mean_from_task_measure_before": 0.257,
+            "v0_poi_mean_source": "local reports/gap-estimates.csv; the task MEASURE-BEFORE 0.257 is reported for comparison only, not used to fit priors",
+            "v2_poi_regional_mean_acceptance": regional_mean_checks,
+            "region_mean_constraint_rmse": None,
+            "region_mean_constraint_rmse_not_computed_reason": "No region-mean target results are used or available to fit; the operator amendment forbids region/cell target-moment calibration. No labels are available.",
+        },
+        "summaries": summaries,
+        "inputs": input_manifest,
+        "poi_category_contract": {
+            "path": "config/poi-category-definitions.json",
+            "sha256": sha256(Path(__file__).resolve().parents[1] / "config/poi-category-definitions.json"),
+            "selected_sets_source": "provided Overture feature-cache construction uses this shared exact-category contract",
+        },
+        "restrictions": {
+            "removed_reference_layers_or_equivalents_read": False,
+            "external_data_or_numeric_files_read": False,
+            "sample_score_placeholders_used": False,
+            "labels_or_leaderboard_scores_read": False,
+            "per_geoid_output_written": False,
+            "candidate_or_submission_file_created_or_modified": False,
+            "leaderboard_probe_or_calibration_performed": False,
+        },
+        "limitations": [
+            "The logistic coefficients and one-count-ahead conditional reference-count prior are explicit domain assumptions, not validated against labels.",
+            "Region is pooled; regional differences in the report are feature-distribution diagnostics, not fitted region effects.",
+            "The .024 establishments rate is an analysis-only planning anchor and is not authorized for any scored candidate without a separately compliant approval.",
+            "Composite summaries hold v0 transport/building terms fixed and replace only the POI term; this is not an assembled v2 candidate.",
+            "No predicted RMSE or target-mean fit is possible without labels, and the operator amendment prohibits fitting to region/cell target moments.",
+        ],
+        "rows": 9379,
+        "v0_estimates": {"path": str(v0_path.relative_to(Path(__file__).resolve().parents[1])),
+                          "sha256": sha256(v0_path)},
+    }
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(json.dumps(report, indent=2, ensure_ascii=False, sort_keys=True) + "\n",
+                        encoding="utf-8")
+    return report
+
+
 def write_predictions(path: Path, records: list[dict], columns=OUTPUT_COLUMNS) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as stream:
@@ -717,6 +1071,11 @@ def main() -> int:
     parser.add_argument("--out", type=Path, default=Path("reports/gap-estimates.csv"))
     parser.add_argument("--audit-out", type=Path, default=Path("reports/gap-estimator-audit.json"))
     parser.add_argument("--manifest", type=Path, default=Path("reports/candidates.json"))
+    parser.add_argument("--poi-model", choices=("v0", "facility-miss"), default="v0",
+                        help="select the legacy v0 POI proxy or the score-free facility-miss v2 audit")
+    parser.add_argument("--poi-audit-out", type=Path,
+                        default=Path("reports/poi-facility-miss-audit.json"),
+                        help="aggregate report path used by --poi-model facility-miss")
     parser.add_argument("--refresh-features", action="store_true", help="re-scan allowed Overture feature columns")
     parser.add_argument("--include-source-mix", action="store_true",
                         help="include source-provenance shares; scans only sources+bbox for those source fields")
@@ -726,6 +1085,18 @@ def main() -> int:
         parser.error("pass --workspace or set COMPETITION_WORKSPACE")
     data_root = args.data_root or workspace / "defined-flags-inputs"
     feature_root = workspace / "gap-estimator" / "features"
+    if args.poi_model == "facility-miss":
+        if args.refresh_features or args.include_source_mix:
+            parser.error("facility-miss audit uses existing permitted summary caches; feature refresh/source-mix flags are unsupported")
+        report = run_poi_facility_miss_audit(
+            workspace.resolve(), data_root.resolve(), feature_root.resolve(),
+            (Path(__file__).resolve().parents[1] / "reports/gap-estimates.csv"),
+            args.poi_audit_out.resolve(),
+        )
+        print(f"facility-miss POI v2 report: {args.poi_audit_out.resolve()}")
+        print("POI means by region: " + json.dumps(report["comparison"]["v2_poi_regional_mean_acceptance"], sort_keys=True))
+        print("No candidate or scored file was created or modified.")
+        return 0
     fs = pafs.S3FileSystem(anonymous=True, region="us-west-2")
     all_records = []
     region_info = {}

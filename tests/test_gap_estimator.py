@@ -216,3 +216,75 @@ def test_gap_estimator_invariants():
     assert result["case_count"] >= 16
     assert result["coverage"]["authoritative_rows"] == 9379
 
+
+def test_facility_miss_expected_gap_matches_presence_expectation():
+    missing = estimator.expected_facility_miss_gap_v2(0.6, 0)
+    assert missing["gap"] == pytest.approx(0.6)
+    assert missing["defined"] == 1
+    assert missing["conditional_gap_if_present"] == 1.0
+
+    observed = estimator.expected_facility_miss_gap_v2(0.6, 3)
+    assert observed["gap"] == pytest.approx(0.15)
+    assert observed["defined"] == 1
+    assert observed["conditional_gap_if_present"] == pytest.approx(0.25)
+
+
+def test_facility_miss_zero_presence_prior_is_undefined():
+    for count in (0, 1, 12):
+        component = estimator.expected_facility_miss_gap_v2(0.0, count)
+        assert component == {"gap": 0.0, "defined": 0, "conditional_gap_if_present": 0.0}
+        assert estimator.combine_poi_gap(
+            [(component["gap"], component["defined"])], 0.0, 0
+        ) == (None, 0)
+
+
+def test_facility_miss_prior_is_monotone_in_provided_density_and_urbanity():
+    cov = {"pop_total": 1000.0, "ALAND": 1_000_000.0,
+           "pop_urban": 500.0, "pct_urban": 0.5}
+    baseline, _, _ = estimator.facility_reference_presence_probability_v2("fire", cov)
+    denser = dict(cov, pop_total=10_000.0)
+    more_urban = dict(cov, pct_urban=0.9)
+    p_dense, _, _ = estimator.facility_reference_presence_probability_v2("fire", denser)
+    p_urban, _, _ = estimator.facility_reference_presence_probability_v2("fire", more_urban)
+    assert 0.0 < baseline < 1.0
+    assert p_dense > baseline
+    assert p_urban > baseline
+
+
+def test_facility_miss_poi_component_is_bounded_and_expected():
+    features = {
+        "overture_poi_all": 1.0,
+        "overture_poi_fire": 0.0,
+        "overture_poi_ems": 1.0,
+        "overture_poi_schools": 2.0,
+    }
+    cov = {"pop_total": 100.0, "ALAND": 1_000_000.0,
+           "pop_urban": 50.0, "pct_urban": 0.5}
+    result = estimator.estimate_poi_facility_miss_v2(features, cov)
+    assert result["poi_defined"] == 1
+    assert 0.0 <= result["poi_gap"] <= 1.0
+    assert result["facility_types"]["fire"]["gap"] == pytest.approx(
+        result["facility_types"]["fire"]["reference_presence_probability"])
+    assert result["facility_types"]["ems"]["gap"] == pytest.approx(
+        result["facility_types"]["ems"]["reference_presence_probability"] / 2.0)
+
+
+def test_facility_miss_uses_provided_unclassified_type_share():
+    features = {
+        "overture_poi_all": 2.0,
+        "overture_poi_fire": 0.0,
+        "overture_poi_ems": 0.0,
+        "overture_poi_schools": 0.0,
+        "overture_poi_unclassified": 4.0,
+        "overture_unclassified_fire_share": 0.5,
+        "overture_unclassified_ems_share": 0.25,
+        "overture_unclassified_schools_share": 0.25,
+    }
+    cov = {"pop_total": 100.0, "ALAND": 1_000_000.0,
+           "pop_urban": 50.0, "pct_urban": 0.5}
+    result = estimator.estimate_poi_facility_miss_v2(features, cov)
+    fire = result["facility_types"]["fire"]
+    assert fire["raw_selected_category_count"] == 0.0
+    assert fire["observed_overture_count_after_unclassified_share"] == 2.0
+    assert fire["gap"] == pytest.approx(fire["reference_presence_probability"] / 3.0)
+

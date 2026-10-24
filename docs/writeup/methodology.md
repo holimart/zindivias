@@ -120,6 +120,43 @@ Reproduce the audit from the competition repository:
   --out reports/poi-category-audit.json
 ```
 
+## Facility-miss POI v2 (fixed prior; model-only audit)
+
+The opt-in implementation is `scripts/estimate_gaps.py --poi-model facility-miss`; the default remains v0. It writes `reports/poi-facility-miss-audit.json` only and does not overwrite v0 estimates, manifests, or candidate files. The audited numerator uses the exact fire/EMS/school category sets in `config/poi-category-definitions.json`. It reads only official sample GEOIDs, provided `pop_total`, `ALAND`, `pop_urban`, `pct_urban`, the cached provided Overture type/all-place counts, and the existing v0 estimates needed for a hybrid-composite comparison. It reads no sample scores, labels, removed references, external datasets, or leaderboard values, and writes no per-GEOID output.
+
+The model returns an expected type gap, not an imputed reference count. Its fully pooled, three-coefficient logistic prior is
+
+```text
+x_density = log1p((pop_total / max(ALAND / 1,000,000, 0.01)) / 100)
+P(ref_t present) = sigmoid(intercept_t + beta_density_t * x_density
+                            + beta_urban_t * urban_fraction)
+conditional_gap_t = clip(1 - n_overture_t / (n_overture_t + 1), 0, 1)
+E[gap_t] = P(ref_t present) * conditional_gap_t
+```
+
+Here `n_overture_t` is the selected exact-category count plus the provided summary's unclassified POI count multiplied by its in-sample selected-category share, matching the v0 treatment of unknown types rather than treating them as category zeroes. The `n_overture + 1` denominator is a one-count-ahead model assumption, not a measured reference denominator; it makes the conditional gap 1 at Overture zero and lets the positive-count gap decay as counts increase. When `P(ref_t present) == 0`, the reference is certainly absent and the component is undefined (numeric placeholder zero excluded from means). The facilities half is the mean of the defined expected type gaps. The POI component is the equal mean of the facilities and establishments halves when both are defined. For establishments this analysis uses the prior turn's task-specified `k_pop=0.024` anchor only as a sensitivity assumption; it is explicitly not authorized for scored use without a separately compliant prior and approval. Zero-population tracts with no Overture places have an undefined establishments half; positive observed places at zero population imply a zero, defined deficit under the clipped formula.
+
+The coefficients are fixed qualitative domain priors, not supervised estimates and not fitted to organizer region/cell moments or leaderboard feedback. No region-specific intercept is fit: the model is pooled across regions because no allowed reference evidence supports regional calibration. Density and urbanity are expected to increase the probability that a reference facility exists; the school prior is higher than the fire/EMS priors because schools are a broader, more common facility type. The explicit coefficients are:
+
+| Type | Intercept | Density slope | Urbanity slope |
+|---|---:|---:|---:|
+| Fire | −2.80 | 0.30 | 0.70 |
+| EMS | −3.20 | 0.25 | 0.60 |
+| Schools | −1.00 | 0.20 | 0.35 |
+
+With the prior frozen, the audit reports the observed Overture zero counts by region × rural/urban cell alongside expected POI gaps. Rural is `pct_urban < 0.5`; urban is `>= 0.5`. Missing `pct_urban` falls back to `pop_urban/pop_total` for positive population, otherwise to a neutral 0.5, with each fallback counted. The per-region expected POI means are Maricopa 0.15788, Northern California 0.12576, Eastern Oklahoma 0.08459, and South-Central Texas 0.11873—all inside the backlog's 0.02–0.20 range. Across 9,379 official tracts, v0 POI mean is 0.25704 versus v2 0.12148; v2 `E[p²]` is 0.030688 and 15.84% of tracts have POI v2 > 0.25. The full per-region and per-cell table (`n`, `fire0`, `ems0`, `sch0`, POI mean, `E[p²]`, and >0.25 share) is in the JSON report. The hybrid composite (v0 transport/building, v2 POI) has mean 0.11301 and `E[p²]` 0.031126; this is not an assembled v2 candidate.
+
+The report intentionally leaves region-mean-constrained predicted RMSE null. There are no labels, and the operator amendment prohibits fitting to region/cell target moments. All displayed cell means are diagnostics computed after fixing the prior; they do not feed back into its parameters. These estimates are unvalidated model outputs, not hidden-score or accuracy claims. The default v0 scoring path and the previously committed candidate artifacts remain unchanged. Reproduce with:
+
+```sh
+/home/martin/hddProjects/langywrap/uv run \
+  --with pyarrow==26.0.0 --with numpy==2.5.4 --with shapely==2.2.0 \
+  --with pyproj==3.8.0 python scripts/estimate_gaps.py \
+  --workspace "$COMPETITION_WORKSPACE" \
+  --poi-model facility-miss \
+  --poi-audit-out reports/poi-facility-miss-audit.json
+```
+
 ## Overture POI confidence by SVI and urbanity
 
 The deterministic diagnostic in `scripts/discovery_confidence_by_stratum.py`

@@ -1,0 +1,662 @@
+{
+  "analysis": "fixed-prior facility-miss POI v2 model-only audit",
+  "comparison": {
+    "region_mean_constraint_rmse": null,
+    "region_mean_constraint_rmse_not_computed_reason": "No region-mean target results are used or available to fit; the operator amendment forbids region/cell target-moment calibration. No labels are available.",
+    "v0_poi_mean_from_task_measure_before": 0.257,
+    "v0_poi_mean_overall": 0.2570446448017599,
+    "v0_poi_mean_source": "local reports/gap-estimates.csv; the task MEASURE-BEFORE 0.257 is reported for comparison only, not used to fit priors",
+    "v2_poi_regional_mean_acceptance": {
+      "eastern-ok": {
+        "mean": 0.08458626577704631,
+        "within_required_0_02_to_0_20": true
+      },
+      "maricopa-az": {
+        "mean": 0.15787683068984798,
+        "within_required_0_02_to_0_20": true
+      },
+      "northern-ca": {
+        "mean": 0.1257639923878525,
+        "within_required_0_02_to_0_20": true
+      },
+      "south-central-tx": {
+        "mean": 0.11873308442903742,
+        "within_required_0_02_to_0_20": true
+      }
+    }
+  },
+  "inputs": {
+    "eastern-ok": {
+      "official_sample": {
+        "rows": 1192,
+        "score_placeholder_values_used": false,
+        "sha256": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4"
+      },
+      "provided_overture_poi_summary": {
+        "columns_used": [
+          "GEOID",
+          "overture_poi_all",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "rows": 1192,
+        "sha256": "ea0a37ff31f584c0939f5e935fe25c2c3d2086c7fb65d86f115dfbf2b3c196bb"
+      },
+      "provided_strata": {
+        "columns_used": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban"
+        ],
+        "rows": 1192,
+        "sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54"
+      }
+    },
+    "maricopa-az": {
+      "official_sample": {
+        "rows": 1593,
+        "score_placeholder_values_used": false,
+        "sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31"
+      },
+      "provided_overture_poi_summary": {
+        "columns_used": [
+          "GEOID",
+          "overture_poi_all",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "rows": 1593,
+        "sha256": "e3bad28882ef49ff3ed911c37524e1dc35e2ee28c38d8075539776d3a499fd58"
+      },
+      "provided_strata": {
+        "columns_used": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban"
+        ],
+        "rows": 1593,
+        "sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd"
+      }
+    },
+    "northern-ca": {
+      "official_sample": {
+        "rows": 591,
+        "score_placeholder_values_used": false,
+        "sha256": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902"
+      },
+      "provided_overture_poi_summary": {
+        "columns_used": [
+          "GEOID",
+          "overture_poi_all",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "rows": 591,
+        "sha256": "3f3e22ee3b18ca931a3bd4d1bc0dc22a38ad5998eb803d0fd739b24680792785"
+      },
+      "provided_strata": {
+        "columns_used": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban"
+        ],
+        "rows": 591,
+        "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243"
+      }
+    },
+    "south-central-tx": {
+      "official_sample": {
+        "rows": 6003,
+        "score_placeholder_values_used": false,
+        "sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e"
+      },
+      "provided_overture_poi_summary": {
+        "columns_used": [
+          "GEOID",
+          "overture_poi_all",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "rows": 6003,
+        "sha256": "c25eedbbe904255fc8331268ff503a72ed76d39662c4637defec156e5d1482a3"
+      },
+      "provided_strata": {
+        "columns_used": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban"
+        ],
+        "rows": 6010,
+        "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354"
+      }
+    }
+  },
+  "limitations": [
+    "The logistic coefficients and one-count-ahead conditional reference-count prior are explicit domain assumptions, not validated against labels.",
+    "Region is pooled; regional differences in the report are feature-distribution diagnostics, not fitted region effects.",
+    "The .024 establishments rate is an analysis-only planning anchor and is not authorized for any scored candidate without a separately compliant approval.",
+    "Composite summaries hold v0 transport/building terms fixed and replace only the POI term; this is not an assembled v2 candidate.",
+    "No predicted RMSE or target-mean fit is possible without labels, and the operator amendment prohibits fitting to region/cell target moments."
+  ],
+  "model": {
+    "conditional_gap_if_reference_present": "clip(1 - n_overture / (n_overture + 1), 0, 1); one-count-ahead model prior, not a measured reference denominator",
+    "establishments_half": {
+      "analysis_k_pop": 0.024,
+      "formula": "clip(1 - overture_poi_all / (k_pop * pop_total), 0, 1)",
+      "scored_use_authorized": false,
+      "source": "task-specified approximate national-rate sensitivity anchor; no CBP data/table read",
+      "zero_population": "positive POI count -> zero gap, defined; zero POIs -> undefined"
+    },
+    "expected_type_gap": "P(ref_t present) * conditional_gap_if_reference_present",
+    "facility_half": "mean of defined expected fire, EMS, and school type gaps",
+    "feature_transforms": {
+      "ALAND_km2": "max(ALAND / 1,000,000, 0.01)",
+      "density_index": "log1p((pop_total / ALAND_km2) / 100)",
+      "urban_fraction": "pct_urban, else pop_urban/pop_total when population > 0, else neutral 0.5"
+    },
+    "logistic_formula": "P(ref_t present) = sigmoid(intercept_t + beta_density_t * log1p((pop_total / ALAND_km2) / 100) + beta_urban_t * urban_fraction)",
+    "overture_type_count": "selected exact-category count plus the provided-summary unclassified count times the region's in-sample selected-category share, matching v0 handling of unclassified POIs",
+    "parameters_per_type": {
+      "ems": {
+        "intercept": -3.2,
+        "log_density": 0.25,
+        "urban_fraction": 0.6
+      },
+      "fire": {
+        "intercept": -2.8,
+        "log_density": 0.3,
+        "urban_fraction": 0.7
+      },
+      "schools": {
+        "intercept": -1.0,
+        "log_density": 0.2,
+        "urban_fraction": 0.35
+      }
+    },
+    "poi_v2": "equal mean of defined facilities and establishments halves",
+    "prior_coefficients_fixed_before_any_target_or_leaderboard_score_viewed": true,
+    "prior_type": "region-pooled logistic prior for reference presence; coefficients are subjective monotonic domain assumptions, not fitted to hidden scores, organizer region/cell moments, or leaderboard feedback",
+    "region_handling": "fully pooled; region is used only for audit tables because no allowed target evidence supports region-specific intercepts",
+    "region_or_cell_target_means_used_for_fit": false,
+    "score_or_reference_data_used_for_fit": false,
+    "undefined_rule": "P(ref_t present) == 0 means reference absence is certain: return numeric placeholder 0 with defined=0"
+  },
+  "poi_category_contract": {
+    "path": "config/poi-category-definitions.json",
+    "selected_sets_source": "provided Overture feature-cache construction uses this shared exact-category contract",
+    "sha256": "8309a0bb08613b92621f4977eb78998e469951c0cd0ed012d93ea2f5cf59654f"
+  },
+  "restrictions": {
+    "candidate_or_submission_file_created_or_modified": false,
+    "external_data_or_numeric_files_read": false,
+    "labels_or_leaderboard_scores_read": false,
+    "leaderboard_probe_or_calibration_performed": false,
+    "per_geoid_output_written": false,
+    "removed_reference_layers_or_equivalents_read": false,
+    "sample_score_placeholders_used": false
+  },
+  "rows": 9379,
+  "summaries": {
+    "all": {
+      "establishments_half_mean_defined": 0.1173077412663411,
+      "expected_facility_gap_mean_by_type": {
+        "ems": 0.0964502017182263,
+        "fire": 0.14725904884446303,
+        "schools": 0.13325827391690628
+      },
+      "facility_half_mean_defined": 0.12565584149319853,
+      "observed_overture_zero_counts": {
+        "ems0": 7282,
+        "fire0": 5892,
+        "sch0": 1088
+      },
+      "poi_defined_tracts": 9379,
+      "poi_v2_E_p_squared_defined": 0.03068770758156277,
+      "poi_v2_mean_defined": 0.12148479000148199,
+      "poi_v2_share_gt_0_25_defined": 0.1584390659985073,
+      "prior_probability_mean_by_type": {
+        "ems": 0.1084490782937433,
+        "fire": 0.18164698630409676,
+        "schools": 0.42903986232323316
+      },
+      "tracts": 9379,
+      "urbanity_fallback_tracts": 26,
+      "v0_composite_E_p_squared_defined": 0.05268415779099713,
+      "v0_composite_mean_defined": 0.1689761598782756,
+      "v0_poi_E_p_squared_defined": 0.10276621117347147,
+      "v0_poi_defined_tracts": 9377,
+      "v0_poi_mean_defined": 0.2570446448017599,
+      "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.0311264572016571,
+      "v2_poi_with_v0_transport_building_composite_mean": 0.1130122868999763,
+      "v2_poi_with_v0_transport_building_composite_tracts": 9379
+    },
+    "eastern-ok": {
+      "establishments_half_mean_defined": 0.06632641538929548,
+      "expected_facility_gap_mean_by_type": {
+        "ems": 0.076227111196771,
+        "fire": 0.11248733349631306,
+        "schools": 0.11982390380130738
+      },
+      "facility_half_mean_defined": 0.10284611616479715,
+      "observed_overture_zero_counts": {
+        "ems0": 864,
+        "fire0": 646,
+        "sch0": 130
+      },
+      "poi_defined_tracts": 1192,
+      "poi_v2_E_p_squared_defined": 0.01622475178476029,
+      "poi_v2_mean_defined": 0.08458626577704631,
+      "poi_v2_share_gt_0_25_defined": 0.08137583892617449,
+      "prior_probability_mean_by_type": {
+        "ems": 0.08760643309912423,
+        "fire": 0.14401084728698635,
+        "schools": 0.3849202292665062
+      },
+      "tracts": 1192,
+      "urbanity_fallback_tracts": 1,
+      "v0_composite_E_p_squared_defined": 0.028795695475608722,
+      "v0_composite_mean_defined": 0.11734124649737128,
+      "v0_poi_E_p_squared_defined": 0.0733073041599645,
+      "v0_poi_defined_tracts": 1192,
+      "v0_poi_mean_defined": 0.19934620484484325,
+      "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.013847543356564858,
+      "v2_poi_with_v0_transport_building_composite_mean": 0.06742851828363232,
+      "v2_poi_with_v0_transport_building_composite_tracts": 1192
+    },
+    "eastern-ok:rural": {
+      "establishments_half_mean_defined": 0.04627560225318435,
+      "expected_facility_gap_mean_by_type": {
+        "ems": 0.03112553248575723,
+        "fire": 0.03496226633326188,
+        "schools": 0.08979723834321392
+      },
+      "facility_half_mean_defined": 0.05196167905407768,
+      "observed_overture_zero_counts": {
+        "ems0": 221,
+        "fire0": 106,
+        "sch0": 51
+      },
+      "poi_defined_tracts": 411,
+      "poi_v2_E_p_squared_defined": 0.006882634021513469,
+      "poi_v2_mean_defined": 0.04911864065363101,
+      "poi_v2_share_gt_0_25_defined": 0.031630170316301706,
+      "prior_probability_mean_by_type": {
+        "ems": 0.042469926204229354,
+        "fire": 0.06303828393369403,
+        "schools": 0.28075233177232495
+      },
+      "tracts": 411,
+      "urbanity_fallback_tracts": 0,
+      "v0_composite_E_p_squared_defined": 0.005101287825092647,
+      "v0_composite_mean_defined": 0.026444878000453934,
+      "v0_poi_E_p_squared_defined": 0.019144134617429667,
+      "v0_poi_defined_tracts": 411,
+      "v0_poi_mean_defined": 0.05073124033002034,
+      "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.0034776250373085055,
+      "v2_poi_with_v0_transport_building_composite_mean": 0.02573172522687576,
+      "v2_poi_with_v0_transport_building_composite_tracts": 411
+    },
+    "eastern-ok:urban": {
+      "establishments_half_mean_defined": 0.07687812371060364,
+      "expected_facility_gap_mean_by_type": {
+        "ems": 0.09996174480781668,
+        "fire": 0.15328477601105572,
+        "schools": 0.13562538844058575
+      },
+      "facility_half_mean_defined": 0.1296239697531527,
+      "observed_overture_zero_counts": {
+        "ems0": 643,
+        "fire0": 540,
+        "sch0": 79
+      },
+      "poi_defined_tracts": 781,
+      "poi_v2_E_p_squared_defined": 0.02114102630549582,
+      "poi_v2_mean_defined": 0.10325104673187818,
+      "poi_v2_share_gt_0_25_defined": 0.10755441741357234,
+      "prior_probability_mean_by_type": {
+        "ems": 0.11135944761103435,
+        "fire": 0.18662252915408387,
+        "schools": 0.43973841860083207
+      },
+      "tracts": 781,
+      "urbanity_fallback_tracts": 1,
+      "v0_composite_E_p_squared_defined": 0.041264839578505144,
+      "v0_composite_mean_defined": 0.1651753149381306,
+      "v0_poi_E_p_squared_defined": 0.10181058544291177,
+      "v0_poi_defined_tracts": 781,
+      "v0_poi_mean_defined": 0.27755459206071037,
+      "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.019304696274893104,
+      "v2_poi_with_v0_transport_building_composite_mean": 0.08937138889352597,
+      "v2_poi_with_v0_transport_building_composite_tracts": 781
+    },
+    "maricopa-az": {
+      "establishments_half_mean_defined": 0.17293110454910288,
+      "expected_facility_gap_mean_by_type": {
+        "ems": 0.10675472103133024,
+        "fire": 0.16334001444430019,
+        "schools": 0.1583729350161489
+      },
+      "facility_half_mean_defined": 0.1428225568305931,
+      "observed_overture_zero_counts": {
+        "ems0": 1346,
+        "fire0": 1105,
+        "sch0": 254
+      },
+      "poi_defined_tracts": 1593,
+      "poi_v2_E_p_squared_defined": 0.045771081995518416,
+      "poi_v2_mean_defined": 0.15787683068984798,
+      "poi_v2_share_gt_0_25_defined": 0.24356559949780288,
+      "prior_probability_mean_by_type": {
+        "ems": 0.11564573557718723,
+        "fire": 0.19462774445982897,
+        "schools": 0.4444911983727035
+      },
+      "tracts": 1593,
+      "urbanity_fallback_tracts": 11,
+      "v0_composite_E_p_squared_defined": 0.060048781025501104,
+      "v0_composite_mean_defined": 0.19668435231946868,
+      "v0_poi_E_p_squared_defined": 0.13579538774213246,
+      "v0_poi_defined_tracts": 1593,
+      "v0_poi_mean_defined": 0.31285133939705145,
+      "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.03609598891162353,
+      "v2_poi_with_v0_transport_building_composite_mean": 0.13357255882591032,
+      "v2_poi_with_v0_transport_building_composite_tracts": 1593
+    },
+    "maricopa-az:rural": {
+      "establishments_half_mean_defined": 0.1323495652262349,
+      "expected_facility_gap_mean_by_type": {
+        "ems": 0.033858230112517866,
+        "fire": 0.04117975955453583,
+        "schools": 0.11668928806258783
+      },
+      "facility_half_mean_defined": 0.06390909257654717,
+      "observed_overture_zero_counts": {
+        "ems0": 100,
+        "fire0": 67,
+        "sch0": 34
+      },
+      "poi_defined_tracts": 163,
+      "poi_v2_E_p_squared_defined": 0.02564106287411699,
+      "poi_v2_mean_defined": 0.09812932890139103,
+      "poi_v2_share_gt_0_25_defined": 0.13496932515337423,
+      "prior_probability_mean_by_type": {
+        "ems": 0.043108665967995674,
+        "fire": 0.0641539950499655,
+        "schools": 0.28224003923445834
+      },
+      "tracts": 163,
+      "urbanity_fallback_tracts": 0,
+      "v0_composite_E_p_squared_defined": 0.03356373218819282,
+      "v0_composite_mean_defined": 0.07946464489344565,
+      "v0_poi_E_p_squared_defined": 0.05414007026233046,
+      "v0_poi_defined_tracts": 163,
+      "v0_poi_mean_defined": 0.10919673079950756,
+      "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.024319982539724342,
+      "v2_poi_with_v0_transport_building_composite_mean": 0.0737184947873666,
+      "v2_poi_with_v0_transport_building_composite_tracts": 163
+    },
+    "maricopa-az:urban": {
+      "establishments_half_mean_defined": 0.17755683245793324,
+      "expected_facility_gap_mean_by_type": {
+        "ems": 0.11506390146473332,
+        "fire": 0.1772645749666999,
+        "schools": 0.16312428778078558
+      },
+      "facility_half_mean_defined": 0.1518175880707396,
+      "observed_overture_zero_counts": {
+        "ems0": 1246,
+        "fire0": 1038,
+        "sch0": 220
+      },
+      "poi_defined_tracts": 1430,
+      "poi_v2_E_p_squared_defined": 0.04806562263662921,
+      "poi_v2_mean_defined": 0.16468721026433644,
+      "poi_v2_share_gt_0_25_defined": 0.25594405594405595,
+      "prior_probability_mean_by_type": {
+        "ems": 0.12391394700816499,
+        "fire": 0.20949992708486936,
+        "schools": 0.4629855612674826
+      },
+      "tracts": 1430,
+      "urbanity_fallback_tracts": 11,
+      "v0_composite_E_p_squared_defined": 0.0630677061726908,
+      "v0_composite_mean_defined": 0.21004575952956783,
+      "v0_poi_E_p_squared_defined": 0.14510295190241757,
+      "v0_poi_defined_tracts": 1430,
+      "v0_poi_mean_defined": 0.33606511646096726,
+      "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.03743828893863022,
+      "v2_poi_with_v0_transport_building_composite_mean": 0.14039508500652753,
+      "v2_poi_with_v0_transport_building_composite_tracts": 1430
+    },
+    "northern-ca": {
+      "establishments_half_mean_defined": 0.13874768171310967,
+      "expected_facility_gap_mean_by_type": {
+        "ems": 0.09229994799188823,
+        "fire": 0.13071413599365525,
+        "schools": 0.1153268252022425
+      },
+      "facility_half_mean_defined": 0.11278030306259533,
+      "observed_overture_zero_counts": {
+        "ems0": 451,
+        "fire0": 316,
+        "sch0": 49
+      },
+      "poi_defined_tracts": 591,
+      "poi_v2_E_p_squared_defined": 0.034608380067779096,
+      "poi_v2_mean_defined": 0.1257639923878525,
+      "poi_v2_share_gt_0_25_defined": 0.17597292724196278,
+      "prior_probability_mean_by_type": {
+        "ems": 0.10336537576225542,
+        "fire": 0.17252310748004626,
+        "schools": 0.4172521569313171
+      },
+      "tracts": 591,
+      "urbanity_fallback_tracts": 0,
+      "v0_composite_E_p_squared_defined": 0.04472991574442255,
+      "v0_composite_mean_defined": 0.15383899870291118,
+      "v0_poi_E_p_squared_defined": 0.0962627001291376,
+      "v0_poi_defined_tracts": 591,
+      "v0_poi_mean_defined": 0.2336821598805405,
+      "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.0271689063190847,
+      "v2_poi_with_v0_transport_building_composite_mean": 0.10963640500928665,
+      "v2_poi_with_v0_transport_building_composite_tracts": 591
+    },
+    "northern-ca:rural": {
+      "establishments_half_mean_defined": 0.06725851108253558,
+      "expected_facility_gap_mean_by_type": {
+        "ems": 0.0324476761672706,
+        "fire": 0.03424831730961403,
+        "schools": 0.07894987794381024
+      },
+      "facility_half_mean_defined": 0.0485486238068983,
+      "observed_overture_zero_counts": {
+        "ems0": 79,
+        "fire0": 36,
+        "sch0": 11
+      },
+      "poi_defined_tracts": 147,
+      "poi_v2_E_p_squared_defined": 0.010531834109418603,
+      "poi_v2_mean_defined": 0.05790356744471694,
+      "poi_v2_share_gt_0_25_defined": 0.06802721088435375,
+      "prior_probability_mean_by_type": {
+        "ems": 0.0431502634513112,
+        "fire": 0.0642153114173747,
+        "schools": 0.2827749306041588
+      },
+      "tracts": 147,
+      "urbanity_fallback_tracts": 0,
+      "v0_composite_E_p_squared_defined": 0.006012731364196291,
+      "v0_composite_mean_defined": 0.027348656987583066,
+      "v0_poi_E_p_squared_defined": 0.013945848579673565,
+      "v0_poi_defined_tracts": 147,
+      "v0_poi_mean_defined": 0.0407521410390669,
+      "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.00599185468742923,
+      "v2_poi_with_v0_transport_building_composite_mean": 0.03380028695328171,
+      "v2_poi_with_v0_transport_building_composite_tracts": 147
+    },
+    "northern-ca:urban": {
+      "establishments_half_mean_defined": 0.16241639361107,
+      "expected_facility_gap_mean_by_type": {
+        "ems": 0.11211590285274134,
+        "fire": 0.16265214353093913,
+        "schools": 0.1273705442269937
+      },
+      "facility_half_mean_defined": 0.13404619687022473,
+      "observed_overture_zero_counts": {
+        "ems0": 372,
+        "fire0": 280,
+        "sch0": 38
+      },
+      "poi_defined_tracts": 444,
+      "poi_v2_E_p_squared_defined": 0.04257966893237142,
+      "poi_v2_mean_defined": 0.14823129524064738,
+      "poi_v2_share_gt_0_25_defined": 0.21171171171171171,
+      "prior_probability_mean_by_type": {
+        "ems": 0.12330146024358156,
+        "fire": 0.20838176968998484,
+        "schools": 0.46177502240449797
+      },
+      "tracts": 444,
+      "urbanity_fallback_tracts": 0,
+      "v0_composite_E_p_squared_defined": 0.0575484430054434,
+      "v0_composite_mean_defined": 0.19571755778433736,
+      "v0_poi_E_p_squared_defined": 0.12351625233132503,
+      "v0_poi_defined_tracts": 444,
+      "v0_poi_mean_defined": 0.29755763909156896,
+      "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.03418022746740307,
+      "v2_poi_with_v0_transport_building_composite_mean": 0.1347443089602613,
+      "v2_poi_with_v0_transport_building_composite_tracts": 444
+    },
+    "south-central-tx": {
+      "establishments_half_mean_defined": 0.11055731932532434,
+      "expected_facility_gap_mean_by_type": {
+        "ems": 0.09813996093662807,
+        "fire": 0.1515250741633505,
+        "schools": 0.13102665643182662
+      },
+      "facility_half_mean_defined": 0.1268972305106017,
+      "observed_overture_zero_counts": {
+        "ems0": 4621,
+        "fire0": 3825,
+        "sch0": 655
+      },
+      "poi_defined_tracts": 6003,
+      "poi_v2_E_p_squared_defined": 0.029170951031338443,
+      "poi_v2_mean_defined": 0.11873308442903742,
+      "poi_v2_share_gt_0_25_defined": 0.14942528735632185,
+      "prior_probability_mean_by_type": {
+        "ems": 0.1111784846265051,
+        "fire": 0.1865738799158456,
+        "schools": 0.4348608115425293
+      },
+      "tracts": 6003,
+      "urbanity_fallback_tracts": 14,
+      "v0_composite_E_p_squared_defined": 0.05625639822359812,
+      "v0_composite_mean_defined": 0.17336658607282127,
+      "v0_poi_E_p_squared_defined": 0.10049044278710664,
+      "v0_poi_defined_tracts": 6001,
+      "v0_poi_mean_defined": 0.2559921043129724,
+      "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.03362835856113965,
+      "v2_poi_with_v0_transport_building_composite_mean": 0.11694007054316582,
+      "v2_poi_with_v0_transport_building_composite_tracts": 6003
+    },
+    "south-central-tx:rural": {
+      "establishments_half_mean_defined": 0.05079352290658698,
+      "expected_facility_gap_mean_by_type": {
+        "ems": 0.03387244229191973,
+        "fire": 0.041750314542597027,
+        "schools": 0.10400406019027776
+      },
+      "facility_half_mean_defined": 0.059875605674931505,
+      "observed_overture_zero_counts": {
+        "ems0": 559,
+        "fire0": 357,
+        "sch0": 164
+      },
+      "poi_defined_tracts": 991,
+      "poi_v2_E_p_squared_defined": 0.00930709694227199,
+      "poi_v2_mean_defined": 0.05533456429075924,
+      "poi_v2_share_gt_0_25_defined": 0.04339051463168517,
+      "prior_probability_mean_by_type": {
+        "ems": 0.04451530783276518,
+        "fire": 0.06661428930566282,
+        "schools": 0.28754363460892873
+      },
+      "tracts": 991,
+      "urbanity_fallback_tracts": 0,
+      "v0_composite_E_p_squared_defined": 0.010532578828278046,
+      "v0_composite_mean_defined": 0.039281320411622515,
+      "v0_poi_E_p_squared_defined": 0.03195422375969767,
+      "v0_poi_defined_tracts": 991,
+      "v0_poi_mean_defined": 0.08282635699989888,
+      "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.006361000378771069,
+      "v2_poi_with_v0_transport_building_composite_mean": 0.029340383493653935,
+      "v2_poi_with_v0_transport_building_composite_tracts": 991
+    },
+    "south-central-tx:urban": {
+      "establishments_half_mean_defined": 0.12237886069278317,
+      "expected_facility_gap_mean_by_type": {
+        "ems": 0.11084728555293014,
+        "fire": 0.17323033888485223,
+        "schools": 0.13636971167431958
+      },
+      "facility_half_mean_defined": 0.14014911203736732,
+      "observed_overture_zero_counts": {
+        "ems0": 4062,
+        "fire0": 3468,
+        "sch0": 491
+      },
+      "poi_defined_tracts": 5012,
+      "poi_v2_E_p_squared_defined": 0.0330985406965948,
+      "poi_v2_mean_defined": 0.13126858591687338,
+      "poi_v2_share_gt_0_25_defined": 0.17039106145251395,
+      "prior_probability_mean_by_type": {
+        "ems": 0.12435949184968868,
+        "fire": 0.21029294501853735,
+        "schools": 0.46398916795537815
+      },
+      "tracts": 5012,
+      "urbanity_fallback_tracts": 14,
+      "v0_composite_E_p_squared_defined": 0.06529716139613646,
+      "v0_composite_mean_defined": 0.19987865675722832,
+      "v0_poi_E_p_squared_defined": 0.11404720786817699,
+      "v0_poi_defined_tracts": 5010,
+      "v0_poi_mean_defined": 0.2902450495399696,
+      "v2_poi_with_v0_transport_building_composite_E_p_squared": 0.03901980947070215,
+      "v2_poi_with_v0_transport_building_composite_mean": 0.1342607588644081,
+      "v2_poi_with_v0_transport_building_composite_tracts": 5012
+    }
+  },
+  "v0_estimates": {
+    "path": "reports/gap-estimates.csv",
+    "sha256": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852"
+  }
+}
