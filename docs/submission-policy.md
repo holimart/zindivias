@@ -103,8 +103,9 @@ P2 writeup/discovery follows: methodology rubric, source/strata discoveries,
 prior art, scorecard reflection, and the final operator-reviewed writeup.
 Optional estimator sensitivity audits remain below the core model rows. Rows
 that require region means, cells, composition, or LB-derived blend coefficients
-are retired or rewritten before selection. The final-two protocol observes the
-official requirement to select two submissions; it does not create probe slots.
+are retired or rewritten before selection. The active final-two rules are in
+[`final-two-protocol.md`](final-two-protocol.md); they observe the official
+requirement to select two submissions and do not create probe slots.
 
 ## 5. Status and references
 

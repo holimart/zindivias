@@ -16,7 +16,8 @@ of a fabricated holdout score.
 2. Methodology and discovery writeups, scorecard reflection and literature
    review after the model mechanisms are documented.
 3. Optional feature-sensitivity work only after the core estimator; final-two
-   selection applies only to finished model candidates.
+   selection applies only to finished model candidates under
+   [`final-two-protocol.md`](final-two-protocol.md).
 
 Any permitted live evaluation requires a written hypothesis against the current
 best scored candidate (P4 public RMSE 0.091440198), passing invariants, operator

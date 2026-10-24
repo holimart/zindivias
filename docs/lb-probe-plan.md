@@ -8,4 +8,7 @@ and scores are not permission to submit.
 
 The active policy is [`submission-policy.md`](submission-policy.md): only
 finished, locally validated model candidates may be evaluated, with no
-leaderboard information probing and no new LB-derived constants.
+leaderboard information probing and no new LB-derived constants. Final private
+selection is governed by [`final-two-protocol.md`](final-two-protocol.md), which
+supersedes the archived C0-anchor recommendation and excludes probe-derived
+candidate choices.

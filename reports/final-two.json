@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "status": "protocol_frozen_waiting_for_eligible_candidates",
+  "prepared_utc": "2026-10-24",
+  "protocol": {
+    "path": "docs/final-two-protocol.md",
+    "sha256": "f21f085218071e733a09fd92015e702a2a6be19b7fbdbffcf4d465961a12a5ef",
+    "policy": "model candidates only; no information probes; no LB-derived coefficients"
+  },
+  "scope": {
+    "official_scored_tracts": 9379,
+    "public_fraction_approx": 0.3,
+    "public_tracts_expected": 2813.7,
+    "public_tracts_rounded": 2814,
+    "private_fraction_approx": 0.7,
+    "private_tracts_expected": 6565.3,
+    "private_tracts_rounded": 6565,
+    "platform_template_rows": 9794,
+    "template_only_rows": 415
+  },
+  "deadlines_utc": {
+    "final_successful_uploads_by": "2026-10-30T12:00:00Z",
+    "operator_ui_selection_by": "2026-10-31T20:00:00Z",
+    "challenge_close": "2026-10-31T23:59:00Z"
+  },
+  "selection_policy": {
+    "cohort": "No candidate is grandfathered. Register each mechanism-based card, immutable artifact hash, and passing-invariant result before its first score. Historical calibration candidates and probes are excluded.",
+    "candidate_A": "Lowest successful public RMSE among eligible frozen-cohort model candidates; scores within the pairwise sampling guard are tied and use the predeclared simplicity/adjustment-count/candidate-ID tie-break.",
+    "candidate_B": "Deterministic 50% shrink of A's composite predictions toward A's own provided-feature prediction mean within each official region; no target means, leaderboard results, or cell adjustments.",
+    "predicted_vs_actual_threshold": "The former 1e-3 target-error rule is superseded: target labels are unavailable and probing is forbidden; local correctness/reproducibility invariants are required instead.",
+    "tie_break_order": [
+      "fewer fitted/free parameters",
+      "fewer region- or stratum-specific adjustments",
+      "lexicographically smaller frozen candidate ID"
+    ],
+    "no_information_probes": true,
+    "no_upload_queued": true
+  },
+  "noise_estimate": {
+    "per_cell_formula": "SE_cell(MSE) approximately sd_cell/sqrt(0.30*n_cell); sd_cell is the standard deviation of per-tract squared-error contributions and is not observable without labels",
+    "rmse_delta_method": "SE_cell(RMSE) approximately SE_cell(MSE)/(2*RMSE_cell)",
+    "planning_assumption": "independent approximately normal residuals; SE(RMSE) approximately RMSE/sqrt(2*n)",
+    "historical_scale_rmse": 0.091440198,
+    "historical_scale_candidate_note": "P4 is an LB-calibrated historical benchmark used only to illustrate score sampling noise; it is not eligible for this protocol or a new model parameter",
+    "public_se_at_historical_scale": 0.0012188776492865093,
+    "private_se_at_historical_scale": 0.0007980034974201783,
+    "public_private_shift_se_at_historical_scale": 0.001456870723786103,
+    "conservative_pairwise_public_guard_at_historical_scale": 0.0024377552985730186,
+    "pairwise_guard_rule": "SE_public(candidate_1)+SE_public(candidate_2); a smaller public RMSE difference is a tie, not a selection reason",
+    "scorecard_cell_results_used": false
+  },
+  "upload_budget": {
+    "steward_observed_platform_ceiling_per_day": 5,
+    "effective_lane_ceiling_per_day": 2,
+    "dates_with_upload_budget": [
+      {"date_utc": "2026-10-25", "lane_max": 2, "purpose": "authorized finished-model evaluation only"},
+      {"date_utc": "2026-10-26", "lane_max": 2, "purpose": "authorized finished-model evaluation only"},
+      {"date_utc": "2026-10-27", "lane_max": 2, "purpose": "authorized finished-model evaluation only"},
+      {"date_utc": "2026-10-28", "lane_max": 2, "purpose": "authorized finished-model evaluation only"},
+      {"date_utc": "2026-10-29", "lane_max": 2, "purpose": "authorized finished-model evaluation only"},
+      {"date_utc": "2026-10-30", "lane_max": 2, "purpose": "two final candidate uploads by 12:00Z; reserved"},
+      {"date_utc": "2026-10-31", "lane_max": 0, "purpose": "UI selection/writeup only"}
+    ],
+    "official_capacity_estimate_oct25_to_oct30": 30,
+    "lane_capacity_estimate_oct25_to_oct30": 12,
+    "pre_final_lane_ceiling": 10,
+    "reserved_final_uploads": 2,
+    "remaining_total_account_capacity_verified": false,
+    "queued_uploads": []
+  },
+  "candidate_registrations": [],
+  "final_candidates": [
+    {
+      "slot": "A",
+      "candidate_id": null,
+      "preregistration_commit": null,
+      "preregistered_card_sha256": null,
+      "artifact": null,
+      "sha256": null,
+      "submission_id": null,
+      "public_rmse": null,
+      "rationale": null
+    },
+    {
+      "slot": "B",
+      "candidate_id": null,
+      "preregistration_commit": null,
+      "preregistered_card_sha256": null,
+      "artifact": null,
+      "sha256": null,
+      "submission_id": null,
+      "public_rmse": null,
+      "rationale": null
+    }
+  ],
+  "pending_fields": [
+    "A and B candidate IDs, artifact paths, SHA-256 hashes, successful submission IDs, and public RMSEs after actual successful scoring",
+    "candidate-specific mechanism-based rationale and local invariant report",
+    "operator's Zindi UI selection confirmation",
+    "operator's methodology-form submission confirmation"
+  ],
+  "operator_acknowledgement": "requested in lane closeout; not yet recorded"
+}

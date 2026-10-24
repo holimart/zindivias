@@ -39,9 +39,11 @@ small, score-free projection of only `GEOID,region` from the provided platform
 template; the 415 eastern-WA rows are format-only fills, not target evidence.
 The official scored scope remains 9,379 IDs. Sample score placeholders are
 never consumed. The pair reflects the best available successful public scores
-as of 2026-10-24 and is **not** a final private-leaderboard selection. This
-pair's historical P4 scale is for reproduction only; new models must use
-model-derived component levels. Active upload rules and cancelled probes are
+as of 2026-10-24 and is **not** a final private-leaderboard selection. The
+model-first final selection protocol is in
+[`docs/final-two-protocol.md`](docs/final-two-protocol.md). This pair's
+historical P4 scale is for reproduction only; new models must use model-derived
+component levels. Active upload rules and cancelled probes are
 in [`docs/submission-policy.md`](docs/submission-policy.md); no information
 probes are queued. No tokens, credentials, paid APIs, or private packages are
 used.
