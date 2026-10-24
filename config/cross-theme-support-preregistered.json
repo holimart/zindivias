@@ -1,14 +1,14 @@
 {
-  "candidate_id": "XTS_C2_V1",
+  "candidate_id": "XTS_C2_V2",
   "registered_utc": "2026-10-24",
-  "status": "preregistered_before_cross_theme_feature_measurement",
-  "purpose": "analysis-only deterministic adjustment sensitivity using Overture building, road, and place support indicators; no target-RMSE claim or upload",
+  "status": "preregistered_before_final_cross_theme_adjustment_measurement",
+  "purpose": "analysis-only deterministic adjustment sensitivity using Overture building source, road-network, and place-confidence support indicators; no target-RMSE claim or upload",
   "prior_candidate": {
     "candidate_id": "C2",
     "path": "reports/candidates/C2_component_estimator_v0.csv",
     "sha256": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514",
     "score_column": "coverage_gap_score",
-    "scored_region_projection": "Use only the 9,379 official GEOIDs, joined by string GEOID; ignore the 415 template-only rows. Historical C2 predictions are a frozen, feature-derived adjustment baseline, not a calibration target."
+    "scored_region_projection": "Use only the 9,379 official GEOIDs, joined by string GEOID; ignore the 415 template-only rows. Historical C2 predictions are a frozen feature-derived adjustment baseline, not a calibration target."
   },
   "scope": {
     "regions": ["maricopa-az", "northern-ca", "eastern-ok", "south-central-tx"],
@@ -25,20 +25,22 @@
     "road_route_support": {
       "columns": ["overture_route_km", "overture_named_road_km_5070"],
       "formula": "overture_route_km / (overture_route_km + overture_named_road_km_5070)",
-      "interpretation": "bounded route-reference-tag length share of the two provided Overture length summaries; a support indicator, not a road-completeness estimate",
+      "interpretation": "bounded route-network length share of the two provided Overture length summaries; a support indicator, not a road-completeness estimate",
       "missing_when": "both lengths sum to zero or either length is unavailable",
       "missing_fill": 0.5
     },
-    "place_upstream_source_support": {
-      "column": "overture_poi_no_upstream_source_share",
-      "formula": "1 - overture_poi_no_upstream_source_share",
-      "interpretation": "fraction of assigned Overture places carrying at least one recognized upstream provider attribution; not evidence of place correctness or completeness",
-      "missing_when": "no assigned Overture places or unavailable source-share value",
+    "place_confidence_support": {
+      "columns": ["confidence_valid_count", "confidence_below_0_5_share"],
+      "formula": "1 - confidence_below_0_5_share",
+      "definition": "fraction of assigned Overture places with valid confidence at least 0.5",
+      "interpretation": "provided Overture confidence attribute; not an independent estimate of place truth, completeness, or service availability",
+      "missing_when": "no valid Overture place confidence values or unavailable share",
       "missing_fill": 0.5
     }
   },
+  "feature_screen_note": "A preliminary source-field coverage check found the upstream-provider share equal to 1.0 for every tract with assigned places; that constant attribute was excluded from the final place support score as non-discriminating. The choice of the provided confidence attribute is based only on feature semantics/variation, not on target or leaderboard feedback.",
   "cross_theme_adjustment": {
-    "support_order": ["building_source_support", "road_route_support", "place_upstream_source_support"],
+    "support_order": ["building_source_support", "road_route_support", "place_confidence_support"],
     "cross_theme_support_formula": "clip(0.5 * mean(three support features) + 0.5 * min(three support features), 0, 1)",
     "adjustment_scale": 0.05,
     "adjustment_formula": "adjustment_scale * (1 - cross_theme_support)",
@@ -48,16 +50,16 @@
     "row_changed_tolerance": 1e-12
   },
   "measurement_plan": {
-    "before": "Record frozen C2 full-artifact hash and official-scope prediction moments; document the existing mechanistic component schemas and the exact challenge-feature columns used by this screen before applying the adjustment.",
+    "before": "Record frozen C2 full-artifact hash and official-scope prediction moments; document the existing mechanistic v2 feature schemas and exact challenge-feature columns before applying the final adjustment.",
     "after": "Report four-region feature coverage/missingness, feature moments, pairwise Pearson and Spearman support correlations, per-region prior/adjusted prediction variance, adjustment quantiles/max, changed-row fractions, exact IDs, bounds, and artifact/manifest hashes.",
     "no_labels_or_score_feedback": true,
     "no_external_or_removed_reference_layers": true,
     "no_submission": true
   },
   "mechanistic_v2_context": {
-    "transport": "provided Overture named-road length and route-reference features; route support is not an organizer target label",
+    "transport": "provided Overture named-road length and route-network support features; route support is not an organizer target label",
     "building": "provided Overture positive-count definedness and source metadata; no reference-derived per-tract feature",
-    "places": "provided Overture source metadata; no external facility/establishment counts",
+    "places": "provided Overture confidence attribute; no external facility/establishment counts",
     "assembly_status": "this screen does not assemble or promote the approval-gated v2 component bundle; the frozen C2 prediction remains the prior candidate"
   },
   "acceptance": {

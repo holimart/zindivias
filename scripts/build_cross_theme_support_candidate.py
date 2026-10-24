@@ -33,7 +33,10 @@ FEATURE_COLUMNS = [
     "overture_named_road_km_5070",
     "overture_route_km",
     "overture_poi_all",
-    "overture_poi_no_upstream_source_share",
+]
+CONFIDENCE_COLUMNS = [
+    "GEOID", "poi_count", "confidence_valid_count", "confidence_missing_count",
+    "confidence_invalid_count", "confidence_below_0_5_share",
 ]
 SUPPORT_NAMES = tuple(CONFIG["cross_theme_adjustment"]["support_order"])
 MISSING_FILL = float(CONFIG["support_features"]["building_source_support"]["missing_fill"])
@@ -52,6 +55,16 @@ def git_commit() -> str | None:
     try:
         return subprocess.check_output(["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True).strip()
     except (OSError, subprocess.CalledProcessError):
+        return None
+
+
+def git_file_commit(path: Path) -> str | None:
+    try:
+        relative = path.relative_to(ROOT)
+        return subprocess.check_output(
+            ["git", "-C", str(ROOT), "log", "-1", "--format=%H", "--", str(relative)],
+            text=True).strip()
+    except (OSError, ValueError, subprocess.CalledProcessError):
         return None
 
 
@@ -92,7 +105,8 @@ def optional_unit(value: Any, label: str) -> float | None:
     return number
 
 
-def support_features(feature: dict[str, Any]) -> tuple[dict[str, float], dict[str, int]]:
+def support_features(feature: dict[str, Any], confidence: dict[str, Any]
+                     ) -> tuple[dict[str, float], dict[str, int], dict[str, float | None]]:
     building_count = optional_nonnegative(feature["overture_buildings"], "overture_buildings")
     building_share = optional_unit(feature["overture_building_microsoft_source_share"],
                                    "overture_building_microsoft_source_share")
@@ -108,23 +122,24 @@ def support_features(feature: dict[str, Any]) -> tuple[dict[str, float], dict[st
     else:
         road_value = clip01(route_km / (named_km + route_km))
 
-    poi_count = optional_nonnegative(feature["overture_poi_all"], "overture_poi_all")
-    poi_missing_share = optional_unit(feature["overture_poi_no_upstream_source_share"],
-                                      "overture_poi_no_upstream_source_share")
-    if poi_count is None:
-        poi_count = 0.0
-    place_value = (1.0 - poi_missing_share
-                   if poi_count > 0 and poi_missing_share is not None else None)
+    valid_confidence_count = optional_nonnegative(
+        confidence["confidence_valid_count"], "confidence_valid_count")
+    low_confidence_share = optional_unit(
+        confidence["confidence_below_0_5_share"], "confidence_below_0_5_share")
+    if valid_confidence_count is None:
+        valid_confidence_count = 0.0
+    place_value = (1.0 - low_confidence_share
+                   if valid_confidence_count > 0 and low_confidence_share is not None else None)
 
     raw = {
         "building_source_support": building_value,
         "road_route_support": road_value,
-        "place_upstream_source_support": place_value,
+        "place_confidence_support": place_value,
     }
     missing = {name: int(value is None) for name, value in raw.items()}
     filled = {name: clip01(MISSING_FILL if value is None else value)
               for name, value in raw.items()}
-    return filled, missing
+    return filled, missing, raw
 
 
 def cross_theme_support(supports: dict[str, float]) -> tuple[float, float, float]:
@@ -276,28 +291,29 @@ def run(workspace: Path, candidate_path: Path, manifest_path: Path, report_path:
         feature_ids = [str(row["GEOID"]) for row in feature_rows]
         if feature_ids != sample_ids:
             raise ValueError(f"feature cache ID order differs from official sample for {region}")
+        confidence_path = workspace / "gap-estimator" / "features" / "poi-confidence-by-tract.parquet"
+        confidence_table = pq.read_table(confidence_path, columns=CONFIDENCE_COLUMNS)
+        confidence_rows = confidence_table.to_pylist()
+        confidence_by_id = {str(row["GEOID"]): row for row in confidence_rows}
+        if len(confidence_by_id) != len(confidence_rows) or not set(sample_ids).issubset(confidence_by_id):
+            raise ValueError(f"POI confidence cache does not cover official GEOIDs for {region}")
         if not set(sample_ids).issubset(prior_scores):
             raise ValueError(f"frozen prior candidate missing official GEOIDs for {region}")
         for geoid, feature in zip(sample_ids, feature_rows):
-            support, missing = support_features(feature)
+            confidence = confidence_by_id[geoid]
+            poi_count = optional_nonnegative(feature["overture_poi_all"], "overture_poi_all")
+            confidence_poi_count = optional_nonnegative(confidence["poi_count"], "confidence poi_count")
+            confidence_valid = optional_nonnegative(confidence["confidence_valid_count"], "confidence_valid_count")
+            confidence_missing = optional_nonnegative(confidence["confidence_missing_count"], "confidence_missing_count")
+            confidence_invalid = optional_nonnegative(confidence["confidence_invalid_count"], "confidence_invalid_count")
+            if poi_count is None or confidence_poi_count != poi_count:
+                raise ValueError(f"POI count mismatch between feature caches for {region}:{geoid}")
+            if confidence_valid is None or confidence_missing is None or confidence_invalid is None or \
+                    confidence_valid + confidence_missing + confidence_invalid != confidence_poi_count:
+                raise ValueError(f"POI confidence counts do not reconcile for {region}:{geoid}")
+            support, missing, raw = support_features(feature, confidence)
             mean_support, weakest_support, cross_support = cross_theme_support(support)
             adjustment, adjusted = adjusted_score(prior_scores[geoid], cross_support)
-            raw = {
-                "building_source_support": optional_unit(feature["overture_building_microsoft_source_share"],
-                                                          "overture_building_microsoft_source_share")
-                if float(feature["overture_buildings"] or 0) > 0 else None,
-                "road_route_support": None,
-                "place_upstream_source_support": None,
-            }
-            named = optional_nonnegative(feature["overture_named_road_km_5070"], "overture_named_road_km_5070")
-            route = optional_nonnegative(feature["overture_route_km"], "overture_route_km")
-            if named is not None and route is not None and named + route > 0:
-                raw["road_route_support"] = clip01(route / (named + route))
-            poi_count = float(feature["overture_poi_all"] or 0)
-            upstream_missing = optional_unit(feature["overture_poi_no_upstream_source_share"],
-                                             "overture_poi_no_upstream_source_share")
-            if poi_count > 0 and upstream_missing is not None:
-                raw["place_upstream_source_support"] = 1.0 - upstream_missing
             record = {
                 "GEOID": geoid,
                 "region": region,
@@ -317,6 +333,12 @@ def run(workspace: Path, candidate_path: Path, manifest_path: Path, report_path:
             "feature_cache_sha256": sha256_file(feature_path),
             "rows": table.num_rows,
             "read_columns": FEATURE_COLUMNS,
+            "confidence_cache_path": str(confidence_path.relative_to(workspace)),
+            "confidence_cache_sha256": sha256_file(confidence_path),
+            "confidence_cache_rows": confidence_table.num_rows,
+            "confidence_cache_read_columns": CONFIDENCE_COLUMNS,
+            "confidence_cache_ids_cover_official_order": True,
+            "poi_counts_reconciled_between_caches": True,
             "official_sample_path": str(sample_path.relative_to(workspace)),
             "official_sample_sha256": sha256_file(sample_path),
             "official_rows": len(sample_ids),
@@ -334,7 +356,7 @@ def run(workspace: Path, candidate_path: Path, manifest_path: Path, report_path:
         "GEOID", "region", "prior_candidate_id", "prior_coverage_gap_score",
         "building_source_support", "building_source_support_missing",
         "road_route_support", "road_route_support_missing",
-        "place_upstream_source_support", "place_upstream_source_support_missing",
+        "place_confidence_support", "place_confidence_support_missing",
         "mean_theme_support", "weakest_theme_support", "cross_theme_support",
         "cross_theme_adjustment", "adjusted_coverage_gap_score",
     ]
@@ -353,8 +375,8 @@ def run(workspace: Path, candidate_path: Path, manifest_path: Path, report_path:
                 "building_source_support_missing": row["missing"]["building_source_support"],
                 "road_route_support": format(row["supports"]["road_route_support"], ".12g"),
                 "road_route_support_missing": row["missing"]["road_route_support"],
-                "place_upstream_source_support": format(row["supports"]["place_upstream_source_support"], ".12g"),
-                "place_upstream_source_support_missing": row["missing"]["place_upstream_source_support"],
+                "place_confidence_support": format(row["supports"]["place_confidence_support"], ".12g"),
+                "place_confidence_support_missing": row["missing"]["place_confidence_support"],
                 "mean_theme_support": format(row["mean_support"], ".12g"),
                 "weakest_theme_support": format(row["weakest_support"], ".12g"),
                 "cross_theme_support": format(row["cross_theme_support"], ".12g"),
@@ -435,7 +457,7 @@ def run(workspace: Path, candidate_path: Path, manifest_path: Path, report_path:
         "preregistration": {
             "config": str(CONFIG_PATH.relative_to(ROOT)),
             "config_sha256": sha256_file(CONFIG_PATH),
-            "config_commit": "f70d3877522eb75284f36d82834f11bb0bad1361",
+            "config_commit": git_file_commit(CONFIG_PATH),
             "registered_before_cross_theme_feature_measurement": True,
         },
         "measure_before": {
@@ -447,9 +469,10 @@ def run(workspace: Path, candidate_path: Path, manifest_path: Path, report_path:
             "frozen_feature_schema": {
                 "building": "overture_building_microsoft_source_share (Overture sources-derived membership); missing when no positive Overture building count",
                 "road": "overture_route_km and overture_named_road_km_5070 (provided Overture routes/class support summaries)",
-                "place": "overture_poi_no_upstream_source_share (Overture sources-derived attribution); missing when no positive Overture place count",
+                "place": "confidence_below_0_5_share in the provided Overture confidence-by-tract cache; high-confidence support is 1 minus this share; missing when no valid confidence observations",
                 "v2_context": CONFIG["mechanistic_v2_context"],
                 "feature_cache_read_columns": FEATURE_COLUMNS,
+                "confidence_cache_read_columns": CONFIDENCE_COLUMNS,
             },
             "existing_mechanistic_reports": {
                 "transport_route_v2": {"path": "reports/transport-route-ref-audit.json",
@@ -462,6 +485,10 @@ def run(workspace: Path, candidate_path: Path, manifest_path: Path, report_path:
                                              "sha256": sha256_file(ROOT / "reports/source-provenance.json")},
                 "facility_miss_prior": {"path": "reports/poi-facility-miss-audit.json",
                                          "sha256": sha256_file(ROOT / "reports/poi-facility-miss-audit.json")},
+                "place_confidence_feature": {"path": "reports/confidence-by-stratum.json",
+                                              "sha256": sha256_file(ROOT / "reports/confidence-by-stratum.json")},
+                "workspace_confidence_cache_sha256": sha256_file(
+                    workspace / "gap-estimator" / "features" / "poi-confidence-by-tract.parquet"),
             },
         },
         "method": CONFIG,
@@ -505,7 +532,7 @@ def run(workspace: Path, candidate_path: Path, manifest_path: Path, report_path:
         },
         "limitations": [
             "C2 is a frozen historical feature-derived prediction baseline, not a hidden target or fitted correction target; its full artifact hash is retained in the manifest.",
-            "Microsoft source membership, Overture route-network tagging, and upstream place attribution are internal support covariates only; none proves reference completeness, geometry correctness, or real-world service availability.",
+            "Microsoft source membership, Overture route-network tagging, and place confidence are internal support covariates only; none proves reference completeness, geometry correctness, or real-world service availability."
             "The route support ratio combines two potentially overlapping Overture length summaries solely to bound the indicator; it is not a length-completeness estimate.",
             "A neutral 0.5 fill keeps rows with unavailable support evidence finite; missingness flags are retained and missing support is not evidence of low coverage.",
             "The fixed adjustment is an unvalidated conservative sensitivity and is not a scored-v2 integration or evidence of improved accuracy.",

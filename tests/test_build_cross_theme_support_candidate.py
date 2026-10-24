@@ -26,12 +26,13 @@ class CrossThemeSupportTests(unittest.TestCase):
             "overture_named_road_km_5070": 10.0,
             "overture_route_km": 5.0,
             "overture_poi_all": 20,
-            "overture_poi_no_upstream_source_share": 0.25,
         }
-        features, missing = support_features(row)
+        confidence = {"confidence_valid_count": 20, "confidence_below_0_5_share": 0.25}
+        features, missing, raw = support_features(row, confidence)
         self.assertEqual(features["building_source_support"], 0.6)
         self.assertAlmostEqual(features["road_route_support"], 1 / 3)
-        self.assertEqual(features["place_upstream_source_support"], 0.75)
+        self.assertEqual(features["place_confidence_support"], 0.75)
+        self.assertEqual(raw["place_confidence_support"], 0.75)
         self.assertEqual(set(features), set(SUPPORT_NAMES))
         self.assertEqual(sum(missing.values()), 0)
 
@@ -39,9 +40,9 @@ class CrossThemeSupportTests(unittest.TestCase):
                     "overture_building_microsoft_source_share": None,
                     "overture_named_road_km_5070": 0.0,
                     "overture_route_km": 0.0,
-                    "overture_poi_all": 0,
-                    "overture_poi_no_upstream_source_share": None})
-        features, missing = support_features(row)
+                    "overture_poi_all": 0})
+        confidence = {"confidence_valid_count": 0, "confidence_below_0_5_share": None}
+        features, missing, raw = support_features(row, confidence)
         self.assertEqual(set(features.values()), {0.5})
         self.assertEqual(set(missing.values()), {1})
 
@@ -91,7 +92,7 @@ class CrossThemeSupportTests(unittest.TestCase):
         self.assertEqual(len(rows), 9379)
         self.assertEqual(len({row["GEOID"] for row in rows}), 9379)
         for row in rows:
-            for name in ("building_source_support", "road_route_support", "place_upstream_source_support",
+            for name in ("building_source_support", "road_route_support", "place_confidence_support",
                          "mean_theme_support", "weakest_theme_support", "cross_theme_support",
                          "cross_theme_adjustment", "prior_coverage_gap_score", "adjusted_coverage_gap_score"):
                 value = float(row[name])
