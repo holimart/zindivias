@@ -120,6 +120,57 @@ Reproduce the audit from the competition repository:
   --out reports/poi-category-audit.json
 ```
 
+## Overture POI confidence by SVI and urbanity
+
+The deterministic diagnostic in `scripts/discovery_confidence_by_stratum.py`
+computes per-tract Overture confidence quantiles in the authorized workspace
+cache `gap-estimator/features/poi-confidence-by-tract.parquet`; stratum results
+and 95% confidence intervals are in `reports/confidence-by-stratum.json`.
+Only official sample GEOIDs, provided `svi_overall`/`pct_urban`/`svi_covered`,
+Overture `bbox`/`confidence`, and provided ACS tract geometry for spatial
+assignment were read. Overture geometry, scores, removed reference layers, and
+external data were not used. The metric is the place-weighted share with the
+provided confidence value `<0.5`; it is not a count of stale pages or an
+accuracy measure. No source attribution was read, so the Facebook/staleness
+explanation remains untested.
+
+Quartiles are region-specific over official scored tracts with finite
+`svi_overall`; equal values at cut points stay together in the higher quartile.
+`pct_urban <0.5` is rural and `>=0.5` urban; missing values are excluded from
+the cross-tab but remain in the per-tract cache. Intervals resample tracts
+within each region × urbanity × SVI-quartile cell (10,000 seeded replicates)
+and recompute the pooled low/valid-place ratio. They reflect tract resampling
+only, not spatial dependence; the Q4−Q1 contrasts below are unadjusted
+exploratory comparisons.
+
+| Region | All-place confidence q10 / q25 / median | All places `<0.5` | Urban Q4−Q1 share difference (95% CI) | Rural Q4−Q1 share difference (95% CI) |
+|---|---:|---:|---:|---:|
+| Maricopa AZ | 0.502 / 0.768 / 0.920 | 9.95% | −2.24 pp [−2.86, −1.64] | −4.02 pp [−7.80, −0.39] |
+| Northern CA | 0.489 / 0.770 / 0.920 | 10.26% | −1.38 pp [−2.35, −0.46] | +0.53 pp [−1.78, +3.19] |
+| Eastern OK | 0.503 / 0.770 / 0.920 | 9.91% | −0.80 pp [−1.44, −0.18] | −3.47 pp [−4.92, −2.06] |
+| South-Central TX | 0.402 / 0.750 / 0.920 | 12.38% | −6.06 pp [−7.71, −4.56] | −3.60 pp [−4.56, −2.60] |
+
+The observed pattern is opposite the initial hypothesis that higher-SVI tracts
+would have a larger low-confidence share: Q4−Q1 is negative in seven of eight
+region × urbanity cells, with the Northern California rural interval spanning
+zero. The largest contrast is South-Central Texas urban (Q1 16.02%, Q4 9.96%,
+difference −6.06 pp). This consistent inverse pattern is material enough to
+record as a descriptive quality caveat, not as evidence that vulnerable
+communities have better maps: confidence distributions may reflect POI mix,
+urban form, or other unmeasured factors, and confidence does not validate
+feature correctness. It neither validates hidden scores nor supports a causal
+or source-vintage claim.
+
+Reproduce from the competition repository with the authorized workspace:
+
+```sh
+/home/martin/hddProjects/langywrap/uv run \
+  --with pyarrow==26.0.0 --with numpy==2.5.4 --with shapely==2.2.0 \
+  python scripts/discovery_confidence_by_stratum.py \
+  --workspace "$COMPETITION_WORKSPACE" \
+  --out reports/confidence-by-stratum.json
+```
+
 ## Discovery screen
 
 The reproducible script is `scripts/discovery_rural_svi_minority.py`. It constructs a within-region intersection not specified in the official description of the automated scorecard:

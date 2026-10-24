@@ -1,0 +1,1036 @@
+{
+  "analysis": "provided Overture POI confidence<0.5 share by regional svi_overall quartile × urban/rural",
+  "constraints": {
+    "external_data_used": [],
+    "organizer_targets_or_sample_scores_used": false,
+    "overture_geometry_read": false,
+    "poi_columns_read": [
+      "bbox",
+      "confidence"
+    ],
+    "removed_reference_layers_read": false,
+    "strata_columns_read": [
+      "GEOID",
+      "svi_overall",
+      "pct_urban",
+      "svi_covered"
+    ],
+    "tract_geometry": "provided ACS tract geometry used solely to assign Overture bbox centers to official sample GEOIDs"
+  },
+  "definitions": {
+    "intervals": "95% percentile cluster-bootstrap intervals: resample official tracts with replacement within the same cell, then pool low/valid place counts; 10,000 replicates per cell, fixed SHA-derived seeds",
+    "low_confidence": "provided Overture confidence < 0.5; denominator finite confidence in [0,1]",
+    "primary_estimate": "pooled low-confidence place count / valid-confidence place count within each region × urbanity × SVI-quartile cell",
+    "svi_field": "provided strata.svi_overall",
+    "svi_quartiles": "computed within each region over official sample tracts with finite svi_overall; quartile cut ties stay together in the higher bin; q4 is higher SVI",
+    "urban_rural": "provided pct_urban < 0.5 is rural; >= 0.5 is urban; missing/nonfinite excluded from the cross-tab",
+    "vulnerability_contrast": "q4 minus q1 pooled low-confidence share within each urban/rural group and region; independent tract resampling in each quartile"
+  },
+  "environment": {
+    "numpy": "2.5.4",
+    "pyarrow": "26.0.0",
+    "python": "3.12.3",
+    "shapely": "2.2.0"
+  },
+  "feature_cache": {
+    "bytes": 326956,
+    "columns": [
+      "region",
+      "GEOID",
+      "svi_overall",
+      "svi_quartile",
+      "pct_urban",
+      "urbanity",
+      "svi_covered",
+      "poi_count",
+      "confidence_valid_count",
+      "confidence_missing_count",
+      "confidence_invalid_count",
+      "confidence_below_0_5_count",
+      "confidence_below_0_5_share",
+      "confidence_q10",
+      "confidence_q25",
+      "confidence_q50",
+      "confidence_q75",
+      "confidence_q90"
+    ],
+    "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/poi-confidence-by-tract.parquet",
+    "row_order": "region order in script, then authoritative sample GEOID order",
+    "rows": 9379,
+    "sha256": "66eb8f093c8e02395cdab7e675b00bf304209da34362774c94c750ce6bf8b3cb"
+  },
+  "interpretation": "descriptive data-quality screen only; not a hidden-target accuracy, causal, or stale-source finding",
+  "regions": {
+    "eastern-ok": {
+      "assigned_poi_rows": 207369,
+      "official_sample_tracts": 1192,
+      "overall_confidence_quantiles_q10_q25_q50_q75_q90": {
+        "q10": 0.5029245853424072,
+        "q25": 0.77,
+        "q50": 0.9199122190475464,
+        "q75": 0.9199122190475464,
+        "q90": 0.9865384650230408
+      },
+      "poi_rows_confidence_below_0_5": 20560,
+      "poi_rows_confidence_invalid": 0,
+      "poi_rows_confidence_missing": 0,
+      "poi_rows_with_valid_confidence": 207369,
+      "poi_source": {
+        "assigned_columns_read": [
+          "bbox",
+          "confidence"
+        ],
+        "column_compressed_bytes": {
+          "bbox": 4929340,
+          "confidence": 446583
+        },
+        "full_object_downloaded": false,
+        "input_rows": 207369,
+        "object_bytes": 28848614,
+        "overture_geometry_read": false,
+        "row_groups": 6,
+        "selected_column_compressed_bytes_total": 5375923,
+        "uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-pois.parquet"
+      },
+      "sample_input": {
+        "geoid_sequence_sha256": "d1886fe60e412888bc5dbc1057f918eb840caa40936037f45bce9ce1c9169964",
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/eastern-ok-sample-submission.csv",
+        "rows": 1192,
+        "score_placeholder_values_used": false
+      },
+      "strata_analysis": {
+        "by_urbanity_and_svi_quartile": {
+          "rural": {
+            "q1": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 2507660542,
+              "cluster_bootstrap_95_ci": [
+                0.12973171939151418,
+                0.15293010936245938
+              ],
+              "low_confidence_place_share": 0.1412318556296587,
+              "low_confidence_places": 1080,
+              "mean_tract_low_confidence_share": 0.14917406279445145,
+              "poi_rows": 7647,
+              "tract_count": 76,
+              "tracts_with_pois": 76,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 7647
+            },
+            "q2": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 3384925789,
+              "cluster_bootstrap_95_ci": [
+                0.11899107260300415,
+                0.13605654422994243
+              ],
+              "low_confidence_place_share": 0.12736191860465115,
+              "low_confidence_places": 2103,
+              "mean_tract_low_confidence_share": 0.1384377568169249,
+              "poi_rows": 16512,
+              "tract_count": 147,
+              "tracts_with_pois": 147,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 16512
+            },
+            "q3": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 846390864,
+              "cluster_bootstrap_95_ci": [
+                0.112676000063028,
+                0.12774050061114947
+              ],
+              "low_confidence_place_share": 0.12006391234877882,
+              "low_confidence_places": 2104,
+              "mean_tract_low_confidence_share": 0.12827815297171866,
+              "poi_rows": 17524,
+              "tract_count": 128,
+              "tracts_with_pois": 128,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 17524
+            },
+            "q4": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 2443930515,
+              "cluster_bootstrap_95_ci": [
+                0.0984511643721076,
+                0.11503813832519205
+              ],
+              "low_confidence_place_share": 0.10649487246910334,
+              "low_confidence_places": 1215,
+              "mean_tract_low_confidence_share": 0.11182386529834983,
+              "poi_rows": 11409,
+              "tract_count": 59,
+              "tracts_with_pois": 59,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 11409
+            }
+          },
+          "urban": {
+            "q1": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 3278436827,
+              "cluster_bootstrap_95_ci": [
+                0.0919962439893298,
+                0.10252474819577963
+              ],
+              "low_confidence_place_share": 0.0971507769396839,
+              "low_confidence_places": 3645,
+              "mean_tract_low_confidence_share": 0.11341395307698844,
+              "poi_rows": 37519,
+              "tract_count": 219,
+              "tracts_with_pois": 219,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 37519
+            },
+            "q2": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 3919696088,
+              "cluster_bootstrap_95_ci": [
+                0.08838147128229949,
+                0.09976290194396197
+              ],
+              "low_confidence_place_share": 0.09377161370172181,
+              "low_confidence_places": 2576,
+              "mean_tract_low_confidence_share": 0.09518153620353309,
+              "poi_rows": 27471,
+              "tract_count": 148,
+              "tracts_with_pois": 148,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 27471
+            },
+            "q3": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 3570573645,
+              "cluster_bootstrap_95_ci": [
+                0.08286419507797492,
+                0.09279919171000456
+              ],
+              "low_confidence_place_share": 0.0878310143626571,
+              "low_confidence_places": 3131,
+              "mean_tract_low_confidence_share": 0.08936757437089574,
+              "poi_rows": 35648,
+              "tract_count": 167,
+              "tracts_with_pois": 167,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 35648
+            },
+            "q4": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 684050506,
+              "cluster_bootstrap_95_ci": [
+                0.08560043599645444,
+                0.09283747370196503
+              ],
+              "low_confidence_place_share": 0.0891776227011605,
+              "low_confidence_places": 4626,
+              "mean_tract_low_confidence_share": 0.09211301762061727,
+              "poi_rows": 51874,
+              "tract_count": 237,
+              "tracts_with_pois": 237,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 51874
+            }
+          }
+        },
+        "high_vs_low_svi_quartile_contrasts_within_urbanity": {
+          "rural": {
+            "bootstrap_replicates": 10000,
+            "ci_excludes_zero": true,
+            "cluster_bootstrap_95_ci_difference": [
+              -0.04918618252609334,
+              -0.02056213951615252
+            ],
+            "q1_share": 0.1412318556296587,
+            "q1_tracts": 76,
+            "q4_minus_q1_share_difference": -0.03473698316055536,
+            "q4_share": 0.10649487246910334,
+            "q4_tracts": 59
+          },
+          "urban": {
+            "bootstrap_replicates": 10000,
+            "ci_excludes_zero": true,
+            "cluster_bootstrap_95_ci_difference": [
+              -0.014370344182016458,
+              -0.0017679461213416865
+            ],
+            "q1_share": 0.0971507769396839,
+            "q1_tracts": 219,
+            "q4_minus_q1_share_difference": -0.007973154238523392,
+            "q4_share": 0.0891776227011605,
+            "q4_tracts": 237
+          }
+        },
+        "low_confidence_rule": "provided Overture confidence < 0.5; denominator is finite confidence in [0,1]",
+        "method": "pooled place-weighted share; 95% percentile cluster bootstrap resamples official tracts within each region × urbanity × SVI-quartile stratum",
+        "urban_rural_rule": "rural if provided pct_urban < 0.5; urban if pct_urban >= 0.5; missing/nonfinite urbanity excluded"
+      },
+      "strata_input": {
+        "bytes": 638464,
+        "official_ids_not_in_source": 0,
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+        "read_columns": [
+          "GEOID",
+          "svi_overall",
+          "pct_urban",
+          "svi_covered"
+        ],
+        "sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54",
+        "source_rows": 1192
+      },
+      "svi_covered_false_or_missing": 0,
+      "svi_quartile_cut_rule": "region-specific quantiles among official sample GEOIDs with finite svi_overall; searchsorted(side=right), so exact ties at cutpoints remain together in the higher quartile",
+      "svi_quartile_cutpoints_q25_q50_q75": [
+        0.3837,
+        0.6151,
+        0.8055
+      ],
+      "tract_geometry_input": {
+        "object_bytes": 3650879,
+        "row_groups": 1,
+        "rows": 1192,
+        "selected_column_compressed_bytes": 3612768,
+        "selected_columns": [
+          "GEOID",
+          "geometry"
+        ],
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-census-acs-housing.parquet"
+      },
+      "tracts_missing_pct_urban": 1,
+      "tracts_missing_svi_overall": 11,
+      "tracts_with_finite_svi_overall": 1181,
+      "tracts_with_no_assigned_pois": 0,
+      "unmatched_poi_rows": 0
+    },
+    "maricopa-az": {
+      "assigned_poi_rows": 300046,
+      "official_sample_tracts": 1593,
+      "overall_confidence_quantiles_q10_q25_q50_q75_q90": {
+        "q10": 0.501508504152298,
+        "q25": 0.7682222574949265,
+        "q50": 0.9199122190475464,
+        "q75": 0.9492276906967163,
+        "q90": 0.9902192950248718
+      },
+      "poi_rows_confidence_below_0_5": 29868,
+      "poi_rows_confidence_invalid": 0,
+      "poi_rows_confidence_missing": 0,
+      "poi_rows_with_valid_confidence": 300046,
+      "poi_source": {
+        "assigned_columns_read": [
+          "bbox",
+          "confidence"
+        ],
+        "column_compressed_bytes": {
+          "bbox": 6605884,
+          "confidence": 620258
+        },
+        "full_object_downloaded": false,
+        "input_rows": 300046,
+        "object_bytes": 40987154,
+        "overture_geometry_read": false,
+        "row_groups": 9,
+        "selected_column_compressed_bytes_total": 7226142,
+        "uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-pois.parquet"
+      },
+      "sample_input": {
+        "geoid_sequence_sha256": "f5dee76799fa137848f0fe7b3cbde36cbeed06ee372957e6df68ee3e526f30d5",
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/maricopa-az-sample-submission.csv",
+        "rows": 1593,
+        "score_placeholder_values_used": false
+      },
+      "strata_analysis": {
+        "by_urbanity_and_svi_quartile": {
+          "rural": {
+            "q1": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 1155540789,
+              "cluster_bootstrap_95_ci": [
+                0.11528606404571859,
+                0.1824777804027633
+              ],
+              "low_confidence_place_share": 0.14633087277464177,
+              "low_confidence_places": 337,
+              "mean_tract_low_confidence_share": 0.15296641627966387,
+              "poi_rows": 2303,
+              "tract_count": 24,
+              "tracts_with_pois": 24,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 2303
+            },
+            "q2": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 2259575747,
+              "cluster_bootstrap_95_ci": [
+                0.12802113240049562,
+                0.1769716136236285
+              ],
+              "low_confidence_place_share": 0.1504442649434572,
+              "low_confidence_places": 745,
+              "mean_tract_low_confidence_share": 0.1796015088430432,
+              "poi_rows": 4952,
+              "tract_count": 43,
+              "tracts_with_pois": 43,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 4952
+            },
+            "q3": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 1653910099,
+              "cluster_bootstrap_95_ci": [
+                0.12345898140047784,
+                0.16683674351539496
+              ],
+              "low_confidence_place_share": 0.14343899415618913,
+              "low_confidence_places": 810,
+              "mean_tract_low_confidence_share": 0.136834147784935,
+              "poi_rows": 5647,
+              "tract_count": 50,
+              "tracts_with_pois": 50,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 5647
+            },
+            "q4": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 1087902835,
+              "cluster_bootstrap_95_ci": [
+                0.0931971739669766,
+                0.12471397187727697
+              ],
+              "low_confidence_place_share": 0.10617897727272728,
+              "low_confidence_places": 598,
+              "mean_tract_low_confidence_share": 0.12901479441060226,
+              "poi_rows": 5632,
+              "tract_count": 41,
+              "tracts_with_pois": 41,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 5632
+            }
+          },
+          "urban": {
+            "q1": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 3985871918,
+              "cluster_bootstrap_95_ci": [
+                0.1066763997534914,
+                0.1156296736008655
+              ],
+              "low_confidence_place_share": 0.11099423910932746,
+              "low_confidence_places": 6859,
+              "mean_tract_low_confidence_share": 0.12199669909521975,
+              "poi_rows": 61796,
+              "tract_count": 367,
+              "tracts_with_pois": 367,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 61796
+            },
+            "q2": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 1969464716,
+              "cluster_bootstrap_95_ci": [
+                0.09374687122480654,
+                0.10624873178036194
+              ],
+              "low_confidence_place_share": 0.09971921943001544,
+              "low_confidence_places": 7103,
+              "mean_tract_low_confidence_share": 0.106875085213912,
+              "poi_rows": 71230,
+              "tract_count": 348,
+              "tracts_with_pois": 348,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 71230
+            },
+            "q3": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 3874274275,
+              "cluster_bootstrap_95_ci": [
+                0.08785273599124414,
+                0.0960096998510812
+              ],
+              "low_confidence_place_share": 0.09194357738353945,
+              "low_confidence_places": 6981,
+              "mean_tract_low_confidence_share": 0.09600203793181519,
+              "poi_rows": 75927,
+              "tract_count": 341,
+              "tracts_with_pois": 341,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 75927
+            },
+            "q4": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 280835486,
+              "cluster_bootstrap_95_ci": [
+                0.08430436246905813,
+                0.09282829485406573
+              ],
+              "low_confidence_place_share": 0.08858908371446185,
+              "low_confidence_places": 6179,
+              "mean_tract_low_confidence_share": 0.09154621800405713,
+              "poi_rows": 69749,
+              "tract_count": 350,
+              "tracts_with_pois": 350,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 69749
+            }
+          }
+        },
+        "high_vs_low_svi_quartile_contrasts_within_urbanity": {
+          "rural": {
+            "bootstrap_replicates": 10000,
+            "ci_excludes_zero": true,
+            "cluster_bootstrap_95_ci_difference": [
+              -0.07804275696363959,
+              -0.003933263261394508
+            ],
+            "q1_share": 0.14633087277464177,
+            "q1_tracts": 24,
+            "q4_minus_q1_share_difference": -0.04015189550191449,
+            "q4_share": 0.10617897727272728,
+            "q4_tracts": 41
+          },
+          "urban": {
+            "bootstrap_replicates": 10000,
+            "ci_excludes_zero": true,
+            "cluster_bootstrap_95_ci_difference": [
+              -0.0286411996970328,
+              -0.016373845240308618
+            ],
+            "q1_share": 0.11099423910932746,
+            "q1_tracts": 367,
+            "q4_minus_q1_share_difference": -0.02240515539486561,
+            "q4_share": 0.08858908371446185,
+            "q4_tracts": 350
+          }
+        },
+        "low_confidence_rule": "provided Overture confidence < 0.5; denominator is finite confidence in [0,1]",
+        "method": "pooled place-weighted share; 95% percentile cluster bootstrap resamples official tracts within each region × urbanity × SVI-quartile stratum",
+        "urban_rural_rule": "rural if provided pct_urban < 0.5; urban if pct_urban >= 0.5; missing/nonfinite urbanity excluded"
+      },
+      "strata_input": {
+        "bytes": 793492,
+        "official_ids_not_in_source": 0,
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+        "read_columns": [
+          "GEOID",
+          "svi_overall",
+          "pct_urban",
+          "svi_covered"
+        ],
+        "sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd",
+        "source_rows": 1593
+      },
+      "svi_covered_false_or_missing": 0,
+      "svi_quartile_cut_rule": "region-specific quantiles among official sample GEOIDs with finite svi_overall; searchsorted(side=right), so exact ties at cutpoints remain together in the higher quartile",
+      "svi_quartile_cutpoints_q25_q50_q75": [
+        0.23105,
+        0.5186999999999999,
+        0.78015
+      ],
+      "tract_geometry_input": {
+        "object_bytes": 3457173,
+        "row_groups": 1,
+        "rows": 1593,
+        "selected_column_compressed_bytes": 3409661,
+        "selected_columns": [
+          "GEOID",
+          "geometry"
+        ],
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-census-acs-housing.parquet"
+      },
+      "tracts_missing_pct_urban": 11,
+      "tracts_missing_svi_overall": 29,
+      "tracts_with_finite_svi_overall": 1564,
+      "tracts_with_no_assigned_pois": 0,
+      "unmatched_poi_rows": 0
+    },
+    "northern-ca": {
+      "assigned_poi_rows": 116897,
+      "official_sample_tracts": 591,
+      "overall_confidence_quantiles_q10_q25_q50_q75_q90": {
+        "q10": 0.4888045608997345,
+        "q25": 0.77,
+        "q50": 0.9199122190475464,
+        "q75": 0.9199122190475464,
+        "q90": 0.9901962511777881
+      },
+      "poi_rows_confidence_below_0_5": 11992,
+      "poi_rows_confidence_invalid": 0,
+      "poi_rows_confidence_missing": 0,
+      "poi_rows_with_valid_confidence": 116897,
+      "poi_source": {
+        "assigned_columns_read": [
+          "bbox",
+          "confidence"
+        ],
+        "column_compressed_bytes": {
+          "bbox": 2712042,
+          "confidence": 244408
+        },
+        "full_object_downloaded": false,
+        "input_rows": 116897,
+        "object_bytes": 16168720,
+        "overture_geometry_read": false,
+        "row_groups": 4,
+        "selected_column_compressed_bytes_total": 2956450,
+        "uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-pois.parquet"
+      },
+      "sample_input": {
+        "geoid_sequence_sha256": "84c4bc3c03900cb37c5e6afbfbb7dde3c49849a68475b2bd5fdea3096ee3c915",
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/northern-ca-sample-submission.csv",
+        "rows": 591,
+        "score_placeholder_values_used": false
+      },
+      "strata_analysis": {
+        "by_urbanity_and_svi_quartile": {
+          "rural": {
+            "q1": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 2607293006,
+              "cluster_bootstrap_95_ci": [
+                0.10424377917465512,
+                0.13234638782125094
+              ],
+              "low_confidence_place_share": 0.1180820610687023,
+              "low_confidence_places": 495,
+              "mean_tract_low_confidence_share": 0.12178316907911742,
+              "poi_rows": 4192,
+              "tract_count": 36,
+              "tracts_with_pois": 36,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 4192
+            },
+            "q2": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 1405157898,
+              "cluster_bootstrap_95_ci": [
+                0.11660622780087128,
+                0.14696893172000008
+              ],
+              "low_confidence_place_share": 0.13152950018789927,
+              "low_confidence_places": 700,
+              "mean_tract_low_confidence_share": 0.13564909592982102,
+              "poi_rows": 5322,
+              "tract_count": 45,
+              "tracts_with_pois": 45,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 5322
+            },
+            "q3": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 3672014494,
+              "cluster_bootstrap_95_ci": [
+                0.13163223521422357,
+                0.1823412670829064
+              ],
+              "low_confidence_place_share": 0.15482003979019715,
+              "low_confidence_places": 856,
+              "mean_tract_low_confidence_share": 0.15927244226372042,
+              "poi_rows": 5529,
+              "tract_count": 39,
+              "tracts_with_pois": 39,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 5529
+            },
+            "q4": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 479455625,
+              "cluster_bootstrap_95_ci": [
+                0.10531881243175069,
+                0.14573828972539682
+              ],
+              "low_confidence_place_share": 0.12336581887330639,
+              "low_confidence_places": 519,
+              "mean_tract_low_confidence_share": 0.12615227085741088,
+              "poi_rows": 4207,
+              "tract_count": 27,
+              "tracts_with_pois": 27,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 4207
+            }
+          },
+          "urban": {
+            "q1": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 878446886,
+              "cluster_bootstrap_95_ci": [
+                0.09652030716507587,
+                0.11252877471831575
+              ],
+              "low_confidence_place_share": 0.10413968188176778,
+              "low_confidence_places": 2010,
+              "mean_tract_low_confidence_share": 0.11516147623739093,
+              "poi_rows": 19301,
+              "tract_count": 112,
+              "tracts_with_pois": 112,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 19301
+            },
+            "q2": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 2682398426,
+              "cluster_bootstrap_95_ci": [
+                0.08945138067167584,
+                0.12016394774940213
+              ],
+              "low_confidence_place_share": 0.10283361588762412,
+              "low_confidence_places": 2123,
+              "mean_tract_low_confidence_share": 0.10691393321460622,
+              "poi_rows": 20645,
+              "tract_count": 102,
+              "tracts_with_pois": 102,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 20645
+            },
+            "q3": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 3578083544,
+              "cluster_bootstrap_95_ci": [
+                0.08622414121063195,
+                0.10064416437541188
+              ],
+              "low_confidence_place_share": 0.09321520520975314,
+              "low_confidence_places": 2462,
+              "mean_tract_low_confidence_share": 0.09432794163327816,
+              "poi_rows": 26412,
+              "tract_count": 109,
+              "tracts_with_pois": 109,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 26412
+            },
+            "q4": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 2525015362,
+              "cluster_bootstrap_95_ci": [
+                0.0853634809191948,
+                0.09517128711773908
+              ],
+              "low_confidence_place_share": 0.09035124165042027,
+              "low_confidence_places": 2827,
+              "mean_tract_low_confidence_share": 0.09491329008009236,
+              "poi_rows": 31289,
+              "tract_count": 121,
+              "tracts_with_pois": 121,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 31289
+            }
+          }
+        },
+        "high_vs_low_svi_quartile_contrasts_within_urbanity": {
+          "rural": {
+            "bootstrap_replicates": 10000,
+            "ci_excludes_zero": false,
+            "cluster_bootstrap_95_ci_difference": [
+              -0.017847884553928453,
+              0.031928501769011526
+            ],
+            "q1_share": 0.1180820610687023,
+            "q1_tracts": 36,
+            "q4_minus_q1_share_difference": 0.005283757804604092,
+            "q4_share": 0.12336581887330639,
+            "q4_tracts": 27
+          },
+          "urban": {
+            "bootstrap_replicates": 10000,
+            "ci_excludes_zero": true,
+            "cluster_bootstrap_95_ci_difference": [
+              -0.023530800787473504,
+              -0.004582097444707269
+            ],
+            "q1_share": 0.10413968188176778,
+            "q1_tracts": 112,
+            "q4_minus_q1_share_difference": -0.01378844023134751,
+            "q4_share": 0.09035124165042027,
+            "q4_tracts": 121
+          }
+        },
+        "low_confidence_rule": "provided Overture confidence < 0.5; denominator is finite confidence in [0,1]",
+        "method": "pooled place-weighted share; 95% percentile cluster bootstrap resamples official tracts within each region × urbanity × SVI-quartile stratum",
+        "urban_rural_rule": "rural if provided pct_urban < 0.5; urban if pct_urban >= 0.5; missing/nonfinite urbanity excluded"
+      },
+      "strata_input": {
+        "bytes": 354711,
+        "official_ids_not_in_source": 0,
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+        "read_columns": [
+          "GEOID",
+          "svi_overall",
+          "pct_urban",
+          "svi_covered"
+        ],
+        "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+        "source_rows": 591
+      },
+      "svi_covered_false_or_missing": 0,
+      "svi_quartile_cut_rule": "region-specific quantiles among official sample GEOIDs with finite svi_overall; searchsorted(side=right), so exact ties at cutpoints remain together in the higher quartile",
+      "svi_quartile_cutpoints_q25_q50_q75": [
+        0.32805,
+        0.5852,
+        0.79975
+      ],
+      "tract_geometry_input": {
+        "object_bytes": 3037540,
+        "row_groups": 1,
+        "rows": 591,
+        "selected_column_compressed_bytes": 3016786,
+        "selected_columns": [
+          "GEOID",
+          "geometry"
+        ],
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-census-acs-housing.parquet"
+      },
+      "tracts_missing_pct_urban": 0,
+      "tracts_missing_svi_overall": 0,
+      "tracts_with_finite_svi_overall": 591,
+      "tracts_with_no_assigned_pois": 0,
+      "unmatched_poi_rows": 0
+    },
+    "south-central-tx": {
+      "assigned_poi_rows": 1300331,
+      "official_sample_tracts": 6003,
+      "overall_confidence_quantiles_q10_q25_q50_q75_q90": {
+        "q10": 0.4022187292575836,
+        "q25": 0.75,
+        "q50": 0.9199122190475464,
+        "q75": 0.9415332049131393,
+        "q90": 0.9902192950248718
+      },
+      "poi_rows_confidence_below_0_5": 160932,
+      "poi_rows_confidence_invalid": 0,
+      "poi_rows_confidence_missing": 0,
+      "poi_rows_with_valid_confidence": 1300331,
+      "poi_source": {
+        "assigned_columns_read": [
+          "bbox",
+          "confidence"
+        ],
+        "column_compressed_bytes": {
+          "bbox": 29922404,
+          "confidence": 2772882
+        },
+        "full_object_downloaded": false,
+        "input_rows": 1300334,
+        "object_bytes": 179937096,
+        "overture_geometry_read": false,
+        "row_groups": 36,
+        "selected_column_compressed_bytes_total": 32695286,
+        "uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-pois.parquet"
+      },
+      "sample_input": {
+        "geoid_sequence_sha256": "10c6cef055d79af255b9a6890c1896565ffe8884c756815c5474ff7d6633883c",
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/south-central-tx-sample-submission.csv",
+        "rows": 6003,
+        "score_placeholder_values_used": false
+      },
+      "strata_analysis": {
+        "by_urbanity_and_svi_quartile": {
+          "rural": {
+            "q1": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 1194476067,
+              "cluster_bootstrap_95_ci": [
+                0.14045708385351519,
+                0.1543771103870174
+              ],
+              "low_confidence_place_share": 0.14712710388856645,
+              "low_confidence_places": 3549,
+              "mean_tract_low_confidence_share": 0.15517945437257993,
+              "poi_rows": 24122,
+              "tract_count": 163,
+              "tracts_with_pois": 163,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 24122
+            },
+            "q2": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 3038236368,
+              "cluster_bootstrap_95_ci": [
+                0.1378996668425566,
+                0.1475024717824414
+              ],
+              "low_confidence_place_share": 0.1426834130781499,
+              "low_confidence_places": 7157,
+              "mean_tract_low_confidence_share": 0.1518995836250108,
+              "poi_rows": 50160,
+              "tract_count": 348,
+              "tracts_with_pois": 348,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 50160
+            },
+            "q3": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 1245767773,
+              "cluster_bootstrap_95_ci": [
+                0.1265375559284119,
+                0.13612013761644973
+              ],
+              "low_confidence_place_share": 0.13111648383371824,
+              "low_confidence_places": 7267,
+              "mean_tract_low_confidence_share": 0.14114865206733937,
+              "poi_rows": 55424,
+              "tract_count": 341,
+              "tracts_with_pois": 341,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 55424
+            },
+            "q4": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 4040329835,
+              "cluster_bootstrap_95_ci": [
+                0.1046071472788931,
+                0.11839430401506358
+              ],
+              "low_confidence_place_share": 0.11112108831320433,
+              "low_confidence_places": 2475,
+              "mean_tract_low_confidence_share": 0.1242603697639102,
+              "poi_rows": 22273,
+              "tract_count": 128,
+              "tracts_with_pois": 128,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 22273
+            }
+          },
+          "urban": {
+            "q1": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 1420723739,
+              "cluster_bootstrap_95_ci": [
+                0.14547818161763962,
+                0.17621661506387523
+              ],
+              "low_confidence_place_share": 0.1601997580693138,
+              "low_confidence_places": 48471,
+              "mean_tract_low_confidence_share": 0.13820316170186084,
+              "poi_rows": 302566,
+              "tract_count": 1327,
+              "tracts_with_pois": 1327,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 302566
+            },
+            "q2": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 1532327947,
+              "cluster_bootstrap_95_ci": [
+                0.11048934277076682,
+                0.13437602924737876
+              ],
+              "low_confidence_place_share": 0.12095292240541383,
+              "low_confidence_places": 32976,
+              "mean_tract_low_confidence_share": 0.11516428799397357,
+              "poi_rows": 272635,
+              "tract_count": 1141,
+              "tracts_with_pois": 1141,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 272635
+            },
+            "q3": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 3700053025,
+              "cluster_bootstrap_95_ci": [
+                0.10025281721482719,
+                0.11455141874329824
+              ],
+              "low_confidence_place_share": 0.10640087259586252,
+              "low_confidence_places": 28972,
+              "mean_tract_low_confidence_share": 0.10868698326399517,
+              "poi_rows": 272291,
+              "tract_count": 1148,
+              "tracts_with_pois": 1148,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 272291
+            },
+            "q4": {
+              "bootstrap_replicates": 10000,
+              "bootstrap_seed": 933554141,
+              "cluster_bootstrap_95_ci": [
+                0.09628862331846946,
+                0.10382590880170085
+              ],
+              "low_confidence_place_share": 0.09960422608332153,
+              "low_confidence_places": 29546,
+              "mean_tract_low_confidence_share": 0.1027621775217056,
+              "poi_rows": 296634,
+              "tract_count": 1362,
+              "tracts_with_pois": 1362,
+              "tracts_without_pois": 0,
+              "valid_confidence_places": 296634
+            }
+          }
+        },
+        "high_vs_low_svi_quartile_contrasts_within_urbanity": {
+          "rural": {
+            "bootstrap_replicates": 10000,
+            "ci_excludes_zero": true,
+            "cluster_bootstrap_95_ci_difference": [
+              -0.0456159360648219,
+              -0.025971232087593915
+            ],
+            "q1_share": 0.14712710388856645,
+            "q1_tracts": 163,
+            "q4_minus_q1_share_difference": -0.03600601557536212,
+            "q4_share": 0.11112108831320433,
+            "q4_tracts": 128
+          },
+          "urban": {
+            "bootstrap_replicates": 10000,
+            "ci_excludes_zero": true,
+            "cluster_bootstrap_95_ci_difference": [
+              -0.077056650988186,
+              -0.045618424493503604
+            ],
+            "q1_share": 0.1601997580693138,
+            "q1_tracts": 1327,
+            "q4_minus_q1_share_difference": -0.06059553198599227,
+            "q4_share": 0.09960422608332153,
+            "q4_tracts": 1362
+          }
+        },
+        "low_confidence_rule": "provided Overture confidence < 0.5; denominator is finite confidence in [0,1]",
+        "method": "pooled place-weighted share; 95% percentile cluster bootstrap resamples official tracts within each region × urbanity × SVI-quartile stratum",
+        "urban_rural_rule": "rural if provided pct_urban < 0.5; urban if pct_urban >= 0.5; missing/nonfinite urbanity excluded"
+      },
+      "strata_input": {
+        "bytes": 2800838,
+        "official_ids_not_in_source": 0,
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+        "read_columns": [
+          "GEOID",
+          "svi_overall",
+          "pct_urban",
+          "svi_covered"
+        ],
+        "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354",
+        "source_rows": 6010
+      },
+      "svi_covered_false_or_missing": 2,
+      "svi_quartile_cut_rule": "region-specific quantiles among official sample GEOIDs with finite svi_overall; searchsorted(side=right), so exact ties at cutpoints remain together in the higher quartile",
+      "svi_quartile_cutpoints_q25_q50_q75": [
+        0.32615,
+        0.63465,
+        0.8465
+      ],
+      "tract_geometry_input": {
+        "object_bytes": 13758433,
+        "row_groups": 1,
+        "rows": 6010,
+        "selected_column_compressed_bytes": 13587215,
+        "selected_columns": [
+          "GEOID",
+          "geometry"
+        ],
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-census-acs-housing.parquet"
+      },
+      "tracts_missing_pct_urban": 14,
+      "tracts_missing_svi_overall": 45,
+      "tracts_with_finite_svi_overall": 5958,
+      "tracts_with_no_assigned_pois": 2,
+      "unmatched_poi_rows": 3
+    }
+  },
+  "uncertainty_and_caveats": [
+    "Bootstrap intervals reflect tract-resampling variability only; they do not adjust for spatial dependence or the finite, geographically clustered design.",
+    "The table is descriptive; stratum differences do not show that SVI causes lower confidence or that confidence indicates data staleness.",
+    "Overture confidence is treated only as the provided field; no source-dataset attribution was read or inferred.",
+    "Tracts with no assigned POIs remain in the cache and are counted in tract denominators, but contribute zero places to pooled shares.",
+    "Confidence missing/invalid counts are reported; rows outside the official sample are excluded from strata estimates."
+  ]
+}
