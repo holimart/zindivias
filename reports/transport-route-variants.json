@@ -1,0 +1,373 @@
+{
+  "aggregate_variant_metrics": [
+    {
+      "all_four_any_undefined_checks_pass": true,
+      "mean_absolute_any_undefined_error": 0.04379648948426056,
+      "regions_within_disclosed_ratio_band": 3,
+      "regions_within_lane_ratio_band": 3,
+      "sum_distance_to_disclosed_ratio_band": 0.3385403236217188,
+      "variant_id": "plus_fm_rm_cr"
+    },
+    {
+      "all_four_any_undefined_checks_pass": true,
+      "mean_absolute_any_undefined_error": 0.03646146410354991,
+      "regions_within_disclosed_ratio_band": 2,
+      "regions_within_lane_ratio_band": 2,
+      "sum_distance_to_disclosed_ratio_band": 0.5165526862973899,
+      "variant_id": "plus_fm_rm"
+    },
+    {
+      "all_four_any_undefined_checks_pass": true,
+      "mean_absolute_any_undefined_error": 0.03355958171141263,
+      "regions_within_disclosed_ratio_band": 1,
+      "regions_within_lane_ratio_band": 1,
+      "sum_distance_to_disclosed_ratio_band": 1.323120031819452,
+      "variant_id": "state_us_interstate"
+    }
+  ],
+  "data_use": {
+    "disclosed_aggregate_statistics_used_only_for_variant_selection": true,
+    "feature_columns_read": [
+      "GEOID",
+      "overture_named_road_km_5070",
+      "overture_route_core_km",
+      "overture_route_plus_fm_rm_km",
+      "overture_route_km"
+    ],
+    "labels_or_sample_score_placeholders_read": false,
+    "leaderboard_or_submission_scores_read": false,
+    "no_candidate_or_submission_created": true,
+    "official_sample_columns_read": [
+      "GEOID"
+    ],
+    "per_geoid_outputs_written": false,
+    "removed_reference_layers_or_equivalents_read": false,
+    "v0_columns_read": [
+      "GEOID",
+      "transport_defined",
+      "building_defined",
+      "poi_defined"
+    ]
+  },
+  "inputs": {
+    "feature_cache_sha256_by_region": {
+      "eastern-ok": "e5a06316c316f61bf25b80b48e89c1e7f0b1461a0b8cec5831aae24e0cf83fa6",
+      "maricopa-az": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22",
+      "northern-ca": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c",
+      "south-central-tx": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746"
+    },
+    "route_reference_audit": {
+      "path": "reports/transport-route-ref-audit.json",
+      "sha256": "bf904336963f553cc7442c5996a4d8d504fe30aad5c4f1a2e44da8fa773b1927"
+    },
+    "v0_defined_flags": {
+      "path": "reports/gap-estimates.csv",
+      "sha256": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852"
+    }
+  },
+  "limitations": [
+    "Disclosed ratio endpoints are not mapped to individual regions, so band fit is not a comparison to region-specific reference labels.",
+    "Hybrid any-undefined shares replace only the transport defined flag while retaining v0 building/POI defined flags; they are not a full v2 composite.",
+    "Aggregate undefined percentages are used only as the row-authorized selection context, not as per-tract labels or score-fitting targets."
+  ],
+  "ratio_bands": {
+    "interpretation": "The organizer disclosed a cross-region range, not region-specific target ratios; in-band counts/distances are comparison diagnostics only.",
+    "lane_acceptance_check": [
+      0.6,
+      1.7
+    ],
+    "organizer_disclosed_cross_region_context": [
+      0.71,
+      1.59
+    ]
+  },
+  "regions": {
+    "eastern-ok": {
+      "official_tracts": 1192,
+      "v0_any_component_undefined_share": 0.40687919463087246,
+      "variants": {
+        "plus_fm_rm": {
+          "L_named_km_sum_epsg5070": 27944.02776408843,
+          "L_route_km_sum_epsg5070": 24071.910964743845,
+          "any_undefined_abs_error": 0.029932885906040263,
+          "any_undefined_within_0_10": true,
+          "disclosed_any_component_undefined_share": 0.21,
+          "distance_to_disclosed_ratio_band": 0.0,
+          "ratio_within_disclosed_0_71_to_1_59": true,
+          "ratio_within_lane_0_60_to_1_70": true,
+          "route_undefined_count": 286,
+          "route_undefined_share": 0.23993288590604026,
+          "sum_L_named_over_sum_L_route": 1.160856228033402,
+          "variant_any_component_undefined_count": 286,
+          "variant_any_component_undefined_share": 0.23993288590604026
+        },
+        "plus_fm_rm_cr": {
+          "L_named_km_sum_epsg5070": 27944.02776408843,
+          "L_route_km_sum_epsg5070": 24071.910964743845,
+          "any_undefined_abs_error": 0.029932885906040263,
+          "any_undefined_within_0_10": true,
+          "disclosed_any_component_undefined_share": 0.21,
+          "distance_to_disclosed_ratio_band": 0.0,
+          "ratio_within_disclosed_0_71_to_1_59": true,
+          "ratio_within_lane_0_60_to_1_70": true,
+          "route_undefined_count": 286,
+          "route_undefined_share": 0.23993288590604026,
+          "sum_L_named_over_sum_L_route": 1.160856228033402,
+          "variant_any_component_undefined_count": 286,
+          "variant_any_component_undefined_share": 0.23993288590604026
+        },
+        "state_us_interstate": {
+          "L_named_km_sum_epsg5070": 27944.02776408843,
+          "L_route_km_sum_epsg5070": 24070.63147013891,
+          "any_undefined_abs_error": 0.029932885906040263,
+          "any_undefined_within_0_10": true,
+          "disclosed_any_component_undefined_share": 0.21,
+          "distance_to_disclosed_ratio_band": 0.0,
+          "ratio_within_disclosed_0_71_to_1_59": true,
+          "ratio_within_lane_0_60_to_1_70": true,
+          "route_undefined_count": 286,
+          "route_undefined_share": 0.23993288590604026,
+          "sum_L_named_over_sum_L_route": 1.1609179343198663,
+          "variant_any_component_undefined_count": 286,
+          "variant_any_component_undefined_share": 0.23993288590604026
+        }
+      }
+    },
+    "maricopa-az": {
+      "official_tracts": 1593,
+      "v0_any_component_undefined_share": 0.3653483992467043,
+      "variants": {
+        "plus_fm_rm": {
+          "L_named_km_sum_epsg5070": 22113.71284793831,
+          "L_route_km_sum_epsg5070": 11466.55456309551,
+          "any_undefined_abs_error": 0.015599497802887607,
+          "any_undefined_within_0_10": true,
+          "disclosed_any_component_undefined_share": 0.55,
+          "distance_to_disclosed_ratio_band": 0.3385403236217188,
+          "ratio_within_disclosed_0_71_to_1_59": false,
+          "ratio_within_lane_0_60_to_1_70": false,
+          "route_undefined_count": 901,
+          "route_undefined_share": 0.5655994978028877,
+          "sum_L_named_over_sum_L_route": 1.928540323621719,
+          "variant_any_component_undefined_count": 901,
+          "variant_any_component_undefined_share": 0.5655994978028877
+        },
+        "plus_fm_rm_cr": {
+          "L_named_km_sum_epsg5070": 22113.71284793831,
+          "L_route_km_sum_epsg5070": 11466.55456309551,
+          "any_undefined_abs_error": 0.015599497802887607,
+          "any_undefined_within_0_10": true,
+          "disclosed_any_component_undefined_share": 0.55,
+          "distance_to_disclosed_ratio_band": 0.3385403236217188,
+          "ratio_within_disclosed_0_71_to_1_59": false,
+          "ratio_within_lane_0_60_to_1_70": false,
+          "route_undefined_count": 901,
+          "route_undefined_share": 0.5655994978028877,
+          "sum_L_named_over_sum_L_route": 1.928540323621719,
+          "variant_any_component_undefined_count": 901,
+          "variant_any_component_undefined_share": 0.5655994978028877
+        },
+        "state_us_interstate": {
+          "L_named_km_sum_epsg5070": 22113.71284793831,
+          "L_route_km_sum_epsg5070": 11466.55456309551,
+          "any_undefined_abs_error": 0.015599497802887607,
+          "any_undefined_within_0_10": true,
+          "disclosed_any_component_undefined_share": 0.55,
+          "distance_to_disclosed_ratio_band": 0.3385403236217188,
+          "ratio_within_disclosed_0_71_to_1_59": false,
+          "ratio_within_lane_0_60_to_1_70": false,
+          "route_undefined_count": 901,
+          "route_undefined_share": 0.5655994978028877,
+          "sum_L_named_over_sum_L_route": 1.928540323621719,
+          "variant_any_component_undefined_count": 901,
+          "variant_any_component_undefined_share": 0.5655994978028877
+        }
+      }
+    },
+    "northern-ca": {
+      "official_tracts": 591,
+      "v0_any_component_undefined_share": 0.30456852791878175,
+      "variants": {
+        "plus_fm_rm": {
+          "L_named_km_sum_epsg5070": 12203.647742818603,
+          "L_route_km_sum_epsg5070": 6902.467426387149,
+          "any_undefined_abs_error": 0.03270727580372251,
+          "any_undefined_within_0_10": true,
+          "disclosed_any_component_undefined_share": 0.37,
+          "distance_to_disclosed_ratio_band": 0.1780123626756711,
+          "ratio_within_disclosed_0_71_to_1_59": false,
+          "ratio_within_lane_0_60_to_1_70": false,
+          "route_undefined_count": 238,
+          "route_undefined_share": 0.4027072758037225,
+          "sum_L_named_over_sum_L_route": 1.7680123626756712,
+          "variant_any_component_undefined_count": 238,
+          "variant_any_component_undefined_share": 0.4027072758037225
+        },
+        "plus_fm_rm_cr": {
+          "L_named_km_sum_epsg5070": 12203.647742818603,
+          "L_route_km_sum_epsg5070": 8116.742873591476,
+          "any_undefined_abs_error": 0.06204737732656512,
+          "any_undefined_within_0_10": true,
+          "disclosed_any_component_undefined_share": 0.37,
+          "distance_to_disclosed_ratio_band": 0.0,
+          "ratio_within_disclosed_0_71_to_1_59": true,
+          "ratio_within_lane_0_60_to_1_70": true,
+          "route_undefined_count": 182,
+          "route_undefined_share": 0.3079526226734349,
+          "sum_L_named_over_sum_L_route": 1.503515379614183,
+          "variant_any_component_undefined_count": 182,
+          "variant_any_component_undefined_share": 0.3079526226734349
+        },
+        "state_us_interstate": {
+          "L_named_km_sum_epsg5070": 12203.647742818603,
+          "L_route_km_sum_epsg5070": 6902.467426387149,
+          "any_undefined_abs_error": 0.03270727580372251,
+          "any_undefined_within_0_10": true,
+          "disclosed_any_component_undefined_share": 0.37,
+          "distance_to_disclosed_ratio_band": 0.1780123626756711,
+          "ratio_within_disclosed_0_71_to_1_59": false,
+          "ratio_within_lane_0_60_to_1_70": false,
+          "route_undefined_count": 238,
+          "route_undefined_share": 0.4027072758037225,
+          "sum_L_named_over_sum_L_route": 1.7680123626756712,
+          "variant_any_component_undefined_count": 238,
+          "variant_any_component_undefined_share": 0.4027072758037225
+        }
+      }
+    },
+    "south-central-tx": {
+      "official_tracts": 6003,
+      "v0_any_component_undefined_share": 0.3694819257038148,
+      "variants": {
+        "plus_fm_rm": {
+          "L_named_km_sum_epsg5070": 118176.3816858997,
+          "L_route_km_sum_epsg5070": 99894.08394454684,
+          "any_undefined_abs_error": 0.06760619690154926,
+          "any_undefined_within_0_10": true,
+          "disclosed_any_component_undefined_share": 0.28,
+          "distance_to_disclosed_ratio_band": 0.0,
+          "ratio_within_disclosed_0_71_to_1_59": true,
+          "ratio_within_lane_0_60_to_1_70": true,
+          "route_undefined_count": 1275,
+          "route_undefined_share": 0.21239380309845077,
+          "sum_L_named_over_sum_L_route": 1.1830168216117956,
+          "variant_any_component_undefined_count": 1275,
+          "variant_any_component_undefined_share": 0.21239380309845077
+        },
+        "plus_fm_rm_cr": {
+          "L_named_km_sum_epsg5070": 118176.3816858997,
+          "L_route_km_sum_epsg5070": 99894.08394454684,
+          "any_undefined_abs_error": 0.06760619690154926,
+          "any_undefined_within_0_10": true,
+          "disclosed_any_component_undefined_share": 0.28,
+          "distance_to_disclosed_ratio_band": 0.0,
+          "ratio_within_disclosed_0_71_to_1_59": true,
+          "ratio_within_lane_0_60_to_1_70": true,
+          "route_undefined_count": 1275,
+          "route_undefined_share": 0.21239380309845077,
+          "sum_L_named_over_sum_L_route": 1.1830168216117956,
+          "variant_any_component_undefined_count": 1275,
+          "variant_any_component_undefined_share": 0.21239380309845077
+        },
+        "state_us_interstate": {
+          "L_named_km_sum_epsg5070": 118176.3816858997,
+          "L_route_km_sum_epsg5070": 49310.68676484718,
+          "any_undefined_abs_error": 0.05599866733300013,
+          "any_undefined_within_0_10": true,
+          "disclosed_any_component_undefined_share": 0.28,
+          "distance_to_disclosed_ratio_band": 0.8065673455220621,
+          "ratio_within_disclosed_0_71_to_1_59": false,
+          "ratio_within_lane_0_60_to_1_70": false,
+          "route_undefined_count": 2017,
+          "route_undefined_share": 0.33599866733300016,
+          "sum_L_named_over_sum_L_route": 2.396567345522062,
+          "variant_any_component_undefined_count": 2017,
+          "variant_any_component_undefined_share": 0.33599866733300016
+        }
+      }
+    }
+  },
+  "rows": 9379,
+  "selection_rule": {
+    "chosen_label": "state + US + Interstate + FM/RM + CR",
+    "chosen_variant": "plus_fm_rm_cr",
+    "criterion_order": [
+      "require all four hybrid any-undefined checks within 0.10 when possible",
+      "maximize number of regional ratios within the disclosed 0.71-1.59 band",
+      "minimize summed distance outside that band",
+      "minimize macro mean absolute error to disclosed any-undefined shares"
+    ],
+    "leaderboard_used": false,
+    "rationale": "All three variants pass the four regional any-undefined tolerances. The chosen cumulative state+US+I+FM/RM+CR variant places the most regions within the disclosed ratio band; adding FM/RM brings Texas into band, and adding explicit CR brings Northern California into band. Maricopa remains above band. This choice prioritizes aggregate ratio-band fit while retaining the stated undefined-share tolerance; it is not an accuracy or leaderboard result.",
+    "scores_or_labels_used": false,
+    "selection": {
+      "chosen_variant": "plus_fm_rm_cr",
+      "ranking": [
+        {
+          "all_four_any_undefined_checks_pass": true,
+          "mean_absolute_any_undefined_error": 0.04379648948426056,
+          "regions_within_disclosed_ratio_band": 3,
+          "regions_within_lane_ratio_band": 3,
+          "sum_distance_to_disclosed_ratio_band": 0.3385403236217188,
+          "variant_id": "plus_fm_rm_cr"
+        },
+        {
+          "all_four_any_undefined_checks_pass": true,
+          "mean_absolute_any_undefined_error": 0.03646146410354991,
+          "regions_within_disclosed_ratio_band": 2,
+          "regions_within_lane_ratio_band": 2,
+          "sum_distance_to_disclosed_ratio_band": 0.5165526862973899,
+          "variant_id": "plus_fm_rm"
+        },
+        {
+          "all_four_any_undefined_checks_pass": true,
+          "mean_absolute_any_undefined_error": 0.03355958171141263,
+          "regions_within_disclosed_ratio_band": 1,
+          "regions_within_lane_ratio_band": 1,
+          "sum_distance_to_disclosed_ratio_band": 1.323120031819452,
+          "variant_id": "state_us_interstate"
+        }
+      ]
+    },
+    "tradeoff": "The state+US+I-only variant has the smallest mean absolute any-undefined error, but only one region ratio is inside the disclosed range. The selected full variant's mean absolute any-undefined error is reported rather than hidden."
+  },
+  "title": "Overture route-reference transport denominator sensitivity",
+  "variant_definitions": [
+    {
+      "formula": "clip(1 - L_named/L_route, 0, 1); undefined when L_route=0",
+      "id": "state_us_interstate",
+      "included_network_families": [
+        "state",
+        "us",
+        "interstate"
+      ],
+      "label": "state + US + Interstate only",
+      "route_length_feature": "overture_route_core_km"
+    },
+    {
+      "formula": "clip(1 - L_named/L_route, 0, 1); undefined when L_route=0",
+      "id": "plus_fm_rm",
+      "included_network_families": [
+        "state",
+        "us",
+        "interstate",
+        "fm_rm"
+      ],
+      "label": "state + US + Interstate + FM/RM",
+      "route_length_feature": "overture_route_plus_fm_rm_km"
+    },
+    {
+      "formula": "clip(1 - L_named/L_route, 0, 1); undefined when L_route=0",
+      "id": "plus_fm_rm_cr",
+      "included_network_families": [
+        "state",
+        "us",
+        "interstate",
+        "fm_rm",
+        "county"
+      ],
+      "label": "state + US + Interstate + FM/RM + CR",
+      "route_length_feature": "overture_route_km"
+    }
+  ]
+}
