@@ -7,7 +7,7 @@ Local-only competition worktree for the `competitionsall` orchestrator.
 - Deadline: 2026-10-31T23:59:00+00:00
 - Lane: `comp-zindi-bias-bounty`
 - Orchestrator: `../competitionsall`
-- Status: onboarding in progress
+- Status: model-first policy active; no leaderboard information probes
 
 This repo is data/work for the lane. Do not copy `.langywrap`, `langywrap`, or
 `slurmhelps` here; the orchestrator owns those.
@@ -39,7 +39,9 @@ small, score-free projection of only `GEOID,region` from the provided platform
 template; the 415 eastern-WA rows are format-only fills, not target evidence.
 The official scored scope remains 9,379 IDs. Sample score placeholders are
 never consumed. The pair reflects the best available successful public scores
-as of 2026-10-24 and is **not** a final private-leaderboard selection. If a
-later probe changes the chosen pair, update the builder/config and manifest,
-then rerun and reprofile this package before describing it as final. No tokens,
-credentials, paid APIs, or private packages are used.
+as of 2026-10-24 and is **not** a final private-leaderboard selection. This
+pair's historical P4 scale is for reproduction only; new models must use
+model-derived component levels. Active upload rules and cancelled probes are
+in [`docs/submission-policy.md`](docs/submission-policy.md); no information
+probes are queued. No tokens, credentials, paid APIs, or private packages are
+used.
