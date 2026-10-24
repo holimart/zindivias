@@ -63,6 +63,10 @@ class FacilityCatchmentCandidateTests(unittest.TestCase):
         self.assertEqual(hashlib.sha256(manifest_path.read_bytes()).hexdigest(),
                          report["candidate_manifest_sha256"])
         self.assertTrue(report["measure_after"]["exact_id_and_output_checks"]["exact_official_order"])
+        for region, region_report in report["measure_after"]["per_region"].items():
+            for radius in ("1km", "5km", "10km"):
+                self.assertEqual(region_report["by_radius"][radius]["delta"]["n"],
+                                 region_report["official_rows"])
         for radius in ("1km", "5km", "10km"):
             self.assertTrue(report["measure_after"]["exact_id_and_output_checks"][
                 "max_delta_at_most_0_05_by_radius"][radius])

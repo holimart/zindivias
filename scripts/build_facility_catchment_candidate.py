@@ -651,7 +651,13 @@ def run(workspace: Path, candidate_path: Path, manifest_path: Path, report_path:
                     "total_population_weight": float(populations.sum()),
                     "neighbor_count_within_radius": summarize(data["count"]),
                 }
-            region_after["by_radius"][suffix] = {"radius_meters": radius, "by_facility_type": by_type}
+            region_after["by_radius"][suffix] = {
+                "radius_meters": radius,
+                "candidate": summarize_rows(rows, f"facility_catchment_gap_{suffix}"),
+                "delta": summarize_rows(rows, f"facility_delta_{suffix}"),
+                "max_absolute_delta": max(abs(float(row[f"facility_delta_{suffix}"])) for row in rows),
+                "by_facility_type": by_type,
+            }
             global_by_radius.setdefault(suffix, {})[region] = by_type
         after_by_region[region] = region_after
 
