@@ -546,6 +546,260 @@
         },
         "eastern-wa": null
       }
+    },
+    {
+      "candidate_id": "R-AZ",
+      "name": "Phase-3 maricopa-az indicator probe",
+      "artifact": "reports/candidates/R-AZ_region_indicator.csv",
+      "sha256": "ff493d94f17fa9977be69113b4c4cca7cd0d207e3d65a8b7f68b9c4ca7f0373d",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "coverage_gap_score"
+      ],
+      "pre_registered": true,
+      "description": "Global-constant region-indicator public calibration probe; p=c_r in one official region and zero elsewhere, including eastern-WA template rows. No labels, per-GEOID tuning, or removed references.",
+      "phase": 3,
+      "parameters": {
+        "transform": "p=c_r on the selected official region; p=0 elsewhere and on eastern-WA template rows",
+        "region": "maricopa-az",
+        "c_r": 0.06467249836257832,
+        "alpha_from_P4": 0.3288136427728255,
+        "C1_region_mean": 0.19668435231946868,
+        "predicted_public_rmse": 0.10473932500233933,
+        "prediction_scenarios": {
+          "official_9379_scored_ids": {
+            "evaluation_denominator_assumption": 9379,
+            "region_share": 0.16984753171979955,
+            "assumed_E_y_given_region": 0.05652688955988315,
+            "predicted_public_rmse": 0.10473932500233933
+          },
+          "all_9794_template_ids_scored": {
+            "evaluation_denominator_assumption": 9794,
+            "region_share": 0.16265060240963855,
+            "assumed_E_y_given_region": 0.05652688955988315,
+            "predicted_public_rmse": 0.10484676890448541
+          }
+        },
+        "prediction_basis": "E[y|region] assumed equal to the existing P6 working global-mean estimate; E[y^2] from C0 public RMSE; public composition assumed representative. Official 9,379-row denominator is the primary forecast; 9,794-row alternative is recorded to test template scoring."
+      },
+      "eastern_wa_fill": {
+        "region": "eastern-wa",
+        "rows": 415,
+        "policy": "zero indicator; no eastern-WA feature or target inference",
+        "values": {
+          "coverage_gap_score": 0.0
+        },
+        "scored_target_claim": false
+      },
+      "column_checks": {
+        "unique_columns": true,
+        "all_rows_have_columns": true,
+        "finite_bounded_scores": true
+      },
+      "per_region_means": {
+        "maricopa-az": 0.06467249836257832,
+        "northern-ca": 0.0,
+        "eastern-ok": 0.0,
+        "south-central-tx": 0.0,
+        "eastern-wa": 0.0
+      },
+      "defined_rates": null
+    },
+    {
+      "candidate_id": "R-CA",
+      "name": "Phase-3 northern-ca indicator probe",
+      "artifact": "reports/candidates/R-CA_region_indicator.csv",
+      "sha256": "3e3d171e2c676a3cc7bc462acc67a46f1ca084903e26b3ccb0f5b6faba227189",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "pre_registered": true,
+      "description": "Global-constant region-indicator public calibration probe; p=c_r in one official region and zero elsewhere, including eastern-WA template rows. No labels, per-GEOID tuning, or removed references.",
+      "phase": 3,
+      "parameters": {
+        "transform": "p=c_r on the selected official region; p=0 elsewhere and on eastern-WA template rows",
+        "region": "northern-ca",
+        "c_r": 0.0505843615640282,
+        "alpha_from_P4": 0.3288136427728255,
+        "C1_region_mean": 0.15383899870291118,
+        "predicted_public_rmse": 0.1063139160454831,
+        "prediction_scenarios": {
+          "official_9379_scored_ids": {
+            "evaluation_denominator_assumption": 9379,
+            "region_share": 0.06301311440452073,
+            "assumed_E_y_given_region": 0.05652688955988315,
+            "predicted_public_rmse": 0.1063139160454831
+          },
+          "all_9794_template_ids_scored": {
+            "evaluation_denominator_assumption": 9794,
+            "region_share": 0.0603430671839902,
+            "assumed_E_y_given_region": 0.05652688955988315,
+            "predicted_public_rmse": 0.10635358963855109
+          }
+        },
+        "prediction_basis": "E[y|region] assumed equal to the existing P6 working global-mean estimate; E[y^2] from C0 public RMSE; public composition assumed representative. Official 9,379-row denominator is the primary forecast; 9,794-row alternative is recorded to test template scoring."
+      },
+      "eastern_wa_fill": {
+        "region": "eastern-wa",
+        "rows": 415,
+        "policy": "zero indicator; no eastern-WA feature or target inference",
+        "values": {
+          "transport_gap": 0.0,
+          "building_gap": 0.0,
+          "poi_gap": 0.0,
+          "coverage_gap_score": 0.0
+        },
+        "scored_target_claim": false
+      },
+      "column_checks": {
+        "unique_columns": true,
+        "all_rows_have_columns": true,
+        "finite_bounded_scores": true
+      },
+      "per_region_means": {
+        "maricopa-az": 0.0,
+        "northern-ca": 0.0505843615640282,
+        "eastern-ok": 0.0,
+        "south-central-tx": 0.0,
+        "eastern-wa": 0.0
+      },
+      "defined_rates": null
+    },
+    {
+      "candidate_id": "R-OK",
+      "name": "Phase-3 eastern-ok indicator probe",
+      "artifact": "reports/candidates/R-OK_region_indicator.csv",
+      "sha256": "49a1b8527caca4054d1b05c1a0bc3383af8b510aa973392f60d6b0552e0c0713",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "pre_registered": true,
+      "description": "Global-constant region-indicator public calibration probe; p=c_r in one official region and zero elsewhere, including eastern-WA template rows. No labels, per-GEOID tuning, or removed references.",
+      "phase": 3,
+      "parameters": {
+        "transform": "p=c_r on the selected official region; p=0 elsewhere and on eastern-WA template rows",
+        "region": "eastern-ok",
+        "c_r": 0.0385834027083047,
+        "alpha_from_P4": 0.3288136427728255,
+        "C1_region_mean": 0.11734124649737128,
+        "predicted_public_rmse": 0.10553004942399961,
+        "prediction_scenarios": {
+          "official_9379_scored_ids": {
+            "evaluation_denominator_assumption": 9379,
+            "region_share": 0.12709244055869495,
+            "assumed_E_y_given_region": 0.05652688955988315,
+            "predicted_public_rmse": 0.10553004942399961
+          },
+          "all_9794_template_ids_scored": {
+            "evaluation_denominator_assumption": 9794,
+            "region_share": 0.12170716765366552,
+            "assumed_E_y_given_region": 0.05652688955988315,
+            "predicted_public_rmse": 0.10560333776255067
+          }
+        },
+        "prediction_basis": "E[y|region] assumed equal to the existing P6 working global-mean estimate; E[y^2] from C0 public RMSE; public composition assumed representative. Official 9,379-row denominator is the primary forecast; 9,794-row alternative is recorded to test template scoring."
+      },
+      "eastern_wa_fill": {
+        "region": "eastern-wa",
+        "rows": 415,
+        "policy": "zero indicator; no eastern-WA feature or target inference",
+        "values": {
+          "transport_gap": 0.0,
+          "building_gap": 0.0,
+          "poi_gap": 0.0,
+          "coverage_gap_score": 0.0
+        },
+        "scored_target_claim": false
+      },
+      "column_checks": {
+        "unique_columns": true,
+        "all_rows_have_columns": true,
+        "finite_bounded_scores": true
+      },
+      "per_region_means": {
+        "maricopa-az": 0.0,
+        "northern-ca": 0.0,
+        "eastern-ok": 0.0385834027083047,
+        "south-central-tx": 0.0,
+        "eastern-wa": 0.0
+      },
+      "defined_rates": null
+    },
+    {
+      "candidate_id": "R-TX",
+      "name": "Phase-3 south-central-tx indicator probe",
+      "artifact": "reports/candidates/R-TX_region_indicator.csv",
+      "sha256": "b7046ce5e169e8a8fe81e8f7cbb2993a9cd6749f074ac137390d9158be701b35",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "pre_registered": true,
+      "description": "Global-constant region-indicator public calibration probe; p=c_r in one official region and zero elsewhere, including eastern-WA template rows. No labels, per-GEOID tuning, or removed references.",
+      "phase": 3,
+      "parameters": {
+        "transform": "p=c_r on the selected official region; p=0 elsewhere and on eastern-WA template rows",
+        "region": "south-central-tx",
+        "c_r": 0.057005298701692964,
+        "alpha_from_P4": 0.3288136427728255,
+        "C1_region_mean": 0.1733665860728213,
+        "predicted_public_rmse": 0.09724597741188211,
+        "prediction_scenarios": {
+          "official_9379_scored_ids": {
+            "evaluation_denominator_assumption": 9379,
+            "region_share": 0.6400469133169847,
+            "assumed_E_y_given_region": 0.05652688955988315,
+            "predicted_public_rmse": 0.09724597741188211
+          },
+          "all_9794_template_ids_scored": {
+            "evaluation_denominator_assumption": 9794,
+            "region_share": 0.6129262813967735,
+            "assumed_E_y_given_region": 0.05652688955988315,
+            "predicted_public_rmse": 0.09769049175327091
+          }
+        },
+        "prediction_basis": "E[y|region] assumed equal to the existing P6 working global-mean estimate; E[y^2] from C0 public RMSE; public composition assumed representative. Official 9,379-row denominator is the primary forecast; 9,794-row alternative is recorded to test template scoring."
+      },
+      "eastern_wa_fill": {
+        "region": "eastern-wa",
+        "rows": 415,
+        "policy": "zero indicator; no eastern-WA feature or target inference",
+        "values": {
+          "transport_gap": 0.0,
+          "building_gap": 0.0,
+          "poi_gap": 0.0,
+          "coverage_gap_score": 0.0
+        },
+        "scored_target_claim": false
+      },
+      "column_checks": {
+        "unique_columns": true,
+        "all_rows_have_columns": true,
+        "finite_bounded_scores": true
+      },
+      "per_region_means": {
+        "maricopa-az": 0.0,
+        "northern-ca": 0.0,
+        "eastern-ok": 0.0,
+        "south-central-tx": 0.057005298701692964,
+        "eastern-wa": 0.0
+      },
+      "defined_rates": null
     }
   ],
   "feature_source": "provided Overture buildings/roads/POIs plus provided ACS housing geometries and strata covariates",
@@ -605,5 +859,295 @@
       }
     },
     "constraints": "No per-tract or per-GEOID fit; all parameters are global; no labels or removed references used."
+  },
+  "phase3_preregistration": {
+    "frozen_before_live_upload": true,
+    "probe_order": [
+      "P6",
+      "R-AZ",
+      "R-CA",
+      "R-OK",
+      "R-TX"
+    ],
+    "max_live_uploads": 5,
+    "P6_existing_registration": {
+      "artifact": "reports/candidates/P6_global_constant.csv",
+      "sha256": "68851dd2fee88f229bee08466d342f14313fa75e84bf42867baf28995445f6b3",
+      "predicted_public_rmse": 0.0911398892136817,
+      "status_before_phase3": null,
+      "note": "Reuse existing frozen P6 constant candidate; no P6 artifact changes."
+    },
+    "region_indicator_candidates": {
+      "R-AZ": {
+        "candidate_id": "R-AZ",
+        "name": "Phase-3 maricopa-az indicator probe",
+        "artifact": "reports/candidates/R-AZ_region_indicator.csv",
+        "sha256": "ff493d94f17fa9977be69113b4c4cca7cd0d207e3d65a8b7f68b9c4ca7f0373d",
+        "rows": 9794,
+        "columns": [
+          "GEOID",
+          "coverage_gap_score"
+        ],
+        "pre_registered": true,
+        "description": "Global-constant region-indicator public calibration probe; p=c_r in one official region and zero elsewhere, including eastern-WA template rows. No labels, per-GEOID tuning, or removed references.",
+        "phase": 3,
+        "parameters": {
+          "transform": "p=c_r on the selected official region; p=0 elsewhere and on eastern-WA template rows",
+          "region": "maricopa-az",
+          "c_r": 0.06467249836257832,
+          "alpha_from_P4": 0.3288136427728255,
+          "C1_region_mean": 0.19668435231946868,
+          "predicted_public_rmse": 0.10473932500233933,
+          "prediction_scenarios": {
+            "official_9379_scored_ids": {
+              "evaluation_denominator_assumption": 9379,
+              "region_share": 0.16984753171979955,
+              "assumed_E_y_given_region": 0.05652688955988315,
+              "predicted_public_rmse": 0.10473932500233933
+            },
+            "all_9794_template_ids_scored": {
+              "evaluation_denominator_assumption": 9794,
+              "region_share": 0.16265060240963855,
+              "assumed_E_y_given_region": 0.05652688955988315,
+              "predicted_public_rmse": 0.10484676890448541
+            }
+          },
+          "prediction_basis": "E[y|region] assumed equal to the existing P6 working global-mean estimate; E[y^2] from C0 public RMSE; public composition assumed representative. Official 9,379-row denominator is the primary forecast; 9,794-row alternative is recorded to test template scoring."
+        },
+        "eastern_wa_fill": {
+          "region": "eastern-wa",
+          "rows": 415,
+          "policy": "zero indicator; no eastern-WA feature or target inference",
+          "values": {
+            "coverage_gap_score": 0.0
+          },
+          "scored_target_claim": false
+        },
+        "column_checks": {
+          "unique_columns": true,
+          "all_rows_have_columns": true,
+          "finite_bounded_scores": true
+        },
+        "per_region_means": {
+          "maricopa-az": 0.06467249836257832,
+          "northern-ca": 0.0,
+          "eastern-ok": 0.0,
+          "south-central-tx": 0.0,
+          "eastern-wa": 0.0
+        },
+        "defined_rates": null
+      },
+      "R-CA": {
+        "candidate_id": "R-CA",
+        "name": "Phase-3 northern-ca indicator probe",
+        "artifact": "reports/candidates/R-CA_region_indicator.csv",
+        "sha256": "3e3d171e2c676a3cc7bc462acc67a46f1ca084903e26b3ccb0f5b6faba227189",
+        "rows": 9794,
+        "columns": [
+          "GEOID",
+          "transport_gap",
+          "building_gap",
+          "poi_gap",
+          "coverage_gap_score"
+        ],
+        "pre_registered": true,
+        "description": "Global-constant region-indicator public calibration probe; p=c_r in one official region and zero elsewhere, including eastern-WA template rows. No labels, per-GEOID tuning, or removed references.",
+        "phase": 3,
+        "parameters": {
+          "transform": "p=c_r on the selected official region; p=0 elsewhere and on eastern-WA template rows",
+          "region": "northern-ca",
+          "c_r": 0.0505843615640282,
+          "alpha_from_P4": 0.3288136427728255,
+          "C1_region_mean": 0.15383899870291118,
+          "predicted_public_rmse": 0.1063139160454831,
+          "prediction_scenarios": {
+            "official_9379_scored_ids": {
+              "evaluation_denominator_assumption": 9379,
+              "region_share": 0.06301311440452073,
+              "assumed_E_y_given_region": 0.05652688955988315,
+              "predicted_public_rmse": 0.1063139160454831
+            },
+            "all_9794_template_ids_scored": {
+              "evaluation_denominator_assumption": 9794,
+              "region_share": 0.0603430671839902,
+              "assumed_E_y_given_region": 0.05652688955988315,
+              "predicted_public_rmse": 0.10635358963855109
+            }
+          },
+          "prediction_basis": "E[y|region] assumed equal to the existing P6 working global-mean estimate; E[y^2] from C0 public RMSE; public composition assumed representative. Official 9,379-row denominator is the primary forecast; 9,794-row alternative is recorded to test template scoring."
+        },
+        "eastern_wa_fill": {
+          "region": "eastern-wa",
+          "rows": 415,
+          "policy": "zero indicator; no eastern-WA feature or target inference",
+          "values": {
+            "transport_gap": 0.0,
+            "building_gap": 0.0,
+            "poi_gap": 0.0,
+            "coverage_gap_score": 0.0
+          },
+          "scored_target_claim": false
+        },
+        "column_checks": {
+          "unique_columns": true,
+          "all_rows_have_columns": true,
+          "finite_bounded_scores": true
+        },
+        "per_region_means": {
+          "maricopa-az": 0.0,
+          "northern-ca": 0.0505843615640282,
+          "eastern-ok": 0.0,
+          "south-central-tx": 0.0,
+          "eastern-wa": 0.0
+        },
+        "defined_rates": null
+      },
+      "R-OK": {
+        "candidate_id": "R-OK",
+        "name": "Phase-3 eastern-ok indicator probe",
+        "artifact": "reports/candidates/R-OK_region_indicator.csv",
+        "sha256": "49a1b8527caca4054d1b05c1a0bc3383af8b510aa973392f60d6b0552e0c0713",
+        "rows": 9794,
+        "columns": [
+          "GEOID",
+          "transport_gap",
+          "building_gap",
+          "poi_gap",
+          "coverage_gap_score"
+        ],
+        "pre_registered": true,
+        "description": "Global-constant region-indicator public calibration probe; p=c_r in one official region and zero elsewhere, including eastern-WA template rows. No labels, per-GEOID tuning, or removed references.",
+        "phase": 3,
+        "parameters": {
+          "transform": "p=c_r on the selected official region; p=0 elsewhere and on eastern-WA template rows",
+          "region": "eastern-ok",
+          "c_r": 0.0385834027083047,
+          "alpha_from_P4": 0.3288136427728255,
+          "C1_region_mean": 0.11734124649737128,
+          "predicted_public_rmse": 0.10553004942399961,
+          "prediction_scenarios": {
+            "official_9379_scored_ids": {
+              "evaluation_denominator_assumption": 9379,
+              "region_share": 0.12709244055869495,
+              "assumed_E_y_given_region": 0.05652688955988315,
+              "predicted_public_rmse": 0.10553004942399961
+            },
+            "all_9794_template_ids_scored": {
+              "evaluation_denominator_assumption": 9794,
+              "region_share": 0.12170716765366552,
+              "assumed_E_y_given_region": 0.05652688955988315,
+              "predicted_public_rmse": 0.10560333776255067
+            }
+          },
+          "prediction_basis": "E[y|region] assumed equal to the existing P6 working global-mean estimate; E[y^2] from C0 public RMSE; public composition assumed representative. Official 9,379-row denominator is the primary forecast; 9,794-row alternative is recorded to test template scoring."
+        },
+        "eastern_wa_fill": {
+          "region": "eastern-wa",
+          "rows": 415,
+          "policy": "zero indicator; no eastern-WA feature or target inference",
+          "values": {
+            "transport_gap": 0.0,
+            "building_gap": 0.0,
+            "poi_gap": 0.0,
+            "coverage_gap_score": 0.0
+          },
+          "scored_target_claim": false
+        },
+        "column_checks": {
+          "unique_columns": true,
+          "all_rows_have_columns": true,
+          "finite_bounded_scores": true
+        },
+        "per_region_means": {
+          "maricopa-az": 0.0,
+          "northern-ca": 0.0,
+          "eastern-ok": 0.0385834027083047,
+          "south-central-tx": 0.0,
+          "eastern-wa": 0.0
+        },
+        "defined_rates": null
+      },
+      "R-TX": {
+        "candidate_id": "R-TX",
+        "name": "Phase-3 south-central-tx indicator probe",
+        "artifact": "reports/candidates/R-TX_region_indicator.csv",
+        "sha256": "b7046ce5e169e8a8fe81e8f7cbb2993a9cd6749f074ac137390d9158be701b35",
+        "rows": 9794,
+        "columns": [
+          "GEOID",
+          "transport_gap",
+          "building_gap",
+          "poi_gap",
+          "coverage_gap_score"
+        ],
+        "pre_registered": true,
+        "description": "Global-constant region-indicator public calibration probe; p=c_r in one official region and zero elsewhere, including eastern-WA template rows. No labels, per-GEOID tuning, or removed references.",
+        "phase": 3,
+        "parameters": {
+          "transform": "p=c_r on the selected official region; p=0 elsewhere and on eastern-WA template rows",
+          "region": "south-central-tx",
+          "c_r": 0.057005298701692964,
+          "alpha_from_P4": 0.3288136427728255,
+          "C1_region_mean": 0.1733665860728213,
+          "predicted_public_rmse": 0.09724597741188211,
+          "prediction_scenarios": {
+            "official_9379_scored_ids": {
+              "evaluation_denominator_assumption": 9379,
+              "region_share": 0.6400469133169847,
+              "assumed_E_y_given_region": 0.05652688955988315,
+              "predicted_public_rmse": 0.09724597741188211
+            },
+            "all_9794_template_ids_scored": {
+              "evaluation_denominator_assumption": 9794,
+              "region_share": 0.6129262813967735,
+              "assumed_E_y_given_region": 0.05652688955988315,
+              "predicted_public_rmse": 0.09769049175327091
+            }
+          },
+          "prediction_basis": "E[y|region] assumed equal to the existing P6 working global-mean estimate; E[y^2] from C0 public RMSE; public composition assumed representative. Official 9,379-row denominator is the primary forecast; 9,794-row alternative is recorded to test template scoring."
+        },
+        "eastern_wa_fill": {
+          "region": "eastern-wa",
+          "rows": 415,
+          "policy": "zero indicator; no eastern-WA feature or target inference",
+          "values": {
+            "transport_gap": 0.0,
+            "building_gap": 0.0,
+            "poi_gap": 0.0,
+            "coverage_gap_score": 0.0
+          },
+          "scored_target_claim": false
+        },
+        "column_checks": {
+          "unique_columns": true,
+          "all_rows_have_columns": true,
+          "finite_bounded_scores": true
+        },
+        "per_region_means": {
+          "maricopa-az": 0.0,
+          "northern-ca": 0.0,
+          "eastern-ok": 0.0,
+          "south-central-tx": 0.057005298701692964,
+          "eastern-wa": 0.0
+        },
+        "defined_rates": null
+      }
+    },
+    "prediction_assumptions": {
+      "score_identity": "MSE(p)=E[y^2]-2E[p y]+E[p^2]",
+      "E_y2": 0.011501768649197401,
+      "global_mean_prior_from_P6": 0.05652688955988315,
+      "conditional_mean_prior": "E[y|r]=global_mean_prior for each official region; this is a forecast assumption, to be replaced by probe-inferred means.",
+      "primary_public_composition": "official 9,379-row region shares; the public 30% is assumed representative",
+      "alternative_composition": "all 9,794 template IDs treated as scored; reported only to frame the eastern-WA test",
+      "no_label_or_hidden_reference_data": true
+    },
+    "input_lineage": {
+      "official_geoid_sequence_sha256": "e64578d59aa25e041d3406dc5b80b7ad01984467b45ec67030e280b68d7f0578",
+      "template_geoid_region_sequence_sha256": "f975799366165267648916d76cc3ec27ed0b440f72b0d6c721c96de28b880d28",
+      "C1_sha256": "dc2e368194b31408cb5c313fa8ce3f3fa59a1b5965bc2df8e4217bbc9e0c82e0",
+      "P6_sha256": "68851dd2fee88f229bee08466d342f14313fa75e84bf42867baf28995445f6b3"
+    },
+    "uploads_started": false
   }
 }
