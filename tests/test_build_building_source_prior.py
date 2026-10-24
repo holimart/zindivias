@@ -71,6 +71,10 @@ class BuildingSourcePriorTests(unittest.TestCase):
         self.assertFalse(report["restrictions"]["reference_or_external_footprint_counts_or_geometry_read"])
         self.assertFalse(report["restrictions"]["leaderboard_or_score_feedback_used"])
         self.assertFalse(report["restrictions"]["upload_or_submission_made"])
+        for region_report in report["per_region"].values():
+            coverage = region_report["source_mix_feature_coverage"]
+            self.assertEqual(coverage["source_mix_defined_tracts"], region_report["building_defined_tracts"])
+            self.assertEqual(coverage["share_of_building_defined_tracts_with_all_six_exclusive_classes"], 1.0)
         primary = report["global_sensitivity_by_profile_and_beta"]["primary"]["0.02"]
         self.assertEqual(primary["changed_vs_constant_baseline_tracts"], 9377)
         self.assertTrue(primary["within_preregistered_absolute_component_bound"])
@@ -78,7 +82,13 @@ class BuildingSourcePriorTests(unittest.TestCase):
             rows = list(csv.DictReader(stream))
         self.assertEqual(len(rows), 9379)
         self.assertEqual(len({row["GEOID"] for row in rows}), 9379)
+        class_fields = [f"source_class_{name}_share" for name in CONFIG["source_class_order"]]
         for row in rows:
+            if row["building_defined"] == "1":
+                self.assertEqual(row["source_mix_defined"], "1")
+                self.assertAlmostEqual(sum(float(row[name]) for name in class_fields), 1.0, places=6)
+            else:
+                self.assertEqual(row["source_mix_defined"], "0")
             for profile in PROFILES:
                 for beta in BETAS:
                     value = float(row[f"building_gap_{profile}_beta_{beta:.2f}"])

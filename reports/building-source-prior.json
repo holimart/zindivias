@@ -1,0 +1,2066 @@
+{
+  "analysis": "Provided-feature-only Overture building-source prior sensitivity; diagnostic candidate, not a submission",
+  "candidate_columns": [
+    "GEOID",
+    "region",
+    "building_defined",
+    "overture_building_count",
+    "source_mix_defined",
+    "population_context_support",
+    "building_gap_constant_0_01",
+    "source_class_microsoft_only_share",
+    "source_class_microsoft_osm_share",
+    "source_class_osm_only_share",
+    "source_class_esri_only_share",
+    "source_class_other_or_mixed_share",
+    "source_class_no_dataset_share",
+    "source_membership_microsoft_any_share",
+    "source_membership_osm_any_share",
+    "source_membership_esri_any_share",
+    "source_membership_other_dataset_any_share",
+    "source_prior_support_conservative",
+    "building_gap_conservative_beta_0.01",
+    "building_gap_conservative_beta_0.02",
+    "building_gap_conservative_beta_0.05",
+    "source_prior_support_primary",
+    "building_gap_primary_beta_0.01",
+    "building_gap_primary_beta_0.02",
+    "building_gap_primary_beta_0.05",
+    "source_prior_support_microsoft_heavy",
+    "building_gap_microsoft_heavy_beta_0.01",
+    "building_gap_microsoft_heavy_beta_0.02",
+    "building_gap_microsoft_heavy_beta_0.05"
+  ],
+  "candidate_csv": "reports/candidates/building_source_prior.csv",
+  "candidate_csv_sha256": "c3efc27237973b9cdcdaf3e5d42edc4c1ad9716f7de28639b9630ab3ae6d079e",
+  "candidate_id": "B_SOURCE_V1",
+  "candidate_rows": 9379,
+  "code_commit_at_run": "82568829201bfbf855c582a8425a4cee5ce6ce8f",
+  "environment": {
+    "numpy": "2.5.4",
+    "python": "3.12.3"
+  },
+  "global_sensitivity_by_profile_and_beta": {
+    "conservative": {
+      "0.01": {
+        "all_official_tracts": {
+          "max": 0.018875992606007752,
+          "mean": 0.014649171877022103,
+          "median": 0.014365734138920574,
+          "min": 0.0,
+          "n": 9379,
+          "q10": 0.013218324902860606,
+          "q90": 0.016401147809418228,
+          "std": 0.0012235650225534108
+        },
+        "changed_vs_constant_baseline_share_all": 0.9997867576500693,
+        "changed_vs_constant_baseline_share_defined": 1.0,
+        "changed_vs_constant_baseline_tracts": 9377,
+        "defined_tracts_only": {
+          "max": 0.018875992606007752,
+          "mean": 0.014652296367131312,
+          "median": 0.014366695312223406,
+          "min": 0.0124,
+          "n": 9377,
+          "q10": 0.013219259406731661,
+          "q90": 0.016401557385430972,
+          "std": 0.0012048442741603225
+        },
+        "nonfinite_values": 0,
+        "within_preregistered_absolute_component_bound": true
+      },
+      "0.02": {
+        "all_official_tracts": {
+          "max": 0.027751985212015502,
+          "mean": 0.019300476177543515,
+          "median": 0.01873146827784115,
+          "min": 0.0,
+          "n": 9379,
+          "q10": 0.01643664980572121,
+          "q90": 0.022802295618836455,
+          "std": 0.0024258631849310482
+        },
+        "changed_vs_constant_baseline_share_all": 0.9997867576500693,
+        "changed_vs_constant_baseline_share_defined": 1.0,
+        "changed_vs_constant_baseline_tracts": 9377,
+        "defined_tracts_only": {
+          "max": 0.027751985212015502,
+          "mean": 0.019304592734262625,
+          "median": 0.01873339062444681,
+          "min": 0.0148,
+          "n": 9377,
+          "q10": 0.016438518813463324,
+          "q90": 0.022803114770861943,
+          "std": 0.0024096885483206446
+        },
+        "nonfinite_values": 0,
+        "within_preregistered_absolute_component_bound": true
+      },
+      "0.05": {
+        "all_official_tracts": {
+          "max": 0.054379963030038767,
+          "mean": 0.03325438907910775,
+          "median": 0.03182867069460288,
+          "min": 0.0,
+          "n": 9379,
+          "q10": 0.026091624514303025,
+          "q90": 0.042005739047091144,
+          "std": 0.00604312581205908
+        },
+        "changed_vs_constant_baseline_share_all": 0.9997867576500693,
+        "changed_vs_constant_baseline_share_defined": 1.0,
+        "changed_vs_constant_baseline_tracts": 9377,
+        "defined_tracts_only": {
+          "max": 0.054379963030038767,
+          "mean": 0.03326148183565656,
+          "median": 0.03183347656111703,
+          "min": 0.022,
+          "n": 9377,
+          "q10": 0.026096297033658306,
+          "q90": 0.042007786927154865,
+          "std": 0.006024221370801613
+        },
+        "nonfinite_values": 0,
+        "within_preregistered_absolute_component_bound": true
+      }
+    },
+    "microsoft_heavy": {
+      "0.01": {
+        "all_official_tracts": {
+          "max": 0.01881497565685521,
+          "mean": 0.012866811393849964,
+          "median": 0.012275250991618263,
+          "min": 0.0,
+          "n": 9379,
+          "q10": 0.01079293077213364,
+          "q90": 0.01567402096930193,
+          "std": 0.0018914011009861186
+        },
+        "changed_vs_constant_baseline_share_all": 0.999680136475104,
+        "changed_vs_constant_baseline_share_defined": 0.9998933560840354,
+        "changed_vs_constant_baseline_tracts": 9376,
+        "defined_tracts_only": {
+          "max": 0.01881497565685521,
+          "mean": 0.012869555728155999,
+          "median": 0.012275377016313375,
+          "min": 0.01,
+          "n": 9377,
+          "q10": 0.010793332453565353,
+          "q90": 0.015674144283511948,
+          "std": 0.001882244080084533
+        },
+        "nonfinite_values": 0,
+        "within_preregistered_absolute_component_bound": true
+      },
+      "0.02": {
+        "all_official_tracts": {
+          "max": 0.02762995131371042,
+          "mean": 0.015735755211199236,
+          "median": 0.014550501983236526,
+          "min": 0.0,
+          "n": 9379,
+          "q10": 0.011585861544267275,
+          "q90": 0.02134804193860386,
+          "std": 0.0037710956263531043
+        },
+        "changed_vs_constant_baseline_share_all": 0.999680136475104,
+        "changed_vs_constant_baseline_share_defined": 0.9998933560840354,
+        "changed_vs_constant_baseline_tracts": 9376,
+        "defined_tracts_only": {
+          "max": 0.02762995131371042,
+          "mean": 0.015739111456312,
+          "median": 0.01455075403262675,
+          "min": 0.01,
+          "n": 9377,
+          "q10": 0.011586664907130706,
+          "q90": 0.021348288567023897,
+          "std": 0.003764488160169066
+        },
+        "nonfinite_values": 0,
+        "within_preregistered_absolute_component_bound": true
+      },
+      "0.05": {
+        "all_official_tracts": {
+          "max": 0.054074878284276054,
+          "mean": 0.024342586663247047,
+          "median": 0.021376254958091315,
+          "min": 0.0,
+          "n": 9379,
+          "q10": 0.01396465386066819,
+          "q90": 0.038370104846509656,
+          "std": 0.009416929886401467
+        },
+        "changed_vs_constant_baseline_share_all": 0.999680136475104,
+        "changed_vs_constant_baseline_share_defined": 0.9998933560840354,
+        "changed_vs_constant_baseline_tracts": 9376,
+        "defined_tracts_only": {
+          "max": 0.054074878284276054,
+          "mean": 0.02434777864078,
+          "median": 0.021376885081566877,
+          "min": 0.01,
+          "n": 9377,
+          "q10": 0.013966662267826765,
+          "q90": 0.03837072141755974,
+          "std": 0.009411220400422665
+        },
+        "nonfinite_values": 0,
+        "within_preregistered_absolute_component_bound": true
+      }
+    },
+    "primary": {
+      "0.01": {
+        "all_official_tracts": {
+          "max": 0.01801497565685521,
+          "mean": 0.013252134958561123,
+          "median": 0.012869140673927162,
+          "min": 0.0,
+          "n": 9379,
+          "q10": 0.01164440749256038,
+          "q90": 0.015338173162345625,
+          "std": 0.001412889910918691
+        },
+        "changed_vs_constant_baseline_share_all": 0.9997867576500693,
+        "changed_vs_constant_baseline_share_defined": 1.0,
+        "changed_vs_constant_baseline_tracts": 9377,
+        "defined_tracts_only": {
+          "max": 0.01801497565685521,
+          "mean": 0.013254961477694867,
+          "median": 0.012869556940266036,
+          "min": 0.010799999999999999,
+          "n": 9377,
+          "q10": 0.011644746511121929,
+          "q90": 0.015338260506649382,
+          "std": 0.0013997207848930506
+        },
+        "nonfinite_values": 0,
+        "within_preregistered_absolute_component_bound": true
+      },
+      "0.02": {
+        "all_official_tracts": {
+          "max": 0.02602995131371042,
+          "mean": 0.016506402340621555,
+          "median": 0.015738281347854325,
+          "min": 0.0,
+          "n": 9379,
+          "q10": 0.013288814985120762,
+          "q90": 0.02067634632469125,
+          "std": 0.002809504339427135
+        },
+        "changed_vs_constant_baseline_share_all": 0.9997867576500693,
+        "changed_vs_constant_baseline_share_defined": 1.0,
+        "changed_vs_constant_baseline_tracts": 9377,
+        "defined_tracts_only": {
+          "max": 0.02602995131371042,
+          "mean": 0.016509922955389736,
+          "median": 0.01573911388053207,
+          "min": 0.011599999999999997,
+          "n": 9377,
+          "q10": 0.013289493022243857,
+          "q90": 0.020676521013298765,
+          "std": 0.0027994415697861017
+        },
+        "nonfinite_values": 0,
+        "within_preregistered_absolute_component_bound": true
+      },
+      "0.05": {
+        "all_official_tracts": {
+          "max": 0.05007487828427606,
+          "mean": 0.026269204486802842,
+          "median": 0.02434570336963581,
+          "min": 0.0,
+          "n": 9379,
+          "q10": 0.018222037462801904,
+          "q90": 0.03669086581172813,
+          "std": 0.007008366140088585
+        },
+        "changed_vs_constant_baseline_share_all": 0.9997867576500693,
+        "changed_vs_constant_baseline_share_defined": 1.0,
+        "changed_vs_constant_baseline_tracts": 9377,
+        "defined_tracts_only": {
+          "max": 0.05007487828427606,
+          "mean": 0.026274807388474337,
+          "median": 0.024347784701330175,
+          "min": 0.013999999999999992,
+          "n": 9377,
+          "q10": 0.018223732555609645,
+          "q90": 0.036691302533246914,
+          "std": 0.006998603924465254
+        },
+        "nonfinite_values": 0,
+        "within_preregistered_absolute_component_bound": true
+      }
+    }
+  },
+  "input_hashes": {
+    "eastern-ok": {
+      "feature_cache_sha256": "e5a06316c316f61bf25b80b48e89c1e7f0b1461a0b8cec5831aae24e0cf83fa6",
+      "sample_sha256": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+      "strata_sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54"
+    },
+    "maricopa-az": {
+      "feature_cache_sha256": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22",
+      "sample_sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+      "strata_sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd"
+    },
+    "northern-ca": {
+      "feature_cache_sha256": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c",
+      "sample_sha256": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+      "strata_sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243"
+    },
+    "south-central-tx": {
+      "feature_cache_sha256": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746",
+      "sample_sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e",
+      "strata_sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354"
+    }
+  },
+  "limitations": [
+    "Source labels indicate provenance metadata only; they do not establish geometry equality, footprint completeness, reference vintage, or matching with the hidden Microsoft reference.",
+    "The six exclusive source classes partition building records, but the separately reported Microsoft/OSM/Esri/other memberships overlap and must not be summed.",
+    "The source and context weights are fixed qualitative assumptions, not fitted rates or measured target gaps. This analysis has no labels or local accuracy metric.",
+    "A positive Overture count is used only for the already-documented component definedness convention; the two zero-count tracts retain undefined status and numeric placeholder zero."
+  ],
+  "method": {
+    "acceptance": {
+      "all_candidate_outputs_finite_and_within_clip_range": true,
+      "complete_source_mix_for_all_building_defined_rows": true,
+      "deterministic_rerun_and_sha256": true,
+      "no_accuracy_claim_or_upload": true,
+      "official_ordered_ids": 9379
+    },
+    "allowed_inputs": [
+      "official sample GEOID only",
+      "provided feature-cache GEOID and overture_buildings count",
+      "provided Overture-derived mutually exclusive building source-class shares from bbox/sources",
+      "provided strata ALAND and pop_total"
+    ],
+    "candidate_id": "B_SOURCE_V1",
+    "component_rule": {
+      "baseline_defined_when": "provided overture_buildings > 0; otherwise undefined with numeric placeholder 0",
+      "baseline_gap_value": 0.01,
+      "candidate_formula": "0.01 + beta * (1 - total_support) when building_defined=1; otherwise numeric placeholder 0 and building_defined=0",
+      "clip_range": [
+        0.0,
+        0.1
+      ],
+      "coefficient_rationale": "predeclared qualitative source-attribution ordering and bounded perturbation around the constant 0.01 prior; coefficients are not fitted to any target, reference count, or leaderboard score",
+      "primary_beta": 0.02,
+      "primary_profile": "primary",
+      "sensitivity_betas": [
+        0.01,
+        0.02,
+        0.05
+      ],
+      "source_support_formula": "sum(profile[class] * exclusive_source_class_share[class])",
+      "total_support_formula": "clip(0.8 * source_support + 0.2 * population_context, 0, 1)"
+    },
+    "context": {
+      "context_weight": 0.2,
+      "formula": "clip(log1p(pop_total / max(ALAND_km2, 0.01)) / log1p(10000), 0, 1)",
+      "land_area_floor_km2": 0.01,
+      "population_density_scale_per_km2": 10000.0,
+      "source_weight": 0.8
+    },
+    "forbidden_inputs": [
+      "sample score placeholders or hidden labels",
+      "MS, USFS, CarbonPlan, or any reference footprint counts, per-tract values, or external footprints",
+      "ACS housing-unit counts as a denominator or floor",
+      "external imagery or external footprint data",
+      "leaderboard or score-derived calibration"
+    ],
+    "purpose": "analysis-only near-zero building source-prior sensitivity; no upload, target RMSE, or accuracy claim",
+    "registered_utc": "2026-10-24",
+    "source_class_order": [
+      "microsoft_only",
+      "microsoft_osm",
+      "osm_only",
+      "esri_only",
+      "other_or_mixed",
+      "no_dataset"
+    ],
+    "source_class_semantics": "exclusive Overture source-dataset membership classes; class shares form a partition among assigned buildings. Source attribution is not proof of geometric identity, completeness, vintage, or reference match.",
+    "source_mixture_profiles": {
+      "conservative": {
+        "esri_only": 0.2,
+        "microsoft_only": 0.7,
+        "microsoft_osm": 0.6,
+        "no_dataset": 0.0,
+        "osm_only": 0.3,
+        "other_or_mixed": 0.1
+      },
+      "microsoft_heavy": {
+        "esri_only": 0.25,
+        "microsoft_only": 1.0,
+        "microsoft_osm": 0.95,
+        "no_dataset": 0.0,
+        "osm_only": 0.35,
+        "other_or_mixed": 0.1
+      },
+      "primary": {
+        "esri_only": 0.35,
+        "microsoft_only": 0.9,
+        "microsoft_osm": 0.8,
+        "no_dataset": 0.0,
+        "osm_only": 0.45,
+        "other_or_mixed": 0.2
+      }
+    },
+    "status": "preregistered_before_source-prior_candidate_scan"
+  },
+  "per_region": {
+    "eastern-ok": {
+      "allowed_context_input": {
+        "extra_strata_rows_excluded": 0,
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+        "read_columns": [
+          "GEOID",
+          "ALAND",
+          "pop_total"
+        ],
+        "rows": 1192,
+        "sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54"
+      },
+      "assigned_overture_buildings": 2551694,
+      "baseline_constant_0_01": {
+        "max": 0.01,
+        "mean": 0.01,
+        "median": 0.01,
+        "min": 0.01,
+        "n": 1192,
+        "q10": 0.01,
+        "q90": 0.01,
+        "std": 0.0
+      },
+      "building_defined_tracts": 1192,
+      "building_weighted_exclusive_source_class_shares": {
+        "esri_only": 0.06182520317875106,
+        "microsoft_only": 0.6936035433715798,
+        "microsoft_osm": 0.10894723270109974,
+        "no_dataset": 0.0,
+        "osm_only": 0.057813750394835745,
+        "other_or_mixed": 0.07781027035373364
+      },
+      "building_weighted_overlapping_source_membership_shares": {
+        "esri_any": 0.1396354735324847,
+        "microsoft_any": 0.8803610464264132,
+        "osm_any": 0.16676098309593548,
+        "other_dataset_any": 0.0
+      },
+      "feature_cache": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/eastern-ok-overture-tract-summary.parquet",
+        "read_columns": [
+          "GEOID",
+          "overture_buildings",
+          "overture_building_ms_only_source_share",
+          "overture_building_ms_osm_source_share",
+          "overture_building_osm_only_source_share",
+          "overture_building_esri_only_source_share",
+          "overture_building_other_or_mixed_source_share",
+          "overture_building_no_dataset_source_share",
+          "overture_building_microsoft_source_share",
+          "overture_building_osm_source_share",
+          "overture_building_esri_source_share",
+          "overture_building_other_source_share"
+        ],
+        "rows": 1192,
+        "sha256": "e5a06316c316f61bf25b80b48e89c1e7f0b1461a0b8cec5831aae24e0cf83fa6",
+        "source_features_derived_from": [
+          "provided Overture bbox",
+          "provided Overture sources"
+        ]
+      },
+      "official_sample": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/eastern-ok-sample-submission.csv",
+        "read_column": "GEOID only; score placeholders ignored",
+        "rows": 1192,
+        "sha256": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4"
+      },
+      "official_tracts": 1192,
+      "population_context_support_defined_tracts": {
+        "max": 0.916398725631147,
+        "mean": 0.5628275515997357,
+        "median": 0.6291527732042599,
+        "min": 0.0,
+        "n": 1192,
+        "q10": 0.21441020042699063,
+        "q90": 0.8086789748234157,
+        "std": 0.22811381579259918
+      },
+      "sensitivity_by_fixed_source_profile_and_beta": {
+        "conservative": {
+          "0.01": {
+            "all_official_tracts": {
+              "max": 0.01772032426859419,
+              "mean": 0.014267183894106071,
+              "median": 0.013887371149761782,
+              "min": 0.012725865127911311,
+              "n": 1192,
+              "q10": 0.013057290921402063,
+              "q90": 0.016785286476783463,
+              "std": 0.0012615929430711053
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 1192,
+            "defined_tracts_only": {
+              "max": 0.01772032426859419,
+              "mean": 0.014267183894106071,
+              "median": 0.013887371149761782,
+              "min": 0.012725865127911311,
+              "n": 1192,
+              "q10": 0.013057290921402063,
+              "q90": 0.016785286476783463,
+              "std": 0.0012615929430711053
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          },
+          "0.02": {
+            "all_official_tracts": {
+              "max": 0.025440648537188384,
+              "mean": 0.018534367788212144,
+              "median": 0.017774742299523562,
+              "min": 0.015451730255822622,
+              "n": 1192,
+              "q10": 0.016114581842804124,
+              "q90": 0.02357057295356693,
+              "std": 0.0025231858861422107
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 1192,
+            "defined_tracts_only": {
+              "max": 0.025440648537188384,
+              "mean": 0.018534367788212144,
+              "median": 0.017774742299523562,
+              "min": 0.015451730255822622,
+              "n": 1192,
+              "q10": 0.016114581842804124,
+              "q90": 0.02357057295356693,
+              "std": 0.0025231858861422107
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          },
+          "0.05": {
+            "all_official_tracts": {
+              "max": 0.04860162134297096,
+              "mean": 0.03133591947053037,
+              "median": 0.029436855748808905,
+              "min": 0.023629325639556557,
+              "n": 1192,
+              "q10": 0.02528645460701031,
+              "q90": 0.04392643238391733,
+              "std": 0.0063079647153555275
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 1192,
+            "defined_tracts_only": {
+              "max": 0.04860162134297096,
+              "mean": 0.03133591947053037,
+              "median": 0.029436855748808905,
+              "min": 0.023629325639556557,
+              "n": 1192,
+              "q10": 0.02528645460701031,
+              "q90": 0.04392643238391733,
+              "std": 0.0063079647153555275
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          }
+        },
+        "microsoft_heavy": {
+          "0.01": {
+            "all_official_tracts": {
+              "max": 0.01742900552136013,
+              "mean": 0.012273434541168778,
+              "median": 0.011544107115934359,
+              "min": 0.010333660540764341,
+              "n": 1192,
+              "q10": 0.010656649072320378,
+              "q90": 0.016196038819495787,
+              "std": 0.0019297490706429597
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 1192,
+            "defined_tracts_only": {
+              "max": 0.01742900552136013,
+              "mean": 0.012273434541168778,
+              "median": 0.011544107115934359,
+              "min": 0.010333660540764341,
+              "n": 1192,
+              "q10": 0.010656649072320378,
+              "q90": 0.016196038819495787,
+              "std": 0.0019297490706429597
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          },
+          "0.02": {
+            "all_official_tracts": {
+              "max": 0.024858011042720257,
+              "mean": 0.014546869082337552,
+              "median": 0.01308821423186872,
+              "min": 0.01066732108152868,
+              "n": 1192,
+              "q10": 0.011313298144640757,
+              "q90": 0.02239207763899157,
+              "std": 0.003859498141285919
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 1192,
+            "defined_tracts_only": {
+              "max": 0.024858011042720257,
+              "mean": 0.014546869082337552,
+              "median": 0.01308821423186872,
+              "min": 0.01066732108152868,
+              "n": 1192,
+              "q10": 0.011313298144640757,
+              "q90": 0.02239207763899157,
+              "std": 0.003859498141285919
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          },
+          "0.05": {
+            "all_official_tracts": {
+              "max": 0.047145027606800644,
+              "mean": 0.02136717270584388,
+              "median": 0.0177205355796718,
+              "min": 0.0116683027038217,
+              "n": 1192,
+              "q10": 0.01328324536160189,
+              "q90": 0.04098019409747893,
+              "std": 0.009648745353214798
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 1192,
+            "defined_tracts_only": {
+              "max": 0.047145027606800644,
+              "mean": 0.02136717270584388,
+              "median": 0.0177205355796718,
+              "min": 0.0116683027038217,
+              "n": 1192,
+              "q10": 0.01328324536160189,
+              "q90": 0.04098019409747893,
+              "std": 0.009648745353214798
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          }
+        },
+        "primary": {
+          "0.01": {
+            "all_official_tracts": {
+              "max": 0.016642414756021736,
+              "mean": 0.012787449431357456,
+              "median": 0.012307051202038377,
+              "min": 0.011132675570590085,
+              "n": 1192,
+              "q10": 0.011468208170248817,
+              "q90": 0.015743256500085834,
+              "std": 0.0014482834467603471
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 1192,
+            "defined_tracts_only": {
+              "max": 0.016642414756021736,
+              "mean": 0.012787449431357456,
+              "median": 0.012307051202038377,
+              "min": 0.011132675570590085,
+              "n": 1192,
+              "q10": 0.011468208170248817,
+              "q90": 0.015743256500085834,
+              "std": 0.0014482834467603471
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          },
+          "0.02": {
+            "all_official_tracts": {
+              "max": 0.02328482951204347,
+              "mean": 0.015574898862714908,
+              "median": 0.014614102404076755,
+              "min": 0.012265351141180169,
+              "n": 1192,
+              "q10": 0.012936416340497634,
+              "q90": 0.02148651300017167,
+              "std": 0.002896566893520694
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 1192,
+            "defined_tracts_only": {
+              "max": 0.02328482951204347,
+              "mean": 0.015574898862714908,
+              "median": 0.014614102404076755,
+              "min": 0.012265351141180169,
+              "n": 1192,
+              "q10": 0.012936416340497634,
+              "q90": 0.02148651300017167,
+              "std": 0.002896566893520694
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          },
+          "0.05": {
+            "all_official_tracts": {
+              "max": 0.043212073780108676,
+              "mean": 0.023937247156787272,
+              "median": 0.021535256010191888,
+              "min": 0.015663377852950425,
+              "n": 1192,
+              "q10": 0.017341040851244084,
+              "q90": 0.03871628250042918,
+              "std": 0.007241417233801736
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 1192,
+            "defined_tracts_only": {
+              "max": 0.043212073780108676,
+              "mean": 0.023937247156787272,
+              "median": 0.021535256010191888,
+              "min": 0.015663377852950425,
+              "n": 1192,
+              "q10": 0.017341040851244084,
+              "q90": 0.03871628250042918,
+              "std": 0.007241417233801736
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          }
+        }
+      },
+      "source_mix_feature_coverage": {
+        "exclusive_classes_partition_share_per_defined_tract": true,
+        "membership_shares_are_overlapping": true,
+        "share_of_building_defined_tracts_with_all_six_exclusive_classes": 1.0,
+        "source_mix_defined_tracts": 1192
+      },
+      "tract_equal_weight_exclusive_source_class_share_summaries": {
+        "esri_only": {
+          "max": 0.6065781151170145,
+          "mean": 0.06491205767850439,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 1192,
+          "q10": 0.0,
+          "q90": 0.3080241552663731,
+          "std": 0.13099635482120192
+        },
+        "microsoft_only": {
+          "max": 1.0,
+          "mean": 0.64015296017429,
+          "median": 0.8315506979143776,
+          "min": 0.0,
+          "n": 1192,
+          "q10": 0.013847026449774674,
+          "q90": 0.9806420996595828,
+          "std": 0.3738137309669801
+        },
+        "microsoft_osm": {
+          "max": 0.9486215538847118,
+          "mean": 0.14488507695490735,
+          "median": 0.06401157243695108,
+          "min": 0.0,
+          "n": 1192,
+          "q10": 0.008263819761705014,
+          "q90": 0.4237804038225093,
+          "std": 0.18750263531513212
+        },
+        "no_dataset": {
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 1192,
+          "q10": 0.0,
+          "q90": 0.0,
+          "std": 0.0
+        },
+        "osm_only": {
+          "max": 0.7533440342429106,
+          "mean": 0.06434802493464431,
+          "median": 0.029141461285016185,
+          "min": 0.0,
+          "n": 1192,
+          "q10": 0.0045791279183329675,
+          "q90": 0.16077665271785088,
+          "std": 0.09222058758535655
+        },
+        "other_or_mixed": {
+          "max": 0.854080791426216,
+          "mean": 0.08570188025765398,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 1192,
+          "q10": 0.0,
+          "q90": 0.46688907134236357,
+          "std": 0.19097669337168155
+        }
+      },
+      "zero_overture_building_tracts": 0
+    },
+    "maricopa-az": {
+      "allowed_context_input": {
+        "extra_strata_rows_excluded": 0,
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+        "read_columns": [
+          "GEOID",
+          "ALAND",
+          "pop_total"
+        ],
+        "rows": 1593,
+        "sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd"
+      },
+      "assigned_overture_buildings": 2908224,
+      "baseline_constant_0_01": {
+        "max": 0.01,
+        "mean": 0.009999999999999997,
+        "median": 0.01,
+        "min": 0.01,
+        "n": 1593,
+        "q10": 0.01,
+        "q90": 0.01,
+        "std": 3.469446951953614e-18
+      },
+      "building_defined_tracts": 1593,
+      "building_weighted_exclusive_source_class_shares": {
+        "esri_only": 0.03276638938403644,
+        "microsoft_only": 0.1304077677647939,
+        "microsoft_osm": 0.29157245109042496,
+        "no_dataset": 0.0,
+        "osm_only": 0.11959979698950288,
+        "other_or_mixed": 0.4256535947712418
+      },
+      "building_weighted_overlapping_source_membership_shares": {
+        "esri_any": 0.04735398648797342,
+        "microsoft_any": 0.446921557624172,
+        "osm_any": 0.7968000401619683,
+        "other_dataset_any": 0.4138948719218327
+      },
+      "feature_cache": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/maricopa-az-overture-tract-summary.parquet",
+        "read_columns": [
+          "GEOID",
+          "overture_buildings",
+          "overture_building_ms_only_source_share",
+          "overture_building_ms_osm_source_share",
+          "overture_building_osm_only_source_share",
+          "overture_building_esri_only_source_share",
+          "overture_building_other_or_mixed_source_share",
+          "overture_building_no_dataset_source_share",
+          "overture_building_microsoft_source_share",
+          "overture_building_osm_source_share",
+          "overture_building_esri_source_share",
+          "overture_building_other_source_share"
+        ],
+        "rows": 1593,
+        "sha256": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22",
+        "source_features_derived_from": [
+          "provided Overture bbox",
+          "provided Overture sources"
+        ]
+      },
+      "official_sample": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/maricopa-az-sample-submission.csv",
+        "read_column": "GEOID only; score placeholders ignored",
+        "rows": 1593,
+        "sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31"
+      },
+      "official_tracts": 1593,
+      "population_context_support_defined_tracts": {
+        "max": 1.0,
+        "mean": 0.6991709406829605,
+        "median": 0.7803025371375578,
+        "min": 0.0,
+        "n": 1593,
+        "q10": 0.3380139212543722,
+        "q90": 0.8683656590568162,
+        "std": 0.21577708660916073
+      },
+      "sensitivity_by_fixed_source_profile_and_beta": {
+        "conservative": {
+          "0.01": {
+            "all_official_tracts": {
+              "max": 0.018875992606007752,
+              "mean": 0.015847622529696383,
+              "median": 0.016102228281572293,
+              "min": 0.01273548585330822,
+              "n": 1593,
+              "q10": 0.014269851009050037,
+              "q90": 0.016968410079028235,
+              "std": 0.0010406032016693361
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 1593,
+            "defined_tracts_only": {
+              "max": 0.018875992606007752,
+              "mean": 0.015847622529696383,
+              "median": 0.016102228281572293,
+              "min": 0.01273548585330822,
+              "n": 1593,
+              "q10": 0.014269851009050037,
+              "q90": 0.016968410079028235,
+              "std": 0.0010406032016693361
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          },
+          "0.02": {
+            "all_official_tracts": {
+              "max": 0.027751985212015502,
+              "mean": 0.021695245059392763,
+              "median": 0.022204456563144584,
+              "min": 0.015470971706616442,
+              "n": 1593,
+              "q10": 0.01853970201810007,
+              "q90": 0.02393682015805647,
+              "std": 0.002081206403338672
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 1593,
+            "defined_tracts_only": {
+              "max": 0.027751985212015502,
+              "mean": 0.021695245059392763,
+              "median": 0.022204456563144584,
+              "min": 0.015470971706616442,
+              "n": 1593,
+              "q10": 0.01853970201810007,
+              "q90": 0.02393682015805647,
+              "std": 0.002081206403338672
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          },
+          "0.05": {
+            "all_official_tracts": {
+              "max": 0.054379963030038767,
+              "mean": 0.039238112648481906,
+              "median": 0.04051114140786147,
+              "min": 0.0236774292665411,
+              "n": 1593,
+              "q10": 0.03134925504525018,
+              "q90": 0.04484205039514118,
+              "std": 0.0052030160083466805
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 1593,
+            "defined_tracts_only": {
+              "max": 0.054379963030038767,
+              "mean": 0.039238112648481906,
+              "median": 0.04051114140786147,
+              "min": 0.0236774292665411,
+              "n": 1593,
+              "q10": 0.03134925504525018,
+              "q90": 0.04484205039514118,
+              "std": 0.0052030160083466805
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          }
+        },
+        "microsoft_heavy": {
+          "0.01": {
+            "all_official_tracts": {
+              "max": 0.01881497565685521,
+              "mean": 0.014673126465830036,
+              "median": 0.015107712994824359,
+              "min": 0.010339762022573255,
+              "n": 1593,
+              "q10": 0.012122827015474177,
+              "q90": 0.016453105985941262,
+              "std": 0.0016464115556927559
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 1593,
+            "defined_tracts_only": {
+              "max": 0.01881497565685521,
+              "mean": 0.014673126465830036,
+              "median": 0.015107712994824359,
+              "min": 0.010339762022573255,
+              "n": 1593,
+              "q10": 0.012122827015474177,
+              "q90": 0.016453105985941262,
+              "std": 0.0016464115556927559
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          },
+          "0.02": {
+            "all_official_tracts": {
+              "max": 0.02762995131371042,
+              "mean": 0.01934625293166007,
+              "median": 0.02021542598964872,
+              "min": 0.010679524045146509,
+              "n": 1593,
+              "q10": 0.014245654030948353,
+              "q90": 0.022906211971882525,
+              "std": 0.0032928231113855113
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 1593,
+            "defined_tracts_only": {
+              "max": 0.02762995131371042,
+              "mean": 0.01934625293166007,
+              "median": 0.02021542598964872,
+              "min": 0.010679524045146509,
+              "n": 1593,
+              "q10": 0.014245654030948353,
+              "q90": 0.022906211971882525,
+              "std": 0.0032928231113855113
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          },
+          "0.05": {
+            "all_official_tracts": {
+              "max": 0.054074878284276054,
+              "mean": 0.03336563232915018,
+              "median": 0.03553856497412179,
+              "min": 0.011698810112866272,
+              "n": 1593,
+              "q10": 0.020614135077370886,
+              "q90": 0.04226552992970631,
+              "std": 0.00823205777846378
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 1593,
+            "defined_tracts_only": {
+              "max": 0.054074878284276054,
+              "mean": 0.03336563232915018,
+              "median": 0.03553856497412179,
+              "min": 0.011698810112866272,
+              "n": 1593,
+              "q10": 0.020614135077370886,
+              "q90": 0.04226552992970631,
+              "std": 0.00823205777846378
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          }
+        },
+        "primary": {
+          "0.01": {
+            "all_official_tracts": {
+              "max": 0.01801497565685521,
+              "mean": 0.014663430220070467,
+              "median": 0.014981425695437735,
+              "min": 0.011136376721905103,
+              "n": 1593,
+              "q10": 0.012782021813442892,
+              "q90": 0.015992967832408733,
+              "std": 0.001237227363727609
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 1593,
+            "defined_tracts_only": {
+              "max": 0.01801497565685521,
+              "mean": 0.014663430220070467,
+              "median": 0.014981425695437735,
+              "min": 0.011136376721905103,
+              "n": 1593,
+              "q10": 0.012782021813442892,
+              "q90": 0.015992967832408733,
+              "std": 0.001237227363727609
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          },
+          "0.02": {
+            "all_official_tracts": {
+              "max": 0.02602995131371042,
+              "mean": 0.01932686044014094,
+              "median": 0.019962851390875468,
+              "min": 0.012272753443810205,
+              "n": 1593,
+              "q10": 0.015564043626885784,
+              "q90": 0.021985935664817467,
+              "std": 0.0024744547274552177
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 1593,
+            "defined_tracts_only": {
+              "max": 0.02602995131371042,
+              "mean": 0.01932686044014094,
+              "median": 0.019962851390875468,
+              "min": 0.012272753443810205,
+              "n": 1593,
+              "q10": 0.015564043626885784,
+              "q90": 0.021985935664817467,
+              "std": 0.0024744547274552177
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          },
+          "0.05": {
+            "all_official_tracts": {
+              "max": 0.05007487828427606,
+              "mean": 0.03331715110035235,
+              "median": 0.03490712847718867,
+              "min": 0.015681883609525514,
+              "n": 1593,
+              "q10": 0.02391010906721446,
+              "q90": 0.039964839162043665,
+              "std": 0.006186136818638045
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 1593,
+            "defined_tracts_only": {
+              "max": 0.05007487828427606,
+              "mean": 0.03331715110035235,
+              "median": 0.03490712847718867,
+              "min": 0.015681883609525514,
+              "n": 1593,
+              "q10": 0.02391010906721446,
+              "q90": 0.039964839162043665,
+              "std": 0.006186136818638045
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          }
+        }
+      },
+      "source_mix_feature_coverage": {
+        "exclusive_classes_partition_share_per_defined_tract": true,
+        "membership_shares_are_overlapping": true,
+        "share_of_building_defined_tracts_with_all_six_exclusive_classes": 1.0,
+        "source_mix_defined_tracts": 1593
+      },
+      "tract_equal_weight_exclusive_source_class_share_summaries": {
+        "esri_only": {
+          "max": 0.8634521015574995,
+          "mean": 0.01650915968594847,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 1593,
+          "q10": 0.0,
+          "q90": 0.001138557001720458,
+          "std": 0.08115700728756954
+        },
+        "microsoft_only": {
+          "max": 0.9973273942093541,
+          "mean": 0.1191168505069111,
+          "median": 0.036593707250342,
+          "min": 0.0,
+          "n": 1593,
+          "q10": 0.008983958864544514,
+          "q90": 0.35505573679543284,
+          "std": 0.20553246570292263
+        },
+        "microsoft_osm": {
+          "max": 1.0,
+          "mean": 0.2998583967146882,
+          "median": 0.24642857142857144,
+          "min": 0.0,
+          "n": 1593,
+          "q10": 0.08417965381521075,
+          "q90": 0.6379321451462612,
+          "std": 0.202363994391662
+        },
+        "no_dataset": {
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 1593,
+          "q10": 0.0,
+          "q90": 0.0,
+          "std": 0.0
+        },
+        "osm_only": {
+          "max": 0.8489208633093526,
+          "mean": 0.10602111993563287,
+          "median": 0.023261824760920133,
+          "min": 0.0,
+          "n": 1593,
+          "q10": 0.0026860441071370274,
+          "q90": 0.33002530352624365,
+          "std": 0.1532210876683302
+        },
+        "other_or_mixed": {
+          "max": 0.996244131455399,
+          "mean": 0.45849447315681924,
+          "median": 0.5887230514096186,
+          "min": 0.0,
+          "n": 1593,
+          "q10": 0.0,
+          "q90": 0.7907133138259304,
+          "std": 0.32023138867454376
+        }
+      },
+      "zero_overture_building_tracts": 0
+    },
+    "northern-ca": {
+      "allowed_context_input": {
+        "extra_strata_rows_excluded": 0,
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+        "read_columns": [
+          "GEOID",
+          "ALAND",
+          "pop_total"
+        ],
+        "rows": 591,
+        "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243"
+      },
+      "assigned_overture_buildings": 1164723,
+      "baseline_constant_0_01": {
+        "max": 0.01,
+        "mean": 0.01,
+        "median": 0.01,
+        "min": 0.01,
+        "n": 591,
+        "q10": 0.01,
+        "q90": 0.01,
+        "std": 0.0
+      },
+      "building_defined_tracts": 591,
+      "building_weighted_exclusive_source_class_shares": {
+        "esri_only": 0.013692526034087075,
+        "microsoft_only": 0.5083114182513783,
+        "microsoft_osm": 0.3749543882966164,
+        "no_dataset": 0.0,
+        "osm_only": 0.09083275594282933,
+        "other_or_mixed": 0.012208911475088926
+      },
+      "building_weighted_overlapping_source_membership_shares": {
+        "esri_any": 0.025901437509176003,
+        "microsoft_any": 0.8954747180230836,
+        "osm_any": 0.4657871442394458,
+        "other_dataset_any": 0.0
+      },
+      "feature_cache": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/northern-ca-overture-tract-summary.parquet",
+        "read_columns": [
+          "GEOID",
+          "overture_buildings",
+          "overture_building_ms_only_source_share",
+          "overture_building_ms_osm_source_share",
+          "overture_building_osm_only_source_share",
+          "overture_building_esri_only_source_share",
+          "overture_building_other_or_mixed_source_share",
+          "overture_building_no_dataset_source_share",
+          "overture_building_microsoft_source_share",
+          "overture_building_osm_source_share",
+          "overture_building_esri_source_share",
+          "overture_building_other_source_share"
+        ],
+        "rows": 591,
+        "sha256": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c",
+        "source_features_derived_from": [
+          "provided Overture bbox",
+          "provided Overture sources"
+        ]
+      },
+      "official_sample": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/northern-ca-sample-submission.csv",
+        "read_column": "GEOID only; score placeholders ignored",
+        "rows": 591,
+        "sha256": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902"
+      },
+      "official_tracts": 591,
+      "population_context_support_defined_tracts": {
+        "max": 0.9769995020032409,
+        "mean": 0.6381479736523955,
+        "median": 0.7375160950370746,
+        "min": 0.021240312933359075,
+        "n": 591,
+        "q10": 0.22765669137400124,
+        "q90": 0.8709155363473066,
+        "std": 0.24401504673338142
+      },
+      "sensitivity_by_fixed_source_profile_and_beta": {
+        "conservative": {
+          "0.01": {
+            "all_official_tracts": {
+              "max": 0.0172872205716899,
+              "mean": 0.013862116359500808,
+              "median": 0.013700110336787677,
+              "min": 0.012480886541863273,
+              "n": 591,
+              "q10": 0.013118778565712716,
+              "q90": 0.014723252252382546,
+              "std": 0.0007034659844082573
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 591,
+            "defined_tracts_only": {
+              "max": 0.0172872205716899,
+              "mean": 0.013862116359500808,
+              "median": 0.013700110336787677,
+              "min": 0.012480886541863273,
+              "n": 591,
+              "q10": 0.013118778565712716,
+              "q90": 0.014723252252382546,
+              "std": 0.0007034659844082573
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          },
+          "0.02": {
+            "all_official_tracts": {
+              "max": 0.0245744411433798,
+              "mean": 0.017724232719001618,
+              "median": 0.017400220673575353,
+              "min": 0.014961773083726544,
+              "n": 591,
+              "q10": 0.016237557131425433,
+              "q90": 0.019446504504765094,
+              "std": 0.0014069319688165146
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 591,
+            "defined_tracts_only": {
+              "max": 0.0245744411433798,
+              "mean": 0.017724232719001618,
+              "median": 0.017400220673575353,
+              "min": 0.014961773083726544,
+              "n": 591,
+              "q10": 0.016237557131425433,
+              "q90": 0.019446504504765094,
+              "std": 0.0014069319688165146
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          },
+          "0.05": {
+            "all_official_tracts": {
+              "max": 0.0464361028584495,
+              "mean": 0.029310581797504044,
+              "median": 0.028500551683938384,
+              "min": 0.02240443270931636,
+              "n": 591,
+              "q10": 0.02559389282856358,
+              "q90": 0.03361626126191273,
+              "std": 0.0035173299220412875
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 591,
+            "defined_tracts_only": {
+              "max": 0.0464361028584495,
+              "mean": 0.029310581797504044,
+              "median": 0.028500551683938384,
+              "min": 0.02240443270931636,
+              "n": 591,
+              "q10": 0.02559389282856358,
+              "q90": 0.03361626126191273,
+              "std": 0.0035173299220412875
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          }
+        },
+        "microsoft_heavy": {
+          "0.01": {
+            "all_official_tracts": {
+              "max": 0.016484733893181905,
+              "mean": 0.01152059877516305,
+              "median": 0.011235647859311382,
+              "min": 0.01008088654186327,
+              "n": 591,
+              "q10": 0.0106669178022459,
+              "q90": 0.012685747943523533,
+              "std": 0.0009693729072270109
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 591,
+            "defined_tracts_only": {
+              "max": 0.016484733893181905,
+              "mean": 0.01152059877516305,
+              "median": 0.011235647859311382,
+              "min": 0.01008088654186327,
+              "n": 591,
+              "q10": 0.0106669178022459,
+              "q90": 0.012685747943523533,
+              "std": 0.0009693729072270109
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          },
+          "0.02": {
+            "all_official_tracts": {
+              "max": 0.022969467786363815,
+              "mean": 0.0130411975503261,
+              "median": 0.012471295718622764,
+              "min": 0.01016177308372654,
+              "n": 591,
+              "q10": 0.0113338356044918,
+              "q90": 0.015371495887047063,
+              "std": 0.0019387458144540218
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 591,
+            "defined_tracts_only": {
+              "max": 0.022969467786363815,
+              "mean": 0.0130411975503261,
+              "median": 0.012471295718622764,
+              "min": 0.01016177308372654,
+              "n": 591,
+              "q10": 0.0113338356044918,
+              "q90": 0.015371495887047063,
+              "std": 0.0019387458144540218
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          },
+          "0.05": {
+            "all_official_tracts": {
+              "max": 0.04242366946590954,
+              "mean": 0.017602993875815248,
+              "median": 0.016178239296556908,
+              "min": 0.010404432709316349,
+              "n": 591,
+              "q10": 0.0133345890112295,
+              "q90": 0.023428739717617664,
+              "std": 0.004846864536135055
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 591,
+            "defined_tracts_only": {
+              "max": 0.04242366946590954,
+              "mean": 0.017602993875815248,
+              "median": 0.016178239296556908,
+              "min": 0.010404432709316349,
+              "n": 591,
+              "q10": 0.0133345890112295,
+              "q90": 0.023428739717617664,
+              "std": 0.004846864536135055
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          }
+        },
+        "primary": {
+          "0.01": {
+            "all_official_tracts": {
+              "max": 0.016131359115206773,
+              "mean": 0.012312082036865095,
+              "median": 0.012123788170459355,
+              "min": 0.01088088654186327,
+              "n": 591,
+              "q10": 0.011528477189144133,
+              "q90": 0.013221637011340501,
+              "std": 0.0007624114051830923
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 591,
+            "defined_tracts_only": {
+              "max": 0.016131359115206773,
+              "mean": 0.012312082036865095,
+              "median": 0.012123788170459355,
+              "min": 0.01088088654186327,
+              "n": 591,
+              "q10": 0.011528477189144133,
+              "q90": 0.013221637011340501,
+              "std": 0.0007624114051830923
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          },
+          "0.02": {
+            "all_official_tracts": {
+              "max": 0.02226271823041355,
+              "mean": 0.014624164073730189,
+              "median": 0.014247576340918711,
+              "min": 0.011761773083726541,
+              "n": 591,
+              "q10": 0.013056954378288266,
+              "q90": 0.016443274022681004,
+              "std": 0.0015248228103661846
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 591,
+            "defined_tracts_only": {
+              "max": 0.02226271823041355,
+              "mean": 0.014624164073730189,
+              "median": 0.014247576340918711,
+              "min": 0.011761773083726541,
+              "n": 591,
+              "q10": 0.013056954378288266,
+              "q90": 0.016443274022681004,
+              "std": 0.0015248228103661846
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          },
+          "0.05": {
+            "all_official_tracts": {
+              "max": 0.04065679557603387,
+              "mean": 0.021560410184325474,
+              "median": 0.020618940852296777,
+              "min": 0.014404432709316354,
+              "n": 591,
+              "q10": 0.017642385945720665,
+              "q90": 0.02610818505670251,
+              "std": 0.0038120570259154623
+            },
+            "changed_vs_constant_baseline_share_all": 1.0,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 591,
+            "defined_tracts_only": {
+              "max": 0.04065679557603387,
+              "mean": 0.021560410184325474,
+              "median": 0.020618940852296777,
+              "min": 0.014404432709316354,
+              "n": 591,
+              "q10": 0.017642385945720665,
+              "q90": 0.02610818505670251,
+              "std": 0.0038120570259154623
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          }
+        }
+      },
+      "source_mix_feature_coverage": {
+        "exclusive_classes_partition_share_per_defined_tract": true,
+        "membership_shares_are_overlapping": true,
+        "share_of_building_defined_tracts_with_all_six_exclusive_classes": 1.0,
+        "source_mix_defined_tracts": 591
+      },
+      "tract_equal_weight_exclusive_source_class_share_summaries": {
+        "esri_only": {
+          "max": 0.3534064812452156,
+          "mean": 0.012142444902321489,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 591,
+          "q10": 0.0,
+          "q90": 0.009849362688296639,
+          "std": 0.04419031209117955
+        },
+        "microsoft_only": {
+          "max": 1.0,
+          "mean": 0.45267818113810626,
+          "median": 0.4230769230769231,
+          "min": 0.00691699604743083,
+          "n": 591,
+          "q10": 0.026755852842809364,
+          "q90": 0.9429967426710097,
+          "std": 0.3590663331775601
+        },
+        "microsoft_osm": {
+          "max": 0.9759572573463936,
+          "mean": 0.4335990859405378,
+          "median": 0.3933075933075933,
+          "min": 0.0,
+          "n": 591,
+          "q10": 0.034765625,
+          "q90": 0.8744186046511628,
+          "std": 0.3205002169445846
+        },
+        "no_dataset": {
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 591,
+          "q10": 0.0,
+          "q90": 0.0,
+          "std": 0.0
+        },
+        "osm_only": {
+          "max": 0.8879103282626101,
+          "mean": 0.09038882752967596,
+          "median": 0.05290611028315946,
+          "min": 0.0,
+          "n": 591,
+          "q10": 0.009701760689902982,
+          "q90": 0.2113970588235294,
+          "std": 0.11246389822062106
+        },
+        "other_or_mixed": {
+          "max": 0.4462910417511147,
+          "mean": 0.011191460489358566,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 591,
+          "q10": 0.0,
+          "q90": 0.005063291139240506,
+          "std": 0.049663148098870485
+        }
+      },
+      "zero_overture_building_tracts": 0
+    },
+    "south-central-tx": {
+      "allowed_context_input": {
+        "extra_strata_rows_excluded": 7,
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+        "read_columns": [
+          "GEOID",
+          "ALAND",
+          "pop_total"
+        ],
+        "rows": 6010,
+        "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354"
+      },
+      "assigned_overture_buildings": 11463800,
+      "baseline_constant_0_01": {
+        "max": 0.01,
+        "mean": 0.009996668332500415,
+        "median": 0.01,
+        "min": 0.0,
+        "n": 6003,
+        "q10": 0.01,
+        "q90": 0.01,
+        "std": 0.00018249815064133563
+      },
+      "building_defined_tracts": 6001,
+      "building_weighted_exclusive_source_class_shares": {
+        "esri_only": 0.018449030862366756,
+        "microsoft_only": 0.4331386625726199,
+        "microsoft_osm": 0.2687556482143792,
+        "no_dataset": 0.0,
+        "osm_only": 0.16857237565205255,
+        "other_or_mixed": 0.11108428269858162
+      },
+      "building_weighted_overlapping_source_membership_shares": {
+        "esri_any": 0.02430180219473473,
+        "microsoft_any": 0.719071860988503,
+        "osm_any": 0.5099944172089534,
+        "other_dataset_any": 0.10741595282541566
+      },
+      "feature_cache": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/south-central-tx-overture-tract-summary.parquet",
+        "read_columns": [
+          "GEOID",
+          "overture_buildings",
+          "overture_building_ms_only_source_share",
+          "overture_building_ms_osm_source_share",
+          "overture_building_osm_only_source_share",
+          "overture_building_esri_only_source_share",
+          "overture_building_other_or_mixed_source_share",
+          "overture_building_no_dataset_source_share",
+          "overture_building_microsoft_source_share",
+          "overture_building_osm_source_share",
+          "overture_building_esri_source_share",
+          "overture_building_other_source_share"
+        ],
+        "rows": 6003,
+        "sha256": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746",
+        "source_features_derived_from": [
+          "provided Overture bbox",
+          "provided Overture sources"
+        ]
+      },
+      "official_sample": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/south-central-tx-sample-submission.csv",
+        "read_column": "GEOID only; score placeholders ignored",
+        "rows": 6003,
+        "sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e"
+      },
+      "official_tracts": 6003,
+      "population_context_support_defined_tracts": {
+        "max": 1.0,
+        "mean": 0.6907337907204081,
+        "median": 0.7657792166374938,
+        "min": 0.0,
+        "n": 6001,
+        "q10": 0.35501615138512677,
+        "q90": 0.866887297120633,
+        "std": 0.20329881489686666
+      },
+      "sensitivity_by_fixed_source_profile_and_beta": {
+        "conservative": {
+          "0.01": {
+            "all_official_tracts": {
+              "max": 0.018630031628828557,
+              "mean": 0.014484478823012589,
+              "median": 0.0142903589565791,
+              "min": 0.0,
+              "n": 6003,
+              "q10": 0.013195988091179405,
+              "q90": 0.015960089175656705,
+              "std": 0.0010902849407830677
+            },
+            "changed_vs_constant_baseline_share_all": 0.9996668332500417,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 6001,
+            "defined_tracts_only": {
+              "max": 0.018630031628828557,
+              "mean": 0.014489306178061085,
+              "median": 0.014290781902365057,
+              "min": 0.0124,
+              "n": 6001,
+              "q10": 0.013196708049107301,
+              "q90": 0.01596025466466483,
+              "std": 0.0010579094484684261
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          },
+          "0.02": {
+            "all_official_tracts": {
+              "max": 0.027260063257657112,
+              "mean": 0.018972289313524758,
+              "median": 0.0185807179131582,
+              "min": 0.0,
+              "n": 6003,
+              "q10": 0.016391976182358808,
+              "q90": 0.02192017835131341,
+              "std": 0.002143632597720213
+            },
+            "changed_vs_constant_baseline_share_all": 0.9996668332500417,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 6001,
+            "defined_tracts_only": {
+              "max": 0.027260063257657112,
+              "mean": 0.01897861235612217,
+              "median": 0.01858156380473011,
+              "min": 0.0148,
+              "n": 6001,
+              "q10": 0.016393416098214604,
+              "q90": 0.02192050932932966,
+              "std": 0.0021158188969368523
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          },
+          "0.05": {
+            "all_official_tracts": {
+              "max": 0.05315015814414279,
+              "mean": 0.032435720785061274,
+              "median": 0.0314517947828955,
+              "min": 0.0,
+              "n": 6003,
+              "q10": 0.025979940455897018,
+              "q90": 0.039800445878283526,
+              "std": 0.005321712300428978
+            },
+            "changed_vs_constant_baseline_share_all": 0.9996668332500417,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 6001,
+            "defined_tracts_only": {
+              "max": 0.05315015814414279,
+              "mean": 0.03244653089030542,
+              "median": 0.031453909511825286,
+              "min": 0.022,
+              "n": 6001,
+              "q10": 0.025983540245536507,
+              "q90": 0.03980127332332414,
+              "std": 0.005289547242342131
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          }
+        },
+        "microsoft_heavy": {
+          "0.01": {
+            "all_official_tracts": {
+              "max": 0.01853430513310206,
+              "mean": 0.012637835374588876,
+              "median": 0.012165782271685802,
+              "min": 0.0,
+              "n": 6003,
+              "q10": 0.010787215947869406,
+              "q90": 0.015244837526562518,
+              "std": 0.0016945169850062652
+            },
+            "changed_vs_constant_baseline_share_all": 0.9995002498750625,
+            "changed_vs_constant_baseline_share_defined": 0.9998333611064822,
+            "changed_vs_constant_baseline_tracts": 6000,
+            "defined_tracts_only": {
+              "max": 0.01853430513310206,
+              "mean": 0.012642047284395438,
+              "median": 0.012165887934565434,
+              "min": 0.01,
+              "n": 6001,
+              "q10": 0.010789923560222788,
+              "q90": 0.015244950702168573,
+              "std": 0.0016790168609392884
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          },
+          "0.02": {
+            "all_official_tracts": {
+              "max": 0.02706861026620412,
+              "mean": 0.015279002416677333,
+              "median": 0.014331564543371604,
+              "min": 0.0,
+              "n": 6003,
+              "q10": 0.011574431895738813,
+              "q90": 0.020489675053125038,
+              "std": 0.003369040896658273
+            },
+            "changed_vs_constant_baseline_share_all": 0.9995002498750625,
+            "changed_vs_constant_baseline_share_defined": 0.9998333611064822,
+            "changed_vs_constant_baseline_tracts": 6000,
+            "defined_tracts_only": {
+              "max": 0.02706861026620412,
+              "mean": 0.015284094568790875,
+              "median": 0.014331775869130868,
+              "min": 0.01,
+              "n": 6001,
+              "q10": 0.011579847120445574,
+              "q90": 0.02048990140433715,
+              "std": 0.0033580337218785763
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          },
+          "0.05": {
+            "all_official_tracts": {
+              "max": 0.05267152566551031,
+              "mean": 0.02320250354294271,
+              "median": 0.020828911358429014,
+              "min": 0.0,
+              "n": 6003,
+              "q10": 0.013936079739347029,
+              "q90": 0.03622418763281259,
+              "std": 0.008404366834947413
+            },
+            "changed_vs_constant_baseline_share_all": 0.9995002498750625,
+            "changed_vs_constant_baseline_share_defined": 0.9998333611064822,
+            "changed_vs_constant_baseline_tracts": 6000,
+            "defined_tracts_only": {
+              "max": 0.05267152566551031,
+              "mean": 0.023210236421977188,
+              "median": 0.020829439672827167,
+              "min": 0.01,
+              "n": 6001,
+              "q10": 0.013949617801113937,
+              "q90": 0.03622475351084287,
+              "std": 0.008395084304696442
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          }
+        },
+        "primary": {
+          "0.01": {
+            "all_official_tracts": {
+              "max": 0.017759946158743087,
+              "mean": 0.013062443649809623,
+              "median": 0.012790897210206462,
+              "min": 0.0,
+              "n": 6003,
+              "q10": 0.011624054454498248,
+              "q90": 0.014792343308682749,
+              "std": 0.0012428130269299237
+            },
+            "changed_vs_constant_baseline_share_all": 0.9996668332500417,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 6001,
+            "defined_tracts_only": {
+              "max": 0.017759946158743087,
+              "mean": 0.013066797072122506,
+              "median": 0.01279122673489358,
+              "min": 0.010799999999999999,
+              "n": 6001,
+              "q10": 0.011626080029783629,
+              "q90": 0.014792350169869552,
+              "std": 0.0012199236490804287
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          },
+          "0.02": {
+            "all_official_tracts": {
+              "max": 0.025519892317486175,
+              "mean": 0.016128218967118826,
+              "median": 0.015581794420412923,
+              "min": 0.0,
+              "n": 6003,
+              "q10": 0.013248108908996494,
+              "q90": 0.019584686617365496,
+              "std": 0.002457145412612273
+            },
+            "changed_vs_constant_baseline_share_all": 0.9996668332500417,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 6001,
+            "defined_tracts_only": {
+              "max": 0.025519892317486175,
+              "mean": 0.016133594144245016,
+              "median": 0.01558245346978716,
+              "min": 0.011599999999999997,
+              "n": 6001,
+              "q10": 0.013252160059567258,
+              "q90": 0.0195847003397391,
+              "std": 0.0024398472981608577
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          },
+          "0.05": {
+            "all_official_tracts": {
+              "max": 0.04879973079371544,
+              "mean": 0.02532554491904645,
+              "median": 0.023954486051032307,
+              "min": 0.0,
+              "n": 6003,
+              "q10": 0.018120272272491238,
+              "q90": 0.03396171654341374,
+              "std": 0.006116102185096291
+            },
+            "changed_vs_constant_baseline_share_all": 0.9996668332500417,
+            "changed_vs_constant_baseline_share_defined": 1.0,
+            "changed_vs_constant_baseline_tracts": 6001,
+            "defined_tracts_only": {
+              "max": 0.04879973079371544,
+              "mean": 0.025333985360612536,
+              "median": 0.023956133674467896,
+              "min": 0.013999999999999992,
+              "n": 6001,
+              "q10": 0.018130400148918143,
+              "q90": 0.03396175084934776,
+              "std": 0.006099618245402143
+            },
+            "nonfinite_values": 0,
+            "within_preregistered_absolute_component_bound": true
+          }
+        }
+      },
+      "source_mix_feature_coverage": {
+        "exclusive_classes_partition_share_per_defined_tract": true,
+        "membership_shares_are_overlapping": true,
+        "share_of_building_defined_tracts_with_all_six_exclusive_classes": 1.0,
+        "source_mix_defined_tracts": 6001
+      },
+      "tract_equal_weight_exclusive_source_class_share_summaries": {
+        "esri_only": {
+          "max": 0.5434370771312584,
+          "mean": 0.015943668378005642,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 6001,
+          "q10": 0.0,
+          "q90": 0.018342391304347828,
+          "std": 0.05646181572041839
+        },
+        "microsoft_only": {
+          "max": 1.0,
+          "mean": 0.3771300378701807,
+          "median": 0.18269230769230768,
+          "min": 0.0,
+          "n": 6001,
+          "q10": 0.010188679245283019,
+          "q90": 0.95995995995996,
+          "std": 0.37634171111507897
+        },
+        "microsoft_osm": {
+          "max": 0.99125,
+          "mean": 0.31067086356739043,
+          "median": 0.21414141414141413,
+          "min": 0.0,
+          "n": 6001,
+          "q10": 0.007526881720430108,
+          "q90": 0.7941567065073041,
+          "std": 0.3010496089862547
+        },
+        "no_dataset": {
+          "max": 0.0,
+          "mean": 0.0,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 6001,
+          "q10": 0.0,
+          "q90": 0.0,
+          "std": 0.0
+        },
+        "osm_only": {
+          "max": 1.0,
+          "mean": 0.16472729359329222,
+          "median": 0.054831704668838216,
+          "min": 0.0,
+          "n": 6001,
+          "q10": 0.0028317152103559872,
+          "q90": 0.5228983688833124,
+          "std": 0.24273927351084137
+        },
+        "other_or_mixed": {
+          "max": 0.9865525672371638,
+          "mean": 0.13152813659113113,
+          "median": 0.0,
+          "min": 0.0,
+          "n": 6001,
+          "q10": 0.0,
+          "q90": 0.49230769230769234,
+          "std": 0.21142261953150482
+        }
+      },
+      "zero_overture_building_tracts": 2
+    }
+  },
+  "preregistration": {
+    "commit": "55bcacbe30f93581f1a7b3aba949fb31c91b064d",
+    "config": "config/building-source-prior-preregistered.json",
+    "config_sha256": "692cffb84873a29a1ebf62dec1808e17297fe7d58591129bebe57f4526067c4b",
+    "status": "preregistered_before_source-prior_candidate_scan"
+  },
+  "restrictions": {
+    "ACS_housing_units_read_or_used": false,
+    "MS_USFS_CarbonPlan_per_tract_building_counts_read_or_used": false,
+    "all_source_mixture_coefficients_preregistered_before_candidate_scan": true,
+    "candidate_accuracy_claim": false,
+    "external_data_used": [],
+    "leaderboard_or_score_feedback_used": false,
+    "reference_or_external_footprint_counts_or_geometry_read": false,
+    "sample_score_placeholders_or_target_labels_read": false,
+    "upload_or_submission_made": false
+  },
+  "scope": {
+    "official_regions": [
+      "maricopa-az",
+      "northern-ca",
+      "eastern-ok",
+      "south-central-tx"
+    ],
+    "official_tracts": 9379,
+    "ordered_official_sample_ids": true,
+    "template_only_rows_included": false
+  },
+  "script_sha256_at_run": "f5e52470b366f3b0c6adb39d5fad8ee9c5b43039ca71d9aed9de8a9f991b1f9c",
+  "source_features": {
+    "exclusive_class_order": [
+      "microsoft_only",
+      "microsoft_osm",
+      "osm_only",
+      "esri_only",
+      "other_or_mixed",
+      "no_dataset"
+    ],
+    "exclusive_share_columns": [
+      "overture_building_ms_only_source_share",
+      "overture_building_ms_osm_source_share",
+      "overture_building_osm_only_source_share",
+      "overture_building_esri_only_source_share",
+      "overture_building_other_or_mixed_source_share",
+      "overture_building_no_dataset_source_share"
+    ],
+    "existing_source_audit": {
+      "report": "reports/source-provenance.json",
+      "sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565"
+    },
+    "overlapping_membership_columns": [
+      "overture_building_microsoft_source_share",
+      "overture_building_osm_source_share",
+      "overture_building_esri_source_share",
+      "overture_building_other_source_share"
+    ],
+    "share_provenance": "Existing workspace feature cache; derived from provided Overture bbox centers assigned to provided ACS GEOID/geometry and the provided Overture sources[].dataset field. No Overture building geometry or any reference footprint was read by this screen.",
+    "source_class_semantics": "exclusive Overture source-dataset membership classes; class shares form a partition among assigned buildings. Source attribution is not proof of geometric identity, completeness, vintage, or reference match."
+  }
+}
