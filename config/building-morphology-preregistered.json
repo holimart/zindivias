@@ -1,0 +1,56 @@
+{
+  "candidate_id": "B_MORPH_V1",
+  "registered_utc": "2026-10-24",
+  "status": "preregistered_before_morphology_scan",
+  "purpose": "analysis-only feature-only building-component sensitivity; no candidate upload or accuracy claim",
+  "allowed_inputs": [
+    "official sample GEOID only",
+    "provided Overture buildings bbox, geometry, subtype, has_parts, num_floors, height",
+    "provided strata ALAND and pop_total",
+    "provided ACS tract GEOID/geometry for spatial assignment",
+    "existing provided-feature overture_buildings count solely for count reconciliation"
+  ],
+  "forbidden_inputs": [
+    "sample score placeholders or hidden labels",
+    "MS, USFS, CarbonPlan, or other reference footprint counts or geometries",
+    "external imagery or external footprint data",
+    "ACS housing-unit counts as a denominator or floor",
+    "leaderboard or score-derived calibration"
+  ],
+  "spatial_assignment": {
+    "building_assignment": "center of the provided building bbox, matching the existing Overture count aggregation; boundary ties resolve to lowest official tract index",
+    "area_projection": "provided Overture building WKB geometries transformed from EPSG:4326 to EPSG:5070; area in square metres",
+    "land_area_floor_km2": 0.01
+  },
+  "morphology_support": {
+    "features": [
+      "structure_density = clip(log1p(building_count / max(ALAND_km2, 0.01)) / log1p(1000 buildings_per_km2), 0, 1)",
+      "median_area = clip(log1p(median valid projected footprint area_m2) / log1p(500 m2), 0, 1); zero if no valid geometry",
+      "verticality = mean over assigned buildings of clip(max(num_floors when positive else height_m/3 when positive else 0) / 4, 0, 1)",
+      "subtype_support = share of assigned buildings with non-null non-empty subtype",
+      "parts_support = share of assigned buildings with has_parts=true",
+      "population_context = clip(log1p(pop_total / max(ALAND_km2, 0.01)) / log1p(10000 people_per_km2), 0, 1)"
+    ],
+    "weights": {
+      "structure_density": 0.16666666666666666,
+      "median_area": 0.16666666666666666,
+      "verticality": 0.16666666666666666,
+      "subtype_support": 0.16666666666666666,
+      "parts_support": 0.16666666666666666,
+      "population_context": 0.16666666666666666
+    },
+    "support_formula": "arithmetic mean of the six listed bounded features; all weights frozen equally"
+  },
+  "component_rule": {
+    "baseline": "0.01 if provided Overture building count > 0; otherwise undefined with numeric placeholder 0 and building_defined=0",
+    "morphology_candidate": "0.01 + beta * (1 - morphology_support) when building_defined=1; otherwise numeric placeholder 0 and building_defined=0",
+    "clip_range": [0.0, 0.1],
+    "sensitivity_betas": [0.01, 0.02, 0.05],
+    "primary_beta": 0.02,
+    "coefficient_rationale": "fixed conservative perturbation envelope around the existing 0.01 near-zero baseline; no target or leaderboard fit"
+  },
+  "reporting": {
+    "summaries": ["per-region area quantiles", "attribute missingness", "support-score distribution", "component distributions", "percent changed versus baseline for each beta"],
+    "acceptance": ["exact ordered 9379 official GEOIDs", "deterministic rerun and SHA-256", "all component values finite and in [0,0.1]", "no candidate upload", "no accuracy claim"]
+  }
+}
