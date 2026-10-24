@@ -696,6 +696,8 @@ def run(workspace: Path, candidate_path: Path, manifest_path: Path, report_path:
             suffix = f"t{int(threshold * 100):03d}"
             row[f"poi_gap_{suffix}"] = variants_by_id[row["GEOID"]][threshold]["poi_gap"]
             row[f"poi_defined_{suffix}"] = variants_by_id[row["GEOID"]][threshold]["poi_defined"]
+            row[f"poi_delta_vs_v2_raw_{suffix}"] = (
+                variants_by_id[row["GEOID"]][threshold]["poi_gap"] - v2_raw[row["GEOID"]]["poi_gap"])
             for family in FAMILIES:
                 row[f"{family}_count_delta_vs_raw_{suffix}"] = (
                     row["weighted_counts"][threshold][family] - row["raw_counts"][family])
