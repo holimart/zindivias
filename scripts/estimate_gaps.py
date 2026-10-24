@@ -40,6 +40,21 @@ OUTPUT_COLUMNS = [
     "schools_gap", "schools_defined", "cbp_gap", "cbp_defined",
 ]
 SUBMISSION_COLUMNS = ["GEOID", "transport_gap", "building_gap", "poi_gap", "coverage_gap_score"]
+BUILDING_SOURCE_FEATURE_COLUMNS = [
+    "overture_building_osm_source_share", "overture_building_microsoft_source_share",
+    "overture_building_esri_source_share", "overture_building_other_source_share",
+    "overture_building_no_dataset_source_share", "overture_building_ms_only_source_share",
+    "overture_building_ms_osm_source_share", "overture_building_osm_only_source_share",
+    "overture_building_esri_only_source_share", "overture_building_other_or_mixed_source_share",
+]
+POI_SOURCE_FEATURE_COLUMNS = [
+    "overture_poi_meta_source_share", "overture_poi_microsoft_source_share",
+    "overture_poi_other_upstream_source_share", "overture_poi_meta_not_microsoft_source_share",
+    "overture_poi_microsoft_not_meta_source_share", "overture_poi_meta_and_microsoft_source_share",
+    "overture_poi_other_without_meta_microsoft_source_share",
+    "overture_poi_no_upstream_source_share", "overture_poi_sources_missing_share",
+]
+SOURCE_MIX_FEATURE_COLUMNS = BUILDING_SOURCE_FEATURE_COLUMNS + POI_SOURCE_FEATURE_COLUMNS
 
 
 def sha256(path: Path) -> str:
@@ -186,6 +201,246 @@ def aggregate_pois(fs, region: str, tree, n_tracts: int) -> tuple[dict[str, np.n
                     "elapsed_seconds": round(time.monotonic()-started, 2)}
 
 
+def _dataset_names(sources) -> set[str]:
+    return {str(source["dataset"]).strip().casefold()
+            for source in (sources or [])
+            if isinstance(source, dict) and source.get("dataset") and
+            str(source["dataset"]).strip()}
+
+
+def classify_building_sources(sources) -> dict[str, object]:
+    """Return source-presence flags and one disjoint provenance class for a building."""
+    names = _dataset_names(sources)
+    has_microsoft = any(name.startswith("microsoft") for name in names)
+    has_osm = any(name == "osm" or name.startswith("openstreetmap") for name in names)
+    has_esri = any(name.startswith("esri") for name in names)
+    known = {name for name in names if name.startswith("microsoft") or
+             name == "osm" or name.startswith("openstreetmap") or name.startswith("esri")}
+    has_other = bool(names - known)
+    if not names:
+        source_class = "no_dataset"
+    elif has_microsoft and has_osm and not has_esri and not has_other:
+        source_class = "microsoft_osm"
+    elif has_microsoft and not has_osm and not has_esri and not has_other:
+        source_class = "microsoft_only"
+    elif has_osm and not has_microsoft and not has_esri and not has_other:
+        source_class = "osm_only"
+    elif has_esri and not has_microsoft and not has_osm and not has_other:
+        source_class = "esri_only"
+    else:
+        source_class = "other_or_mixed"
+    return {"has_dataset": bool(names), "osm": has_osm, "microsoft": has_microsoft,
+            "esri": has_esri, "other": has_other, "class": source_class,
+            "dataset_names": names}
+
+
+def classify_poi_sources(sources) -> dict[str, object]:
+    """Classify upstream POI source membership; Overture wrappers are not providers."""
+    names = _dataset_names(sources)
+    has_meta = "meta" in names
+    has_microsoft = any(name.startswith("microsoft") for name in names)
+    other_names = names - {"meta", "overture", "overture-signals"}
+    other_names = {name for name in other_names if not name.startswith("microsoft")}
+    has_other = bool(other_names)
+    if has_meta and has_microsoft:
+        source_class = "meta_and_microsoft"
+    elif has_meta:
+        source_class = "meta_not_microsoft"
+    elif has_microsoft:
+        source_class = "microsoft_not_meta"
+    elif has_other:
+        source_class = "other_without_meta_microsoft"
+    else:
+        source_class = "no_upstream"
+    return {"has_dataset": bool(names), "meta": has_meta,
+            "microsoft": has_microsoft, "other_upstream": has_other,
+            "class": source_class, "dataset_names": names}
+
+
+def _source_list_dataset_column(table):
+    source_array = table.column("sources").combine_chunks()
+    if not (pa.types.is_list(source_array.type) or pa.types.is_large_list(source_array.type)):
+        raise TypeError(f"expected list<struct> sources column, found {source_array.type}")
+    if not pa.types.is_struct(source_array.type.value_type):
+        raise TypeError(f"expected sources list elements to be structs: {source_array.type}")
+    if "dataset" not in source_array.type.value_type.names:
+        raise ValueError("sources structs have no dataset field")
+    offsets = source_array.offsets.to_numpy(zero_copy_only=False).astype(np.int64, copy=False)
+    datasets = source_array.values.field("dataset").to_pylist()
+    null_rows = source_array.is_null().to_numpy(zero_copy_only=False)
+    return offsets, datasets, null_rows
+
+
+def _shares_from_counts(counts: dict[str, np.ndarray], total: np.ndarray,
+                        definitions: dict[str, str]) -> dict[str, list[float | None]]:
+    features: dict[str, list[float | None]] = {}
+    for feature_name, count_name in definitions.items():
+        features[feature_name] = [
+            float(count / n) if n else None
+            for count, n in zip(counts[count_name], total)
+        ]
+    return features
+
+
+def _aggregate_source_layer(fs, region: str, layer: str, tree, n_tracts: int,
+                            classifier) -> tuple[dict[str, np.ndarray], dict]:
+    key, size, pf = open_source(fs, region, layer)
+    if "sources" not in pf.schema_arrow.names or "bbox" not in pf.schema_arrow.names:
+        raise ValueError(f"{layer} Parquet lacks bbox/sources columns for {region}")
+    selected_bytes = {name: 0 for name in ("bbox", "sources")}
+    for rg in range(pf.metadata.num_row_groups):
+        metadata = pf.metadata.row_group(rg)
+        for col in range(pf.metadata.num_columns):
+            name = pf.metadata.schema.column(col).path.split(".")[0]
+            if name in selected_bytes:
+                selected_bytes[name] += metadata.column(col).total_compressed_size
+    if layer == "buildings":
+        count_names = ("assigned_rows", "sources_missing", "osm_any", "microsoft_any", "esri_any",
+                       "other_any", "class_microsoft_only", "class_microsoft_osm", "class_osm_only",
+                       "class_esri_only", "class_other_or_mixed", "class_no_dataset")
+    else:
+        count_names = ("assigned_rows", "sources_missing", "meta_any", "microsoft_any", "other_upstream_any",
+                       "class_meta_not_microsoft", "class_microsoft_not_meta", "class_meta_and_microsoft",
+                       "class_other_without_meta_microsoft", "class_no_upstream")
+    counts = {name: np.zeros(n_tracts, dtype=np.int64) for name in count_names}
+    total_rows = unmatched_rows = null_source_rows = 0
+    dataset_membership_counts = Counter()
+    for rg in range(pf.metadata.num_row_groups):
+        table = pf.read_row_group(rg, columns=["bbox", "sources"])
+        x, y = arrow_bbox_centers(table)
+        assignment, outside = assign_points(tree, x, y)
+        offsets, dataset_values, null_rows = _source_list_dataset_column(table)
+        if len(assignment) != len(offsets) - 1:
+            raise ValueError(f"{layer} bbox/sources row mismatch in {region} rowgroup {rg}")
+        batch_flags = {name: np.zeros(len(assignment), dtype=bool) for name in count_names
+                       if name != "assigned_rows"}
+        for row_index, tract in enumerate(assignment):
+            if tract < 0:
+                continue
+            start, stop = int(offsets[row_index]), int(offsets[row_index + 1])
+            source_items = [{"dataset": value} for value in dataset_values[start:stop] if value]
+            classification = classifier(source_items)
+            if not classification["has_dataset"]:
+                batch_flags["sources_missing"][row_index] = True
+            for dataset in classification["dataset_names"]:
+                dataset_membership_counts[dataset] += 1
+            if layer == "buildings":
+                for flag in ("osm", "microsoft", "esri", "other"):
+                    batch_flags[f"{flag}_any"][row_index] = bool(classification[flag])
+            else:
+                for flag in ("meta", "microsoft", "other_upstream"):
+                    batch_flags[f"{flag}_any"][row_index] = bool(classification[flag])
+            batch_flags[f"class_{classification['class']}"][row_index] = True
+        assigned = assignment >= 0
+        assigned_tracts = assignment[assigned]
+        counts["assigned_rows"] += np.bincount(assigned_tracts, minlength=n_tracts)
+        counts["sources_missing"] += np.bincount(
+            assignment[assigned & batch_flags["sources_missing"]], minlength=n_tracts)
+        for name in count_names:
+            if name in ("assigned_rows", "sources_missing"):
+                continue
+            mask = assigned & batch_flags[name]
+            counts[name] += np.bincount(assignment[mask], minlength=n_tracts)
+        total_rows += len(assignment)
+        unmatched_rows += outside
+        null_source_rows += int(np.count_nonzero(assigned & null_rows))
+        if (rg + 1) % (50 if layer == "buildings" else 25) == 0:
+            print(f"{region} {layer} source rowgroups {rg + 1}/{pf.metadata.num_row_groups}; "
+                  f"rows={total_rows}", flush=True)
+
+    source_info = {
+        "source_uri": f"s3://{key}", "object_bytes": size, "input_rows": total_rows,
+        "row_groups": pf.metadata.num_row_groups, "selected_columns": ["bbox", "sources"],
+        "selected_column_compressed_bytes": selected_bytes,
+        "selected_column_compressed_bytes_total": int(sum(selected_bytes.values())),
+        "assigned_to_official_sample": int(counts["assigned_rows"].sum()),
+        "unmatched_outside_official_sample": unmatched_rows,
+        "assigned_rows_with_null_sources_list": null_source_rows,
+        "dataset_membership_counts": dict(sorted(dataset_membership_counts.items())),
+        "full_object_downloaded": False,
+        "overture_geometry_read": False,
+        "assigned_source_counts": {name: int(values.sum()) for name, values in counts.items()},
+    }
+    return counts, source_info
+
+
+def aggregate_source_mix(fs, region: str, tree, n_tracts: int) -> tuple[dict, dict, dict]:
+    """Aggregate source shares from only bbox+sources columns for buildings and places."""
+    building_counts, building_info = _aggregate_source_layer(
+        fs, region, "buildings", tree, n_tracts, classify_building_sources)
+    poi_counts, poi_info = _aggregate_source_layer(
+        fs, region, "pois", tree, n_tracts, classify_poi_sources)
+    building_total = building_counts["assigned_rows"]
+    poi_total = poi_counts["assigned_rows"]
+    building_map = {
+        "overture_building_osm_source_share": "osm_any",
+        "overture_building_microsoft_source_share": "microsoft_any",
+        "overture_building_esri_source_share": "esri_any",
+        "overture_building_other_source_share": "other_any",
+        "overture_building_no_dataset_source_share": "class_no_dataset",
+        "overture_building_ms_only_source_share": "class_microsoft_only",
+        "overture_building_ms_osm_source_share": "class_microsoft_osm",
+        "overture_building_osm_only_source_share": "class_osm_only",
+        "overture_building_esri_only_source_share": "class_esri_only",
+        "overture_building_other_or_mixed_source_share": "class_other_or_mixed",
+    }
+    poi_map = {
+        "overture_poi_meta_source_share": "meta_any",
+        "overture_poi_microsoft_source_share": "microsoft_any",
+        "overture_poi_other_upstream_source_share": "other_upstream_any",
+        "overture_poi_meta_not_microsoft_source_share": "class_meta_not_microsoft",
+        "overture_poi_microsoft_not_meta_source_share": "class_microsoft_not_meta",
+        "overture_poi_meta_and_microsoft_source_share": "class_meta_and_microsoft",
+        "overture_poi_other_without_meta_microsoft_source_share": "class_other_without_meta_microsoft",
+        "overture_poi_no_upstream_source_share": "class_no_upstream",
+        "overture_poi_sources_missing_share": "sources_missing",
+    }
+    features = _shares_from_counts(building_counts, building_total, building_map)
+    features.update(_shares_from_counts(poi_counts, poi_total, poi_map))
+    row_counts = {
+        "buildings": building_counts["assigned_rows"],
+        "pois": poi_counts["assigned_rows"],
+    }
+    return features, row_counts, {"buildings": building_info, "pois": poi_info}
+
+
+def merge_source_mix_features(cache_path: Path, sample_geoids: list[str],
+                              source_features: dict, source_row_counts: dict) -> dict:
+    """Append source-mix columns to the per-tract feature cache, preserving sample order."""
+    table = pq.read_table(cache_path)
+    ids = [str(value) for value in table.column("GEOID").to_pylist()]
+    if ids != list(sample_geoids) or len(ids) != len(set(ids)):
+        raise ValueError("base feature cache GEOIDs do not match official ordered sample IDs")
+    source_names = set(SOURCE_MIX_FEATURE_COLUMNS)
+    present_source_names = source_names & set(table.column_names)
+    if present_source_names and present_source_names != source_names:
+        raise ValueError("feature cache has a partial set of source-mix columns")
+    base_names = [name for name in table.column_names if name not in source_names]
+    base_table = table.select(base_names)
+    if set(base_names) & set(source_features):
+        raise ValueError("base feature cache collides with a source-mix column")
+    base_building = np.asarray(base_table.column("overture_buildings").to_numpy(), dtype=np.int64)
+    base_poi = np.asarray(base_table.column("overture_poi_all").to_numpy(), dtype=np.int64)
+    if not np.array_equal(base_building, source_row_counts["buildings"]):
+        raise ValueError("source-scan building assignment counts differ from existing feature cache")
+    if not np.array_equal(base_poi, source_row_counts["pois"]):
+        raise ValueError("source-scan POI assignment counts differ from existing feature cache")
+    arrays = list(base_table.columns)
+    names = list(base_table.column_names)
+    for name in SOURCE_MIX_FEATURE_COLUMNS:
+        if name not in source_features:
+            raise ValueError(f"source-mix column missing: {name}")
+        values = source_features[name]
+        if len(values) != len(ids):
+            raise ValueError(f"source-mix row count mismatch for {name}")
+        arrays.append(pa.array(values, type=pa.float64()))
+        names.append(name)
+    extended = pa.Table.from_arrays(arrays, names=names)
+    write_parquet(cache_path, extended)
+    return {"rows": extended.num_rows, "columns": extended.column_names,
+            "sha256": sha256(cache_path), "bytes": cache_path.stat().st_size}
+
+
 def aggregate_roads(fs, region: str, tree, tract_geoms, n_tracts: int) -> tuple[np.ndarray, dict]:
     key, size, pf = open_source(fs, region, "roads")
     total = selected = unmatched = 0
@@ -228,7 +483,8 @@ def aggregate_roads(fs, region: str, tree, tract_geoms, n_tracts: int) -> tuple[
                                 "elapsed_seconds": round(time.monotonic()-started, 2)}
 
 
-def build_feature_cache(fs, region: str, cache_path: Path, sample_geoids: list[str]) -> dict:
+def build_feature_cache(fs, region: str, cache_path: Path, sample_geoids: list[str],
+                        include_source_mix: bool = False) -> dict:
     acs_key = f"{BUCKET}/reference/{region}/{region}-census-acs-housing.parquet"
     acs_pf = pq.ParquetFile(fs.open_input_file(acs_key))
     acs = acs_pf.read(columns=["GEOID", "geometry"])
@@ -253,6 +509,13 @@ def build_feature_cache(fs, region: str, cache_path: Path, sample_geoids: list[s
     building_counts, building_info = aggregate_buildings(fs, region, tree, len(geoids))
     poi_counts, poi_info = aggregate_pois(fs, region, tree, len(geoids))
     road_lengths, road_info = aggregate_roads(fs, region, tree, tracts, len(geoids))
+    source_features = source_row_counts = source_info = None
+    if include_source_mix:
+        source_features, source_row_counts, source_info = aggregate_source_mix(
+            fs, region, tree, len(geoids))
+        if (not np.array_equal(source_row_counts["buildings"], building_counts) or
+                not np.array_equal(source_row_counts["pois"], poi_counts["all"])):
+            raise ValueError(f"source aggregation counts do not reconcile for {region}")
     type_shares = poi_info["estimated_unclassified_type_shares"]
     arrays = [pa.array(geoids), pa.array(road_lengths), pa.array(building_counts),
               pa.array(poi_counts["all"]), pa.array(poi_counts["fire"]),
@@ -261,19 +524,24 @@ def build_feature_cache(fs, region: str, cache_path: Path, sample_geoids: list[s
               pa.array([type_shares["fire"]] * len(geoids)),
               pa.array([type_shares["ems"]] * len(geoids)),
               pa.array([type_shares["schools"]] * len(geoids))]
-    table = pa.Table.from_arrays(arrays, names=["GEOID", "overture_road_km",
-        "overture_buildings", "overture_poi_all", "overture_poi_fire",
-        "overture_poi_ems", "overture_poi_schools", "overture_poi_unclassified",
-        "overture_unclassified_fire_share", "overture_unclassified_ems_share",
-        "overture_unclassified_schools_share"])
+    feature_names = ["GEOID", "overture_road_km", "overture_buildings", "overture_poi_all",
+        "overture_poi_fire", "overture_poi_ems", "overture_poi_schools",
+        "overture_poi_unclassified", "overture_unclassified_fire_share",
+        "overture_unclassified_ems_share", "overture_unclassified_schools_share"]
+    if source_features is not None:
+        arrays.extend(pa.array(source_features[name], type=pa.float64())
+                      for name in SOURCE_MIX_FEATURE_COLUMNS)
+        feature_names.extend(SOURCE_MIX_FEATURE_COLUMNS)
+    table = pa.Table.from_arrays(arrays, names=feature_names)
     write_parquet(cache_path, table)
     return {"region": region, "tracts": len(geoids), "acs_source_uri": f"s3://{acs_key}",
             "acs_rows": acs_pf.metadata.num_rows, "acs_tracts_used": len(geoids),
             "acs_extra_geometries_excluded": acs_pf.metadata.num_rows - len(geoids),
             "acs_row_groups": acs_pf.metadata.num_row_groups,
             "buildings": building_info, "pois": poi_info, "roads": road_info,
+            "source_mix": source_info,
             "feature_cache": str(cache_path), "feature_cache_sha256": sha256(cache_path),
-            "aggregate_schema_version": 4,
+            "aggregate_schema_version": 5 if include_source_mix else 4,
             "elapsed_seconds": round(time.monotonic()-started, 2)}
 
 
@@ -450,6 +718,8 @@ def main() -> int:
     parser.add_argument("--audit-out", type=Path, default=Path("reports/gap-estimator-audit.json"))
     parser.add_argument("--manifest", type=Path, default=Path("reports/candidates.json"))
     parser.add_argument("--refresh-features", action="store_true", help="re-scan allowed Overture feature columns")
+    parser.add_argument("--include-source-mix", action="store_true",
+                        help="include source-provenance shares; scans only sources+bbox for those source fields")
     args = parser.parse_args()
     workspace = args.workspace or (Path(os.environ["COMPETITION_WORKSPACE"]) if os.environ.get("COMPETITION_WORKSPACE") else None)
     if workspace is None:
@@ -470,9 +740,15 @@ def main() -> int:
         feature_meta_path = feature_path.with_suffix(".json")
         cached_meta = (json.loads(feature_meta_path.read_text(encoding="utf-8"))
                        if feature_meta_path.is_file() else {})
-        if (args.refresh_features or not feature_path.is_file() or
-                cached_meta.get("aggregate_schema_version") != 4):
-            info = build_feature_cache(fs, region, feature_path, [row["GEOID"] for row in sample])
+        acceptable_cache_versions = {5} if args.include_source_mix else {4, 5}
+        source_cache_missing = (cached_meta.get("aggregate_schema_version") == 5 and
+                                not set(SOURCE_MIX_FEATURE_COLUMNS).issubset(
+                                    set(pq.read_schema(feature_path).names)
+                                    if feature_path.is_file() else set()))
+        if (args.refresh_features or not feature_path.is_file() or source_cache_missing or
+                cached_meta.get("aggregate_schema_version") not in acceptable_cache_versions):
+            info = build_feature_cache(fs, region, feature_path, [row["GEOID"] for row in sample],
+                                       include_source_mix=args.include_source_mix)
             feature_meta_path.write_text(json.dumps(info, indent=2) + "\n", encoding="utf-8")
         else:
             info = cached_meta
