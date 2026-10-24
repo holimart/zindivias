@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "review_pair_status": "current best two successfully scored candidates as of 2026-10-24; not a final private-leaderboard selection",
+  "review_pair": [
+    {
+      "candidate_id": "C0",
+      "artifact": "reports/candidates/C0_all_zero.csv",
+      "sha256": "0edf8140123e2135489e5728fd71bce6f1e28a97f447ca411ba45fdbc02bc214",
+      "public_rmse": 0.107246299,
+      "submission_id": "uRRw9KpB",
+      "calibration_parameters": []
+    },
+    {
+      "candidate_id": "P4",
+      "artifact": "reports/candidates/P4_c1_shrink_alpha.csv",
+      "sha256": "8b329802d882ea4bdff2bfd8c465c160d6ffd9269cfbe28dce8be9e702b07d37",
+      "public_rmse": 0.091440198,
+      "submission_id": "ySXi73rd",
+      "calibration_parameters": [
+        "alpha_c1"
+      ]
+    }
+  ],
+  "lb_calibrated_constants": {
+    "alpha_c1": {
+      "value": 0.3288136427728255,
+      "transform": "P4 = alpha_c1 * C1, applied to all four score fields on official rows",
+      "provenance": {
+        "probe_id": "P4",
+        "date_utc": "2026-10-24",
+        "formula": "alpha = E[C1*y]/E[C1^2]; E[C1*y] = (MSE(C0)+E[C1^2]-RMSE(C1)^2)/2, using the C0/C1 public --status scores and E[C1^2] over the 9,379 official rows",
+        "C0_public_rmse": 0.107246299,
+        "C1_public_rmse": 0.146449112,
+        "derived_candidate_public_rmse": 0.09143872513056803,
+        "P4_actual_public_rmse": 0.091440198,
+        "P4_submission_id": "ySXi73rd",
+        "score_source": "shared orchestrator zindi_submit.py --status; public split"
+      }
+    }
+  },
+  "scope": {
+    "official_scored_rows": 9379,
+    "platform_template_rows": 9794,
+    "template_only_rows": 415,
+    "template_only_region": "eastern-wa",
+    "template_only_policy": "P4 uses the unweighted mean of each transformed field over the 9,379 official rows; C0 is zero. Template-only values are processing fills, not target evidence."
+  }
+}

@@ -1,0 +1,222 @@
+{
+  "method": "cold reproduction from public Source Cooperative Overture/ACS objects, official sample IDs and strata",
+  "run_started_utc": "2026-10-24T11:13:06.080289+00:00",
+  "code_review_pair": [
+    "C0",
+    "P4"
+  ],
+  "review_pair_is_final_private_selection": false,
+  "review_pair_note": "current best two successfully scored candidates as of 2026-10-24; not a final private-leaderboard selection",
+  "no_labels_or_removed_references_used": true,
+  "sample_score_placeholders_read": false,
+  "credentials_or_tokens_read": false,
+  "paid_apis_or_private_packages_used": false,
+  "fixed_seed": 0,
+  "randomness_used": false,
+  "calibration_file": "config/calibration.json",
+  "calibration_sha256": "b6bdc46f20993011fc857d32816574b88fa94b5cae311ad441805d75d79062b6",
+  "calibrated_constants": {
+    "alpha_c1": {
+      "value": 0.3288136427728255,
+      "transform": "P4 = alpha_c1 * C1, applied to all four score fields on official rows",
+      "provenance": {
+        "probe_id": "P4",
+        "date_utc": "2026-10-24",
+        "formula": "alpha = E[C1*y]/E[C1^2]; E[C1*y] = (MSE(C0)+E[C1^2]-RMSE(C1)^2)/2, using the C0/C1 public --status scores and E[C1^2] over the 9,379 official rows",
+        "C0_public_rmse": 0.107246299,
+        "C1_public_rmse": 0.146449112,
+        "derived_candidate_public_rmse": 0.09143872513056803,
+        "P4_actual_public_rmse": 0.091440198,
+        "P4_submission_id": "ySXi73rd",
+        "score_source": "shared orchestrator zindi_submit.py --status; public split"
+      }
+    }
+  },
+  "official_rows": 9379,
+  "template_rows": 9794,
+  "eastern_wa_template_only_rows": 415,
+  "template_projection": {
+    "path": "data/reproduction/template-geoid-region.csv",
+    "sha256": "692a2ca7b66af02d874bfdedd7111aba4aa65346997497444f9e4728681701e6",
+    "columns_used": [
+      "GEOID",
+      "region"
+    ]
+  },
+  "runtime": {
+    "python": "3.12.3",
+    "implementation": "CPython",
+    "numpy": "2.5.4",
+    "pyarrow": "26.0.0",
+    "shapely": "2.2.0",
+    "pyproj": "3.8.0"
+  },
+  "public_input_hashes": {
+    "maricopa-az": {
+      "sample": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+      "strata": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd"
+    },
+    "northern-ca": {
+      "sample": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+      "strata": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243"
+    },
+    "eastern-ok": {
+      "sample": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+      "strata": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54"
+    },
+    "south-central-tx": {
+      "sample": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e",
+      "strata": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354"
+    }
+  },
+  "cold_feature_rebuild": true,
+  "feature_rebuilds": {
+    "maricopa-az": {
+      "feature_cache_sha256": "54b83014db1a6f397091b649f4a317090fade8583715829f6e9137ca706f1e17",
+      "feature_cache_rows": 1593,
+      "aggregate_schema_version": 4,
+      "elapsed_seconds": 118.03,
+      "region_C1_mean": 0.19668435231946868,
+      "source_objects": {
+        "acs": {
+          "uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-census-acs-housing.parquet",
+          "rows": 1593
+        },
+        "buildings": {
+          "uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-buildings.parquet",
+          "bytes": 324720762,
+          "elapsed_seconds": 85.38
+        },
+        "pois": {
+          "uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-pois.parquet",
+          "bytes": 40987154,
+          "elapsed_seconds": 10.99
+        },
+        "roads": {
+          "uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-roads.parquet",
+          "bytes": 80052206,
+          "elapsed_seconds": 19.26
+        }
+      }
+    },
+    "northern-ca": {
+      "feature_cache_sha256": "0a9f7cebb26058a6f2e5ab8d6d70df6443ad62f558dcd65e742b161737cbeef2",
+      "feature_cache_rows": 591,
+      "aggregate_schema_version": 4,
+      "elapsed_seconds": 63.68,
+      "region_C1_mean": 0.15383899870291118,
+      "source_objects": {
+        "acs": {
+          "uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-census-acs-housing.parquet",
+          "rows": 591
+        },
+        "buildings": {
+          "uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-buildings.parquet",
+          "bytes": 130554079,
+          "elapsed_seconds": 43.27
+        },
+        "pois": {
+          "uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-pois.parquet",
+          "bytes": 16168720,
+          "elapsed_seconds": 4.93
+        },
+        "roads": {
+          "uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-roads.parquet",
+          "bytes": 43515963,
+          "elapsed_seconds": 13.12
+        }
+      }
+    },
+    "eastern-ok": {
+      "feature_cache_sha256": "338e4197146ca29a0823f731cfae0085345a3cdcbb6183b6cf4ec00e8f12fbf8",
+      "feature_cache_rows": 1192,
+      "aggregate_schema_version": 4,
+      "elapsed_seconds": 89.43,
+      "region_C1_mean": 0.11734124649737128,
+      "source_objects": {
+        "acs": {
+          "uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-census-acs-housing.parquet",
+          "rows": 1192
+        },
+        "buildings": {
+          "uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-buildings.parquet",
+          "bytes": 298882068,
+          "elapsed_seconds": 58.43
+        },
+        "pois": {
+          "uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-pois.parquet",
+          "bytes": 28848614,
+          "elapsed_seconds": 6.57
+        },
+        "roads": {
+          "uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-roads.parquet",
+          "bytes": 82239229,
+          "elapsed_seconds": 21.94
+        }
+      }
+    },
+    "south-central-tx": {
+      "feature_cache_sha256": "7252546e436c4febb066be0bf6d96539884c3327ffb7f119d309e963bb9eeafb",
+      "feature_cache_rows": 6003,
+      "aggregate_schema_version": 4,
+      "elapsed_seconds": 384.72,
+      "region_C1_mean": 0.1733665860728213,
+      "source_objects": {
+        "acs": {
+          "uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-census-acs-housing.parquet",
+          "rows": 6010
+        },
+        "buildings": {
+          "uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-buildings.parquet",
+          "bytes": 1269949045,
+          "elapsed_seconds": 254.36
+        },
+        "pois": {
+          "uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-pois.parquet",
+          "bytes": 179937096,
+          "elapsed_seconds": 38.55
+        },
+        "roads": {
+          "uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-roads.parquet",
+          "bytes": 299751270,
+          "elapsed_seconds": 89.15
+        }
+      }
+    }
+  },
+  "candidate_hashes": {
+    "C0": {
+      "artifact": "reports/candidates/C0_all_zero.csv",
+      "sha256": "0edf8140123e2135489e5728fd71bce6f1e28a97f447ca411ba45fdbc02bc214",
+      "manifest_sha256": "0edf8140123e2135489e5728fd71bce6f1e28a97f447ca411ba45fdbc02bc214",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "matches_manifest": true
+    },
+    "P4": {
+      "artifact": "reports/candidates/P4_c1_shrink_alpha.csv",
+      "sha256": "8b329802d882ea4bdff2bfd8c465c160d6ffd9269cfbe28dce8be9e702b07d37",
+      "manifest_sha256": "8b329802d882ea4bdff2bfd8c465c160d6ffd9269cfbe28dce8be9e702b07d37",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "matches_manifest": true
+    }
+  },
+  "score_scope_note": "Official score scope is the 9,379 authoritative sample IDs. The 415 eastern-WA records are present only for platform-format completion and use zero (C0) or pooled official-row P4 values; they are not target estimates.",
+  "profile": {
+    "tool": "/usr/bin/time -v",
+    "raw_output": "\tCommand being timed: \"env PYTHONHASHSEED=0 OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 COMPETITION_WORKSPACE=/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty REPRO_WORKSPACE=/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/repro-code-review REPRO_VENV=/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/.venvs/bias-reproduce PYTHON_BIN=python3.12 UV_BIN=/home/martin/hddProjects/langywrap/uv bash /home/martin/hddProjects/competitions-repos/zindi-bias-bounty/scripts/reproduce.sh --inner\"\n\tUser time (seconds): 461.37\n\tSystem time (seconds): 5.57\n\tPercent of CPU this job got: 68%\n\tElapsed (wall clock) time (h:mm:ss or m:ss): 11:17.13\n\tAverage shared text size (kbytes): 0\n\tAverage unshared data size (kbytes): 0\n\tAverage stack size (kbytes): 0\n\tAverage total size (kbytes): 0\n\tMaximum resident set size (kbytes): 364616\n\tAverage resident set size (kbytes): 0\n\tMajor (requiring I/O) page faults: 1\n\tMinor (reclaiming a frame) page faults: 670006\n\tVoluntary context switches: 20902\n\tInvoluntary context switches: 3070\n\tSwaps: 0\n\tFile system inputs: 728\n\tFile system outputs: 12576\n\tSocket messages sent: 0\n\tSocket messages received: 0\n\tSignals delivered: 0\n\tPage size (bytes): 4096\n\tExit status: 0\n"
+  }
+}

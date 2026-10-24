@@ -1,0 +1,57 @@
+{
+  "source_base_url": "https://data.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge",
+  "transport": "public HTTPS GET; no credentials or tokens",
+  "workspace_directory": "defined-flags-inputs",
+  "template_projection": {
+    "path_in_repo": "data/reproduction/template-geoid-region.csv",
+    "columns": [
+      "GEOID",
+      "region"
+    ],
+    "rows": 9794,
+    "sha256": "692a2ca7b66af02d874bfdedd7111aba4aa65346997497444f9e4728681701e6",
+    "provenance": "Projected only GEOID and region from the provided Data-page SampleSubmission.csv (raw SHA-256 32fb5c2984317d4abf8a98b88b7bb9d16e9eef1cda9a954c37da0a2cdd367f40); no score placeholders retained or used. The additional 415 eastern-WA IDs are template-only fills."
+  },
+  "regions": {
+    "maricopa-az": {
+      "sample": {
+        "remote_path": "reference/maricopa-az/maricopa-az-sample-submission.csv",
+        "sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31"
+      },
+      "strata": {
+        "remote_path": "strata/maricopa-az/maricopa-az-strata-tract-table.parquet",
+        "sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd"
+      }
+    },
+    "northern-ca": {
+      "sample": {
+        "remote_path": "reference/northern-ca/northern-ca-sample-submission.csv",
+        "sha256": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902"
+      },
+      "strata": {
+        "remote_path": "strata/northern-ca/northern-ca-strata-tract-table.parquet",
+        "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243"
+      }
+    },
+    "eastern-ok": {
+      "sample": {
+        "remote_path": "reference/eastern-ok/eastern-ok-sample-submission.csv",
+        "sha256": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4"
+      },
+      "strata": {
+        "remote_path": "strata/eastern-ok/eastern-ok-strata-tract-table.parquet",
+        "sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54"
+      }
+    },
+    "south-central-tx": {
+      "sample": {
+        "remote_path": "reference/south-central-tx/south-central-tx-sample-submission.csv",
+        "sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e"
+      },
+      "strata": {
+        "remote_path": "strata/south-central-tx/south-central-tx-strata-tract-table.parquet",
+        "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354"
+      }
+    }
+  }
+}

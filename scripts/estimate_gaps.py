@@ -283,8 +283,16 @@ def load_sample_and_strata(region: str, data_root: Path) -> tuple[list[dict], di
     sample_path = data_root / f"{region}-sample-submission.csv"
     if not strata_path.is_file() or not sample_path.is_file():
         raise FileNotFoundError(f"missing sample or strata for {region} under {data_root}")
-    sample = list(csv.DictReader(sample_path.open("r", newline="", encoding="utf-8-sig")))
-    ids = [row["GEOID"] for row in sample]
+    # Parse only the ID column from the sample. Its score fields are contract
+    # placeholders and are never loaded into prediction records.
+    with sample_path.open("r", newline="", encoding="utf-8-sig") as stream:
+        reader = csv.reader(stream)
+        header = next(reader, [])
+        if "GEOID" not in header:
+            raise ValueError(f"sample has no GEOID column: {sample_path}")
+        geoid_index = header.index("GEOID")
+        ids = [row[geoid_index] for row in reader]
+    sample = [{"GEOID": geoid} for geoid in ids]
     if len(ids) != len(set(ids)):
         raise ValueError(f"duplicate sample GEOID: {region}")
     wanted = ["GEOID", "ALAND", "pop_total", "pop_urban", "pct_urban", "ur_class"]
