@@ -215,10 +215,12 @@ def read_transport_cache(workspace: Path, region: str, ids: list[str]) -> tuple[
             if not math.isfinite(number) or number < 0:
                 raise ValueError(f"invalid road feature {column} for {geoid}")
             row[column] = number
-        row.update(estimate_transport_route_v2({
+        route_result = estimate_transport_route_v2({
             "overture_named_road_km_5070": row["overture_named_road_km_5070"],
             "overture_route_km": row["overture_route_km"],
-        }))
+        })
+        row["route_reference_transport_gap"] = route_result["transport_gap"]
+        row["route_reference_transport_defined"] = route_result["transport_defined"]
         records.append(row)
     return records, {"path": str(cache_path), "sha256": sha256_file(cache_path),
                      "rows": table.num_rows, "columns_read": CACHE_COLUMNS}
