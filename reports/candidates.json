@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "competition": "zindi-bias-bounty",
+  "authoritative_regions": [
+    "maricopa-az",
+    "northern-ca",
+    "eastern-ok",
+    "south-central-tx"
+  ],
+  "candidate_set": [
+    {
+      "candidate_id": "C0",
+      "name": "all-zero baseline",
+      "artifact": "reports/candidates/C0_all_zero.csv",
+      "sha256": "7546520ee671aaaa10fabe3fd4f6edaa7b88a1a424c9957bac29dcf7a0810f73",
+      "rows": 9379,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "pre_registered": true,
+      "description": "All score columns are zero; measures the public-subset RMS target score and is the baseline reference."
+    }
+  ],
+  "future_pre_registered_candidates": [
+    {
+      "candidate_id": "C1",
+      "name": "global neutral constant",
+      "definition": "All score fields 0.5; tests calibration around the bounded score midpoint."
+    },
+    {
+      "candidate_id": "C2",
+      "name": "provided-data estimator v0",
+      "definition": "The first accepted deterministic scripts/estimate_gaps.py output, with component fields and defined flags."
+    },
+    {
+      "candidate_id": "C3",
+      "name": "region-centred estimator v0",
+      "definition": "C2 predictions shifted by each region's own prediction mean to the pooled prediction mean; clipped to [0,1]. This tests whether region-level calibration helps in aggregate, not per-region truth."
+    }
+  ]
+}
