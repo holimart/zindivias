@@ -34,11 +34,11 @@ The steward's entries in `reports/submissions.jsonl` record a C0 upload attempt 
 
 ## Dry-run reproduction
 
-From the competition repo (the authoritative small samples are in `$COMPETITION_WORKSPACE/defined-flags-inputs`):
+From the competition repo (the authoritative downloaded samples are in `$COMPETITION_WORKSPACE/samples`; the workspace-level `SampleSubmission.csv` is legacy and must not be used):
 
 ```sh
 /home/martin/hddProjects/langywrap/uv run python scripts/build_c0_candidate.py \
-  --sample-dir "$COMPETITION_WORKSPACE/defined-flags-inputs" \
+  --sample-dir "$COMPETITION_WORKSPACE/samples" \
   --out reports/candidates/C0_all_zero.csv
 /home/martin/hddProjects/langywrap/uv run python scripts/submit_zindi.py \
   --candidate C0 --dry-run

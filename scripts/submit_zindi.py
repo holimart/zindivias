@@ -19,6 +19,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 REGIONS = ("maricopa-az", "northern-ca", "eastern-ok", "south-central-tx")
+AUTHORITATIVE_COLUMNS = [
+    "GEOID", "transport_gap", "building_gap", "poi_gap", "coverage_gap_score",
+]
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -51,7 +54,7 @@ def read_sample_ids(sample_dir: Path) -> tuple[list[str], list[dict]]:
         with path.open("r", newline="", encoding="utf-8-sig") as stream:
             reader = csv.DictReader(stream)
             header = reader.fieldnames or []
-            if not header or header[0] != "GEOID" or "coverage_gap_score" not in header:
+            if header != AUTHORITATIVE_COLUMNS:
                 raise ValueError(f"invalid authoritative sample header: {path}: {header}")
             if expected_header is None:
                 expected_header = header
@@ -92,6 +95,10 @@ def validate_candidate(candidate_path: Path, sample_dir: Path,
         reader = csv.DictReader(stream)
         if reader.fieldnames != registration.get("columns"):
             raise ValueError(f"candidate columns differ from manifest: {reader.fieldnames}")
+        if reader.fieldnames != AUTHORITATIVE_COLUMNS:
+            raise ValueError(
+                f"candidate columns differ from the official regional sample contract: {reader.fieldnames}"
+            )
         if len(reader.fieldnames or []) != len(set(reader.fieldnames or [])):
             raise ValueError("candidate has duplicate column names")
         if "GEOID" not in reader.fieldnames:
@@ -155,7 +162,7 @@ def main() -> int:
         workspace = os.environ.get("COMPETITION_WORKSPACE")
         if not workspace:
             parser.error("set COMPETITION_WORKSPACE or pass --sample-dir")
-        sample_dir = Path(workspace) / "defined-flags-inputs"
+        sample_dir = Path(workspace) / "samples"
     manifest = args.manifest.resolve()
     if args.artifact is None:
         registered = json.loads(manifest.read_text(encoding="utf-8"))

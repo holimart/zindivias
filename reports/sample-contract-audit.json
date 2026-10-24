@@ -1,0 +1,180 @@
+{
+  "method": "GEOID/header-only reconciliation; sample score placeholders were not read",
+  "authoritative_source": "official rules: reference/<region>/<region>-sample-submission.csv",
+  "authoritative_columns": [
+    "GEOID",
+    "transport_gap",
+    "building_gap",
+    "poi_gap",
+    "coverage_gap_score"
+  ],
+  "official_rules_required_submission_columns": [
+    "GEOID",
+    "coverage_gap_score"
+  ],
+  "official_rules_optional_component_columns": [
+    "transport_gap",
+    "building_gap",
+    "poi_gap"
+  ],
+  "submission_contract_note": "The official rule text requires GEOID and coverage_gap_score and says component scores may be included. Each authoritative regional sample has all five columns listed above; local frozen candidates use that five-column order.",
+  "authoritative_samples": [
+    {
+      "region": "maricopa-az",
+      "path": "samples/maricopa-az-sample-submission.csv",
+      "source_url": "https://data.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-sample-submission.csv",
+      "bytes": 44664,
+      "sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+      "rows": 1593,
+      "unique_geoids": 1593,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "geoid_read_as": "string"
+    },
+    {
+      "region": "northern-ca",
+      "path": "samples/northern-ca-sample-submission.csv",
+      "source_url": "https://data.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-sample-submission.csv",
+      "bytes": 16608,
+      "sha256": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+      "rows": 591,
+      "unique_geoids": 591,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "geoid_read_as": "string"
+    },
+    {
+      "region": "eastern-ok",
+      "path": "samples/eastern-ok-sample-submission.csv",
+      "source_url": "https://data.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-sample-submission.csv",
+      "bytes": 33436,
+      "sha256": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+      "rows": 1192,
+      "unique_geoids": 1192,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "geoid_read_as": "string"
+    },
+    {
+      "region": "south-central-tx",
+      "path": "samples/south-central-tx-sample-submission.csv",
+      "source_url": "https://data.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-sample-submission.csv",
+      "bytes": 168144,
+      "sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e",
+      "rows": 6003,
+      "unique_geoids": 6003,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "geoid_read_as": "string"
+    }
+  ],
+  "authoritative_rows": 9379,
+  "authoritative_unique_geoids": 9379,
+  "authoritative_region_counts": {
+    "maricopa-az": 1593,
+    "northern-ca": 591,
+    "eastern-ok": 1192,
+    "south-central-tx": 6003
+  },
+  "maricopa_includes_new_mexico_geoid": "35023970000",
+  "legacy_sample": {
+    "path": "SampleSubmission.csv",
+    "bytes": 919898,
+    "sha256": "32fb5c2984317d4abf8a98b88b7bb9d16e9eef1cda9a954c37da0a2cdd367f40",
+    "rows": 9794,
+    "unique_geoids": 9794,
+    "columns": [
+      "GEOID",
+      "coverage_gap_score",
+      "region",
+      "transport_gap",
+      "transport_defined",
+      "building_gap",
+      "building_defined",
+      "poi_gap",
+      "poi_defined",
+      "poi_gap_fire",
+      "poi_defined_fire",
+      "poi_gap_ems",
+      "poi_defined_ems",
+      "poi_gap_schools",
+      "poi_defined_schools",
+      "poi_gap_cbp",
+      "poi_defined_cbp"
+    ],
+    "region_counts": {
+      "eastern-ok": 1192,
+      "eastern-wa": 415,
+      "maricopa-az": 1593,
+      "northern-ca": 591,
+      "south-central-tx": 6003
+    }
+  },
+  "id_set_reconciliation": {
+    "overlap": 9379,
+    "authoritative_only_count": 0,
+    "authoritative_only_geoids": [],
+    "legacy_only_count": 415,
+    "legacy_only_geoids_csv": "reports/legacy-only-sample-ids.csv",
+    "legacy_only_geoids_csv_bytes": 4986,
+    "legacy_only_geoids_csv_sha256": "f7c9079a0869b60d378c9602bda0b0bd9c1c8924c6876c6b5e3b2615c7454148",
+    "legacy_only_region": "eastern-wa",
+    "legacy_only_are_exactly_eastern_wa": true,
+    "reconciliation_csv": "reports/sample-id-reconciliation.csv",
+    "reconciliation_csv_bytes": 254,
+    "reconciliation_csv_sha256": "2951ca3597268db8beab54b9354936fb71f00b7cffe2e3381ec91ff5ea5c5f6b"
+  },
+  "legacy_columns_not_in_authoritative_sample": [
+    "region",
+    "transport_defined",
+    "building_defined",
+    "poi_defined",
+    "poi_gap_fire",
+    "poi_defined_fire",
+    "poi_gap_ems",
+    "poi_defined_ems",
+    "poi_gap_schools",
+    "poi_defined_schools",
+    "poi_gap_cbp",
+    "poi_defined_cbp"
+  ],
+  "mirror_checks_defined_flags_inputs": {
+    "maricopa-az": {
+      "exists": true,
+      "sha256_matches_authoritative_download": true
+    },
+    "northern-ca": {
+      "exists": true,
+      "sha256_matches_authoritative_download": true
+    },
+    "eastern-ok": {
+      "exists": true,
+      "sha256_matches_authoritative_download": true
+    },
+    "south-central-tx": {
+      "exists": true,
+      "sha256_matches_authoritative_download": true
+    }
+  },
+  "platform_contract_status": "unresolved; previous steward-recorded processing error named missing eastern-wa IDs, while official rules and regional samples specify the 9,379-ID contract; no upload performed by this audit"
+}

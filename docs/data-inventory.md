@@ -37,12 +37,25 @@ Local checksums (SHA-256) from the authorized workspace:
 - `northern-ca`: 591/591 sample IDs matched; 0 unmatched; ACS table has 591 distinct GEOIDs.
 - `eastern-ok`: 1,192/1,192 sample IDs matched; 0 unmatched; ACS table has 1,192 distinct GEOIDs.
 - `south-central-tx`: 6,003/6,003 sample IDs matched; 0 unmatched; ACS table has 6,010 distinct GEOIDs.
-- The sample also contains 415 `eastern-wa` rows, outside the four requested package regions; these were not included in the bucket inventory or join acceptance.
+- The legacy workspace-level `SampleSubmission.csv` also contains 415 `eastern-wa` rows, outside the four official package regions; these were not included in the four-region join acceptance and are listed in `reports/legacy-only-sample-ids.csv`.
 - Across the four requested sample regions: 9,379/9,379 IDs matched; zero unmatched. South-central Texas has seven additional ACS tracts not represented in its sample.
 
 ## Current authoritative scored samples (2026-10-24 rules update)
 
-The official per-region sample files under `reference/<region>/<region>-sample-submission.csv` supersede the earlier workspace-level `SampleSubmission.csv` (9,794 rows, which includes 415 eastern-WA records outside the scored regions). The authoritative files have columns `GEOID, transport_gap, building_gap, poi_gap, coverage_gap_score` and exactly 9,379 rows total: Maricopa 1,593, Northern California 591, Eastern Oklahoma 1,192, and South-Central Texas 6,003. GEOID is read as text. For the defined-flag screen, these samples and the four matching `strata-tract-table.parquet` files were copied to `$COMPETITION_WORKSPACE/defined-flags-inputs`; byte sizes and SHA-256 hashes are in `reports/defined-flag-audit.json`. No sample score columns are used as labels.
+The official per-region files at `reference/<region>/<region>-sample-submission.csv` supersede the earlier workspace-level `SampleSubmission.csv`. They were fetched to `$COMPETITION_WORKSPACE/samples/`; byte sizes, SHA-256 hashes, URLs and header checks are recorded in `reports/sample-contract-audit.json`. Each has columns `GEOID,transport_gap,building_gap,poi_gap,coverage_gap_score` and GEOID is parsed as text. The same sample bytes are mirrored in `$COMPETITION_WORKSPACE/defined-flags-inputs` for the earlier estimator run; no sample score placeholders are used as labels.
+
+### ID-set reconciliation (authoritative samples vs legacy workspace sample)
+
+| Region | Authoritative | Legacy | Overlap | Authoritative-only | Legacy-only |
+|---|---:|---:|---:|---:|---:|
+| Maricopa AZ | 1,593 | 1,593 | 1,593 | 0 | 0 |
+| Northern CA | 591 | 591 | 591 | 0 | 0 |
+| Eastern OK | 1,192 | 1,192 | 1,192 | 0 | 0 |
+| South-Central TX | 6,003 | 6,003 | 6,003 | 0 | 0 |
+| eastern-wa | 0 | 415 | 0 | 0 | 415 |
+| **Total** | **9,379** | **9,794** | **9,379** | **0** | **415** |
+
+All 415 legacy-only IDs are eastern-WA tracts and are enumerated in `reports/legacy-only-sample-ids.csv`. The official Maricopa sample includes New Mexico tract `35023970000`. Official regional samples have five score columns as above; the official rule requires GEOID and coverage-gap score and permits the three component scores. The legacy 17-column file also has `region` and defined/component-specific columns. The prior steward-recorded platform processing error asked for the 415 extra legacy IDs, so the live platform contract remains unresolved; do not upload until steward clarification. The committed reconciliation CSV, exact IDs, per-file size/hash manifest and reproducible audit are `reports/sample-id-reconciliation.csv`, `reports/legacy-only-sample-ids.csv`, `reports/sample-contract-audit.json`, and `scripts/audit_sample_contract.py`.
 
 ## Parquet object inventory
 
