@@ -816,3 +816,113 @@ across commits in that one field only. Final hashes measured after the last buil
 `tests/test_audit_discovery_postfire_county_bootstrap.py` `4c6a7c6a14cec0f8` (32 tests). Final state:
 claim audit `88/88` claims and `1035/1035` tokens with `17/17` reproduce commands exiting zero,
 criteria audit `16/16` criteria and `27/27` pointers, packet verifier `PASS`, suite `372 passed`.
+
+### 2026-10-25 — row `bias60-harness`, closed `fixed`
+
+Built the common harness the other bias60 rows depend on: one interface (provided inputs in, per-tract
+value for the idea's component out), one parquet per idea with a recorded SHA-256, a derived registry
+for all 60 spec ideas, and the label-free orthogonality report on the study tracts. Nothing was
+uploaded, no reference layer or label was read, and no lab geography is touched.
+
+New deliverables (SHA-256 first 16):
+
+- `src/bias60/` — `spec.py` `3b0cf558e723474d` (parses the operator-frozen memo into 60 idea records),
+  `registry`-builder + runner in `harness.py` `5243910cb86ecaf4`, `inputs.py` `eb50dfe601dd42e6`
+  (column-declared provided-input access), `contracts.py` `a804e797cc2d4945` (fixed
+  `clip(1-O/E,0,1)` mapping plus the row-level output contract), `orthogonality.py` `59e8b7a610990cea`,
+  `determinism.py` `216faf199f9e92cd`, and the three seed ideas `ideas/tm.py` `42eaf56d656af6fe`,
+  `ideas/sc.py` `7b58e0993b55c264`, `ideas/mx.py` `a93fda7e62f3904b`.
+- `scripts/build_ideas_registry.py` `fd56f56b65dd3a8d`, `scripts/run_bias60_ideas.py` `5635028ed97a072e`,
+  `scripts/report_ideas_orthogonality.py` `d2812ab09c688b2f`.
+- `config/bias60-harness-preregistered.json` `d688fae4c7a11542` — pins the spec SHA-256
+  (`8521753accde328e…`), the vocabulary, the forbidden path/value/column tokens, the orthogonality
+  thresholds, and the three seed definitions.
+- `config/ideas.json` `4f753b1496910a44` — **generated, never hand-written**: 60 ids, 12 families × 5,
+  each with id, family, component, kind, inputs, cost, plus recipe/signal/failure-mode carried from the
+  spec. Derived counts: components R 15, Est 13, B 12, F 12, C 6, "all" 2; kinds 13 gap / 47 covariate;
+  costs 38 cheap / 14 medium / 8 heavy.
+- `reports/ideas-harness.json` `581798e9651c6f37`, `reports/ideas-orthogonality.json`
+  `933a75086883e3e6`, `tests/test_bias60_harness.py` `83757cdbb18ed39c` (43 tests).
+
+Design decisions worth keeping:
+
+- **The registry is derived from the spec and hash-pinned.** `bias60.spec` parses section 2 of
+  `$ORCHESTRATOR_ROOT/docs/research/bias-60-ideas-2026-10.md`; the build fails closed if its SHA-256
+  differs from the pin. Classification rules (primary component = first token of the spec
+  `*Component:*` line with the literal `all` preserved; kind = gap only when the per-tract recipe states
+  an explicit clipped-ratio quantity, else covariate; cost = the heaviest token so "cheap to medium"
+  budgets as medium) are recorded inside the registry under `derivation`.
+- **One idea = one function, one parquet per idea.** `$COMPETITION_WORKSPACE/ideas/<id>.parquet` with
+  columns `GEOID, region, idea, family, component, channel, value, defined`; one row per
+  (GEOID, component, channel) so a multi-component idea like Mx4 can put the county reference-side share
+  on F and the tract's own share on B.
+- **Undefined is not zero.** `clip_one_minus_ratio` returns a `defined` mask and the contract requires
+  every undefined row to carry exactly `0.0`, so an uncovered CarbonPlan cell or a zero-unfiltered-length
+  tract cannot become a fabricated total gap. No mean fill, no zero fill, no dropped rows.
+- **The official GEOID list comes only through the frozen reader** in
+  `scripts/audit_v2_component_masks.py::official_scored_ids`; score placeholder cells are never opened.
+  Every column read is recorded and must be in the preregistered declared list; every opened path is
+  screened against the forbidden tokens.
+- **Both road layers are measured on the same basis.** Sc5 clips named-class segments into the official
+  tract polygons in EPSG:5070 for *both* `roads` and `roads-unfiltered`, and the filtered measurement
+  must reconcile with the lane's cached `overture_named_road_km_5070` to a relative tolerance of 1e-6 —
+  so a length-convention mismatch cannot masquerade as numerator exclusion.
+
+Measured this turn, from provided data only (9,379 official tracts):
+
+- **Sc5 is a measured null and the harness is what proved it.** Named-class rows and clipped lengths are
+  identical between `roads` and `roads-unfiltered` in all four regions (rows_named filtered/unfiltered:
+  Maricopa 57,516/57,516; Northern CA 26,050/26,050; Eastern OK 59,436/59,436; South-Central TX
+  353,790/353,790), the gap is float noise (max 1.4e-15), and 0 tracts are excluded entirely. The
+  organiser's pre-filter removes no named-class segment — the exact failure mode the spec predicted for
+  its own top-10 idea. The orthogonality report declares both Sc5 columns
+  `numerically_null_columns` rather than reporting noise as signal.
+- **Tm1** (two-release building churn, gap-scale via the fixed mapping): defined 9,377/9,379, per-region
+  share of tracts with a positive drop 56.8% (Maricopa), 68.2% (N. CA), 71.1% (E. OK), 66.6% (S. CTX);
+  gap max 0.212, over-coverage covariate max 2.25.
+- **Mx4** (Esri Community Maps presence): 297 counties aggregated, county Esri share 0–0.614, tract
+  Esri-only share 0–0.998; the 2 zero-building tracts of the earlier mask audit stay undefined rather
+  than being zero-filled.
+- **Orthogonality** (label-free, spec 3.3): 6 columns evaluated, all included at ≥98.59% coverage;
+  condition number 9.95; 5 clusters on 1-|rho| with average linkage; the only pair above |rho| > 0.8 is
+  Sc5's own gap/covariate (0.816); 4 columns exceed VIF 10 and are flagged, not dropped; MTMM direction
+  is right — mean |rho| within component 0.230 versus 0.077 between components.
+
+Commands and output:
+
+- `COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with pyproj==3.8.0 python scripts/build_ideas_registry.py`
+  → `PASS ideas registry: all 60 spec ids carry family, component, kind, inputs and cost, the three seed
+  ideas are implemented across distinct components, and the spec hash matches its pin`; `--check-only` →
+  `unchanged`
+- same environment, `python scripts/run_bias60_ideas.py` → `PASS bias60 harness: every implemented idea
+  produced one contract-valid parquet over the official scored tracts, no forbidden source or undeclared
+  column was read, and the run is reproducible` (all 11 gates true; 18,758 rows = 9,379 × 2 emissions per
+  idea; ~4.5 min cold, cached reruns seconds); `--check-only` → `unchanged`
+- same environment, `python scripts/report_ideas_orthogonality.py` → `PASS ideas orthogonality: every
+  implemented estimator was measured label-free on the study tracts with correlation, VIF, condition
+  number and 1 - |rho| clustering, and the merge thresholds were applied exactly` (16 gates true);
+  `--check-only` → `unchanged`
+- negative controls, each exiting non-zero with the expected gate: harness `drop_idea` →
+  `every_idea_wrote_one_parquet`, `duplicate_geoid` → `official_geoid_partition_exact`,
+  `undeclared_column` → `no_undeclared_column_read`, `forbidden_source` → `no_forbidden_source_accessed`,
+  `nondeterministic_rerun` → `deterministic_rerun`; orthogonality `drop_column` →
+  `evaluated_columns_are_the_implemented_ideas`, `duplicate_column` → `no_duplicate_columns`,
+  `break_symmetry` → `correlation_is_symmetric`, `low_coverage` → `coverage_threshold_enforced`;
+  registry `drop_idea` → `registry_holds_all_60_spec_ids`, `wrong_spec_hash` → the pinned-hash refusal.
+  Tampered parquets go to `/tmp` only, and the committed reports were rebuilt afterwards.
+- full suite: `/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with pytest python -m pytest -q`
+  → `415 passed` (43 new).
+
+Determinism: the run-time commit fields (`environment.git_commit`, `code_commit_at_run`) are isolated in
+`bias60/determinism.py` and excluded from the comparison and from `summary.report_sha256`, exactly as in
+the county-bootstrap row; everything else must be byte-identical, and no report carries a temporal key
+(`wall_clock_hits == []`, asserted for all three committed JSON artifacts).
+
+Follow-up filed with the shared command: `bias60-numerator-definition-screen` (P1) — screen Sc1 and Sc4
+now that Sc5 shows the shipped filter is class-neutral, and record them as measured-null with numbers if
+both shares stay below 1% in every region. Command output: `appended bias60-numerator-definition-screen
+for comp-zindi-bias-bounty -> /home/martin/hddProjects/competitionsall/.langywrap/backlogs/competitions.jsonl`.
+
+Next rows in the ladder can now register ideas by id: `bias60-family-*` rows add functions under
+`src/bias60/ideas/`, and `bias60-track-a-combiner` consumes `reports/ideas-orthogonality.json` for the
+pre-registered merge decisions.

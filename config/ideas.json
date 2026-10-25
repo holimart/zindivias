@@ -1,0 +1,1511 @@
+{
+  "derivation": {
+    "component_rule": "first component token in the spec *Component:* line; the literal 'all' is preserved as component 'all' with the full component list",
+    "cost_rule": "the heaviest cost token in the spec *Cost:* line, so 'cheap to medium' is budgeted as 'medium'",
+    "inputs_rule": "comma-split of the spec *Inputs:* line",
+    "kind_rule": "'gap' when the per-tract recipe contains an explicit clipped-ratio or gap marker, otherwise 'covariate' (spec section 3.1); the matched marker is recorded per idea as kind_evidence",
+    "parser": "bias60.spec.parse_spec",
+    "status_rule": "'implemented' when an idea function is registered under the same id, otherwise 'declared'"
+  },
+  "ideas": [
+    {
+      "component": "R",
+      "components": [
+        "R"
+      ],
+      "cost": "medium",
+      "failure_mode": "the organiser may have clipped with a tolerance or snapped TIGER roads to the boundary; or Overture and TIGER may both come from the TIGER 2005 import and coincide.",
+      "family": "G",
+      "id": "G1",
+      "implementation": null,
+      "inputs": [
+        "`roads` (named classes)",
+        "`acs` tract polygons"
+      ],
+      "kind": "gap",
+      "kind_evidence": "ĝ",
+      "orthogonal_because": "this is positional-accuracy information about where a road sits relative to the boundary, independent of class, provenance or density.",
+      "recipe": "f_b = (named-class length within a 25 m buffer of the tract boundary) / (named-class length within the tract plus that 25 m buffer). Feature ĝ = f_b × p_side with p_side = 0.5 (symmetric prior). Also emit f_b itself.",
+      "recipe_scope": "per tract",
+      "signal": "Census tract boundaries often follow major roads. When a TIGER S1100/S1200 line lies on the boundary, its clipped length is decided by sub-metre geometry. An Overture centreline offset by 3–15 m falls on the other side and creates a spurious full gap in one tract and a surplus in its neighbour. Surpluses are clipped at 0, so the asymmetric clip leaves a net positive expected gap.",
+      "status": "declared",
+      "title": "Boundary-coincident highway share"
+    },
+    {
+      "component": "R",
+      "components": [
+        "R"
+      ],
+      "cost": "medium",
+      "failure_mode": "TIGER's convention varies by state; ramps and frontage roads (TX!) look like parallel carriageways.",
+      "family": "G",
+      "id": "G2",
+      "implementation": null,
+      "inputs": [
+        "`roads` named classes: geometry",
+        "`access_restrictions`/heading (oneway)",
+        "`names`",
+        "`routes`"
+      ],
+      "kind": "gap",
+      "kind_evidence": "gap variant",
+      "orthogonal_because": "this is a structural representation convention, not presence.",
+      "recipe": "pair parallel one-way named-class segments (Hausdorff < 60 m, opposite headings, same name or route). Compute L_single = L − 0.5·L_paired. Emit d = L_paired/L and two gap variants (single-line and dual-line conventions) against any E.",
+      "recipe_scope": "per tract",
+      "signal": "OSM/Overture maps divided highways as two one-way carriageways. TIGER sometimes does and sometimes uses a single line. The organiser's 0.71–1.59 regional ratio range is partly this. Where Overture is single-line but TIGER is dual (or the reverse), the ratio moves by up to 2×.",
+      "status": "declared",
+      "title": "Dual-carriageway centreline normalisation"
+    },
+    {
+      "component": "B",
+      "components": [
+        "B",
+        "Est"
+      ],
+      "cost": "heavy",
+      "failure_mode": "big-box retail and warehouses are genuinely one structure in Microsoft too, so restrict to residential/unknown class and area below 5,000 m².",
+      "family": "G",
+      "id": "G3",
+      "implementation": null,
+      "inputs": [
+        "`buildings` geometry and `sources` (dataset)"
+      ],
+      "kind": "gap",
+      "kind_evidence": "ĝ",
+      "orthogonal_because": "it uses geometry × provenance, not the source share itself. The screened source prior used shares only, and the screened morphology prior used shape without provenance.",
+      "recipe": "a_ref = median area of Microsoft-only footprints in the tract, falling back to the county value. For each OSM/Esri-only polygon i: k̂_i = max(1, area_i/a_ref) capped at 50. Deficit D = Σ(k̂_i − 1). ĝ_B = D/(N + D).",
+      "recipe_scope": "per tract",
+      "signal": "by conflation priority, one OSM or Esri polygon covering a row of townhouses, a strip mall or a mobile-home cluster replaces k intersecting Microsoft footprints. Microsoft US counts k; Overture counts 1.",
+      "status": "declared",
+      "title": "Absorbed-footprint deficit"
+    },
+    {
+      "component": "B",
+      "components": [
+        "B"
+      ],
+      "cost": "medium",
+      "failure_mode": "parks, school fields and retention basins (Maricopa!) create real holes. Exclude cells that contain a POI of park or school type or are near `infrastructure` water features.",
+      "family": "G",
+      "id": "G4",
+      "implementation": null,
+      "inputs": [
+        "`buildings` centroids",
+        "`acs` polygons"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "share",
+      "orthogonal_because": "it uses spatial point-pattern holes, not counts or sources.",
+      "recipe": "on a 100 m grid, take cells inside the tract whose 8-neighbourhood ring is at least 60% occupied but which contain no building. Emit the void share among \"should-be-built\" cells and the expected missing count = voids × local buildings per cell.",
+      "recipe_scope": "per tract",
+      "signal": "ML footprints have tile- and imagery-scene artefacts. Overture's Microsoft source is the global ML set, which is newer than the US release, so a scene that failed in one and not the other leaves a rectangular hole inside an otherwise built area.",
+      "status": "declared",
+      "title": "Building coverage voids (tile dropout)"
+    },
+    {
+      "component": "Est",
+      "components": [
+        "Est",
+        "F"
+      ],
+      "cost": "cheap",
+      "failure_mode": "real multi-tenant towers and malls. Downweight stacks inside large commercial footprints.",
+      "family": "G",
+      "id": "G5",
+      "implementation": null,
+      "inputs": [
+        "`pois` geometry and names"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "share",
+      "orthogonal_because": "this is positional-precision information. The screened dedup step removed *same-name* duplicates within 50 m; this targets *different-name* exact collisions.",
+      "recipe": "s_in = places sharing exact coordinates with at least 5 distinct names. Collect stacks within 3 km. Emit s_in/N (surplus) and an \"exported deficit\" = stack mass within 3 km that is not in the tract, apportioned by tract share of buildings.",
+      "recipe_scope": "per tract",
+      "signal": "places geocoded to a ZIP, parcel or municipal centroid stack on identical coordinates with different names. A tract containing such a stack absorbs its neighbours' establishments, while the true tracts look empty against CBP.",
+      "status": "declared",
+      "title": "POI coordinate-collision index (stacked geocodes)"
+    },
+    {
+      "component": "R",
+      "components": [
+        "R"
+      ],
+      "cost": "heavy",
+      "failure_mode": "real downgrades at city limits, where TIGER also changes.",
+      "family": "T",
+      "id": "T1",
+      "implementation": null,
+      "inputs": [
+        "`roads-unfiltered`: class",
+        "names",
+        "connectors"
+      ],
+      "kind": "gap",
+      "kind_evidence": "ĝ",
+      "orthogonal_because": "the screened connector-graph idea measured connectivity and degree. This uses semantic continuity along a stroke.",
+      "recipe": "build strokes from name continuity plus a deflection angle under 30° (Jiang et al. natural roads). For strokes whose length outside the tract is at least 70% named-class, sum the non-named-class length inside the tract (L_drop). ĝ = L_drop/(L_named + L_drop).",
+      "recipe_scope": "per tract",
+      "signal": "a named highway (same `names.primary` or route) that is primary/secondary on both sides but tertiary inside one tract shows the mapper's class boundary, not the real highway. TIGER keeps S1200 continuous.",
+      "status": "declared",
+      "title": "Class-drop at a continuous stroke"
+    },
+    {
+      "component": "R",
+      "components": [
+        "R"
+      ],
+      "cost": "medium",
+      "failure_mode": "service ramps to malls or ports mis-tagged as links.",
+      "family": "T",
+      "id": "T2",
+      "implementation": null,
+      "inputs": [
+        "`roads-unfiltered`: class",
+        "subclass",
+        "connectors"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "default: no gap marker in the per-tract recipe",
+      "orthogonal_because": "it is evidence from network attachments, not the class of the road itself.",
+      "recipe": "count link segments whose connectors join only non-named-class segments, and the length of those attached segments within 2 km.",
+      "recipe_scope": "per tract",
+      "signal": "`motorway_link`/`trunk_link`/`primary_link` segments, or ramps (subclass link), imply a limited-access road. If the ramp's attached carriageway is not a named class, TIGER S1100/S1200 probably still contains it.",
+      "status": "declared",
+      "title": "Orphan ramps"
+    },
+    {
+      "component": "R",
+      "components": [
+        "R"
+      ],
+      "cost": "heavy",
+      "failure_mode": "rail overpasses, which can be excluded using `rail`.",
+      "family": "T",
+      "id": "T3",
+      "implementation": null,
+      "inputs": [
+        "`roads-unfiltered` geometry",
+        "connectors",
+        "`road_flags`",
+        "`level_rules`; `infrastructure` (bridges)"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "share",
+      "orthogonal_because": "it uses 3-D topology (planarity violation), not 2-D connectivity.",
+      "recipe": "count crossings without a shared connector involving at least one tertiary or higher segment that is not a named class. Emit that count normalised by tract area.",
+      "recipe_scope": "per tract",
+      "signal": "two segments that cross geometrically without sharing a connector, or that carry `level_rules`≠0, `is_bridge` or `is_tunnel` flags, form an overpass. Overpasses on non-named-class roads point to freeway-like infrastructure that TIGER classes as S1100/S1200.",
+      "status": "declared",
+      "title": "Non-planar crossings (grade separation)"
+    },
+    {
+      "component": "R",
+      "components": [
+        "R"
+      ],
+      "cost": "heavy",
+      "failure_mode": "urban grids, where betweenness is diffuse.",
+      "family": "T",
+      "id": "T4",
+      "implementation": null,
+      "inputs": [
+        "`roads-unfiltered` (primary through tertiary plus unclassified)",
+        "`tracts` population centroids"
+      ],
+      "kind": "gap",
+      "kind_evidence": "ĝ",
+      "orthogonal_because": "it is functional (flow) information.",
+      "recipe": "run sampled edge betweenness on each county plus a buffer. ĝ = (length in the top betweenness decile that is not a named class) / (top-decile length).",
+      "recipe_scope": "per tract",
+      "signal": "TIGER secondary roads are the arteries that carry inter-place traffic. Edge betweenness between population centroids on a coarse graph finds them whatever the class tag says.",
+      "status": "declared",
+      "title": "Through-traffic betweenness without a named class"
+    },
+    {
+      "component": "C",
+      "components": [
+        "C"
+      ],
+      "cost": "heavy",
+      "failure_mode": "ranch and farm compounds on long private drives that are genuinely unmapped in TIGER too.",
+      "family": "T",
+      "id": "T5",
+      "implementation": null,
+      "inputs": [
+        "`buildings` centroids",
+        "`roads-unfiltered`"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "covariate",
+      "orthogonal_because": "it is a cross-layer *spatial* relation, neither a count nor a source.",
+      "recipe": "fraction of buildings with no road within 150 m.",
+      "recipe_scope": "per tract",
+      "signal": "the share of buildings more than 150 m from any road segment measures local mapping effort and rurality of ML-only areas. Low road attachment marks areas OSM mappers never touched. These also have weak POI coverage and unusual road classing.",
+      "status": "declared",
+      "title": "Building-to-street attachment"
+    },
+    {
+      "component": "R",
+      "components": [
+        "R"
+      ],
+      "cost": "medium",
+      "failure_mode": "bot edits inflate versions.",
+      "family": "M",
+      "id": "M1",
+      "implementation": null,
+      "inputs": [
+        "`roads` `sources`"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "share",
+      "orthogonal_because": "it is contributor-activity history. The screened freshness idea used timestamps only.",
+      "recipe": "length-weighted mean version of named-class and of tertiary segments, and the share of tertiary length at version ≤ 2.",
+      "recipe_scope": "per tract",
+      "signal": "for OSM-sourced segments, `sources.record_id` encodes the way and its version (e.g. `w123@7`) **[U: confirm the format in the package]**. Version 1–2 ways are untouched TIGER imports whose class came from TIGER CFCC, so they agree with TIGER. Heavily edited ways have been reclassified by mappers or DOT conventions and diverge in either direction.",
+      "status": "declared",
+      "title": "OSM edit depth of road ways"
+    },
+    {
+      "component": "F",
+      "components": [
+        "F",
+        "Est"
+      ],
+      "cost": "cheap",
+      "failure_mode": "sparse field. It may be close to zero everywhere in the US, so check the coverage matrix first.",
+      "family": "M",
+      "id": "M2",
+      "implementation": null,
+      "inputs": [
+        "`pois.brand.wikidata`",
+        "`infrastructure.wikidata`"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "share",
+      "orthogonal_because": "it is external-identity metadata.",
+      "recipe": "linked share among facility-name-regex places, plus linked share among all places.",
+      "recipe_scope": "per tract",
+      "signal": "places and infrastructure with a `wikidata` or `brand.wikidata` link are curated entities. Schools and fire stations with wikidata links are more likely to be categorised correctly. Tracts where facility-like names lack linkage carry more mis-categorisation risk.",
+      "status": "declared",
+      "title": "Wikidata / knowledge-graph linkage density"
+    },
+    {
+      "component": "Est",
+      "components": [
+        "Est",
+        "F"
+      ],
+      "cost": "cheap",
+      "failure_mode": "ZIPs routinely straddle tracts, so use only postcodes absent from the tract and its first-order neighbours.",
+      "family": "M",
+      "id": "M3",
+      "implementation": null,
+      "inputs": [
+        "`pois.addresses`"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "share",
+      "orthogonal_because": "it uses textual location metadata, unlike G5's coordinates.",
+      "recipe": "mismatch share. Also the \"incoming\" mismatch, where a place's address is in another postcode but it was placed here.",
+      "recipe_scope": "per tract",
+      "signal": "a place whose `addresses.postcode` or locality disagrees with the tract's dominant postcode (the mode across places in the tract) is probably mis-geocoded. Mis-geocoding moves POIs between tracts.",
+      "status": "declared",
+      "title": "Address–locality mismatch"
+    },
+    {
+      "component": "Est",
+      "components": [
+        "Est"
+      ],
+      "cost": "cheap",
+      "failure_mode": "interstate interchanges, which are all chains but also sparse in CBP.",
+      "family": "M",
+      "id": "M4",
+      "implementation": null,
+      "inputs": [
+        "`pois.brand`",
+        "`pois.sources.dataset`"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "share",
+      "orthogonal_because": "it is about the composition of the establishment universe, not volume.",
+      "recipe": "brand share and brand count per housing unit.",
+      "recipe_scope": "per tract",
+      "signal": "chain outlets (`brand` present, AllThePlaces source) are near-complete in Overture. CBP also counts non-storefront establishments: contractors, offices, home-based businesses and agriculture services. Tracts dominated by chains show apparent completeness; tracts with low chain share hide large non-storefront deficits.",
+      "status": "declared",
+      "title": "Brand / chain share"
+    },
+    {
+      "component": "B",
+      "components": [
+        "B",
+        "R"
+      ],
+      "cost": "medium",
+      "failure_mode": "the property field may be mostly empty **[U]**.",
+      "family": "M",
+      "id": "M5",
+      "implementation": null,
+      "inputs": [
+        "`buildings.sources.property`",
+        "`roads.sources.property`"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "share",
+      "orthogonal_because": "it measures conflation depth, not which provider is present.",
+      "recipe": "share of features whose sources list has more than one distinct property path.",
+      "recipe_scope": "per tract",
+      "signal": "Overture records which source supplied which property, for example geometry from Microsoft with height or class from OSM. Mixed-property features show active conflation and mapping attention. Pure ML geometry with no property-level enrichment marks unattended areas.",
+      "status": "declared",
+      "title": "Attribute-level provenance (`sources.property`)"
+    },
+    {
+      "component": "B",
+      "components": [
+        "B"
+      ],
+      "cost": "cheap",
+      "failure_mode": "CarbonPlan may filter buildings, for example to CONUS or by size. The Eastern OK q10 ratio of 0.989 shows the two are nearly identical, so the signal sits in the tails.",
+      "family": "Tm",
+      "id": "Tm1",
+      "implementation": "bias60.ideas.tm::tm1",
+      "inputs": [
+        "`strata.carbonplan_buildings`",
+        "the package building count"
+      ],
+      "kind": "gap",
+      "kind_evidence": "gap proxy",
+      "orthogonal_because": "it is the only true time-difference signal in the package.",
+      "recipe": "Δ; emit max(0, −Δ) as a gap proxy and max(0, Δ) as an over-coverage covariate.",
+      "recipe_scope": "per tract",
+      "signal": "`carbonplan_buildings` counts Overture buildings from an earlier release. Δ = O_now / O_cp − 1. A drop marks conflation replacements (OSM imports absorbing Microsoft footprints, feeding G3) or deletions after a fire. A rise marks new ML coverage, and new structures absent from the 2018-vintage reference produce clipped zero gap.",
+      "status": "implemented",
+      "title": "Two-release building churn (CarbonPlan Overture 2025-09 vs package Overture 2026)"
+    },
+    {
+      "component": "B",
+      "components": [
+        "B",
+        "F"
+      ],
+      "cost": "cheap",
+      "failure_mode": "rebuilt areas (Paradise rebuild by 2026).",
+      "family": "Tm",
+      "id": "Tm2",
+      "implementation": null,
+      "inputs": [
+        "`strata` MTBS/NIFC burned_km2",
+        "last_year and burned_pct_land; `usfs_BuildingCount_sum` (2022); Overture count"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "share",
+      "orthogonal_because": "it is event-driven hazard information. The lane used this only as Discovery evidence, never as an estimator.",
+      "recipe": "loss = burned_pct(years ≥ 2018) × max(0, usfs_count − O)/usfs_count, or with the burned share alone as a fallback.",
+      "recipe_scope": "per tract",
+      "signal": "structures burned after the reference imagery date (Microsoft US imagery is 2012–2021, with a large 2019–2020 share) remain in the reference but not in Overture. The Camp Fire (2018) and later Northern CA fires are the obvious cases.",
+      "status": "declared",
+      "title": "Post-reference-epoch fire loss"
+    },
+    {
+      "component": "B",
+      "components": [
+        "B",
+        "Est"
+      ],
+      "cost": "cheap",
+      "failure_mode": "ACS vintage noise and margins of error in small tracts.",
+      "family": "Tm",
+      "id": "Tm3",
+      "implementation": null,
+      "inputs": [
+        "`acs.housing_units`",
+        "`strata.usfs_HUCount_sum` (2022)",
+        "`pop_total`",
+        "Overture count"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "index",
+      "orthogonal_because": "it is demographic change, not level.",
+      "recipe": "g = ACS_HU / usfs_HU − 1 and O / usfs_BuildingCount − 1. Emit a growth index that enters with a *negative* expected weight.",
+      "recipe_scope": "per tract",
+      "signal": "fast-growing tracts (Maricopa and Pinal fringe, Austin–San Antonio corridor, Collin and Denton) have more structures today than in the 2018-vintage Microsoft reference, so the building gap clips to 0. New roads are mostly local, so TIGER S1200 is unaffected. The CBP year lags Overture, so the establishments gap shrinks.",
+      "status": "declared",
+      "title": "Growth since the reference epoch"
+    },
+    {
+      "component": "B",
+      "components": [
+        "B",
+        "C"
+      ],
+      "cost": "cheap",
+      "failure_mode": "the epochs mix sources (USA Structures is not Overture), so the curve is not a pure growth curve.",
+      "family": "Tm",
+      "id": "Tm4",
+      "implementation": null,
+      "inputs": [
+        "the three counts above"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "covariate",
+      "orthogonal_because": "it is curve-shape information rather than a ratio. This is the Barrington-Leigh idea on three points.",
+      "recipe": "saturation s = 1 − (O_now − O_cp)/max(O_now − usfs, ε), bounded to [0, 1].",
+      "recipe_scope": "per tract",
+      "signal": "three epochs of building or mapping volume are available: USFS 2022 (independent source), CarbonPlan Overture 2025-09 and package Overture 2026. A logistic saturation fit, or simply the second difference, shows whether mapping in the tract is still growing. Unsaturated tracts are less complete.",
+      "status": "declared",
+      "title": "Multi-epoch saturation index"
+    },
+    {
+      "component": "Est",
+      "components": [
+        "Est",
+        "F",
+        "R"
+      ],
+      "cost": "cheap",
+      "failure_mode": "version semantics may have been reset at the GERS migration **[U]**.",
+      "family": "Tm",
+      "id": "Tm5",
+      "implementation": null,
+      "inputs": [
+        "the `version` column in `pois`",
+        "`buildings` and `roads`"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "share",
+      "orthogonal_because": "it is release-history metadata, distinct from source `update_time`.",
+      "recipe": "mean and p90 of version per theme; share of places with version 0 (new this release).",
+      "recipe_scope": "per tract",
+      "signal": "the integer `version` on Overture places, buildings and segments counts how often the entity changed across releases. High place-version churn marks unstable conflation, with places moved, merged or recategorised. The 2025-02 conflation rework added about 12% more places.",
+      "status": "declared",
+      "title": "GERS feature-version churn"
+    },
+    {
+      "component": "Est",
+      "components": [
+        "Est"
+      ],
+      "cost": "cheap",
+      "failure_mode": "confounded with region (Hidalgo); requires within-region standardisation.",
+      "family": "D",
+      "id": "D1",
+      "implementation": null,
+      "inputs": [
+        "`svi_minority`",
+        "`pct_urban`",
+        "`ruca_primary`"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "default: no gap marker in the per-tract recipe",
+      "orthogonal_because": "it is a demographic determinant of the miss rate, not of density.",
+      "recipe": "svi_minority × (1 − pct_urban), and the interaction with RUCA ≥ 4.",
+      "recipe_scope": "per tract",
+      "signal": "Meta, Foursquare and Microsoft listings under-represent businesses that lack an online presence or have non-English names, as in colonias and rural Hispanic and Native communities. CBP still counts employer establishments there.",
+      "status": "declared",
+      "title": "Minority-language / informal-economy under-listing"
+    },
+    {
+      "component": "F",
+      "components": [
+        "F"
+      ],
+      "cost": "cheap",
+      "failure_mode": "small n: 30 Maricopa tribal tracts, plus the OK OTSAs, which are statistical areas rather than legal ones.",
+      "family": "D",
+      "id": "D2",
+      "implementation": null,
+      "inputs": [
+        "`tribal_legal_pct`",
+        "`aiannh_kind`",
+        "`in_tribal_tract`"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "default: no gap marker in the per-tract recipe",
+      "orthogonal_because": "it is an institutional mechanism. The lane's OK tribal × drought screen was a Discovery test with a CI spanning zero, not an estimator.",
+      "recipe": "tribal_legal_pct, and its interaction with \"Overture has zero fire/EMS\".",
+      "recipe_scope": "per tract",
+      "signal": "on tribal legal lands, EMS and fire services are run by tribal nations, BIA or IHS. They appear in USGS and HIFLD-type inventories but rarely on Meta/Google business pages, so Overture misses them.",
+      "status": "declared",
+      "title": "Tribal jurisdiction facility listing"
+    },
+    {
+      "component": "B",
+      "components": [
+        "B",
+        "Est"
+      ],
+      "cost": "cheap",
+      "failure_mode": "the organiser warned that ACS dwelling density manufactures urban gaps if misused. Keep the weight learned or bounded.",
+      "family": "D",
+      "id": "D3",
+      "implementation": null,
+      "inputs": [
+        "`acs.housing_units`",
+        "Overture building count"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "default: no gap marker in the per-tract recipe",
+      "orthogonal_because": "it compares a Census count with a structure count. The rules forbid an ACS *floor* in the ratio; using ACS as a *covariate* is allowed.",
+      "recipe": "r = HU/O, log-standardised within region × RUCA.",
+      "recipe_scope": "per tract",
+      "signal": "ACS_HU / O_buildings high means multifamily. Multifamily complexes are where OSM/Esri polygons merge Microsoft structures (as in G3) and where one building holds many establishments (CBP ≫ places).",
+      "status": "declared",
+      "title": "Housing units per structure"
+    },
+    {
+      "component": "Est",
+      "components": [
+        "Est",
+        "B"
+      ],
+      "cost": "cheap",
+      "failure_mode": "group quarters (bases, prisons, dorms) produce extreme ratios.",
+      "family": "D",
+      "id": "D4",
+      "implementation": null,
+      "inputs": [
+        "`pop_total`",
+        "`acs.housing_units`"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "default: no gap marker in the per-tract recipe",
+      "orthogonal_because": "it carries housing-use information.",
+      "recipe": "pop/HU, standardised.",
+      "recipe_scope": "per tract",
+      "signal": "low pop/HU marks seasonal and vacation housing (Sierra foothills, lakes in OK, Prescott) and retirement communities. These have tourism-heavy Overture places (over-coverage relative to CBP employer establishments) and buildings that are cabins under canopy (ML misses, see P5).",
+      "status": "declared",
+      "title": "Occupancy ratio (population per housing unit)"
+    },
+    {
+      "component": "Est",
+      "components": [
+        "Est",
+        "F"
+      ],
+      "cost": "cheap",
+      "failure_mode": "CVI is crosswalked from 2010 tracts (`cvi_xwalk_coverage`), so treat coverage below 0.9 as missing.",
+      "family": "D",
+      "id": "D5",
+      "implementation": null,
+      "inputs": [
+        "`cvi_baseline_infrastructure`",
+        "`cvi_baseline_socioeconomic`"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "default: no gap marker in the per-tract recipe",
+      "orthogonal_because": "it is a different index family from SVI. Check correlation against D1.",
+      "recipe": "both, z-scored within region.",
+      "recipe_scope": "per tract",
+      "signal": "CVI's baseline-infrastructure domain bundles broadband, transport and utility deficits. A digital divide lowers online business listings, so Overture places fall short of CBP.",
+      "status": "declared",
+      "title": "Infrastructure-vulnerability domain (CVI baseline infrastructure)"
+    },
+    {
+      "component": "all",
+      "components": [
+        "R",
+        "B",
+        "F",
+        "Est",
+        "C"
+      ],
+      "cost": "cheap",
+      "failure_mode": "smooths away genuine idiosyncratic gaps such as single-tract facility misses.",
+      "family": "S",
+      "id": "S1",
+      "implementation": null,
+      "inputs": [
+        "the outputs of the other ideas; queen contiguity from `acs` polygons"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "default: no gap marker in the per-tract recipe",
+      "orthogonal_because": "it carries neighbourhood rather than local information. Use it as a separate column, not a replacement.",
+      "recipe": "W·e_i excluding the tract itself, plus Moran's I for each e_i (diagnostic).",
+      "recipe_scope": "per tract",
+      "signal": "mapping conventions (DOT classing, county GIS donations, Meta coverage) are spatially autocorrelated, so the neighbours' mean of an estimator denoises single-tract noise.",
+      "status": "declared",
+      "title": "Spatial lag of every other estimator"
+    },
+    {
+      "component": "all",
+      "components": [
+        "R",
+        "B",
+        "F",
+        "Est",
+        "C"
+      ],
+      "cost": "cheap",
+      "failure_mode": "single-county dominance (Harris has 1,094 tracts).",
+      "family": "S",
+      "id": "S2",
+      "implementation": null,
+      "inputs": [
+        "any count-based idea plus COUNTYFP"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "default: no gap marker in the per-tract recipe",
+      "orthogonal_because": "it adds administrative-hierarchy information.",
+      "recipe": "θ̂ = λ·e_tract + (1 − λ)·e_county, with λ = τ²/(τ² + σ²_tract) and σ² from Poisson counts.",
+      "recipe_scope": "per tract",
+      "signal": "county is the unit of Esri Community Maps donations, county highway systems (TIGER S1200 includes them) and CBP disclosure. Pool tract estimators toward county means with weights from tract-level sampling variance (James–Stein / Fay–Herriot style).",
+      "status": "declared",
+      "title": "County empirical-Bayes pooling"
+    },
+    {
+      "component": "F",
+      "components": [
+        "F"
+      ],
+      "cost": "cheap",
+      "failure_mode": "the USGS point may be at the same position as Overture's, in which case there is no gap.",
+      "family": "S",
+      "id": "S3",
+      "implementation": null,
+      "inputs": [
+        "`pois` (facility categories)",
+        "`acs` polygons"
+      ],
+      "kind": "gap",
+      "kind_evidence": "expected gap",
+      "orthogonal_because": "it is positional-accuracy information at the boundary. The screened catchment idea measured access within 1–10 km, not boundary-straddling ambiguity.",
+      "recipe": "P_leak = Σ over outside places of exp(−d/50 m). Emit expected gap contribution min(1, P_leak) when O_k = 0.",
+      "recipe_scope": "per tract and type k",
+      "signal": "when the tract has no Overture station or school of type k but one lies within 150 m outside its boundary, positional differences between Overture and USGS points make it likely that the USGS point sits inside the tract. The tract then gets a per-type gap of 1, while the neighbour's extra place is clipped at 0.",
+      "status": "declared",
+      "title": "Cross-boundary facility leakage"
+    },
+    {
+      "component": "R",
+      "components": [
+        "R"
+      ],
+      "cost": "medium",
+      "failure_mode": "no peers for unique tracts such as reservations and downtowns. Gate with Meyer–Pebesma AOA.",
+      "family": "S",
+      "id": "S4",
+      "implementation": null,
+      "inputs": [
+        "label-free features of all four regions"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "default: no gap marker in the per-tract recipe",
+      "orthogonal_because": "it is information from *between-region* comparison. It also feeds the domain-shift diagnostics (§3).",
+      "recipe": "e_i(tract) − median e_i(peers).",
+      "recipe_scope": "per tract",
+      "signal": "for each tract, find k = 25 nearest peers in standardised urban-form feature space (density, RUCA, building size, road density) *in the other three regions*. The difference between a tract's estimators and its peers' estimators isolates region-specific conventions, such as the primary/secondary boundary that the organiser says varies by region.",
+      "status": "declared",
+      "title": "Cross-region peer matching (counterfactual region)"
+    },
+    {
+      "component": "C",
+      "components": [
+        "C"
+      ],
+      "cost": "cheap",
+      "failure_mode": "noisy in small tracts.",
+      "family": "S",
+      "id": "S5",
+      "implementation": null,
+      "inputs": [
+        "outputs of the count ideas"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "default: no gap marker in the per-tract recipe",
+      "orthogonal_because": "this is second-moment spatial information.",
+      "recipe": "local Geary's c of the O/E ratio; flag pairs where ratio_i < 0.5 < 1.5 < ratio_j.",
+      "recipe_scope": "per tract",
+      "signal": "high local variance among neighbours' estimators, or a sign flip between a tract and its neighbours, marks misallocation (features assigned to the wrong tract) rather than absence. Misallocation drives clipped-gap inflation because only deficits count.",
+      "status": "declared",
+      "title": "Local estimator disagreement"
+    },
+    {
+      "component": "F",
+      "components": [
+        "F"
+      ],
+      "cost": "medium",
+      "failure_mode": "building class labels are sparse outside OSM-mapped towns, and former schools remain labelled.",
+      "family": "X",
+      "id": "X1",
+      "implementation": null,
+      "inputs": [
+        "`buildings` (class",
+        "names)",
+        "`pois` categories"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "mean",
+      "orthogonal_because": "it gives *direct* existence evidence from another theme. The screened logistic presence prior used demographics only.",
+      "recipe": "w_k = 1[building witness] × 1[O_k = 0]. Facility estimate = mean over defined k.",
+      "recipe_scope": "per tract and type k",
+      "signal": "Overture buildings with `class` ∈ {school, fire_station, …} or names matching /fire station|school|elementary|ISD|EMS|ambulance/ show the facility exists. If the tract has no Overture *place* of that type, the USGS reference probably has one, so the per-type gap is about 1.",
+      "status": "declared",
+      "title": "Building-class facility witnesses"
+    },
+    {
+      "component": "B",
+      "components": [
+        "B"
+      ],
+      "cost": "cheap",
+      "failure_mode": "USA Structures applies a minimum size (about 450 ft²) and filters sheds **[U: check the WRC v2 methods]**, so its count is not Microsoft's.",
+      "family": "X",
+      "id": "X2",
+      "implementation": null,
+      "inputs": [
+        "the strata columns and Overture count"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "default: no gap marker in the per-tract recipe",
+      "orthogonal_because": "it is the only extrinsic structure count in the package.",
+      "recipe": "both ratios and their minimum.",
+      "recipe_scope": "per tract",
+      "signal": "`usfs_BuildingCount_sum` is a 2022 structure count from USA Structures + ONEGEO, an ML/imagery source independent of Microsoft US. ĝ_B = clip(1 − O/usfs, 0, 1), with CarbonPlan as a second denominator.",
+      "status": "declared",
+      "title": "Independent structure census ratio"
+    },
+    {
+      "component": "Est",
+      "components": [
+        "Est"
+      ],
+      "cost": "heavy",
+      "failure_mode": "warehouses with one establishment and vacant malls.",
+      "family": "X",
+      "id": "X3",
+      "implementation": null,
+      "inputs": [
+        "`buildings`",
+        "`pois`"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "share",
+      "orthogonal_because": "it measures co-location, where the screened ideas measured densities.",
+      "recipe": "empty-commercial floor area share; expected missing establishments = empty area × local establishments per m² from occupied commercial buildings.",
+      "recipe_scope": "per tract",
+      "signal": "large non-residential footprints (class commercial, retail, industrial or office, or footprints over 1,000 m² in a mixed area) with no Overture place within 30 m indicate unlisted establishments.",
+      "status": "declared",
+      "title": "Commercial buildings without places"
+    },
+    {
+      "component": "R",
+      "components": [
+        "R"
+      ],
+      "cost": "heavy",
+      "failure_mode": "subdivisions inside metros that connect via arterials TIGER also classes as local.",
+      "family": "X",
+      "id": "X4",
+      "implementation": null,
+      "inputs": [
+        "`buildings` centroids",
+        "`roads`"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "default: no gap marker in the per-tract recipe",
+      "orthogonal_because": "it combines settlement pattern with the road network.",
+      "recipe": "the count of such clusters and the length of the best non-named connecting road (shortest path to the named network).",
+      "recipe_scope": "per tract",
+      "signal": "in the US, almost every settlement over a few hundred structures is reached by a US, State or County highway, which TIGER classes S1200. A building cluster (DBSCAN, eps 150 m, at least 300 buildings) whose nearest named-class Overture road is more than 3 km away implies a TIGER S1200 road that Overture classes lower.",
+      "status": "declared",
+      "title": "Settlements without a named highway"
+    },
+    {
+      "component": "R",
+      "components": [
+        "R",
+        "F"
+      ],
+      "cost": "cheap",
+      "failure_mode": "sparse; only 2.7k–13.6k infrastructure features per region.",
+      "family": "X",
+      "id": "X5",
+      "implementation": null,
+      "inputs": [
+        "`infrastructure` (class",
+        "subtype",
+        "names",
+        "`source_tags`)"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "default: no gap marker in the per-tract recipe",
+      "orthogonal_because": "it is a third theme, with OSM tag-level semantics in `source_tags`.",
+      "recipe": "highway-named bridges on non-named-class roads; emergency or helipad features with no EMS place within 500 m.",
+      "recipe_scope": "per tract",
+      "signal": "`infrastructure` features carry their own semantics: bridge names containing highway numbers, toll features, and helipads or emergency features near clinics or stations. These give existence evidence for highways (R) and EMS (F) that the roads and places themes lack.",
+      "status": "declared",
+      "title": "Infrastructure-theme witnesses"
+    },
+    {
+      "component": "Est",
+      "components": [
+        "Est"
+      ],
+      "cost": "cheap",
+      "failure_mode": "category granularity varies by source; Meta categories are fine-grained.",
+      "family": "Dst",
+      "id": "Dst1",
+      "implementation": null,
+      "inputs": [
+        "`pois.categories.primary`"
+      ],
+      "kind": "gap",
+      "kind_evidence": "gap proxy",
+      "orthogonal_because": "it uses only histogram *shape*, no volume or external expectation.",
+      "recipe": "missing mass m = f1/N (singleton categories over places). Est gap proxy = m, shrunk toward the county value.",
+      "recipe_scope": "per tract",
+      "signal": "a well-covered tract's category histogram has few singletons. Many singleton categories indicate an under-sampled establishment universe. Chao1 S_hat = S_obs + f1²/(2 f2) estimates unseen categories, and an analogous Good–Turing missing mass f1/N estimates the unlisted fraction.",
+      "status": "declared",
+      "title": "Unseen category richness (Chao1) for establishments"
+    },
+    {
+      "component": "Est",
+      "components": [
+        "Est"
+      ],
+      "cost": "medium",
+      "failure_mode": "Foursquare was *selected as non-overlapping* with Overture, so its overlap is near zero by design. Exclude it from the captures and use it only for Mx3. Meta and Microsoft overlap may be dependent (similar web sources), which biases N̂ low.",
+      "family": "Dst",
+      "id": "Dst2",
+      "implementation": null,
+      "inputs": [
+        "`pois.sources.dataset` (per-place multi-membership)"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "default: no gap marker in the per-tract recipe",
+      "orthogonal_because": "it is a statistical estimate of the unseen population from overlap structure.",
+      "recipe": "pool to tract or county where m < 10. Fit a log-linear model with pairwise interactions to absorb source dependence.",
+      "recipe_scope": "per tract",
+      "signal": "treat Meta, Microsoft, Foursquare and AllThePlaces as independent \"captures\" of the establishment universe. A conflated place's `sources` list shows which feeds captured it. The Lincoln–Petersen/Chapman estimator N̂ = (n1 + 1)(n2 + 1)/(m + 1) − 1, or a log-linear multi-list model, estimates the true number of places. Est gap = 1 − N_overture/N̂, a CBP-free extrinsic-like estimate.",
+      "status": "declared",
+      "title": "Capture–recapture across place sources"
+    },
+    {
+      "component": "B",
+      "components": [
+        "B"
+      ],
+      "cost": "medium",
+      "failure_mode": "real differences in building stock; urban cores have no sheds.",
+      "family": "Dst",
+      "id": "Dst3",
+      "implementation": null,
+      "inputs": [
+        "`buildings` areas"
+      ],
+      "kind": "gap",
+      "kind_evidence": "deficit =",
+      "orthogonal_because": "it is distribution shape, not merging geometry (G3).",
+      "recipe": "deficit = expected count below 40 m² (from a lognormal fitted to the 40–400 m² range) − observed.",
+      "recipe_scope": "per tract",
+      "signal": "the log-area distribution of footprints in a homogeneous area is approximately normal or lognormal. A truncated or deficient left tail relative to region peers means small structures (sheds, garages, ADUs) are missing or absorbed. Microsoft US counts many of them.",
+      "status": "declared",
+      "title": "Footprint-size left-tail deficit"
+    },
+    {
+      "component": "C",
+      "components": [
+        "C"
+      ],
+      "cost": "cheap",
+      "failure_mode": "the mixture may separate urban from rural instead of complete from incomplete. Condition on RUCA.",
+      "family": "Dst",
+      "id": "Dst4",
+      "implementation": null,
+      "inputs": [
+        "the outputs of the other ideas"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "mean",
+      "orthogonal_because": "it is a structural combination and works as a meta-feature.",
+      "recipe": "EM per region; posterior probability; class-conditional mean gap from the physical mapping.",
+      "recipe_scope": "per tract",
+      "signal": "fit a two- or three-class Gaussian or Poisson mixture per region on a small vector of log ratios (O/E for each component's expectation ideas). The posterior P(incomplete class) is a data-driven label-free gap score.",
+      "status": "declared",
+      "title": "Latent-class mixture of completeness"
+    },
+    {
+      "component": "C",
+      "components": [
+        "C",
+        "R"
+      ],
+      "cost": "cheap",
+      "failure_mode": "the published numbers describe references, not gaps, so they constrain levels only loosely. The lane's Maricopa route-ratio band already failed once; record why.",
+      "family": "Dst",
+      "id": "Dst5",
+      "implementation": null,
+      "inputs": [
+        "the rules text and our estimators"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "default: no gap marker in the per-tract recipe",
+      "orthogonal_because": "it injects organiser-provided moment information.",
+      "recipe": "choose a monotone transform (one parameter per region and component) so that predicted definedness and ratio levels match the published numbers. This is distribution matching to official text, not to labels or the leaderboard.",
+      "recipe_scope": "per region",
+      "signal": "the rules publish rule-clean facts: - per-region shares of tracts with at least one undefined component (EOK 21%, NCA 37%, SCTX 28%, Maricopa 55%); - \"over half of Maricopa has no named-highway road\"; - the transport ratio Overture/TIGER of 0.71–1.59 across regions; - \"hospital category ≈ 12× reference\".",
+      "status": "declared",
+      "title": "Calibration to the organiser's published aggregates"
+    },
+    {
+      "component": "R",
+      "components": [
+        "R"
+      ],
+      "cost": "cheap",
+      "failure_mode": "TomTom may be absent in the US, which makes the idea a null.",
+      "family": "Mx",
+      "id": "Mx1",
+      "implementation": null,
+      "inputs": [
+        "`roads.sources.dataset`"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "share",
+      "orthogonal_because": "the lane's cross-theme support used route support, not road provider.",
+      "recipe": "TomTom share of named-class length and of tertiary length.",
+      "recipe_scope": "per tract",
+      "signal": "TomTom segments (since 2024-09) bring TomTom's functional-road-class semantics, which differ from OSM highway tags. The share of named-class length from TomTom shifts the O/TIGER ratio.",
+      "status": "declared",
+      "title": "Road provider mixture (TomTom vs OSM)"
+    },
+    {
+      "component": "F",
+      "components": [
+        "F",
+        "Est"
+      ],
+      "cost": "cheap",
+      "failure_mode": "conflation may merge most Microsoft records with Meta.",
+      "family": "Mx",
+      "id": "Mx2",
+      "implementation": null,
+      "inputs": [
+        "`pois.sources.dataset`",
+        "categories"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "share",
+      "orthogonal_because": "it is a property of one provider, not overall support.",
+      "recipe": "share of Microsoft-only places, and the share among places with facility-like names.",
+      "recipe_scope": "per tract",
+      "signal": "Microsoft-sourced places have high category and brand incompleteness [V: UK study]. Facilities from this feed may lack the category that would match fire, EMS or school.",
+      "status": "declared",
+      "title": "Microsoft-places share (attribute-poor feed)"
+    },
+    {
+      "component": "Est",
+      "components": [
+        "Est"
+      ],
+      "cost": "cheap",
+      "failure_mode": "Foursquare coverage is urban-biased.",
+      "family": "Mx",
+      "id": "Mx3",
+      "implementation": null,
+      "inputs": [
+        "`pois.sources.dataset`"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "default: no gap marker in the per-tract recipe",
+      "orthogonal_because": "the gap-filling volume indicates the prior miss rate.",
+      "recipe": "Foursquare-only count / N.",
+      "recipe_scope": "per tract",
+      "signal": "Foursquare places were added only where *not previously in Overture*. A high Foursquare-added share means Meta and Microsoft were incomplete there. Even after the rescue, residual incompleteness is likely, because a capture with one extra list still undercounts.",
+      "status": "declared",
+      "title": "Foursquare rescue volume"
+    },
+    {
+      "component": "F",
+      "components": [
+        "F",
+        "B"
+      ],
+      "cost": "cheap",
+      "failure_mode": "weak link; a lab check is essential.",
+      "family": "Mx",
+      "id": "Mx4",
+      "implementation": "bias60.ideas.mx::mx4",
+      "inputs": [
+        "`buildings.sources` (Esri share at county level)"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "share",
+      "orthogonal_because": "it models reference completeness, not test completeness.",
+      "recipe": "county Esri share and the tract's own share.",
+      "recipe_scope": "per tract",
+      "signal": "counties that donate footprints to Esri Community Maps run strong GIS programmes and typically also publish complete facility inventories. The USGS NSD ingests state and local sources, so the *reference* is richer there and facility gaps can be higher even with good Overture. This is the reference-side effect, which no other idea models.",
+      "status": "implemented",
+      "title": "Local-GIS capacity (Esri Community Maps presence) → reference richness"
+    },
+    {
+      "component": "F",
+      "components": [
+        "F"
+      ],
+      "cost": "cheap",
+      "failure_mode": "the organiser's exact filter is unknown; see Sc3.",
+      "family": "Mx",
+      "id": "Mx5",
+      "implementation": null,
+      "inputs": [
+        "`pois` categories × sources"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "share",
+      "orthogonal_because": "it is the interaction of taxonomy and provider. The category audit was pooled over providers.",
+      "recipe": "share of education-like names whose primary category is outside the school set, split by source.",
+      "recipe_scope": "per tract",
+      "signal": "sources label education differently (Meta \"school\", \"elementary_school\"; Microsoft \"education\"; AllThePlaces chains rarely). Where the dominant source uses generic or alternate categories, the organiser's category filter (unknown, probably primary only) misses schools.",
+      "status": "declared",
+      "title": "Source-specific school vocabularies"
+    },
+    {
+      "component": "R",
+      "components": [
+        "R"
+      ],
+      "cost": "cheap",
+      "failure_mode": "\"named\" probably just means the class list **[U]**. The lab resolves it (§4).",
+      "family": "Sc",
+      "id": "Sc1",
+      "implementation": null,
+      "inputs": [
+        "`roads` names and class"
+      ],
+      "kind": "gap",
+      "kind_evidence": "gap variant",
+      "orthogonal_because": "it reflects numerator-definition uncertainty.",
+      "recipe": "unnamed share of named-class length. Emit a gap variant that excludes unnamed length.",
+      "recipe_scope": "per tract",
+      "signal": "the organiser says \"named-highway classes\". If the numerator also requires `names`, for example by filtering on a route or name, unnamed motorway, trunk, primary and secondary segments drop out. Unnamed ones are common on divided-highway carriageways and links.",
+      "status": "declared",
+      "title": "Unnamed named-class segments"
+    },
+    {
+      "component": "F",
+      "components": [
+        "F"
+      ],
+      "cost": "cheap",
+      "failure_mode": "\"Fire Station Grill\".",
+      "family": "Sc",
+      "id": "Sc2",
+      "implementation": null,
+      "inputs": [
+        "`pois` names",
+        "categories",
+        "`basic_category`",
+        "`taxonomy`"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "default: no gap marker in the per-tract recipe",
+      "orthogonal_because": "it is within-theme semantic incompleteness. The category audit counted regex hits for *definition* choice and did not turn them into miss evidence.",
+      "recipe": "witness count where O_k = 0.",
+      "recipe_scope": "per tract and type k",
+      "signal": "places with a null `categories.primary` or a generic category whose name matches fire, EMS or school patterns are real facilities that cannot enter the organiser's count.",
+      "status": "declared",
+      "title": "Uncategorised places with facility names"
+    },
+    {
+      "component": "F",
+      "components": [
+        "F"
+      ],
+      "cost": "cheap",
+      "failure_mode": "if one definition is right, averaging dilutes it. The lab can identify the right one (§4).",
+      "family": "Sc",
+      "id": "Sc3",
+      "implementation": null,
+      "inputs": [
+        "`pois` category fields"
+      ],
+      "kind": "gap",
+      "kind_evidence": "gap_k",
+      "orthogonal_because": "the spread is a definition-uncertainty variable.",
+      "recipe": "gap_k under 4 definitions; emit the mean and the spread.",
+      "recipe_scope": "per tract",
+      "signal": "the organiser's matching rule is unknown: primary only, primary plus alternates, `taxonomy.hierarchy`, or `basic_category`. Computing per-type gaps under each rule and averaging them minimises worst-case error over definitions.",
+      "status": "declared",
+      "title": "Facility-numerator definition ensemble"
+    },
+    {
+      "component": "R",
+      "components": [
+        "R"
+      ],
+      "cost": "cheap",
+      "failure_mode": "rare.",
+      "family": "Sc",
+      "id": "Sc4",
+      "implementation": null,
+      "inputs": [
+        "`roads-unfiltered`"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "default: no gap marker in the per-tract recipe",
+      "orthogonal_because": "it is class-schema incompleteness, not class disagreement.",
+      "recipe": "unknown-class length that has a route or name pattern, or length over 2 km.",
+      "recipe_scope": "per tract",
+      "signal": "OSM `highway=road` and Overture `class=unknown` mark unreviewed segments. On long-straight or route-bearing ones, the TIGER S1200 road exists but is outside the named classes.",
+      "status": "declared",
+      "title": "Generic `class` = unknown/road on major-looking segments"
+    },
+    {
+      "component": "R",
+      "components": [
+        "R"
+      ],
+      "cost": "medium",
+      "failure_mode": "the filter may be just a subtype or class prune that touches no named classes. That costs nothing to check, which is why it ranks in the top 10.",
+      "family": "Sc",
+      "id": "Sc5",
+      "implementation": "bias60.ideas.sc::sc5",
+      "inputs": [
+        "both road layers"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "share",
+      "orthogonal_because": "it is the only direct trace of the organiser's pipeline.",
+      "recipe": "named-class length in unfiltered minus filtered, as a share.",
+      "recipe_scope": "per tract",
+      "signal": "the package ships both `roads` and `roads-unfiltered`. In Maricopa these hold 494k vs 1.17M rows. Whatever rule produced the filtered layer is probably the organiser's pre-filter. Named-class segments that exist in unfiltered but *not* in filtered are excluded from the organiser's numerator, which creates gaps.",
+      "status": "implemented",
+      "title": "Filtered vs unfiltered roads diff (reverse-engineering the numerator)"
+    },
+    {
+      "component": "F",
+      "components": [
+        "F",
+        "B",
+        "R"
+      ],
+      "cost": "cheap",
+      "failure_mode": "overdispersion; use a negative binomial with region dispersion.",
+      "family": "Sca",
+      "id": "Sca1",
+      "implementation": null,
+      "inputs": [
+        "λ from any expectation idea (P2",
+        "P3",
+        "X1); O"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "default: no gap marker in the per-tract recipe",
+      "orthogonal_because": "it is an estimator-form correction (Jensen gap), not a new signal. It wraps others.",
+      "recipe": "closed-form sum over R ≥ 1 of Poisson(R; λ)·max(0, 1 − O/R) / P(R ≥ 1), which conditions on the component being defined.",
+      "recipe_scope": "per tract",
+      "signal": "per-type facility gaps and small-tract building and road gaps are E[max(0, 1 − O/R)] with R random (Poisson(λ) for facilities). This expectation is a nonlinear function of λ and O that a plug-in 1 − O/λ̂ or 1/(count + 1) gets wrong, especially for λ in 0.3–3.",
+      "status": "declared",
+      "title": "Exact expectation of a clipped ratio under count noise"
+    },
+    {
+      "component": "C",
+      "components": [
+        "C"
+      ],
+      "cost": "cheap",
+      "failure_mode": "noisy for rural counties made of a few tracts.",
+      "family": "Sca",
+      "id": "Sca2",
+      "implementation": null,
+      "inputs": [
+        "any count ideas"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "slope",
+      "orthogonal_because": "it carries scale-dependence information.",
+      "recipe": "the slope of log(O/E) against log(area).",
+      "recipe_scope": "per tract",
+      "signal": "compute O/E at tract, tract plus first-ring, and county scales. If the deficit vanishes at coarser scale, the tract deficit is misallocation (see G1, G5, S3), and the clipped organiser gap still counts it. If it persists, it is true absence.",
+      "status": "declared",
+      "title": "Multi-scale (MAUP) slope"
+    },
+    {
+      "component": "B",
+      "components": [
+        "B",
+        "R"
+      ],
+      "cost": "medium",
+      "failure_mode": "matters only in dense small tracts.",
+      "family": "Sca",
+      "id": "Sca3",
+      "implementation": null,
+      "inputs": [
+        "`buildings`",
+        "`pois`",
+        "`roads` geometry",
+        "`acs` polygons"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "default: no gap marker in the per-tract recipe",
+      "orthogonal_because": "it captures protocol uncertainty.",
+      "recipe": "|O_centroid − O_intersect| / O.",
+      "recipe_scope": "per tract",
+      "signal": "the organiser may assign buildings by centroid, by intersection, or by largest overlap, and roads by clipping. For each tract, the difference in O between rules measures how much the unknown rule can move the gap.",
+      "status": "declared",
+      "title": "Assignment-rule sensitivity"
+    },
+    {
+      "component": "Est",
+      "components": [
+        "Est"
+      ],
+      "cost": "medium",
+      "failure_mode": "small-n instability.",
+      "family": "Sca",
+      "id": "Sca4",
+      "implementation": null,
+      "inputs": [
+        "`pois`",
+        "`buildings`"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "index",
+      "orthogonal_because": "it is second-order spatial structure.",
+      "recipe": "ratio of the Clark–Evans index for places to that for buildings.",
+      "recipe_scope": "per tract",
+      "signal": "establishments visible to Meta and Foursquare cluster in storefront corridors. A tract whose places are tightly clustered while its buildings are dispersed is missing the dispersed non-storefront establishments (home-based, agricultural, contractors) that CBP counts.",
+      "status": "declared",
+      "title": "Point-pattern clustering of places (Ripley's K / nearest-neighbour index)"
+    },
+    {
+      "component": "C",
+      "components": [
+        "C"
+      ],
+      "cost": "cheap",
+      "failure_mode": "the definedness probabilities themselves are uncertain.",
+      "family": "Sca",
+      "id": "Sca5",
+      "implementation": null,
+      "inputs": [
+        "P(d_c = 1) from expectation ideas (X4",
+        "P4 for roads; P2",
+        "P3",
+        "X1 for facilities)",
+        "and the component estimates"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "default: no gap marker in the per-tract recipe",
+      "orthogonal_because": "it changes the aggregation operator, not the signals.",
+      "recipe": "enumerate the 2³ definedness patterns with probabilities and compute the expected composite.",
+      "recipe_scope": "per tract",
+      "signal": "the composite is the mean of *defined* components, so predicting E[Σ_c d_c g_c / Σ_c d_c] with probabilistic definedness d_c differs from plugging in hard defined flags, which is what the screened defined-flag estimator did. In Maricopa, where 55% of tracts have an undefined component, this changes the divisor in expectation.",
+      "status": "declared",
+      "title": "Soft-definedness composite"
+    },
+    {
+      "component": "Est",
+      "components": [
+        "Est"
+      ],
+      "cost": "medium",
+      "failure_mode": "floors and heights are sparse, so use class-specific defaults. Warehouses inflate FA.",
+      "family": "P",
+      "id": "P1",
+      "implementation": null,
+      "inputs": [
+        "`buildings` (area",
+        "num_floors or height/3.5 m",
+        "class)",
+        "`pois`"
+      ],
+      "kind": "gap",
+      "kind_evidence": "ĝ",
+      "orthogonal_because": "it is a built-form expectation. The screened k_pop was population-based.",
+      "recipe": "FA = Σ area × floors over non-residential or unknown-large footprints. E_est = κ_region × FA, with κ set as the region median of places per FA in the top-quartile completeness tracts (a label-free anchor). ĝ = clip(1 − N_places/E_est).",
+      "recipe_scope": "per tract",
+      "signal": "CBP establishments scale with non-residential floor area better than with population. Downtown and industrial tracts have few residents but many establishments.",
+      "status": "declared",
+      "title": "Commercial floor-area establishment prior"
+    },
+    {
+      "component": "F",
+      "components": [
+        "F"
+      ],
+      "cost": "cheap",
+      "failure_mode": "fire districts vary widely; EMS is co-located with fire in many counties.",
+      "family": "P",
+      "id": "P2",
+      "implementation": null,
+      "inputs": [
+        "ALAND",
+        "pop density",
+        "RUCA"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "default: no gap marker in the per-tract recipe",
+      "orthogonal_because": "it is a normative engineering prior, unlike the screened logistic, which was density-fitted on Overture presence.",
+      "recipe": "λ = area / A_std(density), with A_std about 10 km² urban, 50 km² suburban and 250 km² rural **[U: tune from public NFPA text, not from data]**. Combine with O_fire via Sca1.",
+      "recipe_scope": "per tract",
+      "signal": "career departments target about 4-minute travel (roughly 1.5–2.5 mi station spacing); rural volunteer standards (NFPA 1720) set longer response times by density class. The expected number of stations in the reference is λ_fire = f(area, density class), from which P(reference has a station) follows.",
+      "status": "declared",
+      "title": "Normative fire-station spacing (NFPA 1710/1720)"
+    },
+    {
+      "component": "F",
+      "components": [
+        "F"
+      ],
+      "cost": "heavy",
+      "failure_mode": "churches, community centres and big-box stores.",
+      "family": "P",
+      "id": "P3",
+      "implementation": null,
+      "inputs": [
+        "`buildings` geometry and height",
+        "`roads`"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "default: no gap marker in the per-tract recipe",
+      "orthogonal_because": "it is a pure shape prior, unlike X1's labels.",
+      "recipe": "count of candidate school footprints (area range; compactness; void-ring ≥ 2 ha within 150 m; not class commercial or industrial). Witness where O_school = 0.",
+      "recipe_scope": "per tract",
+      "signal": "US public schools have a distinctive footprint: one or more large single-storey footprints of 2,000–15,000 m² inside a lot with sports fields (a building void nearby), on a collector road. Detecting such footprints gives school existence evidence independent of places and building class.",
+      "status": "declared",
+      "title": "School-footprint shape witness"
+    },
+    {
+      "component": "R",
+      "components": [
+        "R"
+      ],
+      "cost": "cheap",
+      "failure_mode": "Maricopa desert and reservation land have no grid. Use only for RUCA ≥ 7 in OK and TX.",
+      "family": "P",
+      "id": "P4",
+      "implementation": null,
+      "inputs": [
+        "ALAND",
+        "RUCA",
+        "`roads`"
+      ],
+      "kind": "gap",
+      "kind_evidence": "ĝ",
+      "orthogonal_because": "it is a geographic-form prior independent of the tract's own attributes.",
+      "recipe": "ρ_region = median named-class density over rural tracts in the region's top completeness tercile (label-free anchor). ĝ = clip(1 − L_named / (ρ × area)).",
+      "recipe_scope": "per tract",
+      "signal": "in the Great Plains and Texas section-line landscape, US, State and FM highways form a quasi-grid with about 10–20 km spacing. Expected S1100/S1200 length per km² in rural tracts is roughly constant by region (L_exp ≈ ρ_region × area). A tract with far less Overture named-class length has a classification gap.",
+      "status": "declared",
+      "title": "Rural arterial-spacing law"
+    },
+    {
+      "component": "B",
+      "components": [
+        "B"
+      ],
+      "cost": "cheap",
+      "failure_mode": "the occlusion direction is unknown; either detector may be the worse one.",
+      "family": "P",
+      "id": "P5",
+      "implementation": null,
+      "inputs": [
+        "`usfs_Exposure_mean`",
+        "`usfs_WHP_mean`",
+        "`usfs_CWiRRZ_majority_label` (vegetation and WUI context)",
+        "and P(ML source)"
+      ],
+      "kind": "covariate",
+      "kind_evidence": "share",
+      "orthogonal_because": "it uses environmental (land-cover) information.",
+      "recipe": "forested WUI indicator × Microsoft-only share.",
+      "recipe_scope": "per tract",
+      "signal": "ML footprint detectors miss structures under tree canopy (foothill and WUI tracts in NorCal, eastern-OK forests). The Microsoft US and Microsoft-global models differ, so deficits appear in forested WUI.",
+      "status": "declared",
+      "title": "Vegetation-occlusion prior for ML footprints"
+    }
+  ],
+  "schema_version": 1,
+  "spec": {
+    "family_count": 12,
+    "idea_count": 60,
+    "path": "/home/martin/hddProjects/competitionsall/docs/research/bias-60-ideas-2026-10.md",
+    "sha256": "8521753accde328eaa8f279f3a2c7ff1aa05a324f9950dc521a147542b6927db"
+  },
+  "summary": {
+    "by_component": {
+      "B": 12,
+      "C": 6,
+      "Est": 13,
+      "F": 12,
+      "R": 15,
+      "all": 2
+    },
+    "by_cost": {
+      "cheap": 38,
+      "heavy": 8,
+      "medium": 14
+    },
+    "by_family": {
+      "D": 5,
+      "Dst": 5,
+      "G": 5,
+      "M": 5,
+      "Mx": 5,
+      "P": 5,
+      "S": 5,
+      "Sc": 5,
+      "Sca": 5,
+      "T": 5,
+      "Tm": 5,
+      "X": 5
+    },
+    "by_kind": {
+      "covariate": 47,
+      "gap": 13
+    },
+    "declared_count": 57,
+    "families_total": 12,
+    "ideas_per_family": [
+      5
+    ],
+    "ideas_total": 60,
+    "implemented": [
+      "Tm1",
+      "Mx4",
+      "Sc5"
+    ],
+    "implemented_components": [
+      "B",
+      "F",
+      "R"
+    ],
+    "implemented_count": 3
+  },
+  "vocabulary": {
+    "components": [
+      "R",
+      "B",
+      "F",
+      "Est",
+      "C",
+      "all"
+    ],
+    "components_observed": [
+      "B",
+      "C",
+      "Est",
+      "F",
+      "R",
+      "all"
+    ],
+    "costs": [
+      "cheap",
+      "medium",
+      "heavy"
+    ],
+    "kinds": [
+      "gap",
+      "covariate"
+    ],
+    "statuses": [
+      "declared",
+      "implemented"
+    ]
+  }
+}

@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "row": "bias60-harness",
+  "purpose": "Common harness for the 60 estimators: one interface, per-tract outputs, and a label-free orthogonality report on the study tracts.",
+  "spec": {
+    "path": "docs/research/bias-60-ideas-2026-10.md",
+    "resolved_path": "/home/martin/hddProjects/competitionsall/docs/research/bias-60-ideas-2026-10.md",
+    "sha256": "8521753accde328eaa8f279f3a2c7ff1aa05a324f9950dc521a147542b6927db",
+    "sections": {
+      "ideas": "## 2. The 60 ideas",
+      "common_footing": "### 3.1 Put every idea on a common footing",
+      "orthogonality": "### 3.3 Measuring orthogonality"
+    },
+    "fixed_gap_mapping": "g = clip(1 - O/E, 0, 1), fixed endpoints, never fitted"
+  },
+  "rules": {
+    "source": "RULES.md lines 16 and 137 as quoted in the backlog row",
+    "provided_datasets_only": true,
+    "reference_layers_may_never_be_used": [
+      "TIGER",
+      "Microsoft buildings",
+      "USGS facilities",
+      "CBP"
+    ],
+    "lab_data_touches_study_geoids": false,
+    "uploads_performed": false
+  },
+  "vocabulary": {
+    "idea_count": 60,
+    "family_count": 12,
+    "components": [
+      "R",
+      "B",
+      "F",
+      "Est",
+      "C",
+      "all"
+    ],
+    "costs": [
+      "cheap",
+      "medium",
+      "heavy"
+    ],
+    "kinds": [
+      "gap",
+      "covariate"
+    ],
+    "statuses": [
+      "declared",
+      "implemented"
+    ],
+    "channels": [
+      "gap",
+      "covariate"
+    ],
+    "gap_bounds": [
+      0.0,
+      1.0
+    ]
+  },
+  "regions": [
+    "maricopa-az",
+    "northern-ca",
+    "eastern-ok",
+    "south-central-tx"
+  ],
+  "inputs": {
+    "package_bucket": "us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge",
+    "package_layer_path_template": "{bucket}/reference/{region}/{region}-overture-{layer}.parquet",
+    "strata_cache_template": "defined-flags-inputs/{region}-strata-tract-table.parquet",
+    "feature_cache_template": "gap-estimator/features/{region}-overture-tract-summary.parquet",
+    "polygon_layer": "census-acs-housing",
+    "ideas_cache_dir": "ideas/_cache",
+    "official_samples_template": "samples/{region}-sample-submission.csv",
+    "delegated_sample_reader": "scripts/audit_v2_component_masks.py",
+    "official_scored_rows": 9379,
+    "official_rows_by_region": {
+      "maricopa-az": 1593,
+      "northern-ca": 591,
+      "eastern-ok": 1192,
+      "south-central-tx": 6003
+    },
+    "package_polygon_path_template": "{bucket}/reference/{region}/{region}-{layer}.parquet"
+  },
+  "forbidden": {
+    "path_tokens": [
+      "tiger",
+      "usgs_facilit",
+      "usgs-facilit",
+      "cbp",
+      "microsoft_building",
+      "ms_building",
+      "ms-building",
+      "labels/",
+      "targets/",
+      "reference-target",
+      "structures_usa",
+      "onegeo"
+    ],
+    "value_tokens": [
+      "0.091440198",
+      "0.146449112",
+      "0.10725",
+      "0.3288136427728255",
+      "coverage_gap_score",
+      "public_rmse",
+      "leaderboard"
+    ],
+    "column_tokens": [
+      "target",
+      "label",
+      "coverage_gap_score",
+      "public_rmse",
+      "reference_score",
+      "score_placeholder"
+    ]
+  },
+  "acceptance": {
+    "minimum_implemented_ideas": 3,
+    "minimum_implemented_components": 3,
+    "registry_path": "config/ideas.json",
+    "harness_report": "reports/ideas-harness.json",
+    "orthogonality_report": "reports/ideas-orthogonality.json",
+    "declared_input_columns": [
+      "GEOID",
+      "eastern-ok-census-acs-housing:GEOID,geometry",
+      "eastern-ok-overture-tract-summary.parquet:GEOID",
+      "eastern-ok-overture-tract-summary.parquet:overture_building_esri_source_share",
+      "eastern-ok-overture-tract-summary.parquet:overture_buildings",
+      "eastern-ok-overture-tract-summary.parquet:overture_named_road_km_5070",
+      "eastern-ok-strata-tract-table.parquet:COUNTYFP",
+      "eastern-ok-strata-tract-table.parquet:GEOID",
+      "eastern-ok-strata-tract-table.parquet:carbonplan_buildings",
+      "eastern-ok-strata-tract-table.parquet:carbonplan_covered",
+      "maricopa-az-census-acs-housing:GEOID,geometry",
+      "maricopa-az-overture-tract-summary.parquet:GEOID",
+      "maricopa-az-overture-tract-summary.parquet:overture_building_esri_source_share",
+      "maricopa-az-overture-tract-summary.parquet:overture_buildings",
+      "maricopa-az-overture-tract-summary.parquet:overture_named_road_km_5070",
+      "maricopa-az-strata-tract-table.parquet:COUNTYFP",
+      "maricopa-az-strata-tract-table.parquet:GEOID",
+      "maricopa-az-strata-tract-table.parquet:carbonplan_buildings",
+      "maricopa-az-strata-tract-table.parquet:carbonplan_covered",
+      "northern-ca-census-acs-housing:GEOID,geometry",
+      "northern-ca-overture-tract-summary.parquet:GEOID",
+      "northern-ca-overture-tract-summary.parquet:overture_building_esri_source_share",
+      "northern-ca-overture-tract-summary.parquet:overture_buildings",
+      "northern-ca-overture-tract-summary.parquet:overture_named_road_km_5070",
+      "northern-ca-strata-tract-table.parquet:COUNTYFP",
+      "northern-ca-strata-tract-table.parquet:GEOID",
+      "northern-ca-strata-tract-table.parquet:carbonplan_buildings",
+      "northern-ca-strata-tract-table.parquet:carbonplan_covered",
+      "south-central-tx-census-acs-housing:GEOID,geometry",
+      "south-central-tx-overture-tract-summary.parquet:GEOID",
+      "south-central-tx-overture-tract-summary.parquet:overture_building_esri_source_share",
+      "south-central-tx-overture-tract-summary.parquet:overture_buildings",
+      "south-central-tx-overture-tract-summary.parquet:overture_named_road_km_5070",
+      "south-central-tx-strata-tract-table.parquet:COUNTYFP",
+      "south-central-tx-strata-tract-table.parquet:GEOID",
+      "south-central-tx-strata-tract-table.parquet:carbonplan_buildings",
+      "south-central-tx-strata-tract-table.parquet:carbonplan_covered"
+    ]
+  },
+  "orthogonality": {
+    "merge_abs_rho": 0.8,
+    "merge_vif": 10.0,
+    "minimum_column_coverage": 0.5,
+    "linkage": "average",
+    "distance": "1 - |rho|",
+    "spec_reference": "spec 3.3: merge any pair with |rho| > 0.8 or VIF > 10 within a component before fitting; the report flags, it does not silently drop",
+    "numerical_null_epsilon": 1e-09,
+    "numerical_null_note": "a column whose values vary by no more than this over the study tracts is declared numerically null rather than reported as a measurement"
+  },
+  "seeds": {
+    "Tm1": {
+      "component": "B",
+      "kind": "gap",
+      "earlier_release_column": "carbonplan_buildings",
+      "coverage_column": "carbonplan_covered",
+      "current_column": "overture_buildings",
+      "covariate_maximum": 25.0,
+      "note": "spec Tm1: delta = O_now/O_cp - 1; gap proxy max(0,-delta) is exactly clip(1-O/E,0,1) with E the provided earlier-release count"
+    },
+    "Mx4": {
+      "components": [
+        "F",
+        "B"
+      ],
+      "kind": "covariate",
+      "county_column": "COUNTYFP",
+      "tract_share_column": "overture_building_esri_source_share",
+      "weight_column": "overture_buildings",
+      "note": "spec Mx4: county Esri share (reference-side) on F, tract's own Esri-only share on B; county aggregation is a building-count-weighted mean, declared not fitted"
+    },
+    "Sc5": {
+      "component": "R",
+      "kind": "gap",
+      "filtered_layer": "roads",
+      "unfiltered_layer": "roads-unfiltered",
+      "road_named_classes": [
+        "motorway",
+        "trunk",
+        "primary",
+        "secondary"
+      ],
+      "road_columns_required": [
+        "class",
+        "geometry"
+      ],
+      "cross_check_column": "overture_named_road_km_5070",
+      "cross_check_relative_tolerance": 1e-06,
+      "note": "spec Sc5: named-class length in unfiltered minus filtered as a share; both layers clipped to official tracts in EPSG:5070"
+    }
+  }
+}
