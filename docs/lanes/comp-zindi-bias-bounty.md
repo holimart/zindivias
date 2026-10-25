@@ -1416,3 +1416,19 @@ Tests: `tests/test_bias60_lab_build.py` is 31 tests, including an orphan-directo
 manifest-less `LA` directory in the test staging root and expects the gate to fail, and an acceptance
 assertion that no longer remembers a verdict — it recomputes `acceptance.met` from the fold set and the
 required count, so five folds is proved rather than asserted.
+
+### Re-verification for the lost turn (2026-10-25)
+
+The previous turn was not accepted, so this closeout re-verifies rather than assuming its report. The
+committed prerequisite report probes **9** groups, not 7; its committed-artifact test was stale at 7.
+The synthetic probe fixture also had no TX-W or CA-F records, so those groups looked like additional
+shortfalls in the synthetic contract test. Updated the expected group count to 9 and extended the
+fixture with distant TX-W and CA-F tracts in the preregistered counties. Also replaced the old build
+config note (“two groups this turn … row stays open”) with the current acceptance rule: five
+fold-eligible groups carry labels, definedness and self-checks; a group outside the band is disclosed
+but not counted.
+
+Re-verification: full suite **580 passed, 225 subtests passed in 450.48s**. The build report remains
+`5 of 5 required groups are folds (6 staged, 1 staged but rejected …)`; no study tract measured, no
+promotion, no upload. The previous report's five-fold acceptance is therefore now backed by a passing
+full suite and a consistent config note.

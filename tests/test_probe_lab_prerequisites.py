@@ -124,6 +124,14 @@ def synthetic_records(official: list[str], template: list[str]) -> dict[str, lis
             add(state, {"geoid": f"990{state}{index:07d}"[:11], "county_fips": prefix,
                         "lat": origin[1], "lon": origin[0] + index * 0.01})
 
+    # The fifth-fold probe added these study-state remainders / fire corridors; use counties in the
+    # preregistered group and keep the synthetic tracts far from every study point.
+    for state, prefix, count, origin in (("48", "48141", 40, (-106.5, 31.8)),
+                                         ("06", "06073", 40, (-117.0, 32.8))):
+        for index in range(count):
+            add(state, {"geoid": f"990{state}{index:07d}"[:11], "county_fips": prefix,
+                        "lat": origin[1], "lon": origin[0] + index * 0.01})
+
     for state, prefix, count in (("08", "08031", 25), ("49", "49035", 25), ("35", "35001", 40)):
         for index in range(count):
             add(state, {"geoid": f"9900{state}{index:05d}"[:11], "county_fips": prefix,
@@ -418,7 +426,7 @@ class CommittedArtifactTests(unittest.TestCase):
     def test_the_committed_report_matches_a_fresh_run_and_says_what_was_measured(self) -> None:
         document = json.loads(REPORT_PATH.read_text(encoding="utf-8"))
         self.assertTrue(document["gates"]["all_passed"])
-        self.assertEqual(document["summary"]["groups_probed"], 7)
+        self.assertEqual(document["summary"]["groups_probed"], 9)
         self.assertGreater(document["summary"]["candidates_found"], 4000)
         self.assertEqual(document["summary"]["study_points"], 9793)
         self.assertGreater(document["summary"]["downloaded_bytes"], 1_000_000)
