@@ -146,7 +146,7 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 | `reports/confidence-by-stratum.json` | `ac759312e2b3e1384078c2d46dc386a9c2a2905ae5c6366d1247c13ee6916053` | 4 |
 | `reports/cross-theme-support.json` | `77c010a8c74f62487816b142e489b651f38dfcc93793c87fbe9c91711d1d352d` | 1 |
 | `reports/density-context-candidate.json` | `8da97e44bb3af4a06fb98f83065c8719fc746b5c1596cb11ef8bd611c72dd7b7` | 1 |
-| `reports/discovery-postfire-county-bootstrap.json` | `18123e36b1d9565419c3c8e4b1adf91d6730c83b7c09099b8105fe6b1f756ccb` | 8 |
+| `reports/discovery-postfire-county-bootstrap.json` | `feaf180e6637bafcf184c414600c79e2abf27aecfe094fd8d765d0d210103d63` | 8 |
 | `reports/discovery-postfire.json` | `cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a` | 16 |
 | `reports/discovery-rural-svi-minority.json` | `da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0` | 19 |
 | `reports/discovery-strata-confound.json` | `ce0f1307793d1c658754cb7f9dd6fee7ea9cabf2a8a0e7ccb8e9888c2bad9ecb` | 14 |

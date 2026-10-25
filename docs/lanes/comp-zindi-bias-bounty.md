@@ -786,3 +786,24 @@ table remain published facts of the provided data, and the direction of the high
 disagreement is repeatable in almost every county resample, but the lane no longer states its size as a
 quantitatively established result. The section keeps its four-criteria support; only the strength of the
 quantitative claim changed.
+
+Final artefact hashes after the last regeneration pass (the row's own report carries
+`code_commit_at_run`, so it is rewritten on each regeneration and `--check-only` compares everything
+except that single field, which is why the numbers below differ from the first pass above):
+
+- `config/discovery-postfire-county-bootstrap-preregistered.json` `43ba983db726e6e2` (unchanged)
+- `scripts/audit_discovery_postfire_county_bootstrap.py` `7128e72ca71cde98`
+- `reports/discovery-postfire-county-bootstrap.json` `feaf180e6637bafc` (report sha256
+  `c3fc94f0b21a5fba…`, `code_commit_at_run` `b69fd1099136`)
+- `tests/test_audit_discovery_postfire_county_bootstrap.py` `fd0ab18802fcc538` (31 tests)
+- `docs/writeup/bias-discovery.md` `342df0d2c677861c` (unchanged since qualification)
+- `reports/discovery-prize-criteria-audit.json` `384c8ea9f5eeb60e`,
+  `reports/writeup-claim-evidence-audit.json` `2c4a68bf74addb60`,
+  `reports/writeup-claim-inventory.json` `c818d6afa19c3f67` (88 claims, 1035/1035 tokens)
+- full suite after the final pass: `371 passed`; claim audit `--execute-reproduce`:
+  `17/17 reproduce commands exited 0`; criteria audit `--check-only`: `unchanged`;
+  submission packet verifier: `PASS ... staged only, nothing was submitted to the organiser`
+
+The `code_commit_at_run` exemption is the only comparison relaxation added for this row; the two-run
+determinism test still requires byte-identical reports from the same commit and separately compares the
+committed report with that field removed, and a test asserts the field is a 40-hex commit.

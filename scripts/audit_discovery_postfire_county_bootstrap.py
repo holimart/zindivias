@@ -812,7 +812,16 @@ def main() -> int:
     payload = canonical_bytes(report)
     out = args.out.resolve()
     if args.check_only:
-        if out.is_file() and out.read_bytes() == payload:
+        # code_commit_at_run records the commit that produced the file, so it legitimately differs
+        # from a report committed at an earlier HEAD; everything else must be byte-identical.
+        committed_matches = out.is_file() and out.read_bytes() == payload
+        if not committed_matches and out.is_file():
+            def without_commit_field(raw: bytes) -> bytes:
+                document = json.loads(raw)
+                document.pop("code_commit_at_run", None)
+                return canonical_bytes(document)
+            committed_matches = without_commit_field(out.read_bytes()) == without_commit_field(payload)
+        if out.is_file() and committed_matches:
             print(f"unchanged {out}")
             return 0 if report["summary"]["gates_all_passed"] else 1
         print(f"CHANGED {out}")

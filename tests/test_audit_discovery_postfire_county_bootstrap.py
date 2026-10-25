@@ -325,9 +325,19 @@ class DeterminismTests(unittest.TestCase):
                 self.assertEqual(completed.returncode, 0, completed.stdout[-400:])
                 digests.append(sha256(Path(folder) / f"{index}.json"))
             self.assertEqual(digests[0], digests[1])
-            self.assertEqual(digests[0], sha256(REPORT_PATH))
+
+            def without_commit_field(path: Path) -> bytes:
+                document = json.loads(path.read_text())
+                document.pop("code_commit_at_run", None)
+                return module.canonical_bytes(document)
+
+            self.assertEqual(without_commit_field(Path(folder) / "1.json"),
+                             without_commit_field(REPORT_PATH))
 
     @unittest.skipUnless(WORKSPACE, "COMPETITION_WORKSPACE is not set")
+    def test_committed_report_carries_the_commit_that_produced_it(self) -> None:
+        self.assertRegex(REPORT["code_commit_at_run"], r"^[0-9a-f]{40}$|^unknown$")
+
     def test_check_only_accepts_the_committed_report(self) -> None:
         completed = run_script(["--workspace", WORKSPACE, "--check-only"])
         self.assertEqual(completed.returncode, 0, completed.stdout)
