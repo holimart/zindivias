@@ -3,7 +3,7 @@
 Row: `backlog:.langywrap/backlogs/competitions.jsonl:bias-discovery-prize-criteria-audit`. Lane: `comp-zindi-bias-bounty`. documentation screen of the Best Bias Discovery narrative; not a submission, not a model promotion, not a leaderboard probe.
 
 Audited document: `docs/writeup/bias-discovery.md` (SHA-256 `342df0d2c677861c7d4a2d540469adfe0f33b6ff4ffe74650b247113ad245cd2`).
-Preregistration: `config/discovery-prize-criteria-preregistered.json` (SHA-256 `bfd91240b58301f7a781a68c2764bf8ed498eccffbf0a5b11bafd3747bfafc61`).
+Preregistration: `config/discovery-prize-criteria-preregistered.json` (SHA-256 `28eaad515d5dade388e82299a9c2b3231844b58f127e77fa95cdbef93a94b643`).
 
 This is a documentation screen. It makes no submission, changes no scored candidate, reads no leaderboard feedback, and asserts nothing about the organisers' hidden target. Every score quoted from the proxy models remains a model-side estimate, not an organiser score.
 
@@ -60,10 +60,10 @@ Declared `supported`, resolved `supported`, lines 1-73, 8964 characters. Claims:
   | `reports/discovery-postfire.json` | `/high_burn_vs_unburned_below_0_8` | `cbf100bc833bf09c` | True |
   | `reports/discovery-postfire.json` | `/no_labels_or_removed_references_used` | `cbf100bc833bf09c` | True |
   | `reports/discovery-postfire-map.png` | `-` | `916589e0d3dc765a` | True |
-  | `reports/discovery-postfire-county-bootstrap.json` | `/robustness` | `feaf180e6637bafc` | True |
-  | `reports/discovery-postfire-county-bootstrap.json` | `/county_cluster_bootstrap/cluster_95_percentile_interval` | `feaf180e6637bafc` | True |
-  | `reports/discovery-postfire-county-bootstrap.json` | `/county_cluster_bootstrap/tract_preservation_checks` | `feaf180e6637bafc` | True |
-  | `reports/discovery-postfire-county-bootstrap.json` | `/derived_input_content_equivalence` | `feaf180e6637bafc` | True |
+  | `reports/discovery-postfire-county-bootstrap.json` | `/robustness` | `942c39504dbcf3b2` | True |
+  | `reports/discovery-postfire-county-bootstrap.json` | `/county_cluster_bootstrap/cluster_95_percentile_interval` | `942c39504dbcf3b2` | True |
+  | `reports/discovery-postfire-county-bootstrap.json` | `/county_cluster_bootstrap/tract_preservation_checks` | `942c39504dbcf3b2` | True |
+  | `reports/discovery-postfire-county-bootstrap.json` | `/derived_input_content_equivalence` | `942c39504dbcf3b2` | True |
 
   Reproduction: `python scripts/discovery_postfire_stale_reference.py`; script(s): `scripts/discovery_postfire_stale_reference.py`, `scripts/audit_discovery_postfire_county_bootstrap.py`
 

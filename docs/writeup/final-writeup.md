@@ -2,7 +2,7 @@
 
 - Competition: `bias-bounty-mapping-equity-challenge` (Zindi)
 - Lane: `comp-zindi-bias-bounty`
-- Writeup revision: git `b69fd1099136b4513a93c9f49bc33b23b56b2e26` (tree clean: False)
+- Writeup revision: git `e5a42998f3f994c7788a1314d6bf145d4c238432` (tree clean: False)
 - Zindi username or team name: **PENDING_OPERATOR_CONFIRMATION**
 - Operator confirmation of that identity recorded: NO — pending operator
 - Form submission status: **NOT SUBMITTED — staged for operator submission**

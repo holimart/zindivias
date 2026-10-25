@@ -329,6 +329,7 @@ class DeterminismTests(unittest.TestCase):
             def without_commit_field(path: Path) -> bytes:
                 document = json.loads(path.read_text())
                 document.pop("code_commit_at_run", None)
+                document["summary"].pop("report_sha256", None)
                 return module.canonical_bytes(document)
 
             self.assertEqual(without_commit_field(Path(folder) / "1.json"),
@@ -337,6 +338,19 @@ class DeterminismTests(unittest.TestCase):
     @unittest.skipUnless(WORKSPACE, "COMPETITION_WORKSPACE is not set")
     def test_committed_report_carries_the_commit_that_produced_it(self) -> None:
         self.assertRegex(REPORT["code_commit_at_run"], r"^[0-9a-f]{40}$|^unknown$")
+
+    def test_summary_hash_is_stable_across_commits(self) -> None:
+        """The content hash must not move when only the run-time commit changes."""
+        def content_hash(document: dict) -> str:
+            copy = json.loads(json.dumps(document))
+            copy.pop("code_commit_at_run", None)
+            copy["summary"]["report_sha256"] = ""
+            return hashlib.sha256(module.canonical_bytes(copy)).hexdigest()
+
+        document = json.loads(REPORT_PATH.read_text())
+        self.assertEqual(REPORT["summary"]["report_sha256"], content_hash(document))
+        document["code_commit_at_run"] = "0" * 40
+        self.assertEqual(REPORT["summary"]["report_sha256"], content_hash(document))
 
     def test_check_only_accepts_the_committed_report(self) -> None:
         completed = run_script(["--workspace", WORKSPACE, "--check-only"])

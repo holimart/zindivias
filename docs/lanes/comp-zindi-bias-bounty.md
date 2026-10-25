@@ -807,3 +807,12 @@ except that single field, which is why the numbers below differ from the first p
 The `code_commit_at_run` exemption is the only comparison relaxation added for this row; the two-run
 determinism test still requires byte-identical reports from the same commit and separately compares the
 committed report with that field removed, and a test asserts the field is a 40-hex commit.
+
+Second regeneration pass: `summary.report_sha256` is now computed with `code_commit_at_run`
+excluded, which is the correct fix rather than exempting two fields, so the committed report differs
+across commits in that one field only. Final hashes measured after the last build:
+`scripts/audit_discovery_postfire_county_bootstrap.py` `2332550787682820`,
+`reports/discovery-postfire-county-bootstrap.json` `942c39504dbcf3b2`,
+`tests/test_audit_discovery_postfire_county_bootstrap.py` `4c6a7c6a14cec0f8` (32 tests). Final state:
+claim audit `88/88` claims and `1035/1035` tokens with `17/17` reproduce commands exiting zero,
+criteria audit `16/16` criteria and `27/27` pointers, packet verifier `PASS`, suite `372 passed`.

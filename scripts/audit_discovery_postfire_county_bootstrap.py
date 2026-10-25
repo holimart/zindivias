@@ -781,7 +781,10 @@ def build(workspace: Path, tamper: str | None) -> tuple[dict[str, Any], dict[str
         "counties": size,
         "report_sha256": "",
     }
-    report["summary"]["report_sha256"] = hashlib.sha256(canonical_bytes(report)).hexdigest()
+    # The summary hash covers the content but not code_commit_at_run, which necessarily differs
+    # between the commit that produced the file and any later commit that merely holds it.
+    hashable = {key: value for key, value in report.items() if key != "code_commit_at_run"}
+    report["summary"]["report_sha256"] = hashlib.sha256(canonical_bytes(hashable)).hexdigest()
     hits = wall_clock_hits({key: value for key, value in report.items() if key != "preregistration"})
     report["gates"]["report_serialises_no_unexpected_wall_clock"] = hits == []
     report["summary"]["failed_gates"] = sorted(name for name, value in report["gates"].items()
