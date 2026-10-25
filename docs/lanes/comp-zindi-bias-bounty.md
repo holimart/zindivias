@@ -1360,3 +1360,59 @@ Tests: `tests/test_bias60_lab_build.py` is 29 tests (14 declared negative contro
 rule has two new tests, the committed report is checked for fold/rejection coherence against the bytes on
 disk); the lab files together and the full suite are recorded in the closeout. Nothing was promoted, no
 study tract was measured, and no lab value reached a candidate, calibration or uploader path.
+
+## 2026-10-25 — bias60-external-lab-build, turn 4: the fifth fold, chosen before it was measured
+
+The previous turn stopped at four folds with Louisiana staged and disclosed but failing its own
+road-ratio self-check. Rather than pick a fifth group by shopping for one whose ratio lands inside the
+band, `config/lab-build-preregistered.json` preregistered an **order** before either candidate was
+probed: try TX-W, then CA-F, and the first whose measured ratio lands inside the band or its tolerance
+becomes the fold. Both were probed so the record shows what the other would have offered.
+
+```
+TX-W   282 candidates   274 accepted   nearest study tract  9.105 km
+CA-F  3,029 candidates 2,737 accepted   nearest study tract  8.026 km   (26 m clear of the buffer)
+```
+
+TX-W came first and passed on its own measurement:
+
+`PASS lab build: 5 of 5 required groups are folds (6 staged, 1 staged but rejected by their own road-ratio self-check) from 409 retrieved files (4,406,070,003 bytes transferred) with road labels and the organiser road-ratio self-check reported; no study tract was measured and nothing was promoted to the lab root`
+
+| group | candidates | accepted | road defined | ratio | verdict |
+| --- | --- | --- | --- | --- | --- |
+| NV | 674 | 674 | 433 | 1.013391 | fold, inside band |
+| TX-W | 282 | 245 | 190 | 0.990514 | fold, inside band |
+| CO-UT | 2,163 | 2,163 | 1,741 | 0.80192 | fold, inside band |
+| NM | 612 | 610 | 506 | 0.654624 | fold, within tolerance |
+| AR-KS | 1,652 | 1,635 | 1,465 | 0.645227 | fold, within tolerance |
+| LA | 1,388 | 1,388 | 1,259 | 0.507151 | staged, disclosed, **not a fold** |
+| AZ-R | 94 | 0 | — | — | **refused** by the build, recorded |
+
+That is the row's acceptance: five groups carrying component labels with per-component definedness
+counts, and the recipe self-check reported for every one of them. TX-W's own numbers also show the
+probe/build policy gap again — the probe counted 274 accepted, the build kept 245 and rejected 33 as
+study-county tracts, which is the disagreement already filed as
+`bias60-lab-probe-build-exclusion-policy`.
+
+### What measuring the fifth fold exposed
+
+`--group TX-W` builds one group, and the report is built from the manifests of the groups that run. A
+partial-manifest report would have published one group and silently omitted five, so
+`planned_groups_are_staged_or_refused_with_a_reason` — added last turn — fired exactly as intended and
+the run refused (`FAIL lab build: {"all_passed": false,
+"planned_groups_are_staged_or_refused_with_a_reason": false}`) until the report was regenerated over all
+six staged manifests with `--dry-run`.
+
+The refused AZ-R directory was still on disk with 8,401,752 bytes of cached tract geography and no
+manifest — a directory of retrieved data that no manifest describes. The report now names it
+(`staging_directories_without_manifest`, with its byte total) and the new gate
+`staged_directories_are_manifested_or_refused` holds: every group-shaped staging directory either has a
+manifest or is recorded in `groups_refused`. Anything not named after a group is disclosed rather than
+asserted away, because a stray test cache in the staging root is litter, not a claim about a group —
+which is also why the build's test cache moved out of `staging/` (`lab-test/cache-test`) instead of
+leaving one there.
+
+Tests: `tests/test_bias60_lab_build.py` is 31 tests, including an orphan-directory test that plants a
+manifest-less `LA` directory in the test staging root and expects the gate to fail, and an acceptance
+assertion that no longer remembers a verdict — it recomputes `acceptance.met` from the fold set and the
+required count, so five folds is proved rather than asserted.

@@ -19,7 +19,7 @@
     "lab_plan_config_sha256": "e7106107d63c5bd823c4b65fa3a32c5733cb02500ec5ee539cf99ddde01233cb",
     "prerequisite_report": "reports/lab-prerequisites.json",
     "lab_commit_source": "git rev-parse HEAD",
-    "prerequisite_report_sha256": "0bdf7d185b7aa2e366e6bf60094b8380219d8fb2b3753f7583eea2b34d34eb23",
+    "prerequisite_report_sha256": "cdde80d09bfdb4595787570238df5a36848277985f7d6e5cb5ae6887625b8825",
     "lab_plan_module_sha256": "e106db411a7289a3e76d750d99935756a99530b15b75e257e1bdcceac7377249"
   },
   "operator_decision": {
@@ -44,7 +44,8 @@
     "NM",
     "CO-UT",
     "LA",
-    "AR-KS"
+    "AR-KS",
+    "TX-W"
   ],
   "group_selection": {
     "rule": "core groups with the least retrieval risk that the prerequisite probe measured as viable, so that the pipeline is proved on real bytes before the wide groups are attempted",
@@ -338,6 +339,11 @@
       "field": "pins.prerequisite_report_sha256",
       "supersedes": "a4121650a0ffb9c4cab753881764f140215f4003f8027d4db9e7807e3465b336",
       "reason": "the probe now covers seven groups instead of five: LA (1,388 accepted, nearest study tract 66.36 km) and AR-KS (1,636 accepted, nearest 8.276 km) were measured so that the build's tract floor decides their fate instead of an assumption"
+    },
+    {
+      "field": "pins.prerequisite_report_sha256",
+      "supersedes": "0bdf7d185b7aa2e366e6bf60094b8380219d8fb2b3753f7583eea2b34d34eb23",
+      "reason": "the probe now covers all nine spec 4.2 groups: 9,526 of 11,099 candidates survive the frozen exclusion, and TX-W and CA-F are measured so the fifth fold is chosen by the preregistered order rather than by which ratio looks best"
     }
   ],
   "amendments": [
@@ -456,6 +462,54 @@
         "AR-KS"
       ],
       "reason": "AZ-R was attempted and refused by the build (0 tracts kept of 94 candidates, floor 30); it is recorded in groups_refused with the measured rejection breakdown rather than quietly dropped, and the probe/build exclusion-policy disagreement behind it is filed as its own row"
+    },
+    {
+      "field": "fifth_fold_selection",
+      "now": {
+        "order": [
+          "TX-W",
+          "CA-F"
+        ],
+        "rule": "the two unprobed spec 4.2 groups are attempted in this fixed order and the first whose measured road ratio lands inside the organiser band or its tolerance becomes the fifth fold; a group is never chosen after seeing its ratio, only tried in the order written here",
+        "why_this_order": [
+          "TX-W declares eight named counties (spec 4.2: El Paso 48141, Midland/Ector, Amarillo, the Panhandle, Trans-Pecos), so its retrieval is county-filtered and small, and the lab plan gives it the transfer role 'same state DOT conventions as the study, best transfer for the road ratio'",
+          "CA-F declares sixteen counties across the whole fire belt and 2,500 planned tracts, so it is the more expensive attempt and its named areas ablate the study sample's own counties (Plumas must stay excluded)"
+        ],
+        "if_both_fail": "the lab ships with four folds, bias60-lab-evaluation-run is retuned to four groups with the consequence measured, and neither group is counted while its own self-check fails"
+      },
+      "reason": "preregistered before either group was probed or retrieved, so the fifth fold cannot be picked by shopping for a ratio that lands inside the band"
+    },
+    {
+      "field": "groups_this_build",
+      "supersedes": [
+        "NV",
+        "NM",
+        "CO-UT",
+        "LA",
+        "AR-KS"
+      ],
+      "now": [
+        "NV",
+        "NM",
+        "CO-UT",
+        "LA",
+        "AR-KS",
+        "TX-W"
+      ],
+      "reason": "the first attempt in the preregistered fifth-fold order: TX-W was probed at 282 candidates and 274 accepted (nearest accepted tract 9.105 km from a study tract, four official/template GEOIDs and four neighbour-buffer tracts removed), which is above the frozen floor of 30, so it is built rather than the more expensive CA-F (2,737 accepted from 3,029, but its nearest accepted tract sits 8.026 km out, only 26 metres clear of the neighbour buffer)",
+      "measured_by_prerequisite_probe": {
+        "TX-W": {
+          "candidates_found": 282,
+          "accepted": 274,
+          "min_nearest_study_tract_km": 9.105,
+          "median_nearest_study_tract_km": 272.362
+        },
+        "CA-F": {
+          "candidates_found": 3029,
+          "accepted": 2737,
+          "min_nearest_study_tract_km": 8.026
+        }
+      }
     }
   ],
   "groups_refused": [

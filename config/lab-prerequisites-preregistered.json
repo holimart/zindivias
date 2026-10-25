@@ -47,7 +47,9 @@
     "CO-UT",
     "NM",
     "LA",
-    "AR-KS"
+    "AR-KS",
+    "TX-W",
+    "CA-F"
   ],
   "cache_dir_name": "lab-prerequisites",
   "source_probe": {
@@ -207,6 +209,24 @@
       ],
       "reason": "the build row reached four of its five required groups with NV and NM staged and CO-UT measured viable by this probe; LA and AR-KS are the two remaining spec 4.2 groups that whole-state retrieval can cover without a county list, and the build's frozen tract floor fails them closed if the probe has not measured them, so they are probed before any Overture or county-roads byte is spent on them",
       "authorised_by": "steward 2026-10-25 11:20Z: turn 2+ = the remaining groups to reach >= 5"
+    },
+    {
+      "field": "probe_groups",
+      "supersedes": [
+        "AZ-R",
+        "OK-R",
+        "NV",
+        "CO-UT",
+        "NM",
+        "LA",
+        "AR-KS"
+      ],
+      "added": [
+        "TX-W",
+        "CA-F"
+      ],
+      "reason": "four groups are folds and Louisiana failed its own road-ratio self-check, so the fifth has to come from the two spec 4.2 groups that have never been measured: TX-W and CA-F. Both are probed, not just the one that gets built, so the record shows what the other group would have offered",
+      "authorised_by": "steward 2026-10-25 11:20Z on this row: turn 2+ = the remaining groups to reach >= 5"
     }
   ]
 }

@@ -863,6 +863,14 @@ def build_report(config: dict[str, Any], *, manifests: list[dict[str, Any]],
     urls = [entry["url"] for entry in all_files]
     hosts = sorted({urllib.parse.urlsplit(url).netloc for url in urls})
     staged_groups = sorted(manifest["group"] for manifest in manifests)
+    # A group the build refused still leaves its cached bytes behind, and a directory of retrieved
+    # data that no manifest describes is exactly the kind of thing a later reader must not have to
+    # discover by accident: it is named here, and it is only allowed if the refusal is on record.
+    staging_root = Path(staging_dir(config, "_")).parent
+    orphan_staging = sorted(directory.name for directory in staging_root.iterdir()
+                            if directory.is_dir() and not (directory / "manifest.json").is_file())
+    orphan_bytes = sum(entry.stat().st_size for name in orphan_staging
+                       for entry in (staging_root / name).rglob("*") if entry.is_file())
 
     def self_check_state(manifest: dict[str, Any]) -> str:
         road = manifest["defineness"]["road_ratio"]
@@ -933,6 +941,8 @@ def build_report(config: dict[str, Any], *, manifests: list[dict[str, Any]],
         "groups_rejected_by_self_check": rejected_by_self_check,
         "groups_planned_this_build": list(config["groups_this_build"]),
         "groups_refused": list(config.get("groups_refused", [])),
+        "staging_directories_without_manifest": orphan_staging,
+        "staging_directories_without_manifest_bytes": orphan_bytes,
         "components_built": list(config["components_built_this_build"]),
         "components_held": {key: value["status"] for key, value in config["components_held"].items()},
         "retrieval": {
@@ -1073,6 +1083,15 @@ def build_report(config: dict[str, Any], *, manifests: list[dict[str, Any]],
                  or any(entry.get("id") == group and entry.get("reason") and entry.get("measured")
                         for entry in config.get("groups_refused", [])))
             for group in config["groups_this_build"]),
+        # a directory named after a lab group that carries no manifest is the dangerous case: it looks
+        # like a built group and is not one. Anything else under staging (a stray cache directory, say)
+        # is disclosed by name above rather than asserted away, because it is test and operator litter
+        # rather than a claim about a group.
+        "staged_directories_are_manifested_or_refused": all(
+            name in {entry.get("id") for entry in config.get("groups_refused", [])}
+            for name in orphan_staging
+            if name in set(config["groups_this_build"])
+            | {entry.get("id") for entry in config.get("groups_refused", [])}),
         "no_lab_value_in_submission_paths": True,
         "no_fabricated_measurement": bool(manifests) and all(
             any(entry["role"] == "reference_roads" for entry in manifest["files"])
@@ -1180,6 +1199,12 @@ def render_markdown(report: dict[str, Any]) -> str:
                   "reference road lengths disagree beyond tolerance cannot test a gap estimator."]
     hospital = report["measurement"]["hospital_ratio_check"]
     lines.append(f"- hospital ratio: **{hospital['status']}** — {hospital['reason']}")
+    if report["staging_directories_without_manifest"]:
+        lines += ["", "### Staging directories with no manifest", "",
+                  f"- {', '.join(report['staging_directories_without_manifest'])} hold "
+                  f"{report['staging_directories_without_manifest_bytes']:,} bytes of cached "
+                  "retrieval from an attempt the build refused; they carry no tracts, no labels and no "
+                  "defineness, and are named here rather than left to be discovered"]
     lines += ["", "## Held back, and why", ""]
     for component, detail in config["components_held"].items():
         lines.append(f"- **{component}** ({detail['status']}): {detail['reason']}")

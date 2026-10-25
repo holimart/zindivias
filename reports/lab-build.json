@@ -1,6 +1,6 @@
 {
   "access": {
-    "files_opened": 8,
+    "files_opened": 9,
     "opened_paths": [
       "REPO:config/bias60-lab-preregistered.json",
       "REPO:config/lab-build-preregistered.json",
@@ -9,7 +9,8 @@
       "WORKSPACE:lab/staging/CO-UT/manifest.json",
       "WORKSPACE:lab/staging/LA/manifest.json",
       "WORKSPACE:lab/staging/NM/manifest.json",
-      "WORKSPACE:lab/staging/NV/manifest.json"
+      "WORKSPACE:lab/staging/NV/manifest.json",
+      "WORKSPACE:lab/staging/TX-W/manifest.json"
     ]
   },
   "backlog_item": "bias60-external-lab-build",
@@ -46,7 +47,7 @@
       "default_in_the_frozen_plan": false,
       "enabled_for_this_build": true,
       "reason": "a state-level download of a removed reference layer necessarily covers the study tracts inside it, so the build may only retrieve for a county that no provided package touches; the readiness plan leaves whole-county exclusion off because that would empty the spec 4.2 groups, which is a candidate question, not a retrieval permission",
-      "tracts_rejected_by_county": 1
+      "tracts_rejected_by_county": 34
     },
     "min_nearest_study_tract_km": 8.293,
     "policy": "src/bias60/lab_plan.py::ExclusionPolicy",
@@ -80,6 +81,7 @@
     "self_check_flags_agree_with_the_measured_ratio": true,
     "self_check_rejections_are_disclosed": true,
     "spec_hash_matches_pin": true,
+    "staged_directories_are_manifested_or_refused": true,
     "staging_not_promoted": true,
     "study_county_never_appears_in_a_url": true,
     "study_geoid_never_appears_in_a_url": true,
@@ -89,14 +91,16 @@
     "AR-KS",
     "CO-UT",
     "NM",
-    "NV"
+    "NV",
+    "TX-W"
   ],
   "groups_planned_this_build": [
     "NV",
     "NM",
     "CO-UT",
     "LA",
-    "AR-KS"
+    "AR-KS",
+    "TX-W"
   ],
   "groups_refused": [
     {
@@ -132,7 +136,8 @@
     "CO-UT",
     "LA",
     "NM",
-    "NV"
+    "NV",
+    "TX-W"
   ],
   "lab_root": {
     "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/lab",
@@ -153,10 +158,10 @@
         "reason": "the band is the lab's only external check that the observed and reference layers describe the same roads; a group that fails it would let the fit learn a coverage artefact, which is the failure the whole lab exists to avoid",
         "rule": "a staged group whose measured Overture/TIGER road ratio falls outside the organiser band and its tolerance is not counted as a fold: it remains staged, its bytes and numbers are published, acceptance does not count it, and promotion refuses while it is present"
       },
-      "groups_fold_eligible": 4,
+      "groups_fold_eligible": 5,
       "groups_required": 5,
-      "groups_staged": 5,
-      "met": false,
+      "groups_staged": 6,
+      "met": true,
       "minimum_labelled_groups": 5,
       "note": "two groups this turn is staging, not acceptance; the row stays open until five groups carry labels",
       "required_per_group": [
@@ -325,6 +330,39 @@
         "segment_tract_intersections": 114150,
         "segments_seen": 467086,
         "self_check_state": "within_tolerance"
+      },
+      {
+        "accepted": 245,
+        "candidates": 282,
+        "clipped_reference_lines": 1618,
+        "composite_defined_count": 190,
+        "fold_eligible": true,
+        "group": "TX-W",
+        "min_nearest_study_tract_km": 9.301,
+        "rejected_by_reason": {
+          "official_scored_or_template_geoid": 4,
+          "study_county": 33
+        },
+        "road": {
+          "defined": 190,
+          "defined_share": 0.77551,
+          "undefined": 55
+        },
+        "road_ratio": {
+          "band": [
+            0.71,
+            1.59
+          ],
+          "inside_band": true,
+          "observed_km": 4579.215,
+          "ratio": 0.990514,
+          "reference_km": 4623.069,
+          "tolerance": 0.15,
+          "within_tolerance": true
+        },
+        "segment_tract_intersections": 17734,
+        "segments_seen": 344686,
+        "self_check_state": "inside_band"
       }
     ],
     "hospital_ratio_check": {
@@ -336,12 +374,13 @@
       "CO-UT": "inside_band",
       "LA": "outside_band",
       "NM": "within_tolerance",
-      "NV": "inside_band"
+      "NV": "inside_band",
+      "TX-W": "inside_band"
     }
   },
   "preregistration": {
     "config_path": "config/lab-build-preregistered.json",
-    "config_sha256": "b4e648dc62d46f7fd5a38ee23cb1a06d5da7647de730c8f18800de13ed4e7a90",
+    "config_sha256": "ee11ff4213e5fa051688afef04322a6d05a527611d324e0b5effbb61e748a6e5",
     "lab_plan_config_sha256": "e7106107d63c5bd823c4b65fa3a32c5733cb02500ec5ee539cf99ddde01233cb",
     "negative_controls_declared": [
       "accepted_tract_inside_buffer",
@@ -365,7 +404,7 @@
       "retrieval_authorised": true,
       "study_region_prohibition_is_absolute": true
     },
-    "prerequisite_report_sha256": "0bdf7d185b7aa2e366e6bf60094b8380219d8fb2b3753f7583eea2b34d34eb23",
+    "prerequisite_report_sha256": "cdde80d09bfdb4595787570238df5a36848277985f7d6e5cb5ae6887625b8825",
     "recipe_variant_id": "road-obs4cls-mtfcc-S1100S1200-5070-v1",
     "spec_path": "/home/martin/hddProjects/competitionsall/docs/research/bias-60-ideas-2026-10.md",
     "spec_sha256": "f150649b34caebefb91b8eda75517e43f5cc278699ec9dba7b23fea717f16862",
@@ -390,38 +429,42 @@
   "retrieval": {
     "budget_bytes": 25000000000,
     "budget_files": 4000,
-    "bytes_of_objects_listed": 11110884220,
-    "bytes_transferred": 3491061420,
+    "bytes_of_objects_listed": 14506391085,
+    "bytes_transferred": 4406070003,
     "cap_applies_to": "the whole staged lab, across groups and across invocations",
     "credentials_used": false,
-    "files": 395,
+    "files": 409,
     "hosts": [
       "overturemaps-us-west-2.s3.us-west-2.amazonaws.com",
       "www2.census.gov"
     ],
     "overture": {
-      "compressed_bytes_read_estimate": 2984213640,
-      "files_read": 17,
-      "objects_listed": 640,
+      "compressed_bytes_read_estimate": 3861256473,
+      "files_read": 23,
+      "objects_listed": 768,
       "release": "2026-09-23.1"
     },
     "transfer_note": "census files are transferred whole; an Overture object is listed whole but only the row groups whose bbox statistics overlap the group window are read, and only the preregistered columns of those",
-    "unique_urls": 388
+    "unique_urls": 397
   },
   "schema_version": "1.0",
+  "staging_directories_without_manifest": [
+    "AZ-R"
+  ],
+  "staging_directories_without_manifest_bytes": 8401752,
   "summary": {
-    "acceptance_met": false,
-    "bytes_of_objects_listed": 11110884220,
-    "bytes_transferred": 3491061420,
-    "files_retrieved": 395,
+    "acceptance_met": true,
+    "bytes_of_objects_listed": 14506391085,
+    "bytes_transferred": 4406070003,
+    "files_retrieved": 409,
     "gates_all_passed": true,
-    "groups_fold_eligible": 4,
+    "groups_fold_eligible": 5,
     "groups_rejected_by_self_check": 1,
     "groups_required": 5,
-    "groups_staged": 5,
+    "groups_staged": 6,
     "lab_rows_opened_by_a_model_or_submission_path": 0,
-    "overture_compressed_bytes_read_estimate": 2984213640,
-    "overture_objects_listed": 640,
+    "overture_compressed_bytes_read_estimate": 3861256473,
+    "overture_objects_listed": 768,
     "reference_layer_bytes_computed_on_study_tracts": 0,
     "uploads": 0
   },

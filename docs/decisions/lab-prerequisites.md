@@ -1,7 +1,7 @@
 # Measure the preconditions of the external lab before the lab build spends its bandwidth: are the registered sources reachable, and do the planned lab groups still have tracts after the study exclusion runs on real census geography?
 
 - Plan: `lab-prerequisites` (backlog item `bias60-lab-evaluation`)
-- Preregistered configuration: `/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/config/lab-prerequisites-preregistered.json` (SHA-256 `051b67d350b66266…`)
+- Preregistered configuration: `/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/config/lab-prerequisites-preregistered.json` (SHA-256 `7d14dbae170c846a…`)
 - Lab plan consumed: `/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/config/bias60-lab-preregistered.json`
 - Spec: `/home/martin/hddProjects/competitionsall/docs/research/bias-60-ideas-2026-10.md` (SHA-256 `f150649b34caebef…`, matches its pin: True)
 - Verdict: **PASS**
@@ -21,8 +21,8 @@
 - Registered sources: 10; answering 200 anonymously: 5; not probeable as registered: 1
 - Public census geography downloaded: 134365215 bytes across 12 files
 - Study interior points established: 9793 from 9793 matched study tracts in EPSG:5070
-- Planned lab groups: 9; probed: 7; with enough surviving tracts: 6
-- Candidate tracts inspected: 7788; accepted by the frozen exclusion: 6515
+- Planned lab groups: 9; probed: 9; with enough surviving tracts: 8
+- Candidate tracts inspected: 11099; accepted by the frozen exclusion: 9526
 
 ## Source availability
 
@@ -50,6 +50,8 @@
 | `NM` | NM | 0 | 610 | 612 | 611 | 1 | 37.097 | yes |
 | `LA` | LA | 0 | 1300 | 1388 | 1388 | 0 | 66.36 | yes |
 | `AR-KS` | AR, KS | 0 | 1500 | 1652 | 1636 | 16 | 8.276 | yes |
+| `TX-W` | TX | 8 | 890 | 282 | 274 | 8 | 9.105 | yes |
+| `CA-F` | CA | 16 | 2500 | 3029 | 2737 | 292 | 8.026 | yes |
 
 ## Findings the build has to know
 
@@ -64,6 +66,7 @@ Groups far below their planned tract count (plan numbers to correct):
 
 - `AZ-R`: planned 170, accepted 30 (ratio 0.176)
 - `OK-R`: planned 130, accepted 13 (ratio 0.1)
+- `TX-W`: planned 890, accepted 274 (ratio 0.308)
 
 | source | status | meaning | alternate that answers |
 | --- | --- | --- | --- |
@@ -79,8 +82,8 @@ Groups far below their planned tract count (plan numbers to correct):
 
 ## Rejections by reason
 
-- `official_scored_or_template_geoid`: 1252
-- `within_neighbour_buffer_of_study_tract`: 21
+- `official_scored_or_template_geoid`: 1464
+- `within_neighbour_buffer_of_study_tract`: 109
 
 ## Exclusion policy as executed
 

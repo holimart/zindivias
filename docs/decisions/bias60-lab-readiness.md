@@ -4,7 +4,7 @@
 - Preregistered configuration: `/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/config/bias60-lab-preregistered.json` (SHA-256 `8d195030963130be...`)
 - Spec: `/home/martin/hddProjects/competitionsall/docs/research/bias-60-ideas-2026-10.md` (SHA-256 `f150649b34caebef...`, matches its pin: True)
 - Status: **authorized_by_operator_decision** by operator, recorded by the shared steward in orchestrator commit 901d5e3c8ee89eb9995e2adb15a3fee6c48b49ee at 2026-10-25T09:35Z; organiser question `withdrawn_by_operator_decision`; sequencing blocker `bias60-track-a-combiner` (still binding on sequencing; the operator decision lifts the organiser-ruling precondition, not the ordering)
-- Readiness verdict: **PASS** -- the design is frozen, the exclusion policy is proved on a self-test panel, the lab root holds only staged build output (835 files, none promoted, none keyed to a study region), and no model or submission path can read a lab file
+- Readiness verdict: **PASS** -- the design is frozen, the exclusion policy is proved on a self-test panel, the lab root holds only staged build output (871 files, none promoted, none keyed to a study region), and no model or submission path can read a lab file
 
 ## Operator decision that authorises the lab
 

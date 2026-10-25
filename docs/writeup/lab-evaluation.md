@@ -36,14 +36,15 @@
 
 ## Prerequisite measurement this evaluation stands on
 
-- Probe artifact `reports/lab-prerequisites.json` (SHA-256 `dc814900925a37fb...`), its own gates all passed: True
-- Planned lab groups: 9; probed on real census geography: 7; candidate tracts inspected: 7788; accepted by the frozen exclusion: 6515
+- Probe artifact `reports/lab-prerequisites.json` (SHA-256 `a574fae69dbca3b5...`), its own gates all passed: True
+- Planned lab groups: 9; probed on real census geography: 9; candidate tracts inspected: 11099; accepted by the frozen exclusion: 9526
 - Study interior points established for the neighbour buffer: 9793 (1 excluded GEOIDs had no interior point in the census file)
 - Public census geography downloaded by the probe: 134365215 bytes; no reference layer was fetched
 - Lab plan needs amendment: **True** - the frozen lab plan is not yet buildable as written: OK-R cannot be a fold and cbp_2023, hud_usps_crosswalk, overture_package_release, tiger_prisecroads_2024 did not answer an anonymous request at its registered pattern
   - `OK-R` cannot be a fold: 13 accepted tracts against a floor of 30
   - `AZ-R` is far below its planned tract count: 30 accepted against 170 planned
   - `OK-R` is far below its planned tract count: 13 accepted against 130 planned
+  - `TX-W` is far below its planned tract count: 274 accepted against 890 planned
   - source `overture_package_release` answered 404 at its registered pattern but answers at https://overturemaps-us-west-2.s3.amazonaws.com/?list-type=2&max-keys=1
   - source `tiger_prisecroads_2024` answered 404 at its registered pattern but answers at https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32003_roads.zip
   - source `cbp_2023` answered 400 at its registered pattern but answers at https://www2.census.gov/programs-surveys/cbp/datasets/2022/

@@ -34,7 +34,9 @@ WORKSPACE = Path(os.environ["COMPETITION_WORKSPACE"])
 REPORT_PATH = ROOT / CONFIG["outputs"]["report"]
 MARKDOWN_PATH = ROOT / CONFIG["outputs"]["markdown"]
 TEST_ROOT = Path(os.environ["COMPETITION_WORKSPACE"]) / "lab-test"
-TEST_CACHE = TEST_ROOT / "staging" / "cache-test"
+# outside staging: a cache directory inside the staging root would be an orphan directory,
+# and the build would be right to treat it as suspicious
+TEST_CACHE = TEST_ROOT / "cache-test"
 GROUP = "NM"
 
 # A study geography on Phoenix ground, a lab group on Albuquerque ground: 700 km apart, so the
@@ -493,7 +495,15 @@ class CommittedArtifactTests(unittest.TestCase):
                         [key for key, value in report["gates"].items() if value is not True])
         self.assertEqual(report["summary"]["uploads"], 0)
         self.assertEqual(report["summary"]["reference_layer_bytes_computed_on_study_tracts"], 0)
-        self.assertEqual(report["measurement"]["acceptance"]["met"], False)
+        # acceptance is a claim about fold-eligible groups, so it is checked against them rather than
+        # against a remembered verdict: five folds is the acceptance bar, and a sixth staged group that
+        # failed its own self-check must not be able to tip it either way
+        acceptance = report["measurement"]["acceptance"]
+        self.assertEqual(acceptance["met"],
+                         len(report["groups_fold_eligible"]) >= acceptance["groups_required"])
+        self.assertTrue(acceptance["met"])
+        self.assertGreaterEqual(len(report["groups_fold_eligible"]), acceptance["groups_required"])
+        self.assertEqual(report["summary"]["groups_fold_eligible"], acceptance["groups_required"])
         self.assertGreaterEqual(len(report["measurement"]["groups"]), 1)
         for entry in report["measurement"]["groups"]:
             self.assertGreater(entry["min_nearest_study_tract_km"],
@@ -510,6 +520,38 @@ class CommittedArtifactTests(unittest.TestCase):
     def test_the_staged_lab_has_no_model_readable_promoted_artifact(self) -> None:
         root = builder.lab_root_of(CONFIG)
         self.assertEqual([name for name in lab_eval.ARTIFACTS if (root / name).exists()], [])
+
+
+class OrphanStagingTests(unittest.TestCase):
+    """A directory under staging that no manifest describes must be named, not tidied away."""
+
+    def test_a_refused_group_directory_is_disclosed_and_allowed(self) -> None:
+        report = json.loads(REPORT_PATH.read_text(encoding="utf-8"))
+        self.assertEqual(report["staging_directories_without_manifest"], ["AZ-R"])
+        self.assertGreater(report["staging_directories_without_manifest_bytes"], 0)
+        self.assertTrue(report["gates"]["staged_directories_are_manifested_or_refused"])
+        self.assertIn("AZ-R", [entry["id"] for entry in report["groups_refused"]])
+
+    def config_for(self, *groups: str) -> dict:
+        config = json.loads(json.dumps(CONFIG))
+        config["lab_root"] = "$COMPETITION_WORKSPACE/lab-test"
+        config["groups_this_build"] = list(groups)
+        return config
+
+    def test_a_group_directory_without_a_manifest_fails_the_gate(self) -> None:
+        built = build()
+        staging = Path(str(built["staging"]).rsplit("/", 1)[0])
+        impostor = staging / "LA"  # a known plan group with no manifest
+        impostor.mkdir(parents=True, exist_ok=True)
+        (impostor / "stray.bin").write_bytes(b"not a lab")
+        try:
+            report = builder.build_report(self.config_for(GROUP, "LA"),
+                                          manifests=[built["manifest"]])
+            self.assertIn("LA", report["staging_directories_without_manifest"])
+            self.assertFalse(report["gates"]["staged_directories_are_manifested_or_refused"])
+        finally:
+            (impostor / "stray.bin").unlink()
+            impostor.rmdir()
 
 
 class HashVerificationTests(unittest.TestCase):
