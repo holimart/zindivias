@@ -1,0 +1,331 @@
+{
+  "schema_version": 1,
+  "plan_id": "bias60-lab-evaluation",
+  "backlog_item": "bias60-lab-evaluation",
+  "lane": "comp-zindi-bias-bounty",
+  "title": "Lab evaluation of the 60 estimators and their linear combination: leave-one-group-out RMSE, incremental value, MTMM and the Track B weight fit",
+  "intent": "Freeze the spec 3.2-3.3 lab evaluation, define exactly what bias60-external-lab-build must deliver for it to be computable, and refuse to publish a single lab number unless every rail holds. When the lab is absent the report says so with nulls; it never substitutes a plausible figure.",
+  "spec": {
+    "path": "docs/research/bias-60-ideas-2026-10.md",
+    "resolved_path": "/home/martin/hddProjects/competitionsall/docs/research/bias-60-ideas-2026-10.md",
+    "sha256": "f150649b34caebefb91b8eda75517e43f5cc278699ec9dba7b23fea717f16862",
+    "also_pinned_by": [
+      "config/bias60-harness-preregistered.json",
+      "config/bias60-lab-preregistered.json"
+    ],
+    "sections": {
+      "track_b_fitting": "### 3.2 Fitting linear weights on the lab (Track B)",
+      "orthogonality": "### 3.3 Measuring orthogonality",
+      "track_a": "### 3.4 Two-track structure and the rule-clean fallback (Track A)",
+      "lab": "## 4. The external lab"
+    },
+    "two_level_design": "component-level weights on lab component labels, then a 3-weight composite layer on lab composite labels, so the parameter count is about 60 + 3 rather than 60 x 3"
+  },
+  "operator_decision": {
+    "decided_at_utc": "2026-10-25T09:35Z",
+    "decided_by": "operator, recorded by the shared steward in orchestrator commit 901d5e3c8ee89eb9995e2adb15a3fee6c48b49ee",
+    "effect_on_this_row": "the organiser-ruling precondition is replaced: lab-fitted weights may be used, but only the learned weight vector and its normalisation constants cross, recorded with SHA-256 and the lab commit, and the lab method must be disclosed in the writeup",
+    "still_binding": [
+      "no reference layer or equivalent copy is computed on, joined to, or used to approximate targets for any study-region tract or GEOID",
+      "only the weight vector and normalisation constants cross",
+      "disclose the lab method in the writeup"
+    ]
+  },
+  "lab_root": {
+    "path": "$COMPETITION_WORKSPACE/lab",
+    "must_be_outside_repo": true
+  },
+  "artifact_contract": {
+    "files": [
+      "manifest.json",
+      "tracts.parquet",
+      "estimators.parquet",
+      "labels.parquet",
+      "defineness.json"
+    ],
+    "tracts_columns": [
+      "lab_tract_id",
+      "lab_group",
+      "state_fips",
+      "county_fips",
+      "centroid_x",
+      "centroid_y",
+      "nearest_study_tract_km"
+    ],
+    "estimators_columns": [
+      "lab_tract_id",
+      "lab_group",
+      "idea",
+      "family",
+      "component",
+      "channel",
+      "value",
+      "defined"
+    ],
+    "labels_columns": [
+      "lab_tract_id",
+      "lab_group",
+      "component",
+      "label",
+      "defined",
+      "recipe_variant_id"
+    ],
+    "manifest_fields": [
+      "lab_commit",
+      "recipe_variant_id",
+      "exclusion_policy_sha256",
+      "buffer_km",
+      "sources",
+      "self_checks",
+      "groups",
+      "study_polygon_source"
+    ],
+    "source_fields": [
+      "id",
+      "url",
+      "version",
+      "sha256",
+      "retrieved_utc"
+    ],
+    "labelled_component_required": "composite",
+    "exact_columns": true,
+    "note": "the evaluator reads nothing else; a lab that carries extra columns fails rather than being silently accepted",
+    "channel_vocabulary": [
+      "composite",
+      "target:<COMPONENT>"
+    ]
+  },
+  "exclusion": {
+    "buffer_km_min": 8.0,
+    "official_geoid_reader": "scripts/audit_v2_component_masks.py::official_scored_ids",
+    "policy_source": "src/bias60/lab_plan.py::ExclusionPolicy",
+    "require_recorded_nearest_distance": true,
+    "note": "every lab tract must record nearest_study_tract_km at or beyond the buffer, so the exclusion is auditable after the fact rather than asserted by the build"
+  },
+  "weights": {
+    "lambda_grid": [
+      0.0,
+      0.001,
+      0.003,
+      0.01,
+      0.03,
+      0.1,
+      0.3,
+      1.0,
+      3.0,
+      10.0
+    ],
+    "inner_folds": 4,
+    "inner_folds_are_county_blocked": true,
+    "convex": true,
+    "positivity": true,
+    "shrinkage_target": "equal weights within the scored set",
+    "stability_draws": 200,
+    "stability_seed": 20261025,
+    "stability_threshold": 0.6,
+    "shift_clip_percentiles": [
+      1.0,
+      99.0
+    ],
+    "shift_seed": 20261025
+  },
+  "acceptance": {
+    "minimum_held_out_groups": 5,
+    "minimum_track_b_win_rate": 0.75,
+    "minimum_labelled_share": 0.25,
+    "require_all_implemented_ideas": true,
+    "require_per_idea_rmse": true,
+    "require_incremental_value": true,
+    "require_residual_correlation": true,
+    "require_mtmm": true,
+    "require_krogh_vedelsby": true,
+    "require_track_a_scoring": true,
+    "note": "Track B either beats equal weights in at least 75% of held-out groups or is reported as not beating; reporting the loss is a pass, inventing the win is not"
+  },
+  "track_a_variants": {
+    "A1": {
+      "name": "physical anchors and equal weights",
+      "requires_ideas": [],
+      "minimum_members_per_component": 1
+    },
+    "A2": {
+      "name": "one-factor / spectral weighting",
+      "requires_ideas": [],
+      "minimum_members_per_component": 3
+    },
+    "A3": {
+      "name": "Dawid-Skene for facility misses",
+      "requires_ideas": [
+        "X1",
+        "Sc2",
+        "Mx5",
+        "P3",
+        "S3",
+        "D2",
+        "X5"
+      ],
+      "minimum_members_per_component": 1
+    },
+    "A4": {
+      "name": "cross-component self-consistency ridge prior",
+      "requires_ideas": [
+        "T5",
+        "Tm4",
+        "M1",
+        "M5"
+      ],
+      "minimum_members_per_component": 1
+    }
+  },
+  "track_a_preregistration": {
+    "row": "bias60-track-a-combiner",
+    "status_recorded_in_repo": "not_recorded",
+    "release_gate": "while no Track A pre-registration record exists, weight_vector_release stays withheld: the lab numbers may be computed and reported for the writeup, but no weight vector is released to a candidate",
+    "weight_vector_release": "withheld"
+  },
+  "crossing_surface": {
+    "allowed_fields": [
+      "weights",
+      "intercept",
+      "shrinkage",
+      "normalisation_constants",
+      "lab_commit",
+      "lab_manifest_sha256"
+    ],
+    "forbidden_fields": [
+      "lab per-tract values",
+      "lab GEOIDs",
+      "lab labels",
+      "lab region means",
+      "reference-layer measurements",
+      "any value keyed to a study tract"
+    ],
+    "must_record": [
+      "weights_sha256",
+      "lab_commit",
+      "lab_manifest_sha256"
+    ]
+  },
+  "study_side": {
+    "study_predictions_emitted": 0,
+    "study_idea_parquets_opened": 0,
+    "note": "this evaluator scores lab rows only; study-side emissions belong to the Track A and final-candidate rows, and reading the study idea parquets here would be the first step toward applying lab weights to study tracts"
+  },
+  "measurement_status_when_absent": "not_run_missing_lab",
+  "prohibitions": {
+    "no_uploads": true,
+    "uploads_performed": 0,
+    "no_reference_layer_access_by_this_row": true,
+    "reference_layer_bytes_read_in_this_row": 0,
+    "no_labels_or_hidden_targets_for_study_tracts": true,
+    "no_leaderboard_constants": true,
+    "no_calibration_config": true,
+    "no_per_tract_tuning_on_study_data": true,
+    "no_fabricated_measurement": true,
+    "no_wall_clock_in_report": true
+  },
+  "forbidden_value_tokens": [
+    "0.3288136427728255",
+    "config/calibration.json",
+    "alpha_c1_from_P4",
+    "reports/lb-scorecard-snapshot.json",
+    "public_rmse"
+  ],
+  "negative_controls": [
+    {
+      "id": "study_geoid_in_lab",
+      "expect_gate": "study_geoid_exclusion_holds",
+      "mutation": "add an official scored GEOID to the lab tract table"
+    },
+    {
+      "id": "nearest_distance_understated",
+      "expect_gate": "nearest_distance_buffer_respected",
+      "mutation": "record a nearest-study-tract distance inside the buffer"
+    },
+    {
+      "id": "self_check_fabricated",
+      "expect_gate": "recipe_self_checks_passed",
+      "mutation": "claim the road-ratio self-check passed with a ratio outside the frozen band"
+    },
+    {
+      "id": "undefined_rows_zero_filled",
+      "expect_gate": "undefined_never_scored_as_zero",
+      "mutation": "give an undefined estimator row a non-zero value"
+    },
+    {
+      "id": "missing_source_hash",
+      "expect_gate": "manifest_provenance_complete",
+      "mutation": "drop the SHA-256 from one registered source"
+    },
+    {
+      "id": "too_few_groups",
+      "expect_gate": "groups_held_out_adequate",
+      "mutation": "remove tracts until fewer than five groups remain"
+    },
+    {
+      "id": "labels_outside_unit",
+      "expect_gate": "rows_consistent",
+      "mutation": "put a label outside [0, 1]"
+    },
+    {
+      "id": "weights_smuggle_lab_values",
+      "expect_gate": "crossing_surface_is_bounded",
+      "mutation": "allow a lab per-tract value into the crossing surface"
+    },
+    {
+      "id": "measurement_fabricated_without_lab",
+      "expect_gate": "no_fabricated_measurement",
+      "mutation": "publish an RMSE while the lab artifacts are absent"
+    },
+    {
+      "id": "study_side_prediction_emitted",
+      "expect_gate": "weights_not_applied_to_study_tracts",
+      "mutation": "emit a study-side prediction from lab-fitted weights"
+    },
+    {
+      "id": "release_before_track_a_preregistration",
+      "expect_gate": "track_a_release_gate_recorded",
+      "mutation": "release the weight vector before the Track A pre-registration exists"
+    },
+    {
+      "id": "spec_pin_drift",
+      "expect_gate": "spec_hash_matches_pin",
+      "mutation": "point the evaluation at a different spec hash"
+    },
+    {
+      "id": "shift_claimed_without_allowlist",
+      "expect_gate": "shift_correction_status_declared",
+      "mutation": "report the shift-corrected variant as measured with no study-feature allowlist"
+    }
+  ],
+  "outputs": {
+    "report": "reports/lab-evaluation.json",
+    "markdown": "docs/writeup/lab-evaluation.md"
+  },
+  "recipe": {
+    "source": "RULES.md published statistics, frozen in config/bias60-lab-preregistered.json",
+    "road_band": [
+      0.71,
+      1.59
+    ],
+    "road_band_tolerance": 0.15,
+    "hospital_target": 12.0,
+    "hospital_relative_tolerance": 0.35,
+    "projection": "EPSG:5070"
+  },
+  "shift_correction": {
+    "status_allowed": [
+      "not_wired",
+      "measured"
+    ],
+    "requires_before_measured": "study_side_label_free_feature_allowlist",
+    "methods": [
+      "shimodaira_ratio_p_over_1_minus_p",
+      "meyer_pebesma_area_of_applicability"
+    ],
+    "clip_percentiles": [
+      1.0,
+      99.0
+    ]
+  }
+}
