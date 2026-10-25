@@ -17,7 +17,7 @@
       "failure_mode": "the organiser may have clipped with a tolerance or snapped TIGER roads to the boundary; or Overture and TIGER may both come from the TIGER 2005 import and coincide.",
       "family": "G",
       "id": "G1",
-      "implementation": null,
+      "implementation": "bias60.ideas.g::g1",
       "inputs": [
         "`roads` (named classes)",
         "`acs` tract polygons"
@@ -28,7 +28,7 @@
       "recipe": "f_b = (named-class length within a 25 m buffer of the tract boundary) / (named-class length within the tract plus that 25 m buffer). Feature ĝ = f_b × p_side with p_side = 0.5 (symmetric prior). Also emit f_b itself.",
       "recipe_scope": "per tract",
       "signal": "Census tract boundaries often follow major roads. When a TIGER S1100/S1200 line lies on the boundary, its clipped length is decided by sub-metre geometry. An Overture centreline offset by 3–15 m falls on the other side and creates a spurious full gap in one tract and a surplus in its neighbour. Surpluses are clipped at 0, so the asymmetric clip leaves a net positive expected gap.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Boundary-coincident highway share"
     },
     {
@@ -40,7 +40,7 @@
       "failure_mode": "TIGER's convention varies by state; ramps and frontage roads (TX!) look like parallel carriageways.",
       "family": "G",
       "id": "G2",
-      "implementation": null,
+      "implementation": "bias60.ideas.g::g2",
       "inputs": [
         "`roads` named classes: geometry",
         "`access_restrictions`/heading (oneway)",
@@ -53,7 +53,7 @@
       "recipe": "pair parallel one-way named-class segments (Hausdorff < 60 m, opposite headings, same name or route). Compute L_single = L − 0.5·L_paired. Emit d = L_paired/L and two gap variants (single-line and dual-line conventions) against any E.",
       "recipe_scope": "per tract",
       "signal": "OSM/Overture maps divided highways as two one-way carriageways. TIGER sometimes does and sometimes uses a single line. The organiser's 0.71–1.59 regional ratio range is partly this. Where Overture is single-line but TIGER is dual (or the reverse), the ratio moves by up to 2×.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Dual-carriageway centreline normalisation"
     },
     {
@@ -66,7 +66,7 @@
       "failure_mode": "big-box retail and warehouses are genuinely one structure in Microsoft too, so restrict to residential/unknown class and area below 5,000 m².",
       "family": "G",
       "id": "G3",
-      "implementation": null,
+      "implementation": "bias60.ideas.g::g3",
       "inputs": [
         "`buildings` geometry and `sources` (dataset)"
       ],
@@ -76,7 +76,7 @@
       "recipe": "a_ref = median area of Microsoft-only footprints in the tract, falling back to the county value. For each OSM/Esri-only polygon i: k̂_i = max(1, area_i/a_ref) capped at 50. Deficit D = Σ(k̂_i − 1). ĝ_B = D/(N + D).",
       "recipe_scope": "per tract",
       "signal": "by conflation priority, one OSM or Esri polygon covering a row of townhouses, a strip mall or a mobile-home cluster replaces k intersecting Microsoft footprints. Microsoft US counts k; Overture counts 1.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Absorbed-footprint deficit"
     },
     {
@@ -88,7 +88,7 @@
       "failure_mode": "parks, school fields and retention basins (Maricopa!) create real holes. Exclude cells that contain a POI of park or school type or are near `infrastructure` water features.",
       "family": "G",
       "id": "G4",
-      "implementation": null,
+      "implementation": "bias60.ideas.g::g4",
       "inputs": [
         "`buildings` centroids",
         "`acs` polygons"
@@ -99,7 +99,7 @@
       "recipe": "on a 100 m grid, take cells inside the tract whose 8-neighbourhood ring is at least 60% occupied but which contain no building. Emit the void share among \"should-be-built\" cells and the expected missing count = voids × local buildings per cell.",
       "recipe_scope": "per tract",
       "signal": "ML footprints have tile- and imagery-scene artefacts. Overture's Microsoft source is the global ML set, which is newer than the US release, so a scene that failed in one and not the other leaves a rectangular hole inside an otherwise built area.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Building coverage voids (tile dropout)"
     },
     {
@@ -112,7 +112,7 @@
       "failure_mode": "real multi-tenant towers and malls. Downweight stacks inside large commercial footprints.",
       "family": "G",
       "id": "G5",
-      "implementation": null,
+      "implementation": "bias60.ideas.g::g5",
       "inputs": [
         "`pois` geometry and names"
       ],
@@ -122,7 +122,7 @@
       "recipe": "s_in = places sharing exact coordinates with at least 5 distinct names. Collect stacks within 3 km. Emit s_in/N (surplus) and an \"exported deficit\" = stack mass within 3 km that is not in the tract, apportioned by tract share of buildings.",
       "recipe_scope": "per tract",
       "signal": "places geocoded to a ZIP, parcel or municipal centroid stack on identical coordinates with different names. A tract containing such a stack absorbs its neighbours' establishments, while the true tracts look empty against CBP.",
-      "status": "declared",
+      "status": "implemented",
       "title": "POI coordinate-collision index (stacked geocodes)"
     },
     {
@@ -1459,13 +1459,18 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 49,
+    "declared_count": 44,
     "families_total": 12,
     "ideas_per_family": [
       5
     ],
     "ideas_total": 60,
     "implemented": [
+      "G1",
+      "G2",
+      "G3",
+      "G4",
+      "G5",
       "Tm1",
       "Dst1",
       "Dst2",
@@ -1485,7 +1490,7 @@
       "F",
       "R"
     ],
-    "implemented_count": 11
+    "implemented_count": 16
   },
   "vocabulary": {
     "components": [

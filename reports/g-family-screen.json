@@ -1,63 +1,888 @@
 {
   "schema_version": 1,
   "family": "G",
-  "spec": "$ORCHESTRATOR_ROOT/docs/research/bias-60-ideas-2026-10.md#family-g",
-  "status": "documented_not_computed",
+  "status": "computed",
   "scope": {
     "official_scored_tracts": 9379,
-    "ideas": ["G1", "G2", "G3", "G4", "G5"],
-    "computed": [],
-    "coverage": null,
-    "correlation_and_vif": "not measured for uncomputed ideas; existing idea orthogonality remains in reports/ideas-orthogonality.json"
+    "ideas": [
+      "G1",
+      "G2",
+      "G3",
+      "G4",
+      "G5"
+    ],
+    "computed": [
+      "G1",
+      "G2",
+      "G3",
+      "G4",
+      "G5"
+    ],
+    "all_artifacts_partition_official_geoids": true
   },
   "constraints": {
     "provided_datasets_only": true,
     "labels_read": false,
-    "reference_layers_read": false,
+    "microsoft_building_geometry_used": false,
+    "removed_reference_layers_read_or_joined": false,
     "leaderboard_accessed": false,
-    "uploads": 0,
-    "study_tract_geometry_computations": 0
+    "uploads": 0
   },
-  "input_schema_observation": {
-    "roads_layer_columns": ["id", "names", "class", "access_restrictions", "routes", "geometry"],
-    "buildings_layer_columns": ["id", "names", "sources", "class", "has_parts", "geometry"],
-    "places_layer": "not found at the registered provided-package path for eastern-ok; no POI geometry/name bytes were read"
-  },
-  "idea_dispositions": [
-    {
-      "id": "G1",
-      "status": "not_computed",
-      "reason": "The roads layer and ACS tract polygons exist, and the road schema includes geometry. However, the current audited input API only exposes named-class tract lengths, not line-to-tract-boundary distances or 25 m boundary-buffer intersections. Adding those study-geometry operations without a dedicated audited accessor and deterministic boundary-touch tests risks implementing a different recipe or leaking geometry reads outside the declaration contract.",
-      "missing_prerequisite": "A tested, declared geometry accessor for named-class road lines and tract boundaries plus deterministic boundary-buffer clipping tests for the specified 25 m recipe."
+  "ideas": {
+    "G1": {
+      "status": "computed",
+      "artifact": "ideas/G1.parquet",
+      "sha256": "6d870a5a32700934a79d4a4ebf1fd9e65d563a16478fff9dc788e13252621b9f",
+      "rows": 18758,
+      "official_rows": 9379,
+      "emissions": [
+        {
+          "channel": "covariate",
+          "component": "R",
+          "defined_rows": 9285,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 0.000941151785207949
+        },
+        {
+          "channel": "gap",
+          "component": "R",
+          "defined_rows": 9285,
+          "rows": 9379,
+          "value_max": 0.5,
+          "value_min": 0.0004705758926039745
+        }
+      ],
+      "geoid_partition_exact": true,
+      "regions": {
+        "eastern-ok": {
+          "R/covariate": {
+            "defined_rows": 1172,
+            "distribution": {
+              "count": 1172,
+              "max": 1.0,
+              "mean": 0.5584010274968174,
+              "min": 0.002789064087743717,
+              "p50": 0.5829335072457533,
+              "p90": 1.0
+            }
+          },
+          "R/gap": {
+            "defined_rows": 1172,
+            "distribution": {
+              "count": 1172,
+              "max": 0.5,
+              "mean": 0.2792005137484087,
+              "min": 0.0013945320438718586,
+              "p50": 0.29146675362287666,
+              "p90": 0.5
+            }
+          }
+        },
+        "maricopa-az": {
+          "R/covariate": {
+            "defined_rows": 1570,
+            "distribution": {
+              "count": 1570,
+              "max": 1.0,
+              "mean": 0.7866195393150234,
+              "min": 0.001806392712961151,
+              "p50": 0.8789807407017731,
+              "p90": 1.0
+            }
+          },
+          "R/gap": {
+            "defined_rows": 1570,
+            "distribution": {
+              "count": 1570,
+              "max": 0.5,
+              "mean": 0.3933097696575117,
+              "min": 0.0009031963564805755,
+              "p50": 0.43949037035088656,
+              "p90": 0.5
+            }
+          }
+        },
+        "northern-ca": {
+          "R/covariate": {
+            "defined_rows": 586,
+            "distribution": {
+              "count": 586,
+              "max": 1.0,
+              "mean": 0.6221002492480142,
+              "min": 0.0013261184858251258,
+              "p50": 0.6545372383269175,
+              "p90": 1.0
+            }
+          },
+          "R/gap": {
+            "defined_rows": 586,
+            "distribution": {
+              "count": 586,
+              "max": 0.5,
+              "mean": 0.3110501246240071,
+              "min": 0.0006630592429125629,
+              "p50": 0.32726861916345873,
+              "p90": 0.5
+            }
+          }
+        },
+        "south-central-tx": {
+          "R/covariate": {
+            "defined_rows": 5957,
+            "distribution": {
+              "count": 5957,
+              "max": 1.0,
+              "mean": 0.6767681132506623,
+              "min": 0.000941151785207949,
+              "p50": 0.7091464762229476,
+              "p90": 1.0
+            }
+          },
+          "R/gap": {
+            "defined_rows": 5957,
+            "distribution": {
+              "count": 5957,
+              "max": 0.5,
+              "mean": 0.33838405662533116,
+              "min": 0.0004705758926039745,
+              "p50": 0.3545732381114738,
+              "p90": 0.5
+            }
+          }
+        }
+      },
+      "orthogonality_columns": {
+        "G1|R|covariate": {
+          "coverage": 0.9899776095532573,
+          "vif": {
+            "column": "G1|R|covariate",
+            "degenerate": false,
+            "distinct_values": 7199,
+            "vif": 1.0
+          },
+          "correlation_with_existing_ideas": {
+            "Dst1|Est|gap": 0.192916831299586,
+            "Dst3|B|gap": 0.05800342820692638,
+            "Dst4|C|gap": 0.3407524237327142,
+            "Dst5|C|gap": 0.34947158659048694,
+            "G1|R|gap": 1.0,
+            "G2|R|gap": 0.026322015499131837,
+            "G3|B|gap": -0.06583086072501432,
+            "G4|B|covariate": -0.08634660022416712,
+            "G5|Est|covariate": 0.1426375613412258,
+            "G5|F|covariate": 0.04334763347495693,
+            "Mx4|B|covariate": 0.019281863790907457,
+            "Mx4|F|covariate": 0.04618111077591505,
+            "P2|F|gap": 0.13968721072351556,
+            "Sc5|R|covariate": 0.002545150603560774,
+            "Sc5|R|gap": -0.09559968807743677,
+            "Sca1|F|gap": 0.15226530788293363,
+            "Tm1|B|covariate": -0.03968032995875708,
+            "Tm1|B|gap": -0.03828633203498658
+          }
+        },
+        "G1|R|gap": {
+          "coverage": 0.9899776095532573,
+          "vif": {
+            "column": "G1|R|gap",
+            "degenerate": false,
+            "distinct_values": 7199,
+            "vif": 1.0
+          },
+          "correlation_with_existing_ideas": {
+            "Dst1|Est|gap": 0.192916831299586,
+            "Dst3|B|gap": 0.05800342820692638,
+            "Dst4|C|gap": 0.3407524237327142,
+            "Dst5|C|gap": 0.34947158659048694,
+            "G1|R|covariate": 1.0,
+            "G2|R|gap": 0.026322015499131837,
+            "G3|B|gap": -0.06583086072501432,
+            "G4|B|covariate": -0.08634660022416712,
+            "G5|Est|covariate": 0.1426375613412258,
+            "G5|F|covariate": 0.04334763347495693,
+            "Mx4|B|covariate": 0.019281863790907457,
+            "Mx4|F|covariate": 0.04618111077591505,
+            "P2|F|gap": 0.13968721072351556,
+            "Sc5|R|covariate": 0.002545150603560774,
+            "Sc5|R|gap": -0.09559968807743677,
+            "Sca1|F|gap": 0.15226530788293363,
+            "Tm1|B|covariate": -0.03968032995875708,
+            "Tm1|B|gap": -0.03828633203498658
+          }
+        }
+      }
     },
-    {
-      "id": "G2",
-      "status": "not_computed",
-      "reason": "The roads schema exposes names, access_restrictions, routes and geometry, but the current cache/input method returns tract-level lengths and discards segment identity, heading and paired-line candidates. The <60 m/opposite-heading/same-name-or-route pairing rule needs a separate segment-level access contract and false-pair tests for ramps/frontage roads before its per-tract variants can be emitted.",
-      "missing_prerequisite": "A declared segment-level roads reader, frozen heading derivation and validated dual-carriageway pairing tests (including ramps and frontage roads)."
+    "G2": {
+      "status": "computed",
+      "artifact": "ideas/G2.parquet",
+      "sha256": "c2b03ab287ffe2033706eb3a6d51035ae5109e93c7b8c5be616b3d5e2517d5eb",
+      "rows": 9379,
+      "official_rows": 9379,
+      "emissions": [
+        {
+          "channel": "gap",
+          "component": "R",
+          "defined_rows": 9247,
+          "rows": 9379,
+          "value_max": 0.14959316294443317,
+          "value_min": 0.0
+        }
+      ],
+      "geoid_partition_exact": true,
+      "regions": {
+        "eastern-ok": {
+          "R/gap": {
+            "defined_rows": 1164,
+            "distribution": {
+              "count": 1164,
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 0.0
+            }
+          }
+        },
+        "maricopa-az": {
+          "R/gap": {
+            "defined_rows": 1560,
+            "distribution": {
+              "count": 1560,
+              "max": 0.14959316294443317,
+              "mean": 0.0005298559114566511,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 0.0
+            }
+          }
+        },
+        "northern-ca": {
+          "R/gap": {
+            "defined_rows": 584,
+            "distribution": {
+              "count": 584,
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 0.0
+            }
+          }
+        },
+        "south-central-tx": {
+          "R/gap": {
+            "defined_rows": 5939,
+            "distribution": {
+              "count": 5939,
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 0.0
+            }
+          }
+        }
+      },
+      "orthogonality_columns": {
+        "G2|R|gap": {
+          "coverage": 0.985926004904574,
+          "vif": {
+            "column": "G2|R|gap",
+            "degenerate": false,
+            "distinct_values": 33,
+            "vif": 127.9680347906628
+          },
+          "correlation_with_existing_ideas": {
+            "Dst1|Est|gap": 0.014786749625697771,
+            "Dst3|B|gap": 0.008614119714377404,
+            "Dst4|C|gap": 0.0020163089064888532,
+            "Dst5|C|gap": 0.027520814170162916,
+            "G1|R|covariate": 0.026322015499131837,
+            "G1|R|gap": 0.026322015499131837,
+            "G3|B|gap": 0.036587392721267056,
+            "G4|B|covariate": -0.01642967475159906,
+            "G5|Est|covariate": -0.007649945447457647,
+            "G5|F|covariate": -0.007404277305991328,
+            "Mx4|B|covariate": -0.007789663037619917,
+            "Mx4|F|covariate": -0.009641622625924325,
+            "P2|F|gap": -0.005782375095856756,
+            "Sc5|R|covariate": -0.0033507833496403,
+            "Sc5|R|gap": -0.0049046216551038024,
+            "Sca1|F|gap": -0.006421106985525184,
+            "Tm1|B|covariate": -0.002772737879467218,
+            "Tm1|B|gap": -0.011006160177206162
+          }
+        }
+      }
     },
-    {
-      "id": "G3",
-      "status": "not_computed",
-      "reason": "The recipe's denominator a_ref is the median of Microsoft-only footprints. Microsoft US Buildings is a removed reference layer and is explicitly forbidden on study tracts; substituting an Overture source-tagged Microsoft-equivalent layer would still use that prohibited reference copy to construct a target-like deficit.",
-      "missing_prerequisite": "A rule-clean alternate definition that does not use Microsoft/reference footprints, or an operator-approved removal of this recipe; no reference-layer retrieval or computation is permitted."
+    "G3": {
+      "status": "computed",
+      "artifact": "ideas/G3.parquet",
+      "sha256": "95041b75f9d7758dff3065fe31906b2ae69d7cfd4147b843c9d859633e093953",
+      "rows": 9379,
+      "official_rows": 9379,
+      "emissions": [
+        {
+          "channel": "gap",
+          "component": "B",
+          "defined_rows": 8878,
+          "rows": 9379,
+          "value_max": 0.98,
+          "value_min": 0.0
+        }
+      ],
+      "geoid_partition_exact": true,
+      "regions": {
+        "eastern-ok": {
+          "B/gap": {
+            "defined_rows": 1162,
+            "distribution": {
+              "count": 1162,
+              "max": 0.9622317206705483,
+              "mean": 0.44610158349807727,
+              "min": 0.0,
+              "p50": 0.4544014081933617,
+              "p90": 0.7722960438249247
+            }
+          },
+          "definition": {
+            "microsoft_footprints_used": false,
+            "peer_reference": "leave-one-tract-out median footprint area by state-county-RUCA; fallback same RUCA then region"
+          }
+        },
+        "maricopa-az": {
+          "B/gap": {
+            "defined_rows": 1500,
+            "distribution": {
+              "count": 1500,
+              "max": 0.98,
+              "mean": 0.4700936940775919,
+              "min": 0.0,
+              "p50": 0.4740257859569942,
+              "p90": 0.9255060603292616
+            }
+          },
+          "definition": {
+            "microsoft_footprints_used": false,
+            "peer_reference": "leave-one-tract-out median footprint area by state-county-RUCA; fallback same RUCA then region"
+          }
+        },
+        "northern-ca": {
+          "B/gap": {
+            "defined_rows": 582,
+            "distribution": {
+              "count": 582,
+              "max": 0.9140963616345741,
+              "mean": 0.433328670887708,
+              "min": 0.0,
+              "p50": 0.4254364629904438,
+              "p90": 0.7161543709769013
+            }
+          },
+          "definition": {
+            "microsoft_footprints_used": false,
+            "peer_reference": "leave-one-tract-out median footprint area by state-county-RUCA; fallback same RUCA then region"
+          }
+        },
+        "south-central-tx": {
+          "B/gap": {
+            "defined_rows": 5634,
+            "distribution": {
+              "count": 5634,
+              "max": 0.9715732518887759,
+              "mean": 0.39016558923321176,
+              "min": 0.0,
+              "p50": 0.36958272636065886,
+              "p90": 0.7410829071364124
+            }
+          },
+          "definition": {
+            "microsoft_footprints_used": false,
+            "peer_reference": "leave-one-tract-out median footprint area by state-county-RUCA; fallback same RUCA then region"
+          }
+        }
+      },
+      "orthogonality_columns": {
+        "G3|B|gap": {
+          "coverage": 0.9465827913423606,
+          "vif": {
+            "column": "G3|B|gap",
+            "degenerate": false,
+            "distinct_values": 8260,
+            "vif": 9.997705600182655
+          },
+          "correlation_with_existing_ideas": {
+            "Dst1|Est|gap": -0.19116719059016773,
+            "Dst3|B|gap": 0.050029959962206105,
+            "Dst4|C|gap": -0.07077246239209689,
+            "Dst5|C|gap": -0.03557779652651672,
+            "G1|R|covariate": -0.06583086072501432,
+            "G1|R|gap": -0.06583086072501432,
+            "G2|R|gap": 0.036587392721267056,
+            "G4|B|covariate": 0.10758484767010894,
+            "G5|Est|covariate": 0.11721618593840122,
+            "G5|F|covariate": 0.049340788211866944,
+            "Mx4|B|covariate": -0.019756219682849286,
+            "Mx4|F|covariate": -0.04516118625331559,
+            "P2|F|gap": -0.08537092427909006,
+            "Sc5|R|covariate": -0.014697793402232151,
+            "Sc5|R|gap": 0.014709084946432,
+            "Sca1|F|gap": -0.08615017517029919,
+            "Tm1|B|covariate": 0.0031913107676817733,
+            "Tm1|B|gap": 0.07847222578196744
+          }
+        }
+      }
     },
-    {
-      "id": "G4",
-      "status": "not_computed",
-      "reason": "The buildings layer has geometry, but the preregistered void recipe also requires excluding cells with park/school POIs and near water infrastructure. The registered places layer is absent at the provided-package path, and there is no audited 100 m grid/ring or park/water masking implementation. Counting those voids without the specified exclusions would conflate parks and fields with tile dropout.",
-      "missing_prerequisite": "Provided, audited POI and water-feature inputs plus deterministic 100 m cell occupancy, eight-neighbour ring, and exclusion-mask tests."
+    "G4": {
+      "status": "computed",
+      "artifact": "ideas/G4.parquet",
+      "sha256": "65e380272552b0f8362acdbd73a9a7dcbc5eb544eaff38d744788d299e02317e",
+      "rows": 9379,
+      "official_rows": 9379,
+      "emissions": [
+        {
+          "channel": "covariate",
+          "component": "B",
+          "defined_rows": 5763,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 0.0
+        }
+      ],
+      "geoid_partition_exact": true,
+      "regions": {
+        "eastern-ok": {
+          "B/covariate": {
+            "defined_rows": 701,
+            "distribution": {
+              "count": 701,
+              "max": 1.0,
+              "mean": 0.40932217595772213,
+              "min": 0.0,
+              "p50": 0.3220338983050847,
+              "p90": 1.0
+            }
+          },
+          "masks": {
+            "infrastructure_water_buffer_m": 100,
+            "poi_park_school_cells": true,
+            "water_features_found": 0
+          }
+        },
+        "maricopa-az": {
+          "B/covariate": {
+            "defined_rows": 770,
+            "distribution": {
+              "count": 770,
+              "max": 1.0,
+              "mean": 0.29531868113250576,
+              "min": 0.0,
+              "p50": 0.23076923076923078,
+              "p90": 0.6666666666666666
+            }
+          },
+          "masks": {
+            "infrastructure_water_buffer_m": 100,
+            "poi_park_school_cells": true,
+            "water_features_found": 0
+          }
+        },
+        "northern-ca": {
+          "B/covariate": {
+            "defined_rows": 413,
+            "distribution": {
+              "count": 413,
+              "max": 1.0,
+              "mean": 0.39728394518879007,
+              "min": 0.0,
+              "p50": 0.3333333333333333,
+              "p90": 1.0
+            }
+          },
+          "masks": {
+            "infrastructure_water_buffer_m": 100,
+            "poi_park_school_cells": true,
+            "water_features_found": 0
+          }
+        },
+        "south-central-tx": {
+          "B/covariate": {
+            "defined_rows": 3879,
+            "distribution": {
+              "count": 3879,
+              "max": 1.0,
+              "mean": 0.31825485854125457,
+              "min": 0.0,
+              "p50": 0.25,
+              "p90": 0.7
+            }
+          },
+          "masks": {
+            "infrastructure_water_buffer_m": 100,
+            "poi_park_school_cells": true,
+            "water_features_found": 0
+          }
+        }
+      },
+      "orthogonality_columns": {
+        "G4|B|covariate": {
+          "coverage": 0.6144578313253012,
+          "vif": {
+            "column": "G4|B|covariate",
+            "degenerate": false,
+            "distinct_values": 1684,
+            "vif": 25.84732254936969
+          },
+          "correlation_with_existing_ideas": {
+            "Dst1|Est|gap": -0.06314623824132046,
+            "Dst3|B|gap": -0.02502535536510421,
+            "Dst4|C|gap": -0.0729242073659139,
+            "Dst5|C|gap": -0.07481305598495334,
+            "G1|R|covariate": -0.08634660022416712,
+            "G1|R|gap": -0.08634660022416712,
+            "G2|R|gap": -0.01642967475159906,
+            "G3|B|gap": 0.10758484767010894,
+            "G5|Est|covariate": -0.02242814701408671,
+            "G5|F|covariate": -0.11392581342989509,
+            "Mx4|B|covariate": -0.010758481058384107,
+            "Mx4|F|covariate": -0.03130940366114111,
+            "P2|F|gap": -0.03477038617836472,
+            "Sc5|R|covariate": 0.00987548929532859,
+            "Sc5|R|gap": 0.01656481534664031,
+            "Sca1|F|gap": -0.03914708212355191,
+            "Tm1|B|covariate": -0.02041936484423686,
+            "Tm1|B|gap": 0.03561397342842429
+          }
+        }
+      }
     },
-    {
-      "id": "G5",
-      "status": "not_computed",
-      "reason": "The registered Overture places path returned FileNotFound for eastern-ok during schema-only availability inspection. Without per-place geometry and names, exact-coordinate stacks, distinct-name counts and the 3 km exported mass cannot be computed. No tract join or geometry measurement was attempted.",
-      "missing_prerequisite": "A verified, rule-clean provided places layer with geometry and names in all four regions, then an audited point/tract and 3 km allocation contract."
+    "G5": {
+      "status": "computed",
+      "artifact": "ideas/G5.parquet",
+      "sha256": "3df5cf68ea2bc952380d86bfecb3703dc1db2b15555c2943ceafbfaa11f34e0a",
+      "rows": 18758,
+      "official_rows": 9379,
+      "emissions": [
+        {
+          "channel": "covariate",
+          "component": "Est",
+          "defined_rows": 9377,
+          "rows": 9379,
+          "value_max": 0.8285123966942148,
+          "value_min": 0.0
+        },
+        {
+          "channel": "covariate",
+          "component": "F",
+          "defined_rows": 9138,
+          "rows": 9379,
+          "value_max": 849.6747890808224,
+          "value_min": 0.0
+        }
+      ],
+      "geoid_partition_exact": true,
+      "regions": {
+        "eastern-ok": {
+          "Est/covariate": {
+            "defined_rows": 2370,
+            "distribution": {
+              "count": 2370,
+              "max": 134.10125647033533,
+              "mean": 2.8085042689404274,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 7.544337191458164
+            }
+          },
+          "F/covariate": {
+            "defined_rows": 2370,
+            "distribution": {
+              "count": 2370,
+              "max": 134.10125647033533,
+              "mean": 2.8085042689404274,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 7.544337191458164
+            }
+          },
+          "stack_rule": {
+            "distinct_primary_names_minimum": 5,
+            "exact_coordinates": true,
+            "radius_m": 3000
+          }
+        },
+        "maricopa-az": {
+          "Est/covariate": {
+            "defined_rows": 3145,
+            "distribution": {
+              "count": 3145,
+              "max": 849.6747890808224,
+              "mean": 7.389821300314786,
+              "min": 0.0,
+              "p50": 0.1328976034858388,
+              "p90": 21.231908586258033
+            }
+          },
+          "F/covariate": {
+            "defined_rows": 3145,
+            "distribution": {
+              "count": 3145,
+              "max": 849.6747890808224,
+              "mean": 7.389821300314786,
+              "min": 0.0,
+              "p50": 0.1328976034858388,
+              "p90": 21.231908586258033
+            }
+          },
+          "stack_rule": {
+            "distinct_primary_names_minimum": 5,
+            "exact_coordinates": true,
+            "radius_m": 3000
+          }
+        },
+        "northern-ca": {
+          "Est/covariate": {
+            "defined_rows": 1175,
+            "distribution": {
+              "count": 1175,
+              "max": 232.77593247721262,
+              "mean": 5.322615300641372,
+              "min": 0.0,
+              "p50": 0.031746031746031744,
+              "p90": 14.420045593501216
+            }
+          },
+          "F/covariate": {
+            "defined_rows": 1175,
+            "distribution": {
+              "count": 1175,
+              "max": 232.77593247721262,
+              "mean": 5.322615300641372,
+              "min": 0.0,
+              "p50": 0.031746031746031744,
+              "p90": 14.420045593501216
+            }
+          },
+          "stack_rule": {
+            "distinct_primary_names_minimum": 5,
+            "exact_coordinates": true,
+            "radius_m": 3000
+          }
+        },
+        "south-central-tx": {
+          "Est/covariate": {
+            "defined_rows": 11825,
+            "distribution": {
+              "count": 11825,
+              "max": 636.7533934966965,
+              "mean": 6.382596958906303,
+              "min": 0.0,
+              "p50": 0.07746478873239436,
+              "p90": 16.390444754242598
+            }
+          },
+          "F/covariate": {
+            "defined_rows": 11825,
+            "distribution": {
+              "count": 11825,
+              "max": 636.7533934966965,
+              "mean": 6.382596958906303,
+              "min": 0.0,
+              "p50": 0.07746478873239436,
+              "p90": 16.390444754242598
+            }
+          },
+          "stack_rule": {
+            "distinct_primary_names_minimum": 5,
+            "exact_coordinates": true,
+            "radius_m": 3000
+          }
+        }
+      },
+      "orthogonality_columns": {
+        "G5|Est|covariate": {
+          "coverage": 0.9997867576500693,
+          "vif": {
+            "column": "G5|Est|covariate",
+            "degenerate": false,
+            "distinct_values": 2423,
+            "vif": 4.190110596502989
+          },
+          "correlation_with_existing_ideas": {
+            "Dst1|Est|gap": -0.3700870946899615,
+            "Dst3|B|gap": 0.05327403008679773,
+            "Dst4|C|gap": 0.09194126328844959,
+            "Dst5|C|gap": 0.11679395119989414,
+            "G1|R|covariate": 0.1426375613412258,
+            "G1|R|gap": 0.1426375613412258,
+            "G2|R|gap": -0.007649945447457647,
+            "G3|B|gap": 0.11721618593840122,
+            "G4|B|covariate": -0.02242814701408671,
+            "G5|F|covariate": 0.24588071634971798,
+            "Mx4|B|covariate": -0.007194974655693818,
+            "Mx4|F|covariate": 0.01961873556382426,
+            "P2|F|gap": 0.005221107253871443,
+            "Sc5|R|covariate": 0.009389749408227791,
+            "Sc5|R|gap": 0.023838853391664645,
+            "Sca1|F|gap": 0.0113824893380322,
+            "Tm1|B|covariate": -0.009388100336346752,
+            "Tm1|B|gap": 0.03613340901105892
+          }
+        },
+        "G5|F|covariate": {
+          "coverage": 0.9743042968333511,
+          "vif": {
+            "column": "G5|F|covariate",
+            "degenerate": false,
+            "distinct_values": 7366,
+            "vif": 7.549664904469729
+          },
+          "correlation_with_existing_ideas": {
+            "Dst1|Est|gap": -0.24075058951679712,
+            "Dst3|B|gap": 0.0243841358483314,
+            "Dst4|C|gap": 0.02653048340570708,
+            "Dst5|C|gap": 0.035477362716787884,
+            "G1|R|covariate": 0.04334763347495693,
+            "G1|R|gap": 0.04334763347495693,
+            "G2|R|gap": -0.007404277305991328,
+            "G3|B|gap": 0.049340788211866944,
+            "G4|B|covariate": -0.11392581342989509,
+            "G5|Est|covariate": 0.24588071634971798,
+            "Mx4|B|covariate": -0.023191705159447098,
+            "Mx4|F|covariate": -0.014856014558561234,
+            "P2|F|gap": -0.03220096069196234,
+            "Sc5|R|covariate": -0.0015345080268152963,
+            "Sc5|R|gap": 0.03580842645994011,
+            "Sca1|F|gap": -0.030343179506539995,
+            "Tm1|B|covariate": 0.03138572908320808,
+            "Tm1|B|gap": -0.010264454043408974
+          }
+        }
+      }
     }
-  ],
+  },
+  "g3_redefinition": {
+    "old_reference": "Microsoft footprint median (prohibited and not used)",
+    "replacement": "leave-one-tract-out median of per-tract medians for exclusive OSM/Esri-only provided footprints, grouped by STATEFP/COUNTYFP/RUCA class; fallback same RUCA then region",
+    "reference_frozen_before_deficit": true,
+    "residential_or_unknown_and_area_below_m2": 5000,
+    "ratio_cap": 50,
+    "microsoft_rows_excluded_by_region": {
+      "northern-ca": 1042981,
+      "eastern-ok": 2246412,
+      "maricopa-az": 1299748,
+      "south-central-tx": 8243296
+    }
+  },
+  "g4_masks": {
+    "grid_cell_m": 100,
+    "occupied_ring_threshold": 5,
+    "poi_park_school_mask": true,
+    "water_buffer_m": 100,
+    "water_features_found_by_region": {
+      "eastern-ok": 0,
+      "maricopa-az": 0,
+      "northern-ca": 0,
+      "south-central-tx": 0
+    },
+    "interpretation": "The provided infrastructure layer yielded no water-class/subtype features in any region; the water exclusion therefore had zero matched geometries, reported as a measured package-layer limitation rather than an invented mask."
+  },
+  "g5_rule": {
+    "exact_coordinate": true,
+    "minimum_distinct_primary_names": 5,
+    "neighbourhood_radius_m": 3000,
+    "exported_mass_allocator": "non-Microsoft OSM/Esri-only building centroid counts"
+  },
   "orthogonality": {
     "report": "reports/ideas-orthogonality.json",
-    "new_g_columns": 0,
-    "interpretation": "No G correlation or VIF is claimed because no G estimator was computed. Existing implemented estimators remain measured in the refreshed report."
+    "sha256": "bff13c56b1dbf9bc1eae7806910ca4cb550dcf5e8f07be6605a3a3b55a57e0cc",
+    "summary": {
+      "all_passed": true,
+      "clusters": 14,
+      "columns_degenerate": 0,
+      "columns_evaluated": 21,
+      "columns_flagged_vif": 7,
+      "columns_included": 19,
+      "columns_numerically_null": 2,
+      "pairs_flagged": 6,
+      "report_sha256": "b33c48f044437d1dd6afb5335773245b0004e6303a2e29b1b53cffa640939b18"
+    },
+    "flagged_pairs": [
+      {
+        "abs_rho": 0.9015073852040956,
+        "left": "Dst4|C|gap",
+        "right": "Dst5|C|gap",
+        "same_component": true,
+        "same_family": true
+      },
+      {
+        "abs_rho": 0.8435198542525497,
+        "left": "Dst4|C|gap",
+        "right": "P2|F|gap",
+        "same_component": false,
+        "same_family": false
+      },
+      {
+        "abs_rho": 0.8570731856887831,
+        "left": "Dst4|C|gap",
+        "right": "Sca1|F|gap",
+        "same_component": false,
+        "same_family": false
+      },
+      {
+        "abs_rho": 1.0,
+        "left": "G1|R|covariate",
+        "right": "G1|R|gap",
+        "same_component": true,
+        "same_family": true
+      },
+      {
+        "abs_rho": 0.995801065928555,
+        "left": "P2|F|gap",
+        "right": "Sca1|F|gap",
+        "same_component": true,
+        "same_family": false
+      },
+      {
+        "abs_rho": 0.8160240383903553,
+        "left": "Sc5|R|covariate",
+        "right": "Sc5|R|gap",
+        "same_component": true,
+        "same_family": true
+      }
+    ],
+    "vif_flags": [
+      {
+        "column": "Dst3|B|gap",
+        "vif": 36.372894496959354
+      },
+      {
+        "column": "G2|R|gap",
+        "vif": 127.9680347906628
+      },
+      {
+        "column": "G4|B|covariate",
+        "vif": 25.84732254936969
+      },
+      {
+        "column": "Sc5|R|covariate",
+        "vif": 962.6484414102376
+      },
+      {
+        "column": "Sc5|R|gap",
+        "vif": 59.404141461525704
+      },
+      {
+        "column": "Tm1|B|covariate",
+        "vif": 48.98387895436541
+      },
+      {
+        "column": "Tm1|B|gap",
+        "vif": 31.158172197712975
+      }
+    ],
+    "note": "For every included G column the full correlation vector and VIF are stored under its output column; zero-coverage columns are not fabricated."
   }
 }

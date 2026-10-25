@@ -1619,3 +1619,40 @@ negative result and Dst4 source-vector list are in `reports/dst-family-screen.js
 Tests cover Dst1 shrinkage/Chao1, Dst2 zero and nonzero overlap cases, Dst3 lognormal tail formula,
 Dst4 mixture class orientation, Dst5 monotone moment calibration, all five full-artifact reports,
 harness order/partition, and lab evaluator behavior as the registered vector grows. Full suite: **621 passed, 291 subtests in 290.68s**. The lab report remains `not_run_missing_lab`; no lab statistic was produced.
+
+## 2026-10-25 — bias60-family-g: G1–G5 geometry estimators
+
+Implemented and registered all five G ideas on the official 9,379 GEOIDs. The reader uses the
+provided `roads`, `buildings`, `pois` (not the nonexistent `places` alias), `infrastructure`, and
+ACS tract polygon objects, with EPSG:5070 metric operations and workspace caches only.
+
+- **G1:** named-road lengths within the 25 m tract boundary band divided by named-road length in
+  tract-plus-band; emits the prescribed 0.5 symmetric-side gap and the share covariate. Artifact
+  SHA-256 `6d870a5a32700934a79d4a4ebf1fd9e65d563a16478fff9dc788e13252621b9f`.
+- **G2:** segment-level one-to-one pairs require <60 m Hausdorff/distance, same primary name or
+  route, opposite derived travel bearings with explicit one-way restrictions, and reject link,
+  ramp, and frontage features. Synthetic tests cover a valid divided route, a route mismatch,
+  ramp/frontage, and same-direction geometry. Artifact SHA-256
+  `c2b03ab287ffe2033706eb3a6d51035ae5109e93c7b8c5be616b3d5e2517d5eb`.
+- **G3:** removed the Microsoft median denominator. The replacement reference is frozen before
+  computing deficits: leave-one-tract-out median of per-tract medians for exclusive OSM/Esri-only
+  footprints grouped by state, county, and RUCA; fallback is same RUCA then region. Microsoft and
+  mixed-source footprints are filtered before WKB decoding; area candidates are under 5,000 m² and
+  ratios capped at 50. Artifact SHA-256
+  `95041b75f9d7758dff3065fe31906b2ae69d7cfd4147b843c9d859633e093953`.
+- **G4:** 100 m EPSG:5070 grid void share among centers whose 8-cell ring has at least 5 occupied
+  neighbors; excludes park/school cells and a 100 m buffer around water geometries. Buildings are
+  OSM/Esri-only. The provided infrastructure objects contained zero matching water geometries in
+  all four regions, recorded as such; no external water mask was substituted. Artifact SHA-256
+  `65e380272552b0f8362acdbd73a9a7dcbc5eb544eaff38d744788d299e02317e`.
+- **G5:** exact-coordinate stacks require at least five distinct primary names. Emits within-tract
+  stacked-place share and 3 km exported stack mass allocated to nearby tracts by OSM/Esri building
+  centroid counts. Artifact SHA-256
+  `3df5cf68ea2bc952380d86bfecb3703dc1db2b15555c2943ceafbfaa11f34e0a`.
+
+All G artifacts validate their official GEOID partitions and are recorded in
+`reports/ideas-harness.json`; formula/fixture tests and per-G distributions, SHA-256, correlations
+and VIFs are in `tests/test_bias60_family_g.py`, `reports/g-family-screen.json`, and the refreshed
+`reports/ideas-orthogonality.json`. The harness now registers 16 implementations. Dst4’s preregistered
+component vector was refreshed to all 14 other idea IDs (gap channels only); Dst5 was recalculated.
+No labels, Microsoft geometries, removed reference layers, leaderboard feedback, or uploads were used. Full test suite: **626 passed, 301 subtests in 319.79s**.

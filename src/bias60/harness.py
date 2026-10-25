@@ -249,10 +249,16 @@ def build_report(*, config: dict[str, Any], registry_document: dict[str, Any],
                  workspace: Path, regions: list[str], geoids_by_region: dict[str, list[str]],
                  ideas_dir: Path, tamper: str | None = None,
                  inputs_factory: Callable[..., ProvidedInputs] = ProvidedInputs,
-                 spec_parse: dict[str, Any] | None = None) -> tuple[dict[str, Any], dict[str, bytes]]:
+                 spec_parse: dict[str, Any] | None = None,
+                 only_ids: set[str] | None = None) -> tuple[dict[str, Any], dict[str, bytes]]:
     """Run every implemented idea, write the parquets and return the report plus payload bytes."""
     implemented = [idea["id"] for idea in registry_document["ideas"]
                    if idea["status"] == "implemented"]
+    if only_ids is not None:
+        unknown = only_ids - set(implemented)
+        if unknown:
+            raise ValueError(f"unknown/unimplemented idea ids requested: {sorted(unknown)}")
+        implemented = [idea_id for idea_id in implemented if idea_id in only_ids]
     families = {idea["id"]: idea["family"] for idea in registry_document["ideas"]}
     payloads: dict[str, bytes] = {}
     per_idea: dict[str, Any] = {}

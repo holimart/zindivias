@@ -154,6 +154,25 @@ def stub_factory(overrides: dict | None = None):
     return factory
 
 
+def _stub_g_implementations():
+    """Keep common harness tests isolated from raw-geometry package I/O."""
+    originals = {idea: IMPLEMENTATIONS[idea] for idea in (f"G{i}" for i in range(1, 6))}
+    def stub(idea_id, specification):
+        def execute(inputs):
+            from bias60.contracts import Emission, IdeaOutput
+            emissions = []
+            for component, channel in specification:
+                emissions.append(Emission(component, channel, np.zeros(len(inputs.geoids), dtype=np.float64),
+                                          np.ones(len(inputs.geoids), dtype=np.bool_)))
+            return IdeaOutput(idea_id, inputs.region, inputs.geoids, emissions, {"synthetic_test_stub": True})
+        return execute
+    specs = {"G1": [("R", "gap"), ("R", "covariate")], "G2": [("R", "gap")],
+             "G3": [("B", "gap")], "G4": [("B", "covariate")],
+             "G5": [("Est", "covariate"), ("F", "covariate")]}
+    IMPLEMENTATIONS.update({idea: stub(idea, specs[idea]) for idea in specs})
+    return originals
+
+
 def run_build(report: Path | None = None, *, workspace: Path | None = None,
               overrides: dict | None = None, tamper: str | None = None):
     config = harness_config()
@@ -161,11 +180,15 @@ def run_build(report: Path | None = None, *, workspace: Path | None = None,
     regions = ["maricopa-az", "eastern-ok"]
     geoids = {region: stub_geoids(region) for region in regions}
     directory = workspace or Path(tempfile.mkdtemp(prefix="bias60-"))
-    return harness_module.build_report(config=config, registry_document=registry,
-                                       workspace=directory, regions=regions,
-                                       geoids_by_region=geoids,
-                                       ideas_dir=directory / "ideas", tamper=tamper,
-                                       inputs_factory=stub_factory(overrides))
+    originals = _stub_g_implementations()
+    try:
+        return harness_module.build_report(config=config, registry_document=registry,
+                                           workspace=directory, regions=regions,
+                                           geoids_by_region=geoids,
+                                           ideas_dir=directory / "ideas", tamper=tamper,
+                                           inputs_factory=stub_factory(overrides))
+    finally:
+        IMPLEMENTATIONS.update(originals)
 
 
 class SpecAndRegistryTests(unittest.TestCase):
@@ -414,7 +437,7 @@ class HarnessTests(unittest.TestCase):
                     regions=["maricopa-az"],
                     geoids_by_region={"maricopa-az": stub_geoids("maricopa-az")},
                     ideas_dir=Path(tempfile.mkdtemp()) / "ideas",
-                    inputs_factory=stub_factory(None))
+                    inputs_factory=stub_factory(None), only_ids={"Tm1"})
         finally:
             IMPLEMENTATIONS["Tm1"] = broken
 

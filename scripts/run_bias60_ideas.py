@@ -97,7 +97,8 @@ def main(argv: list[str] | None = None) -> int:
     report, payloads = build_report(config=config, registry_document=registry_document,
                                     workspace=workspace, regions=regions,
                                     geoids_by_region=geoids_by_region, ideas_dir=ideas_dir,
-                                    tamper=args.tamper)
+                                    tamper=args.tamper,
+                                    only_ids=set(args.only.split(",")) if args.only else None)
     if args.only:
         wanted = set(args.only.split(","))
         report["per_idea"] = {key: value for key, value in report["per_idea"].items()
