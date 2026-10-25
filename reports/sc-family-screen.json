@@ -1,0 +1,257 @@
+{
+  "schema_version": 1,
+  "family": "Sc",
+  "status": "partial_one_computed_four_documented",
+  "scope": {
+    "official_scored_tracts": 9379,
+    "ideas": [
+      "Sc1",
+      "Sc2",
+      "Sc3",
+      "Sc4",
+      "Sc5"
+    ],
+    "computed": [
+      "Sc5"
+    ],
+    "coverage_is_defined_fraction_of_all_official_tracts": true
+  },
+  "constraints": {
+    "provided_datasets_only": true,
+    "labels_read": false,
+    "reference_layers_read": false,
+    "leaderboard_accessed": false,
+    "uploads": 0
+  },
+  "ideas": [
+    {
+      "id": "Sc1",
+      "status": "not_computed",
+      "reason": "The current audited road accessor computes only named-class geometry and never reads/normalizes the roads names attribute. The raw nested names field can represent null, empty and typed name records; treating any non-null container as a name would create an unvalidated numerator definition.",
+      "missing_prerequisite": "A declared names-field normalizer with null/empty/string/list fixtures and a raw segment-to-tract named-versus-unnamed length implementation."
+    },
+    {
+      "id": "Sc2",
+      "status": "not_computed",
+      "reason": "The idea needs per-place names plus primary/generic category and taxonomy fields. No tested per-place input/cache is registered; the provided eastern-OK places object path previously returned FileNotFound. Aggregate type counts cannot recover uncategorized facility names or guard against false positives such as \u201cFire Station Grill\u201d.",
+      "missing_prerequisite": "A verified places object for every scored region and a schema-checked place/name/category accessor with semantic false-positive fixtures."
+    },
+    {
+      "id": "Sc3",
+      "status": "not_computed",
+      "reason": "The four category-definition variants require per-place primary, alternate, taxonomy-hierarchy and basic-category values, which the harness does not expose through a validated per-place reader. No alternate-definition counts or spread are fabricated.",
+      "missing_prerequisite": "A verified all-region places source and tested extraction/mapping for each of the four specified category rules."
+    },
+    {
+      "id": "Sc4",
+      "status": "not_computed",
+      "reason": "The current unfiltered-road reader requests only class and geometry. Sc4 additionally requires normalized route/name patterns and a precise segment-length-over-2-km test; without those declared fields and fixtures, unknown-class road candidates cannot be distinguished reproducibly.",
+      "missing_prerequisite": "A typed route/name parser plus tests for null, empty, list/record values and the 2-km segment predicate in the raw unfiltered-road clipping path."
+    },
+    {
+      "id": "Sc5",
+      "status": "computed",
+      "path": "ideas/Sc5.parquet",
+      "sha256": "c8603a948b060344f23d2250da22b02a95254401c4a67d64d74a55d4cf4ee720",
+      "rows": 18758,
+      "official_rows": 9379,
+      "geoid_partition_exact": true,
+      "emissions": [
+        {
+          "channel": "covariate",
+          "component": "R",
+          "defined_rows": 9247,
+          "rows": 9379,
+          "value_max": 1.4432899320127035e-15,
+          "value_min": -1.3322676295501878e-15
+        },
+        {
+          "channel": "gap",
+          "component": "R",
+          "defined_rows": 9247,
+          "rows": 9379,
+          "value_max": 1.4432899320127035e-15,
+          "value_min": 0.0
+        }
+      ],
+      "regions": {
+        "eastern-ok": {
+          "rows": 1192,
+          "defined": 1164,
+          "coverage": 0.97651,
+          "gap_distribution": {
+            "count": 1164,
+            "max": 1.1102230246251565e-15,
+            "mean": 7.945152744954943e-17,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 2.220446049250313e-16
+          },
+          "excluded_share_distribution": {
+            "count": 1164,
+            "max": 1.1102230246251565e-15,
+            "mean": -1.8217577122285644e-17,
+            "min": -1.1102230246251565e-15,
+            "p50": 0.0,
+            "p90": 2.220446049250313e-16
+          },
+          "named_length_km": {
+            "roads": 27944.02776408843,
+            "roads-unfiltered": 27944.02776408843
+          },
+          "cross_check": {
+            "cached_km": 27944.02776408843,
+            "column": "overture_named_road_km_5070",
+            "measured_km": 27944.02776408843,
+            "relative_residual": 0.0,
+            "tolerance": 1e-06
+          }
+        },
+        "maricopa-az": {
+          "rows": 1593,
+          "defined": 1560,
+          "coverage": 0.979284,
+          "gap_distribution": {
+            "count": 1560,
+            "max": 1.4432899320127035e-15,
+            "mean": 7.465538159178137e-17,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 2.220446049250313e-16
+          },
+          "excluded_share_distribution": {
+            "count": 1560,
+            "max": 1.4432899320127035e-15,
+            "mean": -8.184336399480321e-18,
+            "min": -8.881784197001252e-16,
+            "p50": 0.0,
+            "p90": 2.220446049250313e-16
+          },
+          "named_length_km": {
+            "roads": 22113.71284793831,
+            "roads-unfiltered": 22113.71284793831
+          },
+          "cross_check": {
+            "cached_km": 22113.71284793831,
+            "column": "overture_named_road_km_5070",
+            "measured_km": 22113.71284793831,
+            "relative_residual": 0.0,
+            "tolerance": 1e-06
+          }
+        },
+        "northern-ca": {
+          "rows": 591,
+          "defined": 584,
+          "coverage": 0.988156,
+          "gap_distribution": {
+            "count": 584,
+            "max": 7.771561172376096e-16,
+            "mean": 8.250630011769142e-17,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 2.220446049250313e-16
+          },
+          "excluded_share_distribution": {
+            "count": 584,
+            "max": 7.771561172376096e-16,
+            "mean": -6.843840562757814e-18,
+            "min": -8.881784197001252e-16,
+            "p50": 0.0,
+            "p90": 2.220446049250313e-16
+          },
+          "named_length_km": {
+            "roads": 12203.647742818604,
+            "roads-unfiltered": 12203.647742818604
+          },
+          "cross_check": {
+            "cached_km": 12203.647742818603,
+            "column": "overture_named_road_km_5070",
+            "measured_km": 12203.647742818604,
+            "relative_residual": 1.4905292596766936e-16,
+            "tolerance": 1e-06
+          }
+        },
+        "south-central-tx": {
+          "rows": 6003,
+          "defined": 5939,
+          "coverage": 0.989339,
+          "gap_distribution": {
+            "count": 5939,
+            "max": 1.3322676295501878e-15,
+            "mean": 9.945085857898355e-17,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 3.3306690738754696e-16
+          },
+          "excluded_share_distribution": {
+            "count": 5939,
+            "max": 1.3322676295501878e-15,
+            "mean": -1.6824393368625036e-18,
+            "min": -1.3322676295501878e-15,
+            "p50": 0.0,
+            "p90": 3.3306690738754696e-16
+          },
+          "named_length_km": {
+            "roads": 118176.38168589972,
+            "roads-unfiltered": 118176.38168589972
+          },
+          "cross_check": {
+            "cached_km": 118176.3816858997,
+            "column": "overture_named_road_km_5070",
+            "measured_km": 118176.38168589972,
+            "relative_residual": 1.2313725484542504e-16,
+            "tolerance": 1e-06
+          }
+        }
+      },
+      "measured_interpretation": "No material named-class length difference: filtered and unfiltered totals agree in every region, and both gap/share columns vary only at floating point epsilon (spread below the registered 1e-9 null tolerance). This is a measured negative for this pipeline-trace recipe, not evidence about all possible numerator definitions."
+    }
+  ],
+  "orthogonality": {
+    "report": "reports/ideas-orthogonality.json",
+    "sha256": "892d0087f12b7c565cfa23f74830f521afc1edc8890916c5aae865e488fcdbde",
+    "summary": {
+      "all_passed": true,
+      "clusters": 6,
+      "columns_degenerate": 0,
+      "columns_evaluated": 8,
+      "columns_flagged_vif": 5,
+      "columns_included": 7,
+      "columns_numerically_null": 2,
+      "pairs_flagged": 1,
+      "report_sha256": "ceb3ddf7c80b430d601a838c35fa5fd0ea3f3b7e557b6ffe48a4e64f0b2bf5eb"
+    },
+    "pairs_exceeding_merge_threshold": [
+      {
+        "abs_rho": 0.8160240383903553,
+        "left": "Sc5|R|covariate",
+        "right": "Sc5|R|gap",
+        "same_component": true,
+        "same_family": true
+      }
+    ],
+    "numerically_null_columns": [
+      {
+        "column": "Sc5|R|covariate",
+        "distinct_values": 20,
+        "epsilon": 1e-09,
+        "reason": "values vary only below the preregistered numerical-null epsilon, so the estimator measured no difference on the study tracts",
+        "spread": 2.7755575615628914e-15
+      },
+      {
+        "column": "Sc5|R|gap",
+        "distinct_values": 14,
+        "epsilon": 1e-09,
+        "reason": "values vary only below the preregistered numerical-null epsilon, so the estimator measured no difference on the study tracts",
+        "spread": 1.4432899320127035e-15
+      }
+    ],
+    "excluded_columns": [
+      {
+        "column": "P4|R|gap",
+        "coverage": 0.06813093080285745
+      }
+    ],
+    "note": "Refreshed report covers each implemented estimator. Sc5 gap/share are measured null at epsilon; unimplemented Sc1-Sc4 have no fabricated correlations or VIF."
+  }
+}

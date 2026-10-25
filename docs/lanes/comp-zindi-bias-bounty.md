@@ -1525,3 +1525,27 @@ multiple ideas; a singleton assertion is not a permanent invariant. Updated it t
 measurement ran: `not_run_missing_lab`, no channels measured, zero weight vectors. The affected
 suite (`test_bias60_family_p.py`, P report, harness and lab-evaluation tests) passes: **91 passed,
 99 subtests**.
+
+## 2026-10-25 — bias60-family-sc: Sc5 measured, Sc1–Sc4 prerequisites recorded
+
+The harness already implements Sc5. This turn verified its per-tract artifact and recorded a
+schema/definition screen for the other four in `reports/sc-family-screen.json`. Sc1 needs a tested
+normalizer for nested road names before distinguishing unnamed class length; Sc2/Sc3 need a verified
+all-region places source and typed name/category access (eastern-OK places path was previously
+missing); Sc4 needs typed route/name parsing and a tested 2-km segment predicate in the unfiltered
+road path. Each item has an individual, tested reason and missing prerequisite; no candidate counts
+or geometry values were invented.
+
+Sc5 artifact: `$COMPETITION_WORKSPACE/ideas/Sc5.parquet`, 18,758 emission rows (two channels over
+9,379 GEOIDs), SHA-256
+`c8603a948b060344f23d2250da22b02a95254401c4a67d64d74a55d4cf4ee720`. It has 9,247 defined rows per
+channel. Filtered and unfiltered named-class road totals match in each region; observed gap/share
+spread is below 1e-9, so the pipeline-trace idea is measured null, not a positive signal. The
+refreshed `reports/ideas-orthogonality.json` reports this null for both Sc5 channels and flags no
+Sc1–Sc4 correlations/VIF because those estimators were not measured. The screen captures its SHA,
+all per-region distributions, coverage, and the orthogonality summary.
+
+Tests: family report verifies all five statuses, Sc5 coverage and measured null interpretation,
+orthogonality/null flags, and prohibited-source declarations. Existing harness tests exercise Sc5
+geometry, filtered/unfiltered reconciliation, full GEOID partition and deterministic output. No
+labels, reference layers, leaderboard access or uploads.
