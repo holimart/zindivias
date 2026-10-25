@@ -230,12 +230,36 @@ class ExclusionPolicy:
     buffer_km: float
     study_points: list[tuple[float, float]] = field(default_factory=list)
     crs: str = "EPSG:5070"
+    # a uniform grid with cell size equal to the buffer, built on first use: a point can only be
+    # within the buffer of a study point that sits in one of the nine surrounding cells, so the
+    # index returns exactly what the brute-force scan returns, only faster
+    _grid: dict[tuple[int, int], list[tuple[float, float]]] | None = field(default=None, repr=False,
+                                                                           compare=False)
 
     @property
     def excluded_geoids(self) -> frozenset[str]:
         return self.official_geoids | self.template_geoids
 
     county_exclusion_enabled: bool = True
+
+    def _ensure_grid(self) -> None:
+        if self._grid is not None or self.buffer_km <= 0.0 or not self.study_points:
+            return
+        step = self.buffer_km * 1000.0
+        grid: dict[tuple[int, int], list[tuple[float, float]]] = {}
+        for x, y in self.study_points:
+            grid.setdefault((int(x // step), int(y // step)), []).append((x, y))
+        self._grid = grid
+
+    def _nearby_study_points(self, centroid: tuple[float, float]) -> list[tuple[float, float]]:
+        step = self.buffer_km * 1000.0
+        cell = (int(centroid[0] // step), int(centroid[1] // step))
+        assert self._grid is not None
+        found: list[tuple[float, float]] = []
+        for dx in (-1, 0, 1):
+            for dy in (-1, 0, 1):
+                found.extend(self._grid.get((cell[0] + dx, cell[1] + dy), ()))
+        return found
 
     def reject_reason(self, geoid: str, county_fips: str | None = None,
                       centroid: tuple[float, float] | None = None) -> str | None:
@@ -248,7 +272,8 @@ class ExclusionPolicy:
             # a zero buffer would silently allow a same-state tract next to the study border
             return "study_state_with_no_buffer"
         if centroid is not None and self.buffer_km > 0.0 and self.study_points:
-            for x, y in self.study_points:
+            self._ensure_grid()
+            for x, y in self._nearby_study_points(centroid):
                 if (x - centroid[0]) ** 2 + (y - centroid[1]) ** 2 <= self.buffer_km ** 2 * 1e6:
                     return "within_neighbour_buffer_of_study_tract"
         return None

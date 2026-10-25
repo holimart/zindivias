@@ -467,5 +467,76 @@ class DeterminismAndSafetyTests(unittest.TestCase):
         self.assertFalse((WORKSPACE / "lab").exists())
 
 
+class SpatialIndexTests(unittest.TestCase):
+    """The buffer check gained a uniform grid for speed; it must not change a single verdict."""
+
+    def brute_force_reason(self, policy, geoid, county, centroid):
+        if geoid in policy.excluded_geoids:
+            return "official_scored_or_template_geoid"
+        if policy.county_exclusion_enabled and county and county in policy.study_county_fips:
+            return "study_county"
+        if county and county[:2] in policy.study_states and policy.buffer_km <= 0.0:
+            return "study_state_with_no_buffer"
+        if centroid is not None and policy.buffer_km > 0.0 and policy.study_points:
+            for x, y in policy.study_points:
+                if (x - centroid[0]) ** 2 + (y - centroid[1]) ** 2 <= policy.buffer_km ** 2 * 1e6:
+                    return "within_neighbour_buffer_of_study_tract"
+        return None
+
+    def test_the_grid_returns_exactly_what_the_brute_force_scan_returns(self) -> None:
+        import random
+
+        random.seed(20261025)
+        study = [(random.uniform(-1.5e6, -1.0e6), random.uniform(1.2e6, 1.5e6)) for _ in range(400)]
+        policy = lab_plan.ExclusionPolicy(official_geoids=frozenset({"04013000100"}),
+                                         template_geoids=frozenset({"53001000200"}),
+                                         study_county_fips=frozenset({"04013"}),
+                                         study_states=frozenset({"04", "53"}),
+                                         buffer_km=8.0, study_points=study,
+                                         county_exclusion_enabled=True)
+        disagreements = 0
+        for index in range(2000):
+            centroid = (random.uniform(-1.6e6, -0.9e6), random.uniform(1.1e6, 1.6e6))
+            county = random.choice(["04013", "04017", "32003", "08031"])
+            geoid = random.choice(["04013000100", "53001000200", f"99000{index:06d}"])
+            expected = self.brute_force_reason(policy, geoid, county, centroid)
+            actual = policy.reject_reason(geoid, county, centroid)
+            disagreements += int(expected != actual)
+        self.assertEqual(disagreements, 0)
+        self.assertIsNotNone(policy._grid, "the index should have been built on first use")
+
+    def test_a_point_just_outside_the_buffer_is_kept_and_just_inside_is_dropped(self) -> None:
+        policy = lab_plan.ExclusionPolicy(official_geoids=frozenset(), template_geoids=frozenset(),
+                                         study_county_fips=frozenset(), study_states=frozenset(),
+                                         buffer_km=8.0, study_points=[(0.0, 0.0)])
+        self.assertEqual(policy.reject_reason("99000000001", None, (7999.0, 0.0)),
+                         "within_neighbour_buffer_of_study_tract")
+        self.assertIsNone(policy.reject_reason("99000000002", None, (8001.0, 0.0)))
+        # a study point one cell away must still be found: a hole in the nine-cell window would
+        # silently accept a tract that sits seven kilometres from a study neighbour
+        neighbour = lab_plan.ExclusionPolicy(official_geoids=frozenset(),
+                                             template_geoids=frozenset(),
+                                             study_county_fips=frozenset(),
+                                             study_states=frozenset(), buffer_km=8.0,
+                                             study_points=[(7900.0, 0.0)])
+        self.assertEqual(neighbour.reject_reason("99000000003", None, (15800.0, 0.0)),
+                         "within_neighbour_buffer_of_study_tract")
+        self.assertIsNone(neighbour.reject_reason("99000000004", None, (16200.0, 0.0)))
+
+    def test_the_prerequisite_probe_is_not_part_of_the_model_chain(self) -> None:
+        chain = ["scripts/build_estimator_v2_candidates.py", "scripts/run_bias60_ideas.py",
+                 "scripts/build_ideas_registry.py", "scripts/evaluate_bias60_on_lab.py",
+                 "scripts/probe_lab_prerequisites.py"]
+        for relative in chain[:-1]:
+            source = (ROOT / relative).read_text(encoding="utf-8")
+            with self.subTest(script=relative):
+                self.assertNotIn("import probe_lab_prerequisites", source)
+                self.assertNotIn("from bias60 import probe", source)
+                self.assertNotIn("urlopen", source,
+                                 "a model-chain script must not reach the network")
+        probe_source = (ROOT / "scripts/probe_lab_prerequisites.py").read_text(encoding="utf-8")
+        self.assertIn('method="HEAD"', probe_source)
+
+
 if __name__ == "__main__":
     unittest.main()

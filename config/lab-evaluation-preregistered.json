@@ -296,6 +296,16 @@
       "id": "shift_claimed_without_allowlist",
       "expect_gate": "shift_correction_status_declared",
       "mutation": "report the shift-corrected variant as measured with no study-feature allowlist"
+    },
+    {
+      "id": "prerequisite_probe_absent",
+      "expect_gate": "prerequisite_probe_recorded",
+      "mutation": "evaluate as if the prerequisite probe had never been run"
+    },
+    {
+      "id": "prerequisite_findings_hidden",
+      "expect_gate": "prerequisite_probe_findings_disclosed",
+      "mutation": "drop the disclosed group shortfalls from the consumed probe"
     }
   ],
   "outputs": {
@@ -327,5 +337,13 @@
       1.0,
       99.0
     ]
+  },
+  "prerequisite_probe": {
+    "artifact": "reports/lab-prerequisites.json",
+    "produced_by": "scripts/probe_lab_prerequisites.py",
+    "config": "config/lab-prerequisites-preregistered.json",
+    "required": true,
+    "minimum_groups_probed": 5,
+    "note": "the probe measures the two things the build cannot fake: whether the planned lab groups still hold tracts after the frozen exclusion on real census geography, and whether each registered source answers an anonymous request at its registered pattern. An evaluation without it is incomplete, so a gate fails"
   }
 }

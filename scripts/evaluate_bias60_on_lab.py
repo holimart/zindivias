@@ -90,6 +90,50 @@ def _floats(node: Any, path: str = "") -> list[str]:
     return hits
 
 
+def load_prerequisite(path: Path) -> dict[str, Any] | None:
+    """The prerequisite probe produced by ``scripts/probe_lab_prerequisites.py``, or ``None``.
+
+    The evaluation is downstream of that measurement: it is the record of whether the planned lab groups
+    still hold tracts after the frozen exclusion and whether the registered sources answer at all. A
+    committed evaluation without it is treated as incomplete rather than quietly tolerated.
+    """
+    path = Path(path)
+    if not path.exists():
+        return None
+    record(path)
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def prerequisite_view(prereq: dict[str, Any] | None) -> dict[str, Any]:
+    if prereq is None:
+        return {"present": False, "gates_all_passed": None, "groups_probed": None,
+                "study_points": None, "candidates_accepted": None, "shortfalls": [],
+                "sources_not_answered": [], "verdict": None}
+    findings = prereq.get("findings", {})
+    return {"present": True, "artifact_sha256": hashlib.sha256(
+        canonical_bytes({key: value for key, value in prereq.items() if key != "summary"})).hexdigest(),
+        "gates_all_passed": bool(prereq.get("gates", {}).get("all_passed")),
+        "groups_probed": prereq["summary"]["groups_probed"],
+        "groups_planned": prereq["summary"]["groups_planned"],
+        "study_points": prereq["summary"]["study_points"],
+        "candidates_found": prereq["summary"]["candidates_found"],
+        "candidates_accepted": prereq["summary"]["candidates_accepted"],
+        "downloaded_bytes": prereq["summary"]["downloaded_bytes"],
+        "shortfalls": [{"id": entry["id"], "accepted": entry["accepted"],
+                        "floor": entry["floor"]} for entry in findings.get("group_shortfalls", [])],
+        "below_plan": [{"id": entry["id"], "planned_approx_tracts":
+                        entry["planned_approx_tracts"], "accepted": entry["accepted"]}
+                       for entry in findings.get("groups_below_plan", [])],
+        "sources_not_answered": [{"id": entry["id"], "status": entry["status"],
+                                  "alternate_that_answers": entry.get("alternate_that_answers")}
+                                 for entry in findings.get("sources_not_answered", [])],
+        "sources_not_probeable": [entry["id"] for entry in
+                                  findings.get("sources_not_probeable", [])],
+        "study_geoids_without_interior_point": findings.get("study_geoids_without_interior_point"),
+        "lab_plan_needs_amendment": findings.get("lab_plan_needs_amendment"),
+        "verdict": findings.get("verdict")}
+
+
 def empty_measurement(config: dict[str, Any], reason: str) -> dict[str, Any]:
     return {"status": config["measurement_status_when_absent"], "reason": reason,
             "channels": {}, "channels_seen": [],
@@ -159,6 +203,12 @@ def build_report(config: dict[str, Any], *, workspace: Path, lab_root: Path,
     spec_path = Path(config["spec"]["resolved_path"])
     spec_hash = lab_plan.sha256_file(spec_path)
     registry = load_registry()
+    prereq = load_prerequisite(ROOT / config["prerequisite_probe"]["artifact"])
+    if tamper == "prerequisite_probe_absent":
+        prereq = None
+    elif tamper == "prerequisite_findings_hidden" and prereq is not None:
+        prereq = json.loads(json.dumps(prereq))
+        prereq["findings"]["group_shortfalls"] = []
 
     lab = None
     absent_reason = None
@@ -274,6 +324,26 @@ def build_report(config: dict[str, Any], *, workspace: Path, lab_root: Path,
             config["prohibitions"]["no_uploads"] and config["prohibitions"]["uploads_performed"] == 0
             and config["prohibitions"]["no_fabricated_measurement"]
             and config["prohibitions"]["no_labels_or_hidden_targets_for_study_tracts"]),
+        "prerequisite_probe_recorded": bool(
+            prereq is not None and prereq.get("gates", {}).get("all_passed") is True
+            and prereq["summary"]["groups_probed"] >= config["prerequisite_probe"]
+            ["minimum_groups_probed"] and prereq["summary"]["study_points"] > 0
+            and prereq["summary"]["candidates_found"] > 0),
+        "prerequisite_probe_findings_disclosed": bool(
+            prereq is not None and prereq.get("gates", {}).get("all_passed") is True
+            and prereq["findings"].get("verdict")
+            # recomputed from the probe's own per-group numbers, so a report cannot quietly drop a
+            # group that fell below the fold floor from its disclosed shortfalls
+            and not ({group["id"] for group in prereq["candidate_probe"]["groups"]
+                      if group["accepted"] < prereq["findings"]
+                      ["minimum_accepted_tracts_per_group"]}
+                     - {entry["id"] for entry in prereq["findings"]
+                        .get("group_shortfalls", [])})
+            and all(entry["accepted"] < entry["floor"]
+                    for entry in prereq["findings"].get("group_shortfalls", []))
+            and prereq["findings"].get("lab_plan_needs_amendment") is bool(
+                prereq["findings"].get("group_shortfalls")
+                or prereq["findings"].get("sources_not_answered"))),
     }
     measurement_gates = {
         "per_idea_rmse_reported": None, "incremental_value_reported": None,
@@ -375,6 +445,7 @@ def build_report(config: dict[str, Any], *, workspace: Path, lab_root: Path,
                 "manifest_fields": list(lab_eval.MANIFEST_REQUIRED),
                 "self_checks": ["state_road_ratio_in_organiser_band", "hospital_ratio_check"],
                 "minimum_groups": config["acceptance"]["minimum_held_out_groups"]},
+            "prerequisite_probe": prerequisite_view(prereq),
         },
         "artifact_contract": config["artifact_contract"],
         "registry": registry,
@@ -510,6 +581,43 @@ def render_markdown(report: dict[str, Any]) -> str:
                  f"and both RULES.md recipe self-checks passing")
     lines.append("- Until then this report publishes nulls. A lab number with no lab behind it would "
                  "be the single most damaging thing this lane could put in a writeup.")
+    lines.append("")
+    prereq = dependency["prerequisite_probe"]
+    lines.append("## Prerequisite measurement this evaluation stands on")
+    lines.append("")
+    if not prereq["present"]:
+        lines.append("- No prerequisite probe exists. That is a failure, not a gap: "
+                     "`scripts/probe_lab_prerequisites.py` must be run so the build is told whether the "
+                     "planned lab groups still hold tracts and whether the registered sources answer.")
+    else:
+        lines.append(f"- Probe artifact `reports/lab-prerequisites.json` (SHA-256 "
+                     f"`{prereq['artifact_sha256'][:16]}...`), its own gates all passed: "
+                     f"{prereq['gates_all_passed']}")
+        lines.append(f"- Planned lab groups: {prereq['groups_planned']}; probed on real census "
+                     f"geography: {prereq['groups_probed']}; candidate tracts inspected: "
+                     f"{prereq['candidates_found']}; accepted by the frozen exclusion: "
+                     f"{prereq['candidates_accepted']}")
+        lines.append(f"- Study interior points established for the neighbour buffer: "
+                     f"{prereq['study_points']} ({prereq['study_geoids_without_interior_point']} excluded "
+                     f"GEOIDs had no interior point in the census file)")
+        lines.append(f"- Public census geography downloaded by the probe: "
+                     f"{prereq['downloaded_bytes']} bytes; no reference layer was fetched")
+        lines.append(f"- Lab plan needs amendment: **{prereq['lab_plan_needs_amendment']}** - "
+                     f"{prereq['verdict']}")
+        for entry in prereq["shortfalls"]:
+            lines.append(f"  - `{entry['id']}` cannot be a fold: {entry['accepted']} accepted tracts "
+                         f"against a floor of {entry['floor']}")
+        for entry in prereq["below_plan"]:
+            lines.append(f"  - `{entry['id']}` is far below its planned tract count: {entry['accepted']} "
+                         f"accepted against {entry['planned_approx_tracts']} planned")
+        for entry in prereq["sources_not_answered"]:
+            answered = (f" but answers at {entry['alternate_that_answers']}"
+                        if entry["alternate_that_answers"] else " and no registered alternate answered")
+            lines.append(f"  - source `{entry['id']}` answered {entry['status']} at its registered "
+                         f"pattern{answered}")
+        for source_id in prereq["sources_not_probeable"]:
+            lines.append(f"  - source `{source_id}` is not probeable as registered: the registry names "
+                         f"a source family, not a URL")
     lines.append("")
     lines.append("## Rails that must hold before a number is published")
     lines.append("")

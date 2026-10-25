@@ -443,6 +443,8 @@ class NegativeControlTests(unittest.TestCase):
             "release_before_track_a_preregistration": "track_a_release_gate_recorded",
             "spec_pin_drift": "spec_hash_matches_pin",
             "shift_claimed_without_allowlist": "shift_correction_status_declared",
+            "prerequisite_probe_absent": "prerequisite_probe_recorded",
+            "prerequisite_findings_hidden": "prerequisite_probe_findings_disclosed",
         })
 
     def test_every_negative_control_fires_its_expected_gate(self) -> None:

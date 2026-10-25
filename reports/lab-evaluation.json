@@ -14,7 +14,8 @@
     "opened_paths": [
       "ORCHESTRATOR:docs/research/bias-60-ideas-2026-10.md",
       "config/ideas.json",
-      "config/lab-evaluation-preregistered.json"
+      "config/lab-evaluation-preregistered.json",
+      "reports/lab-prerequisites.json"
     ],
     "reference_layer_reads": 0
   },
@@ -87,6 +88,8 @@
     "no_fabricated_measurement": true,
     "no_forbidden_value_in_report": true,
     "no_reference_layer_read_by_this_row": true,
+    "prerequisite_probe_findings_disclosed": true,
+    "prerequisite_probe_recorded": true,
     "prohibitions_recorded": true,
     "recipe_self_checks_passed": null,
     "registry_implemented_ideas_declared": true,
@@ -118,6 +121,64 @@
     "lab_present": false,
     "lab_root": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/lab",
     "measurement_status": "not_run_missing_lab",
+    "prerequisite_probe": {
+      "artifact_sha256": "432f1a9db0718de006f9a8b7c58fdacc4b0c8c99ba14b875de42f2a1c890c4fe",
+      "below_plan": [
+        {
+          "accepted": 30,
+          "id": "AZ-R",
+          "planned_approx_tracts": 170
+        },
+        {
+          "accepted": 13,
+          "id": "OK-R",
+          "planned_approx_tracts": 130
+        }
+      ],
+      "candidates_accepted": 3491,
+      "candidates_found": 4748,
+      "downloaded_bytes": 112428536,
+      "gates_all_passed": true,
+      "groups_planned": 9,
+      "groups_probed": 5,
+      "lab_plan_needs_amendment": true,
+      "present": true,
+      "shortfalls": [
+        {
+          "accepted": 13,
+          "floor": 30,
+          "id": "OK-R"
+        }
+      ],
+      "sources_not_answered": [
+        {
+          "alternate_that_answers": "https://overturemaps-us-west-2.s3.amazonaws.com/?list-type=2&max-keys=1",
+          "id": "overture_package_release",
+          "status": 404
+        },
+        {
+          "alternate_that_answers": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32003_roads.zip",
+          "id": "tiger_prisecroads_2024",
+          "status": 404
+        },
+        {
+          "alternate_that_answers": "https://www2.census.gov/programs-surveys/cbp/datasets/2022/",
+          "id": "cbp_2023",
+          "status": 400
+        },
+        {
+          "alternate_that_answers": null,
+          "id": "hud_usps_crosswalk",
+          "status": 202
+        }
+      ],
+      "sources_not_probeable": [
+        "hospital_check"
+      ],
+      "study_geoids_without_interior_point": 1,
+      "study_points": 9793,
+      "verdict": "the frozen lab plan is not yet buildable as written: OK-R cannot be a fold and cbp_2023, hud_usps_crosswalk, overture_package_release, tiger_prisecroads_2024 did not answer an anonymous request at its registered pattern"
+    },
     "what_the_build_must_deliver": {
       "files": [
         "manifest.json",
@@ -144,7 +205,7 @@
     }
   },
   "environment": {
-    "git_commit": "493f67538bd45cb6716606e0a21ba3184e82fa59",
+    "git_commit": "ecadbadffc41903e821ebcbe757f9c39908c3b4e",
     "versions": {
       "numpy": "2.5.4",
       "python": "3.12.3"
@@ -162,6 +223,8 @@
     "no_fabricated_measurement": true,
     "no_forbidden_value_in_report": true,
     "no_reference_layer_read_by_this_row": true,
+    "prerequisite_probe_findings_disclosed": true,
+    "prerequisite_probe_recorded": true,
     "prohibitions_recorded": true,
     "recipe_self_checks_passed": null,
     "registry_implemented_ideas_declared": true,
@@ -221,7 +284,7 @@
   "preregistration": {
     "backlog_item": "bias60-lab-evaluation",
     "config_path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/config/lab-evaluation-preregistered.json",
-    "config_sha256": "efc69dda27952967b159819bb3198b29cfe3950df84b8a67cdc9f8144078d6d3",
+    "config_sha256": "a185192e244d6dea146159d26035bf041dbcc7957dd0e6e19a076b2f69135470",
     "intent": "Freeze the spec 3.2-3.3 lab evaluation, define exactly what bias60-external-lab-build must deliver for it to be computable, and refuse to publish a single lab number unless every rail holds. When the lab is absent the report says so with nulls; it never substitutes a plausible figure.",
     "lane": "comp-zindi-bias-bounty",
     "negative_controls_declared": [
@@ -237,7 +300,9 @@
       "study_side_prediction_emitted",
       "release_before_track_a_preregistration",
       "spec_pin_drift",
-      "shift_claimed_without_allowlist"
+      "shift_claimed_without_allowlist",
+      "prerequisite_probe_absent",
+      "prerequisite_findings_hidden"
     ],
     "operator_decision": {
       "decided_at_utc": "2026-10-25T09:35Z",
@@ -299,7 +364,7 @@
     ],
     "lab_present": false,
     "measurement_status": "not_run_missing_lab",
-    "report_sha256": "4ea64ac5828fb5dad6f55027388b0cf30ac12af0c0f06d72e74ae14744a8fd4c",
+    "report_sha256": "30c94960cce88811dfc772bedc51c7eb3c96ffd0aa999fc610e9eac0a858fb2e",
     "track_b_accepted": {},
     "weight_vectors_published": 0
   },

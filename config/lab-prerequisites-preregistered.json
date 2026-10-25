@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "plan_id": "lab-prerequisites",
+  "backlog_item": "bias60-lab-evaluation",
+  "lane": "comp-zindi-bias-bounty",
+  "title": "Measure the preconditions of the external lab before the lab build spends its bandwidth: are the registered sources reachable, and do the planned lab groups still have tracts after the study exclusion runs on real census geography?",
+  "intent": "The lab evaluation cannot be computed until bias60-external-lab-build delivers an artifact set, and that build is a multi-gigabyte retrieval over ten sources. Two cheap public measurements decide whether that build can succeed at all: whether each registered source answers an anonymous request today, and whether the frozen spec-4.1 exclusion (every official GEOID, every template GEOID and an 8 km neighbour buffer around every study tract) leaves enough candidate tracts in the planned state groups. Both are measured here on public Census tract geography only. This probe downloads no removed reference layer, reads no content byte from a source it only probes, and uses no credential.",
+  "spec": {
+    "path": "/home/martin/hddProjects/competitionsall/docs/research/bias-60-ideas-2026-10.md",
+    "sha256": "f150649b34caebefb91b8eda75517e43f5cc278699ec9dba7b23fea717f16862"
+  },
+  "operator_decision_reference": "operator decision 2026-10-25 09:35Z, recorded in orchestrator commit 901d5e3c8ee89eb9995e2adb15a3fee6c48b49ee: the external lab may be built; no reference layer or equivalent copy is ever computed on, joined to, or used to approximate targets for any study-region tract or GEOID",
+  "lab_plan_config": "config/bias60-lab-preregistered.json",
+  "geometry_source": {
+    "role": "public census tract geography, used for candidate selection and for study-tract interior points",
+    "url_pattern": "https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_<ss>_tract.zip",
+    "allowed_hosts": [
+      "www2.census.gov"
+    ],
+    "user_agent": "zindi-bias-bounty-lane/1.0 (external-lab prerequisite probe; public census geography only)",
+    "geoid_fields": [
+      "GEOID20",
+      "GEOID"
+    ],
+    "lat_fields": [
+      "INTPTLAT"
+    ],
+    "lon_fields": [
+      "INTPTLON",
+      "INTPTLONG"
+    ],
+    "projection": "EPSG:5070",
+    "note": "tract polygons and their interior points are Census geography, not one of the layers the organisers removed. Nothing in this probe downloads TIGER PRISECRROADS or ROADS, Microsoft or Google building footprints, USGS structures, CBP business counts or Overture content.",
+    "field_note": "TIGER2024 tract attribute names were read from the actual file, not assumed: it carries GEOID, GEOIDFQ, INTPTLAT and INTPTLON (no GEOID20, no INTPTLONG), so GEOID is used and it is the 2020-vintage 11-digit GEOID that matches the provided study tables"
+  },
+  "study_states": [
+    "04",
+    "06",
+    "40",
+    "48",
+    "53"
+  ],
+  "probe_groups": [
+    "AZ-R",
+    "OK-R",
+    "NV",
+    "CO-UT",
+    "NM"
+  ],
+  "cache_dir_name": "lab-prerequisites",
+  "source_probe": {
+    "method": "HEAD",
+    "content_bytes_read": false,
+    "credentials_used": false,
+    "instantiations": {
+      "<ss>": "32",
+      "<ssccc>": "32003",
+      "<rel>": "2026-09"
+    },
+    "not_probeable": {
+      "hospital_check": "the registry records a source family (USGS Health/Medical structures or HIFLD hospitals), not a URL; the build must name the exact service and version before it can be probed"
+    },
+    "status_meaning": {
+      "200": "reachable",
+      "403": "denied anonymously; expected for an S3 prefix listing, and an object-level GET may still answer",
+      "404": "not found at this instantiation, so the registered version pattern needs correcting before the build",
+      "other": "unexpected"
+    },
+    "alternates": {
+      "overture_package_release": [
+        "https://overturemaps-us-west-2.s3.amazonaws.com/?list-type=2&max-keys=1",
+        "https://overturemaps-us-west-2.s3.amazonaws.com/release/2025-07-29.0/?list-type=2&max-keys=1",
+        "https://overturemaps-us-west-2.s3.amazonaws.com/release/2025-04-09.0/?list-type=2&max-keys=1"
+      ],
+      "tiger_prisecroads_2024": [
+        "https://www2.census.gov/geo/tiger/TIGER2023/PRISECRROADS/tl_2023_32_prisecroads.zip",
+        "https://www2.census.gov/geo/tiger/TIGER2022/PRISECRROADS/tl_2022_32_prisecroads.zip",
+        "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32003_roads.zip"
+      ],
+      "cbp_2023": [
+        "https://www.census.gov/data/datasets/time-series/econ/cbp/2022.html",
+        "https://www.census.gov/data/datasets/time-series/econ/cbp.html",
+        "https://www2.census.gov/programs-surveys/cbp/datasets/2022/"
+      ],
+      "hud_usps_crosswalk": [
+        "https://www.huduser.gov/portal/datasets/usps_crosswalk.html",
+        "https://www.huduser.gov/portal/datasets/usps.html"
+      ],
+      "usgs_national_structures": [
+        "https://apps.nationalmap.gov/tnmaccess/api/datasets?output=json&formats=Shapefile&q=structures",
+        "https://prd-tnm.s3.amazonaws.com/StagedDownlods/Structures/"
+      ],
+      "ms_us_building_footprints": [
+        "https://raw.githubusercontent.com/microsoft/USBuildingFootprints/main/README.md",
+        "https://github.com/microsoft/USBuildingFootprints/releases/latest"
+      ]
+    },
+    "alternate_note": "a 404 on the registered pattern is a finding, not a verdict: the alternates below are HEAD-probed too so the build is told which version pattern actually answers, rather than being left with a dead URL"
+  },
+  "acceptance": {
+    "minimum_groups_probed": 5,
+    "minimum_accepted_tracts_per_group": 30,
+    "note": "the floor is a finding, not a gate: a group below 30 accepted tracts cannot be a leave-one-group-out fold, and the report must say so loudly. 30 is what a per-group RMSE and whole-group bootstrap resampling need at a minimum; the planned counts are far larger, so a shortfall means the plan's county list is wrong, not that the floor is"
+  },
+  "prohibitions": {
+    "no_reference_layer_downloaded": true,
+    "no_reference_layer_computed_on_study_tracts": true,
+    "no_study_region_byte_fetched": true,
+    "no_credentials_used": true,
+    "no_content_bytes_read_by_source_probe": true,
+    "no_lab_artifact_written": true,
+    "no_upload": true,
+    "no_wall_clock_in_report": true,
+    "reference_layer_bytes_downloaded_in_this_row": 0,
+    "uploads_performed": 0
+  },
+  "forbidden_value_tokens": [
+    "alpha_c1_from_P4",
+    "0.3288136427728255",
+    "config/calibration.json",
+    "leaderboard",
+    "ZINDI_AUTH_TOKEN",
+    "ZINDI_STORAGE_STATE"
+  ],
+  "negative_controls": [
+    {
+      "id": "source_probe_reads_bytes",
+      "expect_gate": "sources_probed_without_content_bytes",
+      "mutation": "record a GET with a byte count against a merely probed source"
+    },
+    {
+      "id": "source_probe_uses_credentials",
+      "expect_gate": "source_probe_credentials_unused",
+      "mutation": "attach a credential to a source probe"
+    },
+    {
+      "id": "registered_source_skipped",
+      "expect_gate": "all_registered_sources_probed",
+      "mutation": "drop one registered source from the probe list"
+    },
+    {
+      "id": "download_off_allowlist",
+      "expect_gate": "only_public_census_geography_downloaded",
+      "mutation": "record a download from a host that is not the census geometry source"
+    },
+    {
+      "id": "reference_layer_download",
+      "expect_gate": "no_reference_layer_bytes_on_disk",
+      "mutation": "record a downloaded file whose name matches a removed reference layer"
+    },
+    {
+      "id": "cache_written_into_lab_root",
+      "expect_gate": "cache_outside_lab_root",
+      "mutation": "point the cache directory inside the lab root"
+    },
+    {
+      "id": "buffer_removed",
+      "expect_gate": "no_accepted_tract_within_buffer",
+      "mutation": "set the neighbour buffer to zero so a study neighbour is accepted"
+    },
+    {
+      "id": "official_geoid_accepted",
+      "expect_gate": "no_official_geoid_accepted",
+      "mutation": "disable the official-GEOID exclusion so a scored tract survives"
+    },
+    {
+      "id": "study_points_dropped",
+      "expect_gate": "study_points_measured_from_public_geography",
+      "mutation": "run with no study interior points so the buffer check is vacuous"
+    },
+    {
+      "id": "group_without_survivors_reported_as_ready",
+      "expect_gate": "shortfalls_disclosed",
+      "mutation": "drop a group that fell below the fold floor from the disclosed shortfalls"
+    },
+    {
+      "id": "temporal_field_added",
+      "expect_gate": "report_has_no_temporal_field",
+      "mutation": "record a retrieval timestamp in the report"
+    },
+    {
+      "id": "source_unavailability_hidden",
+      "expect_gate": "source_availability_disclosed",
+      "mutation": "hide the sources whose registered pattern did not answer"
+    }
+  ],
+  "study_states_note": "the four study regions plus Washington: the provided platform template carries 415 eastern-Washington rows alongside the 9,379 official GEOIDs, so those rows are study geography too and their neighbourhoods are excluded",
+  "gate_note": {
+    "contract_gates_must_pass": "these prove the probe stayed inside its rails: rails, honesty and disclosure",
+    "measurement_findings_may_be_negative": "whether every planned group has enough tracts and whether every source answers are findings the build has to know, and the gates only require that they are disclosed, never that they come out well"
+  }
+}
