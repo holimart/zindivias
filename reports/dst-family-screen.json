@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "family": "Dst",
+  "spec": "$ORCHESTRATOR_ROOT/docs/research/bias-60-ideas-2026-10.md#family-dst",
+  "status": "documented_not_computed",
+  "scope": {
+    "official_scored_tracts": 9379,
+    "ideas": ["Dst1", "Dst2", "Dst3", "Dst4", "Dst5"],
+    "computed": [],
+    "coverage": null,
+    "correlation_and_vif": "not measured for uncomputed ideas; existing idea orthogonality remains in reports/ideas-orthogonality.json"
+  },
+  "constraints": {
+    "provided_datasets_only": true,
+    "labels_read": false,
+    "reference_layers_read": false,
+    "leaderboard_moments_used": false,
+    "uploads": 0
+  },
+  "idea_dispositions": [
+    {
+      "id": "Dst1",
+      "status": "not_computed",
+      "reason": "The aligned provided-data feature cache exposes per-tract POI totals and source shares, not per-place primary-category histograms. Singleton counts f1 and f2, required for Good-Turing/Chao1, cannot be recovered from those aggregates. The harness has no approved per-place category input/cache contract; emitting zero or an aggregate-derived proxy would fabricate histogram shape.",
+      "missing_prerequisite": "A rule-clean, region-aligned per-place primary-category input and a declared harness reader, plus a preregistered county-shrinkage rule."
+    },
+    {
+      "id": "Dst2",
+      "status": "not_computed",
+      "reason": "The cached tract summaries expose marginal source shares, not per-place multi-source membership or source-list intersections. Capture-recapture needs overlap counts; marginals cannot identify them. The harness therefore cannot fit Chapman or a multi-list model from the current caches without inventing overlap.",
+      "missing_prerequisite": "A provided per-place dataset-membership input with validated source semantics and preregistered pooling/model rules; exclude Foursquare as the spec directs."
+    },
+    {
+      "id": "Dst3",
+      "status": "not_computed",
+      "reason": "The aligned provided-data cache contains tract building counts and source-share aggregates, not individual footprint areas. The reference-layer alternative named in the idea (Microsoft buildings) is forbidden on study tracts. A left-tail deficit cannot be estimated from counts or by substituting a prohibited layer.",
+      "missing_prerequisite": "A provided-dataset per-footprint area input with declared provenance and a preregistered peer-fit/expected-count rule; do not use Microsoft reference buildings."
+    },
+    {
+      "id": "Dst4",
+      "status": "not_computed",
+      "reason": "The idea is a meta-estimator over per-tract component expectation/gap outputs. Current registered outputs are only Tm1, Mx4 and Sc5; the complete component-specific expectation vector and RUCA conditioning contract required to distinguish incompleteness from urbanity are not registered. Fitting a mixture to the available three heterogeneous outputs would silently change the preregistered recipe.",
+      "missing_prerequisite": "Prerequisite idea-family outputs for all intended components, a frozen feature/conditioning set, and a deterministic mixture-identifiability/label-orientation rule."
+    },
+    {
+      "id": "Dst5",
+      "status": "not_computed",
+      "reason": "The rules' published aggregates are permissible inputs, but they constrain regional moments rather than supplying a per-tract score. The specified monotone calibration requires base per-tract estimators and a frozen transform/selection rule. The available road estimator Sc5 is not a complete base vector for the published definedness and component-ratio moments. Using an aggregate as a tract label or fitting against leaderboard moments is forbidden.",
+      "missing_prerequisite": "A complete rule-clean per-tract base-estimator vector and preregistered monotone calibration procedure using only organizer-published aggregates."
+    }
+  ],
+  "orthogonality": {
+    "report": "reports/ideas-orthogonality.json",
+    "new_dst_columns": 0,
+    "interpretation": "No Dst correlation or VIF is claimed because no Dst estimator was computed. The existing report covers the currently implemented estimators; refresh it when a Dst implementation is admitted."
+  }
+}

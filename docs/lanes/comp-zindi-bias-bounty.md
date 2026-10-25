@@ -1432,3 +1432,30 @@ Re-verification: full suite **580 passed, 225 subtests passed in 450.48s**. The 
 `5 of 5 required groups are folds (6 staged, 1 staged but rejected …)`; no study tract measured, no
 promotion, no upload. The previous report's five-fold acceptance is therefore now backed by a passing
 full suite and a consistent config note.
+
+## 2026-10-25 — bias60-family-dst feasibility screen
+
+Dst1–Dst5 are now explicitly screened, not silently represented as implemented. The registry still
+marks all five `declared`; no Dst parquet, coverage, correlation, or VIF is claimed. The evidence and
+per-idea missing prerequisites are in `reports/dst-family-screen.json`:
+
+| idea | not computed because | required next input / decision |
+| --- | --- | --- |
+| Dst1 | tract POI totals/source shares do not recover per-place category singletons `f1` and `f2` | rule-clean per-place primary-category input; frozen county shrinkage |
+| Dst2 | source-share marginals do not recover per-place multi-source overlap counts | validated membership lists; frozen pooling/model (Foursquare excluded) |
+| Dst3 | tract building counts do not recover footprint areas; Microsoft reference buildings are forbidden on study tracts | provided-data per-footprint area input, never Microsoft reference buildings |
+| Dst4 | only Tm1/Mx4/Sc5 are registered; they are not the complete, conditioned component-expectation vector in the recipe | prerequisite outputs, frozen conditioning, identifiable mixture/orientation rule |
+| Dst5 | organizer-published aggregates constrain regional moments, not tract labels; the available Sc5 road estimator is not the required base vector | complete rule-clean tract estimators plus a preregistered monotone calibration; no LB moments |
+
+The screen test has four cases and five per-idea subtests; it verifies each entry has a specific reason
+and prerequisite, each remains `declared`, none is claimed computed/correlated, and forbidden evidence
+sources were not used. Command:
+
+`uv run --with pytest python -m pytest tests/test_bias60_family_dst.py -q` → **4 passed, 5 subtests**.
+
+Refreshed `reports/ideas-orthogonality.json` label-free from the three existing idea parquets (all 9,379
+scored tracts): 6 columns evaluated, 1 pair flagged above `|rho| > 0.8`, 4 VIF flags, gates all pass.
+The measured pair is Sc5 R gap/covariate at `|rho|=0.816024`; it is disclosed, not dropped. No Dst
+correlation is imputed into the report. No labels, reference layers, leaderboard moments, or uploads
+were used. Next step for this family is to resolve its per-idea data prerequisites before admitting a
+new estimator to the harness.
