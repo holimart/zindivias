@@ -1296,3 +1296,67 @@ The prerequisite report hash moved twice more during this row (`3e6b9fb7fa6ad2b9
 `6c1b36fe960d4897` -> `a4121650a0ff...`), and each move is recorded as a `pin_amendments` entry in
 `config/lab-build-preregistered.json` with its reason, rather than being tolerated silently by the
 consumer.
+
+## 2026-10-25 — bias60-external-lab-build, turn 3: three more groups, one of them refused, one of them failed its own check
+
+The steward's staging plan for this row is turn 1 = the two smallest core groups end to end, turn 2+ =
+the rest to five. This turn retrieved CO-UT, LA and AR-KS with the frozen road recipe. The lab now holds
+**395 files and 3,491,061,420 bytes across five groups**, and the build says what each one measured:
+
+| group | accepted | road defined | Overture/TIGER ratio | against `[0.71, 1.59]` ± 0.15 | counted as a fold |
+| --- | --- | --- | --- | --- | --- |
+| NV | 674 | 433 | 1.013391 | inside band | yes |
+| CO-UT | 2,163 | 1,741 | 0.80192 | inside band | yes |
+| NM | 610 | 506 | 0.654624 | within tolerance | yes |
+| AR-KS | 1,635 | 1,465 | 0.645227 | within tolerance | yes |
+| LA | 1,388 | 1,259 | **0.507151** | **outside band and tolerance** | **no** |
+
+`PASS lab build: 4 of 5 required groups are folds (5 staged, 1 staged but rejected by their own
+road-ratio self-check) from 395 retrieved files (3,491,061,420 bytes transferred) ... no study tract was
+measured and nothing was promoted to the lab root`
+
+### Louisiana is not a fold, and the lab now says so instead of averaging it in
+
+A group whose observed and reference road lengths disagree beyond tolerance cannot test a gap estimator:
+its label may be measuring a reference-layer hole. So `config/lab-build-preregistered.json` now
+preregisters a **fold rule**, and `scripts/build_bias60_lab.py` enforces it:
+
+* a group outside band and tolerance is still retrieved, staged, counted in the bytes and published in
+  the report, but it is absent from `groups_fold_eligible`, does not count towards acceptance, and
+  `promote()` refuses while it is present;
+* new gate `self_check_rejections_are_disclosed` fails unless every non-fold group appears with its
+  measured ratio, its flags, its accepted count, its file count and its bytes;
+* new gate `self_check_flags_agree_with_the_measured_ratio` re-derives `inside_band` and
+  `within_tolerance` from the published kilometres using the single definition `road_ratio_flags()`, so
+  a manifest cannot report a verdict its own lengths do not support (a test inflates a synthetic
+  group's verdict to `1.0` inside the band and expects the gate to fail, which it does);
+* `recipe_self_checks_passed` now means *no counted fold failed its own check* and requires at least one
+  fold, so a build where every group fails still cannot claim its self-checks passed.
+
+### AZ-R was attempted and the build refused it
+
+`ValueError: group AZ-R kept 0 tracts, below the frozen floor of 30: {"study_county": 35,
+"official_scored_or_template_geoid": 59}` — all 94 of its candidates were excluded. The prerequisite
+probe had reported AZ-R `ready: true` with 30 accepted, because the probe does not apply the whole-county
+rule the build enables for retrieval. That is a defect in the readiness signal, not in AZ-R: the same
+94 candidates produced two different verdicts from two policies. AZ-R is recorded in
+`config/lab-build-preregistered.json:groups_refused` with its measured rejection breakdown, a new gate
+`planned_groups_are_staged_or_refused_with_a_reason` refuses a plan group that is neither staged nor
+refused-with-a-reason, and the policy disagreement is filed as
+**`bias60-lab-probe-build-exclusion-policy`**. The missing fifth fold is filed as
+**`bias60-lab-fifth-fold`** with the two honest routes (re-reference LA on a recorded reason, or probe
+and build TX-W/CA-F) and the forbidden shortcut (narrow a county list after seeing a ratio).
+
+### Retrieval honesty
+
+`retrieval.max_total_bytes` was frozen at 8 GB before any byte had been measured, which is below the
+spec's own estimate for this lab (spec 4.5: Overture full nine-group lab ~8–10 GB, total ~10–25 GB). It
+is raised to the spec's own upper bound of 25 GB **and now applies to the whole staged lab across
+invocations**, with the new gate `cumulative_retrieval_within_the_frozen_cap` and the fourteenth negative
+control `budget_exceeded_unreported`. Both changes are recorded as `amendments` entries carrying the
+measured per-group cost that motivated them, not applied silently.
+
+Tests: `tests/test_bias60_lab_build.py` is 29 tests (14 declared negative controls all fire, the fold
+rule has two new tests, the committed report is checked for fold/rejection coherence against the bytes on
+disk); the lab files together and the full suite are recorded in the closeout. Nothing was promoted, no
+study tract was measured, and no lab value reached a candidate, calibration or uploader path.

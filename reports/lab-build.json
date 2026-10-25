@@ -1,10 +1,13 @@
 {
   "access": {
-    "files_opened": 5,
+    "files_opened": 8,
     "opened_paths": [
       "REPO:config/bias60-lab-preregistered.json",
       "REPO:config/lab-build-preregistered.json",
       "REPO:reports/lab-prerequisites.json",
+      "WORKSPACE:lab/staging/AR-KS/manifest.json",
+      "WORKSPACE:lab/staging/CO-UT/manifest.json",
+      "WORKSPACE:lab/staging/LA/manifest.json",
       "WORKSPACE:lab/staging/NM/manifest.json",
       "WORKSPACE:lab/staging/NV/manifest.json"
     ]
@@ -45,7 +48,7 @@
       "reason": "a state-level download of a removed reference layer necessarily covers the study tracts inside it, so the build may only retrieve for a county that no provided package touches; the readiness plan leaves whole-county exclusion off because that would empty the spec 4.2 groups, which is a candidate question, not a retrieval permission",
       "tracts_rejected_by_county": 1
     },
-    "min_nearest_study_tract_km": 32.637,
+    "min_nearest_study_tract_km": 8.293,
     "policy": "src/bias60/lab_plan.py::ExclusionPolicy",
     "study_counties": 298,
     "study_geoids": 9794,
@@ -56,6 +59,7 @@
     "all_passed": true,
     "components_held_are_documented": true,
     "county_rule_enabled_for_retrieval": true,
+    "cumulative_retrieval_within_the_frozen_cap": true,
     "every_group_above_the_tract_floor": true,
     "every_url_matches_a_preregistered_pattern": true,
     "groups_are_the_preregistered_ones": true,
@@ -68,21 +72,65 @@
     "no_lab_value_in_submission_paths": true,
     "no_measurement_without_bytes": true,
     "no_study_tract_was_measured": true,
+    "planned_groups_are_staged_or_refused_with_a_reason": true,
     "prerequisite_report_pin_matches_disk": true,
     "recipe_self_checks_passed": true,
     "report_has_no_temporal_field": true,
     "retrieval_stayed_on_the_allowlist": true,
+    "self_check_flags_agree_with_the_measured_ratio": true,
+    "self_check_rejections_are_disclosed": true,
     "spec_hash_matches_pin": true,
     "staging_not_promoted": true,
     "study_county_never_appears_in_a_url": true,
     "study_geoid_never_appears_in_a_url": true,
     "undefined_never_scored_as_zero": true
   },
+  "groups_fold_eligible": [
+    "AR-KS",
+    "CO-UT",
+    "NM",
+    "NV"
+  ],
   "groups_planned_this_build": [
     "NV",
-    "NM"
+    "NM",
+    "CO-UT",
+    "LA",
+    "AR-KS"
+  ],
+  "groups_refused": [
+    {
+      "attempted": "2026-10-25 build row, after CO-UT, LA and AR-KS were staged",
+      "id": "AZ-R",
+      "measured": {
+        "accepted": 0,
+        "candidates": 94,
+        "disagreement": "the probe does not apply the county rule the build applies, so its ready=true for AZ-R was never the build's verdict; filed as its own row",
+        "prerequisite_probe_reported_accepted": 30,
+        "rejected_by_reason": {
+          "official_scored_or_template_geoid": 59,
+          "study_county": 35
+        }
+      },
+      "reason": "the build refused the group before writing any label: all 94 candidates were excluded (35 as study-county tracts under the county rule the build enables for retrieval, 59 as official or template GEOIDs), so it kept 0 tracts against the frozen floor of 30"
+    }
+  ],
+  "groups_rejected_by_self_check": [
+    {
+      "accepted": 1388,
+      "bytes_counted": 328618317,
+      "files_counted": 68,
+      "group": "LA",
+      "inside_band": false,
+      "road_ratio": 0.507151,
+      "self_check_state": "outside_band",
+      "within_tolerance": false
+    }
   ],
   "groups_staged": [
+    "AR-KS",
+    "CO-UT",
+    "LA",
     "NM",
     "NV"
   ],
@@ -94,8 +142,20 @@
   "lane": "comp-zindi-bias-bounty",
   "measurement": {
     "acceptance": {
+      "fold_rule": {
+        "enforced_by": [
+          "recipe_self_checks_passed",
+          "self_check_rejections_are_disclosed",
+          "self_check_flags_agree_with_the_measured_ratio",
+          "acceptance_recorded_not_claimed",
+          "promote()"
+        ],
+        "reason": "the band is the lab's only external check that the observed and reference layers describe the same roads; a group that fails it would let the fit learn a coverage artefact, which is the failure the whole lab exists to avoid",
+        "rule": "a staged group whose measured Overture/TIGER road ratio falls outside the organiser band and its tolerance is not counted as a fold: it remains staged, its bytes and numbers are published, acceptance does not count it, and promotion refuses while it is present"
+      },
+      "groups_fold_eligible": 4,
       "groups_required": 5,
-      "groups_staged": 2,
+      "groups_staged": 5,
       "met": false,
       "minimum_labelled_groups": 5,
       "note": "two groups this turn is staging, not acceptance; the row stays open until five groups carry labels",
@@ -116,6 +176,7 @@
         "candidates": 674,
         "clipped_reference_lines": 2291,
         "composite_defined_count": 433,
+        "fold_eligible": true,
         "group": "NV",
         "min_nearest_study_tract_km": 32.637,
         "rejected_by_reason": {},
@@ -137,13 +198,15 @@
           "within_tolerance": true
         },
         "segment_tract_intersections": 37893,
-        "segments_seen": 90869
+        "segments_seen": 90869,
+        "self_check_state": "inside_band"
       },
       {
         "accepted": 610,
         "candidates": 612,
         "clipped_reference_lines": 5402,
         "composite_defined_count": 506,
+        "fold_eligible": true,
         "group": "NM",
         "min_nearest_study_tract_km": 34.971,
         "rejected_by_reason": {
@@ -168,7 +231,100 @@
           "within_tolerance": true
         },
         "segment_tract_intersections": 42816,
-        "segments_seen": 68425
+        "segments_seen": 68425,
+        "self_check_state": "within_tolerance"
+      },
+      {
+        "accepted": 2163,
+        "candidates": 2163,
+        "clipped_reference_lines": 13087,
+        "composite_defined_count": 1741,
+        "fold_eligible": true,
+        "group": "CO-UT",
+        "min_nearest_study_tract_km": 155.338,
+        "rejected_by_reason": {},
+        "road": {
+          "defined": 1741,
+          "defined_share": 0.804901,
+          "undefined": 422
+        },
+        "road_ratio": {
+          "band": [
+            0.71,
+            1.59
+          ],
+          "inside_band": true,
+          "observed_km": 40446.112,
+          "ratio": 0.80192,
+          "reference_km": 50436.619,
+          "tolerance": 0.15,
+          "within_tolerance": true
+        },
+        "segment_tract_intersections": 109277,
+        "segments_seen": 114945,
+        "self_check_state": "inside_band"
+      },
+      {
+        "accepted": 1388,
+        "candidates": 1388,
+        "clipped_reference_lines": 17799,
+        "composite_defined_count": 1259,
+        "fold_eligible": false,
+        "group": "LA",
+        "min_nearest_study_tract_km": 67.598,
+        "rejected_by_reason": {},
+        "road": {
+          "defined": 1259,
+          "defined_share": 0.907061,
+          "undefined": 129
+        },
+        "road_ratio": {
+          "band": [
+            0.71,
+            1.59
+          ],
+          "inside_band": false,
+          "observed_km": 28281.164,
+          "ratio": 0.507151,
+          "reference_km": 55764.756,
+          "tolerance": 0.15,
+          "within_tolerance": false
+        },
+        "segment_tract_intersections": 91343,
+        "segments_seen": 148779,
+        "self_check_state": "outside_band"
+      },
+      {
+        "accepted": 1635,
+        "candidates": 1652,
+        "clipped_reference_lines": 18338,
+        "composite_defined_count": 1465,
+        "fold_eligible": true,
+        "group": "AR-KS",
+        "min_nearest_study_tract_km": 8.293,
+        "rejected_by_reason": {
+          "within_neighbour_buffer_of_study_tract": 17
+        },
+        "road": {
+          "defined": 1465,
+          "defined_share": 0.896024,
+          "undefined": 170
+        },
+        "road_ratio": {
+          "band": [
+            0.71,
+            1.59
+          ],
+          "inside_band": false,
+          "observed_km": 50791.134,
+          "ratio": 0.645227,
+          "reference_km": 78718.205,
+          "tolerance": 0.15,
+          "within_tolerance": true
+        },
+        "segment_tract_intersections": 114150,
+        "segments_seen": 467086,
+        "self_check_state": "within_tolerance"
       }
     ],
     "hospital_ratio_check": {
@@ -176,17 +332,22 @@
       "status": "not_computable"
     },
     "self_checks": {
+      "AR-KS": "within_tolerance",
+      "CO-UT": "inside_band",
+      "LA": "outside_band",
       "NM": "within_tolerance",
       "NV": "inside_band"
     }
   },
   "preregistration": {
     "config_path": "config/lab-build-preregistered.json",
-    "config_sha256": "fa5a7bf57a8c401c2fcb7fda4c2a0e1897ca3022f5d5f72b965ea73134b6dfdb",
+    "config_sha256": "b4e648dc62d46f7fd5a38ee23cb1a06d5da7647de730c8f18800de13ed4e7a90",
     "lab_plan_config_sha256": "e7106107d63c5bd823c4b65fa3a32c5733cb02500ec5ee539cf99ddde01233cb",
     "negative_controls_declared": [
       "accepted_tract_inside_buffer",
+      "budget_exceeded_unreported",
       "downloaded_code_executed",
+      "fold_eligible_group_rejected",
       "lab_value_reaches_submission",
       "measurement_without_lab_bytes",
       "missing_source_hash",
@@ -204,7 +365,7 @@
       "retrieval_authorised": true,
       "study_region_prohibition_is_absolute": true
     },
-    "prerequisite_report_sha256": "a4121650a0ffb9c4cab753881764f140215f4003f8027d4db9e7807e3465b336",
+    "prerequisite_report_sha256": "0bdf7d185b7aa2e366e6bf60094b8380219d8fb2b3753f7583eea2b34d34eb23",
     "recipe_variant_id": "road-obs4cls-mtfcc-S1100S1200-5070-v1",
     "spec_path": "/home/martin/hddProjects/competitionsall/docs/research/bias-60-ideas-2026-10.md",
     "spec_sha256": "f150649b34caebefb91b8eda75517e43f5cc278699ec9dba7b23fea717f16862",
@@ -227,37 +388,40 @@
     "report_serialises_no_generated_wall_clock": true
   },
   "retrieval": {
-    "budget_bytes": 8000000000,
+    "budget_bytes": 25000000000,
     "budget_files": 4000,
-    "bytes_of_objects_listed": 4189898173,
-    "bytes_transferred": 828814965,
+    "bytes_of_objects_listed": 11110884220,
+    "bytes_transferred": 3491061420,
+    "cap_applies_to": "the whole staged lab, across groups and across invocations",
     "credentials_used": false,
-    "files": 42,
+    "files": 395,
     "hosts": [
       "overturemaps-us-west-2.s3.us-west-2.amazonaws.com",
       "www2.census.gov"
     ],
     "overture": {
-      "compressed_bytes_read_estimate": 733420392,
-      "files_read": 6,
-      "objects_listed": 256,
+      "compressed_bytes_read_estimate": 2984213640,
+      "files_read": 17,
+      "objects_listed": 640,
       "release": "2026-09-23.1"
     },
     "transfer_note": "census files are transferred whole; an Overture object is listed whole but only the row groups whose bbox statistics overlap the group window are read, and only the preregistered columns of those",
-    "unique_urls": 41
+    "unique_urls": 388
   },
   "schema_version": "1.0",
   "summary": {
     "acceptance_met": false,
-    "bytes_of_objects_listed": 4189898173,
-    "bytes_transferred": 828814965,
-    "files_retrieved": 42,
+    "bytes_of_objects_listed": 11110884220,
+    "bytes_transferred": 3491061420,
+    "files_retrieved": 395,
     "gates_all_passed": true,
+    "groups_fold_eligible": 4,
+    "groups_rejected_by_self_check": 1,
     "groups_required": 5,
-    "groups_staged": 2,
+    "groups_staged": 5,
     "lab_rows_opened_by_a_model_or_submission_path": 0,
-    "overture_compressed_bytes_read_estimate": 733420392,
-    "overture_objects_listed": 256,
+    "overture_compressed_bytes_read_estimate": 2984213640,
+    "overture_objects_listed": 640,
     "reference_layer_bytes_computed_on_study_tracts": 0,
     "uploads": 0
   },

@@ -115,6 +115,15 @@ def synthetic_records(official: list[str], template: list[str]) -> dict[str, lis
     for index, geoid in enumerate(sorted(g for g in official if g.startswith("04"))[:20]):
         add("32", {"geoid": geoid, "county_fips": "32031", "lat": 38.0, "lon": -115.0})
 
+    # LA and AR-KS joined the plan when the build reached for five folds; the fixture must reach them
+    # too, or a group with no synthetic geography looks like a measured shortfall
+    for state, prefix, count, origin in (("22", "22019", 40, (-92.0, 31.0)),
+                                         ("05", "05119", 20, (-93.5, 35.0)),
+                                         ("20", "20091", 20, (-99.5, 38.0))):
+        for index in range(count):
+            add(state, {"geoid": f"990{state}{index:07d}"[:11], "county_fips": prefix,
+                        "lat": origin[1], "lon": origin[0] + index * 0.01})
+
     for state, prefix, count in (("08", "08031", 25), ("49", "49035", 25), ("35", "35001", 40)):
         for index in range(count):
             add(state, {"geoid": f"9900{state}{index:05d}"[:11], "county_fips": prefix,
@@ -409,7 +418,7 @@ class CommittedArtifactTests(unittest.TestCase):
     def test_the_committed_report_matches_a_fresh_run_and_says_what_was_measured(self) -> None:
         document = json.loads(REPORT_PATH.read_text(encoding="utf-8"))
         self.assertTrue(document["gates"]["all_passed"])
-        self.assertEqual(document["summary"]["groups_probed"], 5)
+        self.assertEqual(document["summary"]["groups_probed"], 7)
         self.assertGreater(document["summary"]["candidates_found"], 4000)
         self.assertEqual(document["summary"]["study_points"], 9793)
         self.assertGreater(document["summary"]["downloaded_bytes"], 1_000_000)

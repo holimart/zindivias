@@ -19,7 +19,7 @@
     "lab_plan_config_sha256": "e7106107d63c5bd823c4b65fa3a32c5733cb02500ec5ee539cf99ddde01233cb",
     "prerequisite_report": "reports/lab-prerequisites.json",
     "lab_commit_source": "git rev-parse HEAD",
-    "prerequisite_report_sha256": "a4121650a0ffb9c4cab753881764f140215f4003f8027d4db9e7807e3465b336",
+    "prerequisite_report_sha256": "0bdf7d185b7aa2e366e6bf60094b8380219d8fb2b3753f7583eea2b34d34eb23",
     "lab_plan_module_sha256": "e106db411a7289a3e76d750d99935756a99530b15b75e257e1bdcceac7377249"
   },
   "operator_decision": {
@@ -41,7 +41,10 @@
   },
   "groups_this_build": [
     "NV",
-    "NM"
+    "NM",
+    "CO-UT",
+    "LA",
+    "AR-KS"
   ],
   "group_selection": {
     "rule": "core groups with the least retrieval risk that the prerequisite probe measured as viable, so that the pipeline is proved on real bytes before the wide groups are attempted",
@@ -231,7 +234,7 @@
       ".zip.exe"
     ],
     "credentials_may_be_used": false,
-    "max_total_bytes": 8000000000,
+    "max_total_bytes": 25000000000,
     "max_files": 4000,
     "study_county_fips_may_appear_in_a_url": false,
     "study_geoid_may_appear_in_a_url": false,
@@ -286,7 +289,9 @@
     "self_check_fabricated": "recipe_self_checks_passed",
     "undefined_rows_zero_filled": "undefined_never_scored_as_zero",
     "missing_source_hash": "manifest_provenance_complete",
-    "accepted_tract_inside_buffer": "nearest_distance_buffer_respected"
+    "accepted_tract_inside_buffer": "nearest_distance_buffer_respected",
+    "budget_exceeded_unreported": "cumulative_retrieval_within_the_frozen_cap",
+    "fold_eligible_group_rejected": "recipe_self_checks_passed"
   },
   "acceptance": {
     "minimum_labelled_groups": 5,
@@ -300,7 +305,18 @@
     "required_recipe_self_checks": [
       "state_road_ratio_in_organiser_band"
     ],
-    "note": "two groups this turn is staging, not acceptance; the row stays open until five groups carry labels"
+    "note": "two groups this turn is staging, not acceptance; the row stays open until five groups carry labels",
+    "fold_rule": {
+      "rule": "a staged group whose measured Overture/TIGER road ratio falls outside the organiser band and its tolerance is not counted as a fold: it remains staged, its bytes and numbers are published, acceptance does not count it, and promotion refuses while it is present",
+      "reason": "the band is the lab's only external check that the observed and reference layers describe the same roads; a group that fails it would let the fit learn a coverage artefact, which is the failure the whole lab exists to avoid",
+      "enforced_by": [
+        "recipe_self_checks_passed",
+        "self_check_rejections_are_disclosed",
+        "self_check_flags_agree_with_the_measured_ratio",
+        "acceptance_recorded_not_claimed",
+        "promote()"
+      ]
+    }
   },
   "pin_amendments": [
     {
@@ -317,6 +333,146 @@
       "field": "pins.prerequisite_report_sha256",
       "supersedes": "8831d14a09ecbb2952725af3e7e2ed1a81d0995264dab0592238b4597fce9b87",
       "reason": "the probe now labels each published status line by how it was obtained (cache, network, or never asked), so a source that registers no url can no longer be read as if it had been probed"
+    },
+    {
+      "field": "pins.prerequisite_report_sha256",
+      "supersedes": "a4121650a0ffb9c4cab753881764f140215f4003f8027d4db9e7807e3465b336",
+      "reason": "the probe now covers seven groups instead of five: LA (1,388 accepted, nearest study tract 66.36 km) and AR-KS (1,636 accepted, nearest 8.276 km) were measured so that the build's tract floor decides their fate instead of an assumption"
+    }
+  ],
+  "amendments": [
+    {
+      "field": "groups_this_build",
+      "supersedes": [
+        "NV",
+        "NM"
+      ],
+      "now": [
+        "NV",
+        "NM",
+        "CO-UT",
+        "LA",
+        "AR-KS"
+      ],
+      "reason": "the steward's staging plan for this row is turn 1 = the two smallest core groups end to end, turn 2+ = the remaining groups to reach >= 5; the prerequisite probe measured all three new groups above the frozen tract floor, so they are built rather than another round of design",
+      "measured_by_prerequisite_probe": {
+        "CO-UT": {
+          "candidates_found": 2163,
+          "accepted": 2163,
+          "min_nearest_study_tract_km": 162.964
+        },
+        "LA": {
+          "candidates_found": 1388,
+          "accepted": 1388,
+          "min_nearest_study_tract_km": 66.36
+        },
+        "AR-KS": {
+          "candidates_found": 1652,
+          "accepted": 1636,
+          "min_nearest_study_tract_km": 8.276,
+          "note": "8.276 km is only 0.276 km outside the frozen 8.0 km neighbour buffer, so the nearest-distance gate has almost no margin for this group and is reported"
+        }
+      },
+      "authorised_by": "steward 2026-10-25 11:20Z on this row"
+    },
+    {
+      "field": "retrieval.max_total_bytes",
+      "supersedes": 8000000000,
+      "now": 25000000000,
+      "reason": "the frozen 8 GB cap was set before any byte had been measured and is below the spec's own size estimate for this lab (spec 4.5: 'Overture ... full 9-group lab ~8-10 GB', 'Total about 10-25 GB on disk'), so it could not have covered five groups let alone nine. The cap exists to stop runaway retrieval, not to be a ceiling on the preregistered deliverable; it is raised to the spec's own upper bound and now applies to the whole staged lab across invocations (new gate cumulative_retrieval_within_the_frozen_cap)",
+      "measured_cost_so_far": {
+        "NV": {
+          "bytes_transferred": 471800664,
+          "files": 7,
+          "largest_component": "observed_roads 455,303,318 bytes over 4 Overture objects"
+        },
+        "NM": {
+          "bytes_transferred": 357014301,
+          "files": 35,
+          "largest_component": "observed_roads 278,117,074 bytes over 2 Overture objects"
+        }
+      }
+    },
+    {
+      "field": "groups_this_build",
+      "supersedes": [
+        "NV",
+        "NM",
+        "CO-UT",
+        "LA",
+        "AR-KS"
+      ],
+      "now": [
+        "NV",
+        "NM",
+        "CO-UT",
+        "LA",
+        "AR-KS",
+        "AZ-R"
+      ],
+      "reason": "Louisiana failed its own recipe self-check on real bytes: 1,388 tracts accepted but an Overture/TIGER road ratio of 0.507151, outside the organiser band [0.71, 1.59] and its 0.15 tolerance, so under the fold rule it is staged and disclosed but not counted, and AZ-R (the last group the prerequisite probe measured at or above the frozen tract floor, 30 accepted with its nearest accepted tract 9.23 km from a study tract) is built to try for the fifth fold",
+      "measured_this_turn": {
+        "CO-UT": {
+          "accepted": 2163,
+          "road_defined": 1741,
+          "road_ratio": 0.80192
+        },
+        "LA": {
+          "accepted": 1388,
+          "road_defined": 1259,
+          "road_ratio": 0.507151,
+          "self_check": "outside_band",
+          "fold_eligible": false
+        },
+        "AR-KS": {
+          "accepted": 1635,
+          "road_defined": 1465,
+          "road_ratio": 0.645227,
+          "self_check": "within_tolerance"
+        },
+        "AZ-R": {
+          "candidates_found": 94,
+          "accepted": 30,
+          "min_nearest_study_tract_km": 9.23,
+          "note": "exactly on the frozen floor of 30 and only 1.23 km outside the neighbour buffer, so it is reported as the thin group it is"
+        }
+      }
+    },
+    {
+      "field": "groups_this_build",
+      "supersedes": [
+        "NV",
+        "NM",
+        "CO-UT",
+        "LA",
+        "AR-KS",
+        "AZ-R"
+      ],
+      "now": [
+        "NV",
+        "NM",
+        "CO-UT",
+        "LA",
+        "AR-KS"
+      ],
+      "reason": "AZ-R was attempted and refused by the build (0 tracts kept of 94 candidates, floor 30); it is recorded in groups_refused with the measured rejection breakdown rather than quietly dropped, and the probe/build exclusion-policy disagreement behind it is filed as its own row"
+    }
+  ],
+  "groups_refused": [
+    {
+      "id": "AZ-R",
+      "attempted": "2026-10-25 build row, after CO-UT, LA and AR-KS were staged",
+      "reason": "the build refused the group before writing any label: all 94 candidates were excluded (35 as study-county tracts under the county rule the build enables for retrieval, 59 as official or template GEOIDs), so it kept 0 tracts against the frozen floor of 30",
+      "measured": {
+        "candidates": 94,
+        "accepted": 0,
+        "rejected_by_reason": {
+          "study_county": 35,
+          "official_scored_or_template_geoid": 59
+        },
+        "prerequisite_probe_reported_accepted": 30,
+        "disagreement": "the probe does not apply the county rule the build applies, so its ready=true for AZ-R was never the build's verdict; filed as its own row"
+      }
     }
   ]
 }

@@ -36,10 +36,10 @@
 
 ## Prerequisite measurement this evaluation stands on
 
-- Probe artifact `reports/lab-prerequisites.json` (SHA-256 `c13d2b4207dfdf75...`), its own gates all passed: True
-- Planned lab groups: 9; probed on real census geography: 5; candidate tracts inspected: 4748; accepted by the frozen exclusion: 3491
+- Probe artifact `reports/lab-prerequisites.json` (SHA-256 `dc814900925a37fb...`), its own gates all passed: True
+- Planned lab groups: 9; probed on real census geography: 7; candidate tracts inspected: 7788; accepted by the frozen exclusion: 6515
 - Study interior points established for the neighbour buffer: 9793 (1 excluded GEOIDs had no interior point in the census file)
-- Public census geography downloaded by the probe: 112428536 bytes; no reference layer was fetched
+- Public census geography downloaded by the probe: 134365215 bytes; no reference layer was fetched
 - Lab plan needs amendment: **True** - the frozen lab plan is not yet buildable as written: OK-R cannot be a fold and cbp_2023, hud_usps_crosswalk, overture_package_release, tiger_prisecroads_2024 did not answer an anonymous request at its registered pattern
   - `OK-R` cannot be a fold: 13 accepted tracts against a floor of 30
   - `AZ-R` is far below its planned tract count: 30 accepted against 170 planned

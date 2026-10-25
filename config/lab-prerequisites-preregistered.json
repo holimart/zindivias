@@ -45,7 +45,9 @@
     "OK-R",
     "NV",
     "CO-UT",
-    "NM"
+    "NM",
+    "LA",
+    "AR-KS"
   ],
   "cache_dir_name": "lab-prerequisites",
   "source_probe": {
@@ -188,5 +190,23 @@
   "gate_note": {
     "contract_gates_must_pass": "these prove the probe stayed inside its rails: rails, honesty and disclosure",
     "measurement_findings_may_be_negative": "whether every planned group has enough tracts and whether every source answers are findings the build has to know, and the gates only require that they are disclosed, never that they come out well"
-  }
+  },
+  "probe_group_amendments": [
+    {
+      "field": "probe_groups",
+      "supersedes": [
+        "AZ-R",
+        "OK-R",
+        "NV",
+        "CO-UT",
+        "NM"
+      ],
+      "added": [
+        "LA",
+        "AR-KS"
+      ],
+      "reason": "the build row reached four of its five required groups with NV and NM staged and CO-UT measured viable by this probe; LA and AR-KS are the two remaining spec 4.2 groups that whole-state retrieval can cover without a county list, and the build's frozen tract floor fails them closed if the probe has not measured them, so they are probed before any Overture or county-roads byte is spent on them",
+      "authorised_by": "steward 2026-10-25 11:20Z: turn 2+ = the remaining groups to reach >= 5"
+    }
+  ]
 }

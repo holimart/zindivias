@@ -296,6 +296,50 @@ class GateTests(unittest.TestCase):
                          builder.canonical_bytes(self.report))
 
 
+class FoldEligibilityTests(unittest.TestCase):
+    """A group that fails its own recipe self-check is disclosed, not counted."""
+
+    def config_for(self, *groups: str) -> dict:
+        config = json.loads(json.dumps(CONFIG))
+        config["groups_this_build"] = list(groups)
+        return config
+
+    def test_a_group_failing_its_own_self_check_is_staged_but_not_a_fold(self) -> None:
+        built = build()
+        manifest = json.loads(json.dumps(built["manifest"]))
+        # a group whose observed length is 40% of its reference length: outside band and tolerance,
+        # with the flags left as the builder would have written them
+        manifest["defineness"]["road_ratio"].update(
+            {"observed_km": 400.0, "reference_km": 1000.0, "ratio": 0.4,
+             "inside_band": False, "within_tolerance": False})
+        report = builder.build_report(self.config_for(GROUP), manifests=[manifest])
+        self.assertEqual(report["groups_fold_eligible"], [])
+        self.assertEqual([entry["group"] for entry in report["groups_rejected_by_self_check"]],
+                         [GROUP])
+        self.assertFalse(report["measurement"]["acceptance"]["met"])
+        self.assertFalse(report["gates"]["recipe_self_checks_passed"])
+        self.assertFalse(report["gates"]["no_measurement_without_bytes"])
+        # but nothing about it is hidden: cost, ratio and flags are all published
+        self.assertTrue(report["gates"]["self_check_rejections_are_disclosed"])
+        entry = report["groups_rejected_by_self_check"][0]
+        self.assertEqual(entry["road_ratio"], 0.4)
+        self.assertGreater(entry["bytes_counted"], 0)
+        self.assertGreater(entry["files_counted"], 0)
+        with self.assertRaises(ValueError) as refused:
+            builder.promote(self.config_for(GROUP), [manifest])
+        self.assertIn("not fold-eligible", str(refused.exception))
+
+    def test_a_fold_claiming_a_ratio_it_did_not_measure_is_caught(self) -> None:
+        built = build()
+        manifest = json.loads(json.dumps(built["manifest"]))
+        # the lengths stay as measured; only the verdict is inflated into the band
+        manifest["defineness"]["road_ratio"].update(
+            {"ratio": 1.0, "inside_band": True, "within_tolerance": True})
+        report = builder.build_report(self.config_for(GROUP), manifests=[manifest])
+        self.assertFalse(report["gates"]["self_check_flags_agree_with_the_measured_ratio"])
+        self.assertFalse(report["gates"]["all_passed"])
+
+
 class NegativeControlTests(unittest.TestCase):
     EXPECTED = dict(CONFIG["negative_controls"])
 
@@ -413,6 +457,26 @@ class PromoteTests(unittest.TestCase):
 
 
 class CommittedArtifactTests(unittest.TestCase):
+    def test_the_committed_report_separates_folds_from_self_check_rejections(self) -> None:
+        report = json.loads(REPORT_PATH.read_text(encoding="utf-8"))
+        rejected = {entry["group"] for entry in report["groups_rejected_by_self_check"]}
+        self.assertEqual(set(report["groups_staged"]),
+                         set(report["groups_fold_eligible"]) | rejected)
+        self.assertFalse(set(report["groups_fold_eligible"]) & rejected)
+        for entry in report["groups_rejected_by_self_check"]:
+            self.assertFalse(entry["inside_band"] or entry["within_tolerance"])
+            self.assertGreater(entry["bytes_counted"], 0)
+            self.assertGreater(entry["files_counted"], 0)
+        self.assertEqual(report["summary"]["groups_fold_eligible"],
+                         len(report["groups_fold_eligible"]))
+        self.assertEqual(report["measurement"]["acceptance"]["met"],
+                         report["summary"]["groups_fold_eligible"]
+                         >= report["summary"]["groups_required"])
+        for entry in report["measurement"]["groups"]:
+            self.assertEqual(entry["fold_eligible"],
+                             entry["group"] in report["groups_fold_eligible"])
+
+
     def test_the_committed_report_and_markdown_match_a_dry_run(self) -> None:
         completed = subprocess.run(
             ["/home/martin/hddProjects/langywrap/uv", "run", "--quiet",

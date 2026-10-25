@@ -686,9 +686,7 @@ def write_labels(group: dict[str, Any], tracts: list[dict[str, Any]], observed: 
     record(staging / "road_measurement.parquet")
     ratio = (observed_total / reference_total) if reference_total > 0 else None
     band = recipe["self_checks"]["state_road_ratio_in_organiser_band"]
-    inside = bool(ratio is not None and band["band"][0] <= ratio <= band["band"][1])
-    near = bool(ratio is not None and band["band"][0] * (1.0 - band["tolerance"]) <= ratio
-                <= band["band"][1] * (1.0 + band["tolerance"]))
+    inside, near = road_ratio_flags(ratio, band["band"], band["tolerance"])
     defineness = {
         "group": group["id"],
         "tracts": len(tracts),
@@ -774,6 +772,11 @@ def promote(config: dict[str, Any], manifests: list[dict[str, Any]]) -> dict[str
     if any(not manifest["defineness"]["road_ratio"]["inside_band"]
            and not manifest["defineness"]["road_ratio"]["within_tolerance"] for manifest in manifests):
         blockers.append("a group's road ratio falls outside the organiser band and its tolerance")
+    for manifest in manifests:
+        road = manifest["defineness"]["road_ratio"]
+        if not (road["inside_band"] or road["within_tolerance"]):
+            blockers.append(f'{manifest["group"]} is not fold-eligible: its measured road ratio '
+                            f'{road["ratio"]} falls outside the organiser band and its tolerance')
     if blockers:
         raise ValueError("promotion refused: " + "; ".join(blockers))
     raise NotImplementedError("promotion is deliberately not exercised until five groups exist; "
@@ -782,6 +785,22 @@ def promote(config: dict[str, Any], manifests: list[dict[str, Any]]) -> dict[str
 
 # --------------------------------------------------------------------------- report
 TEMPORAL_KEYS = ("_utc", "_timestamp", "_at", "built_utc", "retrieved")
+FOLD_STATES = ("inside_band", "within_tolerance")
+
+
+def road_ratio_flags(ratio: float | None, band: list[float],
+                     tolerance: float) -> tuple[bool, bool]:
+    """The organiser band and its tolerance, defined once.
+
+    The builder writes these flags and a gate re-derives them from the published lengths, so the
+    definition cannot live in two places: a group whose reported verdict does not follow from its
+    reported kilometres is a fabrication, not a disagreement between two readings of the rule.
+    """
+    if ratio is None:
+        return False, False
+    inside = band[0] <= ratio <= band[1]
+    near = band[0] * (1.0 - tolerance) <= ratio <= band[1] * (1.0 + tolerance)
+    return bool(inside), bool(near)
 
 
 def _looks_like_timestamp(value: Any) -> bool:
@@ -853,8 +872,28 @@ def build_report(config: dict[str, Any], *, manifests: list[dict[str, Any]],
                 "within_tolerance" if road["within_tolerance"] else "outside_band")
 
     checks = {manifest["group"]: self_check_state(manifest) for manifest in manifests}
+    # The organiser band is the lab's only external check that the observed layer and the reference
+    # layer describe the same roads. A group that fails it is not a fold: fitting weights to a gap
+    # that may be a coverage artefact is the failure this lab exists to avoid. Such a group stays
+    # staged and fully disclosed -- its bytes were spent and its numbers are published -- but it does
+    # not count towards acceptance, and promotion refuses while it is present.
+    fold_groups = sorted(manifest["group"] for manifest in manifests
+                         if self_check_state(manifest) in FOLD_STATES)
+    rejected_by_self_check = [{
+        "group": manifest["group"],
+        "self_check_state": self_check_state(manifest),
+        "road_ratio": manifest["defineness"]["road_ratio"]["ratio"],
+        "inside_band": manifest["defineness"]["road_ratio"]["inside_band"],
+        "within_tolerance": manifest["defineness"]["road_ratio"]["within_tolerance"],
+        "accepted": manifest["counts"]["accepted"],
+        "bytes_counted": sum(int(entry.get("compressed_bytes_read_estimate", entry["bytes"]))
+                             for entry in manifest["files"]),
+        "files_counted": len(manifest["files"]),
+    } for manifest in manifests if self_check_state(manifest) not in FOLD_STATES]
     measured = [{
         "group": manifest["group"],
+        "self_check_state": self_check_state(manifest),
+        "fold_eligible": self_check_state(manifest) in FOLD_STATES,
         "candidates": manifest["counts"]["candidates"],
         "accepted": manifest["counts"]["accepted"],
         "rejected_by_reason": manifest["counts"]["rejected_by_reason"],
@@ -868,6 +907,7 @@ def build_report(config: dict[str, Any], *, manifests: list[dict[str, Any]],
         "composite_defined_count": manifest["defineness"]["composite_defined_count"],
     } for manifest in manifests]
 
+    refused_ids = {entry.get("id") for entry in config.get("groups_refused", [])}
     report: dict[str, Any] = {
         "schema_version": config["schema_version"],
         "lane": config["lane"],
@@ -889,7 +929,10 @@ def build_report(config: dict[str, Any], *, manifests: list[dict[str, Any]],
                      "promoted_artifacts_present": sorted(
                          name for name in lab_eval.ARTIFACTS if (lab_root / name).is_file())},
         "groups_staged": staged_groups,
+        "groups_fold_eligible": fold_groups,
+        "groups_rejected_by_self_check": rejected_by_self_check,
         "groups_planned_this_build": list(config["groups_this_build"]),
+        "groups_refused": list(config.get("groups_refused", [])),
         "components_built": list(config["components_built_this_build"]),
         "components_held": {key: value["status"] for key, value in config["components_held"].items()},
         "retrieval": {
@@ -901,6 +944,7 @@ def build_report(config: dict[str, Any], *, manifests: list[dict[str, Any]],
                              "are read, and only the preregistered columns of those",
             "hosts": hosts,
             "budget_bytes": config["retrieval"]["max_total_bytes"],
+            "cap_applies_to": "the whole staged lab, across groups and across invocations",
             "budget_files": config["retrieval"]["max_files"],
             "credentials_used": False,
             "unique_urls": len(set(urls)),
@@ -917,8 +961,9 @@ def build_report(config: dict[str, Any], *, manifests: list[dict[str, Any]],
                         "hospital_ratio_check": config["recipe"]["self_checks"]["hospital_ratio_check"],
                         "acceptance": {**config["acceptance"],
                                        "groups_staged": len(staged_groups),
+                                       "groups_fold_eligible": len(fold_groups),
                                        "groups_required": config["minimum_labelled_groups"],
-                                       "met": len(staged_groups) >= config["minimum_labelled_groups"]}},
+                                       "met": len(fold_groups) >= config["minimum_labelled_groups"]}},
         "exclusion": {
             "policy": "src/bias60/lab_plan.py::ExclusionPolicy",
             "buffer_km": config["exclusion"]["buffer_km"],
@@ -977,20 +1022,57 @@ def build_report(config: dict[str, Any], *, manifests: list[dict[str, Any]],
         "manifest_provenance_complete": all(
             entry.get(field) not in (None, "") for entry in all_files for field in
             ("url", "version", "sha256", "bytes", "retrieval_date_utc")),
-        "recipe_self_checks_passed": bool(checks) and all(
-            value in ("inside_band", "within_tolerance") for value in checks.values()),
+        # no group may be counted as a fold while failing its own self-check, and the flags it
+        # reports must be the flags its measured lengths imply
+        "recipe_self_checks_passed": bool(fold_groups) and all(
+            self_check_state(manifest) in FOLD_STATES for manifest in manifests
+            if manifest["group"] in fold_groups),
+        "self_check_flags_agree_with_the_measured_ratio": all(
+            entry["road_ratio"]["ratio"] is None or (
+                # kilometres are published to three decimals, so the ratio they imply is only
+                # reproducible to about that precision; anything coarser than that is a claim the
+                # lengths do not support
+                abs(entry["road_ratio"]["ratio"] - entry["road_ratio"]["observed_km"]
+                    / entry["road_ratio"]["reference_km"]) <= 1e-3
+                and (entry["road_ratio"]["inside_band"],
+                     entry["road_ratio"]["within_tolerance"]) == road_ratio_flags(
+                    entry["road_ratio"]["ratio"], entry["road_ratio"]["band"],
+                    entry["road_ratio"]["tolerance"]))
+            for entry in measured),
+        "self_check_rejections_are_disclosed": bool(
+            set(entry["group"] for entry in rejected_by_self_check)
+            == set(group for group in staged_groups if group not in fold_groups)
+            and all(entry["road_ratio"] is not None
+                    or entry["self_check_state"] == "no_reference_length"
+                    for entry in rejected_by_self_check)
+            and all(entry["files_counted"] > 0 and entry["bytes_counted"] > 0
+                    for entry in rejected_by_self_check)),
         "undefined_never_scored_as_zero": all(
             manifest["defineness"]["undefined_never_scored_as_zero"] for manifest in manifests),
-        "no_measurement_without_bytes": all(manifest["counts"]["clipped_reference_lines"] > 0
-                                            and manifest["counts"]["segment_tract_intersections"] > 0
-                                            for manifest in manifests),
+        "no_measurement_without_bytes": bool(fold_groups) and all(
+            manifest["counts"]["clipped_reference_lines"] > 0
+            and manifest["counts"]["segment_tract_intersections"] > 0
+            for manifest in manifests if manifest["group"] in fold_groups),
         "report_has_no_temporal_field": not _has_temporal_field(report),
         "acceptance_recorded_not_claimed": report["measurement"]["acceptance"]["met"] is (
-            len(staged_groups) >= config["minimum_labelled_groups"]),
+            len(fold_groups) >= config["minimum_labelled_groups"]),
         "county_rule_enabled_for_retrieval": report["exclusion"]["county_rule"][
             "enabled_for_this_build"],
         "components_held_are_documented": all(
             config["components_held"][key].get("measured") for key in config["components_held"]),
+        # the budget is a property of the lab, not of one invocation: staged groups from an earlier
+        # run count against the same cap, so a group added in a later run cannot quietly spend past it
+        "cumulative_retrieval_within_the_frozen_cap": bool(
+            bytes_transferred <= int(config["retrieval"]["max_total_bytes"])
+            and len(all_files) <= int(config["retrieval"]["max_files"])),
+        # a group that quietly vanished from the plan would be the cheapest way to make this report
+        # look finished, so every planned group must be staged or carry a recorded refusal
+        "planned_groups_are_staged_or_refused_with_a_reason": all(
+            (group in staged_groups) != (group in refused_ids)
+            and (group in staged_groups
+                 or any(entry.get("id") == group and entry.get("reason") and entry.get("measured")
+                        for entry in config.get("groups_refused", [])))
+            for group in config["groups_this_build"]),
         "no_lab_value_in_submission_paths": True,
         "no_fabricated_measurement": bool(manifests) and all(
             any(entry["role"] == "reference_roads" for entry in manifest["files"])
@@ -1001,6 +1083,7 @@ def build_report(config: dict[str, Any], *, manifests: list[dict[str, Any]],
     }
     if tamper:
         applied = {
+            "fold_eligible_group_rejected": "recipe_self_checks_passed",
             "study_geoid_in_url": "study_geoid_never_appears_in_a_url",
             "study_county_in_url": "study_county_never_appears_in_a_url",
             "off_allowlist_host": "retrieval_stayed_on_the_allowlist",
@@ -1014,6 +1097,7 @@ def build_report(config: dict[str, Any], *, manifests: list[dict[str, Any]],
             "measurement_without_lab_bytes": "no_measurement_without_bytes",
             "accepted_tract_inside_buffer": "nearest_distance_buffer_respected",
             "groups_are_not_the_preregistered_ones": "groups_are_the_preregistered_ones",
+            "budget_exceeded_unreported": "cumulative_retrieval_within_the_frozen_cap",
         }
         if tamper not in applied:
             raise ValueError(f"{tamper!r} declares no gate to break")
@@ -1026,6 +1110,8 @@ def build_report(config: dict[str, Any], *, manifests: list[dict[str, Any]],
     gates["all_passed"] = all(value is True for key, value in gates.items() if key != "all_passed")
     report["summary"] = {
         "groups_staged": len(staged_groups),
+        "groups_fold_eligible": len(fold_groups),
+        "groups_rejected_by_self_check": len(rejected_by_self_check),
         "groups_required": config["minimum_labelled_groups"],
         "files_retrieved": len(all_files),
         "bytes_transferred": report["retrieval"]["bytes_transferred"],
@@ -1078,7 +1164,20 @@ def render_markdown(report: dict[str, Any]) -> str:
         else []
     for group, state in report["measurement"]["self_checks"].items():
         lines.append(f"- `{group}` Overture/TIGER road ratio: **{state}** against the organiser band "
-                     f"{band}")
+                     f"{band}"
+                     + ("" if state in FOLD_STATES else
+                        " — not counted as a fold; its bytes are still reported below"))
+    if report["groups_rejected_by_self_check"]:
+        lines += ["", "### Groups staged but not counted as folds", "",
+                  "| group | road ratio | inside band | within tolerance | accepted tracts | files "
+                  "| bytes counted |", "| --- | --- | --- | --- | --- | --- | --- |"]
+        for entry in report["groups_rejected_by_self_check"]:
+            lines.append(f"| {entry['group']} | {entry['road_ratio']} | {entry['inside_band']} | "
+                         f"{entry['within_tolerance']} | {entry['accepted']} | "
+                         f"{entry['files_counted']} | {entry['bytes_counted']:,} |")
+        lines += ["", "These groups were retrieved and measured, so their cost is disclosed rather "
+                  "than hidden; they are excluded from acceptance because a group whose observed and "
+                  "reference road lengths disagree beyond tolerance cannot test a gap estimator."]
     hospital = report["measurement"]["hospital_ratio_check"]
     lines.append(f"- hospital ratio: **{hospital['status']}** — {hospital['reason']}")
     lines += ["", "## Held back, and why", ""]
@@ -1125,6 +1224,8 @@ def main(argv: list[str] | None = None) -> int:
         for group_id in wanted:
             path = staging_dir(config, group_id) / "manifest.json"
             if not path.is_file():
+                if any(entry.get("id") == group_id for entry in config.get("groups_refused", [])):
+                    continue  # the build refused this group; the report records it, it is not a lab
                 raise SystemExit(f"--dry-run needs {path}")
             record(path)
             manifests.append(json.loads(path.read_text(encoding="utf-8")))
@@ -1172,10 +1273,13 @@ def main(argv: list[str] | None = None) -> int:
         print("FAIL lab build: " + json.dumps({key: value for key, value in report["gates"].items()
                                                if value is not True}, sort_keys=True))
         return 1
-    print(f"PASS lab build: {summary['groups_staged']} of {summary['groups_required']} required groups "
-          f"staged from {summary['files_retrieved']} retrieved files "
-          f"({summary['bytes_transferred']:,} bytes transferred) with road labels and the organiser road-ratio "
-          f"self-check reported; no study tract was measured and nothing was promoted to the lab root")
+    print(f"PASS lab build: {summary['groups_fold_eligible']} of {summary['groups_required']} required "
+          f"groups are folds ({summary['groups_staged']} staged, "
+          f"{summary['groups_rejected_by_self_check']} staged but rejected by their own road-ratio "
+          f"self-check) from {summary['files_retrieved']} retrieved files "
+          f"({summary['bytes_transferred']:,} bytes transferred) with road labels and the organiser "
+          f"road-ratio self-check reported; no study tract was measured and nothing was promoted to the "
+          f"lab root")
     return 0
 
 
