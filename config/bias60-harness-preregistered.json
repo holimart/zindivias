@@ -279,6 +279,16 @@
       "anchor_quantile": 0.6666666666666666,
       "recipe": "rho = median named-road density among the highest-density rural tract tercile in each applicable region; gap = clip(1 - observed named-road density / rho, 0, 1)",
       "note": "Spec P4: region-specific rural completeness anchor, strictly label-free; undefined outside rural OK/TX applicability."
+    },
+    "Sca1": {
+      "component": "F",
+      "kind": "gap",
+      "expectation_idea": "P2",
+      "observed_column": "overture_poi_fire",
+      "tail_standard_deviations": 12.0,
+      "tail_extra_counts": 40,
+      "formula": "E[max(0, 1 - O/R) | R>=1], R~Poisson(lambda), lambda=ALAND_km2/A_std(RUCA)",
+      "note": "Exact conditional-Poisson clipped-ratio expectation for P2 fire counts. Truncation is 12 standard deviations plus 40 counts; no fitted parameters."
     }
   },
   "spec_amendments": {

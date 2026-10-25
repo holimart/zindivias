@@ -8,7 +8,8 @@
         "Mx4|F|covariate"
       ],
       "2": [
-        "P2|F|gap"
+        "P2|F|gap",
+        "Sca1|F|gap"
       ],
       "3": [
         "Sc5|R|covariate",
@@ -27,6 +28,7 @@
       "P2|F|gap": 2,
       "Sc5|R|covariate": 3,
       "Sc5|R|gap": 3,
+      "Sca1|F|gap": 2,
       "Tm1|B|covariate": 4,
       "Tm1|B|gap": 5
     },
@@ -42,6 +44,7 @@
     "P2|F|gap": 1.0,
     "Sc5|R|covariate": 2.7755575615628914e-15,
     "Sc5|R|gap": 1.4432899320127035e-15,
+    "Sca1|F|gap": 0.9999999928963096,
     "Tm1|B|covariate": 2.25,
     "Tm1|B|gap": 0.21212121212121215
   },
@@ -95,6 +98,14 @@
       "idea": "Sc5"
     },
     {
+      "channel": "gap",
+      "column": "Sca1|F|gap",
+      "component": "F",
+      "coverage": 0.9997867576500693,
+      "family": "Sca",
+      "idea": "Sca1"
+    },
+    {
       "channel": "covariate",
       "column": "Tm1|B|covariate",
       "component": "B",
@@ -113,28 +124,24 @@
   ],
   "columns_exceeding_vif_threshold": [
     {
-      "column": "P2|F|gap",
-      "vif": 454.85573430943003
-    },
-    {
       "column": "Sc5|R|covariate",
-      "vif": 6782.44136025182
+      "vif": 5919.848767207871
     },
     {
       "column": "Sc5|R|gap",
-      "vif": 313.3667901349063
+      "vif": 311.09539811720555
     },
     {
       "column": "Tm1|B|covariate",
-      "vif": 75.84959441519902
+      "vif": 73.0793985640838
     },
     {
       "column": "Tm1|B|gap",
-      "vif": 76.2914479915697
+      "vif": 74.76886047485858
     }
   ],
-  "condition_number": 10.005509538362805,
-  "condition_number_all_columns": 10.005509538362805,
+  "condition_number": 481.85503897168513,
+  "condition_number_all_columns": 481.85503897168513,
   "correlation": {
     "columns": [
       "Mx4|B|covariate",
@@ -142,6 +149,7 @@
       "P2|F|gap",
       "Sc5|R|covariate",
       "Sc5|R|gap",
+      "Sca1|F|gap",
       "Tm1|B|covariate",
       "Tm1|B|gap"
     ],
@@ -152,6 +160,7 @@
         0.02503775836406059,
         0.0016083471213855886,
         0.0005152226559569886,
+        0.02530747255007615,
         -0.022092401023797687,
         -0.013987057335015811
       ],
@@ -161,6 +170,7 @@
         0.018436838995737257,
         -0.0016800336983614744,
         -0.01652899984003121,
+        0.01935952682943959,
         -0.024218581309672412,
         0.0037079196292830346
       ],
@@ -170,6 +180,7 @@
         1.0,
         -0.009868888927218739,
         -0.046468020726180066,
+        0.995801065928555,
         -0.0075008846669262445,
         -0.028829599025621305
       ],
@@ -179,6 +190,7 @@
         -0.009868888927218739,
         1.0,
         0.8160240383903553,
+        -0.009418215677920378,
         0.0020726110760328435,
         0.004651985593298486
       ],
@@ -188,8 +200,19 @@
         -0.046468020726180066,
         0.8160240383903553,
         1.0,
+        -0.045895670325657355,
         0.01887119896684477,
         0.00018775443533376678
+      ],
+      [
+        0.02530747255007615,
+        0.01935952682943959,
+        0.995801065928555,
+        -0.009418215677920378,
+        -0.045895670325657355,
+        1.0,
+        -0.00854650985131248,
+        -0.02969583465147453
       ],
       [
         -0.022092401023797687,
@@ -197,6 +220,7 @@
         -0.0075008846669262445,
         0.0020726110760328435,
         0.01887119896684477,
+        -0.00854650985131248,
         1.0,
         -0.0670163591368127
       ],
@@ -206,6 +230,7 @@
         -0.028829599025621305,
         0.004651985593298486,
         0.00018775443533376678,
+        -0.02969583465147453,
         -0.0670163591368127,
         1.0
       ]
@@ -218,6 +243,7 @@
         9247,
         9247,
         9377,
+        9377,
         9377
       ],
       [
@@ -227,6 +253,7 @@
         9247,
         9247,
         9377,
+        9377,
         9377
       ],
       [
@@ -236,9 +263,11 @@
         9247,
         9247,
         9377,
+        9377,
         9377
       ],
       [
+        9247,
         9247,
         9247,
         9247,
@@ -254,6 +283,7 @@
         9247,
         9247,
         9247,
+        9247,
         9247
       ],
       [
@@ -263,6 +293,7 @@
         9247,
         9247,
         9377,
+        9377,
         9377
       ],
       [
@@ -271,6 +302,17 @@
         9377,
         9247,
         9247,
+        9377,
+        9377,
+        9377
+      ],
+      [
+        9377,
+        9377,
+        9377,
+        9247,
+        9247,
+        9377,
         9377,
         9377
       ]
@@ -278,7 +320,7 @@
   },
   "degenerate_columns": [],
   "environment": {
-    "git_commit": "a0c7f024d52eaae7cc9bb734e20d71b8f45bf703",
+    "git_commit": "16b84f71fccedf623256a08e678e84037e528186",
     "versions": {
       "numpy": "2.5.4",
       "pyarrow": "26.0.0",
@@ -317,6 +359,7 @@
     "P2|F|gap",
     "Sc5|R|covariate",
     "Sc5|R|gap",
+    "Sca1|F|gap",
     "Tm1|B|covariate",
     "Tm1|B|gap"
   ],
@@ -326,6 +369,7 @@
     "P2|F|gap",
     "Sc5|R|covariate",
     "Sc5|R|gap",
+    "Sca1|F|gap",
     "Tm1|B|covariate",
     "Tm1|B|gap"
   ],
@@ -346,6 +390,10 @@
       "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Sc5.parquet",
       "sha256": "c8603a948b060344f23d2250da22b02a95254401c4a67d64d74a55d4cf4ee720"
     },
+    "Sca1": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Sca1.parquet",
+      "sha256": "858eadae31c242954fbbd47ffb0151276018d987a994f57b24e84c19a8e6c294"
+    },
     "Tm1": {
       "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Tm1.parquet",
       "sha256": "df93396b8bb481dea6da43dd90b997eeeb47c5bf249a3fa6eac0dca6c8713885"
@@ -354,10 +402,10 @@
   "multitrait_multimethod": {
     "convergent_validity_expected": "same-component pairs from different families should correlate",
     "discriminant_validity_expected": "different-component pairs should correlate less",
-    "mean_abs_rho_between_components": 0.06007914539399478,
-    "mean_abs_rho_within_component": 0.18751133897634376,
-    "pairs_between_components": 16,
-    "pairs_within_component": 5
+    "mean_abs_rho_between_components": 0.051434763302874165,
+    "mean_abs_rho_within_component": 0.27895961251995904,
+    "pairs_between_components": 21,
+    "pairs_within_component": 7
   },
   "numerically_null_columns": [
     {
@@ -377,6 +425,13 @@
   ],
   "pairs_exceeding_merge_threshold": [
     {
+      "abs_rho": 0.995801065928555,
+      "left": "P2|F|gap",
+      "right": "Sca1|F|gap",
+      "same_component": true,
+      "same_family": false
+    },
+    {
       "abs_rho": 0.8160240383903553,
       "left": "Sc5|R|covariate",
       "right": "Sc5|R|gap",
@@ -385,7 +440,7 @@
     }
   ],
   "preregistration": {
-    "sha256": "96db343baaa9c6877d3f7650788fff4475480f4c421bcca1766b03b2ab377d5c",
+    "sha256": "8d981f2eb5982d54b22ac7fa529c3be701e4b560c07b5b45d88dd73d0c714fcd",
     "spec": {
       "family_count": 12,
       "idea_count": 60,
@@ -419,12 +474,12 @@
     "all_passed": true,
     "clusters": 6,
     "columns_degenerate": 0,
-    "columns_evaluated": 8,
-    "columns_flagged_vif": 5,
-    "columns_included": 7,
+    "columns_evaluated": 9,
+    "columns_flagged_vif": 4,
+    "columns_included": 8,
     "columns_numerically_null": 2,
-    "pairs_flagged": 1,
-    "report_sha256": "ceb3ddf7c80b430d601a838c35fa5fd0ea3f3b7e557b6ffe48a4e64f0b2bf5eb"
+    "pairs_flagged": 2,
+    "report_sha256": "e775cac8a67ee822d79604ec26dd29d1567b5cbe8004e1f19ed0a3c2614ed1f7"
   },
   "tamper_case": null,
   "variance_inflation_factors": [
@@ -432,43 +487,49 @@
       "column": "Mx4|B|covariate",
       "degenerate": false,
       "distinct_values": 1243,
-      "vif": 1.6774845441965198
+      "vif": 1.6774171482652327
     },
     {
       "column": "Mx4|F|covariate",
       "degenerate": false,
       "distinct_values": 42,
-      "vif": 1.6779488291827147
+      "vif": 1.6777763435435156
     },
     {
       "column": "P2|F|gap",
       "degenerate": false,
       "distinct_values": 1300,
-      "vif": 454.85573430943003
+      "vif": 1.0084549656175161
     },
     {
       "column": "Sc5|R|covariate",
       "degenerate": false,
       "distinct_values": 20,
-      "vif": 6782.44136025182
+      "vif": 5919.848767207871
     },
     {
       "column": "Sc5|R|gap",
       "degenerate": false,
       "distinct_values": 14,
-      "vif": 313.3667901349063
+      "vif": 311.09539811720555
+    },
+    {
+      "column": "Sca1|F|gap",
+      "degenerate": false,
+      "distinct_values": 3488,
+      "vif": 1.0084534536780108
     },
     {
       "column": "Tm1|B|covariate",
       "degenerate": false,
       "distinct_values": 1830,
-      "vif": 75.84959441519902
+      "vif": 73.0793985640838
     },
     {
       "column": "Tm1|B|gap",
       "degenerate": false,
       "distinct_values": 5269,
-      "vif": 76.2914479915697
+      "vif": 74.76886047485858
     }
   ]
 }

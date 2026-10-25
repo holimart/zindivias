@@ -1549,3 +1549,29 @@ Tests: family report verifies all five statuses, Sc5 coverage and measured null 
 orthogonality/null flags, and prohibited-source declarations. Existing harness tests exercise Sc5
 geometry, filtered/unfiltered reconciliation, full GEOID partition and deterministic output. No
 labels, reference layers, leaderboard access or uploads.
+
+## 2026-10-25 — bias60-family-sca: exact Poisson clipped-ratio expectation
+
+Implemented Sca1 as a fixed-form correction to P2's fire prior in `src/bias60/ideas/sca.py`.
+For Overture fire count O and P2's preregistered area/RUCA rate λ, it emits
+`E[max(0, 1 - O/R) | R >= 1]` for `R ~ Poisson(λ)`, using a PMF recurrence truncated at 12 SD +
+40 counts (verified rates stay below 692). No outcomes or fitted parameters are used. Harness artifact
+`$COMPETITION_WORKSPACE/ideas/Sca1.parquet` covers all 9,379 scored GEOIDs, with 9,377 defined
+(two invalid/missing P2 input rows remain undefined), SHA-256
+`858eadae31c242954fbbd47ffb0151276018d987a994f57b24e84c19a8e6c294`.
+
+Orthogonality now evaluates 9 columns; 8 pass coverage, 2 pair correlations exceed 0.8, and 4 VIF
+flags are retained. **Sca1 and P2 correlate at |rho|=0.995801**. They are explicitly identified in
+`reports/sca-family-screen.json` as a single correlated feature group: Sca1 is an alternative
+Poisson-corrected P2 form, not independent evidence. Both artifacts remain registered and visible;
+the combiner must group/merge them or justify retaining both, rather than silently dropping either.
+Sc5 remains the other flagged pair (its two channels are numerical nulls).
+
+Sca2–Sca5 each have a specific reason and missing prerequisite in the screen: no tested neighbor/multi-
+scale aggregator (Sca2); no per-feature dual allocation API (Sca3); no verified places point source
+(Sca4); and missing probability inputs/component estimates including P3/X1 for soft-definedness
+(Sca5). No missing values or estimator channels were fabricated. Registry and orthogonality were
+refreshed; lab evaluation was regenerated with the new registry and remains `not_run_missing_lab`
+(no channels measured, no weights). Tests cover Sca1 direct PMF agreement, extreme rates, invalid
+inputs and undefinedness, plus the four remaining idea-specific reasons and the correlation/merge
+record. Validation: focused suite 92 passed, 114 subtests; full repository suite **610 passed, 269 subtests** in 560.43s.

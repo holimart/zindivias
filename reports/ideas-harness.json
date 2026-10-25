@@ -1,7 +1,7 @@
 {
-  "code_commit_at_run": "a0c7f024d52eaae7cc9bb734e20d71b8f45bf703",
+  "code_commit_at_run": "16b84f71fccedf623256a08e678e84037e528186",
   "environment": {
-    "git_commit": "a0c7f024d52eaae7cc9bb734e20d71b8f45bf703",
+    "git_commit": "16b84f71fccedf623256a08e678e84037e528186",
     "versions": {
       "numpy": "2.5.4",
       "pyarrow": "26.0.0",
@@ -868,6 +868,218 @@
       "sha256": "c8603a948b060344f23d2250da22b02a95254401c4a67d64d74a55d4cf4ee720",
       "undeclared_columns_read": []
     },
+    "Sca1": {
+      "accessed_inputs": {
+        "caches": [
+          "eastern-ok-overture-tract-summary.parquet",
+          "eastern-ok-strata-tract-table.parquet",
+          "maricopa-az-overture-tract-summary.parquet",
+          "maricopa-az-strata-tract-table.parquet",
+          "northern-ca-overture-tract-summary.parquet",
+          "northern-ca-strata-tract-table.parquet",
+          "south-central-tx-overture-tract-summary.parquet",
+          "south-central-tx-strata-tract-table.parquet"
+        ],
+        "csv_columns": [],
+        "layers": [],
+        "parquet_columns": [
+          "eastern-ok-overture-tract-summary.parquet:GEOID",
+          "eastern-ok-overture-tract-summary.parquet:overture_poi_fire",
+          "eastern-ok-strata-tract-table.parquet:ALAND",
+          "eastern-ok-strata-tract-table.parquet:GEOID",
+          "eastern-ok-strata-tract-table.parquet:pop_total",
+          "eastern-ok-strata-tract-table.parquet:ruca_primary",
+          "maricopa-az-overture-tract-summary.parquet:GEOID",
+          "maricopa-az-overture-tract-summary.parquet:overture_poi_fire",
+          "maricopa-az-strata-tract-table.parquet:ALAND",
+          "maricopa-az-strata-tract-table.parquet:GEOID",
+          "maricopa-az-strata-tract-table.parquet:pop_total",
+          "maricopa-az-strata-tract-table.parquet:ruca_primary",
+          "northern-ca-overture-tract-summary.parquet:GEOID",
+          "northern-ca-overture-tract-summary.parquet:overture_poi_fire",
+          "northern-ca-strata-tract-table.parquet:ALAND",
+          "northern-ca-strata-tract-table.parquet:GEOID",
+          "northern-ca-strata-tract-table.parquet:pop_total",
+          "northern-ca-strata-tract-table.parquet:ruca_primary",
+          "south-central-tx-overture-tract-summary.parquet:GEOID",
+          "south-central-tx-overture-tract-summary.parquet:overture_poi_fire",
+          "south-central-tx-strata-tract-table.parquet:ALAND",
+          "south-central-tx-strata-tract-table.parquet:GEOID",
+          "south-central-tx-strata-tract-table.parquet:pop_total",
+          "south-central-tx-strata-tract-table.parquet:ruca_primary"
+        ]
+      },
+      "bytes": 53490,
+      "diagnostics": {
+        "eastern-ok": {
+          "conditioned_on_positive_denominator": true,
+          "defined": 1192,
+          "gap_distribution": {
+            "count": 1192,
+            "max": 1.0,
+            "mean": 0.6968016040367181,
+            "min": 7.1505524356728365e-06,
+            "p50": 1.0,
+            "p90": 1.0
+          },
+          "no_fitted_parameter": true,
+          "observed_fire_distribution": {
+            "count": 1192,
+            "max": 7.0,
+            "mean": 0.7265100671140939,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 2.0
+          },
+          "poisson_rate_distribution": {
+            "count": 1192,
+            "max": 108.8710647,
+            "mean": 3.87759670092953,
+            "min": 0.0048033,
+            "p50": 0.49328756000000007,
+            "p90": 8.947957288000023
+          },
+          "rows": 1192,
+          "tail_truncation": {
+            "extra_counts": 40,
+            "standard_deviations": 12.0
+          },
+          "undefined_reasons": {
+            "invalid_fire_or_p2_rate_inputs": 0
+          }
+        },
+        "maricopa-az": {
+          "conditioned_on_positive_denominator": true,
+          "defined": 1593,
+          "gap_distribution": {
+            "count": 1593,
+            "max": 1.0,
+            "mean": 0.7684040584811281,
+            "min": 7.103690465597565e-09,
+            "p50": 1.0,
+            "p90": 1.0
+          },
+          "no_fitted_parameter": true,
+          "observed_fire_distribution": {
+            "count": 1593,
+            "max": 11.0,
+            "mean": 0.4494664155681105,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 1.0
+          },
+          "poisson_rate_distribution": {
+            "count": 1593,
+            "max": 691.7353693,
+            "mean": 4.760132512873823,
+            "min": 0.011136132,
+            "p50": 0.26243500000000003,
+            "p90": 3.927434937599999
+          },
+          "rows": 1593,
+          "tail_truncation": {
+            "extra_counts": 40,
+            "standard_deviations": 12.0
+          },
+          "undefined_reasons": {
+            "invalid_fire_or_p2_rate_inputs": 0
+          }
+        },
+        "northern-ca": {
+          "conditioned_on_positive_denominator": true,
+          "defined": 591,
+          "gap_distribution": {
+            "count": 591,
+            "max": 1.0,
+            "mean": 0.6593764381628601,
+            "min": 1.264878567124684e-08,
+            "p50": 1.0,
+            "p90": 1.0
+          },
+          "no_fitted_parameter": true,
+          "observed_fire_distribution": {
+            "count": 591,
+            "max": 6.0,
+            "mean": 0.8307952622673435,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 2.0
+          },
+          "poisson_rate_distribution": {
+            "count": 591,
+            "max": 191.9266091,
+            "mean": 4.119323632324873,
+            "min": 0.011248207999999999,
+            "p50": 0.349215,
+            "p90": 7.557650300000001
+          },
+          "rows": 591,
+          "tail_truncation": {
+            "extra_counts": 40,
+            "standard_deviations": 12.0
+          },
+          "undefined_reasons": {
+            "invalid_fire_or_p2_rate_inputs": 0
+          }
+        },
+        "south-central-tx": {
+          "conditioned_on_positive_denominator": true,
+          "defined": 6001,
+          "gap_distribution": {
+            "count": 6001,
+            "max": 1.0,
+            "mean": 0.7330857631660135,
+            "min": 6.48119590639647e-08,
+            "p50": 1.0,
+            "p90": 1.0
+          },
+          "no_fitted_parameter": true,
+          "observed_fire_distribution": {
+            "count": 6001,
+            "max": 7.0,
+            "mean": 0.5280786535577404,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 2.0
+          },
+          "poisson_rate_distribution": {
+            "count": 6001,
+            "max": 565.9908667,
+            "mean": 2.74618875928012,
+            "min": 0.000963488,
+            "p50": 0.3296439,
+            "p90": 5.2103025
+          },
+          "rows": 6003,
+          "tail_truncation": {
+            "extra_counts": 40,
+            "standard_deviations": 12.0
+          },
+          "undefined_reasons": {
+            "invalid_fire_or_p2_rate_inputs": 2
+          }
+        }
+      },
+      "emissions": [
+        {
+          "channel": "gap",
+          "component": "F",
+          "defined_rows": 9377,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 7.103690465597565e-09
+        }
+      ],
+      "emissions_per_region": 1,
+      "family": "Sca",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/Sca1.parquet",
+      "rows": 9379,
+      "sha256": "858eadae31c242954fbbd47ffb0151276018d987a994f57b24e84c19a8e6c294",
+      "undeclared_columns_read": []
+    },
     "Tm1": {
       "accessed_inputs": {
         "caches": [
@@ -1051,7 +1263,7 @@
   },
   "preregistration": {
     "path": "config/bias60-harness-preregistered.json",
-    "sha256": "fef8e979809e99884ad6d7ac267bae87dd696bbbded5776fa7f907e942078978",
+    "sha256": "47d82cbffac84068162485874a7845d4b457a2996f5325df823e5b1f17c39364",
     "spec": {
       "family_count": 12,
       "idea_count": 60,
@@ -1091,7 +1303,7 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 55,
+    "declared_count": 54,
     "families_total": 12,
     "ideas_per_family": [
       5
@@ -1101,6 +1313,7 @@
       "Tm1",
       "Mx4",
       "Sc5",
+      "Sca1",
       "P2",
       "P4"
     ],
@@ -1109,7 +1322,7 @@
       "F",
       "R"
     ],
-    "implemented_count": 5
+    "implemented_count": 6
   },
   "scope": {
     "geoids_by_region": {
@@ -1135,15 +1348,16 @@
       "F",
       "R"
     ],
-    "ideas_implemented": 5,
+    "ideas_implemented": 6,
     "parquet_files": {
       "ideas/Mx4.parquet": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
       "ideas/P2.parquet": "887ac98d8c2699ef83c48850b7696baea08b5bffbec044d9d9dc825d74e801c6",
       "ideas/P4.parquet": "12b54003b38e3be1fbbcc149a385dc80a38c605a0a33b27eab811d382ff5f29c",
       "ideas/Sc5.parquet": "c8603a948b060344f23d2250da22b02a95254401c4a67d64d74a55d4cf4ee720",
+      "ideas/Sca1.parquet": "858eadae31c242954fbbd47ffb0151276018d987a994f57b24e84c19a8e6c294",
       "ideas/Tm1.parquet": "df93396b8bb481dea6da43dd90b997eeeb47c5bf249a3fa6eac0dca6c8713885"
     },
-    "report_sha256": "a6dfba0d0a1a0cbe1b7376ca618b57f610b7a2e23d0eed17398511fe3ea7a85e"
+    "report_sha256": "1b188268bfe45e0e214a37c4ea997d38a0fb3ae3ae186394a2407af2bee24341"
   },
   "tamper_case": null
 }

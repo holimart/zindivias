@@ -1186,7 +1186,7 @@
       "failure_mode": "overdispersion; use a negative binomial with region dispersion.",
       "family": "Sca",
       "id": "Sca1",
-      "implementation": null,
+      "implementation": "bias60.ideas.sca::sca1",
       "inputs": [
         "λ from any expectation idea (P2",
         "P3",
@@ -1198,7 +1198,7 @@
       "recipe": "closed-form sum over R ≥ 1 of Poisson(R; λ)·max(0, 1 − O/R) / P(R ≥ 1), which conditions on the component being defined.",
       "recipe_scope": "per tract",
       "signal": "per-type facility gaps and small-tract building and road gaps are E[max(0, 1 − O/R)] with R random (Poisson(λ) for facilities). This expectation is a nonlinear function of λ and O that a plug-in 1 − O/λ̂ or 1/(count + 1) gets wrong, especially for λ in 0.3–3.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Exact expectation of a clipped ratio under count noise"
     },
     {
@@ -1459,7 +1459,7 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 55,
+    "declared_count": 54,
     "families_total": 12,
     "ideas_per_family": [
       5
@@ -1469,6 +1469,7 @@
       "Tm1",
       "Mx4",
       "Sc5",
+      "Sca1",
       "P2",
       "P4"
     ],
@@ -1477,7 +1478,7 @@
       "F",
       "R"
     ],
-    "implemented_count": 5
+    "implemented_count": 6
   },
   "vocabulary": {
     "components": [

@@ -1,0 +1,220 @@
+{
+  "schema_version": 1,
+  "family": "Sca",
+  "status": "partial_one_computed_four_documented",
+  "scope": {
+    "official_scored_tracts": 9379,
+    "ideas": [
+      "Sca1",
+      "Sca2",
+      "Sca3",
+      "Sca4",
+      "Sca5"
+    ],
+    "computed": [
+      "Sca1"
+    ],
+    "coverage_is_defined_fraction_of_all_official_tracts": true
+  },
+  "constraints": {
+    "provided_datasets_only": true,
+    "labels_read": false,
+    "reference_layers_read": false,
+    "leaderboard_accessed": false,
+    "uploads": 0
+  },
+  "ideas": [
+    {
+      "id": "Sca1",
+      "status": "computed",
+      "path": "ideas/Sca1.parquet",
+      "sha256": "858eadae31c242954fbbd47ffb0151276018d987a994f57b24e84c19a8e6c294",
+      "rows": 9379,
+      "official_rows": 9379,
+      "geoid_partition_exact": true,
+      "emissions": [
+        {
+          "channel": "gap",
+          "component": "F",
+          "defined_rows": 9377,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 7.103690465597565e-09
+        }
+      ],
+      "regions": {
+        "eastern-ok": {
+          "rows": 1192,
+          "defined": 1192,
+          "coverage": 1.0,
+          "gap_distribution": {
+            "count": 1192,
+            "max": 1.0,
+            "mean": 0.6968016040367181,
+            "min": 7.1505524356728365e-06,
+            "p50": 1.0,
+            "p90": 1.0
+          },
+          "poisson_rate_distribution": {
+            "count": 1192,
+            "max": 108.8710647,
+            "mean": 3.87759670092953,
+            "min": 0.0048033,
+            "p50": 0.49328756000000007,
+            "p90": 8.947957288000023
+          }
+        },
+        "maricopa-az": {
+          "rows": 1593,
+          "defined": 1593,
+          "coverage": 1.0,
+          "gap_distribution": {
+            "count": 1593,
+            "max": 1.0,
+            "mean": 0.7684040584811281,
+            "min": 7.103690465597565e-09,
+            "p50": 1.0,
+            "p90": 1.0
+          },
+          "poisson_rate_distribution": {
+            "count": 1593,
+            "max": 691.7353693,
+            "mean": 4.760132512873823,
+            "min": 0.011136132,
+            "p50": 0.26243500000000003,
+            "p90": 3.927434937599999
+          }
+        },
+        "northern-ca": {
+          "rows": 591,
+          "defined": 591,
+          "coverage": 1.0,
+          "gap_distribution": {
+            "count": 591,
+            "max": 1.0,
+            "mean": 0.6593764381628601,
+            "min": 1.264878567124684e-08,
+            "p50": 1.0,
+            "p90": 1.0
+          },
+          "poisson_rate_distribution": {
+            "count": 591,
+            "max": 191.9266091,
+            "mean": 4.119323632324873,
+            "min": 0.011248207999999999,
+            "p50": 0.349215,
+            "p90": 7.557650300000001
+          }
+        },
+        "south-central-tx": {
+          "rows": 6003,
+          "defined": 6001,
+          "coverage": 0.999667,
+          "gap_distribution": {
+            "count": 6001,
+            "max": 1.0,
+            "mean": 0.7330857631660135,
+            "min": 6.48119590639647e-08,
+            "p50": 1.0,
+            "p90": 1.0
+          },
+          "poisson_rate_distribution": {
+            "count": 6001,
+            "max": 565.9908667,
+            "mean": 2.74618875928012,
+            "min": 0.000963488,
+            "p50": 0.3296439,
+            "p90": 5.2103025
+          }
+        }
+      },
+      "recipe": "E[max(0, 1-O/R) | R>=1], R~Poisson(lambda); lambda is the preregistered P2 RUCA/area expected fire count. The sum truncates at 12 standard deviations + 40 counts; tested against direct PMF sums; no fitted parameters."
+    },
+    {
+      "id": "Sca2",
+      "status": "not_computed",
+      "reason": "The current estimator inputs are tract-scoped totals. This recipe requires O/E ratios at tract, tract-plus-first-ring and county scales, including first-ring neighbor membership and consistent count/area aggregation. The harness has no tested neighbor/scale aggregation interface, so a slope cannot be produced without constructing an unvalidated assignment.",
+      "missing_prerequisite": "A validated first-ring adjacency and aggregation API with exact county and multi-scale count/expectation fixtures."
+    },
+    {
+      "id": "Sca3",
+      "status": "not_computed",
+      "reason": "Centroid, intersection and largest-overlap rules require raw per-feature geometry and identity for buildings, POIs and roads, plus per-tract assigned counts. Existing feature cache values are already tract-aggregated; the current raw road method only measures clipped lengths and does not implement paired assignment modes.",
+      "missing_prerequisite": "Per-feature, rule-clean input access and tested centroid/intersection/largest-overlap assignments for each required source, with count conservation checks."
+    },
+    {
+      "id": "Sca4",
+      "status": "not_computed",
+      "reason": "The Clark-Evans places/buildings ratio needs both point patterns. A verified places source/accessor is not available (the eastern-OK places object path previously returned FileNotFound), and no per-place coordinates are exposed through the harness. Small-n handling cannot be established absent those points.",
+      "missing_prerequisite": "Verified all-region places coordinates and a tested point-pattern/low-count implementation for places and buildings."
+    },
+    {
+      "id": "Sca5",
+      "status": "not_computed",
+      "reason": "The recipe enumerates probabilistic definedness patterns for three components and needs probability inputs from expectation ideas (including P3/X1) plus component gap estimates. These inputs are not all implemented or available: current P implementations provide P2 fire and P4 rural-road estimates only, and P4 is a hard applicability mask, not a probability.",
+      "missing_prerequisite": "Implemented/pre-registered probability estimates for all required component sources (including P3/X1) and a three-component expected-composite contract; do not substitute hard flags."
+    }
+  ],
+  "redundancy": {
+    "pairs_exceeding_abs_rho_0_8": [
+      {
+        "abs_rho": 0.995801065928555,
+        "left": "P2|F|gap",
+        "right": "Sca1|F|gap",
+        "same_component": true,
+        "same_family": false
+      }
+    ],
+    "merge_action": "P2 and Sca1 are retained and flagged, not silently dropped. Treat the pair as one correlated feature group for combiner decisions; Sca1 is an alternative Poisson-corrected P2 formulation, not an independent evidence source. The next combiner must merge/group them or justify retaining both; no learned weights were fitted in this study-side work."
+  },
+  "orthogonality": {
+    "report": "reports/ideas-orthogonality.json",
+    "sha256": "9ba0be0a92c615032199c3ea33e2e2fc0e9cbde625fe479eb7353f130d1deb16",
+    "summary": {
+      "all_passed": true,
+      "clusters": 6,
+      "columns_degenerate": 0,
+      "columns_evaluated": 9,
+      "columns_flagged_vif": 4,
+      "columns_included": 8,
+      "columns_numerically_null": 2,
+      "pairs_flagged": 2,
+      "report_sha256": "e775cac8a67ee822d79604ec26dd29d1567b5cbe8004e1f19ed0a3c2614ed1f7"
+    },
+    "all_flagged_pairs": [
+      {
+        "abs_rho": 0.995801065928555,
+        "left": "P2|F|gap",
+        "right": "Sca1|F|gap",
+        "same_component": true,
+        "same_family": false
+      },
+      {
+        "abs_rho": 0.8160240383903553,
+        "left": "Sc5|R|covariate",
+        "right": "Sc5|R|gap",
+        "same_component": true,
+        "same_family": true
+      }
+    ],
+    "vif_flags": [
+      {
+        "column": "Sc5|R|covariate",
+        "vif": 5919.848767207871
+      },
+      {
+        "column": "Sc5|R|gap",
+        "vif": 311.09539811720555
+      },
+      {
+        "column": "Tm1|B|covariate",
+        "vif": 73.0793985640838
+      },
+      {
+        "column": "Tm1|B|gap",
+        "vif": 74.76886047485858
+      }
+    ],
+    "note": "Every implemented idea was recomputed label-free; unimplemented Sca2-Sca5 have no invented correlations or VIF."
+  }
+}
