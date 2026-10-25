@@ -1716,4 +1716,4 @@ columns, and no forbidden-source hits. New parser/semantic tests: **6 passed**; 
 cover all computed rows and Sc5’s measured null. Dst4’s source vector now includes Sc1 and Sc3 as
 well as earlier registered ideas; Dst4/Dst5 were rebuilt. The refreshed full orthogonality report
 covers 28 columns (26 included), has 9 VIF and 3 pair flags, and retains condition number
-`3373566871295.5605`. Full-suite validation is recorded after this implementation below.
+`3373566871295.5605`. Full suite: **635 passed, 313 subtests in 452.20s**. Commit `4fff5e12f8672c09b759705163f79a7b5fd6c28f`.
