@@ -1071,7 +1071,7 @@
       "failure_mode": "\"named\" probably just means the class list **[U]**. The lab resolves it (§4).",
       "family": "Sc",
       "id": "Sc1",
-      "implementation": null,
+      "implementation": "bias60.ideas.sc_schema::sc1",
       "inputs": [
         "`roads` names and class"
       ],
@@ -1081,7 +1081,7 @@
       "recipe": "unnamed share of named-class length. Emit a gap variant that excludes unnamed length.",
       "recipe_scope": "per tract",
       "signal": "the organiser says \"named-highway classes\". If the numerator also requires `names`, for example by filtering on a route or name, unnamed motorway, trunk, primary and secondary segments drop out. Unnamed ones are common on divided-highway carriageways and links.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Unnamed named-class segments"
     },
     {
@@ -1093,7 +1093,7 @@
       "failure_mode": "\"Fire Station Grill\".",
       "family": "Sc",
       "id": "Sc2",
-      "implementation": null,
+      "implementation": "bias60.ideas.sc_schema::sc2",
       "inputs": [
         "`pois` names",
         "categories",
@@ -1106,7 +1106,7 @@
       "recipe": "witness count where O_k = 0.",
       "recipe_scope": "per tract and type k",
       "signal": "places with a null `categories.primary` or a generic category whose name matches fire, EMS or school patterns are real facilities that cannot enter the organiser's count.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Uncategorised places with facility names"
     },
     {
@@ -1118,7 +1118,7 @@
       "failure_mode": "if one definition is right, averaging dilutes it. The lab can identify the right one (§4).",
       "family": "Sc",
       "id": "Sc3",
-      "implementation": null,
+      "implementation": "bias60.ideas.sc_schema::sc3",
       "inputs": [
         "`pois` category fields"
       ],
@@ -1128,7 +1128,7 @@
       "recipe": "gap_k under 4 definitions; emit the mean and the spread.",
       "recipe_scope": "per tract",
       "signal": "the organiser's matching rule is unknown: primary only, primary plus alternates, `taxonomy.hierarchy`, or `basic_category`. Computing per-type gaps under each rule and averaging them minimises worst-case error over definitions.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Facility-numerator definition ensemble"
     },
     {
@@ -1140,7 +1140,7 @@
       "failure_mode": "rare.",
       "family": "Sc",
       "id": "Sc4",
-      "implementation": null,
+      "implementation": "bias60.ideas.sc_schema::sc4",
       "inputs": [
         "`roads-unfiltered`"
       ],
@@ -1150,7 +1150,7 @@
       "recipe": "unknown-class length that has a route or name pattern, or length over 2 km.",
       "recipe_scope": "per tract",
       "signal": "OSM `highway=road` and Overture `class=unknown` mark unreviewed segments. On long-straight or route-bearing ones, the TIGER S1200 road exists but is outside the named classes.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Generic `class` = unknown/road on major-looking segments"
     },
     {
@@ -1459,7 +1459,7 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 42,
+    "declared_count": 38,
     "families_total": 12,
     "ideas_per_family": [
       5
@@ -1478,6 +1478,10 @@
       "Dst4",
       "Dst5",
       "Mx4",
+      "Sc1",
+      "Sc2",
+      "Sc3",
+      "Sc4",
       "Sc5",
       "Sca1",
       "P1",
@@ -1492,7 +1496,7 @@
       "F",
       "R"
     ],
-    "implemented_count": 18
+    "implemented_count": 22
   },
   "vocabulary": {
     "components": [

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "family": "Sc",
-  "status": "partial_one_computed_four_documented",
+  "status": "all_five_computed",
   "scope": {
     "official_scored_tracts": 9379,
     "ideas": [
@@ -12,6 +12,10 @@
       "Sc5"
     ],
     "computed": [
+      "Sc1",
+      "Sc2",
+      "Sc3",
+      "Sc4",
       "Sc5"
     ],
     "coverage_is_defined_fraction_of_all_official_tracts": true
@@ -26,27 +30,663 @@
   "ideas": [
     {
       "id": "Sc1",
-      "status": "not_computed",
-      "reason": "The current audited road accessor computes only named-class geometry and never reads/normalizes the roads names attribute. The raw nested names field can represent null, empty and typed name records; treating any non-null container as a name would create an unvalidated numerator definition.",
-      "missing_prerequisite": "A declared names-field normalizer with null/empty/string/list fixtures and a raw segment-to-tract named-versus-unnamed length implementation."
+      "status": "computed",
+      "path": "ideas/Sc1.parquet",
+      "sha256": "8a73aa7cee295120db8a8f38e30fb4faca63588f49336a2f0f13fc825881a780",
+      "rows": 9379,
+      "official_rows": 9379,
+      "geoid_partition_exact": true,
+      "emissions": [
+        {
+          "channel": "gap",
+          "component": "R",
+          "defined_rows": 9247,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 0.0
+        }
+      ],
+      "regions": {
+        "eastern-ok": {
+          "defined": 1164,
+          "named_km": 13006.679315677138,
+          "namedness_rule": "any nonempty normalized primary/common/rule name value",
+          "reader": {
+            "crs": "EPSG:5070",
+            "layer": "roads",
+            "microsoft_road_memberships_used": false,
+            "nonempty_name_values": 34767,
+            "region": "eastern-ok",
+            "route_or_name_candidates": 0,
+            "rows_scanned": 520550,
+            "rows_selected": 59436,
+            "rows_total": 520550
+          },
+          "rows": 1192,
+          "unnamed_km": 14937.348448411292
+        },
+        "maricopa-az": {
+          "defined": 1560,
+          "named_km": 19686.09665950951,
+          "namedness_rule": "any nonempty normalized primary/common/rule name value",
+          "reader": {
+            "crs": "EPSG:5070",
+            "layer": "roads",
+            "microsoft_road_memberships_used": false,
+            "nonempty_name_values": 49518,
+            "region": "maricopa-az",
+            "route_or_name_candidates": 0,
+            "rows_scanned": 494492,
+            "rows_selected": 57516,
+            "rows_total": 494492
+          },
+          "rows": 1593,
+          "unnamed_km": 2427.616188428803
+        },
+        "northern-ca": {
+          "defined": 584,
+          "named_km": 8581.742079020776,
+          "namedness_rule": "any nonempty normalized primary/common/rule name value",
+          "reader": {
+            "crs": "EPSG:5070",
+            "layer": "roads",
+            "microsoft_road_memberships_used": false,
+            "nonempty_name_values": 19734,
+            "region": "northern-ca",
+            "route_or_name_candidates": 0,
+            "rows_scanned": 191836,
+            "rows_selected": 26050,
+            "rows_total": 191836
+          },
+          "rows": 591,
+          "unnamed_km": 3621.9056637978283
+        },
+        "south-central-tx": {
+          "defined": 5939,
+          "named_km": 79669.72874381654,
+          "namedness_rule": "any nonempty normalized primary/common/rule name value",
+          "reader": {
+            "crs": "EPSG:5070",
+            "layer": "roads",
+            "microsoft_road_memberships_used": false,
+            "nonempty_name_values": 266247,
+            "region": "south-central-tx",
+            "route_or_name_candidates": 0,
+            "rows_scanned": 1937009,
+            "rows_selected": 353790,
+            "rows_total": 1937009
+          },
+          "rows": 6003,
+          "unnamed_km": 38506.65294208316
+        }
+      }
     },
     {
       "id": "Sc2",
-      "status": "not_computed",
-      "reason": "The idea needs per-place names plus primary/generic category and taxonomy fields. No tested per-place input/cache is registered; the provided eastern-OK places object path previously returned FileNotFound. Aggregate type counts cannot recover uncategorized facility names or guard against false positives such as \u201cFire Station Grill\u201d.",
-      "missing_prerequisite": "A verified places object for every scored region and a schema-checked place/name/category accessor with semantic false-positive fixtures."
+      "status": "computed",
+      "path": "ideas/Sc2.parquet",
+      "sha256": "f9f91c2802826e004e4674972c5230e6fe8db4d20c0b4da4d7dc2f8d0b03571e",
+      "rows": 9379,
+      "official_rows": 9379,
+      "geoid_partition_exact": true,
+      "emissions": [
+        {
+          "channel": "covariate",
+          "component": "F",
+          "defined_rows": 9379,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 0.0
+        }
+      ],
+      "regions": {
+        "eastern-ok": {
+          "by_type": {
+            "ems": {
+              "tracts_with_witness": 0,
+              "witnesses": 0.0
+            },
+            "fire": {
+              "tracts_with_witness": 0,
+              "witnesses": 0.0
+            },
+            "schools": {
+              "tracts_with_witness": 0,
+              "witnesses": 0.0
+            }
+          },
+          "defined": 1192,
+          "false_positive_guards": [
+            "fire station grill",
+            "firehouse subs",
+            "school of rock",
+            "driving school",
+            "emergency room",
+            "urgent care",
+            "hospital"
+          ],
+          "reader": {
+            "assigned_points": 175522,
+            "boundary_or_outside_points": 0,
+            "definition_counts": {
+              "primary": 4305.0
+            },
+            "layer": "pois",
+            "microsoft_membership_rows_excluded": 31847,
+            "null_geometry_rows": 0,
+            "point_assignment": "provided EPSG:4326 point strictly within provided ACS tract; boundary/outside excluded",
+            "region": "eastern-ok",
+            "rows_scanned": 207369,
+            "rows_total": 207369,
+            "source_filter": "exclude Microsoft memberships before point geometry decode"
+          },
+          "rows": 1192,
+          "witness_count": 0.0
+        },
+        "maricopa-az": {
+          "by_type": {
+            "ems": {
+              "tracts_with_witness": 0,
+              "witnesses": 0.0
+            },
+            "fire": {
+              "tracts_with_witness": 0,
+              "witnesses": 0.0
+            },
+            "schools": {
+              "tracts_with_witness": 2,
+              "witnesses": 2.0
+            }
+          },
+          "defined": 1593,
+          "false_positive_guards": [
+            "fire station grill",
+            "firehouse subs",
+            "school of rock",
+            "driving school",
+            "emergency room",
+            "urgent care",
+            "hospital"
+          ],
+          "reader": {
+            "assigned_points": 245299,
+            "boundary_or_outside_points": 1,
+            "definition_counts": {
+              "primary": 4883.0
+            },
+            "layer": "pois",
+            "microsoft_membership_rows_excluded": 54746,
+            "null_geometry_rows": 0,
+            "point_assignment": "provided EPSG:4326 point strictly within provided ACS tract; boundary/outside excluded",
+            "region": "maricopa-az",
+            "rows_scanned": 300046,
+            "rows_total": 300046,
+            "source_filter": "exclude Microsoft memberships before point geometry decode"
+          },
+          "rows": 1593,
+          "witness_count": 2.0
+        },
+        "northern-ca": {
+          "by_type": {
+            "ems": {
+              "tracts_with_witness": 0,
+              "witnesses": 0.0
+            },
+            "fire": {
+              "tracts_with_witness": 0,
+              "witnesses": 0.0
+            },
+            "schools": {
+              "tracts_with_witness": 0,
+              "witnesses": 0.0
+            }
+          },
+          "defined": 591,
+          "false_positive_guards": [
+            "fire station grill",
+            "firehouse subs",
+            "school of rock",
+            "driving school",
+            "emergency room",
+            "urgent care",
+            "hospital"
+          ],
+          "reader": {
+            "assigned_points": 98468,
+            "boundary_or_outside_points": 2,
+            "definition_counts": {
+              "primary": 2580.0
+            },
+            "layer": "pois",
+            "microsoft_membership_rows_excluded": 18427,
+            "null_geometry_rows": 0,
+            "point_assignment": "provided EPSG:4326 point strictly within provided ACS tract; boundary/outside excluded",
+            "region": "northern-ca",
+            "rows_scanned": 116897,
+            "rows_total": 116897,
+            "source_filter": "exclude Microsoft memberships before point geometry decode"
+          },
+          "rows": 591,
+          "witness_count": 0.0
+        },
+        "south-central-tx": {
+          "by_type": {
+            "ems": {
+              "tracts_with_witness": 0,
+              "witnesses": 0.0
+            },
+            "fire": {
+              "tracts_with_witness": 0,
+              "witnesses": 0.0
+            },
+            "schools": {
+              "tracts_with_witness": 9,
+              "witnesses": 9.0
+            }
+          },
+          "defined": 6003,
+          "false_positive_guards": [
+            "fire station grill",
+            "firehouse subs",
+            "school of rock",
+            "driving school",
+            "emergency room",
+            "urgent care",
+            "hospital"
+          ],
+          "reader": {
+            "assigned_points": 1088673,
+            "boundary_or_outside_points": 26,
+            "definition_counts": {
+              "primary": 21718.0
+            },
+            "layer": "pois",
+            "microsoft_membership_rows_excluded": 211635,
+            "null_geometry_rows": 0,
+            "point_assignment": "provided EPSG:4326 point strictly within provided ACS tract; boundary/outside excluded",
+            "region": "south-central-tx",
+            "rows_scanned": 1300334,
+            "rows_total": 1300334,
+            "source_filter": "exclude Microsoft memberships before point geometry decode"
+          },
+          "rows": 6003,
+          "witness_count": 9.0
+        }
+      }
     },
     {
       "id": "Sc3",
-      "status": "not_computed",
-      "reason": "The four category-definition variants require per-place primary, alternate, taxonomy-hierarchy and basic-category values, which the harness does not expose through a validated per-place reader. No alternate-definition counts or spread are fabricated.",
-      "missing_prerequisite": "A verified all-region places source and tested extraction/mapping for each of the four specified category rules."
+      "status": "computed",
+      "path": "ideas/Sc3.parquet",
+      "sha256": "d212396db58a0ee82d5bcdbf83cea1c87b9d41124636a25edda29b75a41ea6f9",
+      "rows": 18758,
+      "official_rows": 9379,
+      "geoid_partition_exact": true,
+      "emissions": [
+        {
+          "channel": "covariate",
+          "component": "F",
+          "defined_rows": 8557,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 0.0
+        },
+        {
+          "channel": "gap",
+          "component": "F",
+          "defined_rows": 8557,
+          "rows": 9379,
+          "value_max": 0.75,
+          "value_min": 0.0
+        }
+      ],
+      "regions": {
+        "eastern-ok": {
+          "defined": 1104,
+          "definition_gaps": {
+            "basic_category": {
+              "count": 1922,
+              "max": 1.0,
+              "mean": 0.730324379757999,
+              "min": 0.0,
+              "p50": 1.0,
+              "p90": 1.0
+            },
+            "primary": {
+              "count": 1922,
+              "max": 1.0,
+              "mean": 0.30037967876998567,
+              "min": 0.0,
+              "p50": 0.15476190476190477,
+              "p90": 1.0
+            },
+            "primary_alternate": {
+              "count": 1922,
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 0.0
+            },
+            "taxonomy_hierarchy": {
+              "count": 1922,
+              "max": 1.0,
+              "mean": 0.5378654326969465,
+              "min": 0.0,
+              "p50": 0.5,
+              "p90": 1.0
+            }
+          },
+          "definitions": [
+            "primary",
+            "primary_alternate",
+            "taxonomy_hierarchy",
+            "basic_category"
+          ],
+          "interpretation": "schema sensitivity proxy only; denominator is package-observed union, never a removed reference layer",
+          "reader": {
+            "assigned_points": 175522,
+            "boundary_or_outside_points": 0,
+            "definition_counts": {
+              "basic_category": 2338.0,
+              "primary": 4305.0,
+              "primary_alternate": 6058.0,
+              "taxonomy_hierarchy": 3621.0
+            },
+            "layer": "pois",
+            "microsoft_membership_rows_excluded": 31847,
+            "null_geometry_rows": 0,
+            "point_assignment": "provided EPSG:4326 point strictly within provided ACS tract; boundary/outside excluded",
+            "region": "eastern-ok",
+            "rows_scanned": 207369,
+            "rows_total": 207369,
+            "source_filter": "exclude Microsoft memberships before point geometry decode"
+          },
+          "rows": 1192,
+          "union_candidates": 6058
+        },
+        "maricopa-az": {
+          "defined": 1397,
+          "definition_gaps": {
+            "basic_category": {
+              "count": 2032,
+              "max": 1.0,
+              "mean": 0.626269206997264,
+              "min": 0.0,
+              "p50": 0.6666666666666667,
+              "p90": 1.0
+            },
+            "primary": {
+              "count": 2032,
+              "max": 1.0,
+              "mean": 0.25035300134785576,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 1.0
+            },
+            "primary_alternate": {
+              "count": 2032,
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 0.0
+            },
+            "taxonomy_hierarchy": {
+              "count": 2032,
+              "max": 1.0,
+              "mean": 0.44068565507863944,
+              "min": 0.0,
+              "p50": 0.33333333333333337,
+              "p90": 1.0
+            }
+          },
+          "definitions": [
+            "primary",
+            "primary_alternate",
+            "taxonomy_hierarchy",
+            "basic_category"
+          ],
+          "interpretation": "schema sensitivity proxy only; denominator is package-observed union, never a removed reference layer",
+          "reader": {
+            "assigned_points": 245299,
+            "boundary_or_outside_points": 1,
+            "definition_counts": {
+              "basic_category": 2964.0,
+              "primary": 4883.0,
+              "primary_alternate": 6334.0,
+              "taxonomy_hierarchy": 4359.0
+            },
+            "layer": "pois",
+            "microsoft_membership_rows_excluded": 54746,
+            "null_geometry_rows": 0,
+            "point_assignment": "provided EPSG:4326 point strictly within provided ACS tract; boundary/outside excluded",
+            "region": "maricopa-az",
+            "rows_scanned": 300046,
+            "rows_total": 300046,
+            "source_filter": "exclude Microsoft memberships before point geometry decode"
+          },
+          "rows": 1593,
+          "union_candidates": 6334
+        },
+        "northern-ca": {
+          "defined": 554,
+          "definition_gaps": {
+            "basic_category": {
+              "count": 944,
+              "max": 1.0,
+              "mean": 0.6789530601018015,
+              "min": 0.0,
+              "p50": 0.8,
+              "p90": 1.0
+            },
+            "primary": {
+              "count": 944,
+              "max": 1.0,
+              "mean": 0.26904481058503366,
+              "min": 0.0,
+              "p50": 0.09090909090909094,
+              "p90": 1.0
+            },
+            "primary_alternate": {
+              "count": 944,
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 0.0
+            },
+            "taxonomy_hierarchy": {
+              "count": 944,
+              "max": 1.0,
+              "mean": 0.48323972583927094,
+              "min": 0.0,
+              "p50": 0.375,
+              "p90": 1.0
+            }
+          },
+          "definitions": [
+            "primary",
+            "primary_alternate",
+            "taxonomy_hierarchy",
+            "basic_category"
+          ],
+          "interpretation": "schema sensitivity proxy only; denominator is package-observed union, never a removed reference layer",
+          "reader": {
+            "assigned_points": 98468,
+            "boundary_or_outside_points": 2,
+            "definition_counts": {
+              "basic_category": 1502.0,
+              "primary": 2580.0,
+              "primary_alternate": 3340.0,
+              "taxonomy_hierarchy": 2255.0
+            },
+            "layer": "pois",
+            "microsoft_membership_rows_excluded": 18427,
+            "null_geometry_rows": 0,
+            "point_assignment": "provided EPSG:4326 point strictly within provided ACS tract; boundary/outside excluded",
+            "region": "northern-ca",
+            "rows_scanned": 116897,
+            "rows_total": 116897,
+            "source_filter": "exclude Microsoft memberships before point geometry decode"
+          },
+          "rows": 591,
+          "union_candidates": 3340
+        },
+        "south-central-tx": {
+          "defined": 5502,
+          "definition_gaps": {
+            "basic_category": {
+              "count": 8811,
+              "max": 1.0,
+              "mean": 0.6903188887814204,
+              "min": 0.0,
+              "p50": 0.8,
+              "p90": 1.0
+            },
+            "primary": {
+              "count": 8811,
+              "max": 1.0,
+              "mean": 0.29945390211320677,
+              "min": 0.0,
+              "p50": 0.16666666666666663,
+              "p90": 1.0
+            },
+            "primary_alternate": {
+              "count": 8811,
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 0.0
+            },
+            "taxonomy_hierarchy": {
+              "count": 8811,
+              "max": 1.0,
+              "mean": 0.5194162327496946,
+              "min": 0.0,
+              "p50": 0.5,
+              "p90": 1.0
+            }
+          },
+          "definitions": [
+            "primary",
+            "primary_alternate",
+            "taxonomy_hierarchy",
+            "basic_category"
+          ],
+          "interpretation": "schema sensitivity proxy only; denominator is package-observed union, never a removed reference layer",
+          "reader": {
+            "assigned_points": 1088673,
+            "boundary_or_outside_points": 26,
+            "definition_counts": {
+              "basic_category": 12854.0,
+              "primary": 21718.0,
+              "primary_alternate": 30377.0,
+              "taxonomy_hierarchy": 19055.0
+            },
+            "layer": "pois",
+            "microsoft_membership_rows_excluded": 211635,
+            "null_geometry_rows": 0,
+            "point_assignment": "provided EPSG:4326 point strictly within provided ACS tract; boundary/outside excluded",
+            "region": "south-central-tx",
+            "rows_scanned": 1300334,
+            "rows_total": 1300334,
+            "source_filter": "exclude Microsoft memberships before point geometry decode"
+          },
+          "rows": 6003,
+          "union_candidates": 30377
+        }
+      }
     },
     {
       "id": "Sc4",
-      "status": "not_computed",
-      "reason": "The current unfiltered-road reader requests only class and geometry. Sc4 additionally requires normalized route/name patterns and a precise segment-length-over-2-km test; without those declared fields and fixtures, unknown-class road candidates cannot be distinguished reproducibly.",
-      "missing_prerequisite": "A typed route/name parser plus tests for null, empty, list/record values and the 2-km segment predicate in the raw unfiltered-road clipping path."
+      "status": "computed",
+      "path": "ideas/Sc4.parquet",
+      "sha256": "9aa62ada6e97d28d20f8e3b5d25b6d697ce0d40beea4e9fc4af9b136f36d5884",
+      "rows": 9379,
+      "official_rows": 9379,
+      "geoid_partition_exact": true,
+      "emissions": [
+        {
+          "channel": "covariate",
+          "component": "R",
+          "defined_rows": 9379,
+          "rows": 9379,
+          "value_max": 28.54737004514797,
+          "value_min": 0.0
+        }
+      ],
+      "regions": {
+        "eastern-ok": {
+          "candidate_km": 60.11667320087615,
+          "defined": 1192,
+          "reader": {
+            "crs": "EPSG:5070",
+            "layer": "roads-unfiltered",
+            "microsoft_road_memberships_used": false,
+            "nonempty_name_values": 9,
+            "region": "eastern-ok",
+            "route_or_name_candidates": 0,
+            "rows_scanned": 1037555,
+            "rows_selected": 13688,
+            "rows_total": 1037555
+          },
+          "route_name_or_length_rule": "class unknown/road and (nonempty parsed route ref/name or whole projected segment length > 2000m)",
+          "rows": 1192
+        },
+        "maricopa-az": {
+          "candidate_km": 196.60983692184186,
+          "defined": 1593,
+          "reader": {
+            "crs": "EPSG:5070",
+            "layer": "roads-unfiltered",
+            "microsoft_road_memberships_used": false,
+            "nonempty_name_values": 200,
+            "region": "maricopa-az",
+            "route_or_name_candidates": 0,
+            "rows_scanned": 1170165,
+            "rows_selected": 19547,
+            "rows_total": 1170165
+          },
+          "route_name_or_length_rule": "class unknown/road and (nonempty parsed route ref/name or whole projected segment length > 2000m)",
+          "rows": 1593
+        },
+        "northern-ca": {
+          "candidate_km": 38.911242378713,
+          "defined": 591,
+          "reader": {
+            "crs": "EPSG:5070",
+            "layer": "roads-unfiltered",
+            "microsoft_road_memberships_used": false,
+            "nonempty_name_values": 28,
+            "region": "northern-ca",
+            "route_or_name_candidates": 1,
+            "rows_scanned": 479596,
+            "rows_selected": 8375,
+            "rows_total": 479596
+          },
+          "route_name_or_length_rule": "class unknown/road and (nonempty parsed route ref/name or whole projected segment length > 2000m)",
+          "rows": 591
+        },
+        "south-central-tx": {
+          "candidate_km": 701.5934800789194,
+          "defined": 6003,
+          "reader": {
+            "crs": "EPSG:5070",
+            "layer": "roads-unfiltered",
+            "microsoft_road_memberships_used": false,
+            "nonempty_name_values": 469,
+            "region": "south-central-tx",
+            "route_or_name_candidates": 5,
+            "rows_scanned": 4122701,
+            "rows_selected": 92429,
+            "rows_total": 4122701
+          },
+          "route_name_or_length_rule": "class unknown/road and (nonempty parsed route ref/name or whole projected segment length > 2000m)",
+          "rows": 6003
+        }
+      }
     },
     {
       "id": "Sc5",
@@ -209,19 +849,37 @@
   ],
   "orthogonality": {
     "report": "reports/ideas-orthogonality.json",
-    "sha256": "892d0087f12b7c565cfa23f74830f521afc1edc8890916c5aae865e488fcdbde",
+    "sha256": "54f47a41db86c73a24cd491585be3674664e51f14f5b17f41f9c92c719dbddd6",
     "summary": {
       "all_passed": true,
-      "clusters": 6,
+      "clusters": 23,
       "columns_degenerate": 0,
-      "columns_evaluated": 8,
-      "columns_flagged_vif": 5,
-      "columns_included": 7,
+      "columns_evaluated": 28,
+      "columns_flagged_vif": 9,
+      "columns_included": 26,
       "columns_numerically_null": 2,
-      "pairs_flagged": 1,
-      "report_sha256": "ceb3ddf7c80b430d601a838c35fa5fd0ea3f3b7e557b6ffe48a4e64f0b2bf5eb"
+      "pairs_flagged": 3,
+      "report_sha256": "b21a6671896405469b4997d2b06473fc503e94e0d2d305778b234d412466b95b"
     },
+    "sc_family_columns_included": [
+      "Sc1|R|gap",
+      "Sc2|F|covariate",
+      "Sc3|F|covariate",
+      "Sc3|F|gap",
+      "Sc4|R|covariate",
+      "Sc5|R|covariate",
+      "Sc5|R|gap",
+      "Sca1|F|gap"
+    ],
+    "sc_family_columns_excluded": [],
     "pairs_exceeding_merge_threshold": [
+      {
+        "abs_rho": 0.995801065928555,
+        "left": "P2|F|gap",
+        "right": "Sca1|F|gap",
+        "same_component": true,
+        "same_family": false
+      },
       {
         "abs_rho": 0.8160240383903553,
         "left": "Sc5|R|covariate",
@@ -246,12 +904,6 @@
         "spread": 1.4432899320127035e-15
       }
     ],
-    "excluded_columns": [
-      {
-        "column": "P4|R|gap",
-        "coverage": 0.06813093080285745
-      }
-    ],
-    "note": "Refreshed report covers each implemented estimator. Sc5 gap/share are measured null at epsilon; unimplemented Sc1-Sc4 have no fabricated correlations or VIF."
+    "note": "Full measured matrix and all cross-family flags are in the linked report."
   }
 }

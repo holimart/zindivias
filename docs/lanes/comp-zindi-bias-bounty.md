@@ -1684,3 +1684,36 @@ orthogonality now cover 18 implementations. P1/P3 integration outputs passed the
 with exact GEOID partitions and no undeclared/forbidden inputs. Orthogonality report has 23 evaluated
 columns, 21 included, 8 VIF flags and 3 correlation flags; condition number remains visible. No labels,
 Microsoft building geometries, leaderboard feedback, or uploads were used. Full test suite: **628 passed, 305 subtests in 382.34s**.
+
+## 2026-10-26 — bias60-family-sc: Sc1–Sc4 implemented and measured
+
+- **Sc1** scans the provided filtered `roads` layer, using normalized `names.primary`, common map,
+  and rules values (null/empty/string/list/record fixtures); emits unnamed named-class length / all
+  named-class length for the frozen motorway/trunk/primary/secondary set. All four regions computed;
+  9,247 tracts have positive named-class length. SHA-256
+  `8a73aa7cee295120db8a8f38e30fb4faca63588f49336a2f0f13fc825881a780`.
+- **Sc2** reads per-place names/category/basic-category/taxonomy from provided `overture-pois`,
+  excludes Microsoft-source memberships, and emits semantically screened fire/EMS/school name
+  witnesses only for unclassified/generic places where the tract has zero primary-category matches
+  for that type. False-positive fixtures reject “Fire Station Grill”, “Firehouse Subs”, “School of
+  Rock”, “Driving School”, “Emergency Room”, and urgent care. Eleven school witnesses were measured
+  across Maricopa/Texas; none for fire/EMS. SHA-256
+  `f9f91c2802826e004e4674972c5230e6fe8db4d20c0b4da4d7dc2f8d0b03571e`.
+- **Sc3** computes four per-type category-definition counts (primary, primary+alternate, taxonomy
+  hierarchy, basic category), then emits the mean and range of each definition’s exclusion share
+  relative to the largest package-observed category count for that type. This is explicitly a
+  schema-sensitivity proxy, **not** the organiser’s target gap: no facility reference counts or
+  labels were read. All four outputs cover the 9,379 official IDs. SHA-256
+  `d212396db58a0ee82d5bcdbf83cea1c87b9d41124636a25edda29b75a41ea6f9`.
+- **Sc4** parses name/route refs in the provided `roads-unfiltered` layer and adds unknown/road-class
+  segment length only when a name/route exists or full EPSG:5070 segment length is strictly greater
+  than 2 km (exact 2 km is excluded). Measured candidate lengths: Eastern OK 60.12 km, Maricopa
+  196.61 km, Northern CA 38.91 km, South-Central TX 701.59 km. SHA-256
+  `9aa62ada6e97d28d20f8e3b5d25b6d697ce0d40beea4e9fc4af9b136f36d5884`.
+
+All four outputs passed the harness on 9,379 official GEOIDs with exact partitions, no undeclared
+columns, and no forbidden-source hits. New parser/semantic tests: **6 passed**; family report tests
+cover all computed rows and Sc5’s measured null. Dst4’s source vector now includes Sc1 and Sc3 as
+well as earlier registered ideas; Dst4/Dst5 were rebuilt. The refreshed full orthogonality report
+covers 28 columns (26 included), has 9 VIF and 3 pair flags, and retains condition number
+`3373566871295.5605`. Full-suite validation is recorded after this implementation below.

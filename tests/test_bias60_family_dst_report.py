@@ -52,11 +52,12 @@ class DistributionalShapeReportTests(unittest.TestCase):
 
     def test_dst4_and_dst5_cover_defined_rows_and_published_aggregate(self) -> None:
         dst4, dst5 = self.report["ideas"]["Dst4"], self.report["ideas"]["Dst5"]
-        self.assertEqual(sum(r["defined"] for r in dst4["regions"].values()), 9258)
-        self.assertEqual(sum(r["defined"] for r in dst5["regions"].values()), 9258)
+        self.assertEqual(sum(r["defined"] for r in dst4["regions"].values()), 9296)
+        self.assertEqual(sum(r["defined"] for r in dst5["regions"].values()), 9296)
         for region in dst4["regions"].values():
             self.assertEqual(region["key_diagnostics"]["source_ideas"],
-                             ["Dst1", "Dst2", "Dst3", "Mx4", "P2", "P4", "Sc5", "Sca1", "Tm1"])
+                             ["Tm1", "Mx4", "Sc5", "P2", "P4", "Sca1", "Dst1", "Dst2", "Dst3",
+                              "G1", "G2", "G3", "G4", "G5", "P1", "P3", "Sc1", "Sc3"])
         for region, detail in dst5["regions"].items():
             with self.subTest(region=region):
                 self.assertAlmostEqual(detail["key_diagnostics"]["calibrated_mean"],
@@ -66,11 +67,12 @@ class DistributionalShapeReportTests(unittest.TestCase):
     def test_orthogonality_reports_full_matrix_and_flags(self) -> None:
         orth = self.report["orthogonality"]
         self.assertTrue(orth["summary"]["all_passed"])
-        self.assertEqual(orth["summary"]["columns_evaluated"], 14)
-        self.assertEqual(orth["summary"]["pairs_flagged"], 2)
+        self.assertEqual(orth["summary"]["columns_evaluated"], 28)
+        self.assertEqual(orth["summary"]["pairs_flagged"], 3)
         for idea_id in ("Dst1", "Dst3", "Dst4", "Dst5"):
             with self.subTest(idea=idea_id):
-                self.assertEqual(len(self.report["ideas"][idea_id]["correlation_with_existing_ideas"]), 11)
+                self.assertEqual(len(self.report["ideas"][idea_id]["correlation_with_existing_ideas"]),
+                                 orth["summary"]["columns_included"] - 1)
         self.assertEqual(len(orth["excluded_low_coverage_columns"]), 2)
 
     def test_forbidden_sources_are_explicitly_absent(self) -> None:

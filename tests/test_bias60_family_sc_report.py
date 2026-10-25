@@ -21,7 +21,7 @@ class SchemaCompletenessFamilyReportTests(unittest.TestCase):
         for idea_id, item in ideas.items():
             with self.subTest(idea=idea_id):
                 if item["status"] == "computed":
-                    self.assertEqual(item["rows"], 18758)
+                    self.assertEqual(item["rows"], 9379 * len(item["emissions"]))
                     self.assertEqual(item["official_rows"], 9379)
                     self.assertTrue(item["geoid_partition_exact"])
                     self.assertRegex(item["sha256"], r"^[0-9a-f]{64}$")
@@ -31,6 +31,17 @@ class SchemaCompletenessFamilyReportTests(unittest.TestCase):
                     self.assertGreater(len(item["reason"]), 80)
                     self.assertGreater(len(item["missing_prerequisite"]), 20)
                     self.assertEqual(self.registry_by_id[idea_id]["status"], "declared")
+
+    def test_sc1_to_sc4_are_computed_and_sc3_has_four_explicit_definitions(self) -> None:
+        ideas = {item["id"]: item for item in self.report["ideas"]}
+        for idea_id in ("Sc1", "Sc2", "Sc3", "Sc4"):
+            self.assertEqual(ideas[idea_id]["status"], "computed")
+            self.assertEqual(ideas[idea_id]["official_rows"], 9379)
+            self.assertTrue(ideas[idea_id]["geoid_partition_exact"])
+        self.assertEqual(ideas["Sc3"]["regions"]["eastern-ok"]["definitions"],
+                         ["primary", "primary_alternate", "taxonomy_hierarchy", "basic_category"])
+        self.assertIn("schema sensitivity proxy only",
+                      ideas["Sc3"]["regions"]["eastern-ok"]["interpretation"])
 
     def test_sc5_measured_null_is_not_sold_as_a_positive_pipeline_gap(self) -> None:
         sc5 = next(item for item in self.report["ideas"] if item["id"] == "Sc5")
