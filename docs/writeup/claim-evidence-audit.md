@@ -4,11 +4,11 @@ Row: `bias-writeup-claim-evidence-audit`. Documentation screen: every quantitati
 
 ## Verdict
 
-- **84 of 87 quantitative claims fully traceable** (96.6%).
+- **87 of 87 quantitative claims fully traceable** (100.0%).
 - **1026 of 1026 numeric tokens (100.0%) are present in the evidence named by the claim that states them.**
 - 87 per-claim verify commands and 17 reproduce commands; every listed command's recorded exit code is 0 and every reproduce product hash-verifies.
 - Accuracy language outside the allowed classes: none. Prohibited reference/label/leaderboard sources used as scored-model evidence: none.
-- All acceptance gates: **FAIL**.
+- All acceptance gates: **PASS**.
 
 ## Method
 
@@ -19,7 +19,7 @@ Each of the three writeup documents is split into quantitative claim blocks (a b
 | Document | Claims | Fully traceable | Numeric tokens | Covered |
 |---|---:|---:|---:|---:|
 | `docs/writeup/bias-discovery.md` | 28 | 28 | 253 | 253 |
-| `docs/writeup/methodology.md` | 52 | 49 | 642 | 642 |
+| `docs/writeup/methodology.md` | 52 | 52 | 642 | 642 |
 | `docs/writeup/edge-cases.md` | 7 | 7 | 131 | 131 |
 
 ## Claim inventory
@@ -105,9 +105,9 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 | `methodology-047` 4. Compare mean C2 predicted `coverage_gap_score` across those groups.… | `methodology.md` | Discovery screen | 425-425 | `measured_provided_proxy` | `reports/candidates.json` | `/` | 2/2 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
 | `methodology-048` 5. Compute 95% percentile intervals from 50,000 bootstrap resamples of… | `methodology.md` | Discovery screen | 426-426 | `measured_provided_proxy` | `reports/discovery-rural-svi-minority.json` | `/composite_results/c2/bootstrap_replicates` | 3/3 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
 | `methodology-049` The screen found 248 high-field rural tracts and 739 other rural tract… | `methodology.md` | Discovery screen | 428-428 | `measured_provided_proxy` | `reports/discovery-rural-svi-minority.json` | `/composite_results/c2/high_group_mean` | 5/5 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-050` In that snapshot 1,441 participants had produced 390 ranked teams. Quo… | `methodology.md` | Scorecard reflection | 456-461 | `historical_disclosure` | `reports/lb-scorecard-snapshot.json` | `/summary/participants` | 11/11 | FAILED | `/home/martin/hddProjects/langywrap/uv run --quiet python scr…` |
-| `methodology-051` The scorecard is more informative than the single number. The all-zero… | `methodology.md` | Scorecard reflection | 463-475 | `historical_disclosure` | `reports/scorecards/index.json` | `/scorecards` | 16/16 | FAILED | `/home/martin/hddProjects/langywrap/uv run --quiet python scr…` |
-| `methodology-052` Per the operator amendment of `2026-10-24` this paragraph is reflectio… | `methodology.md` | Scorecard reflection | 477-484 | `historical_disclosure` | `reports/scorecards/index.json` | `/preregistration/intent` | 1/1 | FAILED | `/home/martin/hddProjects/langywrap/uv run --quiet python scr…` |
+| `methodology-050` In that snapshot 1,441 participants had produced 390 ranked teams. Quo… | `methodology.md` | Scorecard reflection | 456-461 | `historical_disclosure` | `reports/lb-scorecard-snapshot.json` | `/summary/participants` | 11/11 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet python scr…` |
+| `methodology-051` The scorecard is more informative than the single number. The all-zero… | `methodology.md` | Scorecard reflection | 463-475 | `historical_disclosure` | `reports/scorecards/index.json` | `/scorecards` | 16/16 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet python scr…` |
+| `methodology-052` Per the operator amendment of `2026-10-24` this paragraph is reflectio… | `methodology.md` | Scorecard reflection | 477-484 | `historical_disclosure` | `reports/scorecards/index.json` | `/preregistration/intent` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet python scr…` |
 | `edge-cases-001` This table makes the handling explicit for low-information and structu… | `edge-cases.md` | Edge-case register for the coverage-ga | 3-3 | `scope_statement` | `docs/data-inventory.md` | `document` | 2/2 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
 | `edge-cases-002` \| Region \| Official n \| Population 0 \| `ALAND` 0 \| Water proxy >50% \| … | `edge-cases.md` | Observed edge cases | 7-13 | `measured_provided_data` | `reports/v2-defined-mask-audit.json` | `/scope/region_rows/maricopa-az` | 55/55 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
 | `edge-cases-003` Water is an approximation, not an independently observed water mask: f… | `edge-cases.md` | Observed edge cases | 15-15 | `measured_provided_data` | `reports/edge-cases.json` | `/geometry_method` | 8/8 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
@@ -154,9 +154,9 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 | `reports/facility-catchment-candidate.json` | `53cdbfa4450223d84db7647dc4fb16d058d6bd239740e9153f51000e884e6794` | 1 |
 | `reports/gap-estimator-audit.json` | `a872e2dd62a5333037bc8e663278134c5b0a08493c7ec41768962e33859187f9` | 2 |
 | `reports/lb-score-algebra.json` | `ae2066c228e13dcc2f0e174ed6ccb8491d5ac343286f914dd75d3213ebeeeeff` | 3 |
-| `reports/lb-scorecard-snapshot.json` | `40abf876922d28e6bb499864ca526437eb033e620a7bde293229d86d6316c78f` | 3 |
-| `reports/leaderboard/2026-10-25T051219+0000.json` | `fbfa3ce3b73a57189263ce7393df69678db062acdb411669e7d8b7e33ab60705` | 3 |
-| `reports/leaderboard/index.json` | `80c0da0410d73a62a16058696c8488357e3cf3a4ac1ff75a4e56cc5629d28d96` | 3 |
+| `reports/lb-scorecard-snapshot.json` | `82e9515d5d4462fb057f3c2780dc1895f8c625caab4dc4c86ea6f7a9a5906d56` | 3 |
+| `reports/leaderboard/2026-10-25T051219+0000.json` | `7f699892f4f38d8ce55deec8ae4ddbc03e33098bb4f053305ea67fd6d7b5686c` | 3 |
+| `reports/leaderboard/index.json` | `1f35df77f881e0978a7d5653cc8e6b75b4026c614473cb88186a0619e61dd932` | 3 |
 | `reports/place-dedup.json` | `de03f53c37fbb9a909b2f45172ede1a58bc059371e22837738df56a54bcd3cba` | 3 |
 | `reports/poi-category-audit.json` | `cd48fa40d0fb1b3cdd1e431734acb646791916df02ee021a60243020b17d9de8` | 6 |
 | `reports/poi-confidence-candidate.json` | `23c49c00105c5936baa094a3ce0f5a23e41589939c6fea972870f1fde794370e` | 2 |
@@ -164,12 +164,12 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 | `reports/road-topology-candidate.json` | `4a8b630e865609ae23e8825c864c771ed319d63e5c27eb86158e1dac6dcfc6ce` | 3 |
 | `reports/sample-contract-audit.json` | `e9a56f30ea7c5a09bf94ebc95d2bf6b1e7559456ee8cf1c16304d9137175dbd0` | 4 |
 | `reports/schema-presence-candidate.json` | `c4a4cfe3e290e15dd6cc1165c079f9494a2ac415c09c0c9334bd0184268fe457` | 1 |
-| `reports/scorecards/BvyKrR6v.json` | `5851f6b82a2da0a5c8980e438bf6b4fdfdf4e1aaec60c60dbf211c582d89487d` | 3 |
-| `reports/scorecards/TM83xxU6.json` | `ee7d67a60c3549f1e9ecc801187e47ed443728450d734bcb147a842d60deeb0f` | 3 |
-| `reports/scorecards/index.json` | `439bc6583d2d6bdf8cb92556666563cd9fa6e85b47d06d05abf28505e5f9b882` | 3 |
-| `reports/scorecards/rTARuUaG.json` | `1e1c7c71dcac6ea3b3cbe6ca2602193c6fd47bc14ed3c013a8c7535a9e018b9b` | 3 |
-| `reports/scorecards/uRRw9KpB.json` | `1cd116b65445431fe26e95f7c5d68f64073085f2c9a453825c6ad30a2058c257` | 3 |
-| `reports/scorecards/ySXi73rd.json` | `d8944484fd80b80099f236770abb49a83dcd40c1995959d291250833689b6788` | 3 |
+| `reports/scorecards/BvyKrR6v.json` | `eedd62442b80c58528254b4731673343512c6bf29db5226241c0dadd5cce2c4f` | 3 |
+| `reports/scorecards/TM83xxU6.json` | `efb267a63c7a312d04b59d53a667332a3ecb77dc229082f38d711b1aa01bbdaf` | 3 |
+| `reports/scorecards/index.json` | `5355a2acf86675e1a07958e2e2ef3569109f911f91c69b850fb6142a6e53ba70` | 3 |
+| `reports/scorecards/rTARuUaG.json` | `e977b4440c47f3b06afe45548145eabb1675852dd2d4d8b3052afb1759141550` | 3 |
+| `reports/scorecards/uRRw9KpB.json` | `bfa4c458866ba17b588696fd9a4453cfae872f9935aebcaf8314ba3bf876ba7d` | 3 |
+| `reports/scorecards/ySXi73rd.json` | `0927d4b704da35c06cb7dce6884210be90e91b9c510aa4408d2c3a8d87c19584` | 3 |
 | `reports/source-provenance.json` | `e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565` | 7 |
 | `reports/transport-route-ref-audit.json` | `bf904336963f553cc7442c5996a4d8d504fe30aad5c4f1a2e44da8fa773b1927` | 12 |
 | `reports/transport-route-variants.json` | `2a1acc760aadd2fce3a1df2afae6bfd9aaaef2a2ce510df8b674bccb9eb11aa2` | 3 |
@@ -356,11 +356,11 @@ Per-claim verify commands (executed by the audit; each must exit 0):
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-048
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-049
-# exit 1
+# exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-050
-# exit 1
+# exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-051
-# exit 1
+# exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-052
 ```
 
@@ -405,9 +405,7 @@ MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap
 
 ## Unresolved claims
 
-- `methodology-050`: uncovered tokens []; pointer '/summary/participants' hit=True; accuracy ok=True; prohibited [].
-- `methodology-051`: uncovered tokens []; pointer '/scorecards' hit=True; accuracy ok=True; prohibited [].
-- `methodology-052`: uncovered tokens []; pointer '/preregistration/intent' hit=True; accuracy ok=True; prohibited [].
+None. Every quantitative claim in the three writeup documents carries a verified evidence pointer, a passing verify command and a hash-verified reproduction path.
 
 ## Limits of this screen
 

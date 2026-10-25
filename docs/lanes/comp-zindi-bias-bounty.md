@@ -584,3 +584,96 @@ Verification commands and output:
 - full suite: `/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with
   pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with pytest python -m pytest -q`
   → `313 passed`
+
+### 2026-10-25 — row `bias-lb-snapshot-and-scorecard`, closed `fixed`
+
+Delivered the passive leaderboard snapshot and the per-submission Bias Scorecard record, plus the
+organiser-encouraged scorecard reflection in the methodology writeup. No upload, no credential
+stored, and no scorecard- or leaderboard-driven model change.
+
+New deliverables (SHA-256 first 16):
+
+- `config/lb-scorecard-snapshot-preregistered.json` `309516c02e76b4e2` — the passive scope: the
+  retained submission fields, the deliberately dropped `url` field, the required scorecard rubric
+  fields, the pinned ledger snapshot, the five required scorecard submission ids with the failed one
+  excluded and why, the assembled POST markers, and four negative controls.
+- `scripts/snapshot_lb_and_scorecards.py` `41a1163874441e44` — reads the shared orchestrator ledger
+  read-only, makes exactly one read-only `GET` of the authenticated submission status path under
+  `--fetch`, and derives every product. It has **no POST path**: the gate assembles POST markers from
+  config fragments so the file cannot self-hit and cannot grow one silently.
+- `reports/leaderboard/2026-10-25T051219+0000.json` `7f699892f4f38d8c` — the dated snapshot: top-20
+  public RMSE table, our rank, participants, ranked teams, rank-10/25/50/100, median, perfect-score
+  count, every one of our submissions with the number of teams strictly better, and the gaps.
+- `reports/leaderboard/index.json` `1f35df77f881e097` — this snapshot plus the full 20-event rank
+  history from the ledger.
+- `reports/scorecards/<submission_id>.json` for all six platform submissions, e.g. P4
+  `ySXi73rd` `0927d4b704da35c0` and the C0 anchor `uRRw9KpB` `bfa4c458866ba17b`, with
+  `reports/scorecards/index.json` `5355a2acf86675e1` pinning every file hash.
+- `reports/lb-scorecard-snapshot.json` `82e9515d5d4462fb` — the machine record: 19 gates.
+- `tests/test_snapshot_lb_and_scorecards.py` `c0870060b50896f4` — 26 tests.
+- `docs/writeup/methodology.md` `584abb80f94b9541` — new `## Scorecard reflection` section at the end.
+
+Measured: 1,441 participants, 390 ranked teams, our rank 274, our best public 0.091440198 (P4),
+rank-10 boundary 0.000429403, **gap to the top-10 boundary 0.091010795**, median 0.083887046 (we sit
+0.007553152 above it), rank-50 gap 0.024401074, six exact-zero scores and a best positive score of
+0.000091526. All 19 gates true, including `gap_to_top10_boundary_computed` (reproduced to 1e-12),
+`every_successful_submission_has_a_scorecard`, `scorecard_dimensions_complete`,
+`scorecard_fields_complete_per_dimension`, `no_secrets_in_committed_outputs`,
+`ledger_access_is_read_only`, `no_upload_path_exists` and
+`scorecard_never_influenced_parameters`.
+
+What the scorecard actually said, and it is not flattering:
+
+- The all-zero anchor `uRRw9KpB` returns all nine dimensions `undefined` with the organiser's reason
+  "Reference group has zero mean gap; ratio is undefined."
+- `BvyKrR6v` and `ySXi73rd` have **identical** scorecards (heat 1.141 / 14.1% larger, tribal 0.705 /
+  29.5% smaller, everything else "Similar") even though their public RMSE differ 0.146449 against
+  0.091440: the disparity ratios are ratios of group means, so shrinking the whole prediction scale
+  moved the score and left the equity profile untouched.
+- The component estimator `rTARuUaG` is flagged on rural (0.248, 75.2% smaller), tribal (0.556, 44.4%
+  smaller), wildfire (0.621, 37.9% smaller) and heat (1.211, 21.1% larger): our own components assign
+  systematically smaller predicted gaps to rural, tribal and high-wildfire tracts than to their
+  reference groups, and the organiser rubric sees it even in a poor-RMSE submission.
+
+Honesty controls that shaped the work:
+
+- The presigned `url` field is dropped before anything is written because it embeds an AWS access-key
+  id and a request signature; a test walks every committed JSON for a `url` key, scans all outputs for
+  AKIA/X-Amz/signature/cookie/JWT shapes, and asserts the token file's content never appears.
+- The snapshot is **pinned** to the ledger event `2026-10-25T05:12:19+00:00` rather than "latest", so
+  the reproduce command stays byte-stable while the steward keeps appending snapshots; a missing pin
+  fails closed.
+- The reflection paragraph quotes scores to six decimals, because the claim tokenizer treats longer
+  literals as identifiers; three claims (`methodology-050..052`) are registered in the claim-evidence
+  config with the snapshot, scorecards and `reports/lb-score-algebra.json` as evidence, so the
+  accuracy-asserting sentences are backed by the committed platform record rather than by prose.
+- Two earlier placements of the new section were rejected and reverted: inserting it mid-document
+  renumbered 43 existing methodology claim ids and broke their overrides. It now sits at the end and
+  the 84 pre-existing claims are byte-identical to the `2aa0a57` inventory.
+
+Verification commands and output:
+
+- `COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" /home/martin/hddProjects/langywrap/uv run --quiet python scripts/snapshot_lb_and_scorecards.py`
+  → `PASS lb snapshot and scorecards: passive ledger snapshot plus hash-pinned per-submission Bias
+  Scorecards committed without secrets, uploads, or any leaderboard-driven model change`;
+  `--check-only` → `unchanged`
+- determinism: two independent runs produce byte-identical reports equal to the committed file; the
+  scorecards and both index files rebuild identically from the ledger plus committed payloads
+- negative controls (all exit non-zero with the expected gate): `inject_secret` and
+  `secret_in_snapshot` → `no_secrets_in_committed_outputs`; `scorecard_field_dropped` →
+  `scorecard_fields_complete_per_dimension`; `rank_without_timestamp` →
+  `snapshot_carries_utc_timestamp`; a bogus pin → exit 2 `BLOCKED`; the unmutated control passes, and
+  the tamper runs write only into a sandbox copy so the committed scorecards are provably untouched
+- cascade after the methodology edit: `scripts/audit_writeup_claim_evidence.py --write-inventory` → 87
+  claims; `--execute-reproduce --reproduce-filter snapshot_lb_and_scorecards` → 17/17 reproduce
+  commands exit 0; full claim audit → `PASS` with 87/87 traceable and 1026/1026 numeric tokens
+  covered; `scripts/audit_discovery_prize_criteria.py` → `PASS` (16/16 criteria, 23/23 pointers);
+  `scripts/build_final_writeup.py` + `scripts/verify_writeup_submission.py` → `PASS ... staged only,
+  nothing was submitted to the organiser`
+- full suite: `/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with
+  pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with pytest python -m pytest -q` →
+  `339 passed`
+
+Note for the operator, from the same status path (not operator-confirmed, so the writeup still says
+`PENDING_OPERATOR_CONFIRMATION`): the platform records the submitter handle `holi` on all six Bias
+Bounty submissions.
