@@ -1485,3 +1485,43 @@ five idea-specific reasons plus the no-measurement and prohibition assertions. V
 `uv run --with pytest python -m pytest tests/test_bias60_family_g.py tests/test_bias60_harness.py -q`
 → **48 passed, 14 subtests**; orthogonality `--check-only` unchanged. No labels, reference layers,
 leaderboard access, or uploads.
+
+## 2026-10-25 — bias60-family-p: two priors measured, three reasons retained
+
+Registered and ran P2 and P4 through the common harness across all 9,379 official scored rows. Their
+fixed recipes and numerical thresholds were added to `config/bias60-harness-preregistered.json`
+before running; no labels or public scores entered them. P1, P3 and P5 remain `declared`, each with a
+specific reason and missing prerequisite in `reports/p-family-screen.json` (P1: places layer absent;
+P3: no tested school-footprint/void/road classifier; P5: forest/WUI threshold and occlusion direction
+not frozen). P1/P3/P5 have test subcases proving their reasons are recorded, not presented as measured.
+
+- **P2**: registered family-P implementation in `src/bias60/ideas/p.py`. For all tract rows, E = land
+  km² / fixed RUCA-class standard area (10 urban, 50 suburban, 250 rural km²); gap =
+  `clip(1 - Overture fire POI count / E, 0, 1)`. Parquet has 9,379 ordered rows, 9,377 defined;
+  two invalid/missing input cases stay undefined. SHA-256:
+  `887ac98d8c2699ef83c48850b7696baea08b5bffbec044d9d9dc825d74e801c6`.
+- **P4**: for RUCA 7–10 tracts in eastern OK and south-central TX only, rho is the median road density
+  in that region's highest-density rural tercile; outside that declared scope is undefined. Parquet
+  has 9,379 ordered rows, 639 defined (218 OK, 421 TX). SHA-256:
+  `12b54003b38e3be1fbbcc149a385dc80a38c605a0a33b27eab811d382ff5f29c`.
+
+The five-idea registry now includes the two implementations. The harness PASS reports 5 ideas over
+9,379 official GEOIDs and exact partitions. Refreshed label-free orthogonality over all implemented
+ideas: 8 evaluated columns, 7 included (one null), 1 pair above `|rho| > 0.8` (existing Sc5 R
+covariate/gap, `0.816024`), 5 VIF flags, all gates pass. The flagged pair remains visible; nothing is
+silently dropped. Exact P2/P4 regional coverage and distributions, hashes, and uncomputed reasons are
+in `reports/p-family-screen.json`.
+
+Tests cover the P2 ratio, undefined inputs, P4 anchor/rural restriction and regional applicability,
+plus P1/P3/P5 documented reasons, harness partition/determinism, and no-forbidden-evidence claims.
+
+### Family P validation correction: evaluation contract follows new component membership
+
+The first full-suite run exposed that the lab-evaluation test asserted every component channel had a
+single implemented member. After P2 and P4 were registered, `target:F` and `target:R` correctly had
+multiple ideas; a singleton assertion is not a permanent invariant. Updated it to check that
+`mtmm.single_member` exactly matches the number of ideas in the channel, and regenerated
+`reports/lab-evaluation.json` / its markdown so the no-lab report pins the new registry. No lab
+measurement ran: `not_run_missing_lab`, no channels measured, zero weight vectors. The affected
+suite (`test_bias60_family_p.py`, P report, harness and lab-evaluation tests) passes: **91 passed,
+99 subtests**.

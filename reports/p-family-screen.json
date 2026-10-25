@@ -1,0 +1,194 @@
+{
+  "schema_version": 1,
+  "family": "P",
+  "status": "partial_two_computed_three_documented",
+  "scope": {
+    "official_scored_tracts": 9379,
+    "ideas": [
+      "P1",
+      "P2",
+      "P3",
+      "P4",
+      "P5"
+    ],
+    "computed": [
+      "P2",
+      "P4"
+    ],
+    "coverage_is_defined_fraction_of_all_official_tracts": true
+  },
+  "constraints": {
+    "provided_datasets_only": true,
+    "labels_read": false,
+    "reference_layers_read": false,
+    "leaderboard_accessed": false,
+    "uploads": 0
+  },
+  "ideas": [
+    {
+      "id": "P1",
+      "status": "not_computed",
+      "reason": "The published recipe requires per-tract non-residential building floor area and a places count. The approved places layer path is absent (schema inspection returned FileNotFound), so neither place density nor its label-free top-completeness-quartile anchor can be calculated. No substitute count is fabricated.",
+      "missing_prerequisite": "A verified rule-clean provided places input and a declared building floor-area aggregation with frozen class/default-floor rules."
+    },
+    {
+      "id": "P2",
+      "status": "computed",
+      "path": "ideas/P2.parquet",
+      "sha256": "887ac98d8c2699ef83c48850b7696baea08b5bffbec044d9d9dc825d74e801c6",
+      "rows": 9379,
+      "official_rows": 9379,
+      "geoid_partition_exact": true,
+      "regions": {
+        "eastern-ok": {
+          "rows": 1192,
+          "defined": 1192,
+          "coverage": 1.0,
+          "gap_distribution": {
+            "count": 1192,
+            "max": 1.0,
+            "mean": 0.6866181635241555,
+            "min": 0.0,
+            "p50": 1.0,
+            "p90": 1.0
+          }
+        },
+        "maricopa-az": {
+          "rows": 1593,
+          "defined": 1593,
+          "coverage": 1.0,
+          "gap_distribution": {
+            "count": 1593,
+            "max": 1.0,
+            "mean": 0.7561060493834293,
+            "min": 0.0,
+            "p50": 1.0,
+            "p90": 1.0
+          }
+        },
+        "northern-ca": {
+          "rows": 591,
+          "defined": 591,
+          "coverage": 1.0,
+          "gap_distribution": {
+            "count": 591,
+            "max": 1.0,
+            "mean": 0.6443176422183341,
+            "min": 0.0,
+            "p50": 1.0,
+            "p90": 1.0
+          }
+        },
+        "south-central-tx": {
+          "rows": 6003,
+          "defined": 6001,
+          "coverage": 0.999667,
+          "gap_distribution": {
+            "count": 6001,
+            "max": 1.0,
+            "mean": 0.7195911042850944,
+            "min": 0.0,
+            "p50": 1.0,
+            "p90": 1.0
+          }
+        }
+      },
+      "recipe": "Fixed expected stations E = tract land km\u00b2 / (10, 50, 250 km\u00b2 for RUCA urban, suburban, rural); gap = clip(1 - Overture fire POI count / E, 0, 1). Values are frozen in the preregistration, not fit to outcomes."
+    },
+    {
+      "id": "P3",
+      "status": "not_computed",
+      "reason": "The building geometry is available, but the candidate school classifier requires a heavy tract-level search over 2,000\u201315,000 m\u00b2 footprints, compactness, 2 ha void rings within 150 m, and collector-road adjacency. This classifier has no tested component-level geometry routine or false-positive fixtures in the current harness; emitting candidates without those checks would turn churches/community centres and retail into unvalidated school evidence.",
+      "missing_prerequisite": "A deterministic, audited building/road geometry candidate routine and fixtures for the stated area, compactness, void-ring and adjacency tests."
+    },
+    {
+      "id": "P4",
+      "status": "computed",
+      "path": "ideas/P4.parquet",
+      "sha256": "12b54003b38e3be1fbbcc149a385dc80a38c605a0a33b27eab811d382ff5f29c",
+      "rows": 9379,
+      "official_rows": 9379,
+      "geoid_partition_exact": true,
+      "regions": {
+        "eastern-ok": {
+          "rows": 1192,
+          "defined": 218,
+          "coverage": 0.182886,
+          "gap_distribution": {
+            "count": 218,
+            "max": 1.0,
+            "mean": 0.47837599793667246,
+            "min": 0.0,
+            "p50": 0.5571087640481869,
+            "p90": 0.8017052263834137
+          }
+        },
+        "maricopa-az": {
+          "rows": 1593,
+          "defined": 0,
+          "coverage": 0.0,
+          "gap_distribution": {
+            "count": 0
+          }
+        },
+        "northern-ca": {
+          "rows": 591,
+          "defined": 0,
+          "coverage": 0.0,
+          "gap_distribution": {
+            "count": 0
+          }
+        },
+        "south-central-tx": {
+          "rows": 6003,
+          "defined": 421,
+          "coverage": 0.070132,
+          "gap_distribution": {
+            "count": 421,
+            "max": 1.0,
+            "mean": 0.5531685485353669,
+            "min": 0.0,
+            "p50": 0.6719778266681427,
+            "p90": 0.8524582999729042
+          }
+        }
+      },
+      "recipe": "For eastern Oklahoma and south-central Texas rural tracts (RUCA 7\u201310), take rho as median named-road density in the highest-density rural tercile; gap = clip(1 - tract density / rho, 0, 1). Other tracts are explicitly undefined."
+    },
+    {
+      "id": "P5",
+      "status": "not_computed",
+      "reason": "The available strata include USFS exposure/WHP and the provided feature cache has an MS-only source share, but the preregistered phrase \u201cforested WUI indicator\u201d supplies no numeric cut point or categorical mapping. Choosing one after inspecting the study distributions would add an unregistered tuning choice and the direction of occlusion is explicitly unknown.",
+      "missing_prerequisite": "Freeze a public-data-based forest/WUI classification and source-share mapping before inspecting the estimator distribution; resolve direction as a covariate or fixed gap prior."
+    }
+  ],
+  "orthogonality": {
+    "report": "reports/ideas-orthogonality.json",
+    "sha256": "892d0087f12b7c565cfa23f74830f521afc1edc8890916c5aae865e488fcdbde",
+    "g_family_columns_included": [
+      "P2|F|gap",
+      "P4|R|gap"
+    ],
+    "summary": {
+      "all_passed": true,
+      "clusters": 6,
+      "columns_degenerate": 0,
+      "columns_evaluated": 8,
+      "columns_flagged_vif": 5,
+      "columns_included": 7,
+      "columns_numerically_null": 2,
+      "pairs_flagged": 1,
+      "report_sha256": "ceb3ddf7c80b430d601a838c35fa5fd0ea3f3b7e557b6ffe48a4e64f0b2bf5eb"
+    },
+    "pairs_exceeding_merge_threshold": [
+      {
+        "abs_rho": 0.8160240383903553,
+        "left": "Sc5|R|covariate",
+        "right": "Sc5|R|gap",
+        "same_component": true,
+        "same_family": true
+      }
+    ],
+    "note": "Report covers every implemented idea on 9,379 official tracts; no statistic was imputed for P1/P3/P5."
+  }
+}

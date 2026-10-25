@@ -276,8 +276,10 @@ class MeasuredStateTests(unittest.TestCase):
                 self.assertEqual(entry["ideas"], sorted(
                     idea for idea, value in self.registry["components"].items()
                     if value == component))
-                self.assertTrue(entry["mtmm"]["single_member"])
-                # a single-member channel cannot beat equal weights, and must say so
+                # The number of implemented ideas per component changes as families land; the MTMM
+                # marker must describe the observed membership rather than assume one member forever.
+                self.assertEqual(entry["mtmm"]["single_member"], len(entry["ideas"]) < 2)
+                # A single-member channel cannot beat equal weights, and must say so.
                 self.assertTrue(entry["reported_as_not_beating_equal_weights"]
                                 or entry["track_b_accepted_by_rule"])
 

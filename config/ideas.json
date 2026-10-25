@@ -1332,7 +1332,7 @@
       "failure_mode": "fire districts vary widely; EMS is co-located with fire in many counties.",
       "family": "P",
       "id": "P2",
-      "implementation": null,
+      "implementation": "bias60.ideas.p::p2",
       "inputs": [
         "ALAND",
         "pop density",
@@ -1344,7 +1344,7 @@
       "recipe": "λ = area / A_std(density), with A_std about 10 km² urban, 50 km² suburban and 250 km² rural **[U: tune from public NFPA text, not from data]**. Combine with O_fire via Sca1.",
       "recipe_scope": "per tract",
       "signal": "career departments target about 4-minute travel (roughly 1.5–2.5 mi station spacing); rural volunteer standards (NFPA 1720) set longer response times by density class. The expected number of stations in the reference is λ_fire = f(area, density class), from which P(reference has a station) follows.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Normative fire-station spacing (NFPA 1710/1720)"
     },
     {
@@ -1379,7 +1379,7 @@
       "failure_mode": "Maricopa desert and reservation land have no grid. Use only for RUCA ≥ 7 in OK and TX.",
       "family": "P",
       "id": "P4",
-      "implementation": null,
+      "implementation": "bias60.ideas.p::p4",
       "inputs": [
         "ALAND",
         "RUCA",
@@ -1391,7 +1391,7 @@
       "recipe": "ρ_region = median named-class density over rural tracts in the region's top completeness tercile (label-free anchor). ĝ = clip(1 − L_named / (ρ × area)).",
       "recipe_scope": "per tract",
       "signal": "in the Great Plains and Texas section-line landscape, US, State and FM highways form a quasi-grid with about 10–20 km spacing. Expected S1100/S1200 length per km² in rural tracts is roughly constant by region (L_exp ≈ ρ_region × area). A tract with far less Overture named-class length has a classification gap.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Rural arterial-spacing law"
     },
     {
@@ -1459,7 +1459,7 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 57,
+    "declared_count": 55,
     "families_total": 12,
     "ideas_per_family": [
       5
@@ -1468,14 +1468,16 @@
     "implemented": [
       "Tm1",
       "Mx4",
-      "Sc5"
+      "Sc5",
+      "P2",
+      "P4"
     ],
     "implemented_components": [
       "B",
       "F",
       "R"
     ],
-    "implemented_count": 3
+    "implemented_count": 5
   },
   "vocabulary": {
     "components": [

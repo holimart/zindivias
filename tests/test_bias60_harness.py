@@ -83,6 +83,9 @@ class StubInputs:
                 "carbonplan_covered", np.array([True, True, True, True, True, True, True, False][:count])),
             "COUNTYFP": self.overrides.get(
                 "COUNTYFP", np.array(["01", "01", "01", "02", "02", "02", "03", "03"][:count], dtype=object)),
+            "ALAND": self.overrides.get("ALAND", np.array([10e6, 20e6, 30e6, 40e6, 50e6, 60e6, 70e6, 80e6][:count])),
+            "pop_total": self.overrides.get("pop_total", np.array([100., 200., 300., 400., 500., 600., 700., 800.][:count])),
+            "ruca_primary": self.overrides.get("ruca_primary", np.array([1., 4., 7., 8., 3., 6., 9., 10.][:count])),
         }
         self._features = {
             "overture_buildings": self.overrides.get(
@@ -93,6 +96,8 @@ class StubInputs:
             "overture_named_road_km_5070": self.overrides.get(
                 "overture_named_road_km_5070",
                 np.array([10.0, 20.0, 0.0, 5.0, 2.5, 1.0, 40.0, 8.0][:count])),
+            "overture_poi_fire": self.overrides.get(
+                "overture_poi_fire", np.array([0.0, 1.0, 0.0, 2.0, 1.0, 2.0, 0.0, 3.0][:count])),
         }
         self._km = {
             "roads": self.overrides.get("roads_km", self._features["overture_named_road_km_5070"]),

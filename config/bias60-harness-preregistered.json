@@ -158,7 +158,23 @@
       "south-central-tx-strata-tract-table.parquet:COUNTYFP",
       "south-central-tx-strata-tract-table.parquet:GEOID",
       "south-central-tx-strata-tract-table.parquet:carbonplan_buildings",
-      "south-central-tx-strata-tract-table.parquet:carbonplan_covered"
+      "south-central-tx-strata-tract-table.parquet:carbonplan_covered",
+      "maricopa-az-overture-tract-summary.parquet:overture_poi_fire",
+      "maricopa-az-strata-tract-table.parquet:ALAND",
+      "maricopa-az-strata-tract-table.parquet:pop_total",
+      "maricopa-az-strata-tract-table.parquet:ruca_primary",
+      "northern-ca-overture-tract-summary.parquet:overture_poi_fire",
+      "northern-ca-strata-tract-table.parquet:ALAND",
+      "northern-ca-strata-tract-table.parquet:pop_total",
+      "northern-ca-strata-tract-table.parquet:ruca_primary",
+      "eastern-ok-overture-tract-summary.parquet:overture_poi_fire",
+      "eastern-ok-strata-tract-table.parquet:ALAND",
+      "eastern-ok-strata-tract-table.parquet:pop_total",
+      "eastern-ok-strata-tract-table.parquet:ruca_primary",
+      "south-central-tx-overture-tract-summary.parquet:overture_poi_fire",
+      "south-central-tx-strata-tract-table.parquet:ALAND",
+      "south-central-tx-strata-tract-table.parquet:pop_total",
+      "south-central-tx-strata-tract-table.parquet:ruca_primary"
     ]
   },
   "orthogonality": {
@@ -210,6 +226,59 @@
       "cross_check_column": "overture_named_road_km_5070",
       "cross_check_relative_tolerance": 1e-06,
       "note": "spec Sc5: named-class length in unfiltered minus filtered as a share; both layers clipped to official tracts in EPSG:5070"
+    },
+    "P2": {
+      "component": "F",
+      "kind": "gap",
+      "observed_fire_column": "overture_poi_fire",
+      "area_column": "ALAND",
+      "population_column": "pop_total",
+      "ruca_column": "ruca_primary",
+      "standard_area_km2": {
+        "urban": 10.0,
+        "suburban": 50.0,
+        "rural": 250.0
+      },
+      "ruca_classes": {
+        "urban": [
+          1,
+          2,
+          3
+        ],
+        "suburban": [
+          4,
+          5,
+          6
+        ],
+        "rural": [
+          7,
+          8,
+          9,
+          10
+        ]
+      },
+      "recipe": "E = tract land area / frozen density-class standard area; gap = clip(1 - observed Overture fire POIs / E, 0, 1)",
+      "note": "Spec P2: normative area-spacing prior; classes and approximate standards are fixed from the preregistered spec, not tuned on labels or leaderboard."
+    },
+    "P4": {
+      "component": "R",
+      "kind": "gap",
+      "road_column": "overture_named_road_km_5070",
+      "area_column": "ALAND",
+      "ruca_column": "ruca_primary",
+      "applicable_regions": [
+        "eastern-ok",
+        "south-central-tx"
+      ],
+      "rural_ruca": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "anchor_quantile": 0.6666666666666666,
+      "recipe": "rho = median named-road density among the highest-density rural tract tercile in each applicable region; gap = clip(1 - observed named-road density / rho, 0, 1)",
+      "note": "Spec P4: region-specific rural completeness anchor, strictly label-free; undefined outside rural OK/TX applicability."
     }
   },
   "spec_amendments": {

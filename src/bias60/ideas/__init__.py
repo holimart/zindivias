@@ -26,4 +26,4 @@ def implemented_ids() -> list[str]:
     return sorted(IMPLEMENTATIONS)
 
 
-from bias60.ideas import mx as _mx, sc as _sc, tm as _tm  # noqa: E402,F401  (registration import)
+from bias60.ideas import mx as _mx, p as _p, sc as _sc, tm as _tm  # noqa: E402,F401  (registration import)
