@@ -311,13 +311,30 @@ class NegativeControlTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             build(tamper="invented_a_number")
 
+    def test_a_group_substituted_for_a_preregistered_one_is_caught(self) -> None:
+        """The group list is a preregistration, not a knob: swapping NM for another id must fail."""
+        report = build(tamper="groups_are_not_the_preregistered_ones")["report"]
+        self.assertFalse(report["gates"]["groups_are_the_preregistered_ones"])
+        self.assertFalse(report["gates"]["all_passed"])
+
     def test_a_report_without_manifests_carries_no_measurement(self) -> None:
         report = builder.build_report(CONFIG, manifests=[])
         self.assertFalse(report["gates"]["no_fabricated_measurement"])
         self.assertFalse(report["gates"]["recipe_self_checks_passed"])
         self.assertEqual(report["measurement"]["groups"], [])
-        floats = [value for entry in report["measurement"]["groups"] for value in entry.values()
-                  if isinstance(value, float)]
+
+        def walk(value):
+            if isinstance(value, dict):
+                for inner in value.values():
+                    yield from walk(inner)
+            elif isinstance(value, (list, tuple)):
+                for inner in value:
+                    yield from walk(inner)
+            elif isinstance(value, float) and not isinstance(value, bool):
+                yield value
+
+        # a recursive scan: the measurement block may not smuggle a number in at any depth
+        floats = sorted(walk(report["measurement"]))
         self.assertEqual(floats, [])
 
 

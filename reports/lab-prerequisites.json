@@ -3740,7 +3740,7 @@
         "id": "cbp_2023",
         "meaning": "unexpected",
         "registered_url": "https://www.census.gov/data/datasets/time-series/econ/cbp/2023.html",
-        "status": null
+        "status": 400
       },
       {
         "alternate_that_answers": null,
@@ -3775,6 +3775,7 @@
     "report_is_strict_json": true,
     "shortfalls_disclosed": true,
     "source_availability_disclosed": true,
+    "source_probe_answers_are_reusable": true,
     "source_probe_credentials_unused": true,
     "sources_probed_without_content_bytes": true,
     "spec_hash_matches_pin": true,
@@ -3837,6 +3838,7 @@
         "meaning": "reachable",
         "method": "HEAD",
         "probe": "attempted",
+        "probed_from": "cache",
         "registered_url": "https://www2.census.gov/geo/tiger/TIGER2020/TRACT/tl_2020_<ss>_tract.zip",
         "role": "lab_tract_polygons",
         "status": 200,
@@ -3872,6 +3874,7 @@
         "meaning": "not found at this instantiation, so the registered version pattern needs correcting before the build",
         "method": "HEAD",
         "probe": "attempted",
+        "probed_from": "cache",
         "registered_url": "s3://overturemaps-us-west-2/release/<rel>/",
         "role": "observed_data",
         "status": 404,
@@ -3907,6 +3910,7 @@
         "meaning": "not found at this instantiation, so the registered version pattern needs correcting before the build",
         "method": "HEAD",
         "probe": "attempted",
+        "probed_from": "cache",
         "registered_url": "https://www2.census.gov/geo/tiger/TIGER2024/PRISECRROADS/tl_2024_<ss>_prisecroads.zip",
         "role": "reference_roads",
         "status": 404,
@@ -3923,6 +3927,7 @@
         "meaning": "reachable",
         "method": "HEAD",
         "probe": "attempted",
+        "probed_from": "cache",
         "registered_url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_<ssccc>_roads.zip",
         "role": "reference_roads_check",
         "status": 200,
@@ -3952,6 +3957,7 @@
         "meaning": "reachable",
         "method": "HEAD",
         "probe": "attempted",
+        "probed_from": "cache",
         "registered_url": "https://github.com/microsoft/USBuildingFootprints",
         "role": "reference_buildings",
         "status": 200,
@@ -3968,6 +3974,7 @@
         "meaning": "reachable",
         "method": "HEAD",
         "probe": "attempted",
+        "probed_from": "cache",
         "registered_url": "https://github.com/microsoft/GlobalMLBuildingFootprints",
         "role": "reference_buildings_variant",
         "status": 200,
@@ -3997,6 +4004,7 @@
         "meaning": "reachable",
         "method": "HEAD",
         "probe": "attempted",
+        "probed_from": "cache",
         "registered_url": "https://apps.nationalmap.gov/downloader/",
         "role": "reference_facilities",
         "status": 200,
@@ -4006,9 +4014,9 @@
         "alternate_that_answers": "https://www2.census.gov/programs-surveys/cbp/datasets/2022/",
         "alternates": [
           {
-            "error": "TimeoutError",
+            "error": null,
             "meaning": "unexpected",
-            "status": null,
+            "status": 400,
             "url": "https://www.census.gov/data/datasets/time-series/econ/cbp/2022.html"
           },
           {
@@ -4027,14 +4035,15 @@
         "content_bytes_read": false,
         "content_length_bytes": null,
         "credentials_used": false,
-        "error": "TimeoutError",
+        "error": null,
         "id": "cbp_2023",
         "meaning": "unexpected",
         "method": "HEAD",
         "probe": "attempted",
+        "probed_from": "cache",
         "registered_url": "https://www.census.gov/data/datasets/time-series/econ/cbp/2023.html",
         "role": "reference_establishments",
-        "status": null,
+        "status": 400,
         "url_probed": "https://www.census.gov/data/datasets/time-series/econ/cbp/2023.html"
       },
       {
@@ -4061,6 +4070,7 @@
         "meaning": "unexpected",
         "method": "HEAD",
         "probe": "attempted",
+        "probed_from": "cache",
         "registered_url": "https://www.huduser.gov/portal/datasets/usps_crosswalk.html",
         "role": "allocation_helper",
         "status": 202,
@@ -4072,12 +4082,15 @@
         "id": "hospital_check",
         "method": "HEAD",
         "probe": "skipped",
+        "probed_from": "not_probed",
         "reason": "the registry records a source family (USGS Health/Medical structures or HIFLD hospitals), not a URL; the build must name the exact service and version before it can be probed",
         "registered_url": "USGS Health/Medical structures or HIFLD hospitals",
         "role": "recipe_identification",
         "status": null
       }
     ],
+    "probed_from": "cache",
+    "probed_from_cache_sha256": "a2d96aa96d0ece139d900a7d0bb30497c270b69b2090412f4dc06b27aad7b8d9",
     "registered": 10
   },
   "study_geography": {
@@ -4103,7 +4116,7 @@
     "groups_ready": 4,
     "groups_short_of_floor": 1,
     "lab_plan_needs_amendment": true,
-    "report_sha256": "58afecabf03cef80d36a4181fe8dfc24a680fc76cfd5822de08ed6e21753a0a8",
+    "report_sha256": "c13d2b4207dfdf75c8f1b6ac2edad6f21328970158294cfdf48b608949c1b9cd",
     "sources_not_answered": 4,
     "sources_not_probeable": 1,
     "sources_reachable": 5,

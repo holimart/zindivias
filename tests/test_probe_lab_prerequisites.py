@@ -123,7 +123,8 @@ def synthetic_records(official: list[str], template: list[str]) -> dict[str, lis
 
 
 def build(tamper: str | None = None, *, records: dict[str, list[dict]] | None = None,
-          head_status: dict[str, int] | None = None, cache: Path | None = None) -> dict:
+          head_status: dict[str, int] | None = None, cache: Path | None = None,
+          head: "Callable[..., dict] | None" = None) -> dict:
     probe_module.OPENED.clear()
     official = lab_plan.official_scored_ids(WORKSPACE)
     template = lab_plan.template_geoids(WORKSPACE)
@@ -149,7 +150,8 @@ def build(tamper: str | None = None, *, records: dict[str, list[dict]] | None = 
 
     lab_plan.set_recorder(probe_module.record)
     return probe_module.build_report(config(), workspace=WORKSPACE, lab_config=LAB_CONFIG_PATH,
-                                     cache=cache, tamper=tamper, head=fake_head, get=fake_get,
+                                     cache=cache, tamper=tamper, head=head or fake_head,
+                                     get=fake_get,
                                      records_for_state=lambda state: synthetic.get(state, []))
 
 
@@ -242,8 +244,10 @@ class ContractTests(unittest.TestCase):
         # the same cache directory, because the report records where its census files live
         again = build(cache=Path(tempfile.mkdtemp(prefix="prereq-shared-")))
         third = build(cache=Path(str(again["access"]["cache_dir"])))
-        self.assertEqual(probe_module.canonical_bytes(third),
-                         probe_module.canonical_bytes(again))
+        self.assertEqual(without_probe_mode(third), without_probe_mode(again))
+        # the mode field is the only thing a cache round may legitimately change
+        self.assertEqual(again["sources"]["probed_from"], "network")
+        self.assertEqual(third["sources"]["probed_from"], "cache")
         self.assertTrue(self.report["gates"]["report_has_no_temporal_field"])
         self.assertTrue(self.report["gates"]["report_is_strict_json"])
 
@@ -351,6 +355,53 @@ class GeographyTests(unittest.TestCase):
         self.assertEqual(probe_module.state_of_filename(
             "https://www2.census.gov/geo/tiger/TIGER2024/PRISECRROADS/tl_2024_32_prisecroads.zip"),
             "")
+
+
+def without_probe_mode(report: dict) -> bytes:
+    """Canonical bytes with the probe-mode disclosure removed.
+
+    Whether a status line came from the network or from the recorded round is a disclosure about the
+    run, not a measurement: the measurements themselves must survive a cache round-trip unchanged.
+    """
+    body = json.loads(json.dumps(report))
+    body.get("summary", {}).pop("report_sha256", None)  # the self-hash follows the body
+    body["sources"].pop("probed_from", None)
+    body["sources"].pop("probed_from_cache_sha256", None)
+    for entry in body["sources"]["probed"]:
+        entry.pop("probed_from", None)
+    return probe_module.canonical_bytes(body)
+
+
+@require_workspace
+class HeadAnswerCacheTests(unittest.TestCase):
+    """A status line that can only be produced once is not a measurement the lane can keep."""
+
+    def test_the_published_head_answers_survive_a_rerun(self) -> None:
+        cache = Path(tempfile.mkdtemp(prefix="prereq-head-"))
+        asked = {"n": 0}
+
+        def flaky(url: str, *, user_agent: str = "", timeout: int = 0) -> dict:
+            asked["n"] += 1
+            answered = asked["n"] % 2 == 1
+            return {"url": url, "method": "HEAD", "status": 403 if answered else 520,
+                    "content_length_bytes": 1024 if answered else None,
+                    "error": None if answered else "TimeoutError",
+                    "content_bytes_read": False, "credentials_used": False}
+
+        first = build(cache=cache, head=flaky)
+        after_first = asked["n"]
+        second = build(cache=cache, head=flaky)
+        self.assertEqual(without_probe_mode(first), without_probe_mode(second))
+        self.assertEqual(first["sources"]["probed_from"], "network")
+        self.assertEqual(second["sources"]["probed_from"], "cache")
+        self.assertEqual(asked["n"], after_first, "the second round asked the network again")
+        self.assertTrue(second["gates"]["source_probe_answers_are_reusable"])
+        self.assertEqual(len(str(second["sources"]["probed_from_cache_sha256"])), 64)
+        # a source that was never asked must not be reported as if it had been
+        skipped = [entry for entry in second["sources"]["probed"]
+                   if entry.get("probe") == "skipped"]
+        self.assertTrue(skipped)
+        self.assertEqual({entry["probed_from"] for entry in skipped}, {"not_probed"})
 
 
 @require_workspace

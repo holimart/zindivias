@@ -19,7 +19,7 @@
     "lab_plan_config_sha256": "e7106107d63c5bd823c4b65fa3a32c5733cb02500ec5ee539cf99ddde01233cb",
     "prerequisite_report": "reports/lab-prerequisites.json",
     "lab_commit_source": "git rev-parse HEAD",
-    "prerequisite_report_sha256": "6c1b36fe960d4897b73f856d8c81df8dc0c91b2a3305be17442e34bfb41bf5ed",
+    "prerequisite_report_sha256": "a4121650a0ffb9c4cab753881764f140215f4003f8027d4db9e7807e3465b336",
     "lab_plan_module_sha256": "e106db411a7289a3e76d750d99935756a99530b15b75e257e1bdcceac7377249"
   },
   "operator_decision": {
@@ -307,6 +307,16 @@
       "field": "pins.prerequisite_report_sha256",
       "supersedes": "3e6b9fb7fa6ad2b9fe8db67a34ef9f2d7dbe09d623be893ad038a0941fa81001",
       "reason": "the prerequisite report records the frozen lab-plan config hash; when bias60-external-lab-build advanced recipe.self_check_status in config/bias60-lab-preregistered.json to report the measured road-ratio result, the prerequisite report changed and had to be re-pinned rather than quietly tolerated"
+    },
+    {
+      "field": "pins.prerequisite_report_sha256",
+      "supersedes": "6c1b36fe960d4897b73f856d8c81df8dc0c91b2a3305be17442e34bfb41bf5ed",
+      "reason": "the availability probe was made reproducible: HEAD answers are now cached and hash-tied, because the same HUD endpoint answered 520 in one run and timed out in the next, which left the committed prerequisite report unreproducible; re-pinning records the round the published status lines came from"
+    },
+    {
+      "field": "pins.prerequisite_report_sha256",
+      "supersedes": "8831d14a09ecbb2952725af3e7e2ed1a81d0995264dab0592238b4597fce9b87",
+      "reason": "the probe now labels each published status line by how it was obtained (cache, network, or never asked), so a source that registers no url can no longer be read as if it had been probed"
     }
   ]
 }

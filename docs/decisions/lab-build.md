@@ -1,6 +1,6 @@
 # Staged external-lab build: reference-derived coverage-gap labels for lab regions, outside the four study regions
 
-Staged build for `bias60-external-lab-build`. Config `b6586b6aa2cce55c…`, spec `f150649b34caebef…`, recipe variant `road-obs4cls-mtfcc-S1100S1200-5070-v1`.
+Staged build for `bias60-external-lab-build`. Config `fa5a7bf57a8c401c…`, spec `f150649b34caebef…`, recipe variant `road-obs4cls-mtfcc-S1100S1200-5070-v1`.
 
 ## Retrieval
 

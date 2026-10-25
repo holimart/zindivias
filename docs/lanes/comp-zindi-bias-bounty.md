@@ -1131,8 +1131,9 @@ two, so `bias60-external-lab-build` stays open.
 | NV | 674 | 674 | - | 32.637 km | 433 (64.24%) | 1.013391 (inside [0.71, 1.59]) |
 | NM | 612 | 610 | 1 official GEOID, 1 study county | 34.971 km | 506 (82.95%) | 0.654624 (below band, inside the 0.15 tolerance) |
 
-* 100 files staged under `$COMPETITION_WORKSPACE/lab/staging/{NV,NM}`: `manifest.json`,
-  `tracts.parquet`, `labels.parquet`, `defineness.json` plus the retrieved sources.
+* 94 files staged under `$COMPETITION_WORKSPACE/lab/staging/{NV,NM}`: per-group `manifest.json`,
+  `tracts.parquet`, `labels.parquet`, `defineness.json` plus the retrieved census zips, TIGER county
+  roads zips and Overture row-group slices with their provenance sidecars.
 * Retrieval: 41 unique URLs, 2 hosts (`www2.census.gov`, `overturemaps-us-west-2.s3...`),
   828,814,965 bytes transferred, `credentials_used: false`. 4,189,898,173 bytes of Overture objects
   were **listed**; 733,420,392 compressed bytes were read from 6 shards.
@@ -1185,14 +1186,21 @@ two, so `bias60-external-lab-build` stays open.
 * `estimator_reader_and_submitter_name_no_lab_token`: the 11 model-chain and uploader scripts contain
   no lab path, shard name or reference-layer token; `opened_paths` shows only the two preregistered
   configs, the prerequisite report and the two staged manifests.
-* 10/10 negative controls fire their expected gate: `fabricated_provenance` ->
-  `manifest_provenance_complete`, `temporal_field_added` -> `report_serialises_no_wall_clock`,
-  `undefined_rows_zero_filled` -> `undefined_never_scored_as_zero`, `weights_smuggle_lab_values` ->
-  `crossing_surface_is_bounded`, `groups_are_not_the_preregistered_ones` ->
-  `groups_are_the_preregistered_ones`, `study_geoid_in_lab` -> `study_geoid_exclusion_holds`,
-  `self_check_ignored` -> `recipe_self_checks_declared`, `model_reads_lab` ->
-  `model_and_submission_paths_cannot_read_lab`, `lab_root_in_repo` -> `lab_root_outside_repo`,
-  `budget_exceeded_not_enforced` -> `budget_caps_frozen_before_retrieval`. Unknown tampers are refused.
+* The 12 negative controls declared in `config/lab-build-preregistered.json` are the map the test
+  reads (`EXPECTED = dict(CONFIG["negative_controls"])`), so a control cannot be added to the config
+  without firing, and each one does: `study_geoid_in_url` -> `study_geoid_never_appears_in_a_url`,
+  `study_county_in_url` -> `study_county_never_appears_in_a_url`, `off_allowlist_host` ->
+  `retrieval_stayed_on_the_allowlist`, `downloaded_code_executed` ->
+  `no_downloaded_code_was_executed`, `lab_value_reaches_submission` ->
+  `lab_values_never_reached_a_submission_artifact`, `reference_computed_on_study_tract` ->
+  `no_study_tract_was_measured`, `measurement_without_lab_bytes` -> `no_measurement_without_bytes`,
+  `temporal_field_added` -> `report_has_no_temporal_field`, `self_check_fabricated` ->
+  `recipe_self_checks_passed`, `undefined_rows_zero_filled` -> `undefined_never_scored_as_zero`,
+  `missing_source_hash` -> `manifest_provenance_complete`, `accepted_tract_inside_buffer` ->
+  `nearest_distance_buffer_respected`. An undeclared tamper (`invented_a_number`) is refused with
+  `ValueError`, `groups_are_not_the_preregistered_ones` is accepted as a declared extra case and fires
+  `groups_are_the_preregistered_ones`, and a report built without manifests carries no measurement
+  block and fails `no_fabricated_measurement`.
 * Promotion refuses with `promotion requires 5 ready groups; 2 are staged: NM, NV`.
 
 ### Tests
@@ -1250,3 +1258,41 @@ bytes. Rather than leave a stale claim committed:
   it does not exist yet. `reports/candidates/`, `reports/candidates.json`, `reports/final-two.json` and
   `config/calibration.json` untouched.
 * No upload; no leaderboard access; no organiser form; no secret read.
+
+### A reproducibility defect found while making the other tests pass
+
+`tests/test_probe_lab_prerequisites.py::CommittedArtifactTests` began reporting `CHANGED` for
+`reports/lab-prerequisites.json` even with no code change. Two consecutive CLI runs produced reports
+that differed from each other:
+
+```
+.findings.sources_not_answered[2].status   None -> 520
+.sources.probed[7].alternates[0].error     TimeoutError -> None
+.sources.probed[7].status                  None -> 520
+```
+
+The cause was not a code bug in the exclusion or the maths: the availability probe asks the network
+live, and the HUD endpoint answered `520` on one round and timed out on the next. A published status
+line that can only be produced once is not a measurement the lane can keep, so:
+
+* HEAD answers are now cached beside the census geography cache
+  (`$COMPETITION_WORKSPACE/lab-prerequisites/source-probe.json`) and reused; `--reprobe` is the only
+  way to ask again, so a re-probe is a deliberate act rather than a side effect of running the script.
+* The report discloses how each published status line was obtained: `sources.probed_from` is
+  `cache`, `network` or `mixed`, every entry carries its own `probed_from`, and a cached round is
+  tied to its exact recorded answers by `sources.probed_from_cache_sha256`.
+* A source that registers no URL stays `probe: skipped` with `probed_from: not_probed`; caching must
+  not quietly turn "never asked" into "asked and answered".
+* New gate `source_probe_answers_are_reusable` (the probe report now carries 20 gates) fails if a
+  status line has no provenance or a cached round lacks its 64-hex tie.
+* New test `HeadAnswerCacheTests.test_the_published_head_answers_survive_a_rerun` runs the probe
+  against a deliberately flaky fake `head` twice on one cache directory and asserts the measurement
+  content is identical, the second round asks the network zero further times, the mode label flips to
+  `cache`, and skipped sources remain `not_probed`. The pre-existing two-run test now compares with
+  the mode disclosure (and the body self-hash that follows it) removed, which is the honest form of
+  the invariant: what must reproduce is the measurement, not the record of how it was obtained.
+
+The prerequisite report hash moved twice more during this row (`3e6b9fb7fa6ad2b9` ->
+`6c1b36fe960d4897` -> `a4121650a0ff...`), and each move is recorded as a `pin_amendments` entry in
+`config/lab-build-preregistered.json` with its reason, rather than being tolerated silently by the
+consumer.

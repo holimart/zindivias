@@ -224,8 +224,25 @@ def _https_form(url: str) -> str:
 
 
 def probe_sources(config: dict[str, Any], lab_config: dict[str, Any], *,
-                  head: Callable[..., dict[str, Any]]) -> list[dict[str, Any]]:
+                  head: Callable[..., dict[str, Any]], cache: Path | None = None,
+                  reprobe: bool = False) -> list[dict[str, Any]]:
+    """HEAD every registered source, or reuse the recorded answers.
+
+    A remote status line is not a reproducible measurement: the same URL answered 520 in one run and
+    timed out in the next, which would have made the committed report unreproducible. The answers are
+    therefore cached beside the geography cache, and a re-probe is an explicit act (--reprobe). The
+    report says which of the two it used.
+    """
     settings = config["source_probe"]
+    cache_file = (Path(cache) / "source-probe.json") if cache else None
+    if cache_file is not None and cache_file.is_file() and not reprobe:
+        cached = json.loads(cache_file.read_text(encoding="utf-8"))
+        registered = [source["id"] for source in lab_config["sources"]]
+        if [entry["id"] for entry in cached] == registered:
+            for entry in cached:
+                # a skipped source was never asked, so caching must not claim that it was
+                entry["probed_from"] = "cache" if entry.get("probe") == "attempted" else "not_probed"
+            return cached
     probed: list[dict[str, Any]] = []
     for source in lab_config["sources"]:
         entry: dict[str, Any] = {"id": source["id"], "role": source.get("role"),
@@ -233,7 +250,7 @@ def probe_sources(config: dict[str, Any], lab_config: dict[str, Any], *,
                                  "content_bytes_read": False, "credentials_used": False}
         url = source.get("url")
         if not url or source["id"] in settings["not_probeable"]:
-            entry.update({"status": None, "probe": "skipped",
+            entry.update({"status": None, "probe": "skipped", "probed_from": "not_probed",
                           "reason": settings["not_probeable"].get(
                               source["id"], "no url registered for this source")})
         else:
@@ -255,11 +272,17 @@ def probe_sources(config: dict[str, Any], lab_config: dict[str, Any], *,
             entry["alternates"] = alternates
             answered = [item for item in alternates if item["status"] == 200]
             entry["alternate_that_answers"] = answered[0]["url"] if answered else None
+        entry["probed_from"] = "network"
         probed.append(entry)
+    if cache_file is not None:
+        cache_file.parent.mkdir(parents=True, exist_ok=True)
+        cache_file.write_text(json.dumps([{**entry, "probed_from": None} for entry in probed],
+                                         indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return probed
 
 
 def probe(config: dict[str, Any], lab_config: dict[str, Any], workspace: Path, cache: Path, *,
+          reprobe: bool = False,
           head: Callable[..., dict[str, Any]] = http_head,
           get: Callable[..., dict[str, Any]] = http_get,
           records_for_state: Callable[[str], list[dict[str, Any]]] | None = None,
@@ -341,7 +364,7 @@ def probe(config: dict[str, Any], lab_config: dict[str, Any], workspace: Path, c
             "ready": len(accepted) >= config["acceptance"]["minimum_accepted_tracts_per_group"],
         })
 
-    sources = probe_sources(config, lab_config, head=head)
+    sources = probe_sources(config, lab_config, head=head, cache=cache, reprobe=reprobe)
     if tamper == "source_probe_reads_bytes":
         sources[0].update({"method": "GET", "content_bytes_read": True,
                            "content_length_bytes": 4096})
@@ -373,6 +396,16 @@ def probe(config: dict[str, Any], lab_config: dict[str, Any], workspace: Path, c
             "negative_controls_declared": [case["id"] for case in config["negative_controls"]],
         },
         "sources": {"probed": sources, "registered": len(lab_config["sources"]),
+                    "probed_from": (lambda asked: (
+                        "cache" if asked and all(entry["probed_from"] == "cache"
+                                                 for entry in asked) else
+                        "network" if asked and all(entry["probed_from"] == "network"
+                                                   for entry in asked) else "mixed"))(
+                        [entry for entry in sources if entry.get("probe") == "attempted"]),
+                    "probed_from_cache_sha256": (
+                        None if (cache is None or not (Path(cache) / "source-probe.json").is_file())
+                        else hashlib.sha256((Path(cache) / "source-probe.json").read_bytes())
+                        .hexdigest()),
                     "credentials_used": any(entry.get("credentials_used") for entry in sources),
                     "content_bytes_read_by_probe": any(entry.get("content_bytes_read")
                                                        for entry in sources)},
@@ -457,6 +490,16 @@ def evaluate_gates(report: dict[str, Any], config: dict[str, Any],
             entry["method"] == "HEAD" and entry["content_bytes_read"] is False
             for entry in report["sources"]["probed"]),
         "source_probe_credentials_unused": report["sources"]["credentials_used"] is False,
+        # a remote status line is not a measurement if it can only be produced once: the answers the
+        # report publishes must be the answers a re-run will produce again
+        "source_probe_answers_are_reusable": bool(
+            report["sources"]["probed_from"] in ("cache", "network", "mixed")
+            and all(entry.get("probed_from") in ("cache", "network", "not_probed")
+                    for entry in report["sources"]["probed"])
+            # a cached round must still be a traceable round: the published status lines are tied to
+            # the exact recorded answers by their hash
+            and (report["sources"]["probed_from"] != "cache"
+                 or len(str(report["sources"]["probed_from_cache_sha256"])) == 64)),
         "only_public_census_geography_downloaded": bool(download_urls) and all(
             host_of(url) in allowed_hosts
             and url == geometry["url_pattern"].replace("<ss>", state_of_filename(url))
@@ -490,7 +533,7 @@ def evaluate_gates(report: dict[str, Any], config: dict[str, Any],
 
 def build_report(config: dict[str, Any], *, workspace: Path,
                  lab_config: Path = DEFAULT_LAB_CONFIG, cache: Path | None = None,
-                 tamper: str | None = None,
+                 tamper: str | None = None, reprobe: bool = False,
                  head: Callable[..., dict[str, Any]] = http_head,
                  get: Callable[..., dict[str, Any]] = http_get,
                  records_for_state: Callable[[str], list[dict[str, Any]]] | None = None,
@@ -514,6 +557,7 @@ def build_report(config: dict[str, Any], *, workspace: Path,
                      if tamper == "cache_written_into_lab_root" else None)
 
     report = probe(config, lab_document, workspace, cache_dir, head=head, get=get,
+                   reprobe=reprobe,
                    records_for_state=records_for_state, tamper=tamper)
     if tamper == "temporal_field_added":
         # a wall-clock field is injected where a real run would be tempted to put one
@@ -703,13 +747,16 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--out", default=str(DEFAULT_OUT))
     parser.add_argument("--markdown", default=str(DEFAULT_MARKDOWN))
     parser.add_argument("--tamper", default=None)
+    parser.add_argument("--reprobe", action="store_true",
+                        help="ask the network again instead of reusing the recorded HEAD answers")
     parser.add_argument("--check-only", action="store_true")
     args = parser.parse_args(argv)
 
     lab_plan.set_recorder(record)
     config = load_config(Path(args.config))
     report = build_report(config, workspace=Path(args.workspace), lab_config=Path(args.lab_config),
-                          cache=Path(args.cache) if args.cache else None, tamper=args.tamper)
+                          cache=Path(args.cache) if args.cache else None, tamper=args.tamper,
+                          reprobe=args.reprobe)
     payload = canonical_bytes(report)
     markdown = render_markdown(report)
     out_path = Path(args.out)
