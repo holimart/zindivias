@@ -1,0 +1,1317 @@
+{
+  "schema_version": 1,
+  "row": "bias-writeup-claim-evidence-audit",
+  "intent": "documentation screen: every quantitative statement in the Best Bias Discovery / Best Documentation writeup must carry an exact evidence pointer and a reproducible command; not a model-promotion or accuracy assessment",
+  "docs": [
+    "docs/writeup/bias-discovery.md",
+    "docs/writeup/methodology.md",
+    "docs/writeup/edge-cases.md"
+  ],
+  "workspace_rules": "RULES.md",
+  "evidence_allowlist": [
+    "reports/building-morphology-candidate.json",
+    "reports/building-source-mix.json",
+    "reports/building-source-prior.json",
+    "reports/building-v2-audit.json",
+    "reports/candidate-stability-envelope.json",
+    "reports/candidates.json",
+    "reports/confidence-by-stratum.json",
+    "reports/cross-theme-support.json",
+    "reports/density-context-candidate.json",
+    "reports/discovery-ok-tribal-ems.json",
+    "reports/discovery-postfire.json",
+    "reports/discovery-rural-svi-minority.json",
+    "reports/discovery-strata-confound.json",
+    "reports/edge-cases.json",
+    "reports/establishments-sensitivity.json",
+    "reports/estimator-sensitivity.json",
+    "reports/estimator-v1-audit.json",
+    "reports/estimator-v2-audit.json",
+    "reports/estimator-v2-prerequisite-gate.json",
+    "reports/facility-catchment-candidate.json",
+    "reports/final-two.json",
+    "reports/full-id-candidate-audit.json",
+    "reports/gap-estimator-audit.json",
+    "reports/gap-invariant-audit.json",
+    "reports/lb-score-algebra.json",
+    "reports/lb-subset-moments.json",
+    "reports/maricopa-route-ratio-diagnostic.json",
+    "reports/place-dedup.json",
+    "reports/poi-category-audit.json",
+    "reports/poi-confidence-candidate.json",
+    "reports/poi-facility-miss-audit.json",
+    "reports/probe-retirement-2026-10-24.json",
+    "reports/region-probe-preregistration.json",
+    "reports/region-subset-cell-definitions.json",
+    "reports/reproduce-run.json",
+    "reports/road-topology-candidate.json",
+    "reports/sample-contract-audit.json",
+    "reports/schema-presence-candidate.json",
+    "reports/source-freshness-candidate.json",
+    "reports/source-provenance.json",
+    "reports/transport-route-ref-audit.json",
+    "reports/transport-route-variants.json",
+    "reports/v2-defined-mask-audit.json",
+    "reports/v2-input-provenance.json",
+    "reports/v2-prior-envelope.json",
+    "reports/v2-strata-descriptive-audit.json",
+    "reports/candidates/candidate_stability_envelope_manifest.json",
+    "reports/candidates/cross_theme_support_manifest.json",
+    "reports/candidates/density_context_candidate_manifest.json",
+    "reports/candidates/facility_catchment_candidate_manifest.json",
+    "reports/candidates/poi_confidence_weighted_manifest.json",
+    "reports/candidates/road_topology_candidate_manifest.json",
+    "reports/candidates/schema_presence_candidate_manifest.json",
+    "reports/candidates/source_freshness_candidate_manifest.json",
+    "reports/candidates/v2_input_provenance_manifest.json",
+    "config/building-morphology-preregistered.json",
+    "config/building-source-prior-preregistered.json",
+    "config/candidate-stability-envelope-preregistered.json",
+    "config/cross-theme-support-preregistered.json",
+    "config/density-context-preregistered.json",
+    "config/facility-catchment-preregistered.json",
+    "config/poi-category-definitions.json",
+    "config/poi-confidence-weighting-preregistered.json",
+    "config/reproduction-inputs.json",
+    "config/road-topology-preregistered.json",
+    "config/schema-presence-preregistered.json",
+    "config/source-freshness-preregistered.json",
+    "config/v2-component-mask-audit-preregistered.json",
+    "config/v2-input-provenance-preregistered.json",
+    "config/v2-prior-envelope-preregistered.json",
+    "config/v2-strata-descriptive-preregistered.json",
+    "docs/data-inventory.md",
+    "docs/competition.md",
+    "docs/decisions/building-component.md",
+    "docs/decisions/establishments-half.md",
+    "docs/literature/README.md",
+    "docs/literature/completeness-prior-art.md",
+    "docs/writeup/probe-log.md",
+    "scripts/audit_building_source_mix.py",
+    "scripts/audit_building_v2.py",
+    "scripts/audit_data.py",
+    "scripts/audit_edge_cases.py",
+    "scripts/audit_establishments_sensitivity.py",
+    "scripts/audit_gap_invariants.py",
+    "scripts/audit_maricopa_route_ratio.py",
+    "scripts/audit_place_duplicates.py",
+    "scripts/audit_poi_categories.py",
+    "scripts/audit_sample_contract.py",
+    "scripts/audit_transport_route_variants.py",
+    "scripts/audit_v2_component_masks.py",
+    "scripts/audit_v2_input_provenance.py",
+    "scripts/audit_v2_prior_envelope.py",
+    "scripts/audit_v2_strata_distribution.py",
+    "scripts/audit_writeup_claim_evidence.py",
+    "scripts/build_building_morphology_candidate.py",
+    "scripts/build_building_source_prior.py",
+    "scripts/build_c0_candidate.py",
+    "scripts/build_candidate_stability_envelope.py",
+    "scripts/build_cross_theme_support_candidate.py",
+    "scripts/build_density_context_candidate.py",
+    "scripts/build_estimator_v1_candidates.py",
+    "scripts/build_estimator_v2_candidates.py",
+    "scripts/build_facility_catchment_candidate.py",
+    "scripts/build_full_id_candidates.py",
+    "scripts/build_poi_confidence_candidate.py",
+    "scripts/build_region_probes.py",
+    "scripts/build_road_topology_candidate.py",
+    "scripts/build_schema_presence_candidate.py",
+    "scripts/build_source_freshness_candidate.py",
+    "scripts/compare_estimator_variants.py",
+    "scripts/discovery_confidence_by_stratum.py",
+    "scripts/discovery_ok_tribal_ems.py",
+    "scripts/discovery_postfire_stale_reference.py",
+    "scripts/discovery_rural_svi_minority.py",
+    "scripts/discovery_source_provenance.py",
+    "scripts/discovery_strata_confound.py",
+    "scripts/estimate_defined_flags.py",
+    "scripts/estimate_gaps.py",
+    "scripts/estimator_v2_building.py",
+    "scripts/estimator_v2_establishments.py",
+    "scripts/fetch_repro_inputs.py",
+    "scripts/lb_score_algebra.py",
+    "scripts/lb_subset_algebra.py",
+    "scripts/record_reproduce_run.py",
+    "scripts/render_probe_log.py",
+    "scripts/reproduce_candidates.py",
+    "scripts/reproduce_pipeline.py",
+    "scripts/submit_zindi.py",
+    "scripts/verify_writeup_claim.py",
+    "WORKSPACE:RULES.md"
+  ],
+  "reproduce_command_aliases": {
+    "SEE_DISCOVERY_RURAL_SVI": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
+    "SEE_EDGE_CASES": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/audit_edge_cases.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/edge-cases.json"
+  },
+  "tokenizer": {
+    "pattern": "(?<![A-Za-z0-9_.+-])\\d[\\d,]*(?:\\.\\d+)?(?![A-Za-z0-9_])",
+    "keep_inline_code": "^[\\d,.+\\-]+$",
+    "identifier_minimum_digits": 9,
+    "informative": {
+      "minimum_decimals": 3,
+      "minimum_absolute": 1000,
+      "minimum_absolute_with_decimal": 10
+    },
+    "value_scales": [
+      1.0,
+      100.0
+    ],
+    "maximum_decimals": 6
+  },
+  "provenance_classes": {
+    "measured_provided_data": "recomputed from organiser-provided inputs by a committed script",
+    "measured_provided_proxy": "prediction of an unvalidated provided-data proxy candidate",
+    "measured_model_only": "aggregate of a frozen model-only component or candidate",
+    "input_inventory": "byte/row/hash inventory of organiser-provided objects",
+    "model_specification": "fixed formula or constant declared in committed code/config",
+    "historical_disclosure": "archived leaderboard-era experiment, disclosed for transparency and explicitly not model evidence",
+    "disclosed_rules": "value published by the organisers in the captured official rules",
+    "scope_statement": "scope or status statement, quantifier only",
+    "policy_statement": "handling rule chosen by the team, quantifier only",
+    "reproduction_statement": "statement about how an artifact is reproduced",
+    "limitation_statement": "statement of what an analysis does not show",
+    "hypothetical_impact": "explicitly hypothetical consequence"
+  },
+  "accuracy_claim_patterns": [
+    "rmse",
+    "public score",
+    "public leaderboard",
+    "leaderboard score",
+    "hidden score",
+    "true score",
+    "accuracy"
+  ],
+  "accuracy_claim_allowed_classes": [
+    "historical_disclosure",
+    "disclosed_rules",
+    "limitation_statement",
+    "scope_statement",
+    "reproduction_statement",
+    "policy_statement"
+  ],
+  "prohibited_tokens": [
+    "tiger",
+    "ms-buildings",
+    "ms_buildings",
+    "msbuilding",
+    "usgs",
+    "cbp",
+    "carbonplan",
+    "usfs",
+    "ntad",
+    "openrailwaymap",
+    "mapillary",
+    "maxar",
+    "google",
+    "bing",
+    "labels",
+    "label_",
+    "submissions.jsonl",
+    "lb-score-algebra",
+    "lb-subset-moments",
+    "lb-calibration",
+    "config/calibration.json",
+    "storage_state",
+    "auth_token",
+    "0.3288136427728255",
+    "alpha_c1",
+    "beta_constrained",
+    "beta_unconstrained",
+    "global_constant_c"
+  ],
+  "prohibited_allowed_classes": [
+    "historical_disclosure",
+    "limitation_statement",
+    "policy_statement",
+    "reproduction_statement",
+    "scope_statement",
+    "measured_provided_data",
+    "input_inventory"
+  ],
+  "hedge_required_classes": [
+    "hypothetical_impact",
+    "measured_provided_proxy"
+  ],
+  "hedge_phrases": [
+    "not a claim",
+    "does not establish",
+    "not establish",
+    "hypothesis",
+    "plausible risk",
+    "not measured",
+    "no evidence",
+    "does not show",
+    "not evidence",
+    "not a claim about",
+    "must not be interpreted",
+    "not confidence intervals",
+    "exploratory",
+    "descriptive",
+    "not accuracy",
+    "do not demonstrate score accuracy",
+    "not a claim of model accuracy",
+    "unvalidated",
+    "draft for operator review"
+  ],
+  "inventory": "reports/writeup-claim-inventory.json",
+  "execution_log": "reports/writeup-claim-evidence-execution.json",
+  "report": "reports/writeup-claim-evidence-audit.json",
+  "audit_markdown": "docs/writeup/claim-evidence-audit.md",
+  "command_timeout_seconds": 1800,
+  "acceptance": {
+    "inventory_matches_docs_and_config": true,
+    "all_claim_anchors_verbatim": true,
+    "every_quantitative_claim_has_evidence_pointer": true,
+    "every_quantitative_claim_has_reproducible_command": true,
+    "all_numeric_tokens_covered": true,
+    "all_evidence_hashes_verified": true,
+    "all_primary_pointers_hit": true,
+    "all_verify_commands_exit_zero": true,
+    "all_reproduce_products_hash_verified": true,
+    "all_reproduce_commands_exit_zero": true,
+    "no_unsupported_accuracy_claim": true,
+    "no_prohibited_source_used_as_model_evidence": true,
+    "hedged_language_present_where_required": true,
+    "writeup_carries_no_prohibited_open": true,
+    "no_upload_and_no_model_change": true,
+    "all_passed": true
+  },
+  "sections": [
+    {
+      "doc": "docs/writeup/bias-discovery.md",
+      "section": "Impact",
+      "occurrence": 1,
+      "evidence": [
+        "reports/discovery-postfire.json"
+      ],
+      "reproduce": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
+      "products": [
+        "reports/discovery-postfire.json",
+        "reports/discovery-postfire-map.png"
+      ],
+      "provenance_class": "measured_provided_data"
+    },
+    {
+      "doc": "docs/writeup/bias-discovery.md",
+      "section": "Novelty",
+      "occurrence": 1,
+      "evidence": [
+        "reports/discovery-postfire.json"
+      ],
+      "reproduce": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
+      "products": [
+        "reports/discovery-postfire.json"
+      ],
+      "provenance_class": "measured_provided_data"
+    },
+    {
+      "doc": "docs/writeup/bias-discovery.md",
+      "section": "Evidence",
+      "occurrence": 1,
+      "evidence": [
+        "reports/discovery-postfire.json"
+      ],
+      "reproduce": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
+      "products": [
+        "reports/discovery-postfire.json",
+        "reports/discovery-postfire-map.png"
+      ],
+      "provenance_class": "measured_provided_data"
+    },
+    {
+      "doc": "docs/writeup/bias-discovery.md",
+      "section": "Reproducibility",
+      "occurrence": 1,
+      "evidence": [
+        "reports/discovery-postfire.json"
+      ],
+      "reproduce": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
+      "products": [
+        "reports/discovery-postfire.json"
+      ],
+      "provenance_class": "reproduction_statement"
+    },
+    {
+      "doc": "docs/writeup/bias-discovery.md",
+      "section": "Section 2 — Scorecard strata are strongly region-composition confounded",
+      "occurrence": 1,
+      "evidence": [
+        "reports/discovery-strata-confound.json"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_strata_confound.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-strata-confound.json",
+      "products": [
+        "reports/discovery-strata-confound.json"
+      ],
+      "provenance_class": "measured_provided_data"
+    },
+    {
+      "doc": "docs/writeup/bias-discovery.md",
+      "section": "Impact",
+      "occurrence": 2,
+      "evidence": [
+        "reports/discovery-strata-confound.json"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_strata_confound.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-strata-confound.json",
+      "products": [
+        "reports/discovery-strata-confound.json"
+      ],
+      "provenance_class": "hypothetical_impact"
+    },
+    {
+      "doc": "docs/writeup/bias-discovery.md",
+      "section": "Novelty",
+      "occurrence": 2,
+      "evidence": [
+        "reports/discovery-strata-confound.json",
+        "WORKSPACE:RULES.md"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_strata_confound.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-strata-confound.json",
+      "products": [
+        "reports/discovery-strata-confound.json"
+      ],
+      "provenance_class": "measured_provided_data"
+    },
+    {
+      "doc": "docs/writeup/bias-discovery.md",
+      "section": "Evidence",
+      "occurrence": 2,
+      "evidence": [
+        "reports/discovery-strata-confound.json",
+        "reports/transport-route-ref-audit.json",
+        "WORKSPACE:RULES.md"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_strata_confound.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-strata-confound.json",
+      "products": [
+        "reports/discovery-strata-confound.json"
+      ],
+      "provenance_class": "measured_provided_data"
+    },
+    {
+      "doc": "docs/writeup/bias-discovery.md",
+      "section": "Reproducibility",
+      "occurrence": 2,
+      "evidence": [
+        "reports/discovery-strata-confound.json"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_strata_confound.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-strata-confound.json",
+      "products": [
+        "reports/discovery-strata-confound.json"
+      ],
+      "provenance_class": "reproduction_statement"
+    },
+    {
+      "doc": "docs/writeup/bias-discovery.md",
+      "section": "Secondary exploratory lead — rural × SVI minority-domain screen in South-Central Texas",
+      "occurrence": 1,
+      "evidence": [
+        "reports/discovery-rural-svi-minority.json"
+      ],
+      "reproduce": "SEE_DISCOVERY_RURAL_SVI",
+      "products": [
+        "reports/discovery-rural-svi-minority.json"
+      ],
+      "provenance_class": "measured_provided_proxy"
+    },
+    {
+      "doc": "docs/writeup/bias-discovery.md",
+      "section": "Proposed pattern outside the published scorecard grid",
+      "occurrence": 1,
+      "evidence": [
+        "reports/discovery-rural-svi-minority.json"
+      ],
+      "reproduce": "SEE_DISCOVERY_RURAL_SVI",
+      "products": [
+        "reports/discovery-rural-svi-minority.json"
+      ],
+      "provenance_class": "measured_provided_proxy"
+    },
+    {
+      "doc": "docs/writeup/bias-discovery.md",
+      "section": "Quantified proxy evidence",
+      "occurrence": 1,
+      "evidence": [
+        "reports/discovery-rural-svi-minority.json"
+      ],
+      "reproduce": "SEE_DISCOVERY_RURAL_SVI",
+      "products": [
+        "reports/discovery-rural-svi-minority.json"
+      ],
+      "provenance_class": "measured_provided_proxy"
+    },
+    {
+      "doc": "docs/writeup/bias-discovery.md",
+      "section": "Why this may matter; what it does not show",
+      "occurrence": 1,
+      "evidence": [
+        "reports/discovery-rural-svi-minority.json"
+      ],
+      "reproduce": "SEE_DISCOVERY_RURAL_SVI",
+      "products": [
+        "reports/discovery-rural-svi-minority.json"
+      ],
+      "provenance_class": "hypothetical_impact"
+    },
+    {
+      "doc": "docs/writeup/bias-discovery.md",
+      "section": "Reproduction",
+      "occurrence": 1,
+      "evidence": [
+        "reports/discovery-rural-svi-minority.json"
+      ],
+      "reproduce": "SEE_DISCOVERY_RURAL_SVI",
+      "products": [
+        "reports/discovery-rural-svi-minority.json"
+      ],
+      "provenance_class": "reproduction_statement"
+    },
+    {
+      "doc": "docs/writeup/bias-discovery.md",
+      "section": "Section 3 — Overture source mix differs across tract strata",
+      "occurrence": 1,
+      "evidence": [
+        "reports/source-provenance.json",
+        "docs/data-inventory.md"
+      ],
+      "reproduce": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python --with matplotlib==3.10.8 scripts/discovery_source_provenance.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/source-provenance.json --figure reports/source-provenance.png",
+      "products": [
+        "reports/source-provenance.json",
+        "reports/source-provenance.png"
+      ],
+      "provenance_class": "measured_provided_data"
+    },
+    {
+      "doc": "docs/writeup/methodology.md",
+      "section": "Reproducible methodology for the Bias Bounty coverage-gap challenge",
+      "evidence": [
+        "reports/candidates.json"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with pytest python -m pytest -q",
+      "products": [],
+      "provenance_class": "scope_statement"
+    },
+    {
+      "doc": "docs/writeup/methodology.md",
+      "section": "Rubric checklist and reading guide",
+      "evidence": [
+        "reports/candidates.json"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with pytest python -m pytest -q",
+      "products": [],
+      "provenance_class": "scope_statement"
+    },
+    {
+      "doc": "docs/writeup/methodology.md",
+      "section": "Data sources, scope, and provenance",
+      "evidence": [
+        "docs/data-inventory.md",
+        "reports/sample-contract-audit.json",
+        "reports/v2-input-provenance.json"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/audit_sample_contract.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/sample-contract-audit.json",
+      "products": [
+        "reports/sample-contract-audit.json"
+      ],
+      "provenance_class": "input_inventory"
+    },
+    {
+      "doc": "docs/writeup/methodology.md",
+      "section": "Organiser scoring context and our calculations",
+      "evidence": [
+        "config/reproduction-inputs.json",
+        "scripts/estimate_gaps.py",
+        "reports/estimator-v1-audit.json"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v1_candidates.py --workspace \"$COMPETITION_WORKSPACE\" --out-dir reports/estimator-v1 --out-report reports/estimator-v1-audit.json",
+      "products": [
+        "reports/estimator-v1-audit.json"
+      ],
+      "provenance_class": "model_specification"
+    },
+    {
+      "doc": "docs/writeup/methodology.md",
+      "section": "Alternative components and aggregation choices",
+      "evidence": [
+        "reports/candidates.json"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v2_candidates.py --workspace \"$COMPETITION_WORKSPACE\"",
+      "products": [
+        "reports/candidates.json"
+      ],
+      "provenance_class": "historical_disclosure"
+    },
+    {
+      "doc": "docs/writeup/methodology.md",
+      "section": "Historical leaderboard calibration (transparency only; not reusable)",
+      "evidence": [
+        "reports/lb-score-algebra.json",
+        "reports/submissions.jsonl"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/render_probe_log.py --out docs/writeup/probe-log.md",
+      "products": [
+        "docs/writeup/probe-log.md"
+      ],
+      "provenance_class": "historical_disclosure"
+    },
+    {
+      "doc": "docs/writeup/methodology.md",
+      "section": "Model-only v2 components and approval gates",
+      "evidence": [
+        "reports/estimator-v2-audit.json"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v2_candidates.py --workspace \"$COMPETITION_WORKSPACE\"",
+      "products": [
+        "reports/estimator-v2-audit.json",
+        "reports/candidates/V2_model.csv"
+      ],
+      "provenance_class": "measured_model_only"
+    },
+    {
+      "doc": "docs/writeup/methodology.md",
+      "section": "Edge cases, bias discovery, and interpretation",
+      "evidence": [
+        "reports/edge-cases.json",
+        "docs/data-inventory.md",
+        "reports/v2-defined-mask-audit.json"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/audit_edge_cases.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/edge-cases.json",
+      "products": [
+        "reports/edge-cases.json"
+      ],
+      "provenance_class": "measured_provided_data"
+    },
+    {
+      "doc": "docs/writeup/methodology.md",
+      "section": "Reproduction and recommendations",
+      "evidence": [
+        "reports/reproduce-run.json"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with pytest python -m pytest -q",
+      "products": [
+        "reports/reproduce-run.json"
+      ],
+      "provenance_class": "reproduction_statement"
+    },
+    {
+      "doc": "docs/writeup/methodology.md",
+      "section": "Route-reference transport v2 (provided Overture only)",
+      "evidence": [
+        "reports/transport-route-ref-audit.json"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/estimate_gaps.py --workspace \"$COMPETITION_WORKSPACE\" --route-audit-only --route-audit-out reports/transport-route-ref-audit.json",
+      "products": [
+        "reports/transport-route-ref-audit.json"
+      ],
+      "provenance_class": "measured_provided_data"
+    },
+    {
+      "doc": "docs/writeup/methodology.md",
+      "section": "Connector-graph road topology sensitivity (analysis only)",
+      "evidence": [
+        "reports/road-topology-candidate.json",
+        "reports/candidates/road_topology_candidate_manifest.json"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_road_topology_candidate.py --workspace \"$COMPETITION_WORKSPACE\"",
+      "products": [
+        "reports/road-topology-candidate.json"
+      ],
+      "provenance_class": "measured_provided_data"
+    },
+    {
+      "doc": "docs/writeup/methodology.md",
+      "section": "Route denominator sensitivity and selected definition",
+      "evidence": [
+        "reports/transport-route-variants.json",
+        "reports/transport-route-ref-audit.json"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/audit_transport_route_variants.py --workspace \"$COMPETITION_WORKSPACE\"",
+      "products": [
+        "reports/transport-route-variants.json"
+      ],
+      "provenance_class": "measured_provided_data"
+    },
+    {
+      "doc": "docs/writeup/methodology.md",
+      "section": "POI numerator audit and selected category definitions (2026-10-24)",
+      "evidence": [
+        "reports/poi-category-audit.json"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/audit_poi_categories.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/poi-category-audit.json",
+      "products": [
+        "reports/poi-category-audit.json"
+      ],
+      "provenance_class": "measured_provided_data"
+    },
+    {
+      "doc": "docs/writeup/methodology.md",
+      "section": "50 m same-name facility dedup sensitivity",
+      "evidence": [
+        "reports/place-dedup.json",
+        "config/poi-category-definitions.json"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/audit_place_duplicates.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/place-dedup.json",
+      "products": [
+        "reports/place-dedup.json"
+      ],
+      "provenance_class": "measured_provided_data"
+    },
+    {
+      "doc": "docs/writeup/methodology.md",
+      "section": "Facility-miss POI v2 (fixed prior; model-only audit)",
+      "evidence": [
+        "reports/poi-facility-miss-audit.json"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/estimate_gaps.py --workspace \"$COMPETITION_WORKSPACE\" --poi-model facility-miss",
+      "products": [
+        "reports/poi-facility-miss-audit.json"
+      ],
+      "provenance_class": "measured_model_only"
+    },
+    {
+      "doc": "docs/writeup/methodology.md",
+      "section": "POI confidence-weighted count sensitivity (fixed thresholds)",
+      "evidence": [
+        "reports/poi-confidence-candidate.json"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_poi_confidence_candidate.py --workspace \"$COMPETITION_WORKSPACE\"",
+      "products": [
+        "reports/poi-confidence-candidate.json"
+      ],
+      "provenance_class": "measured_model_only"
+    },
+    {
+      "doc": "docs/writeup/methodology.md",
+      "section": "Overture POI confidence by SVI and urbanity",
+      "evidence": [
+        "reports/confidence-by-stratum.json"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_confidence_by_stratum.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/confidence-by-stratum.json",
+      "products": [
+        "reports/confidence-by-stratum.json"
+      ],
+      "provenance_class": "measured_provided_data"
+    },
+    {
+      "doc": "docs/writeup/methodology.md",
+      "section": "Discovery screen",
+      "evidence": [
+        "reports/discovery-rural-svi-minority.json"
+      ],
+      "reproduce": "SEE_DISCOVERY_RURAL_SVI",
+      "products": [
+        "reports/discovery-rural-svi-minority.json"
+      ],
+      "provenance_class": "measured_provided_proxy"
+    },
+    {
+      "doc": "docs/writeup/methodology.md",
+      "section": "Limitations and interpretation",
+      "evidence": [
+        "reports/discovery-rural-svi-minority.json"
+      ],
+      "reproduce": "SEE_DISCOVERY_RURAL_SVI",
+      "products": [
+        "reports/discovery-rural-svi-minority.json"
+      ],
+      "provenance_class": "limitation_statement"
+    },
+    {
+      "doc": "docs/writeup/edge-cases.md",
+      "section": "Edge-case register for the coverage-gap methodology",
+      "evidence": [
+        "reports/edge-cases.json",
+        "docs/data-inventory.md",
+        "reports/v2-defined-mask-audit.json"
+      ],
+      "reproduce": "SEE_EDGE_CASES",
+      "products": [
+        "reports/edge-cases.json"
+      ],
+      "provenance_class": "scope_statement"
+    },
+    {
+      "doc": "docs/writeup/edge-cases.md",
+      "section": "Observed edge cases",
+      "evidence": [
+        "reports/edge-cases.json",
+        "docs/data-inventory.md",
+        "reports/v2-defined-mask-audit.json"
+      ],
+      "reproduce": "SEE_EDGE_CASES",
+      "products": [
+        "reports/edge-cases.json"
+      ],
+      "provenance_class": "measured_provided_data"
+    },
+    {
+      "doc": "docs/writeup/edge-cases.md",
+      "section": "Model-only v2 predictions for edge groups",
+      "evidence": [
+        "reports/edge-cases.json",
+        "docs/data-inventory.md",
+        "reports/v2-defined-mask-audit.json"
+      ],
+      "reproduce": "SEE_EDGE_CASES",
+      "products": [
+        "reports/edge-cases.json"
+      ],
+      "provenance_class": "measured_model_only"
+    },
+    {
+      "doc": "docs/writeup/edge-cases.md",
+      "section": "Handling policy",
+      "evidence": [
+        "reports/edge-cases.json",
+        "docs/data-inventory.md",
+        "reports/v2-defined-mask-audit.json"
+      ],
+      "reproduce": "SEE_EDGE_CASES",
+      "products": [
+        "reports/edge-cases.json"
+      ],
+      "provenance_class": "policy_statement"
+    },
+    {
+      "doc": "docs/writeup/edge-cases.md",
+      "section": "Reproduce the aggregate audit",
+      "evidence": [
+        "reports/edge-cases.json",
+        "docs/data-inventory.md",
+        "reports/v2-defined-mask-audit.json"
+      ],
+      "reproduce": "SEE_EDGE_CASES",
+      "products": [
+        "reports/edge-cases.json"
+      ],
+      "provenance_class": "reproduction_statement"
+    },
+    {
+      "doc": "docs/writeup/bias-discovery.md",
+      "section": "*",
+      "occurrence": "any",
+      "evidence": [
+        "reports/discovery-postfire.json",
+        "reports/discovery-strata-confound.json",
+        "reports/discovery-rural-svi-minority.json",
+        "reports/source-provenance.json",
+        "docs/data-inventory.md"
+      ],
+      "reproduce": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
+      "products": [
+        "reports/discovery-postfire.json"
+      ],
+      "provenance_class": "measured_provided_data"
+    },
+    {
+      "doc": "docs/writeup/methodology.md",
+      "section": "*",
+      "occurrence": "any",
+      "evidence": [
+        "reports/estimator-v2-audit.json",
+        "reports/candidates.json",
+        "docs/data-inventory.md"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v2_candidates.py --workspace \"$COMPETITION_WORKSPACE\"",
+      "products": [
+        "reports/estimator-v2-audit.json",
+        "reports/candidates/V2_model.csv"
+      ],
+      "provenance_class": "measured_model_only"
+    },
+    {
+      "doc": "docs/writeup/edge-cases.md",
+      "section": "*",
+      "occurrence": "any",
+      "evidence": [
+        "reports/edge-cases.json",
+        "docs/data-inventory.md"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/audit_edge_cases.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/edge-cases.json",
+      "products": [
+        "reports/edge-cases.json"
+      ],
+      "provenance_class": "measured_provided_data"
+    }
+  ],
+  "verify_command_template": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim {claim_id}",
+  "accuracy_assertion_patterns": [
+    "(rmse|public score|public leaderboard score|our score)[^.;]{0,60}0\\.\\d{3,}",
+    "(hidden|organiser|organizer|true) (score|target)[^.;]{0,40}0\\.\\d{3,}",
+    "\\bscored (at |0\\.)?\\s*0\\.\\d{3,}",
+    "\\bwe (scored|submitted)[^.;]{0,40}0\\.\\d{3,}"
+  ],
+  "accuracy_evidence_required": [
+    "reports/submissions.jsonl",
+    "WORKSPACE:RULES.md",
+    "reports/lb-score-algebra.json"
+  ],
+  "removed_reference_tokens": [
+    "tiger",
+    "ms-buildings",
+    "ms_buildings",
+    "msbuilding",
+    "usgs",
+    "cbp",
+    "ntad",
+    "openrailwaymap",
+    "mapillary",
+    "maxar",
+    "google",
+    "bing"
+  ],
+  "platform_state_tokens": [
+    "labels",
+    "label_",
+    "submissions.jsonl",
+    "lb-score-algebra",
+    "lb-subset-moments",
+    "lb-calibration",
+    "config/calibration.json",
+    "storage_state",
+    "auth_token",
+    "alpha_c1",
+    "beta_constrained",
+    "beta_unconstrained",
+    "global_constant_c",
+    "0.3288136427728255"
+  ],
+  "provided_strata_family_tokens": [
+    "usfs",
+    "carbonplan",
+    "mtbs",
+    "nifc",
+    "fod",
+    "svi_",
+    "cvi_",
+    "ruca",
+    "rucc",
+    "nchs",
+    "gehe",
+    "uhe",
+    "pmdi",
+    "spi",
+    "epht",
+    "drought",
+    "usfs",
+    "usdm"
+  ],
+  "disclosure_classes": [
+    "historical_disclosure",
+    "limitation_statement",
+    "policy_statement",
+    "scope_statement",
+    "reproduction_statement"
+  ],
+  "disclosure_markers": [
+    "rules",
+    "disclose",
+    "organiser",
+    "organizer",
+    "official",
+    "published",
+    "supplied",
+    "provided",
+    "quoted",
+    "documented"
+  ],
+  "prohibited_prose_exceptions": [
+    "contextual labels",
+    "label the",
+    "not a claim about the hidden score",
+    "cbp components",
+    "transport/building/cbp components",
+    "cbp anchor",
+    "cbp_k",
+    "no labels",
+    "without labels",
+    "no label",
+    "labels, sample score placeholders"
+  ],
+  "claim_overrides": {
+    "bias-discovery-006": {
+      "tokens_exempt": [
+        {
+          "value": 95,
+          "decimals": 0,
+          "class": "methodological_constant",
+          "reason": "the 95% level of the preregistered tract-bootstrap percentile interval, declared in the discovery script"
+        }
+      ],
+      "notes": "only the interval level is exempt; every count and share is checked against reports/discovery-postfire.json"
+    },
+    "bias-discovery-012": {
+      "derived_tokens": [
+        {
+          "value": 26,
+          "decimals": 0,
+          "operation": "sum",
+          "evidence": "reports/discovery-strata-confound.json",
+          "path": "/missing",
+          "key": "pct_urban_by_region"
+        }
+      ]
+    },
+    "bias-discovery-018": {
+      "evidence": [
+        "reports/discovery-rural-svi-minority.json",
+        "reports/candidates.json"
+      ]
+    },
+    "methodology-047": {
+      "evidence": [
+        "reports/discovery-rural-svi-minority.json",
+        "reports/candidates.json"
+      ]
+    },
+    "methodology-016": {
+      "derived_tokens": [
+        {
+          "value": 62.82,
+          "decimals": 2,
+          "operation": "percentage",
+          "evidence": "reports/facility-catchment-candidate.json",
+          "pointer_a": "/measure_before/facility_zero_shares_and_logistic_candidate_moments/global/observed_overture_zero_counts/fire0",
+          "pointer_b": "/candidate_rows",
+          "tolerance": 0.005
+        },
+        {
+          "value": 77.64,
+          "decimals": 2,
+          "operation": "percentage",
+          "evidence": "reports/facility-catchment-candidate.json",
+          "pointer_a": "/measure_before/facility_zero_shares_and_logistic_candidate_moments/global/observed_overture_zero_counts/ems0",
+          "pointer_b": "/candidate_rows",
+          "tolerance": 0.005
+        },
+        {
+          "value": 11.6,
+          "decimals": 2,
+          "operation": "percentage",
+          "evidence": "reports/facility-catchment-candidate.json",
+          "pointer_a": "/measure_before/facility_zero_shares_and_logistic_candidate_moments/global/observed_overture_zero_counts/sch0",
+          "pointer_b": "/candidate_rows",
+          "tolerance": 0.005
+        }
+      ]
+    },
+    "methodology-018": {
+      "derived_tokens": [
+        {
+          "value": 2644,
+          "decimals": 0,
+          "operation": "sum",
+          "evidence": "reports/edge-cases.json",
+          "path": "/regions",
+          "key": "zero_overture_route_network"
+        },
+        {
+          "value": 132,
+          "decimals": 0,
+          "operation": "sum",
+          "evidence": "reports/edge-cases.json",
+          "path": "/regions",
+          "key": "zero_overture_named_roads"
+        },
+        {
+          "value": 43,
+          "decimals": 0,
+          "operation": "sum",
+          "evidence": "reports/edge-cases.json",
+          "path": "/regions",
+          "key": "water_dominated_over_50pct"
+        }
+      ]
+    },
+    "edge-cases-002": {
+      "derived_tokens": [
+        {
+          "value": 9379,
+          "decimals": 0,
+          "operation": "sum",
+          "evidence": "reports/edge-cases.json",
+          "path": "/regions",
+          "key": "official_tracts"
+        },
+        {
+          "value": 2,
+          "decimals": 0,
+          "operation": "sum",
+          "evidence": "reports/edge-cases.json",
+          "path": "/regions",
+          "key": "zero_land_area"
+        },
+        {
+          "value": 43,
+          "decimals": 0,
+          "operation": "sum",
+          "evidence": "reports/edge-cases.json",
+          "path": "/regions",
+          "key": "water_dominated_over_50pct"
+        },
+        {
+          "value": 132,
+          "decimals": 0,
+          "operation": "sum",
+          "evidence": "reports/edge-cases.json",
+          "path": "/regions",
+          "key": "zero_overture_named_roads"
+        },
+        {
+          "value": 2644,
+          "decimals": 0,
+          "operation": "sum",
+          "evidence": "reports/edge-cases.json",
+          "path": "/regions",
+          "key": "zero_overture_route_network"
+        },
+        {
+          "value": 2,
+          "decimals": 0,
+          "operation": "sum",
+          "evidence": "reports/edge-cases.json",
+          "path": "/regions",
+          "key": "zero_overture_buildings"
+        },
+        {
+          "value": 2,
+          "decimals": 0,
+          "operation": "sum",
+          "evidence": "reports/edge-cases.json",
+          "path": "/regions",
+          "key": "zero_overture_places"
+        },
+        {
+          "value": 2,
+          "decimals": 0,
+          "operation": "sum",
+          "evidence": "reports/edge-cases.json",
+          "path": "/regions",
+          "key": "no_overture_roads_buildings_or_places"
+        }
+      ],
+      "notes": "the two 26-valued totals (zero-population and missing-pct_urban) are checked as values present in reports/edge-cases.json rather than as key-sums, because per-region counts coexist with distribution statistics under the same key names"
+    },
+    "edge-cases-006": {
+      "derived_tokens": [
+        {
+          "value": 132,
+          "decimals": 0,
+          "operation": "sum",
+          "evidence": "reports/edge-cases.json",
+          "path": "/regions",
+          "key": "zero_overture_named_roads"
+        }
+      ]
+    },
+    "methodology-024": {
+      "derived_tokens": [
+        {
+          "value": 3143887,
+          "decimals": 0,
+          "operation": "sum",
+          "evidence": "reports/road-topology-candidate.json",
+          "path": "/input_metadata_by_region",
+          "key": "segments_seen"
+        },
+        {
+          "value": 8491546,
+          "decimals": 0,
+          "operation": "sum",
+          "evidence": "reports/road-topology-candidate.json",
+          "path": "/input_metadata_by_region",
+          "key": "connector_occurrences"
+        },
+        {
+          "value": 1087,
+          "decimals": 0,
+          "operation": "sum",
+          "evidence": "reports/road-topology-candidate.json",
+          "path": "/input_metadata_by_region",
+          "key": "segments_skipped_invalid_or_non_linestring_geometry"
+        },
+        {
+          "value": 245818,
+          "decimals": 0,
+          "operation": "sum",
+          "evidence": "reports/road-topology-candidate.json",
+          "path": "/input_metadata_by_region",
+          "key": "cross_tract_adjacencies"
+        }
+      ]
+    },
+    "methodology-026": {
+      "evidence": [
+        "reports/transport-route-variants.json",
+        "reports/transport-route-ref-audit.json"
+      ]
+    },
+    "methodology-027": {
+      "evidence": [
+        "reports/transport-route-variants.json",
+        "reports/transport-route-ref-audit.json"
+      ]
+    },
+    "methodology-028": {
+      "evidence": [
+        "reports/poi-category-audit.json",
+        "docs/data-inventory.md",
+        "reports/v2-input-provenance.json"
+      ],
+      "derived_tokens": [
+        {
+          "value": 132133741,
+          "decimals": 0,
+          "operation": "sum",
+          "evidence": "reports/poi-category-audit.json",
+          "path": "/regions",
+          "key": "selected_column_compressed_bytes_total"
+        }
+      ]
+    },
+    "methodology-031": {
+      "derived_tokens": [
+        {
+          "value": 12.37,
+          "decimals": 2,
+          "operation": "difference",
+          "evidence": "reports/poi-category-audit.json",
+          "pointer_a": "/regions/maricopa-az/tract_zero_sensitivity/core_v0/fire/zero_share",
+          "pointer_b": "/regions/maricopa-az/tract_zero_sensitivity/fire_all_fire_or_rescue_categories/fire/zero_share",
+          "scale": 100.0,
+          "absolute": true,
+          "tolerance": 0.005
+        },
+        {
+          "value": 6.97,
+          "decimals": 2,
+          "operation": "difference",
+          "evidence": "reports/poi-category-audit.json",
+          "pointer_a": "/regions/maricopa-az/tract_zero_sensitivity/core_v0/schools/zero_share",
+          "pointer_b": "/regions/maricopa-az/tract_zero_sensitivity/schools_all_school_or_education_categories/schools/zero_share",
+          "scale": 100.0,
+          "absolute": true,
+          "tolerance": 0.005
+        },
+        {
+          "value": 8.12,
+          "decimals": 2,
+          "operation": "difference",
+          "evidence": "reports/poi-category-audit.json",
+          "pointer_a": "/regions/northern-ca/tract_zero_sensitivity/core_v0/fire/zero_share",
+          "pointer_b": "/regions/northern-ca/tract_zero_sensitivity/fire_all_fire_or_rescue_categories/fire/zero_share",
+          "scale": 100.0,
+          "absolute": true,
+          "tolerance": 0.005
+        },
+        {
+          "value": 12.67,
+          "decimals": 2,
+          "operation": "difference",
+          "evidence": "reports/poi-category-audit.json",
+          "pointer_a": "/regions/eastern-ok/tract_zero_sensitivity/core_v0/fire/zero_share",
+          "pointer_b": "/regions/eastern-ok/tract_zero_sensitivity/fire_all_fire_or_rescue_categories/fire/zero_share",
+          "scale": 100.0,
+          "absolute": true,
+          "tolerance": 0.005
+        },
+        {
+          "value": 5.29,
+          "decimals": 2,
+          "operation": "difference",
+          "evidence": "reports/poi-category-audit.json",
+          "pointer_a": "/regions/eastern-ok/tract_zero_sensitivity/core_v0/schools/zero_share",
+          "pointer_b": "/regions/eastern-ok/tract_zero_sensitivity/schools_all_school_or_education_categories/schools/zero_share",
+          "scale": 100.0,
+          "absolute": true,
+          "tolerance": 0.005
+        },
+        {
+          "value": 11.58,
+          "decimals": 2,
+          "operation": "difference",
+          "evidence": "reports/poi-category-audit.json",
+          "pointer_a": "/regions/south-central-tx/tract_zero_sensitivity/core_v0/fire/zero_share",
+          "pointer_b": "/regions/south-central-tx/tract_zero_sensitivity/fire_all_fire_or_rescue_categories/fire/zero_share",
+          "scale": 100.0,
+          "absolute": true,
+          "tolerance": 0.005
+        }
+      ]
+    },
+    "methodology-033": {
+      "evidence": [
+        "reports/place-dedup.json",
+        "config/poi-category-definitions.json",
+        "reports/poi-category-audit.json"
+      ]
+    },
+    "methodology-038": {
+      "evidence": [
+        "reports/poi-confidence-candidate.json",
+        "reports/poi-facility-miss-audit.json",
+        "config/poi-confidence-weighting-preregistered.json"
+      ]
+    },
+    "methodology-042": {
+      "derived_tokens": [
+        {
+          "value": 9.95,
+          "decimals": 2,
+          "operation": "percentage",
+          "evidence": "reports/confidence-by-stratum.json",
+          "pointer_a": "/regions/maricopa-az/poi_rows_confidence_below_0_5",
+          "pointer_b": "/regions/maricopa-az/poi_rows_with_valid_confidence",
+          "tolerance": 0.005
+        },
+        {
+          "value": 10.26,
+          "decimals": 2,
+          "operation": "percentage",
+          "evidence": "reports/confidence-by-stratum.json",
+          "pointer_a": "/regions/northern-ca/poi_rows_confidence_below_0_5",
+          "pointer_b": "/regions/northern-ca/poi_rows_with_valid_confidence",
+          "tolerance": 0.005
+        },
+        {
+          "value": 9.91,
+          "decimals": 2,
+          "operation": "percentage",
+          "evidence": "reports/confidence-by-stratum.json",
+          "pointer_a": "/regions/eastern-ok/poi_rows_confidence_below_0_5",
+          "pointer_b": "/regions/eastern-ok/poi_rows_with_valid_confidence",
+          "tolerance": 0.005
+        },
+        {
+          "value": 12.38,
+          "decimals": 2,
+          "operation": "percentage",
+          "evidence": "reports/confidence-by-stratum.json",
+          "pointer_a": "/regions/south-central-tx/poi_rows_confidence_below_0_5",
+          "pointer_b": "/regions/south-central-tx/poi_rows_with_valid_confidence",
+          "tolerance": 0.005
+        }
+      ]
+    }
+  },
+  "reproduce_disclosed_difference_paths": [
+    "/inputs/",
+    "/environment/",
+    "/map/sha256"
+  ],
+  "reproduce_never_disclosed_products": [
+    "reports/candidates.json",
+    "reports/final-two.json",
+    "reports/lb-score-algebra.json"
+  ],
+  "reproduce_disclosed_products": [
+    "reports/discovery-postfire-map.png"
+  ],
+  "reproduce_disclosed_difference_exact_paths": [
+    "/reproducibility/git_commit",
+    "/code_commit_at_run",
+    "/transport_road_taxonomy_context/route_ref_audit_present"
+  ],
+  "workspace_documentation_evidence": [
+    "WORKSPACE:RULES.md"
+  ]
+}

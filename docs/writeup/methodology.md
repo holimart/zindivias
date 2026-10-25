@@ -412,7 +412,12 @@ Reproduce from the competition repository with the authorized workspace:
 
 ## Discovery screen
 
-The reproducible script is `scripts/discovery_rural_svi_minority.py`. It constructs a within-region intersection not specified in the official description of the automated scorecard:
+Every figure in this section is a C2/C3 provided-data proxy statistic computed over model
+predictions. It is not a claim about true organiser scores, it is not an observed real-world
+disparity measurement, and it does not establish causation.
+
+The reproducible script is `scripts/discovery_rural_svi_minority.py`. It constructs a
+within-region intersection not specified in the official description of the automated scorecard:
 
 1. Restrict to the authoritative South-Central TX sample.
 2. Define the rural screen as provided `pct_urban < 0.5`.

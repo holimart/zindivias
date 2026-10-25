@@ -254,3 +254,82 @@
 - Determinism: three runs (two to alternate paths, one to the repo path) produced byte-identical reports (`2d117808…`); no wall-clock value is serialized and a test asserts no timestamp-like key ever appears.
 - Negative controls all fire with the expected gates: one official score pushed to `1.5` fails `candidate_scores_finite_and_in_unit_interval` and the SHA tie; a band set that cannot classify a provided `pct_urban` of 0.8639861007694217 aborts with `ValueError: provided value ... matches no preregistered band` instead of dropping the tract; a broken strata pin hash fails `provided_strata_hashes_verified`; altering the frozen mask-audit counts fails `definedness_matches_frozen_mask_audit`; a model-chain script containing `svi_overall`/`cvi_overall` fails `descriptive_only_columns_absent_from_model_chain`; a wrong declared template-row count fails `excluded_rows_documented`; and the unmutated run passes.
 - FORBID respected: no sample score placeholder value, no label, no public leaderboard value, no removed reference layer or equivalent copy, no per-tract tuning (all bins are preregistered fixed edges, and nothing in the report feeds a model), and no proxy estimate is presented as an organiser target — the report carries `descriptive_only_not_an_accuracy_claim` and emits no RMSE or accuracy figure. No upload; the candidate is untouched.
+
+### 2026-10-25 — row `bias-writeup-claim-evidence-audit` (documentation screen)
+
+Row: `backlog:.langywrap/backlogs/competitions.jsonl:bias-writeup-claim-evidence-audit`.
+Disposition `actioned`, close verdict `fixed`. Descriptive/verification screen only: no model
+promotion, no accuracy assessment, no upload.
+
+Built a claim-to-evidence auditor for the three writeup documents
+(`docs/writeup/bias-discovery.md`, `docs/writeup/methodology.md`,
+`docs/writeup/edge-cases.md`). Every block that carries a numeric token becomes a claim with a
+verbatim anchor, named evidence pinned by SHA-256, an evidence pointer, a per-claim verify
+command and a section-level reproduce command whose products are hash-verified.
+
+Deliverables (SHA-256 first 16):
+
+- `config/writeup-claim-evidence-preregistered.json` `2dfc00a70d8885c3`
+- `scripts/audit_writeup_claim_evidence.py` `d459d67f66ae1cca`
+- `scripts/verify_writeup_claim.py` `d6e724675a31095a`
+- `docs/writeup/claim-evidence-audit.md` `d474612959cda2ec`
+- `reports/writeup-claim-evidence-audit.json` `43bdc11dd128ab00`
+- `reports/writeup-claim-inventory.json` `94bec394035fc7f4`
+- `reports/writeup-claim-evidence-execution.json` `859af6f096de5904`
+- `tests/test_audit_writeup_claim_evidence.py` `278c1e3f7ef5c226` (26 tests)
+
+Measured: 84 quantitative claims, 100% traceable; 998/998 numeric tokens (100%) present in the
+evidence named by the claim that states them; 84 verify commands and 16 reproduce commands, all
+recorded exit code 0, zero undisclosed reproduce-product changes; zero unsupported accuracy
+claims; zero removed-reference/label/leaderboard sources used as scored-model evidence.
+
+Derivations were machine-checked rather than trusted: regional totals such as 9,379 official
+tracts, 2,644 tracts with no named roads and 132 with no named-road segments are key sums over
+`reports/edge-cases.json`; 3,143,887 road segments / 8,491,546 connector occurrences / 245,818
+cross-tract adjacencies are key sums over `reports/road-topology-candidate.json`; the
+`<0.5`-confidence shares 9.95/10.26/9.91/12.38% are ratios from
+`reports/confidence-by-stratum.json`; the `pp` category-sensitivity figures are differences of
+two `zero_share` values in `reports/poi-category-audit.json`; 132,133,741 is the sum of
+`selected_column_compressed_bytes_total` in `reports/poi-category-audit.json`.
+
+Findings worth keeping:
+
+1. `scripts/lb_score_algebra.py` regenerates `reports/candidates.json` from its own candidate
+   list and silently drops the newer cards (including `V2_model`), and rewrites
+   `reports/lb-score-algebra.json` without `phase3_preregistration`, which breaks
+   `tests/test_writeup_artifacts.py`. That command is no longer used as a reproduction path and
+   both files are listed in `reproduce_never_disclosed_products`, so any change there fails the
+   audit.
+2. The derived Overture POI tract-summary cache is not byte-stable across pyarrow versions, so
+   audits that record its hash legitimately differ in `/inputs/**/sha256`. Those paths, plus
+   `/environment/**`, `/reproducibility/git_commit`, `/code_commit_at_run` and the rendered
+   post-fire map, are the only reproduce differences allowed; every other changed leaf fails.
+3. One `## Discovery screen` section in `methodology.md` stated proxy group means with no
+   qualification; it now carries an explicit "not a claim about true organiser scores / not an
+   observed real-world disparity" sentence, which the hedge gate requires.
+
+Determinism: three audit runs produced byte-identical JSON (`43bdc11dd128ab00…`) and byte-identical
+markdown (`d474612959cda2ec…`), including runs to alternate output paths; no wall-clock value is
+serialized and a test rejects timestamp-like keys.
+
+Negative controls (all fail closed, unmutated control passes): stale evidence hash →
+`all_evidence_hashes_verified` + `every_quantitative_claim_has_evidence_pointer`; perturbed
+derived aggregate → coverage/inventory gates; removed hedge phrases →
+`hedged_language_present_where_required`; widened accuracy-pattern probe →
+`no_unsupported_accuracy_claim`; missing reproduce execution log → both reproduce gates;
+self-referential evidence (the audit's own inventory) → hash and pointer gates. The inventory and
+the audit report are excluded from the evidence allowlist so the audit cannot certify itself.
+
+Commands:
+
+- `COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" /home/martin/hddProjects/langywrap/uv run --quiet python scripts/audit_writeup_claim_evidence.py`
+  → `PASS v2 writeup claim audit: every quantitative claim in the writeup carries a hash-verified
+  evidence pointer, a passing verify command and a hash-verified reproduction path, with no
+  unsupported accuracy claim and no prohibited source used as scored-model evidence`
+- `/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with pytest python -m pytest -q`
+  → `258 passed`
+
+Limits: this is a documentation-integrity screen. It proves each stated number exists in, or is a
+declared derivation from, a hash-pinned committed artifact, and that the listed commands exit 0.
+It does not establish that the model is good, and it is not an accuracy claim; `V2_model` remains
+un-uploaded and gated on operator authorization.
