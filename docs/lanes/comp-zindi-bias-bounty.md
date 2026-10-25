@@ -1459,3 +1459,29 @@ The measured pair is Sc5 R gap/covariate at `|rho|=0.816024`; it is disclosed, n
 correlation is imputed into the report. No labels, reference layers, leaderboard moments, or uploads
 were used. Next step for this family is to resolve its per-idea data prerequisites before admitting a
 new estimator to the harness.
+
+## 2026-10-25 — bias60-family-g geometry feasibility screen
+
+Recorded a per-idea result in `reports/g-family-screen.json`; no geometry estimator or score was
+fabricated. A schema-only inspection of provided Overture package metadata confirmed roads expose
+`names`, `class`, `access_restrictions`, `routes`, `geometry` and buildings expose `sources`, `class`,
+`geometry`; the registered `places` path returned FileNotFound for eastern-ok. No feature geometry was
+read or intersected with study tracts. The test report names a specific missing audited accessor or
+data prerequisite for each idea:
+
+| idea | reason not computed |
+| --- | --- |
+| G1 | current audited API returns road lengths, not line-to-boundary distance / 25 m buffer intersections; needs a declared geometry accessor and boundary-touch tests |
+| G2 | current input contract discards segment identity and headings; needs segment reader and validated parallel-road pairing rules (ramps/frontage roads included) |
+| G3 | denominator requires Microsoft-only reference footprints, prohibited on study tracts; needs a rule-clean alternative or removal of this recipe |
+| G4 | 100 m occupancy/ring and park/school/water exclusions are not implemented; registered places layer is unavailable, so raw voids would mistake parks for dropout |
+| G5 | provided places path is absent; no geometry/name bytes were available for exact-coordinate collision measurement |
+
+The orthogonality report was refreshed from the 3 existing implemented estimators (all 9,379 scored
+tracts): 6 columns, 1 pair above `|rho| > 0.8` (Sc5 R gap/covariate, `|rho|=0.816024`), 4 VIF flags,
+all gates pass. No G correlation or VIF is claimed. `tests/test_bias60_family_g.py` checks each of the
+five idea-specific reasons plus the no-measurement and prohibition assertions. Validation:
+
+`uv run --with pytest python -m pytest tests/test_bias60_family_g.py tests/test_bias60_harness.py -q`
+→ **48 passed, 14 subtests**; orthogonality `--check-only` unchanged. No labels, reference layers,
+leaderboard access, or uploads.

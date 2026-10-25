@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "family": "G",
+  "spec": "$ORCHESTRATOR_ROOT/docs/research/bias-60-ideas-2026-10.md#family-g",
+  "status": "documented_not_computed",
+  "scope": {
+    "official_scored_tracts": 9379,
+    "ideas": ["G1", "G2", "G3", "G4", "G5"],
+    "computed": [],
+    "coverage": null,
+    "correlation_and_vif": "not measured for uncomputed ideas; existing idea orthogonality remains in reports/ideas-orthogonality.json"
+  },
+  "constraints": {
+    "provided_datasets_only": true,
+    "labels_read": false,
+    "reference_layers_read": false,
+    "leaderboard_accessed": false,
+    "uploads": 0,
+    "study_tract_geometry_computations": 0
+  },
+  "input_schema_observation": {
+    "roads_layer_columns": ["id", "names", "class", "access_restrictions", "routes", "geometry"],
+    "buildings_layer_columns": ["id", "names", "sources", "class", "has_parts", "geometry"],
+    "places_layer": "not found at the registered provided-package path for eastern-ok; no POI geometry/name bytes were read"
+  },
+  "idea_dispositions": [
+    {
+      "id": "G1",
+      "status": "not_computed",
+      "reason": "The roads layer and ACS tract polygons exist, and the road schema includes geometry. However, the current audited input API only exposes named-class tract lengths, not line-to-tract-boundary distances or 25 m boundary-buffer intersections. Adding those study-geometry operations without a dedicated audited accessor and deterministic boundary-touch tests risks implementing a different recipe or leaking geometry reads outside the declaration contract.",
+      "missing_prerequisite": "A tested, declared geometry accessor for named-class road lines and tract boundaries plus deterministic boundary-buffer clipping tests for the specified 25 m recipe."
+    },
+    {
+      "id": "G2",
+      "status": "not_computed",
+      "reason": "The roads schema exposes names, access_restrictions, routes and geometry, but the current cache/input method returns tract-level lengths and discards segment identity, heading and paired-line candidates. The <60 m/opposite-heading/same-name-or-route pairing rule needs a separate segment-level access contract and false-pair tests for ramps/frontage roads before its per-tract variants can be emitted.",
+      "missing_prerequisite": "A declared segment-level roads reader, frozen heading derivation and validated dual-carriageway pairing tests (including ramps and frontage roads)."
+    },
+    {
+      "id": "G3",
+      "status": "not_computed",
+      "reason": "The recipe's denominator a_ref is the median of Microsoft-only footprints. Microsoft US Buildings is a removed reference layer and is explicitly forbidden on study tracts; substituting an Overture source-tagged Microsoft-equivalent layer would still use that prohibited reference copy to construct a target-like deficit.",
+      "missing_prerequisite": "A rule-clean alternate definition that does not use Microsoft/reference footprints, or an operator-approved removal of this recipe; no reference-layer retrieval or computation is permitted."
+    },
+    {
+      "id": "G4",
+      "status": "not_computed",
+      "reason": "The buildings layer has geometry, but the preregistered void recipe also requires excluding cells with park/school POIs and near water infrastructure. The registered places layer is absent at the provided-package path, and there is no audited 100 m grid/ring or park/water masking implementation. Counting those voids without the specified exclusions would conflate parks and fields with tile dropout.",
+      "missing_prerequisite": "Provided, audited POI and water-feature inputs plus deterministic 100 m cell occupancy, eight-neighbour ring, and exclusion-mask tests."
+    },
+    {
+      "id": "G5",
+      "status": "not_computed",
+      "reason": "The registered Overture places path returned FileNotFound for eastern-ok during schema-only availability inspection. Without per-place geometry and names, exact-coordinate stacks, distinct-name counts and the 3 km exported mass cannot be computed. No tract join or geometry measurement was attempted.",
+      "missing_prerequisite": "A verified, rule-clean provided places layer with geometry and names in all four regions, then an audited point/tract and 3 km allocation contract."
+    }
+  ],
+  "orthogonality": {
+    "report": "reports/ideas-orthogonality.json",
+    "new_g_columns": 0,
+    "interpretation": "No G correlation or VIF is claimed because no G estimator was computed. Existing implemented estimators remain measured in the refreshed report."
+  }
+}
