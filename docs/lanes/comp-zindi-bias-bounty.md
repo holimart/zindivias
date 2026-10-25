@@ -333,3 +333,100 @@ Limits: this is a documentation-integrity screen. It proves each stated number e
 declared derivation from, a hash-pinned committed artifact, and that the listed commands exit 0.
 It does not establish that the model is good, and it is not an accuracy claim; `V2_model` remains
 un-uploaded and gated on operator authorization.
+
+### 2026-10-25 — row `bias-writeup-form-submission` (documentation / prize deadline task)
+
+Row: `backlog:.langywrap/backlogs/competitions.jsonl:bias-writeup-form-submission`.
+Disposition `blocked`, close verdict `blocked`. Nothing was submitted to the organiser.
+
+Assembled and machine-verified the full submission packet for the organiser writeup form, then
+stopped at the operator gate as the row and the steward note require (FORBID submitting before the
+operator reviews the discovery narrative; MEASURE-AFTER requires the operator to confirm the Zindi
+username; steward: deliver the draft and mark the row blocked, do not act unilaterally).
+
+Deliverables (SHA-256 first 16):
+
+- `config/writeup-submission-preregistered.json` `0807403ff03c12fa` — preregistered identity/form/prize/
+  external-source/prohibited-content rules, section order, and the never-invent list
+- `scripts/build_final_writeup.py` `d0569cc3627edeb5` — assembles the writeup, renders the PDF, writes the record
+- `scripts/verify_writeup_submission.py` `acb4bc4a30ecf75a` — independent packet checker (28 gate families)
+- `docs/writeup/final-writeup.md` `029c95f7b67b1e6d` — the writeup: front matter, prize consideration,
+  associated leaderboard submissions, Best Bias Discovery entry, methodology (Best Documentation
+  entry), edge cases, external source register, reproducibility appendix, provenance statement
+- `reports/writeup/final-writeup.pdf` `a013efe455c4737c` — exported PDF, `reportlab==4.4.10`, `invariant=1`
+- `reports/writeup-submission.json` `10917b2f572e77ea` — the submission record (staged, all confirmation fields
+  null)
+- `tests/test_writeup_submission_packet.py` `d2b2865553392184` — 25 tests including tamper controls
+- `docs/final-two-protocol.md` — writeup-form checklist line now points at the packet and names the
+  blockers instead of implying a submission
+
+Packet content that the rules require:
+
+- Zindi username or team name: **`PENDING_OPERATOR_CONFIRMATION`** (never invented; the ledger
+  records `team: null` for every Bias Bounty submission, so no identity is claimable from the repo).
+- Leaderboard submissions associated with the methodology: the five successful uploads
+  `uRRw9KpB` (C0, 0.107246299), `BvyKrR6v` (C1, 0.146449112), `rTARuUaG` (C2, 0.235358712),
+  `TM83xxU6` (C3, 0.349409867), `ySXi73rd` (P4, 0.091440198), each tied by artifact SHA-256 to
+  `reports/submissions.jsonl` and `reports/candidates.json`, plus the explicit statement that these
+  are historical calibration/probe records excluded from the frozen final-two cohort and used as no
+  evidence for the model or any discovery claim.
+- Scored model candidate: `V2_model` at `reports/candidates/V2_model.csv` SHA-256
+  `3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12`, `uploaded: false`,
+  `uploads_used_for_this_candidate: 0`, hash tied to the registry card and to
+  `reports/estimator-v2-audit.json`.
+- Both prizes stated with amounts and labelled sections, and the verbatim request line:
+  "We request consideration for both Best Bias Discovery ($1,000) and Best Documentation ($500)."
+  The discovery section is labelled `Best Bias Discovery entry` and quotes the four judging criteria
+  with their weights (Impact 30%, Novelty 25%, Evidence 25%, Reproducibility 20%) plus the
+  earlier-submission tie-break.
+- External source register: 19 rows (18 prior-art URLs from `docs/literature/completeness-prior-art.md`
+  accessed 2026-10-24, plus the organiser-hosted `SampleSubmission.csv` endpoint accessed 2026-10-23
+  from the workspace download manifest). Every row carries URL + access date + role, satisfying the
+  no-external-data-claim-without-URL-and-date prohibition; scored predictions use only provided data,
+  tied to `reports/v2-input-provenance.json` (`prohibited_source_dependencies: 0`,
+  `external_data_added_to_scored_predictions: false`, `target_labels_read: false`,
+  `leaderboard_feedback_read_for_modeling: false`).
+- Reproducibility appendix carries the claim-to-evidence audit figures (84/84 claims traceable,
+  998/998 numeric tokens covered) and the exact commands.
+
+Verification:
+
+- `COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" /home/martin/hddProjects/langywrap/uv run --quiet --with reportlab==4.4.10 python scripts/build_final_writeup.py`
+  → `PACKET ASSEMBLED, OPERATOR INPUTS MISSING (form_url_available,
+  operator_identity_confirmation_recorded, submission_confirmation_recorded): packet is staged only;
+  nothing was submitted to the organiser`
+- `/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_submission.py`
+  → `PASS writeup submission packet: assembled, hash-tied and honest about its pending operator
+  inputs; staged only, nothing was submitted to the organiser`
+- `/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with pytest python -m pytest -q`
+  → `283 passed`
+
+`reports/writeup-submission.json` records `revision.git_commit` as the last commit
+(`f55dbcb7d769d9f6c41aba42abb08f727955f274`) and `tree_clean: false`, measured honestly at
+build time because the packet's own new files were still untracked; the checker does not
+gate on that field and the packet hashes are pinned by content.
+
+Determinism: three builds produced byte-identical markdown, PDF and record. PDF reproducibility
+required `reportlab.rl_config.invariant = 1` plus a `canvasFactory` with `invariant=1`; without it
+ReportLab embedded a wall-clock `/CreationDate` and the PDF hash changed every run. The record
+serializes no wall-clock value and a test rejects timestamp-like keys.
+
+Negative controls (checker fails closed; unmutated packet passes): forged `submitted_at_utc` +
+confirmation reference; `ready_for_submission` flipped to true; an invented username without
+operator confirmation; a tampered platform submission id; a tampered model-candidate SHA-256; an
+external register row with a blank access date; an injected retired leaderboard constant value;
+claim-audit figures made to disagree with the audit report; a broken recorded file hash.
+
+Blocked on (all operator/steward-owned):
+
+1. Operator review of the Best Bias Discovery narrative (the row forbids submitting before it, and
+   ties on that prize break by earlier submission, so this is the critical path before the Oct 31
+   close; target was Oct 29).
+2. Operator confirmation of the Zindi username or team name (the ledger has `team: null` for every
+   Bias Bounty submission, so the repo cannot state it).
+3. The organiser writeup form URL: `$COMPETITION_WORKSPACE/RULES.md` preserves the sentence "submit
+   your methodology writeup through this form" but not the hyperlink target.
+4. Final-two selection: `reports/final-two.json` is still
+   `protocol_frozen_waiting_for_eligible_candidates`, so the two candidate IDs whose submission IDs
+   the form must name are not fixed yet; the packet records `candidate_A/B: null` rather than
+   inventing them, and `V2_model` upload remains operator-gated.

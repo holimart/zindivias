@@ -1,0 +1,228 @@
+"""Tests for the assembled Bias Bounty writeup submission packet.
+
+Row: bias-writeup-form-submission. The packet is staged for operator review only; these tests
+also prove the checker fails closed when the packet lies about anything the operator owns.
+"""
+from __future__ import annotations
+
+import copy
+import importlib.util
+import json
+import unittest
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+
+
+def _module(name: str):
+    spec = importlib.util.spec_from_file_location(name, ROOT / f"scripts/{name}.py")
+    module = importlib.util.module_from_spec(spec)
+    assert spec and spec.loader
+    spec.loader.exec_module(module)
+    return module
+
+
+builder = _module("build_final_writeup")
+verify = _module("verify_writeup_submission")
+
+CONFIG = json.loads((ROOT / "config/writeup-submission-preregistered.json").read_text())
+RECORD = json.loads((ROOT / "reports/writeup-submission.json").read_text())
+MARKDOWN = (ROOT / "docs/writeup/final-writeup.md").read_text(encoding="utf-8")
+OPERATOR_GATES = {"operator_identity_confirmation_recorded", "form_url_available",
+                  "submission_confirmation_recorded"}
+
+
+class PacketPresenceTests(unittest.TestCase):
+    def test_markdown_and_pdf_exist_and_are_hash_recorded(self) -> None:
+        self.assertTrue((ROOT / "docs/writeup/final-writeup.md").is_file())
+        pdf = ROOT / "reports/writeup/final-writeup.pdf"
+        self.assertTrue(pdf.is_file())
+        self.assertEqual(pdf.read_bytes()[:5], b"%PDF-")
+        self.assertGreater((ROOT / "docs/writeup/final-writeup.md").stat().st_size, 40000)
+        for item in RECORD["writeup_files"]:
+            path = ROOT / item["path"]
+            self.assertTrue(path.is_file(), item["path"])
+            self.assertEqual(verify.sha256_file(path), item["sha256"])
+            self.assertEqual(path.stat().st_size, item["bytes"])
+
+    def test_status_is_staged_and_no_submission_is_claimed(self) -> None:
+        self.assertEqual(RECORD["status"], "prepared_pending_operator_review")
+        self.assertFalse(RECORD["ready_for_submission"])
+        for key in ("submitted_at_utc", "confirmation_reference", "submitted_by",
+                    "form_url_used"):
+            self.assertIsNone(RECORD["submission_record"][key])
+        self.assertEqual(RECORD["submission_record"]["operator_review"], "not recorded")
+        self.assertNotIn("form submitted", MARKDOWN.lower())
+
+    def test_only_the_three_operator_owned_gates_are_open(self) -> None:
+        open_gates = {key for key, value in RECORD["acceptance"].items() if value is not True}
+        self.assertEqual(open_gates, OPERATOR_GATES | {"all_passed"})
+
+
+class RulesContentTests(unittest.TestCase):
+    def test_both_prizes_amounts_and_sections_are_stated(self) -> None:
+        for prize in CONFIG["prizes"]:
+            self.assertIn(prize["name"], MARKDOWN)
+            self.assertIn(f"${prize['amount_usd']:,}", MARKDOWN)
+            self.assertIn(prize["section_label"], MARKDOWN)
+
+    def test_discovery_criteria_weights_and_tie_break_are_quoted(self) -> None:
+        discovery = next(prize for prize in CONFIG["prizes"] if prize["name"]
+                         == "Best Bias Discovery")
+        for name, weight in discovery["criteria_weights"].items():
+            self.assertIn(f"{name}:", MARKDOWN)
+            self.assertIn(f"{weight}%", MARKDOWN)
+        self.assertIn(discovery["tie_break_quote"], MARKDOWN)
+
+    def test_consideration_statement_is_verbatim(self) -> None:
+        self.assertIn(CONFIG["consideration_requested"]["stated_verbatim_in_writeup"], MARKDOWN)
+
+    def test_identity_and_form_url_stay_uninvented(self) -> None:
+        self.assertIsNone(RECORD["identity"]["zindi_username_or_team"])
+        self.assertIsNone(RECORD["form"]["url"])
+        self.assertIn(CONFIG["identity"]["pending_placeholder"], MARKDOWN)
+
+    def test_model_candidate_is_declared_not_uploaded(self) -> None:
+        self.assertIn(CONFIG["model_evidence"]["upload_status_quote"], MARKDOWN)
+        status = RECORD["model_candidate"]["upload_status"]
+        self.assertFalse(status["uploaded"])
+        self.assertFalse(status["live_upload_attempted"])
+        self.assertEqual(status["uploads_used_for_this_candidate"], 0)
+
+
+class ProvenanceTieTests(unittest.TestCase):
+    def test_associated_submissions_tie_to_successful_uploads_and_registry(self) -> None:
+        rows = [json.loads(line) for line in
+                (ROOT / "reports/submissions.jsonl").read_text(encoding="utf-8").splitlines()]
+        successful = {(row["platform_submission_id"], row["candidate_id"], row["sha256"])
+                      for row in rows if row.get("platform_submission_id")
+                      and row.get("status") == "successful"}
+        registry = {card["candidate_id"]: card for card in
+                    json.loads((ROOT / "reports/candidates.json").read_text())["candidate_set"]}
+        self.assertTrue(RECORD["associated_leaderboard_submissions"])
+        for row in RECORD["associated_leaderboard_submissions"]:
+            self.assertIn((row["platform_submission_id"], row["candidate_id"],
+                           row["artifact_sha256"]), successful)
+            self.assertEqual(row["registry_sha256"], registry[row["candidate_id"]]["sha256"])
+
+    def test_model_candidate_hash_is_pinned_in_three_places(self) -> None:
+        candidate = RECORD["model_candidate"]
+        registry = {card["candidate_id"]: card for card in
+                    json.loads((ROOT / "reports/candidates.json").read_text())["candidate_set"]}
+        audit = json.loads((ROOT / "reports/estimator-v2-audit.json").read_text())
+        self.assertEqual(candidate["sha256"], CONFIG["model_evidence"]["frozen_candidate_sha256"])
+        self.assertEqual(candidate["sha256"], registry["V2_model"]["sha256"])
+        self.assertEqual(candidate["sha256"], audit["artifact"]["sha256"])
+
+    def test_external_register_is_complete_and_dated(self) -> None:
+        register = RECORD["external_source_register"]
+        self.assertGreaterEqual(len(register), 10)
+        for row in register:
+            self.assertTrue(row["url"].startswith("http"))
+            self.assertRegex(row["accessed_on"], r"^\d{4}-\d{2}-\d{2}$")
+            self.assertTrue(row["role"])
+        registered = {row["url"] for row in register}
+        self.assertTrue({url.rstrip('.,;:)\'"')
+                         for url in verify.URL_PATTERN.findall(MARKDOWN)} <= registered)
+        literature = (ROOT / "docs/literature/completeness-prior-art.md").read_text()
+        self.assertTrue({url.rstrip('.,;:)\'"')
+                         for url in verify.URL_PATTERN.findall(literature)} <= registered)
+
+    def test_no_retired_leaderboard_constant_appears_anywhere(self) -> None:
+        haystack = MARKDOWN + json.dumps(RECORD)
+        prohibited = CONFIG["prohibited_content"]
+        for value in prohibited["retired_leaderboard_constant_values"]:
+            self.assertNotIn(value, haystack)
+        for name in prohibited["retired_leaderboard_constant_names"]:
+            self.assertNotIn(name, haystack)
+
+    def test_record_serializes_no_wall_clock_key(self) -> None:
+        stack = [RECORD]
+        while stack:
+            node = stack.pop()
+            if isinstance(node, dict):
+                for key, child in node.items():
+                    self.assertFalse(any(word in key.lower() for word in
+                                         verify.FORBIDDEN_KEY_WORDS), key)
+                    stack.append(child)
+            elif isinstance(node, list):
+                stack.extend(node)
+
+
+class BuildTests(unittest.TestCase):
+    def test_assembly_is_deterministic(self) -> None:
+        builder.CONFIG = builder.load_config()
+        first, _ = builder.assemble(builder.CONFIG)
+        second, _ = builder.assemble(builder.CONFIG)
+        self.assertEqual(first, second)
+        self.assertGreater(len(first), 40000)
+
+    def test_claim_audit_figures_in_the_record_match_the_audit_report(self) -> None:
+        summary = json.loads((ROOT / "reports/writeup-claim-evidence-audit.json")
+                             .read_text())["summary"]
+        recorded = RECORD["claim_evidence_audit"]
+        for key in ("claims_total", "claims_fully_traceable",
+                    "fraction_quantitative_claims_traceable", "numeric_tokens_total",
+                    "numeric_tokens_covered"):
+            self.assertEqual(recorded[key], summary[key])
+        self.assertEqual(summary["fraction_quantitative_claims_traceable"], 1.0)
+
+
+class NegativeControlTests(unittest.TestCase):
+    """A tampered packet must be rejected, so the gates are not decorative."""
+
+    def check(self, mutate) -> list[str]:
+        record = copy.deepcopy(RECORD)
+        mutate(record)
+        return verify.check(record, CONFIG)["failures"]
+
+    def test_unmutated_packet_passes(self) -> None:
+        self.assertEqual(verify.check(copy.deepcopy(RECORD), CONFIG)["failures"], [])
+
+    def test_forged_submission_confirmation_is_rejected(self) -> None:
+        def mutate(record):
+            record["submission_record"]["submitted_at_utc"] = "2026-10-26T00:00:00Z"
+            record["submission_record"]["confirmation_reference"] = "made-up"
+        self.assertTrue(self.check(mutate))
+
+    def test_ready_flag_flip_is_rejected(self) -> None:
+        self.assertTrue(self.check(lambda record: record.__setitem__("ready_for_submission", True)))
+
+    def test_invented_username_without_confirmation_is_rejected(self) -> None:
+        self.assertTrue(self.check(lambda record: record["identity"].__setitem__(
+            "zindi_username_or_team", "some-team-name")))
+
+    def test_tampered_submission_id_is_rejected(self) -> None:
+        def mutate(record):
+            record["associated_leaderboard_submissions"][0]["platform_submission_id"] = "ZZZZZZZZ"
+        self.assertTrue(any("submission id" in item for item in self.check(mutate)))
+
+    def test_tampered_model_candidate_hash_is_rejected(self) -> None:
+        def mutate(record):
+            record["model_candidate"]["sha256"] = "f" * 64
+        failures = self.check(mutate)
+        self.assertTrue(any("model candidate" in item for item in failures))
+
+    def test_undated_external_source_is_rejected(self) -> None:
+        def mutate(record):
+            record["external_source_register"][0]["accessed_on"] = ""
+        self.assertTrue(any("register row" in item for item in self.check(mutate)))
+
+    def test_injected_retired_constant_is_rejected(self) -> None:
+        def mutate(record):
+            record["notes"] = CONFIG["prohibited_content"]["retired_leaderboard_constant_values"][0]
+        self.assertTrue(any("retired leaderboard constant" in item for item in self.check(mutate)))
+
+    def test_disagreement_with_the_claim_audit_is_rejected(self) -> None:
+        def mutate(record):
+            record["claim_evidence_audit"]["numeric_tokens_covered"] = 1
+        self.assertTrue(any("claim audit" in item for item in self.check(mutate)))
+
+    def test_broken_record_hash_is_rejected(self) -> None:
+        def mutate(record):
+            record["writeup_files"][0]["sha256"] = "0" * 64
+        self.assertTrue(any("sha256 does not match" in item for item in self.check(mutate)))
+
+
+if __name__ == "__main__":
+    unittest.main()

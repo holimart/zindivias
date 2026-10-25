@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "row_key": "backlog:.langywrap/backlogs/competitions.jsonl:bias-writeup-form-submission",
+  "lane": "comp-zindi-bias-bounty",
+  "competition": "bias-bounty-mapping-equity-challenge",
+  "prepared_policy": {
+    "no_unilateral_form_submission": true,
+    "reason": "The row forbids submitting before the operator reviews the discovery narrative, its MEASURE-AFTER requires the operator to confirm the Zindi username, and the steward note says to deliver the draft and mark the row blocked pending an operator/steward decision. The packet is assembled and machine-validated; nothing is sent.",
+    "never_invent": [
+      "zindi_username_or_team",
+      "form_url",
+      "submitted_at_utc",
+      "confirmation_reference"
+    ]
+  },
+  "identity": {
+    "zindi_username_or_team": null,
+    "pending_placeholder": "PENDING_OPERATOR_CONFIRMATION",
+    "operator_confirmation_recorded": false,
+    "rules_requirement_quote": "Your writeup should identify your Zindi username or team name and the leaderboard submission(s) associated with the methodology."
+  },
+  "form": {
+    "url": null,
+    "rules_text": "To be considered, submit your methodology writeup through this form and clearly indicate whether you wish to be considered for Best Bias Discovery, Best Documentation, or both.",
+    "url_note": "The saved official page text in the workspace RULES.md preserves the sentence but not the hyperlink target, so the operator must supply the form URL; this build never guesses one.",
+    "deadline_utc": "2026-10-31T23:59:00Z",
+    "target_submission_utc": "2026-10-29"
+  },
+  "prizes": [
+    {
+      "name": "Best Bias Discovery",
+      "amount_usd": 1000,
+      "section_label": "Best Bias Discovery entry",
+      "judge_quote": "Entries for Best Bias Discovery are judged from the writeup by the organizing team against four criteria",
+      "criteria_weights": {
+        "Impact": 30,
+        "Novelty": 25,
+        "Evidence": 25,
+        "Reproducibility": 20
+      },
+      "tie_break_quote": "Ties are broken by earlier submission."
+    },
+    {
+      "name": "Best Documentation",
+      "amount_usd": 500,
+      "section_label": "Best Documentation entry",
+      "judge_quote": "No separate leaderboard submission is required for Best Bias Discovery or Best Documentation."
+    }
+  ],
+  "consideration_requested": {
+    "best_bias_discovery": true,
+    "best_documentation": true,
+    "stated_verbatim_in_writeup": "We request consideration for both Best Bias Discovery ($1,000) and Best Documentation ($500)."
+  },
+  "assembly": {
+    "output_markdown": "docs/writeup/final-writeup.md",
+    "output_pdf": "reports/writeup/final-writeup.pdf",
+    "output_record": "reports/writeup-submission.json",
+    "pdf_engine": "reportlab==4.4.10 with canvas invariant=1 (no wall-clock in the file identity)",
+    "sections": [
+      {
+        "kind": "front_matter"
+      },
+      {
+        "kind": "consideration",
+        "heading": "Prize consideration requested"
+      },
+      {
+        "kind": "leaderboard_submissions",
+        "heading": "Leaderboard submissions associated with this methodology"
+      },
+      {
+        "kind": "discovery_entry",
+        "heading": "Best Bias Discovery entry",
+        "source": "docs/writeup/bias-discovery.md"
+      },
+      {
+        "kind": "documentation_entry",
+        "heading": "Methodology (Best Documentation entry)",
+        "source": "docs/writeup/methodology.md"
+      },
+      {
+        "kind": "edge_cases",
+        "heading": "Edge cases and documented limitations",
+        "source": "docs/writeup/edge-cases.md"
+      },
+      {
+        "kind": "external_source_register",
+        "heading": "External source register (URL and access date)"
+      },
+      {
+        "kind": "reproducibility_appendix",
+        "heading": "Reproducibility appendix"
+      },
+      {
+        "kind": "provenance_statement",
+        "heading": "Data provenance and prohibited-source statement"
+      }
+    ]
+  },
+  "external_sources": {
+    "literature_source": "docs/literature/completeness-prior-art.md",
+    "accessed_on_source": "git_commit_date_of_literature_file",
+    "role": "prior art and methodology know-how; not a dataset and never joined to scored predictions",
+    "scored_predictions_use_only_provided_data": true,
+    "provided_data_evidence": "reports/v2-input-provenance.json"
+  },
+  "model_evidence": {
+    "frozen_candidate_id": "V2_model",
+    "frozen_candidate_artifact": "reports/candidates/V2_model.csv",
+    "frozen_candidate_sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12",
+    "upload_status_quote": "Not uploaded: the frozen final-two protocol queues zero uploads and requires operator authorization.",
+    "final_two_status": "protocol_frozen_waiting_for_eligible_candidates",
+    "historical_uploads_are_prohibited_as_model_evidence": true
+  },
+  "prohibited_content": {
+    "retired_leaderboard_constant_values": [
+      "0.3288136427728255",
+      "0.05652688955988315"
+    ],
+    "retired_leaderboard_constant_names": [
+      "alpha_c1_from_P4",
+      "beta_constrained_from_P5",
+      "beta_unconstrained_from_P5",
+      "global_constant_c_from_P6",
+      "c0_public_rmse",
+      "c1_public_rmse",
+      "p4_public_rmse"
+    ],
+    "removed_reference_layers": [
+      "TIGER",
+      "MS Buildings",
+      "USGS",
+      "CBP"
+    ],
+    "allowed_disclosure_markers": [
+      "rules",
+      "disclose",
+      "organiser",
+      "organizer",
+      "official",
+      "published",
+      "supplied",
+      "provided",
+      "quoted",
+      "documented",
+      "removed",
+      "not used",
+      "never used",
+      "prohibit",
+      "forbid"
+    ]
+  },
+  "numeric_provenance": {
+    "note": "Numbers in the builder-authored sections must come from these committed artifacts; the verifier re-derives them.",
+    "claim_audit_report": "reports/writeup-claim-evidence-audit.json",
+    "candidates_registry": "reports/candidates.json",
+    "submission_log": "reports/submissions.jsonl",
+    "final_two": "reports/final-two.json",
+    "provided_data_audit": "reports/v2-input-provenance.json",
+    "exempt_literal_values": [
+      1000,
+      500,
+      30,
+      25,
+      20,
+      2026,
+      10,
+      31,
+      29,
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "commands": {
+    "build": "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --quiet --with reportlab==4.4.10 python scripts/build_final_writeup.py",
+    "verify": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_submission.py",
+    "tests": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with pytest python -m pytest -q"
+  }
+}
