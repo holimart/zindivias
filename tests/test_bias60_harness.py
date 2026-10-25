@@ -156,7 +156,7 @@ def stub_factory(overrides: dict | None = None):
 
 def _stub_g_implementations():
     """Keep common harness tests isolated from raw-geometry package I/O."""
-    originals = {idea: IMPLEMENTATIONS[idea] for idea in (f"G{i}" for i in range(1, 6))}
+    originals = {idea: IMPLEMENTATIONS[idea] for idea in [*(f"G{i}" for i in range(1, 6)), "P1", "P3"]}
     def stub(idea_id, specification):
         def execute(inputs):
             from bias60.contracts import Emission, IdeaOutput
@@ -168,7 +168,8 @@ def _stub_g_implementations():
         return execute
     specs = {"G1": [("R", "gap"), ("R", "covariate")], "G2": [("R", "gap")],
              "G3": [("B", "gap")], "G4": [("B", "covariate")],
-             "G5": [("Est", "covariate"), ("F", "covariate")]}
+             "G5": [("Est", "covariate"), ("F", "covariate")],
+             "P1": [("Est", "gap")], "P3": [("F", "covariate")]}
     IMPLEMENTATIONS.update({idea: stub(idea, specs[idea]) for idea in specs})
     return originals
 

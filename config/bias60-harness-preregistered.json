@@ -202,7 +202,15 @@
       "south-central-tx-strata-tract-table.parquet:carbonplan_buildings",
       "south-central-tx-strata-tract-table.parquet:carbonplan_covered",
       "south-central-tx-strata-tract-table.parquet:pop_total",
-      "south-central-tx-strata-tract-table.parquet:ruca_primary"
+      "south-central-tx-strata-tract-table.parquet:ruca_primary",
+      "maricopa-az-overture-buildings.parquet:sources,class,height,num_floors,geometry",
+      "maricopa-az-overture-roads.parquet:class,subclass,geometry",
+      "northern-ca-overture-buildings.parquet:sources,class,height,num_floors,geometry",
+      "northern-ca-overture-roads.parquet:class,subclass,geometry",
+      "eastern-ok-overture-buildings.parquet:sources,class,height,num_floors,geometry",
+      "eastern-ok-overture-roads.parquet:class,subclass,geometry",
+      "south-central-tx-overture-buildings.parquet:sources,class,height,num_floors,geometry",
+      "south-central-tx-overture-roads.parquet:class,subclass,geometry"
     ]
   },
   "orthogonality": {
@@ -254,6 +262,59 @@
       "cross_check_column": "overture_named_road_km_5070",
       "cross_check_relative_tolerance": 1e-06,
       "note": "spec Sc5: named-class length in unfiltered minus filtered as a share; both layers clipped to official tracts in EPSG:5070"
+    },
+    "P1": {
+      "component": "Est",
+      "kind": "gap",
+      "building_layer": "buildings",
+      "poi_layer": "pois",
+      "allowed_building_sources": [
+        "OpenStreetMap",
+        "OSM",
+        "Esri"
+      ],
+      "exclude_microsoft_and_mixed_source": true,
+      "nonresidential_classes": [
+        "commercial",
+        "industrial",
+        "education",
+        "government",
+        "institutional",
+        "transportation",
+        "agricultural",
+        "warehouse",
+        "office",
+        "retail",
+        "public",
+        "religious",
+        "school",
+        "hospital",
+        "civic"
+      ],
+      "unknown_large_min_area_m2": 1000.0,
+      "default_floors": {
+        "commercial": 2,
+        "industrial": 1,
+        "education": 1,
+        "government": 2,
+        "institutional": 2,
+        "transportation": 1,
+        "agricultural": 1,
+        "warehouse": 1,
+        "office": 2,
+        "retail": 1,
+        "public": 2,
+        "religious": 1,
+        "school": 1,
+        "hospital": 3,
+        "civic": 2,
+        "unknown_large": 1
+      },
+      "floor_height_m": 3.5,
+      "maximum_inferred_floors": 20,
+      "anchor_quantile": 0.75,
+      "anchor_definition": "upper quartile of distinct primary-category richness among tracts with positive non-residential floor area",
+      "note": "All floor and anchor rules fixed before scanning; exclusive OSM/Esri buildings and provided non-Microsoft POIs only."
     },
     "P2": {
       "component": "F",
@@ -355,6 +416,44 @@
       "assignment": "centroid of each provided Overture footprint; never Microsoft buildings",
       "note": "The fitted shape is estimated only from provided Overture building polygons, not labels or reference layers."
     },
+    "P3": {
+      "component": "F",
+      "kind": "covariate",
+      "building_layer": "buildings",
+      "poi_layer": "pois",
+      "road_layer": "roads",
+      "allowed_building_sources": [
+        "OpenStreetMap",
+        "OSM",
+        "Esri"
+      ],
+      "school_area_min_m2": 2000.0,
+      "school_area_max_m2": 15000.0,
+      "minimum_circularity": 0.05,
+      "minimum_solidity": 0.8,
+      "maximum_height_m": 20.0,
+      "maximum_floors": 2.0,
+      "excluded_classes": [
+        "commercial",
+        "industrial",
+        "warehouse",
+        "retail"
+      ],
+      "void_radius_m": 150.0,
+      "minimum_void_area_m2": 20000.0,
+      "collector_classes": [
+        "primary",
+        "secondary",
+        "tertiary"
+      ],
+      "collector_subclasses": [
+        "collector"
+      ],
+      "collector_distance_m": 50.0,
+      "school_category": "school",
+      "witness_rule": "emit candidate count only where provided non-Microsoft school POI count is zero",
+      "note": "Frozen geometric witness thresholds; void is disk area minus eligible building footprint area whose centroid falls within the disk; not a school label."
+    },
     "Dst4": {
       "component": "C",
       "kind": "gap",
@@ -372,7 +471,9 @@
         "G2",
         "G3",
         "G4",
-        "G5"
+        "G5",
+        "P1",
+        "P3"
       ],
       "components": [
         "B",

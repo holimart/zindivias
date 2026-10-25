@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "family": "P",
-  "status": "partial_two_computed_three_documented",
+  "status": "four_computed_one_blocked_by_data-use-rule",
   "scope": {
     "official_scored_tracts": 9379,
     "ideas": [
@@ -22,14 +22,289 @@
     "labels_read": false,
     "reference_layers_read": false,
     "leaderboard_accessed": false,
-    "uploads": 0
+    "uploads": 0,
+    "external_canopy_layer_read": false,
+    "microsoft_building_geometry_used": false,
+    "mixed_or_microsoft_building_geometry_decoded": false
   },
   "ideas": [
     {
       "id": "P1",
-      "status": "not_computed",
+      "status": "computed",
       "reason": "The published recipe requires per-tract non-residential building floor area and a places count. The approved places layer path is absent (schema inspection returned FileNotFound), so neither place density nor its label-free top-completeness-quartile anchor can be calculated. No substitute count is fabricated.",
-      "missing_prerequisite": "A verified rule-clean provided places input and a declared building floor-area aggregation with frozen class/default-floor rules."
+      "missing_prerequisite": "A verified rule-clean provided places input and a declared building floor-area aggregation with frozen class/default-floor rules.",
+      "path": "ideas/P1.parquet",
+      "sha256": "5bda0f80ba8397abecb31731caa09dec6500248d1ab072fcfb9f95f1199a7d3e",
+      "rows": 9379,
+      "official_rows": 9379,
+      "geoid_partition_exact": true,
+      "regions": {
+        "eastern-ok": {
+          "anchor_category_richness_q": 116.5,
+          "anchor_tracts": 239,
+          "building_reader": {
+            "assigned_valid_rows": 147523,
+            "crs": "EPSG:5070",
+            "floor_area_rules_frozen": true,
+            "invalid_rows": 0,
+            "layer": "buildings",
+            "microsoft_membership_rows_excluded_before_wkb": 2246412,
+            "reader_version": 2,
+            "region": "eastern-ok",
+            "rows_scanned": 2551694,
+            "rows_total": 2551694,
+            "rule_clean_rows": 147523,
+            "source_rule": "exclusive OSM/Esri; mixed and Microsoft memberships dropped before WKB decode"
+          },
+          "defined": 955,
+          "expected_establishments": {
+            "count": 955,
+            "max": 54084.89992664507,
+            "mean": 445.1671404861728,
+            "min": 0.11558338731012534,
+            "p50": 131.55164509472726,
+            "p90": 797.653618515306
+          },
+          "floor_area_m2": {
+            "count": 1192,
+            "max": 3622548.7878985307,
+            "mean": 23888.475152868752,
+            "min": 0.0,
+            "p50": 5657.502027971939,
+            "p90": 43080.47965738359
+          },
+          "floor_rule": "floors field; else round(height/3.5m); else frozen class default",
+          "gap_distribution": {
+            "count": 955,
+            "max": 0.9950178757843757,
+            "mean": 0.27733248140990535,
+            "min": 0.0,
+            "p50": 0.03785154737152718,
+            "p90": 0.8060852955975295
+          },
+          "kappa_places_per_floor_m2": 0.01493006805244993,
+          "place_count": {
+            "count": 1192,
+            "max": 1649.0,
+            "mean": 147.25,
+            "min": 5.0,
+            "p50": 111.0,
+            "p90": 288.0
+          },
+          "places_reader": {
+            "assigned_points": 175522,
+            "category_field": "categories.primary",
+            "layer": "pois",
+            "microsoft_membership_rows_excluded": 31847,
+            "reader_version": 2,
+            "region": "eastern-ok",
+            "rows_scanned": 207369,
+            "rows_total": 207369,
+            "rule_clean_rows": 175522,
+            "source_rule": "provided places excluding Microsoft memberships"
+          },
+          "rows": 1192
+        },
+        "maricopa-az": {
+          "anchor_category_richness_q": 123.0,
+          "anchor_tracts": 237,
+          "building_reader": {
+            "assigned_valid_rows": 347823,
+            "crs": "EPSG:5070",
+            "floor_area_rules_frozen": true,
+            "invalid_rows": 0,
+            "layer": "buildings",
+            "microsoft_membership_rows_excluded_before_wkb": 1299748,
+            "reader_version": 2,
+            "region": "maricopa-az",
+            "rows_scanned": 2908224,
+            "rows_total": 2908224,
+            "rule_clean_rows": 347823,
+            "source_rule": "exclusive OSM/Esri; mixed and Microsoft memberships dropped before WKB decode"
+          },
+          "defined": 943,
+          "expected_establishments": {
+            "count": 943,
+            "max": 34718.25327032106,
+            "mean": 834.0938593056043,
+            "min": 0.04406072033155813,
+            "p50": 151.44815954450547,
+            "p90": 1655.7525958274775
+          },
+          "floor_area_m2": {
+            "count": 1593,
+            "max": 1094068.1698731964,
+            "mean": 15559.561621818975,
+            "min": 0.0,
+            "p50": 146.71099160251867,
+            "p90": 26491.36927540112
+          },
+          "floor_rule": "floors field; else round(height/3.5m); else frozen class default",
+          "gap_distribution": {
+            "count": 943,
+            "max": 0.9991595782029243,
+            "mean": 0.3746629587933692,
+            "min": 0.0,
+            "p50": 0.2388686575336455,
+            "p90": 0.9244316368096063
+          },
+          "kappa_places_per_floor_m2": 0.03173317186839001,
+          "place_count": {
+            "count": 1593,
+            "max": 4047.0,
+            "mean": 153.98556183301946,
+            "min": 1.0,
+            "p50": 98.0,
+            "p90": 333.5999999999999
+          },
+          "places_reader": {
+            "assigned_points": 245299,
+            "category_field": "categories.primary",
+            "layer": "pois",
+            "microsoft_membership_rows_excluded": 54746,
+            "reader_version": 2,
+            "region": "maricopa-az",
+            "rows_scanned": 300046,
+            "rows_total": 300046,
+            "rule_clean_rows": 245300,
+            "source_rule": "provided places excluding Microsoft memberships"
+          },
+          "rows": 1593
+        },
+        "northern-ca": {
+          "anchor_category_richness_q": 126.25,
+          "anchor_tracts": 115,
+          "building_reader": {
+            "assigned_valid_rows": 105795,
+            "crs": "EPSG:5070",
+            "floor_area_rules_frozen": true,
+            "invalid_rows": 0,
+            "layer": "buildings",
+            "microsoft_membership_rows_excluded_before_wkb": 1042981,
+            "reader_version": 2,
+            "region": "northern-ca",
+            "rows_scanned": 1164724,
+            "rows_total": 1164724,
+            "rule_clean_rows": 105795,
+            "source_rule": "exclusive OSM/Esri; mixed and Microsoft memberships dropped before WKB decode"
+          },
+          "defined": 460,
+          "expected_establishments": {
+            "count": 460,
+            "max": 14154.409351333908,
+            "mean": 398.6849607131146,
+            "min": 0.2309511515200647,
+            "p50": 139.38418005355217,
+            "p90": 731.4056760000915
+          },
+          "floor_area_m2": {
+            "count": 591,
+            "max": 860722.0215570776,
+            "mean": 18869.976847696595,
+            "min": 0.0,
+            "p50": 4853.459300995282,
+            "p90": 37294.06103809402
+          },
+          "floor_rule": "floors field; else round(height/3.5m); else frozen class default",
+          "gap_distribution": {
+            "count": 460,
+            "max": 0.9874950628029336,
+            "mean": 0.25427116056011023,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.7756962428020122
+          },
+          "kappa_places_per_floor_m2": 0.016444809121681427,
+          "place_count": {
+            "count": 591,
+            "max": 1603.0,
+            "mean": 166.61252115059222,
+            "min": 2.0,
+            "p50": 112.0,
+            "p90": 353.0
+          },
+          "places_reader": {
+            "assigned_points": 98468,
+            "category_field": "categories.primary",
+            "layer": "pois",
+            "microsoft_membership_rows_excluded": 18427,
+            "reader_version": 2,
+            "region": "northern-ca",
+            "rows_scanned": 116897,
+            "rows_total": 116897,
+            "rule_clean_rows": 98470,
+            "source_rule": "provided places excluding Microsoft memberships"
+          },
+          "rows": 591
+        },
+        "south-central-tx": {
+          "anchor_category_richness_q": 132.0,
+          "anchor_tracts": 1105,
+          "building_reader": {
+            "assigned_valid_rows": 1932481,
+            "crs": "EPSG:5070",
+            "floor_area_rules_frozen": true,
+            "invalid_rows": 0,
+            "layer": "buildings",
+            "microsoft_membership_rows_excluded_before_wkb": 8243296,
+            "reader_version": 2,
+            "region": "south-central-tx",
+            "rows_scanned": 11463801,
+            "rows_total": 11463801,
+            "rule_clean_rows": 1932481,
+            "source_rule": "exclusive OSM/Esri; mixed and Microsoft memberships dropped before WKB decode"
+          },
+          "defined": 4375,
+          "expected_establishments": {
+            "count": 4375,
+            "max": 33763.20690309083,
+            "mean": 718.3087756710303,
+            "min": 0.31529635665420086,
+            "p50": 166.4513139126287,
+            "p90": 1605.8663655856549
+          },
+          "floor_area_m2": {
+            "count": 6003,
+            "max": 2578544.3862369177,
+            "mean": 39980.83018000774,
+            "min": 0.0,
+            "p50": 5362.087931606612,
+            "p90": 89043.90816412604
+          },
+          "floor_rule": "floors field; else round(height/3.5m); else frozen class default",
+          "gap_distribution": {
+            "count": 4375,
+            "max": 0.9975711545169682,
+            "mean": 0.32593953236905426,
+            "min": 0.0,
+            "p50": 0.09316953894938018,
+            "p90": 0.8971582858588713
+          },
+          "kappa_places_per_floor_m2": 0.013093901770046417,
+          "place_count": {
+            "count": 6003,
+            "max": 3427.0,
+            "mean": 181.35482258870564,
+            "min": 0.0,
+            "p50": 128.0,
+            "p90": 369.8000000000002
+          },
+          "places_reader": {
+            "assigned_points": 1088673,
+            "category_field": "categories.primary",
+            "layer": "pois",
+            "microsoft_membership_rows_excluded": 211635,
+            "reader_version": 2,
+            "region": "south-central-tx",
+            "rows_scanned": 1300334,
+            "rows_total": 1300334,
+            "rule_clean_rows": 1088699,
+            "source_rule": "provided places excluding Microsoft memberships"
+          },
+          "rows": 6003
+        }
+      },
+      "recipe": "Non-residential floor-area expectation with frozen class defaults and regional median places/m\u00b2 anchor among top-quartile non-Microsoft primary-category-richness tracts."
     },
     {
       "id": "P2",
@@ -97,9 +372,189 @@
     },
     {
       "id": "P3",
-      "status": "not_computed",
+      "status": "computed",
       "reason": "The building geometry is available, but the candidate school classifier requires a heavy tract-level search over 2,000\u201315,000 m\u00b2 footprints, compactness, 2 ha void rings within 150 m, and collector-road adjacency. This classifier has no tested component-level geometry routine or false-positive fixtures in the current harness; emitting candidates without those checks would turn churches/community centres and retail into unvalidated school evidence.",
-      "missing_prerequisite": "A deterministic, audited building/road geometry candidate routine and fixtures for the stated area, compactness, void-ring and adjacency tests."
+      "missing_prerequisite": "A deterministic, audited building/road geometry candidate routine and fixtures for the stated area, compactness, void-ring and adjacency tests.",
+      "path": "ideas/P3.parquet",
+      "sha256": "2e9a063759f697d0b2419152c3c0907e68e41dd04b8d901a16425f3207776fa1",
+      "rows": 9379,
+      "official_rows": 9379,
+      "geoid_partition_exact": true,
+      "regions": {
+        "eastern-ok": {
+          "building_reader": {
+            "assigned_valid_rows": 147523,
+            "crs": "EPSG:5070",
+            "floor_area_rules_frozen": true,
+            "invalid_rows": 0,
+            "layer": "buildings",
+            "microsoft_membership_rows_excluded_before_wkb": 2246412,
+            "reader_version": 2,
+            "region": "eastern-ok",
+            "rows_scanned": 2551694,
+            "rows_total": 2551694,
+            "rule_clean_rows": 147523,
+            "source_rule": "exclusive OSM/Esri; mixed and Microsoft memberships dropped before WKB decode"
+          },
+          "candidate_buildings": 1288,
+          "collector_distance_m": 50.0,
+          "defined": 1192,
+          "note": "void area is a conservative centroid-footprint approximation; candidate output remains a covariate, not a school label",
+          "passed_collector_adjacency": 116,
+          "passed_void_ring": 1282,
+          "places_reader": {
+            "assigned_points": 175522,
+            "category_field": "categories.primary",
+            "layer": "pois",
+            "microsoft_membership_rows_excluded": 31847,
+            "reader_version": 2,
+            "region": "eastern-ok",
+            "rows_scanned": 207369,
+            "rows_total": 207369,
+            "rule_clean_rows": 175522,
+            "source_rule": "provided places excluding Microsoft memberships"
+          },
+          "road_reader": {
+            "collector_candidates": 81555,
+            "collector_rule": "provided road class/subclass preregistered in config",
+            "crs": "EPSG:5070",
+            "rows_scanned": 520550
+          },
+          "rows": 1192,
+          "tracts_with_unwitnessed_school_candidate": 30,
+          "void_ring_rule": "150m disk around candidate centroid minus OSM/Esri footprint area from centroids in disk; require >= 20,000 m2"
+        },
+        "maricopa-az": {
+          "building_reader": {
+            "assigned_valid_rows": 347823,
+            "crs": "EPSG:5070",
+            "floor_area_rules_frozen": true,
+            "invalid_rows": 0,
+            "layer": "buildings",
+            "microsoft_membership_rows_excluded_before_wkb": 1299748,
+            "reader_version": 2,
+            "region": "maricopa-az",
+            "rows_scanned": 2908224,
+            "rows_total": 2908224,
+            "rule_clean_rows": 347823,
+            "source_rule": "exclusive OSM/Esri; mixed and Microsoft memberships dropped before WKB decode"
+          },
+          "candidate_buildings": 1094,
+          "collector_distance_m": 50.0,
+          "defined": 1593,
+          "note": "void area is a conservative centroid-footprint approximation; candidate output remains a covariate, not a school label",
+          "passed_collector_adjacency": 56,
+          "passed_void_ring": 1090,
+          "places_reader": {
+            "assigned_points": 245299,
+            "category_field": "categories.primary",
+            "layer": "pois",
+            "microsoft_membership_rows_excluded": 54746,
+            "reader_version": 2,
+            "region": "maricopa-az",
+            "rows_scanned": 300046,
+            "rows_total": 300046,
+            "rule_clean_rows": 245300,
+            "source_rule": "provided places excluding Microsoft memberships"
+          },
+          "road_reader": {
+            "collector_candidates": 94322,
+            "collector_rule": "provided road class/subclass preregistered in config",
+            "crs": "EPSG:5070",
+            "rows_scanned": 494492
+          },
+          "rows": 1593,
+          "tracts_with_unwitnessed_school_candidate": 15,
+          "void_ring_rule": "150m disk around candidate centroid minus OSM/Esri footprint area from centroids in disk; require >= 20,000 m2"
+        },
+        "northern-ca": {
+          "building_reader": {
+            "assigned_valid_rows": 105795,
+            "crs": "EPSG:5070",
+            "floor_area_rules_frozen": true,
+            "invalid_rows": 0,
+            "layer": "buildings",
+            "microsoft_membership_rows_excluded_before_wkb": 1042981,
+            "reader_version": 2,
+            "region": "northern-ca",
+            "rows_scanned": 1164724,
+            "rows_total": 1164724,
+            "rule_clean_rows": 105795,
+            "source_rule": "exclusive OSM/Esri; mixed and Microsoft memberships dropped before WKB decode"
+          },
+          "candidate_buildings": 613,
+          "collector_distance_m": 50.0,
+          "defined": 591,
+          "note": "void area is a conservative centroid-footprint approximation; candidate output remains a covariate, not a school label",
+          "passed_collector_adjacency": 47,
+          "passed_void_ring": 611,
+          "places_reader": {
+            "assigned_points": 98468,
+            "category_field": "categories.primary",
+            "layer": "pois",
+            "microsoft_membership_rows_excluded": 18427,
+            "reader_version": 2,
+            "region": "northern-ca",
+            "rows_scanned": 116897,
+            "rows_total": 116897,
+            "rule_clean_rows": 98470,
+            "source_rule": "provided places excluding Microsoft memberships"
+          },
+          "road_reader": {
+            "collector_candidates": 40919,
+            "collector_rule": "provided road class/subclass preregistered in config",
+            "crs": "EPSG:5070",
+            "rows_scanned": 191836
+          },
+          "rows": 591,
+          "tracts_with_unwitnessed_school_candidate": 7,
+          "void_ring_rule": "150m disk around candidate centroid minus OSM/Esri footprint area from centroids in disk; require >= 20,000 m2"
+        },
+        "south-central-tx": {
+          "building_reader": {
+            "assigned_valid_rows": 1932481,
+            "crs": "EPSG:5070",
+            "floor_area_rules_frozen": true,
+            "invalid_rows": 0,
+            "layer": "buildings",
+            "microsoft_membership_rows_excluded_before_wkb": 8243296,
+            "reader_version": 2,
+            "region": "south-central-tx",
+            "rows_scanned": 11463801,
+            "rows_total": 11463801,
+            "rule_clean_rows": 1932481,
+            "source_rule": "exclusive OSM/Esri; mixed and Microsoft memberships dropped before WKB decode"
+          },
+          "candidate_buildings": 7899,
+          "collector_distance_m": 50.0,
+          "defined": 6003,
+          "note": "void area is a conservative centroid-footprint approximation; candidate output remains a covariate, not a school label",
+          "passed_collector_adjacency": 571,
+          "passed_void_ring": 7877,
+          "places_reader": {
+            "assigned_points": 1088673,
+            "category_field": "categories.primary",
+            "layer": "pois",
+            "microsoft_membership_rows_excluded": 211635,
+            "reader_version": 2,
+            "region": "south-central-tx",
+            "rows_scanned": 1300334,
+            "rows_total": 1300334,
+            "rule_clean_rows": 1088699,
+            "source_rule": "provided places excluding Microsoft memberships"
+          },
+          "road_reader": {
+            "collector_candidates": 484446,
+            "collector_rule": "provided road class/subclass preregistered in config",
+            "crs": "EPSG:5070",
+            "rows_scanned": 1937009
+          },
+          "rows": 6003,
+          "tracts_with_unwitnessed_school_candidate": 142,
+          "void_ring_rule": "150m disk around candidate centroid minus OSM/Esri footprint area from centroids in disk; require >= 20,000 m2"
+        }
+      },
+      "recipe": "School-footprint covariate: 2,000-15,000m\u00b2, circularity>=0.05, solidity>=0.80, <=2 floors/20m, non-commercial/industrial; 150m disk void >=20,000m\u00b2, <=50m to preregistered collector classes; witness only where non-Microsoft school POI count is zero."
     },
     {
       "id": "P4",
@@ -157,30 +612,47 @@
     },
     {
       "id": "P5",
-      "status": "not_computed",
-      "reason": "The available strata include USFS exposure/WHP and the provided feature cache has an MS-only source share, but the preregistered phrase \u201cforested WUI indicator\u201d supplies no numeric cut point or categorical mapping. Choosing one after inspecting the study distributions would add an unregistered tuning choice and the direction of occlusion is explicitly unknown.",
-      "missing_prerequisite": "Freeze a public-data-based forest/WUI classification and source-share mapping before inspecting the estimator distribution; resolve direction as a covariate or fixed gap prior."
+      "status": "blocked_by_rule",
+      "reason": "The provided strata contain `usfs_WHP_mean`, vegetation labels, and `usfs_CFL_mean` (canopy fuel load), but no tree-canopy-cover measure. The public FIA forestland cut is at least 10% tree canopy cover (USDA Forest Service, FIA glossary: https://www.fia.fs.usda.gov/library/database-documentation/); canopy fuel load is not canopy cover. Applying the cut requires an external canopy layer, which the competition rules forbid for scored estimators (additional public datasets are authorized only for the Best Bias Discovery writeup). No canopy layer was fetched or used.",
+      "missing_prerequisite": "No rule-permitted canopy-cover field in the provided strata; external canopy layer is disallowed.",
+      "rule_basis": "The scored estimator may use only challenge-provided datasets; obtaining the missing canopy-cover variable externally is prohibited."
     }
   ],
   "orthogonality": {
     "report": "reports/ideas-orthogonality.json",
-    "sha256": "892d0087f12b7c565cfa23f74830f521afc1edc8890916c5aae865e488fcdbde",
+    "sha256": "3703556721298158a78b0d21f1d7d36a858acdf18248319f4bc959eecfea7ec3",
     "g_family_columns_included": [
+      "P1|Est|gap",
       "P2|F|gap",
-      "P4|R|gap"
+      "P3|F|covariate"
     ],
+    "family_p_columns_excluded_by_coverage": ["P4|R|gap"],
     "summary": {
       "all_passed": true,
-      "clusters": 6,
+      "clusters": 18,
       "columns_degenerate": 0,
-      "columns_evaluated": 8,
-      "columns_flagged_vif": 5,
-      "columns_included": 7,
+      "columns_evaluated": 23,
+      "columns_flagged_vif": 8,
+      "columns_included": 21,
       "columns_numerically_null": 2,
-      "pairs_flagged": 1,
-      "report_sha256": "ceb3ddf7c80b430d601a838c35fa5fd0ea3f3b7e557b6ffe48a4e64f0b2bf5eb"
+      "pairs_flagged": 3,
+      "report_sha256": "00a3475e0afb3253b2848390471e7dad0616095084e129865658a44dc0b4e45a"
     },
     "pairs_exceeding_merge_threshold": [
+      {
+        "abs_rho": 1.0,
+        "left": "G1|R|covariate",
+        "right": "G1|R|gap",
+        "same_component": true,
+        "same_family": true
+      },
+      {
+        "abs_rho": 0.995801065928555,
+        "left": "P2|F|gap",
+        "right": "Sca1|F|gap",
+        "same_component": true,
+        "same_family": false
+      },
       {
         "abs_rho": 0.8160240383903553,
         "left": "Sc5|R|covariate",
@@ -189,6 +661,46 @@
         "same_family": true
       }
     ],
-    "note": "Report covers every implemented idea on 9,379 official tracts; no statistic was imputed for P1/P3/P5."
-  }
+    "columns_exceeding_vif_threshold": [
+      {
+        "column": "Dst3|B|gap",
+        "vif": 36.67680672516824
+      },
+      {
+        "column": "G2|R|gap",
+        "vif": 323.6854782373298
+      },
+      {
+        "column": "G4|B|covariate",
+        "vif": 11.551238272152649
+      },
+      {
+        "column": "P3|F|covariate",
+        "vif": 42.343928019338136
+      },
+      {
+        "column": "Sc5|R|covariate",
+        "vif": 283.77590272295834
+      },
+      {
+        "column": "Sc5|R|gap",
+        "vif": 58.620974205493326
+      },
+      {
+        "column": "Tm1|B|covariate",
+        "vif": 50.754182729688935
+      },
+      {
+        "column": "Tm1|B|gap",
+        "vif": 25.155075284390488
+      }
+    ],
+    "note": "Full correlations, VIF, condition number, coverage, and all flags are in the linked orthogonality report."
+  },
+  "computed": [
+    "P1",
+    "P2",
+    "P3",
+    "P4"
+  ]
 }

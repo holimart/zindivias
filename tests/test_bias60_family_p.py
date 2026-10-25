@@ -11,6 +11,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 from bias60.ideas import IMPLEMENTATIONS  # noqa: E402
+from bias60.ideas.p_physical import _school_shape_candidate, _void_area_150m  # noqa: E402
 
 CONFIG = json.loads((ROOT / "config/bias60-harness-preregistered.json").read_text())
 
@@ -32,6 +33,30 @@ class StubInputs:
 
 
 class PhysicalPriorTests(unittest.TestCase):
+    def test_p3_void_ring_fixture_rejects_built_up_neighbourhood(self) -> None:
+        sparse = {(0, 0): [(0.0, 0.0, 8000.0)]}
+        dense = {(0, 0): [(0.0, 0.0, 8000.0), (20.0, 0.0, 30000.0),
+                          (40.0, 0.0, 30000.0)]}
+        self.assertGreaterEqual(_void_area_150m(0.0, 0.0, sparse, 150.0), 20000.0)
+        self.assertLess(_void_area_150m(0.0, 0.0, dense, 150.0), 20000.0)
+
+    def test_p3_shape_fixtures_reject_common_false_positives(self) -> None:
+        seed = CONFIG["seeds"]["P3"]
+        self.assertTrue(_school_shape_candidate(area_m2=8000, circularity=0.25, solidity=0.9,
+                                                building_class="education", floors=1, height_m=8,
+                                                seed=seed))
+        # Area, compactness, floor count, and non-school commercial classes are independent gates.
+        self.assertFalse(_school_shape_candidate(area_m2=1999, circularity=0.5, solidity=0.9,
+                                                 building_class="education", floors=1, height_m=8, seed=seed))
+        self.assertFalse(_school_shape_candidate(area_m2=8000, circularity=0.02, solidity=0.9,
+                                                 building_class="education", floors=1, height_m=8, seed=seed))
+        self.assertFalse(_school_shape_candidate(area_m2=8000, circularity=0.5, solidity=0.9,
+                                                 building_class="commercial", floors=1, height_m=8, seed=seed))
+        self.assertFalse(_school_shape_candidate(area_m2=8000, circularity=0.5, solidity=0.9,
+                                                 building_class="education", floors=4, height_m=8, seed=seed))
+        self.assertFalse(_school_shape_candidate(area_m2=8000, circularity=0.5, solidity=0.7,
+                                                 building_class="education", floors=1, height_m=8, seed=seed))
+
     def test_p2_uses_fixed_ruca_area_expectations_and_ratio_gap(self) -> None:
         inputs = StubInputs(
             "eastern-ok",

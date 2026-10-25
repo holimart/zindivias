@@ -27,9 +27,10 @@ class PhysicalFamilyReportTests(unittest.TestCase):
                     self.assertRegex(item["sha256"], r"^[0-9a-f]{64}$")
                     self.assertEqual(self.registry_by_id[idea_id]["status"], "implemented")
                 else:
-                    self.assertEqual(item["status"], "not_computed")
+                    self.assertEqual(item["status"], "blocked_by_rule")
                     self.assertGreater(len(item["reason"]), 80)
                     self.assertGreater(len(item["missing_prerequisite"]), 20)
+                    self.assertGreater(len(item["rule_basis"]), 30)
                     self.assertEqual(self.registry_by_id[idea_id]["status"], "declared")
 
     def test_p2_and_p4_outputs_keep_definedness_denominators_honest(self) -> None:
@@ -45,8 +46,10 @@ class PhysicalFamilyReportTests(unittest.TestCase):
 
     def test_orthogonality_has_both_new_columns_and_flags_instead_of_dropping(self) -> None:
         ortho = self.report["orthogonality"]
+        self.assertIn("P1|Est|gap", ortho["g_family_columns_included"])
         self.assertIn("P2|F|gap", ortho["g_family_columns_included"])
-        self.assertIn("P4|R|gap", ortho["g_family_columns_included"])
+        self.assertIn("P3|F|covariate", ortho["g_family_columns_included"])
+        self.assertIn("P4|R|gap", ortho["family_p_columns_excluded_by_coverage"])
         self.assertTrue(ortho["summary"]["all_passed"])
         self.assertGreater(ortho["summary"]["columns_included"], 0)
         self.assertTrue(ortho["pairs_exceeding_merge_threshold"])

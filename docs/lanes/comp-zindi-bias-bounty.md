@@ -1656,3 +1656,31 @@ and VIFs are in `tests/test_bias60_family_g.py`, `reports/g-family-screen.json`,
 `reports/ideas-orthogonality.json`. The harness now registers 16 implementations. Dst4’s preregistered
 component vector was refreshed to all 14 other idea IDs (gap channels only); Dst5 was recalculated.
 No labels, Microsoft geometries, removed reference layers, leaderboard feedback, or uploads were used. Full test suite: **626 passed, 301 subtests in 319.79s**.
+
+## 2026-10-26 — bias60-family-p: P1/P3 computed; P5 constrained by data-use rule
+
+- **P1** computes the Est gap on all 9,379 scored GEOIDs. It uses provided non-Microsoft places and
+  exclusive OSM/Esri building footprints. Floors are taken from `num_floors`, otherwise rounded
+  `height/3.5m`, otherwise fixed class defaults (capped at 20); unknown-class floor area is admitted
+  only at >=1,000 m². The regional κ anchor is the median places/m² ratio among tracts in the
+  preregistered upper quartile of primary-category richness with positive non-residential floor area.
+  Artifact SHA-256 `5bda0f80ba8397abecb31731caa09dec6500248d1ab072fcfb9f95f1199a7d3e`.
+- **P3** emits a school-candidate F covariate on all tracts. Frozen geometry gates are 2,000–15,000
+  m², circularity >=0.05, solidity >=0.80, <=2 floors/20m height, and not commercial/industrial/
+  warehouse/retail. It additionally requires a 150m disk with >=20,000 m² estimated void, <=50m to
+  a preregistered primary/secondary/tertiary or collector-subclass road, and emits only where no
+  provided non-Microsoft school POI is present. Void is estimated conservatively by subtracting the
+  area of eligible footprints whose centroids lie in the disk; this is disclosed as a candidate
+  covariate, not a school label. False-positive shape/area/class/floor/void fixtures pass. Artifact
+  SHA-256 `2e9a063759f697d0b2419152c3c0907e68e41dd04b8d901a16425f3207776fa1`.
+- **P5** was not computed: the provided wildfire strata have WHP and canopy-fuel-load fields, but no
+  tree-canopy-cover value. The public FIA forestland cut (>=10% canopy cover) cannot be applied to
+  canopy fuel load as if it were canopy cover. Fetching an external canopy layer for a scored
+  estimator is prohibited by the package-only rule; none was fetched. The rule-based non-computation
+  and citation are recorded in `reports/p-family-screen.json`.
+
+Updated Dst4's frozen source vector to include P1 and P3 and rebuilt Dst4/Dst5. Registry and
+orthogonality now cover 18 implementations. P1/P3 integration outputs passed the 9,379-row harness
+with exact GEOID partitions and no undeclared/forbidden inputs. Orthogonality report has 23 evaluated
+columns, 21 included, 8 VIF flags and 3 correlation flags; condition number remains visible. No labels,
+Microsoft building geometries, leaderboard feedback, or uploads were used. Full test suite: **628 passed, 305 subtests in 382.34s**.
