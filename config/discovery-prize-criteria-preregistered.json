@@ -1,0 +1,464 @@
+{
+  "schema_version": 1,
+  "row_key": "backlog:.langywrap/backlogs/competitions.jsonl:bias-discovery-prize-criteria-audit",
+  "lane": "comp-zindi-bias-bounty",
+  "intent": "documentation screen of the Best Bias Discovery narrative; not a submission, not a model promotion, not a leaderboard probe",
+  "discovery_document": "docs/writeup/bias-discovery.md",
+  "claim_inventory": "reports/writeup-claim-inventory.json",
+  "claim_audit_report": "reports/writeup-claim-evidence-audit.json",
+  "report_output": "reports/discovery-prize-criteria-audit.json",
+  "markdown_output": "docs/writeup/bias-prize-criteria-audit.md",
+  "rules_quote_source": "WORKSPACE:RULES.md",
+  "criteria": [
+    {
+      "key": "impact",
+      "label": "Impact",
+      "weight_percent": 30,
+      "requirement": "a specific, responsibly qualified decision consequence with a named referent, never an unqualified operational claim",
+      "organiser_quote": "Entries for Best Bias Discovery are judged from the writeup by the organizing team against four criteria"
+    },
+    {
+      "key": "novelty",
+      "label": "Novelty outside the published scorecard grid",
+      "weight_percent": 25,
+      "requirement": "an explicit comparison with the published Bias Scorecard dimensions showing the finding is not a restatement of a marginal scorecard cell",
+      "organiser_quote": "the Bias Scorecard evaluates every submission across rural vs. urban, tribal vs. non-tribal, high-SVI vs. low-SVI, and communities facing high heat, wildfire, or drought exposure"
+    },
+    {
+      "key": "evidence",
+      "label": "Quantified evidence",
+      "weight_percent": 25,
+      "requirement": "every quantitative statement in the section carries a hash-pinned evidence pointer that resolves on disk and is traceable in the claim inventory",
+      "organiser_quote": "Evidence"
+    },
+    {
+      "key": "reproducibility",
+      "label": "Reproducibility",
+      "weight_percent": 20,
+      "requirement": "a recorded command that regenerates the deterministic report, the script exists, and a sampled claim verify command exits zero",
+      "organiser_quote": "Reproducibility"
+    }
+  ],
+  "hedge_phrases": [
+    "plausible risk",
+    "plausible decision risk",
+    "these are plausible",
+    "not observed",
+    "does not establish",
+    "does not prove",
+    "not a claim",
+    "hypothetical",
+    "descriptive",
+    "remains plausible",
+    "not measured",
+    "not causation",
+    "not a count of people confirmed displaced",
+    "not evidence",
+    "not a restatement"
+  ],
+  "grid_terms": [
+    "scorecard",
+    "bias scorecard",
+    "marginal",
+    "published scorecard grid",
+    "rural/urban",
+    "rural vs. urban",
+    "svi",
+    "tribal",
+    "hazard exposure"
+  ],
+  "beyond_grid_markers": [
+    "not simply",
+    "does not specify a joint cell",
+    "does not make region composition the comparison itself",
+    "not a marginal",
+    "rather than restating",
+    "not a claim about marginal",
+    "is not simply a marginal",
+    "not a restatement of a marginal",
+    "not a restatement"
+  ],
+  "decision_consequence_terms": [
+    "dispatch",
+    "geocoding",
+    "evacuation",
+    "routing",
+    "recovery-resource",
+    "mapping audit",
+    "investment",
+    "relief",
+    "locating services",
+    "field verification",
+    "quality-assurance",
+    "prioritisation"
+  ],
+  "named_referent_regex": "\\b\\d{11}\\b",
+  "named_referent_region_terms": [
+    "Butte",
+    "Maricopa",
+    "Northern California",
+    "Eastern Oklahoma",
+    "South-Central Texas",
+    "Paradise",
+    "Camp Fire"
+  ],
+  "unqualified_impact_regexes": [
+    "will (?:reduce|prevent|eliminate|improve) (?:dispatch|emergency|routing|evacuation)",
+    "saves? lives",
+    "measured dispatch failure",
+    "proves? that (?:emergency|dispatch|evacuation)",
+    "confirms? that the organiser",
+    "caused? (?:the|this) (?:gap|disparity|failure)",
+    "caused? (?:dispatch|emergency|routing|evacuation)",
+    "confirms? that the gap",
+    "led to (?:dispatch|emergency|routing) (?:failures|delays)"
+  ],
+  "hidden_target_claim_regexes": [
+    "the organiser(?:'s)? (?:hidden )?target (?:is|uses|equals)",
+    "hidden score (?:is|equals)",
+    "(?:true|actual|real) coverage gap",
+    "confirmed (?:missing|unmapped) buildings",
+    "the organiser scored these tracts"
+  ],
+  "external_data_policy": {
+    "url_regex": "https?://[^\\s)\\]`]+",
+    "allowlist": [],
+    "no_external_data_statement_regex": "(?:no additional public (?:data|dataset) was used|no external public data was used|no external-source retrieval)",
+    "note": "Best Bias Discovery sections must introduce no public dataset beyond the challenge package; if one were introduced it would need source, open licence, URL, retrieval date and a reproducible method, and would have to be added to the allowlist"
+  },
+  "prohibited_evidence_tokens": {
+    "description": "prohibited for evidence artifacts and section scripts; in prose a token is only a violation when its sentence carries no disclosure marker",
+    "tokens": [
+      "alpha_c1_from_P4",
+      "0.3288136427728255",
+      "config/calibration.json",
+      "lb_score_algebra",
+      "sample score placeholder",
+      "target label",
+      "MS Buildings",
+      "USGS facilities",
+      "tiger",
+      "cbp",
+      "public leaderboard score",
+      "leaderboard probing"
+    ],
+    "disclosure_markers": [
+      "does not",
+      "not use",
+      "do not use",
+      "no tiger",
+      "excluded",
+      "removed",
+      "official rules",
+      "rules disclose",
+      "rules also warn",
+      "never",
+      "without",
+      "prohibits",
+      "must not",
+      "not a claim",
+      "not evidence"
+    ]
+  },
+  "section_expectations": {
+    "require_all_four_criteria": true,
+    "draft_sections_must_carry_marker": true,
+    "draft_allowed_criteria_to_need_revision": [
+      "impact",
+      "novelty"
+    ],
+    "draft_required_criteria_to_pass": [
+      "evidence",
+      "reproducibility"
+    ]
+  },
+  "recommendation_templates": {
+    "impact": "State the decision consequence as an explicit hypothesis with a named referent and keep the qualifying sentence ('These are plausible risks, not observed ...'); if the consequence cannot be qualified, delete the operational sentence.",
+    "novelty": "Name the published scorecard dimension being compared and state in one sentence why the finding is not that marginal cell; if it is a restatement, remove the section from the discovery entry.",
+    "evidence": "Add a hash-pinned report pointer (path + JSON pointer) for every unpointed quantitative statement, or delete the number.",
+    "reproducibility": "Record the exact regeneration command inside the section and ensure it exits zero with the deterministic report path."
+  },
+  "sections": [
+    {
+      "id": "section-1-postfire",
+      "title": "Post-fire building-count disagreement may look like under-mapping",
+      "heading": "Best Bias Discovery: post-fire building-count disagreement may look like under-mapping",
+      "level": 1,
+      "status": "supported",
+      "line_start": 1,
+      "line_end": 61,
+      "criterion_blocks": {
+        "impact": [
+          "Impact"
+        ],
+        "novelty": [
+          "Novelty"
+        ],
+        "evidence": [
+          "Evidence"
+        ],
+        "reproducibility": [
+          "Reproducibility"
+        ]
+      },
+      "scripts": [
+        "scripts/discovery_postfire_stale_reference.py"
+      ],
+      "deterministic_reports": [
+        "reports/discovery-postfire.json"
+      ],
+      "pointers": [
+        {
+          "path": "reports/discovery-postfire.json",
+          "pointer": "/focal_butte_2018_burn_geoids",
+          "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
+        },
+        {
+          "path": "reports/discovery-postfire.json",
+          "pointer": "/northern_ca_burn_class_table",
+          "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
+        },
+        {
+          "path": "reports/discovery-postfire.json",
+          "pointer": "/high_burn_vs_unburned_below_0_8",
+          "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
+        },
+        {
+          "path": "reports/discovery-postfire.json",
+          "pointer": "/no_labels_or_removed_references_used",
+          "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
+        },
+        {
+          "path": "reports/discovery-postfire-map.png",
+          "pointer": null,
+          "sha256": "916589e0d3dc765a77c133dbcfe454740906dabb26ab74fcc0db92f9ffa43da1"
+        }
+      ],
+      "reproduce_command": "python scripts/discovery_postfire_stale_reference.py",
+      "sampled_claim_id": "bias-discovery-001",
+      "outside_scorecard_grid": true
+    },
+    {
+      "id": "section-2-region-confound",
+      "title": "Scorecard strata are strongly region-composition confounded",
+      "heading": "Section 2 — Scorecard strata are strongly region-composition confounded",
+      "level": 2,
+      "status": "supported",
+      "line_start": 62,
+      "line_end": 102,
+      "criterion_blocks": {
+        "impact": [
+          "Impact"
+        ],
+        "novelty": [
+          "Novelty"
+        ],
+        "evidence": [
+          "Evidence"
+        ],
+        "reproducibility": [
+          "Reproducibility"
+        ]
+      },
+      "scripts": [
+        "scripts/discovery_strata_confound.py"
+      ],
+      "deterministic_reports": [
+        "reports/discovery-strata-confound.json"
+      ],
+      "pointers": [
+        {
+          "path": "reports/discovery-strata-confound.json",
+          "pointer": "/stratum_composition",
+          "sha256": "ce0f1307793d1c658754cb7f9dd6fee7ea9cabf2a8a0e7ccb8e9888c2bad9ecb"
+        },
+        {
+          "path": "reports/discovery-strata-confound.json",
+          "pointer": "/regional_counts_and_prevalence",
+          "sha256": "ce0f1307793d1c658754cb7f9dd6fee7ea9cabf2a8a0e7ccb8e9888c2bad9ecb"
+        },
+        {
+          "path": "reports/discovery-strata-confound.json",
+          "pointer": "/unique_official_geoid_count",
+          "sha256": "ce0f1307793d1c658754cb7f9dd6fee7ea9cabf2a8a0e7ccb8e9888c2bad9ecb"
+        },
+        {
+          "path": "reports/discovery-strata-confound.json",
+          "pointer": "/missing",
+          "sha256": "ce0f1307793d1c658754cb7f9dd6fee7ea9cabf2a8a0e7ccb8e9888c2bad9ecb"
+        },
+        {
+          "path": "reports/transport-route-ref-audit.json",
+          "pointer": "/regions",
+          "sha256": "bf904336963f553cc7442c5996a4d8d504fe30aad5c4f1a2e44da8fa773b1927"
+        },
+        {
+          "path": "reports/transport-route-ref-audit.json",
+          "pointer": "/limitations",
+          "sha256": "bf904336963f553cc7442c5996a4d8d504fe30aad5c4f1a2e44da8fa773b1927"
+        }
+      ],
+      "reproduce_command": "python scripts/discovery_strata_confound.py",
+      "sampled_claim_id": "bias-discovery-010",
+      "outside_scorecard_grid": true
+    },
+    {
+      "id": "section-3-rural-svi-draft",
+      "title": "Secondary exploratory lead — rural × SVI minority-domain screen in South-Central Texas",
+      "heading": "Secondary exploratory lead — rural × SVI minority-domain screen in South-Central Texas",
+      "level": 2,
+      "status": "draft",
+      "line_start": 103,
+      "line_end": 161,
+      "criterion_blocks": {
+        "impact": [
+          "Why this may matter; what it does not show"
+        ],
+        "novelty": [
+          "Proposed pattern outside the published scorecard grid"
+        ],
+        "evidence": [
+          "Quantified proxy evidence"
+        ],
+        "reproducibility": [
+          "Reproduction"
+        ]
+      },
+      "scripts": [
+        "scripts/discovery_rural_svi_minority.py"
+      ],
+      "deterministic_reports": [
+        "reports/discovery-rural-svi-minority.json"
+      ],
+      "pointers": [
+        {
+          "path": "reports/discovery-rural-svi-minority.json",
+          "pointer": "/group_definition",
+          "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0"
+        },
+        {
+          "path": "reports/discovery-rural-svi-minority.json",
+          "pointer": "/composite_results",
+          "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0"
+        },
+        {
+          "path": "reports/discovery-rural-svi-minority.json",
+          "pointer": "/C2_component_results_defined_only",
+          "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0"
+        },
+        {
+          "path": "reports/discovery-rural-svi-minority.json",
+          "pointer": "/named_high_group_tracts_sorted_by_C2_estimate",
+          "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0"
+        },
+        {
+          "path": "reports/discovery-rural-svi-minority.json",
+          "pointer": "/fixed_scorecard_novelty",
+          "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0"
+        },
+        {
+          "path": "reports/discovery-rural-svi-minority.json",
+          "pointer": "/causal_and_accuracy_limitations",
+          "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0"
+        }
+      ],
+      "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+      "sampled_claim_id": "bias-discovery-017",
+      "outside_scorecard_grid": true,
+      "draft_marker": "Draft for operator review",
+      "recommendation": "Keep the section marked draft until the operator reviews the discovery narrative: the group means are proxy model scores, the transport component interval includes zero, and the impact paragraph is hypothetical. Either promote it with a stakeholder-checked cutpoint or remove the operational sentence and keep it as a follow-up screen."
+    },
+    {
+      "id": "section-4-source-provenance",
+      "title": "Overture source mix differs across tract strata",
+      "heading": "Section 3 — Overture source mix differs across tract strata",
+      "level": 2,
+      "status": "supported",
+      "line_start": 162,
+      "line_end": 215,
+      "criterion_blocks": {
+        "impact": [
+          "Interpretation and limits"
+        ],
+        "novelty": [
+          "Proposed pattern outside the published scorecard grid",
+          "Method and source definitions",
+          "Interpretation and limits"
+        ],
+        "evidence": [
+          "Findings"
+        ],
+        "reproducibility": [
+          "Reproduction"
+        ]
+      },
+      "scripts": [
+        "scripts/discovery_source_provenance.py"
+      ],
+      "deterministic_reports": [
+        "reports/source-provenance.json"
+      ],
+      "pointers": [
+        {
+          "path": "reports/source-provenance.json",
+          "pointer": "/statistics",
+          "sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565"
+        },
+        {
+          "path": "reports/source-provenance.json",
+          "pointer": "/source_definitions",
+          "sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565"
+        },
+        {
+          "path": "reports/source-provenance.json",
+          "pointer": "/regions",
+          "sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565"
+        },
+        {
+          "path": "reports/source-provenance.json",
+          "pointer": "/data_and_restrictions",
+          "sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565"
+        },
+        {
+          "path": "reports/source-provenance.json",
+          "pointer": "/uncertainty_and_limitations",
+          "sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565"
+        },
+        {
+          "path": "reports/source-provenance.png",
+          "pointer": null,
+          "sha256": "2d45a9d06baa5e0ab917f1c2b432a885209d833edb7957ad9c8da2a9439ffa4d"
+        }
+      ],
+      "reproduce_command": "python scripts/discovery_source_provenance.py",
+      "sampled_claim_id": "bias-discovery-024",
+      "outside_scorecard_grid": true,
+      "status_marker": "descriptive discovery lead, not a measured map-completeness or hidden-score finding"
+    }
+  ],
+  "negative_control_cases": [
+    "drop_impact_hedge",
+    "invent_external_url",
+    "fake_pointer_hash",
+    "untraceable_section_claim",
+    "unqualified_operational_impact",
+    "proxy_asserted_as_organiser_target",
+    "missing_reproduce_command",
+    "sampled_command_fails"
+  ],
+  "hidden_target_negation_markers": [
+    "not",
+    "no ",
+    "never",
+    "without",
+    "cannot",
+    "mistaken",
+    "risk",
+    "exclude",
+    "remove",
+    "warn",
+    "does not",
+    "hypothes",
+    "suggest"
+  ]
+}

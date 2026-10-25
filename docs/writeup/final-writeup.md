@@ -2,7 +2,7 @@
 
 - Competition: `bias-bounty-mapping-equity-challenge` (Zindi)
 - Lane: `comp-zindi-bias-bounty`
-- Writeup revision: git `7aeda7eb15db7f7a84e3acdde7101b133a3a28cc` (tree clean: False)
+- Writeup revision: git `93ca3018c6b5b3eb89ae9fd4bdaa2de7d49f57c2` (tree clean: False)
 - Zindi username or team name: **PENDING_OPERATOR_CONFIRMATION**
 - Operator confirmation of that identity recorded: NO — pending operator
 - Form submission status: **NOT SUBMITTED — staged for operator submission**
@@ -250,7 +250,7 @@ The ten lowest-OSM-share tracts within each region's high-SVI quartile are liste
 
 #### Interpretation and limits
 
-The strongest repeatable descriptive pattern is lower OSM-source and non-Meta place membership in rural than urban tracts. The SVI gradient is smaller and less certain in some regions; heat/drought results are heterogeneous. This motivates provenance-aware review of map-source representation by rurality and vulnerability, but it does **not** establish that Overture coverage is incomplete, that one provider is more accurate, or that any operational service is absent. The bbox-center assignment can misclassify features near tract borders; tract means are not population-weighted; spatial dependence, multiple comparisons, and confounding are not modeled. No score candidate or submission was changed.
+The strongest repeatable descriptive pattern is lower OSM-source and non-Meta place membership in rural than urban tracts. The SVI gradient is smaller and less certain in some regions; heat/drought results are heterogeneous. This motivates provenance-aware review of map-source representation by rurality and vulnerability, but it does **not** establish that Overture coverage is incomplete, that one provider is more accurate, or that any operational service is absent. Relative to the published scorecard this is not a restatement of a marginal rural-versus-urban or SVI cell: the scorecard publishes those marginals, whereas this finding concerns the provider composition *inside* the same rural cell, a dimension the scorecard does not publish. For mapping programmes in Eastern Oklahoma, Northern California, Maricopa and South-Central Texas, a systematically lower OpenStreetMap-sourced share in rural tracts is a reason to weight source provenance when choosing where to send field verification or quality-assurance effort; that is a plausible audit-prioritisation consequence, not evidence that any service is absent from those tracts. The bbox-center assignment can misclassify features near tract borders; tract means are not population-weighted; spatial dependence, multiple comparisons, and confounding are not modeled. No score candidate or submission was changed.
 
 #### Reproduction
 

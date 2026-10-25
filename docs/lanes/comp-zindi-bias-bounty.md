@@ -509,3 +509,78 @@ Still blocked on, all operator/steward-owned:
 Deadline note for the operator: the challenge closes 2026-10-31T23:59:00Z, discovery-prize ties
 break by earlier submission, and the row's target was 2026-10-29. The packet is ready for one
 review, one input file and one submission.
+
+### 2026-10-25 — row `bias-discovery-prize-criteria-audit`, closed `fixed`
+
+Delivered the consolidated criteria-by-section audit of the Best Bias Discovery narrative.
+Documentation screen only: no submission, no candidate change, no leaderboard access.
+
+New deliverables (SHA-256 first 16):
+
+- `config/discovery-prize-criteria-preregistered.json` `9f907ed11b7c1cbd` — the four organiser
+  criteria with weights (Impact 30, Novelty 25, Evidence 25, Reproducibility 20), the section map,
+  hash-pinned evidence pointers, hedge/grid/negation vocabularies, prohibited-token rules, the
+  external-dataset policy (empty allowlist because the discovery uses no data beyond the challenge
+  package) and eight preregistered negative-control cases.
+- `scripts/audit_discovery_prize_criteria.py` `04871218aca0486a` — parses
+  `docs/writeup/bias-discovery.md` into sections, judges each of the four criteria mechanically,
+  verifies every pointer (existence + pinned SHA-256 + JSON-pointer resolution), ties each section
+  to its inventoried claims, and executes one sampled claim verify command per section.
+- `reports/discovery-prize-criteria-audit.json` `673c39487e56197f` — deterministic report, no
+  wall-clock value.
+- `docs/writeup/bias-prize-criteria-audit.md` `0c07b2a13bfdb373` — the required deliverable:
+  criteria table, section × criterion matrix, per-section evidence pointers with hashes,
+  reproduction commands, measured acceptance, recommendations and an explicit non-claims list.
+  Generated from the JSON report, so the two cannot disagree.
+- `tests/test_audit_discovery_prize_criteria.py` `984496ec7bca7be0` — 22 tests.
+
+Measured result: 4 sections configured and covered (0 uncovered headings in the document),
+16/16 criteria judged as `pass`, 23/23 evidence pointers hash-verified and resolving, 28/28
+quantitative claims in the discovery document traceable (claim audit fraction 1.0),
+0 unlisted external URLs, 0 hidden-target patterns, 0 unqualified operational patterns, 0
+prohibited-token hits in prose or scripts, 4/4 sampled claim commands exit 0, all 17 gates true.
+
+Two findings the audit produced, and what I did about them (not cosmetic — both were real
+criterion gaps in the narrative):
+
+1. **Section 3 (Overture source mix) never compared itself to the published scorecard grid.**
+   Novelty failed with "the section never names a published scorecard dimension". Added one
+   digit-free sentence making the comparison explicit ("the scorecard publishes those marginals,
+   whereas this finding concerns the provider composition *inside* the same rural cell, a dimension
+   the scorecard does not publish").
+2. **The same section had no qualified decision consequence.** Impact failed on "no named decision
+   consequence" and "no named referent". Added one hedged sentence naming the four regions and a
+   concrete audit-prioritisation consequence, explicitly "not evidence that any service is absent".
+
+Honesty controls that stayed in place: the rural × SVI minority lead remains declared **draft**
+("Draft for operator review") and is recorded as ineligible for the discovery prize until the
+operator reviews it; negated sentences such as "not evidence of a true coverage gap" are *not*
+counted as hidden-target claims (a plain pattern scan would have flagged them, so the scan is
+negation-aware); `TIGER`, `USFS`, `Microsoft` and removed-reference mentions are allowed only where
+the sentence carries a disclosure marker.
+
+Verification commands and output:
+
+- `COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" /home/martin/hddProjects/langywrap/uv run --quiet python scripts/audit_discovery_prize_criteria.py`
+  → `PASS discovery prize criteria audit: every discovery section is supported on all four organiser
+  criteria or explicitly marked draft, every evidence pointer reproduces, and no unqualified
+  operational or hidden-target claim survives`; `--check-only` → `unchanged`
+- determinism: two runs to alternate paths produced byte-identical JSON and markdown, equal to the
+  committed files; `wall_clock_hits(report) == []`
+- negative controls, all exit 1 with the expected failed gate: `drop_impact_hedge`
+  (`no_unqualified_operational_impact`), `invent_external_url`
+  (`zero_unreferenced_external_datasets`), `fake_pointer_hash`
+  (`every_evidence_pointer_reproduces`), `untraceable_section_claim`
+  (`every_section_claim_traceable`), `unqualified_operational_impact`
+  (`no_unqualified_operational_impact`), `proxy_asserted_as_organiser_target`
+  (`zero_proxy_as_organiser_target_claims`), `missing_reproduce_command`
+  (`every_section_supported_or_marked`), `sampled_command_fails`
+  (`sampled_verify_commands_exit_zero`); the unmutated control passes
+- cascade after the discovery-document edit:
+  `/home/martin/hddProjects/langywrap/uv run --quiet python scripts/audit_writeup_claim_evidence.py`
+  → still `PASS` with 84 claims, 998/998 numeric tokens covered, no failed gates; the submission
+  packet was rebuilt and `scripts/verify_writeup_submission.py` → `PASS ... staged only, nothing was
+  submitted to the organiser`
+- full suite: `/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with
+  pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with pytest python -m pytest -q`
+  → `313 passed`
