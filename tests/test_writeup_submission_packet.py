@@ -8,6 +8,7 @@ from __future__ import annotations
 import copy
 import importlib.util
 import json
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -222,6 +223,82 @@ class NegativeControlTests(unittest.TestCase):
         def mutate(record):
             record["writeup_files"][0]["sha256"] = "0" * 64
         self.assertTrue(any("sha256 does not match" in item for item in self.check(mutate)))
+
+
+class OperatorFillTests(unittest.TestCase):
+    """The operator can complete the packet with one input file; partial input is rejected."""
+
+    INPUTS = {
+        "identity": {"zindi_username_or_team": "operator-supplied-team",
+                     "operator_confirmation_recorded": True},
+        "form": {"url": "https://forms.example.org/bias-bounty-writeup"},
+        "submission_record": {"submitted_at_utc": "2026-10-26T14:05:00Z",
+                              "confirmation_reference": "organiser reply #BB-4417",
+                              "submitted_by": "operator-handle",
+                              "form_url_used": "https://forms.example.org/bias-bounty-writeup",
+                              "operator_review": "discovery narrative reviewed and approved"},
+        "final_two": {"selected": {"candidate_A": "V2_model", "candidate_B": "C0"}},
+    }
+
+    def packet(self, inputs: dict, tmp: Path):
+        builder.CONFIG = builder.load_config()
+        merged = builder.apply_operator_inputs(builder.CONFIG, inputs)
+        markdown, facts = builder.assemble(merged)
+        markdown_path = tmp / "final-writeup.md"
+        pdf_path = tmp / "final-writeup.pdf"
+        markdown_path.write_text(markdown, encoding="utf-8")
+        pdf_path.write_bytes(b"%PDF-1.4\nunit-test stub\n%%EOF\n")
+        record = builder.build_record(merged, facts, markdown_path, pdf_path)
+        return markdown, record
+
+    def test_full_operator_inputs_produce_a_confirmed_packet(self) -> None:
+        with tempfile.TemporaryDirectory() as folder:
+            markdown, record = self.packet(copy.deepcopy(self.INPUTS), Path(folder))
+            self.assertEqual(record["status"], "submitted_confirmed_by_operator")
+            self.assertTrue(record["ready_for_submission"])
+            self.assertEqual(record["pending_operator_inputs"], [])
+            self.assertEqual(record["blocking_prerequisites"], [])
+            self.assertIn("operator-supplied-team", markdown)
+            self.assertIn("submitted at 2026-10-26T14:05:00Z", markdown)
+            self.assertIn("`V2_model` and `C0`", markdown)
+            result = verify.check(copy.deepcopy(record), CONFIG)
+            self.assertEqual(result["failures"], [])
+
+    def test_partial_operator_inputs_are_rejected(self) -> None:
+        inputs = copy.deepcopy(self.INPUTS)
+        del inputs["submission_record"]["confirmation_reference"]
+        with tempfile.TemporaryDirectory() as folder:
+            _, record = self.packet(inputs, Path(folder))
+            self.assertEqual(record["status"], "prepared_pending_operator_review")
+            self.assertFalse(record["ready_for_submission"])
+            failures = "".join(verify.check(copy.deepcopy(record), CONFIG)["failures"])
+            self.assertIn("submission confirmation must stay null", failures)
+            self.assertIn("operator review may only be recorded by the operator", failures)
+
+    def test_operator_input_file_cannot_touch_evidence_or_prizes(self) -> None:
+        tampered = copy.deepcopy(self.INPUTS)
+        tampered["prizes"] = [{"name": "Best Bias Discovery", "amount_usd": 99999}]
+        tampered["writeup_files"] = [{"path": "x", "sha256": "0" * 64, "bytes": 1}]
+        builder.CONFIG = builder.load_config()
+        merged = builder.apply_operator_inputs(builder.CONFIG, tampered)
+        self.assertEqual(merged["prizes"], CONFIG["prizes"])
+        self.assertNotIn("writeup_files", merged)
+        self.assertEqual(merged["identity"]["zindi_username_or_team"], "operator-supplied-team")
+
+    def test_official_page_extracts_and_form_url_search_are_recorded(self) -> None:
+        page = RECORD["organiser_page"]
+        self.assertTrue(page["url"].startswith("https://zindi.africa/"))
+        self.assertRegex(page["documented_on"], r"^\d{4}-\d{2}-\d{2}$")
+        for entry in page["extracts"]:
+            self.assertIn(entry["quote"], MARKDOWN)
+            self.assertTrue(entry["used_for"])
+        registered = {row["url"] for row in RECORD["external_source_register"]}
+        self.assertIn(page["url"], registered)
+        for attempted in page["form_url_search"]["pages_attempted"]:
+            self.assertIn(attempted, registered)
+        self.assertIn(page["form_url_search"]["outcome"], MARKDOWN)
+        self.assertIsNone(RECORD["form"]["url"])
+        self.assertTrue(RECORD["operator_input_schema"]["fields"])
 
 
 if __name__ == "__main__":

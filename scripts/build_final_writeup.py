@@ -53,7 +53,9 @@ def relative_or(path: Path, default: str) -> str:
     try:
         return str(path.relative_to(ROOT))
     except ValueError:
-        return default
+        # alternate output path outside the repo: record it absolutely so the record stays
+        # self-consistent (Path(ROOT) / absolute == absolute)
+        return str(path)
 
 
 def git(*args: str) -> str:
@@ -184,6 +186,13 @@ def external_register(document_text: str) -> list[dict[str, Any]]:
         add(url, "organiser-hosted challenge file used by the workspace downloader",
             "official challenge data endpoint provided by the organisers; not an external dataset",
             accessed_on, True)
+    page = CONFIG["organiser_page"]
+    add(page["url"], "official challenge page (quoted rules and membership note)",
+        page["role"], page["documented_on"], True)
+    for attempted in page["form_url_search"].get("pages_attempted", []):
+        add(attempted, "official page fetched while searching for the writeup form link",
+            "official challenge page; documentation lookup only, no data added to predictions",
+            page["form_url_search"]["attempted_on"], True)
     for line in document_text.splitlines():
         for raw in URL_PATTERN.findall(line):
             url = normalize_url(raw)
@@ -224,6 +233,9 @@ def front_matter(config: dict[str, Any], submissions: list[dict[str, Any]],
         f"- Zindi username or team name: **{username}**",
         f"- Operator confirmation of that identity recorded: "
         f"{'yes' if identity['operator_confirmation_recorded'] else 'NO — pending operator'}",
+        f"- Form submission status: **{submission_status_line(config)}**",
+        f"- Frozen final-two candidate IDs named for the form: "
+        f"{final_two_names(config)}",
         f"- Official requirement: {identity['rules_requirement_quote']}",
         f"- Packaged for the organiser writeup form; form URL status: "
         f"{'recorded' if config['form']['url'] else 'NOT AVAILABLE in the saved rules text'}",
@@ -246,6 +258,25 @@ def front_matter(config: dict[str, Any], submissions: list[dict[str, Any]],
     if not config["form"]["url"]:
         lines += [f"> {config['form']['url_note']}", ""]
     return lines
+
+
+def submission_status_line(config: dict[str, Any]) -> str:
+    record_submission = config.get("submission_record", {})
+    submitted = record_submission.get("submitted_at_utc")
+    confirmation = record_submission.get("confirmation_reference")
+    if submitted and confirmation:
+        return (f"submitted at {submitted} with organiser confirmation "
+                f"'{confirmation}' by {record_submission.get('submitted_by') or 'operator'} "
+                f"using {record_submission.get('form_url_used') or config['form']['url']}")
+    return "NOT SUBMITTED — staged for operator submission"
+
+
+def final_two_names(config: dict[str, Any]) -> str:
+    selected = (config.get("final_two") or {}).get("selected") or {}
+    first, second = selected.get("candidate_A"), selected.get("candidate_B")
+    if first and second:
+        return f"`{first}` and `{second}`"
+    return "not selected yet (recorded as null rather than invented)"
 
 
 def consideration(config: dict[str, Any]) -> list[str]:
@@ -363,7 +394,24 @@ def provenance_section() -> list[str]:
              "- Equity and hazard strata columns are used only for the descriptive discovery "
              "screen, never as model inputs; the descriptive reports state that they are not "
              "accuracy measurements.",
-             "- All code and tooling used is open source, as the rules require.", ""]
+             "- All code and tooling used is open source, as the rules require.", "",
+             "### Quoted official page text", ""]
+    page = CONFIG["organiser_page"]
+    lines += [f"Source: {page['url']} (documented {page['documented_on']}). {page['role']}.", ""]
+    lines += [f"> {entry['quote']}" for entry in page["extracts"]]
+    lines += [""]
+    for entry in page["extracts"]:
+        lines.append(f"- Used for: {entry['used_for']}.")
+    lines += ["", "### Organiser writeup form URL status", ""]
+    if CONFIG["form"]["url"]:
+        lines += [f"Form URL supplied by the operator: {CONFIG['form']['url']}", ""]
+    else:
+        search = CONFIG["organiser_page"]["form_url_search"]
+        lines += [f"The saved rules text preserves the sentence '{CONFIG['form']['rules_text']}' "
+                  f"but not the hyperlink target. An attempt on {search['attempted_on']} fetched "
+                  f"{', '.join(search['pages_attempted'])} and the result was "
+                  f"{search['outcome']}: {search['reason']}. The URL is therefore supplied by the "
+                  "operator at submission time rather than guessed here.", ""]
     return lines
 
 
@@ -525,13 +573,17 @@ def build_record(config: dict[str, Any], facts: dict[str, Any], markdown_path: P
     measured = claim_report.get("summary", {})
     provided = facts["provided_audit"]
     final_two = load_json(ROOT / CONFIG["numeric_provenance"]["final_two"])
+    status, ready, missing = submission_state(config)
     record = {
         "schema_version": 1,
         "row_key": config["row_key"],
         "lane": config["lane"],
         "competition": config["competition"],
-        "status": "prepared_pending_operator_review",
-        "ready_for_submission": False,
+        "status": status,
+        "ready_for_submission": ready,
+        "pending_operator_inputs": missing,
+        "organiser_page": config["organiser_page"],
+        "operator_input_schema": config["operator_input_schema"],
         "revision": {"git_commit": git("rev-parse", "HEAD"),
                      "tree_clean": git("status", "--porcelain") == "",
                      "pdf_engine": CONFIG["assembly"]["pdf_engine"]},
@@ -543,10 +595,10 @@ def build_record(config: dict[str, Any], facts: dict[str, Any], markdown_path: P
         "model_candidate": facts["candidate"],
         "final_two": {"status": final_two["status"],
                       "protocol": final_two["protocol"],
-                      "selected": {"candidate_A": None, "candidate_B": None},
-                      "selection_note": "No final-two selection is recorded yet; the writeup lists "
-                                        "the registered model candidate and its non-uploaded "
-                                        "status instead of inventing a selection."},
+                      "selected": dict(config["final_two"]["selected"]),
+                      "selection_note": "Selections come only from operator input; until then both "
+                                        "slots are null and the writeup names the registered model "
+                                        "candidate with its non-uploaded status."},
         "external_source_register": facts["external_register"],
         "external_data_policy": {
             "scored_predictions_use_only_provided_data":
@@ -581,15 +633,8 @@ def build_record(config: dict[str, Any], facts: dict[str, Any], markdown_path: P
             {"path": relative_or(pdf_path, CONFIG["assembly"]["output_pdf"]),
              "role": "writeup_pdf", "sha256": sha256_file(pdf_path),
              "bytes": pdf_path.stat().st_size}],
-        "submission_record": {"submitted_at_utc": None, "confirmation_reference": None,
-                              "submitted_by": None, "form_url_used": None,
-                              "operator_review": "not recorded"},
-        "blocking_prerequisites": [
-            "operator review of the Best Bias Discovery narrative",
-            "operator confirmation of the Zindi username or team name",
-            "organiser writeup form URL (not preserved in the saved rules text)",
-            "final-two selection of the two candidates whose submission IDs the form must name",
-        ],
+        "submission_record": dict(config["submission_record"]),
+        "blocking_prerequisites": blocking_prerequisites(config, final_two["status"]),
         "commands": dict(CONFIG["commands"]),
     }
     record["acceptance"] = acceptance(record, facts["authored_text"])
@@ -598,8 +643,34 @@ def build_record(config: dict[str, Any], facts: dict[str, Any], markdown_path: P
     return record
 
 
+def blocking_prerequisites(config: dict[str, Any], final_two_status: str) -> list[str]:
+    prerequisites: list[str] = []
+    if not config["identity"].get("zindi_username_or_team"):
+        prerequisites.append("operator confirmation of the Zindi username or team name "
+                             "(identity.zindi_username_or_team)")
+    if not config["identity"].get("operator_confirmation_recorded"):
+        prerequisites.append("operator confirmation flag for that identity "
+                             "(identity.operator_confirmation_recorded)")
+    if not config["form"].get("url"):
+        prerequisites.append("organiser writeup form URL: the saved rules text keeps the sentence "
+                             "but not the hyperlink target, and the live page is client-rendered, "
+                             "so the operator must supply it (form.url)")
+    if config["submission_record"].get("operator_review") == "not recorded":
+        prerequisites.append("operator review of the Best Bias Discovery narrative "
+                             "(submission_record.operator_review)")
+    selected = config["final_two"]["selected"]
+    if not (selected.get("candidate_A") and selected.get("candidate_B")):
+        prerequisites.append("final-two selection of the two candidates whose submission IDs the "
+                             f"form must name (reports/final-two.json status {final_two_status})")
+    if not config["submission_record"].get("submitted_at_utc"):
+        prerequisites.append("form submission evidence: UTC time, organiser confirmation reference "
+                             "and submitter (submission_record.*)")
+    return prerequisites
+
+
 def acceptance(record: dict[str, Any], authored_text: str = "") -> dict[str, Any]:
     """Measured packet-integrity gates. Operator-owned inputs are reported, never assumed."""
+    submitted = record["status"] == "submitted_confirmed_by_operator"
     files = {item["path"]: item for item in record["writeup_files"]}
     markdown = ROOT / "docs/writeup/final-writeup.md"
     text = markdown.read_text(encoding="utf-8") if markdown.is_file() else ""
@@ -653,6 +724,10 @@ def acceptance(record: dict[str, Any], authored_text: str = "") -> dict[str, Any
             row["platform_submission_id"] for row in successful_submissions()},
         "submission_candidate_ids_registered": named_candidates <= registry_ids
         and candidate_id in registry_ids,
+        "final_two_selection_ids_registered": (
+            not submitted
+            or all(record["final_two"]["selected"][slot] in registry_ids
+                   for slot in ("candidate_A", "candidate_B"))),
         "model_candidate_artifact_hash_pinned": bool(
             record["model_candidate"]["sha256"]
             == CONFIG["model_evidence"]["frozen_candidate_sha256"]
@@ -660,9 +735,20 @@ def acceptance(record: dict[str, Any], authored_text: str = "") -> dict[str, Any
             and record["model_candidate"]["artifact_sha256_in_build_audit"]),
         "model_candidate_non_upload_disclosed": CONFIG["model_evidence"]["upload_status_quote"]
         in text,
-        "final_two_selection_declared_not_invented": record["final_two"]["status"] == \
-        CONFIG["model_evidence"]["final_two_status"] and record["final_two"]["selected"][
-            "candidate_A"] is None,
+        "final_two_selection_declared_not_invented": (
+            record["final_two"]["status"] == CONFIG["model_evidence"]["final_two_status"]
+            and ((bool(record["final_two"]["selected"]["candidate_A"])
+                  and bool(record["final_two"]["selected"]["candidate_B"]))
+                 if submitted else
+                 (record["final_two"]["selected"]["candidate_A"] is None
+                  and record["final_two"]["selected"]["candidate_B"] is None))),
+        "organiser_page_extracts_quoted_verbatim": all(
+            entry["quote"] in text for entry in record["organiser_page"]["extracts"])
+            and record["organiser_page"]["url"] in register_urls,
+        "form_url_status_documented": bool(record["form"]["url"]) or (
+            bool(record["organiser_page"]["form_url_search"].get("attempted_on"))
+            and bool(record["organiser_page"]["form_url_search"].get("pages_attempted"))
+            and record["organiser_page"]["form_url_search"]["outcome"] in text),
         "external_claims_carry_url_and_access_date": bool(doc_urls <= register_urls) and all(
             row["url"] and row["accessed_on"] and row["role"]
             for row in record["external_source_register"]) and len(
@@ -682,10 +768,66 @@ def acceptance(record: dict[str, Any], authored_text: str = "") -> dict[str, Any
             and record["external_data_policy"]["prohibitions"].get("target_labels_read") is False
             and record["external_data_policy"]["prohibitions"].get(
                 "leaderboard_feedback_read_for_modeling") is False),
-        "no_unilateral_submission_claimed": record["status"]
-        == "prepared_pending_operator_review" and not record["ready_for_submission"]
-        and record["submission_record"]["submitted_at_utc"] is None,
+        "no_unilateral_submission_claimed": (
+            (submitted and all(record["submission_record"][key]
+                               for key in ("submitted_at_utc", "confirmation_reference",
+                                           "submitted_by", "form_url_used"))
+             and record["submission_record"]["operator_review"] != "not recorded"
+             and record["identity"]["operator_confirmation_recorded"]
+             and bool(record["identity"]["zindi_username_or_team"]))
+            if submitted else
+            (record["status"] == "prepared_pending_operator_review"
+             and not record["ready_for_submission"]
+             and all(record["submission_record"][key] is None for key in
+                     ("submitted_at_utc", "confirmation_reference", "submitted_by",
+                      "form_url_used"))
+             and record["submission_record"]["operator_review"] == "not recorded"
+             and not record["identity"]["operator_confirmation_recorded"])),
     }
+
+
+ALLOWED_OPERATOR_PATHS = (
+    "identity.zindi_username_or_team", "identity.operator_confirmation_recorded",
+    "form.url", "submission_record.submitted_at_utc",
+    "submission_record.confirmation_reference", "submission_record.submitted_by",
+    "submission_record.form_url_used", "submission_record.operator_review",
+    "final_two.selected.candidate_A", "final_two.selected.candidate_B")
+
+
+def apply_operator_inputs(config: dict[str, Any], inputs: dict[str, Any]) -> dict[str, Any]:
+    """Merge only the operator-owned fields; anything else in the file is ignored."""
+    merged = json.loads(json.dumps(config))
+    for path in ALLOWED_OPERATOR_PATHS:
+        node: Any = inputs
+        for part in path.split("."):
+            if not isinstance(node, dict) or part not in node:
+                node = None
+                break
+            node = node[part]
+        if node is None:
+            continue
+        target = merged
+        parts = path.split(".")
+        for part in parts[:-1]:
+            target = target.setdefault(part, {})
+        target[parts[-1]] = node
+    if merged["submission_record"].get("form_url_used") and not merged["form"].get("url"):
+        merged["form"]["url"] = merged["submission_record"]["form_url_used"]
+    return merged
+
+
+def submission_state(config: dict[str, Any]) -> tuple[str, bool, list[str]]:
+    required = config["operator_input_schema"]["ready_requires"]
+    missing = []
+    for path in required:
+        node: Any = config
+        for part in path.split("."):
+            node = node.get(part) if isinstance(node, dict) else None
+        if not node:
+            missing.append(path)
+    if not missing:
+        return "submitted_confirmed_by_operator", True, []
+    return "prepared_pending_operator_review", False, missing
 
 
 def main() -> int:
@@ -697,10 +839,16 @@ def main() -> int:
     parser.add_argument("--record", type=Path, default=ROOT / "reports/writeup-submission.json")
     parser.add_argument("--skip-pdf", action="store_true")
     parser.add_argument("--check-only", action="store_true")
+    parser.add_argument("--operator-inputs", type=Path, default=None,
+                        help="JSON of operator-owned fields, merged into the preregistration")
     args = parser.parse_args()
 
     global CONFIG
     CONFIG = load_config(args.config)
+    if args.operator_inputs:
+        CONFIG = apply_operator_inputs(CONFIG, json.loads(
+            args.operator_inputs.read_text(encoding="utf-8")))
+        print(f"merged operator inputs from {args.operator_inputs}")
     markdown, facts = assemble(CONFIG)
     if args.check_only:
         existing = args.markdown.read_text(encoding="utf-8") if args.markdown.is_file() else ""

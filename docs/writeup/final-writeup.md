@@ -2,9 +2,11 @@
 
 - Competition: `bias-bounty-mapping-equity-challenge` (Zindi)
 - Lane: `comp-zindi-bias-bounty`
-- Writeup revision: git `f55dbcb7d769d9f6c41aba42abb08f727955f274` (tree clean: False)
+- Writeup revision: git `a727f68206290d0dd90f74c0352be1db5bb40ca0` (tree clean: False)
 - Zindi username or team name: **PENDING_OPERATOR_CONFIRMATION**
 - Operator confirmation of that identity recorded: NO — pending operator
+- Form submission status: **NOT SUBMITTED — staged for operator submission**
+- Frozen final-two candidate IDs named for the form: not selected yet (recorded as null rather than invented)
 - Official requirement: Your writeup should identify your Zindi username or team name and the leaderboard submission(s) associated with the methodology.
 - Packaged for the organiser writeup form; form URL status: NOT AVAILABLE in the saved rules text
 
@@ -788,6 +790,8 @@ No external dataset is cited or used in the scored predictions. The register bel
 | URL | Reference | Accessed | Role |
 |---|---|---|---|
 | https://api.zindi.world/v1/competitions/bias-bounty-mapping-equity-challenge/files/SampleSubmission.csv | organiser-hosted challenge file used by the workspace downloader | 2026-10-23 | official challenge data endpoint provided by the organisers; not an external dataset |
+| https://zindi.africa/competitions/bias-bounty-mapping-equity-challenge | official challenge page (quoted rules and membership note) | 2026-10-25 | official challenge page; quoted text only, no data added to scored predictions |
+| https://zindi.africa/competitions/bias-bounty-mapping-equity-challenge/rules | official page fetched while searching for the writeup form link | 2026-10-25 | official challenge page; documentation lookup only, no data added to predictions |
 | https://arxiv.org/abs/1502.04585 | Citation: Avrim Blum and Moritz Hardt, “The Ladder: A Reliable Leaderboard for Machine Learning Competitions,” arXiv:150 | 2026-10-24 | prior art and methodology know-how; not a dataset and never joined to scored predictions |
 | https://arxiv.org/abs/1707.01825 | Citation: Jacob Whitehill, “Climbing the Kaggle Leaderboard by Exploiting the Log-Loss Oracle,” arXiv:1707.01825. arXiv | 2026-10-24 | prior art and methodology know-how; not a dataset and never joined to scored predictions |
 | https://docs.overturemaps.org/schema/ | Citation/documentation: Schema overview, Transportation Segment, and Places Place. URL check: all three official pages r | 2026-10-24 | prior art and methodology know-how; not a dataset and never joined to scored predictions |
@@ -843,3 +847,17 @@ Deterministic audit artifacts: `reports/writeup-claim-evidence-audit.json`, `rep
 - No sample score placeholder, no label, and no leaderboard-probe outcome is used as model evidence. The retired leaderboard-fitted constants and probe values of the retired probe set are listed in `reports/probe-retirement-2026-10-24.json` and appear nowhere in the model chain, in this writeup, or in any claim evidence, by name or by value.
 - Equity and hazard strata columns are used only for the descriptive discovery screen, never as model inputs; the descriptive reports state that they are not accuracy measurements.
 - All code and tooling used is open source, as the rules require.
+
+### Quoted official page text
+
+Source: https://zindi.africa/competitions/bias-bounty-mapping-equity-challenge (documented 2026-10-25). official challenge page; quoted text only, no data added to scored predictions.
+
+> One membership note: the Maricopa package is 1,592 Arizona tracts plus one New Mexico tract, 35023970000 (Hidalgo County, Tract 9700), which the region boundary meets at the state line.
+> Participants must not use reference layers, or equivalent copies obtained elsewhere, to recreate or approximate the organiser-computed targets.
+
+- Used for: cross-state scored tract disclosure in the edge-case section; independently verified present in the official Maricopa sample.
+- Used for: prohibited-source statement.
+
+### Organiser writeup form URL status
+
+The saved rules text preserves the sentence 'To be considered, submit your methodology writeup through this form and clearly indicate whether you wish to be considered for Best Bias Discovery, Best Documentation, or both.' but not the hyperlink target. An attempt on 2026-10-25 fetched https://zindi.africa/competitions/bias-bounty-mapping-equity-challenge, https://zindi.africa/competitions/bias-bounty-mapping-equity-challenge/rules and the result was not recoverable programmatically: the page is client-rendered and the fetched preview ends before the writeup/prize section that carries the hyperlink target, so the form URL must come from the operator. The URL is therefore supplied by the operator at submission time rather than guessed here.

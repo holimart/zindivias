@@ -62,32 +62,89 @@ def check(record: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
     text = markdown_path.read_text(encoding="utf-8") if markdown_path.is_file() else ""
 
     # -- recorded hashes must match the bytes on disk -----------------------------------------
-    files = {item["path"]: item for item in record.get("writeup_files", [])}
-    for role, path in (("writeup_markdown", markdown_path), ("writeup_pdf", pdf_path)):
+    paths = {item["role"]: item["path"] for item in record.get("writeup_files", [])}
+    require(len(paths) == len(record["writeup_files"]), "duplicate role in writeup_files")
+    for role in ("writeup_markdown", "writeup_pdf"):
         entry = next((item for item in record["writeup_files"] if item["role"] == role), None)
         require(entry is not None, f"record missing {role} entry")
         if entry:
-            require(entry["path"] in files, f"{role} path not unique in record")
-            require(path.is_file() and sha256_file(path) == entry["sha256"],
-                    f"{role} sha256 does not match bytes on disk")
-            require(path.stat().st_size == entry["bytes"], f"{role} byte size mismatch")
+            resolved = ROOT / entry["path"]
+            require(resolved.is_file(), f"{role} file missing at recorded path {entry['path']}")
+            if resolved.is_file():
+                require(sha256_file(resolved) == entry["sha256"],
+                        f"{role} sha256 does not match bytes on disk")
+                require(resolved.stat().st_size == entry["bytes"], f"{role} byte size mismatch")
+            if not str(entry["path"]).startswith("/"):
+                require((ROOT / config["assembly"]["output_markdown"]).is_file()
+                        and (ROOT / config["assembly"]["output_pdf"]).is_file(),
+                        "canonical writeup artefacts missing")
+                require(entry["path"] == config["assembly"].get(
+                    "output_markdown" if role == "writeup_markdown" else "output_pdf"),
+                    f"{role} recorded path does not match the configured artefact path")
+    require(markdown_path.is_file() and pdf_path.is_file(),
+            "canonical writeup markdown or pdf missing")
+    recorded_markdown = next((item for item in record["writeup_files"]
+                              if item["role"] == "writeup_markdown"), None)
+    if recorded_markdown and (ROOT / recorded_markdown["path"]).is_file():
+        # content checks read the file the record actually pins
+        text = (ROOT / recorded_markdown["path"]).read_text(encoding="utf-8")
 
     # -- nothing may be invented ---------------------------------------------------------------
     submission = record["submission_record"]
-    require(record["status"] == "prepared_pending_operator_review", "unexpected packet status")
-    require(record["ready_for_submission"] is False, "packet must not claim readiness")
-    require(all(submission[key] is None for key in
-                ("submitted_at_utc", "confirmation_reference", "submitted_by", "form_url_used")),
-            "submission confirmation must stay null until the operator submits the form")
-    require(record["identity"]["zindi_username_or_team"] is None
-            or record["identity"]["operator_confirmation_recorded"],
-            "a username may only appear with recorded operator confirmation")
-    if record["identity"]["zindi_username_or_team"] is None:
-        require(config["identity"]["pending_placeholder"] in text,
-                "pending placeholder must be stated for the unconfirmed identity")
-        require("PENDING" in text, "pending marker missing from the writeup")
-    for phrase in ("form submitted", "submitted the form", "submitted our writeup through the form"):
+    submitted = record["status"] == "submitted_confirmed_by_operator"
+    require(record["status"] in ("prepared_pending_operator_review",
+                                 "submitted_confirmed_by_operator"), "unexpected packet status")
+    if submitted:
+        require(record["ready_for_submission"] is True, "a confirmed packet must claim readiness")
+        require(all(submission.get(key) for key in ("submitted_at_utc", "confirmation_reference",
+                                                   "submitted_by", "form_url_used")),
+                "a confirmed packet must carry submission time, confirmation, submitter and URL")
+        require(submission.get("operator_review") not in (None, "not recorded"),
+                "a confirmed packet must record the operator review of the discovery narrative")
+        require(bool(record["identity"].get("zindi_username_or_team"))
+                and bool(record["identity"].get("operator_confirmation_recorded")),
+                "a confirmed packet needs an operator-confirmed username")
+        require(bool(record["form"].get("url")), "a confirmed packet needs the form URL")
+        for slot in ("candidate_A", "candidate_B"):
+            require(bool(record["final_two"]["selected"].get(slot)),
+                    f"a confirmed packet must name the selected {slot}")
+    else:
+        require(record["ready_for_submission"] is False, "packet must not claim readiness")
+        require(all(submission.get(key) is None for key in
+                    ("submitted_at_utc", "confirmation_reference", "submitted_by",
+                     "form_url_used")),
+                "submission confirmation must stay null until the operator submits the form")
+        require(submission.get("operator_review") in (None, "not recorded"),
+                "operator review may only be recorded by the operator")
+        require(record["identity"]["zindi_username_or_team"] is None
+                or record["identity"]["operator_confirmation_recorded"],
+                "a username may only appear with recorded operator confirmation")
+        if record["identity"]["zindi_username_or_team"] is None:
+            require(config["identity"]["pending_placeholder"] in text,
+                    "pending placeholder must be stated for the unconfirmed identity")
+            require("PENDING" in text, "pending marker missing from the writeup")
+        require(not record["identity"].get("operator_confirmation_recorded"),
+                "identity confirmation may only be recorded by the operator")
+        require(bool(record.get("blocking_prerequisites")),
+                "a staged packet must list its blocking prerequisites")
+        search = record["organiser_page"]["form_url_search"]
+        require(bool(search.get("attempted_on")) and bool(search.get("pages_attempted"))
+                and search.get("outcome") in text,
+                "a missing form URL must be documented with the retrieval attempt")
+    for phrase in ("we submitted the form", "submitted our writeup through the form"):
         require(phrase not in text.lower(), f"writeup claims a form submission: {phrase!r}")
+
+    # -- quoted official page text -------------------------------------------------------------
+    page = record["organiser_page"]
+    require(bool(page.get("url")) and bool(page.get("documented_on")),
+            "official page citation lacks url or documented_on")
+    require(page["url"] in {row["url"] for row in record["external_source_register"]},
+            "official page url is missing from the external source register")
+    for entry in page["extracts"]:
+        require(entry["quote"] in text, f"official quote missing from writeup: {entry['quote'][:40]}")
+        require(bool(entry["used_for"]), f"official quote lacks a use note: {entry['quote'][:40]}")
+    require(bool(record["operator_input_schema"].get("fields")),
+            "operator input schema must be recorded so filling is one command")
 
     # -- rules-driven content -------------------------------------------------------------------
     for prize in config["prizes"]:
@@ -241,8 +298,13 @@ def main() -> int:
         print(json.dumps({"ok": result["ok"], "failures": result["failures"],
                           **result["notes"]}, indent=1))
     if result["ok"]:
-        print("PASS writeup submission packet: assembled, hash-tied and honest about its pending "
-              "operator inputs; staged only, nothing was submitted to the organiser")
+        if record["status"] == "submitted_confirmed_by_operator":
+            print("PASS writeup submission packet: operator-confirmed submission record complete "
+                  "(UTC time, organiser confirmation, submitter, form URL, named final-two "
+                  "candidates) and hash-tied to the writeup artefacts")
+        else:
+            print("PASS writeup submission packet: assembled, hash-tied and honest about its "
+                  "pending operator inputs; staged only, nothing was submitted to the organiser")
         return 0
     print("FAIL writeup submission packet: " + "; ".join(result["failures"][:8]))
     return 1

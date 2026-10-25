@@ -179,5 +179,63 @@
     "build": "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --quiet --with reportlab==4.4.10 python scripts/build_final_writeup.py",
     "verify": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_submission.py",
     "tests": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with pytest python -m pytest -q"
+  },
+  "organiser_page": {
+    "url": "https://zindi.africa/competitions/bias-bounty-mapping-equity-challenge",
+    "documented_on": "2026-10-25",
+    "role": "official challenge page; quoted text only, no data added to scored predictions",
+    "extracts": [
+      {
+        "quote": "One membership note: the Maricopa package is 1,592 Arizona tracts plus one New Mexico tract, 35023970000 (Hidalgo County, Tract 9700), which the region boundary meets at the state line.",
+        "used_for": "cross-state scored tract disclosure in the edge-case section; independently verified present in the official Maricopa sample"
+      },
+      {
+        "quote": "Participants must not use reference layers, or equivalent copies obtained elsewhere, to recreate or approximate the organiser-computed targets.",
+        "used_for": "prohibited-source statement"
+      }
+    ],
+    "form_url_search": {
+      "attempted_on": "2026-10-25",
+      "pages_attempted": [
+        "https://zindi.africa/competitions/bias-bounty-mapping-equity-challenge",
+        "https://zindi.africa/competitions/bias-bounty-mapping-equity-challenge/rules"
+      ],
+      "outcome": "not recoverable programmatically",
+      "reason": "the page is client-rendered and the fetched preview ends before the writeup/prize section that carries the hyperlink target, so the form URL must come from the operator"
+    }
+  },
+  "operator_input_schema": {
+    "path_hint": "reports/writeup-submission-operator-inputs.json",
+    "fields": {
+      "identity.zindi_username_or_team": "the Zindi username or team name the operator owns",
+      "identity.operator_confirmation_recorded": "true only after the operator confirms that identity",
+      "form.url": "the organiser writeup form URL",
+      "submission_record.submitted_at_utc": "UTC time the operator submitted the form",
+      "submission_record.confirmation_reference": "organiser confirmation text or reference",
+      "submission_record.submitted_by": "operator name or handle",
+      "submission_record.form_url_used": "the URL actually used",
+      "submission_record.operator_review": "review statement for the discovery narrative",
+      "final_two.selected.candidate_A": "frozen final-two candidate A id",
+      "final_two.selected.candidate_B": "frozen final-two candidate B id"
+    },
+    "ready_requires": [
+      "identity.zindi_username_or_team",
+      "form.url",
+      "submission_record.submitted_at_utc",
+      "submission_record.confirmation_reference"
+    ]
+  },
+  "submission_record": {
+    "submitted_at_utc": null,
+    "confirmation_reference": null,
+    "submitted_by": null,
+    "form_url_used": null,
+    "operator_review": "not recorded"
+  },
+  "final_two": {
+    "selected": {
+      "candidate_A": null,
+      "candidate_B": null
+    }
   }
 }

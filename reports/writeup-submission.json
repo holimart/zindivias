@@ -5,8 +5,59 @@
   "competition": "bias-bounty-mapping-equity-challenge",
   "status": "prepared_pending_operator_review",
   "ready_for_submission": false,
+  "pending_operator_inputs": [
+    "identity.zindi_username_or_team",
+    "form.url",
+    "submission_record.submitted_at_utc",
+    "submission_record.confirmation_reference"
+  ],
+  "organiser_page": {
+    "url": "https://zindi.africa/competitions/bias-bounty-mapping-equity-challenge",
+    "documented_on": "2026-10-25",
+    "role": "official challenge page; quoted text only, no data added to scored predictions",
+    "extracts": [
+      {
+        "quote": "One membership note: the Maricopa package is 1,592 Arizona tracts plus one New Mexico tract, 35023970000 (Hidalgo County, Tract 9700), which the region boundary meets at the state line.",
+        "used_for": "cross-state scored tract disclosure in the edge-case section; independently verified present in the official Maricopa sample"
+      },
+      {
+        "quote": "Participants must not use reference layers, or equivalent copies obtained elsewhere, to recreate or approximate the organiser-computed targets.",
+        "used_for": "prohibited-source statement"
+      }
+    ],
+    "form_url_search": {
+      "attempted_on": "2026-10-25",
+      "pages_attempted": [
+        "https://zindi.africa/competitions/bias-bounty-mapping-equity-challenge",
+        "https://zindi.africa/competitions/bias-bounty-mapping-equity-challenge/rules"
+      ],
+      "outcome": "not recoverable programmatically",
+      "reason": "the page is client-rendered and the fetched preview ends before the writeup/prize section that carries the hyperlink target, so the form URL must come from the operator"
+    }
+  },
+  "operator_input_schema": {
+    "path_hint": "reports/writeup-submission-operator-inputs.json",
+    "fields": {
+      "identity.zindi_username_or_team": "the Zindi username or team name the operator owns",
+      "identity.operator_confirmation_recorded": "true only after the operator confirms that identity",
+      "form.url": "the organiser writeup form URL",
+      "submission_record.submitted_at_utc": "UTC time the operator submitted the form",
+      "submission_record.confirmation_reference": "organiser confirmation text or reference",
+      "submission_record.submitted_by": "operator name or handle",
+      "submission_record.form_url_used": "the URL actually used",
+      "submission_record.operator_review": "review statement for the discovery narrative",
+      "final_two.selected.candidate_A": "frozen final-two candidate A id",
+      "final_two.selected.candidate_B": "frozen final-two candidate B id"
+    },
+    "ready_requires": [
+      "identity.zindi_username_or_team",
+      "form.url",
+      "submission_record.submitted_at_utc",
+      "submission_record.confirmation_reference"
+    ]
+  },
   "revision": {
-    "git_commit": "f55dbcb7d769d9f6c41aba42abb08f727955f274",
+    "git_commit": "a727f68206290d0dd90f74c0352be1db5bb40ca0",
     "tree_clean": false,
     "pdf_engine": "reportlab==4.4.10 with canvas invariant=1 (no wall-clock in the file identity)"
   },
@@ -146,7 +197,7 @@
       "candidate_A": null,
       "candidate_B": null
     },
-    "selection_note": "No final-two selection is recorded yet; the writeup lists the registered model candidate and its non-uploaded status instead of inventing a selection."
+    "selection_note": "Selections come only from operator input; until then both slots are null and the writeup names the registered model candidate with its non-uploaded status."
   },
   "external_source_register": [
     {
@@ -154,6 +205,20 @@
       "label": "organiser-hosted challenge file used by the workspace downloader",
       "accessed_on": "2026-10-23",
       "role": "official challenge data endpoint provided by the organisers; not an external dataset",
+      "official": true
+    },
+    {
+      "url": "https://zindi.africa/competitions/bias-bounty-mapping-equity-challenge",
+      "label": "official challenge page (quoted rules and membership note)",
+      "accessed_on": "2026-10-25",
+      "role": "official challenge page; quoted text only, no data added to scored predictions",
+      "official": true
+    },
+    {
+      "url": "https://zindi.africa/competitions/bias-bounty-mapping-equity-challenge/rules",
+      "label": "official page fetched while searching for the writeup form link",
+      "accessed_on": "2026-10-25",
+      "role": "official challenge page; documentation lookup only, no data added to predictions",
       "official": true
     },
     {
@@ -317,14 +382,14 @@
     {
       "path": "docs/writeup/final-writeup.md",
       "role": "writeup_markdown",
-      "sha256": "029c95f7b67b1e6dbb8d33270a0bfaf4253f5509a7e748a5080a0f7a431bd31b",
-      "bytes": 110155
+      "sha256": "151418d0b8742b0eb2e5fa1f40e0de6fb637237042e400798a94dbffe2210273",
+      "bytes": 112337
     },
     {
       "path": "reports/writeup/final-writeup.pdf",
       "role": "writeup_pdf",
-      "sha256": "a013efe455c4737ccf32ba54b6349766965f1a6ccd783be4c9521211b822b575",
-      "bytes": 102941
+      "sha256": "377e0e0f5ee72e1b477405f0cf7ddd143f7945dca4ad7bc27e9116ada8a627a2",
+      "bytes": 102785
     }
   ],
   "submission_record": {
@@ -335,10 +400,12 @@
     "operator_review": "not recorded"
   },
   "blocking_prerequisites": [
-    "operator review of the Best Bias Discovery narrative",
-    "operator confirmation of the Zindi username or team name",
-    "organiser writeup form URL (not preserved in the saved rules text)",
-    "final-two selection of the two candidates whose submission IDs the form must name"
+    "operator confirmation of the Zindi username or team name (identity.zindi_username_or_team)",
+    "operator confirmation flag for that identity (identity.operator_confirmation_recorded)",
+    "organiser writeup form URL: the saved rules text keeps the sentence but not the hyperlink target, and the live page is client-rendered, so the operator must supply it (form.url)",
+    "operator review of the Best Bias Discovery narrative (submission_record.operator_review)",
+    "final-two selection of the two candidates whose submission IDs the form must name (reports/final-two.json status protocol_frozen_waiting_for_eligible_candidates)",
+    "form submission evidence: UTC time, organiser confirmation reference and submitter (submission_record.*)"
   ],
   "commands": {
     "build": "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --quiet --with reportlab==4.4.10 python scripts/build_final_writeup.py",
@@ -360,9 +427,12 @@
     "submission_confirmation_recorded": false,
     "submission_ids_tie_to_successful_upload_log": true,
     "submission_candidate_ids_registered": true,
+    "final_two_selection_ids_registered": true,
     "model_candidate_artifact_hash_pinned": true,
     "model_candidate_non_upload_disclosed": true,
     "final_two_selection_declared_not_invented": true,
+    "organiser_page_extracts_quoted_verbatim": true,
+    "form_url_status_documented": true,
     "external_claims_carry_url_and_access_date": true,
     "prior_art_literature_fully_registered": true,
     "no_retired_leaderboard_constant_named_or_valued": true,

@@ -430,3 +430,82 @@ Blocked on (all operator/steward-owned):
    `protocol_frozen_waiting_for_eligible_candidates`, so the two candidate IDs whose submission IDs
    the form must name are not fixed yet; the packet records `candidate_A/B: null` rather than
    inventing them, and `V2_model` upload remains operator-gated.
+
+### 2026-10-25 — row `bias-writeup-form-submission`, turn 2 (still blocked on the operator)
+
+Disposition `blocked`, close verdict `blocked`. Nothing was submitted to the organiser and no
+submission-capable action was taken.
+
+The packet from the previous turn was blocked on four operator-owned inputs. This turn removed
+everything the lane can legitimately remove, and turned the remaining operator work into one file
+plus one command.
+
+What changed:
+
+1. **One-command operator completion.** `scripts/build_final_writeup.py --operator-inputs <file>`
+   merges only the ten whitelisted operator paths (`identity.zindi_username_or_team`,
+   `identity.operator_confirmation_recorded`, `form.url`,
+   `submission_record.{submitted_at_utc,confirmation_reference,submitted_by,form_url_used,operator_review}`,
+   `final_two.selected.{candidate_A,candidate_B}`). Anything else in that file is ignored: a test
+   proves that tampering with `prizes` or `writeup_files` through the input file has no effect.
+   When all `operator_input_schema.ready_requires` fields are present the packet becomes
+   `submitted_confirmed_by_operator` with `ready_for_submission: true`; a partially filled file
+   stays `prepared_pending_operator_review` and the checker rejects it ("submission confirmation
+   must stay null until the operator submits the form", "operator review may only be recorded by
+   the operator"). This is the pre-registration for the submission, not a way to submit.
+2. **Form URL recovery attempted and recorded.** The official page was fetched twice
+   (`.../bias-bounty-mapping-equity-challenge` and `.../rules`) plus an attempted supervisor
+   extraction (unavailable: no offline extraction profile). The page is client-rendered and the
+   fetched text ends before the writeup/prize section that carries the hyperlink target, so
+   `form.url` stays null and `organiser_page.form_url_search` records the attempt (date, pages,
+   outcome, reason). The checker fails if that documentation is missing while the URL is absent.
+3. **Quoted official text.** The packet now quotes two official sentences verbatim, with the source
+   URL and a documented-on date: the Maricopa membership note ("…1,592 Arizona tracts plus one New
+   Mexico tract, 35023970000 (Hidalgo County, Tract 9700)…") and the prohibition on reference
+   layers or equivalent copies. Both quotes are gated: they must appear verbatim in the writeup and
+   their source URL must be a dated row in the external source register. The cross-state tract was
+   re-verified against the provided sample this turn (`35023970000` present in the 1,593-row
+   Maricopa official sample, which is the only non-`04` GEOID in it), matching
+   `reports/edge-cases.json` `/regions/maricopa-az/new_mexico_geoid_35023970000_present: true`.
+4. **Register and record.** The external source register grew to 21 dated rows (18 prior-art URLs,
+   the organiser-hosted sample-submission endpoint, the official page, and the two pages attempted
+   during the form-URL search). `reports/writeup-submission.json` now carries
+   `pending_operator_inputs`, `blocking_prerequisites` (six, each naming the exact field to fill) and
+   `operator_input_schema.fields` so the operator can see what to write.
+
+Deliverables updated (SHA-256 first 16): `config/writeup-submission-preregistered.json`
+`577035ddc58bcc47`, `scripts/build_final_writeup.py` `2e8a9377289cc848`,
+`scripts/verify_writeup_submission.py` `75ddd0044d78dea7`, `docs/writeup/final-writeup.md`
+`151418d0b8742b0e`, `reports/writeup/final-writeup.pdf` `377e0e0f5ee72e1b`,
+`reports/writeup-submission.json` `2a860cbff3b1208c`,
+`tests/test_writeup_submission_packet.py` `9ad79fc94a8f37b9` (29 tests).
+
+Verification:
+
+- `COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" /home/martin/hddProjects/langywrap/uv run --quiet --with reportlab==4.4.10 python scripts/build_final_writeup.py`
+  → staged packet, `pending_operator_inputs: [form_url_available,
+  operator_identity_confirmation_recorded, submission_confirmation_recorded]`
+- `/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_submission.py`
+  → `PASS writeup submission packet: assembled, hash-tied and honest about its pending operator
+  inputs; staged only, nothing was submitted to the organiser`
+- `/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with pytest python -m pytest -q`
+  → `287 passed`
+- determinism: two builds produced byte-identical markdown, PDF and record
+- fill-mode rehearsal with synthetic operator inputs (in `/tmp`, never committed) produced
+  `submitted_confirmed_by_operator`, `ready_for_submission: true`, empty
+  `blocking_prerequisites`, and a passing checker; a partially filled file was rejected
+
+Still blocked on, all operator/steward-owned:
+
+1. Operator review of the Best Bias Discovery narrative (`submission_record.operator_review`).
+2. Operator confirmation of the Zindi username or team name (`identity.*`); the ledger records
+   `team: null` for every Bias Bounty submission, so the repo cannot state it.
+3. The organiser writeup form URL (`form.url` / `submission_record.form_url_used`); recovery was
+   attempted and documented, the page is client-rendered.
+4. Final-two selection (`final_two.selected.candidate_A/B`): `reports/final-two.json` is still
+   `protocol_frozen_waiting_for_eligible_candidates` and `V2_model` upload stays operator-gated.
+5. Form submission evidence (`submitted_at_utc`, `confirmation_reference`, `submitted_by`).
+
+Deadline note for the operator: the challenge closes 2026-10-31T23:59:00Z, discovery-prize ties
+break by earlier submission, and the row's target was 2026-10-29. The packet is ready for one
+review, one input file and one submission.
