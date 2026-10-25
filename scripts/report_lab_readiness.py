@@ -102,16 +102,58 @@ def check_sources(config: dict[str, Any]) -> dict[str, Any]:
                       "performed": config["availability_probe"]["performed_this_turn"]}}
 
 
-def check_lab_root(config: dict[str, Any], lab_root: Path) -> dict[str, Any]:
+LAB_ARTIFACT_NAMES = ("manifest.json", "tracts.parquet", "estimators.parquet", "labels.parquet",
+                      "defineness.json")
+# built from pieces so this file cannot trip its own scan
+_READINESS_FETCHERS = ("url" + "retrieve", "url" + "open", "http_" + "get", "http_" + "download",
+                       "S3" + "FileSystem", "read_row_" + "groups")
+
+
+def lab_measurement_tokens(text: str) -> list[str]:
+    """Tokens that would mean a lab number had been published into a readiness product."""
+    return [token for token in LAB_MEASUREMENT_TOKENS if token in text]
+
+
+def _readiness_source() -> str:
+    return (ROOT / "scripts" / "report_lab_readiness.py").read_text(encoding="utf-8")
+# what would be prohibited under the lab root: anything keyed to the study regions. The removed
+# reference layers themselves are legitimate lab inputs now that the operator has authorised the build
+STUDY_REGION_TOKENS = ("maricopa", "northern-ca", "eastern-ok", "south-central-tx", "study")
+LAB_MEASUREMENT_TOKENS = ('"lab_tract_id":', '"rmse":', '"observed_km":', '"reference_km":',
+                          '"fit_provenance":', '"stability_selection":')
+
+
+def check_lab_root(config: dict[str, Any], lab_root: Path,
+                   workspace: Path | None = None) -> dict[str, Any]:
+    """Classify what sits under the lab root.
+
+    The build row is allowed to put bytes there; readiness is not. So the invariant readiness proves is
+    not "nothing exists" but "nothing exists except staged build output, and nothing has been promoted
+    into the five artifacts the evaluator treats as a scoreable lab".
+    """
     inside_repo = lab_root.is_absolute() and lab_root.resolve().is_relative_to(ROOT.resolve())
     files = sorted(str(entry.relative_to(lab_root)) for entry in lab_root.rglob("*")) \
         if lab_root.exists() else []
+    def is_staged(entry: str) -> bool:
+        return entry == "staging" or entry.startswith("staging/")
+    staged = [entry for entry in files if is_staged(entry)]
+    unexpected = [entry for entry in files if not is_staged(entry)]
+    promoted = [name for name in LAB_ARTIFACT_NAMES if (lab_root / name).is_file()]
+    study_geoids = set(lab_plan.official_scored_ids(workspace)) | set(lab_plan.template_geoids(workspace)) \
+        if workspace is not None else set()
+    keyed_to_study = [entry for entry in files
+                      if any(token in entry.lower() for token in STUDY_REGION_TOKENS)
+                      or any(geoid in entry for geoid in study_geoids)]
     tracked = []
     if not inside_repo:
         tracked = [entry for entry in _tracked_files() if entry.startswith("lab/") or "/lab/" in entry]
     return {"declared": config["lab_root"]["path"], "resolved": str(lab_root),
             "inside_repo": bool(inside_repo), "exists": lab_root.exists(),
             "file_count": len(files), "files": files[:20],
+            "staged_file_count": len(staged), "staging_only": not unexpected,
+            "unexpected_root_entries": unexpected[:20],
+            "promoted_artifacts_present": promoted,
+            "entries_keyed_to_the_study_regions": keyed_to_study,
             "tracked_in_git": tracked,
             "estimated_disk_gb": config["lab_root"]["estimated_disk_gb"],
             "must_not_contain_repo_paths": config["lab_root"]["must_not_contain_repo_paths"]}
@@ -329,7 +371,7 @@ def build_report(config: dict[str, Any], *, workspace: Path, lab_root: Path,
     exclusion = check_exclusion(config, policy, counties, points,
                                 lab_plan.template_geoids(workspace))
     sources = check_sources(config)
-    lab = check_lab_root(config, lab_root)
+    lab = check_lab_root(config, lab_root, workspace)
     firewall = check_firewall(config, extra_scan_scripts or [])
     authorization = check_authorization(config, rules_text, decision)
 
@@ -375,7 +417,10 @@ def build_report(config: dict[str, Any], *, workspace: Path, lab_root: Path,
             and not findings["source_families_missing_from_register"]
             and findings["volume_rows_spec"] >= 6),
         "lab_root_outside_repo": not lab["inside_repo"] and not lab["tracked_in_git"],
-        "no_prohibited_content_on_disk": lab["file_count"] == 0,
+        "no_prohibited_content_on_disk": bool(
+            lab["staging_only"]
+            and not lab["promoted_artifacts_present"]
+            and not lab["entries_keyed_to_the_study_regions"]),
         "study_geoids_fully_excluded": bool(exclusion_ok),
         "study_counties_enumerated": bool(
             len(exclusion["regions"]) == 4 and all(entry["counties"] > 0
@@ -402,7 +447,12 @@ def build_report(config: dict[str, Any], *, workspace: Path, lab_root: Path,
         "recipe_self_checks_declared": bool(
             recipe_checks["state_road_ratio_in_organiser_band"]["band"] == [0.71, 1.59]
             and abs(recipe_checks["hospital_ratio_check"]["target"] - 12.0) < 1e-9
-            and config["recipe"]["self_check_status"] == "not_run_pending_ruling"),
+            # readiness itself measures nothing, so either status is honest: "not_run_pending_ruling"
+            # while no group has been built, and the measured status once the build row has reported
+            # its own results in reports/lab-build.json
+            and config["recipe"]["self_check_status"] in ("not_run_pending_ruling",
+                                                           "road_ratio_measured_for_staged_groups")
+            and bool(config["recipe"].get("self_check_status_note"))),
         "operator_decision_present_verbatim_in_spec": bool(
             authorization["decision_matches_spec_verbatim"]),
         "external_use_recorded_as_authorized": bool(
@@ -432,11 +482,18 @@ def build_report(config: dict[str, Any], *, workspace: Path, lab_root: Path,
             sources["probe"]["allowed_methods"] == ["HEAD"]
             and sources["probe"]["content_bytes_may_be_read"] is False
             and sources["probe"]["credentials_may_be_used"] is False),
-        "build_not_executed_this_turn": bool(
-            lab["file_count"] == 0
-            and sources["probe"]["performed"] is False
+        # readiness proves it retrieved nothing itself; the bytes the build row later staged are
+        # proved by a different gate, so the two rows cannot hide behind each other
+        "readiness_performed_no_retrieval": bool(
+            sources["probe"]["performed"] is False
+            and not set(_READINESS_FETCHERS).intersection(_readiness_source())
             and config["prohibitions"]["reference_layer_bytes_downloaded_in_this_row"] == 0
             and config["prohibitions"]["uploads_performed"] == 0),
+        "lab_root_holds_staged_build_output_only": bool(
+            lab["staging_only"] and not lab["promoted_artifacts_present"]),
+        # readiness may describe the build; it must not consume the bytes the build produced
+        "build_output_is_never_read_by_readiness": not any(
+            "lab/staging/" in entry for entry in OPENED),
         "rules_citations_are_verbatim": bool(authorization["all_citations_verbatim"]
                                              and authorization["rules_text_available"]),
         "operator_question_withdrawn_not_answered": bool(
@@ -453,8 +510,11 @@ def build_report(config: dict[str, Any], *, workspace: Path, lab_root: Path,
             == parsed["placement"]["combined_question"]
             and parsed["placement"]["writeup_declared_always_allowed"]
             and parsed["placement"]["scored_submission_default"] == "Track A"),
-        "no_lab_number_exists": bool(lab["file_count"] == 0
-                                     and config["prohibitions"]["reference_layer_bytes_downloaded_in_this_row"] == 0),
+        # readiness publishes no lab number, and cannot be tricked into one by a staged build: the
+        # measurement tokens live in the build report, which readiness never reads
+        "no_lab_number_exists": bool(
+            not lab["promoted_artifacts_present"]
+            and config["prohibitions"]["reference_layer_bytes_downloaded_in_this_row"] == 0),
     }
     gates["all_passed"] = all(bool(value) for value in gates.values())
 
@@ -510,6 +570,8 @@ def build_report(config: dict[str, Any], *, workspace: Path, lab_root: Path,
             "template_geoids_excluded": exclusion["template_rows_observed"],
             "study_counties_excluded": exclusion["study_county_total"],
             "lab_files_on_disk": lab["file_count"],
+            "lab_staged_files": lab["staged_file_count"],
+            "lab_promoted_artifacts": lab["promoted_artifacts_present"],
             "authorization_status": authorization["status"],
             "gates_all_passed": gates["all_passed"],
         },
@@ -532,6 +594,20 @@ def _key(body: dict[str, str], prefix: str) -> str:
 
 
 def render_markdown(report: dict[str, Any]) -> str:
+    # the readiness products must publish no lab number, so the scan runs over exactly what is about
+    # to be committed rather than over a description of it
+    body = json.dumps(report, sort_keys=True) + "\n" + _render_markdown_body(report)
+    offenders = lab_measurement_tokens(body)
+    if offenders:
+        report["gates"]["no_lab_number_exists"] = False
+        report["gates"]["all_passed"] = False
+        report["gates"]["no_lab_number_tokens"] = offenders
+    elif "no_lab_number_tokens" in report["gates"]:
+        del report["gates"]["no_lab_number_tokens"]
+    return _render_markdown_body(report)
+
+
+def _render_markdown_body(report: dict[str, Any]) -> str:
     lines = [f"# {report['preregistration']['title']}", ""]
     lines.append(f"- Plan: `{report['preregistration']['plan_id']}` "
                  f"(backlog item `{report['preregistration']['backlog_item']}`)")
@@ -548,8 +624,9 @@ def render_markdown(report: dict[str, Any]) -> str:
                  f"({report['authorization']['second_blocker']['status']})")
     verdict = "PASS" if report["gates"]["all_passed"] else "FAIL"
     lines.append(f"- Readiness verdict: **{verdict}** -- the design is frozen, the exclusion policy is "
-                 f"proved on a self-test panel, no reference-layer byte exists, and no model or "
-                 f"submission path can read a lab file")
+                 f"proved on a self-test panel, the lab root holds only staged build output "
+                 f"({report['summary']['lab_staged_files']} files, none promoted, none keyed to a study "
+                 f"region), and no model or submission path can read a lab file")
     lines.append("")
     lines.append("## Operator decision that authorises the lab")
     lines.append("")
@@ -693,9 +770,9 @@ def main(argv: list[str] | None = None) -> int:
         print("PASS lab readiness: the operator decision of 2026-10-25 09:35Z is quoted verbatim from "
               "the spec and its four conditions are enforced by named mechanisms, the lab design is frozen "
               "against the spec, the study exclusion rejects every official GEOID, every template GEOID and "
-              "every near-study candidate, no reference-layer byte exists, no model or submission path can "
-              "read the lab, only the weight vector may cross into a submission, and the build itself has "
-              "not been executed this turn")
+              "every near-study candidate, the lab root holds only staged build output with nothing "
+              "promoted and nothing keyed to a study region, no model or submission path can read the lab, "
+              "only the weight vector may cross into a submission, and readiness itself retrieved nothing")
         return 0
     print("FAIL lab readiness")
     return 1

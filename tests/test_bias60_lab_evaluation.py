@@ -11,6 +11,7 @@ import hashlib
 import importlib.util
 import json
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -482,6 +483,12 @@ class DeterminismTests(unittest.TestCase):
         # fast=False: this test must reproduce the committed artifact, so it uses the frozen
         # 200-draw stability setting rather than the trimmed one the other tests run on
         report = build(fast=False)
+        recorded = json.loads(REPORT_PATH.read_text(encoding="utf-8"))
+        # environment is the one isolated block: it carries the interpreter versions and the HEAD the
+        # report was generated under, both of which move when a commit lands, and nothing else may
+        self.assertTrue(re.match(r"^[0-9a-f]{40}$", str(report["environment"]["git_commit"])),
+                        report["environment"]["git_commit"])
+        report["environment"] = recorded["environment"]
         self.assertEqual(evaluate.render_markdown(report),
                          MARKDOWN_PATH.read_text(encoding="utf-8"))
         self.assertEqual(evaluate.canonical_bytes(report), REPORT_PATH.read_bytes())

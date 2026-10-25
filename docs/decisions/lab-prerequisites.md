@@ -35,7 +35,7 @@
 | `ms_us_building_footprints` | attempted | 200 | reachable | None | https://github.com/microsoft/USBuildingFootprints/releases/latest |
 | `ms_global_ml_building_footprints` | attempted | 200 | reachable | None | None |
 | `usgs_national_structures` | attempted | 200 | reachable | 32508 | https://apps.nationalmap.gov/tnmaccess/api/datasets?output=json&formats=Shapefile&q=structures |
-| `cbp_2023` | attempted | 400 | unexpected | None | https://www2.census.gov/programs-surveys/cbp/datasets/2022/ |
+| `cbp_2023` | attempted | None | unexpected | None | https://www2.census.gov/programs-surveys/cbp/datasets/2022/ |
 | `hud_usps_crosswalk` | attempted | 202 | unexpected | 0 | None |
 | `hospital_check` | skipped | None | the registry records a source family (USGS Health/Medical structures or HIFLD hospitals), not a URL; the build must name the exact service and version before it can be probed | None | None |
 
@@ -67,7 +67,7 @@ Groups far below their planned tract count (plan numbers to correct):
 | --- | --- | --- | --- |
 | `overture_package_release` | 404 | not found at this instantiation, so the registered version pattern needs correcting before the build | https://overturemaps-us-west-2.s3.amazonaws.com/?list-type=2&max-keys=1 |
 | `tiger_prisecroads_2024` | 404 | not found at this instantiation, so the registered version pattern needs correcting before the build | https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32003_roads.zip |
-| `cbp_2023` | 400 | unexpected | https://www2.census.gov/programs-surveys/cbp/datasets/2022/ |
+| `cbp_2023` | None | unexpected | https://www2.census.gov/programs-surveys/cbp/datasets/2022/ |
 | `hud_usps_crosswalk` | 202 | unexpected | None |
 
 - `hospital_check` is not probeable as registered: the registry records a source family (USGS Health/Medical structures or HIFLD hospitals), not a URL; the build must name the exact service and version before it can be probed

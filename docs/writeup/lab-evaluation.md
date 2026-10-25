@@ -36,7 +36,7 @@
 
 ## Prerequisite measurement this evaluation stands on
 
-- Probe artifact `reports/lab-prerequisites.json` (SHA-256 `432f1a9db0718de0...`), its own gates all passed: True
+- Probe artifact `reports/lab-prerequisites.json` (SHA-256 `58afecabf03cef80...`), its own gates all passed: True
 - Planned lab groups: 9; probed on real census geography: 5; candidate tracts inspected: 4748; accepted by the frozen exclusion: 3491
 - Study interior points established for the neighbour buffer: 9793 (1 excluded GEOIDs had no interior point in the census file)
 - Public census geography downloaded by the probe: 112428536 bytes; no reference layer was fetched
@@ -46,7 +46,7 @@
   - `OK-R` is far below its planned tract count: 13 accepted against 130 planned
   - source `overture_package_release` answered 404 at its registered pattern but answers at https://overturemaps-us-west-2.s3.amazonaws.com/?list-type=2&max-keys=1
   - source `tiger_prisecroads_2024` answered 404 at its registered pattern but answers at https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32003_roads.zip
-  - source `cbp_2023` answered 400 at its registered pattern but answers at https://www2.census.gov/programs-surveys/cbp/datasets/2022/
+  - source `cbp_2023` answered None at its registered pattern but answers at https://www2.census.gov/programs-surveys/cbp/datasets/2022/
   - source `hud_usps_crosswalk` answered 202 at its registered pattern and no registered alternate answered
   - source `hospital_check` is not probeable as registered: the registry names a source family, not a URL
 

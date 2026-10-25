@@ -3740,7 +3740,7 @@
         "id": "cbp_2023",
         "meaning": "unexpected",
         "registered_url": "https://www.census.gov/data/datasets/time-series/econ/cbp/2023.html",
-        "status": 400
+        "status": null
       },
       {
         "alternate_that_answers": null,
@@ -3786,7 +3786,7 @@
     "config_sha256": "64e1c41f4684f53d927a40eef487ae38aed520cb2efb5209c2807725c6bcfb95",
     "intent": "The lab evaluation cannot be computed until bias60-external-lab-build delivers an artifact set, and that build is a multi-gigabyte retrieval over ten sources. Two cheap public measurements decide whether that build can succeed at all: whether each registered source answers an anonymous request today, and whether the frozen spec-4.1 exclusion (every official GEOID, every template GEOID and an 8 km neighbour buffer around every study tract) leaves enough candidate tracts in the planned state groups. Both are measured here on public Census tract geography only. This probe downloads no removed reference layer, reads no content byte from a source it only probes, and uses no credential.",
     "lab_plan_config": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/config/bias60-lab-preregistered.json",
-    "lab_plan_config_sha256": "e7106107d63c5bd823c4b65fa3a32c5733cb02500ec5ee539cf99ddde01233cb",
+    "lab_plan_config_sha256": "8980e94f138409fc86be5081608461d51b8db625b3f516f66399a94c04a1b191",
     "lane": "comp-zindi-bias-bounty",
     "negative_controls_declared": [
       "source_probe_reads_bytes",
@@ -4006,15 +4006,15 @@
         "alternate_that_answers": "https://www2.census.gov/programs-surveys/cbp/datasets/2022/",
         "alternates": [
           {
-            "error": null,
+            "error": "TimeoutError",
             "meaning": "unexpected",
-            "status": 400,
+            "status": null,
             "url": "https://www.census.gov/data/datasets/time-series/econ/cbp/2022.html"
           },
           {
-            "error": null,
+            "error": "TimeoutError",
             "meaning": "unexpected",
-            "status": 400,
+            "status": null,
             "url": "https://www.census.gov/data/datasets/time-series/econ/cbp.html"
           },
           {
@@ -4027,14 +4027,14 @@
         "content_bytes_read": false,
         "content_length_bytes": null,
         "credentials_used": false,
-        "error": null,
+        "error": "TimeoutError",
         "id": "cbp_2023",
         "meaning": "unexpected",
         "method": "HEAD",
         "probe": "attempted",
         "registered_url": "https://www.census.gov/data/datasets/time-series/econ/cbp/2023.html",
         "role": "reference_establishments",
-        "status": 400,
+        "status": null,
         "url_probed": "https://www.census.gov/data/datasets/time-series/econ/cbp/2023.html"
       },
       {
@@ -4103,7 +4103,7 @@
     "groups_ready": 4,
     "groups_short_of_floor": 1,
     "lab_plan_needs_amendment": true,
-    "report_sha256": "432f1a9db0718de006f9a8b7c58fdacc4b0c8c99ba14b875de42f2a1c890c4fe",
+    "report_sha256": "58afecabf03cef80d36a4181fe8dfc24a680fc76cfd5822de08ed6e21753a0a8",
     "sources_not_answered": 4,
     "sources_not_probeable": 1,
     "sources_reachable": 5,

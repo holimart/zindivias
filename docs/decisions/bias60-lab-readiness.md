@@ -1,10 +1,10 @@
 # External lab corpus for the 60 estimators: frozen design, hard study exclusion and a rules gate
 
 - Plan: `bias60-external-lab` (backlog item `bias60-external-lab-build`)
-- Preregistered configuration: `/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/config/bias60-lab-preregistered.json` (SHA-256 `bc556cf81af99a72...`)
+- Preregistered configuration: `/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/config/bias60-lab-preregistered.json` (SHA-256 `8d195030963130be...`)
 - Spec: `/home/martin/hddProjects/competitionsall/docs/research/bias-60-ideas-2026-10.md` (SHA-256 `f150649b34caebef...`, matches its pin: True)
 - Status: **authorized_by_operator_decision** by operator, recorded by the shared steward in orchestrator commit 901d5e3c8ee89eb9995e2adb15a3fee6c48b49ee at 2026-10-25T09:35Z; organiser question `withdrawn_by_operator_decision`; sequencing blocker `bias60-track-a-combiner` (still binding on sequencing; the operator decision lifts the organiser-ruling precondition, not the ordering)
-- Readiness verdict: **PASS** -- the design is frozen, the exclusion policy is proved on a self-test panel, no reference-layer byte exists, and no model or submission path can read a lab file
+- Readiness verdict: **PASS** -- the design is frozen, the exclusion policy is proved on a self-test panel, the lab root holds only staged build output (101 files, none promoted, none keyed to a study region), and no model or submission path can read a lab file
 
 ## Operator decision that authorises the lab
 
@@ -105,7 +105,9 @@ Why the text is still quoted: the RULES.md sentences are quoted unchanged becaus
 - `track_b_crossing_surface_is_bounded`: pass
 - `writeup_disclosure_required`: pass
 - `availability_probe_stays_head_only`: pass
-- `build_not_executed_this_turn`: pass
+- `readiness_performed_no_retrieval`: pass
+- `lab_root_holds_staged_build_output_only`: pass
+- `build_output_is_never_read_by_readiness`: pass
 - `rules_citations_are_verbatim`: pass
 - `operator_question_withdrawn_not_answered`: pass
 - `operator_question_covers_the_spec_question`: pass
@@ -120,5 +122,5 @@ Why the text is still quoted: the RULES.md sentences are quoted unchanged becaus
 - per group and component: ['tracts', 'defined', 'undefined', 'undefined_share', 'gap_mean_over_defined', 'gap_p50_over_defined']
 - per group: ['composite_defined', 'composite_undefined', 'recipe_variant_id', 'source_versions_used']
 - recipe self-checks required: ['state_road_ratio_in_organiser_band', 'hospital_ratio_check']
-- recipe self-check status: not_run_pending_ruling
+- recipe self-check status: road_ratio_measured_for_staged_groups
 

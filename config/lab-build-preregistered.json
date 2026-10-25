@@ -1,0 +1,312 @@
+{
+  "schema_version": "1.0",
+  "lane": "comp-zindi-bias-bounty",
+  "backlog_item": "bias60-external-lab-build",
+  "title": "Staged external-lab build: reference-derived coverage-gap labels for lab regions, outside the four study regions",
+  "intent": "This is the build that bias60-external-lab-build authorises. It retrieves public reference layers for lab groups, applies the frozen spec 4.1 exclusion before any layer byte is written, and produces reference-derived component labels with per-component definedness. It never computes a reference layer for a study-region tract or GEOID, and it never writes a lab value into a model or submission artifact.",
+  "spec": {
+    "path": "$ORCHESTRATOR_ROOT/docs/research/bias-60-ideas-2026-10.md",
+    "sha256": "f150649b34caebefb91b8eda75517e43f5cc278699ec9dba7b23fea717f16862",
+    "sections": [
+      "4.1 exclusion",
+      "4.2 groups",
+      "4.3 sources",
+      "4.4 recipe and variants"
+    ]
+  },
+  "pins": {
+    "lab_plan_config": "config/bias60-lab-preregistered.json",
+    "lab_plan_config_sha256": "e7106107d63c5bd823c4b65fa3a32c5733cb02500ec5ee539cf99ddde01233cb",
+    "prerequisite_report": "reports/lab-prerequisites.json",
+    "lab_commit_source": "git rev-parse HEAD",
+    "prerequisite_report_sha256": "6c1b36fe960d4897b73f856d8c81df8dc0c91b2a3305be17442e34bfb41bf5ed",
+    "lab_plan_module_sha256": "e106db411a7289a3e76d750d99935756a99530b15b75e257e1bdcceac7377249"
+  },
+  "operator_decision": {
+    "decided": "2026-10-25T09:35Z",
+    "retrieval_authorised": true,
+    "quote": "No question goes to organisers. Track B is allowed now. Fit weights in the external lab outside the four study regions, with every study tract and its neighbours excluded. Only the learned weight vector and normalisation constants cross from lab to submission. Reference layers or equivalent copies must never be computed on, joined to, or used to approximate targets for study-region tracts or GEOIDs. Record the SHA-256 and the lab commit and disclose the lab method in the writeup.",
+    "study_region_prohibition_is_absolute": true
+  },
+  "lab_root": "$COMPETITION_WORKSPACE/lab",
+  "staging": {
+    "directory": "staging/<group>",
+    "promote_to_lab_root_when": [
+      "every group in groups_this_build has tracts, labels and definedness",
+      "at least minimum_labelled_groups groups carry a component label",
+      "the manifest lists every retrieved file with url, version, retrieval_date_utc and sha256",
+      "the required recipe self-checks are reported"
+    ],
+    "note": "The five evaluator artifacts (manifest.json, tracts.parquet, estimators.parquet, labels.parquet, defineness.json) are written at the lab root only by the promote step, so a partial build cannot be mistaken for a scoreable lab."
+  },
+  "groups_this_build": [
+    "NV",
+    "NM"
+  ],
+  "group_selection": {
+    "rule": "core groups with the least retrieval risk that the prerequisite probe measured as viable, so that the pipeline is proved on real bytes before the wide groups are attempted",
+    "measured_by_prerequisite_probe": {
+      "NV": {
+        "candidates_found": 674,
+        "accepted": 674,
+        "ready": true,
+        "counties": [
+          "32003",
+          "32031"
+        ]
+      },
+      "NM": {
+        "candidates_found": 612,
+        "accepted": 611,
+        "ready": true,
+        "counties": []
+      },
+      "AZ-R": {
+        "candidates_found": 94,
+        "accepted": 30,
+        "ready": true,
+        "note": "exactly on the fold floor of 30 against 170 planned"
+      },
+      "OK-R": {
+        "candidates_found": 1205,
+        "accepted": 13,
+        "ready": false,
+        "note": "cannot be a fold: 1192 of its candidates are the study sample itself"
+      }
+    },
+    "why_not_the_two_smallest": "OK-R (130 planned) and AZ-R (170 planned) are the two smallest core groups, but the probe measured 13 and 30 usable tracts. A 13-tract group cannot carry per-component definedness and a 30-tract group is exactly on the floor, so both are held for the amendment row while the pipeline is proved on groups the probe found viable."
+  },
+  "minimum_labelled_groups": 5,
+  "minimum_accepted_tracts_per_group": 30,
+  "components_built_this_build": [
+    "road"
+  ],
+  "components_held": {
+    "building": {
+      "status": "not_built",
+      "reason": "the registered reference side is not retrievable: github.com/microsoft/USBuildingFootprints now serves a README-only tree (root entries .gitignore, LICENSE-DATA, README.md, SECURITY.md, images) and the registered geojson path returns 404",
+      "measured": {
+        "ms_us_building_footprints_root_api": 200,
+        "ms_us_building_footprints_geojson_path": 404,
+        "root_entries": [
+          ".gitignore",
+          "LICENSE-DATA",
+          "README.md",
+          "SECURITY.md",
+          "images"
+        ]
+      }
+    },
+    "poi_facilities": {
+      "status": "not_built",
+      "reason": "the registered reference side is not retrievable: the TNM Structures prefix lists zero objects and sciencebase.gov does not resolve in this environment",
+      "measured": {
+        "tnm_structures_prefix_object_count": 0,
+        "sciencebase_dns": "unresolvable"
+      }
+    },
+    "poi_establishments": {
+      "status": "not_built",
+      "reason": "the 2022 CBP index publishes no tract-level file (cbp22cd, cbp22co, cbp22csa, cbp22msa, cbp22pr_ia_co, cbp22pr_ia_st, cbp22st, cbp22us) and the HUD-USPS BUS_RATIO crosswalk that the spec's allocation variants need answers 202 to an anonymous HEAD",
+      "measured": {
+        "cbp_2022_index_files": [
+          "cbp22cd.xlsx",
+          "cbp22co.zip",
+          "cbp22csa.zip",
+          "cbp22msa.zip",
+          "cbp22pr_ia_co.zip",
+          "cbp22pr_ia_st.zip",
+          "cbp22st.zip",
+          "cbp22us.zip"
+        ],
+        "hud_crosswalk_head_status": 202
+      }
+    }
+  },
+  "sources": {
+    "overture": {
+      "id": "overture_package_release",
+      "role": "observed coverage, the numerator side of every gap",
+      "bucket": "overturemaps-us-west-2",
+      "endpoint": "https://overturemaps-us-west-2.s3.us-west-2.amazonaws.com/",
+      "release": "2026-09-23.1",
+      "release_candidates": [
+        "2026-09-23.0",
+        "2026-09-23.1",
+        "2026-10-21.0"
+      ],
+      "release_selection": "the newest release published before the challenge package and matching its September vintage; the two October releases postdate the package and are excluded",
+      "themes": {
+        "roads": "theme=transportation/type=segment",
+        "buildings": "theme=buildings/type=building",
+        "places": "theme=places/type=place"
+      },
+      "road_classes": [
+        "motorway",
+        "trunk",
+        "primary",
+        "secondary"
+      ],
+      "road_subtypes": [
+        "road"
+      ],
+      "road_columns": [
+        "id",
+        "class",
+        "subtype",
+        "names",
+        "geometry",
+        "bbox"
+      ],
+      "bbox_pruning": "row-group statistics on bbox.xmin/xmax/ymin/ymax decide which row groups are read; no theme is ever streamed whole"
+    },
+    "tiger_tracts_2020": {
+      "id": "tiger_tracts_2020",
+      "role": "lab tract polygons, the 2020 vintage the challenge is built on",
+      "url": "https://www2.census.gov/geo/tiger/TIGER2020/TRACT/tl_2020_<ss>_tract.zip"
+    },
+    "tiger_county_roads": {
+      "id": "tiger_county_roads_check",
+      "role": "reference roads, the denominator side of the road gap",
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_<ssccc>_roads.zip",
+      "mtfcc": [
+        "S1100",
+        "S1200"
+      ],
+      "note": "the registered PRISECRROADS state file answers 404 for every probed state and the state-level ROADS file also answers 404, so the reference side is assembled from per-county All Roads files filtered to the same MTFCC set"
+    }
+  },
+  "recipe": {
+    "projection": "EPSG:5070",
+    "component": "road",
+    "observed": "Overture transportation segments with class in road_classes and subtype in road_subtypes, clipped to the lab tract polygon, length in kilometres",
+    "reference": "TIGER 2024 All Roads with MTFCC in the frozen set, clipped to the lab tract polygon, length in kilometres",
+    "gap": "clip(1 - observed_km / reference_km, 0, 1)",
+    "undefined_when": "reference_km == 0",
+    "recipe_variant_id": "road-obs4cls-mtfcc-S1100S1200-5070-v1",
+    "self_checks": {
+      "state_road_ratio_in_organiser_band": {
+        "source": "RULES.md: the Overture/TIGER ratio ranges from 0.71 to 1.59 across the four study regions",
+        "band": [
+          0.71,
+          1.59
+        ],
+        "tolerance": 0.15,
+        "rule": "per-group sum(observed_km) / sum(reference_km) must land inside the band, or within tolerance of it, otherwise the variant is rejected"
+      },
+      "hospital_ratio_check": {
+        "status": "not_computable",
+        "reason": "the independent reference hospital count comes from USGS National Structures, whose registered endpoints serve zero objects in this environment; reporting a ratio without the reference side would be a fabricated measurement"
+      }
+    }
+  },
+  "estimators": {
+    "status": "not_defined_for_this_build",
+    "reason": "all three implemented ideas name a provided-package input in the registry: Sc5 needs both the filtered and the unfiltered roads layer as the organiser shipped them, Mx4 needs buildings.sources, Tm1 needs strata.carbonplan_buildings plus the package building count. None of those exist for a lab region, and inventing a substitute mapping after the labels exist would be fitting the estimator to the answer.",
+    "gate": "a separate preregistered row must map each implemented idea to a raw-source lab analogue before estimators.parquet is written"
+  },
+  "retrieval": {
+    "allowed_hosts": [
+      "www2.census.gov",
+      "overturemaps-us-west-2.s3.us-west-2.amazonaws.com"
+    ],
+    "allowed_url_patterns": [
+      "^https://www2\\.census\\.gov/geo/tiger/TIGER2020/TRACT/tl_2020_[0-9]{2}_tract\\.zip$",
+      "^https://www2\\.census\\.gov/geo/tiger/TIGER2024/TRACT/tl_2024_[0-9]{2}_tract\\.zip$",
+      "^https://www2\\.census\\.gov/geo/tiger/TIGER2024/ROADS/tl_2024_[0-9]{5}_roads\\.zip$",
+      "^https://overturemaps-us-west-2\\.s3\\.us-west-2\\.amazonaws\\.com/overturemaps-us-west-2/release/2026-09-23\\.[01]/theme=(transportation|buildings|places)/type=[a-z_]+/part-[0-9a-z-]+\\.zstd\\.parquet$"
+    ],
+    "denied_url_suffixes": [
+      ".py",
+      ".pyc",
+      ".whl",
+      ".js",
+      ".ts",
+      ".exe",
+      ".sh",
+      ".jar",
+      ".ipynb",
+      ".deb",
+      ".rpm",
+      ".zip.exe"
+    ],
+    "credentials_may_be_used": false,
+    "max_total_bytes": 8000000000,
+    "max_files": 4000,
+    "study_county_fips_may_appear_in_a_url": false,
+    "study_geoid_may_appear_in_a_url": false,
+    "downloaded_code_never_executed": true,
+    "stream_to": "<dest>.part",
+    "hash_while_streaming": true
+  },
+  "exclusion": {
+    "authority": "src/bias60/lab_plan.py::ExclusionPolicy, the same frozen policy the readiness report and the prerequisite probe used",
+    "buffer_km": 8.0,
+    "crs": "EPSG:5070",
+    "study_point_source": "TIGER 2024 tract interior points for the study states, from the prerequisite probe cache",
+    "every_retrieved_layer_is_partitioned_by_the_policy_before_a_byte_is_kept": true,
+    "study_region_tracts_may_be_measured": false
+  },
+  "outputs": {
+    "report": "reports/lab-build.json",
+    "markdown": "docs/decisions/lab-build.md",
+    "manifest": "staging/<group>/manifest.json",
+    "per_group": {
+      "tracts": "staging/<group>/tracts.parquet",
+      "labels": "staging/<group>/labels.parquet",
+      "defineness": "staging/<group>/defineness.json",
+      "road_measurement": "staging/<group>/road_measurement.parquet"
+    }
+  },
+  "prohibitions": {
+    "no_reference_layer_computed_on_a_study_tract": true,
+    "no_study_geoid_in_any_retrieved_url": true,
+    "no_lab_value_in": [
+      "reports/candidates/",
+      "reports/candidates.json",
+      "reports/final-two.json",
+      "config/calibration.json",
+      "scripts/submit_zindi.py"
+    ],
+    "no_upload": true,
+    "no_downloaded_code_executed": true,
+    "no_secrets_read": true,
+    "report_serialises_no_generated_wall_clock": true,
+    "no_fabricated_measurement": true
+  },
+  "negative_controls": {
+    "study_geoid_in_url": "study_geoid_never_appears_in_a_url",
+    "study_county_in_url": "study_county_never_appears_in_a_url",
+    "off_allowlist_host": "retrieval_stayed_on_the_allowlist",
+    "downloaded_code_executed": "no_downloaded_code_was_executed",
+    "lab_value_reaches_submission": "lab_values_never_reached_a_submission_artifact",
+    "reference_computed_on_study_tract": "no_study_tract_was_measured",
+    "measurement_without_lab_bytes": "no_measurement_without_bytes",
+    "temporal_field_added": "report_has_no_temporal_field",
+    "self_check_fabricated": "recipe_self_checks_passed",
+    "undefined_rows_zero_filled": "undefined_never_scored_as_zero",
+    "missing_source_hash": "manifest_provenance_complete",
+    "accepted_tract_inside_buffer": "nearest_distance_buffer_respected"
+  },
+  "acceptance": {
+    "minimum_labelled_groups": 5,
+    "required_per_group": [
+      "tracts",
+      "component_defined_counts",
+      "component_undefined_counts",
+      "composite_defined_count",
+      "recipe_variant_id"
+    ],
+    "required_recipe_self_checks": [
+      "state_road_ratio_in_organiser_band"
+    ],
+    "note": "two groups this turn is staging, not acceptance; the row stays open until five groups carry labels"
+  },
+  "pin_amendments": [
+    {
+      "field": "pins.prerequisite_report_sha256",
+      "supersedes": "3e6b9fb7fa6ad2b9fe8db67a34ef9f2d7dbe09d623be893ad038a0941fa81001",
+      "reason": "the prerequisite report records the frozen lab-plan config hash; when bias60-external-lab-build advanced recipe.self_check_status in config/bias60-lab-preregistered.json to report the measured road-ratio result, the prerequisite report changed and had to be re-pinned rather than quietly tolerated"
+    }
+  ]
+}

@@ -1,0 +1,265 @@
+{
+  "access": {
+    "files_opened": 5,
+    "opened_paths": [
+      "REPO:config/bias60-lab-preregistered.json",
+      "REPO:config/lab-build-preregistered.json",
+      "REPO:reports/lab-prerequisites.json",
+      "WORKSPACE:lab/staging/NM/manifest.json",
+      "WORKSPACE:lab/staging/NV/manifest.json"
+    ]
+  },
+  "backlog_item": "bias60-external-lab-build",
+  "components_built": [
+    "road"
+  ],
+  "components_held": {
+    "building": "not_built",
+    "poi_establishments": "not_built",
+    "poi_facilities": "not_built"
+  },
+  "components_held_detail": {
+    "building": {
+      "reason": "the registered reference side is not retrievable: github.com/microsoft/USBuildingFootprints now serves a README-only tree (root entries .gitignore, LICENSE-DATA, README.md, SECURITY.md, images) and the registered geojson path returns 404",
+      "status": "not_built"
+    },
+    "poi_establishments": {
+      "reason": "the 2022 CBP index publishes no tract-level file (cbp22cd, cbp22co, cbp22csa, cbp22msa, cbp22pr_ia_co, cbp22pr_ia_st, cbp22st, cbp22us) and the HUD-USPS BUS_RATIO crosswalk that the spec's allocation variants need answers 202 to an anonymous HEAD",
+      "status": "not_built"
+    },
+    "poi_facilities": {
+      "reason": "the registered reference side is not retrievable: the TNM Structures prefix lists zero objects and sciencebase.gov does not resolve in this environment",
+      "status": "not_built"
+    }
+  },
+  "estimators": {
+    "gate": "a separate preregistered row must map each implemented idea to a raw-source lab analogue before estimators.parquet is written",
+    "reason": "all three implemented ideas name a provided-package input in the registry: Sc5 needs both the filtered and the unfiltered roads layer as the organiser shipped them, Mx4 needs buildings.sources, Tm1 needs strata.carbonplan_buildings plus the package building count. None of those exist for a lab region, and inventing a substitute mapping after the labels exist would be fitting the estimator to the answer.",
+    "status": "not_defined_for_this_build"
+  },
+  "exclusion": {
+    "buffer_km": 8.0,
+    "county_rule": {
+      "default_in_the_frozen_plan": false,
+      "enabled_for_this_build": true,
+      "reason": "a state-level download of a removed reference layer necessarily covers the study tracts inside it, so the build may only retrieve for a county that no provided package touches; the readiness plan leaves whole-county exclusion off because that would empty the spec 4.2 groups, which is a candidate question, not a retrieval permission",
+      "tracts_rejected_by_county": 1
+    },
+    "min_nearest_study_tract_km": 32.637,
+    "policy": "src/bias60/lab_plan.py::ExclusionPolicy",
+    "study_counties": 298,
+    "study_geoids": 9794,
+    "study_points": 9794
+  },
+  "gates": {
+    "acceptance_recorded_not_claimed": true,
+    "all_passed": true,
+    "components_held_are_documented": true,
+    "county_rule_enabled_for_retrieval": true,
+    "every_group_above_the_tract_floor": true,
+    "every_url_matches_a_preregistered_pattern": true,
+    "groups_are_the_preregistered_ones": true,
+    "lab_root_outside_repo": true,
+    "lab_values_never_reached_a_submission_artifact": true,
+    "manifest_provenance_complete": true,
+    "nearest_distance_buffer_respected": true,
+    "no_downloaded_code_was_executed": true,
+    "no_fabricated_measurement": true,
+    "no_lab_value_in_submission_paths": true,
+    "no_measurement_without_bytes": true,
+    "no_study_tract_was_measured": true,
+    "prerequisite_report_pin_matches_disk": true,
+    "recipe_self_checks_passed": true,
+    "report_has_no_temporal_field": true,
+    "retrieval_stayed_on_the_allowlist": true,
+    "spec_hash_matches_pin": true,
+    "staging_not_promoted": true,
+    "study_county_never_appears_in_a_url": true,
+    "study_geoid_never_appears_in_a_url": true,
+    "undefined_never_scored_as_zero": true
+  },
+  "groups_planned_this_build": [
+    "NV",
+    "NM"
+  ],
+  "groups_staged": [
+    "NM",
+    "NV"
+  ],
+  "lab_root": {
+    "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/lab",
+    "promoted_artifacts_present": [],
+    "staging": "staging/<group>"
+  },
+  "lane": "comp-zindi-bias-bounty",
+  "measurement": {
+    "acceptance": {
+      "groups_required": 5,
+      "groups_staged": 2,
+      "met": false,
+      "minimum_labelled_groups": 5,
+      "note": "two groups this turn is staging, not acceptance; the row stays open until five groups carry labels",
+      "required_per_group": [
+        "tracts",
+        "component_defined_counts",
+        "component_undefined_counts",
+        "composite_defined_count",
+        "recipe_variant_id"
+      ],
+      "required_recipe_self_checks": [
+        "state_road_ratio_in_organiser_band"
+      ]
+    },
+    "groups": [
+      {
+        "accepted": 674,
+        "candidates": 674,
+        "clipped_reference_lines": 2291,
+        "composite_defined_count": 433,
+        "group": "NV",
+        "min_nearest_study_tract_km": 32.637,
+        "rejected_by_reason": {},
+        "road": {
+          "defined": 433,
+          "defined_share": 0.642433,
+          "undefined": 241
+        },
+        "road_ratio": {
+          "band": [
+            0.71,
+            1.59
+          ],
+          "inside_band": true,
+          "observed_km": 5715.898,
+          "ratio": 1.013391,
+          "reference_km": 5640.369,
+          "tolerance": 0.15,
+          "within_tolerance": true
+        },
+        "segment_tract_intersections": 37893,
+        "segments_seen": 90869
+      },
+      {
+        "accepted": 610,
+        "candidates": 612,
+        "clipped_reference_lines": 5402,
+        "composite_defined_count": 506,
+        "group": "NM",
+        "min_nearest_study_tract_km": 34.971,
+        "rejected_by_reason": {
+          "official_scored_or_template_geoid": 1,
+          "study_county": 1
+        },
+        "road": {
+          "defined": 506,
+          "defined_share": 0.829508,
+          "undefined": 104
+        },
+        "road_ratio": {
+          "band": [
+            0.71,
+            1.59
+          ],
+          "inside_band": false,
+          "observed_km": 22811.644,
+          "ratio": 0.654624,
+          "reference_km": 34846.936,
+          "tolerance": 0.15,
+          "within_tolerance": true
+        },
+        "segment_tract_intersections": 42816,
+        "segments_seen": 68425
+      }
+    ],
+    "hospital_ratio_check": {
+      "reason": "the independent reference hospital count comes from USGS National Structures, whose registered endpoints serve zero objects in this environment; reporting a ratio without the reference side would be a fabricated measurement",
+      "status": "not_computable"
+    },
+    "self_checks": {
+      "NM": "within_tolerance",
+      "NV": "inside_band"
+    }
+  },
+  "preregistration": {
+    "config_path": "config/lab-build-preregistered.json",
+    "config_sha256": "b6586b6aa2cce55c9a8f2a1e1ff13f267b5afb04f297472a50ea7afdc01e0c0a",
+    "lab_plan_config_sha256": "e7106107d63c5bd823c4b65fa3a32c5733cb02500ec5ee539cf99ddde01233cb",
+    "negative_controls_declared": [
+      "accepted_tract_inside_buffer",
+      "downloaded_code_executed",
+      "lab_value_reaches_submission",
+      "measurement_without_lab_bytes",
+      "missing_source_hash",
+      "off_allowlist_host",
+      "reference_computed_on_study_tract",
+      "self_check_fabricated",
+      "study_county_in_url",
+      "study_geoid_in_url",
+      "temporal_field_added",
+      "undefined_rows_zero_filled"
+    ],
+    "operator_decision": {
+      "decided": "2026-10-25T09:35Z",
+      "quote": "No question goes to organisers. Track B is allowed now. Fit weights in the external lab outside the four study regions, with every study tract and its neighbours excluded. Only the learned weight vector and normalisation constants cross from lab to submission. Reference layers or equivalent copies must never be computed on, joined to, or used to approximate targets for study-region tracts or GEOIDs. Record the SHA-256 and the lab commit and disclose the lab method in the writeup.",
+      "retrieval_authorised": true,
+      "study_region_prohibition_is_absolute": true
+    },
+    "prerequisite_report_sha256": "6c1b36fe960d4897b73f856d8c81df8dc0c91b2a3305be17442e34bfb41bf5ed",
+    "recipe_variant_id": "road-obs4cls-mtfcc-S1100S1200-5070-v1",
+    "spec_path": "/home/martin/hddProjects/competitionsall/docs/research/bias-60-ideas-2026-10.md",
+    "spec_sha256": "f150649b34caebefb91b8eda75517e43f5cc278699ec9dba7b23fea717f16862",
+    "spec_sha256_measured": "f150649b34caebefb91b8eda75517e43f5cc278699ec9dba7b23fea717f16862"
+  },
+  "prohibitions": {
+    "no_downloaded_code_executed": true,
+    "no_fabricated_measurement": true,
+    "no_lab_value_in": [
+      "reports/candidates/",
+      "reports/candidates.json",
+      "reports/final-two.json",
+      "config/calibration.json",
+      "scripts/submit_zindi.py"
+    ],
+    "no_reference_layer_computed_on_a_study_tract": true,
+    "no_secrets_read": true,
+    "no_study_geoid_in_any_retrieved_url": true,
+    "no_upload": true,
+    "report_serialises_no_generated_wall_clock": true
+  },
+  "retrieval": {
+    "budget_bytes": 8000000000,
+    "budget_files": 4000,
+    "bytes_of_objects_listed": 4189898173,
+    "bytes_transferred": 828814965,
+    "credentials_used": false,
+    "files": 42,
+    "hosts": [
+      "overturemaps-us-west-2.s3.us-west-2.amazonaws.com",
+      "www2.census.gov"
+    ],
+    "overture": {
+      "compressed_bytes_read_estimate": 733420392,
+      "files_read": 6,
+      "objects_listed": 256,
+      "release": "2026-09-23.1"
+    },
+    "transfer_note": "census files are transferred whole; an Overture object is listed whole but only the row groups whose bbox statistics overlap the group window are read, and only the preregistered columns of those",
+    "unique_urls": 41
+  },
+  "schema_version": "1.0",
+  "summary": {
+    "acceptance_met": false,
+    "bytes_of_objects_listed": 4189898173,
+    "bytes_transferred": 828814965,
+    "files_retrieved": 42,
+    "gates_all_passed": true,
+    "groups_required": 5,
+    "groups_staged": 2,
+    "lab_rows_opened_by_a_model_or_submission_path": 0,
+    "overture_compressed_bytes_read_estimate": 733420392,
+    "overture_objects_listed": 256,
+    "reference_layer_bytes_computed_on_study_tracts": 0,
+    "uploads": 0
+  },
+  "title": "Staged external-lab build: reference-derived coverage-gap labels for lab regions, outside the four study regions"
+}

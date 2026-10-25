@@ -1106,3 +1106,147 @@ limitation to state rather than a result to hide.
 - 12 negative controls on the probe fire their preregistered gate: a source probe that reads bytes, one that uses credentials, a skipped registered source, a download off the allowlist, a reference-layer file on disk, a cache relocated into the lab root, `buffer_removed` -> `no_accepted_tract_within_buffer`, `official_geoid_accepted` -> `no_official_geoid_accepted` (an official scored GEOID parked in the Nevada file survives and is caught), a study set with no interior points, a disclosed-shortfall list with the shorted group removed, an injected wall-clock field, and hidden source unavailability. An unknown tamper raises. A first draft of the cache tamper actually created `lab/prereq-cache` in the workspace; it was removed, the invariant tests still assert the lab root is absent, and the tamper now relabels the cache instead of writing to it.
 - FORBID honoured: 0 reference-layer bytes fetched (`no_reference_layer_bytes_on_disk`, with the exact-pattern exemption documented), 0 study-region layer retrievals, 0 credentials used, 0 uploads, nothing written into the lab root, no wall-clock field, strict JSON, byte-identical repeat runs. Full suite after this row: `548 passed, 208 subtests passed in 304.07s` (was 527 passed, 170 subtests).
 - Rows filed with the shared command, quoted for the steward: `python3 -I "$ORCHESTRATOR_ROOT/scripts/backlog_add.py" --owner comp-zindi-bias-bounty --slug bias60-lab-plan-amendment --priority P1 --task-type bugfix ...` -> `appended bias60-lab-plan-amendment for comp-zindi-bias-bounty`, carrying the OK-R and AZ-R numbers and the four dead source patterns; and `--slug bias60-lab-evaluation-run --priority P1 --task-type model` -> `appended bias60-lab-evaluation-run for comp-zindi-bias-bounty`, carrying the acceptance a synthetic lab cannot satisfy. This row closes `lead`: the machinery and the prerequisite measurement are delivered, and the lab numbers themselves still wait on `bias60-external-lab-build`.
+
+## 2026-10-25 - bias60-external-lab-build (first staged build, 2 of 5 groups)
+
+Row: `.langywrap/backlogs/competitions.jsonl:bias60-external-lab-build`, disposition
+`actioned`, not self-closed: acceptance needs lab labels for `>= 5` groups and this turn staged
+two, so `bias60-external-lab-build` stays open.
+
+### What ran
+
+* `COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" uv run --with numpy==2.5.4 --with pyarrow==26.0.0
+  --with pyproj==3.8.0 --with shapely==2.2.0 --with pyshp python scripts/build_bias60_lab.py`
+  -> `PASS lab build: 2 of 5 required groups staged from 42 retrieved files (828,814,965 bytes
+  transferred) with road labels and the organiser road-ratio self-check reported; no study tract was
+  measured and nothing was promoted to the lab root`
+* `--check-only` -> `unchanged reports/lab-build.json`, `unchanged docs/decisions/lab-build.md`.
+* `scripts/report_lab_readiness.py`, `scripts/probe_lab_prerequisites.py` and
+  `scripts/evaluate_bias60_on_lab.py` all re-run: PASS, PASS, PASS and `--check-only` unchanged.
+
+### Measured, from retrieved bytes
+
+| group | candidates | accepted | rejected by reason | nearest study tract | road defined | Overture:TIGER ratio |
+| --- | --- | --- | --- | --- | --- | --- |
+| NV | 674 | 674 | - | 32.637 km | 433 (64.24%) | 1.013391 (inside [0.71, 1.59]) |
+| NM | 612 | 610 | 1 official GEOID, 1 study county | 34.971 km | 506 (82.95%) | 0.654624 (below band, inside the 0.15 tolerance) |
+
+* 100 files staged under `$COMPETITION_WORKSPACE/lab/staging/{NV,NM}`: `manifest.json`,
+  `tracts.parquet`, `labels.parquet`, `defineness.json` plus the retrieved sources.
+* Retrieval: 41 unique URLs, 2 hosts (`www2.census.gov`, `overturemaps-us-west-2.s3...`),
+  828,814,965 bytes transferred, `credentials_used: false`. 4,189,898,173 bytes of Overture objects
+  were **listed**; 733,420,392 compressed bytes were read from 6 shards.
+* Overture pruning measured: of 90,869 NV segments in shard ranges, 37,893 segment-tract
+  intersections were actually clipped, and only the seven preregistered columns of the
+  bbox-overlapping row groups were read.
+* Road recipe: observed = Overture segments with `class in {motorway, trunk, primary, secondary}`
+  and `subtype == road`; reference = TIGER 2024 county `ROADS` filtered to
+  `MTFCC in {S1100, S1200}`; label = `clip(1 - observed_km / reference_km, 0, 1)`, undefined when
+  reference length is zero. NM 0.654624 is reported as **below** the organiser band, not smoothed.
+
+### Two measured findings that changed the build
+
+1. **`retrieved_files` was fabricated provenance.** The first version recorded one manifest entry per
+   preregistered source, not per retrieved file: 12 entries, 6 of them for an Overture object whose
+   real per-shard SHA-256 was never computed. The builder now records every file it fetched, with its
+   own URL, version, retrieval date, size and SHA-256 (42 files), and the
+   `retrieved_files_are_the_files_that_were_fetched` gate recomputes the Overture shard list from the
+   cache directory, so a manifest that names fewer files than are on disk fails.
+2. **A state-level download of a removed reference layer necessarily covers the study tracts inside
+   it.** The readiness plan leaves whole-county exclusion off, because dropping all 298 study counties
+   would empty the spec 4.2 groups; that is a statement about *candidates*, not a permission to
+   download over a study region. The build now enables county exclusion for its own retrieval, and the
+   NM group shows it working (1 study-county tract rejected). Recorded in
+   `exclusion.county_rule` with `default_in_the_plan: false` and gated by
+   `county_rule_enabled_for_retrieval`.
+
+### Held components, with the measured reason
+
+* `buildings`: Microsoft Building Footprints registered repo returns zero usable assets for CONUS
+  (the repo is a documentation-only archive), so no building component was fabricated.
+* `poi_facilities` / `poi_establishments`: every USGS National Structures endpoint
+  (`nationalmap.gov`, `coast.noaa.gov`, `scenc.usgs.gov`, `databasin`, `sciencebase`) returns 403,
+  404 or a SPA shell with zero objects, and CBP 2022 publishes no tract-level ZBP file.
+* `estimators.parquet` is deliberately absent: Sc5 needs the provided filtered **and** unfiltered roads
+  layers, Mx4 needs `buildings.sources`, Tm1 needs `strata.carbonplan_buildings`; none exists outside
+  the study regions, and inventing the analogue after seeing the labels is the tuning this row forbids.
+  Filed as `bias60-lab-estimator-analogues`.
+
+### Rails
+
+* `config/lab-build-preregistered.json` (file hash `064ac7d2d8a43613`) freezes the source pins,
+  allowed hosts, allowed URL patterns, denied code suffixes, budget caps (4,000 files / 8 GB),
+  component definitions, self-check bands and 10 negative controls.
+* `reports/lab-build.json` (`6bb4b6653130ca1c`, 10,447 bytes): 24 gates, all true;
+  `promoted: false`, `promote_blocked_reason` names the missing groups, `root_artifact_names` lists
+  the five evaluator artifacts and none exists.
+* Exclusion evidence: 9,794 official/template GEOIDs and 298 study counties excluded, 8 km buffer in
+  EPSG:5070, measured nearest accepted lab tract 32.637 km.
+* `estimator_reader_and_submitter_name_no_lab_token`: the 11 model-chain and uploader scripts contain
+  no lab path, shard name or reference-layer token; `opened_paths` shows only the two preregistered
+  configs, the prerequisite report and the two staged manifests.
+* 10/10 negative controls fire their expected gate: `fabricated_provenance` ->
+  `manifest_provenance_complete`, `temporal_field_added` -> `report_serialises_no_wall_clock`,
+  `undefined_rows_zero_filled` -> `undefined_never_scored_as_zero`, `weights_smuggle_lab_values` ->
+  `crossing_surface_is_bounded`, `groups_are_not_the_preregistered_ones` ->
+  `groups_are_the_preregistered_ones`, `study_geoid_in_lab` -> `study_geoid_exclusion_holds`,
+  `self_check_ignored` -> `recipe_self_checks_declared`, `model_reads_lab` ->
+  `model_and_submission_paths_cannot_read_lab`, `lab_root_in_repo` -> `lab_root_outside_repo`,
+  `budget_exceeded_not_enforced` -> `budget_caps_frozen_before_retrieval`. Unknown tampers are refused.
+* Promotion refuses with `promotion requires 5 ready groups; 2 are staged: NM, NV`.
+
+### Tests
+
+* `tests/test_bias60_lab_build.py` (`29c6413a9f3166c2`, 25 tests, 12 subtests) builds a synthetic lab
+  (synthetic tract shapefile, synthetic TIGER roads shapefile, synthetic Overture Arrow tables injected
+  through the same `lister`/`reader` seams the real S3 path uses) into
+  `$COMPETITION_WORKSPACE/lab-test`, never the real lab root: exclusions by reason, the clip-to-tract
+  maths (one tract half covered, one fully, so both ends of the recipe are exercised), the undefined
+  rows never scored as zero, exact column sets, provenance completeness, budget enforcement before the
+  bytes arrive, URL safety (host, allowlist, denied suffix, study GEOID/county), promote refusal,
+  determinism, and a corrupt cache caught by its recorded hash.
+* Two earlier test defects found by running them: the fixtures wrote `shapefile.Writer(...).bytes()`
+  which pyshp 3 does not provide (they now write real shapefiles to a temp dir and zip them), and
+  `HashVerificationTests` wrote into the real lab root (it now uses `TEST_CACHE` under `lab-test`).
+* `shapely.ops.transform` (deprecated) replaced by a vectorised `shapely.transform` helper; the real
+  build re-run afterwards produced byte-identical reports and `--check-only` unchanged, so the
+  projection change moved no number.
+* Row tests: `109 passed, 155 subtests passed` across `test_bias60_lab_plan.py`,
+  `test_bias60_lab_build.py`, `test_bias60_lab_evaluation.py`.
+* Full suite: `573 passed, 220 subtests passed` (`python -m pytest -q` under uv with
+  numpy/pyarrow/pyproj/shapely/pyshp/pytest).
+
+### Readiness semantics corrected for the post-build world
+
+The readiness report had asserted "no reference-layer byte exists" and
+`build_not_executed_this_turn`, both of which became false the moment this row legitimately built
+bytes. Rather than leave a stale claim committed:
+
+* `no_prohibited_content_on_disk` now means: lab root is staging-only, no promoted artifact, nothing
+  keyed to a study region (checked against the 9,794 official/template GEOIDs and the four region
+  slugs) - and it still fires on the `lab_data_present` tamper.
+* `readiness_performed_no_retrieval` replaces `build_not_executed_this_turn`: readiness itself performs
+  no GET and its report carries no retrieved-file provenance; `build_output_is_never_read_by_readiness`
+  proves readiness never opens a staged file.
+* `no_lab_number_exists` now scans the committed readiness report and Markdown for the lab measurement
+  tokens (`"lab_tract_id":`, `"rmse":`, `"observed_km":`, `"reference_km":`, `"fit_provenance":`,
+  `"stability_selection":`) instead of trusting a file count.
+* `recipe.self_check_status` moved from `not_run_pending_ruling` to
+  `road_ratio_measured_for_staged_groups` with a note pointing at `reports/lab-build.json`, and the
+  gate accepts either status only when the note is present.
+
+### Rows filed
+
+* `bias60-lab-estimator-analogues` (P1, model) - preregister the raw-source analogue for each
+  implemented idea, or record `not_evaluable_in_lab` with the reason, before any fit reads a label.
+
+### Safety
+
+* `$COMPETITION_WORKSPACE/lab` holds only `staging/` output for NV and NM; none of the five root
+  artifacts exists, so the evaluator still reports `not_run_missing_lab` and publishes no number.
+* No study-region reference-layer retrieval: URLs are checked for the 9,794 official/template GEOIDs
+  and the 298 study counties before any request, and retrieval is county-filtered.
+* No lab value crosses into a candidate, calibration or uploader path; only the weight vector may, and
+  it does not exist yet. `reports/candidates/`, `reports/candidates.json`, `reports/final-two.json` and
+  `config/calibration.json` untouched.
+* No upload; no leaderboard access; no organiser form; no secret read.

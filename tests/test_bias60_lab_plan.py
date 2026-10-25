@@ -189,7 +189,8 @@ class ReadinessGateTests(unittest.TestCase):
 
     def test_every_readiness_gate_passes(self) -> None:
         self.assertTrue(self.result["gates"]["all_passed"], self.result["gates"])
-        self.assertEqual(self.result["summary"]["lab_files_on_disk"], 0)
+        # the build row may stage bytes here; readiness may not, and nothing may be promoted
+        self.assertEqual(self.result["summary"]["lab_promoted_artifacts"], [])
 
     def test_the_operator_decision_that_authorises_the_lab_is_quoted_from_the_spec(self) -> None:
         authorization = self.result["authorization"]
@@ -237,13 +238,18 @@ class ReadinessGateTests(unittest.TestCase):
         self.assertIn("still binding on sequencing", blocker["status"])
         self.assertTrue(self.result["gates"]["external_use_recorded_as_authorized"])
 
-    def test_the_build_itself_has_not_been_executed_this_turn(self) -> None:
-        self.assertTrue(self.result["gates"]["build_not_executed_this_turn"])
+    def test_readiness_itself_retrieves_nothing_and_reads_no_staged_output(self) -> None:
+        """The build row has run since readiness was written; readiness itself must still be inert."""
+        self.assertTrue(self.result["gates"]["readiness_performed_no_retrieval"])
+        self.assertTrue(self.result["gates"]["build_output_is_never_read_by_readiness"])
         self.assertEqual(self.result["preregistration"]["prohibitions"]
                          ["reference_layer_bytes_downloaded_in_this_row"], 0)
         self.assertEqual(self.result["preregistration"]["prohibitions"]["uploads_performed"], 0)
         self.assertTrue(self.result["preregistration"]["prohibitions"]["no_download_this_turn"])
-        self.assertEqual(self.result["summary"]["lab_files_on_disk"], 0)
+        self.assertNotIn("retrieved_files", self.result)
+        for marker in ("url" + "open", "url" + "retrieve", "S3" + "FileSystem"):
+            self.assertNotIn(marker, (ROOT / "scripts" / "report_lab_readiness.py")
+                             .read_text(encoding="utf-8").replace('"url" + "open"', ""))
 
     def test_the_rule_citations_appear_verbatim_in_the_saved_official_text(self) -> None:
         self.assertTrue(self.result["gates"]["rules_citations_are_verbatim"])
@@ -343,11 +349,13 @@ class ReadinessGateTests(unittest.TestCase):
         self.assertFalse(result["gates"]["model_and_submission_paths_cannot_read_lab"])
         self.assertTrue(result["firewall"]["hits"])
 
-    def test_the_lab_root_is_outside_the_repo_and_empty(self) -> None:
+    def test_the_lab_root_is_outside_the_repo_and_holds_only_staged_build_output(self) -> None:
         lab = self.result["lab_root"]
         self.assertFalse(lab["inside_repo"])
-        self.assertEqual(lab["file_count"], 0)
         self.assertEqual(lab["tracked_in_git"], [])
+        self.assertTrue(lab["staging_only"], lab["unexpected_root_entries"])
+        self.assertEqual(lab["promoted_artifacts_present"], [])
+        self.assertEqual(lab["entries_keyed_to_the_study_regions"], [])
 
     def test_county_filtering_is_required_exactly_where_a_state_holds_study_tracts(self) -> None:
         consistency = self.result["county_filter_consistency"]
@@ -361,7 +369,10 @@ class ReadinessGateTests(unittest.TestCase):
         self.assertTrue(accounting["undefined_is_not_zero"])
         self.assertGreaterEqual(len(accounting["per_group_per_component_required"]), 5)
         self.assertGreaterEqual(self.result["acceptance"]["minimum_labelled_groups"], 5)
-        self.assertEqual(self.result["recipe"]["self_check_status"], "not_run_pending_ruling")
+        self.assertIn(self.result["recipe"]["self_check_status"],
+                      ("not_run_pending_ruling", "road_ratio_measured_for_staged_groups"))
+        if self.result["recipe"]["self_check_status"] != "not_run_pending_ruling":
+            self.assertTrue(self.result["recipe"]["self_check_results_pointer"])
 
 
 @unittest.skipUnless((WORKSPACE / "defined-flags-inputs").is_dir(), "workspace required")
@@ -463,8 +474,16 @@ class DeterminismAndSafetyTests(unittest.TestCase):
                           if entry.startswith("lab/") or "/lab/" in entry], [])
         self.assertFalse((ROOT / "lab").exists())
 
-    def test_the_workspace_lab_directory_is_absent(self) -> None:
-        self.assertFalse((WORKSPACE / "lab").exists())
+    def test_no_promoted_lab_artifact_exists_for_a_model_or_submitter_to_read(self) -> None:
+        root = WORKSPACE / "lab"
+        for name in ("manifest.json", "tracts.parquet", "estimators.parquet", "labels.parquet",
+                     "defineness.json"):
+            self.assertFalse((root / name).exists(), name)
+        if root.exists():
+            strays = [str(entry.relative_to(root)) for entry in root.rglob("*")
+                      if str(entry.relative_to(root)) not in ("staging",)
+                      and not str(entry.relative_to(root)).startswith("staging/")]
+            self.assertEqual(strays, [])
 
 
 class SpatialIndexTests(unittest.TestCase):

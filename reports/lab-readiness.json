@@ -218,7 +218,7 @@
     "undefined_is_not_zero": true
   },
   "environment": {
-    "git_commit": "323074443328c8d747de5a5ba05d97a3cace1d49",
+    "git_commit": "b93cec5b9e8eba5000fb9eca698080f2d66f60c7",
     "versions": {
       "numpy": "2.5.4",
       "pyarrow": "26.0.0",
@@ -369,10 +369,11 @@
   "gates": {
     "all_passed": true,
     "availability_probe_stays_head_only": true,
-    "build_not_executed_this_turn": true,
+    "build_output_is_never_read_by_readiness": true,
     "county_filtered_retrieval_required_recorded": true,
     "definedness_accounting_declared": true,
     "external_use_recorded_as_authorized": true,
+    "lab_root_holds_staged_build_output_only": true,
     "lab_root_outside_repo": true,
     "model_and_submission_paths_cannot_read_lab": true,
     "neighbour_buffer_policy_rejects_study_and_adjacent_tracts": true,
@@ -383,6 +384,7 @@
     "operator_question_covers_the_spec_question": true,
     "operator_question_withdrawn_not_answered": true,
     "plan_parsed_from_spec": true,
+    "readiness_performed_no_retrieval": true,
     "recipe_self_checks_declared": true,
     "report_has_no_temporal_field": true,
     "report_is_strict_json": true,
@@ -560,13 +562,35 @@
   ],
   "lab_root": {
     "declared": "$COMPETITION_WORKSPACE/lab",
+    "entries_keyed_to_the_study_regions": [],
     "estimated_disk_gb": [
       10.0,
       25.0
     ],
-    "exists": false,
-    "file_count": 0,
-    "files": [],
+    "exists": true,
+    "file_count": 101,
+    "files": [
+      "staging",
+      "staging/NM",
+      "staging/NM/defineness.json",
+      "staging/NM/labels.parquet",
+      "staging/NM/manifest.json",
+      "staging/NM/road_measurement.parquet",
+      "staging/NM/sources",
+      "staging/NM/sources/overture",
+      "staging/NM/sources/overture/part-00005-0da4f935-af20-566f-a32b-520b154aaf59-c000.zstd.parquet",
+      "staging/NM/sources/overture/part-00005-0da4f935-af20-566f-a32b-520b154aaf59-c000.zstd.parquet.provenance.json",
+      "staging/NM/sources/overture/part-00018-f8fb797d-239f-5523-ba36-20d059d5ff2a-c000.zstd.parquet",
+      "staging/NM/sources/overture/part-00018-f8fb797d-239f-5523-ba36-20d059d5ff2a-c000.zstd.parquet.provenance.json",
+      "staging/NM/sources/tl_2020_35_tract.zip",
+      "staging/NM/sources/tl_2020_35_tract.zip.provenance.json",
+      "staging/NM/sources/tl_2024_35001_roads.zip",
+      "staging/NM/sources/tl_2024_35001_roads.zip.provenance.json",
+      "staging/NM/sources/tl_2024_35003_roads.zip",
+      "staging/NM/sources/tl_2024_35003_roads.zip.provenance.json",
+      "staging/NM/sources/tl_2024_35005_roads.zip",
+      "staging/NM/sources/tl_2024_35005_roads.zip.provenance.json"
+    ],
     "inside_repo": false,
     "must_not_contain_repo_paths": [
       "src/",
@@ -574,8 +598,12 @@
       "reports/",
       "docs/"
     ],
+    "promoted_artifacts_present": [],
     "resolved": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/lab",
-    "tracked_in_git": []
+    "staged_file_count": 101,
+    "staging_only": true,
+    "tracked_in_git": [],
+    "unexpected_root_entries": []
   },
   "offending_group_counties": [
     "AZ-R:04001",
@@ -616,7 +644,7 @@
   "preregistration": {
     "backlog_item": "bias60-external-lab-build",
     "config_path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/config/bias60-lab-preregistered.json",
-    "config_sha256": "bc556cf81af99a72f631586ef6cf0a771aeead3e76b7877235112d2bdec77f23",
+    "config_sha256": "8d195030963130be0ff839f6a41a54220dfa1f7c59ea3de3e5061d16d784adad",
     "intent": "Freeze the external-lab design of spec section 4 (nine state groups, ~10k tracts, sources and versions, RULES.md recipe with its variants, per-component definedness) and implement the safety rails, so that the build is one reviewed command once -- and only once -- the organiser ruling and the Track A pre-registration allow any lab number to exist. This plan itself downloads nothing and computes no target.",
     "lane": "comp-zindi-bias-bounty",
     "negative_controls_declared": [
@@ -703,7 +731,9 @@
       }
     },
     "projection": "EPSG:5070",
-    "self_check_status": "not_run_pending_ruling",
+    "self_check_results_pointer": "reports/lab-build.json",
+    "self_check_status": "road_ratio_measured_for_staged_groups",
+    "self_check_status_note": "amended after bias60-external-lab-build staged its first two groups: the state road-ratio check has been measured for NV and NM in reports/lab-build.json, and the hospital-ratio check remains not_computable because the registered USGS National Structures endpoints serve zero objects here",
     "self_checks": {
       "hospital_ratio_check": {
         "relative_tolerance": 0.35,
@@ -1022,9 +1052,11 @@
     "core_groups": 6,
     "gates_all_passed": true,
     "groups_planned": 9,
-    "lab_files_on_disk": 0,
+    "lab_files_on_disk": 101,
+    "lab_promoted_artifacts": [],
+    "lab_staged_files": 101,
     "official_geoids_excluded": 9379,
-    "report_sha256": "75f2fdbf756ab7a0ab4ab348f458a74595f2732645aad05e94ece4e743c4322d",
+    "report_sha256": "b2f6f51f2180be71a496b79fa344c83deda07443b33bfe8e946303c3f7034d6d",
     "sources_registered": 10,
     "study_counties_excluded": 298,
     "template_geoids_excluded": 9794
