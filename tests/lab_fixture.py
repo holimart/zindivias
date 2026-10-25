@@ -38,8 +38,9 @@ def _weights(names: list[str]) -> dict[str, float]:
     """Deterministic, unequal, sum-to-one truth weights so a fit must recover a specific vector."""
     if len(names) == 1:
         return {names[0]: 1.0}
-    steps = [0.5, 0.3, 0.2, 0.1, 0.05, 0.05, 0.05, 0.05][:len(names)]
-    total = sum(steps[:len(names)])
+    # Support every newly implemented registry idea, not just the original eight-feature fixture.
+    steps = [1.0 / (index + 1) for index in range(len(names))]
+    total = sum(steps)
     return {name: steps[index] / total for index, name in enumerate(names)}
 
 
@@ -74,10 +75,8 @@ def write_lab(root: Path, *, groups: list[str] | None = None, per_group: int = 4
         for index in range(per_group):
             tract = f"9{group_index}{index:06d}"
             county = f"9{group_index}{index % counties_per_group:03d}"
-            base = float(rng.uniform(0.05, 0.95))
-            evidence = {name: _clip(base * (0.4 + 0.2 * position)
-                                    + float(rng.normal(0.02 * position, 0.04)))
-                        for position, name in enumerate(ideas)}
+            # Independent channels keep synthetic grouped-CV weights identifiable as the registry grows.
+            evidence = {name: float(rng.uniform(0.05, 0.95)) for name in ideas}
             composite = _clip(sum(truth_weights[name] * evidence[name] for name in ideas)
                               + float(rng.normal(0.0, label_noise / 2.0)))
             tracts["lab_tract_id"].append(tract)

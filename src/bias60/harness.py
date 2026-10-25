@@ -258,8 +258,19 @@ def build_report(*, config: dict[str, Any], registry_document: dict[str, Any],
     per_idea: dict[str, Any] = {}
     partition_problems: list[str] = []
     declared_columns = set(config["acceptance"]["declared_input_columns"])
-    for idea_id in implemented:
+    # Dst4 and Dst5 consume all preceding registered estimator artifacts; run them after the base
+    # per-idea writers while preserving registry order in the public implemented list.
+    post_estimators = {"Dst4", "Dst5"}
+    run_order = ([idea_id for idea_id in implemented if idea_id not in post_estimators]
+                  + [idea_id for idea_id in implemented if idea_id in post_estimators])
+    for idea_id in run_order:
         if tamper == "drop_idea" and idea_id == implemented[0]:
+            # Keep the dependency artifact available to later post-estimators while omitting this
+            # idea from the report, so the tamper test reaches the intended registry gate.
+            dropped = run_idea(idea_id, config=config, family=families[idea_id], workspace=workspace,
+                               regions=regions, geoids_by_region=geoids_by_region,
+                               inputs_factory=inputs_factory)
+            write_parquet(ideas_dir / f"{idea_id}.parquet", dropped["table"])
             continue
         result = run_idea(idea_id, config=config, family=families[idea_id], workspace=workspace,
                           regions=regions, geoids_by_region=geoids_by_region,

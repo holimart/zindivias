@@ -289,6 +289,84 @@
       "tail_extra_counts": 40,
       "formula": "E[max(0, 1 - O/R) | R>=1], R~Poisson(lambda), lambda=ALAND_km2/A_std(RUCA)",
       "note": "Exact conditional-Poisson clipped-ratio expectation for P2 fire counts. Truncation is 12 standard deviations plus 40 counts; no fitted parameters."
+    },
+    "Dst1": {
+      "component": "Est",
+      "kind": "gap",
+      "layer": "pois",
+      "category_field": "categories.primary",
+      "county_column": "COUNTYFP",
+      "county_shrinkage_pseudocount": 10.0,
+      "source_a": "meta",
+      "source_b": "alltheplaces",
+      "note": "Good-Turing f1/N with county-pooled prior and 10 pseudo-observations; Chao1 richness is diagnostic only."
+    },
+    "Dst2": {
+      "component": "Est",
+      "kind": "gap",
+      "layer": "pois",
+      "source_a": "meta",
+      "source_b": "alltheplaces",
+      "excluded_sources": [
+        "Foursquare",
+        "Microsoft"
+      ],
+      "county_column": "COUNTYFP",
+      "minimum_tract_overlap": 10,
+      "minimum_pooled_overlap": 10,
+      "note": "Chapman two-list estimate; use county-pooled counts when tract overlap < 10; only Meta and AllThePlaces membership is used."
+    },
+    "Dst3": {
+      "component": "B",
+      "kind": "gap",
+      "layer": "buildings",
+      "small_m2": 40.0,
+      "upper_m2": 400.0,
+      "minimum_fit_footprints": 1000,
+      "lognormal_fit": "moment fit of log areas in 40-400 m2, region pooled; expected below-40 count = observed 40-400 count * fitted P(A<40)/P(40<=A<=400)",
+      "assignment": "centroid of each provided Overture footprint; never Microsoft buildings",
+      "note": "The fitted shape is estimated only from provided Overture building polygons, not labels or reference layers."
+    },
+    "Dst4": {
+      "component": "C",
+      "kind": "gap",
+      "source_ideas": [
+        "Dst1",
+        "Dst2",
+        "Dst3",
+        "Mx4",
+        "P2",
+        "P4",
+        "Sc5",
+        "Sca1",
+        "Tm1"
+      ],
+      "components": [
+        "B",
+        "Est",
+        "F",
+        "R"
+      ],
+      "ruca_column": "ruca_primary",
+      "minimum_group_rows": 20,
+      "max_em_iterations": 200,
+      "variance_floor": 0.001,
+      "note": "Build a three-RUCA-stratum two-class diagonal Gaussian mixture over the full currently registered component log(O/E) vector (log(1-gap)); lower-log-ratio class is incomplete.",
+      "gap_log_epsilon": 1e-06
+    },
+    "Dst5": {
+      "component": "C",
+      "kind": "gap",
+      "base_idea": "Dst4",
+      "undefined_share_by_region": {
+        "maricopa-az": 0.55,
+        "northern-ca": 0.37,
+        "eastern-ok": 0.21,
+        "south-central-tx": 0.28
+      },
+      "epsilon": 1e-09,
+      "iterations": 100,
+      "note": "Monotone logit-intercept calibration of Dst4 incomplete probability so its regional mean matches organizer-published undefined-component share; only these published aggregates are used."
     }
   },
   "spec_amendments": {

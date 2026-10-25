@@ -1,7 +1,7 @@
 {
-  "code_commit_at_run": "16b84f71fccedf623256a08e678e84037e528186",
+  "code_commit_at_run": "f354dd35fb4a60e281cfb2b50d9227fe80cbb21d",
   "environment": {
-    "git_commit": "16b84f71fccedf623256a08e678e84037e528186",
+    "git_commit": "f354dd35fb4a60e281cfb2b50d9227fe80cbb21d",
     "versions": {
       "numpy": "2.5.4",
       "pyarrow": "26.0.0",
@@ -25,6 +25,1667 @@
   },
   "partition_problems": [],
   "per_idea": {
+    "Dst1": {
+      "accessed_inputs": {
+        "caches": [
+          "eastern-ok-strata-tract-table.parquet",
+          "maricopa-az-strata-tract-table.parquet",
+          "northern-ca-strata-tract-table.parquet",
+          "south-central-tx-strata-tract-table.parquet"
+        ],
+        "csv_columns": [],
+        "layers": [
+          "census-acs-housing",
+          "pois"
+        ],
+        "parquet_columns": [
+          "eastern-ok-strata-tract-table.parquet:COUNTYFP",
+          "eastern-ok-strata-tract-table.parquet:GEOID",
+          "maricopa-az-strata-tract-table.parquet:COUNTYFP",
+          "maricopa-az-strata-tract-table.parquet:GEOID",
+          "northern-ca-strata-tract-table.parquet:COUNTYFP",
+          "northern-ca-strata-tract-table.parquet:GEOID",
+          "south-central-tx-strata-tract-table.parquet:COUNTYFP",
+          "south-central-tx-strata-tract-table.parquet:GEOID"
+        ]
+      },
+      "bytes": 94324,
+      "diagnostics": {
+        "eastern-ok": {
+          "chao1_defined": 1185,
+          "chao1_estimated_category_count_distribution": {
+            "count": 1185,
+            "max": 650.5,
+            "mean": 242.08417255082412,
+            "min": 10.5,
+            "p50": 229.5681818181818,
+            "p90": 386.24520917678825
+          },
+          "county_shrinkage_pseudocount": 10.0,
+          "county_shrunk_missing_mass_distribution": {
+            "count": 1192,
+            "max": 0.8327412670219064,
+            "mean": 0.4477404362849389,
+            "min": 0.05410699052965944,
+            "p50": 0.44462610647099454,
+            "p90": 0.6070546332545602
+          },
+          "defined": 1192,
+          "good_turing_raw_distribution": {
+            "count": 1192,
+            "max": 1.0,
+            "mean": 0.4621021843545064,
+            "min": 0.05006765899864682,
+            "p50": 0.45240379490459437,
+            "p90": 0.6521739130434783
+          },
+          "no_fitted_parameter": true,
+          "poi_layer": {
+            "assigned_points": 207369,
+            "assignment": "point strictly within tract; boundary excluded",
+            "boundary_or_outside_points": 0,
+            "category_count": 198875,
+            "foursquare_membership_used": false,
+            "layer": "pois",
+            "microsoft_membership_used": false,
+            "reader_version": 3,
+            "region": "eastern-ok",
+            "rows_scanned": 207369,
+            "rows_total": 207369,
+            "source_a": "meta",
+            "source_b": "alltheplaces"
+          },
+          "rows": 1192,
+          "undefined_reasons": {
+            "no_primary_category_observations": 0
+          }
+        },
+        "maricopa-az": {
+          "chao1_defined": 1545,
+          "chao1_estimated_category_count_distribution": {
+            "count": 1545,
+            "max": 989.6101694915254,
+            "mean": 257.8258743777169,
+            "min": 2.5,
+            "p50": 246.21428571428572,
+            "p90": 431.20000000000005
+          },
+          "county_shrinkage_pseudocount": 10.0,
+          "county_shrunk_missing_mass_distribution": {
+            "count": 1593,
+            "max": 0.8362068730754588,
+            "mean": 0.45530805520247586,
+            "min": 0.047906779312428385,
+            "p50": 0.4621646818332954,
+            "p90": 0.6315570679087233
+          },
+          "defined": 1593,
+          "good_turing_raw_distribution": {
+            "count": 1593,
+            "max": 1.0,
+            "mean": 0.4818615272335651,
+            "min": 0.04736440030557677,
+            "p50": 0.47619047619047616,
+            "p90": 0.7
+          },
+          "no_fitted_parameter": true,
+          "poi_layer": {
+            "assigned_points": 300044,
+            "assignment": "point strictly within tract; boundary excluded",
+            "boundary_or_outside_points": 2,
+            "category_count": 285299,
+            "foursquare_membership_used": false,
+            "layer": "pois",
+            "microsoft_membership_used": false,
+            "reader_version": 3,
+            "region": "maricopa-az",
+            "rows_scanned": 300046,
+            "rows_total": 300046,
+            "source_a": "meta",
+            "source_b": "alltheplaces"
+          },
+          "rows": 1593,
+          "undefined_reasons": {
+            "no_primary_category_observations": 0
+          }
+        },
+        "northern-ca": {
+          "chao1_defined": 579,
+          "chao1_estimated_category_count_distribution": {
+            "count": 579,
+            "max": 997.6666666666666,
+            "mean": 252.55274217042893,
+            "min": 18.5,
+            "p50": 233.28571428571428,
+            "p90": 425.0137777777778
+          },
+          "county_shrinkage_pseudocount": 10.0,
+          "county_shrunk_missing_mass_distribution": {
+            "count": 591,
+            "max": 0.7589844574161333,
+            "mean": 0.43532175635506754,
+            "min": 0.07998956210373147,
+            "p50": 0.4416721705224959,
+            "p90": 0.5884248517659191
+          },
+          "defined": 591,
+          "good_turing_raw_distribution": {
+            "count": 591,
+            "max": 1.0,
+            "mean": 0.456852508984823,
+            "min": 0.07741935483870968,
+            "p50": 0.45161290322580644,
+            "p90": 0.6451612903225806
+          },
+          "no_fitted_parameter": true,
+          "poi_layer": {
+            "assigned_points": 116895,
+            "assignment": "point strictly within tract; boundary excluded",
+            "boundary_or_outside_points": 2,
+            "category_count": 112100,
+            "foursquare_membership_used": false,
+            "layer": "pois",
+            "microsoft_membership_used": false,
+            "reader_version": 3,
+            "region": "northern-ca",
+            "rows_scanned": 116897,
+            "rows_total": 116897,
+            "source_a": "meta",
+            "source_b": "alltheplaces"
+          },
+          "rows": 591,
+          "undefined_reasons": {
+            "no_primary_category_observations": 0
+          }
+        },
+        "south-central-tx": {
+          "chao1_defined": 5934,
+          "chao1_estimated_category_count_distribution": {
+            "count": 5934,
+            "max": 1258.5,
+            "mean": 261.3051249483861,
+            "min": 5.0,
+            "p50": 247.2792207792208,
+            "p90": 417.47732479784366
+          },
+          "county_shrinkage_pseudocount": 10.0,
+          "county_shrunk_missing_mass_distribution": {
+            "count": 6001,
+            "max": 0.7926283379990405,
+            "mean": 0.4205328054604557,
+            "min": 0.025902856591194835,
+            "p50": 0.42065161460113204,
+            "p90": 0.5857673396123365
+          },
+          "defined": 6001,
+          "good_turing_raw_distribution": {
+            "count": 6001,
+            "max": 1.0,
+            "mean": 0.4382247438445383,
+            "min": 0.025194805194805193,
+            "p50": 0.4294117647058823,
+            "p90": 0.6363636363636364
+          },
+          "no_fitted_parameter": true,
+          "poi_layer": {
+            "assigned_points": 1300287,
+            "assignment": "point strictly within tract; boundary excluded",
+            "boundary_or_outside_points": 47,
+            "category_count": 1221186,
+            "foursquare_membership_used": false,
+            "layer": "pois",
+            "microsoft_membership_used": false,
+            "reader_version": 3,
+            "region": "south-central-tx",
+            "rows_scanned": 1300334,
+            "rows_total": 1300334,
+            "source_a": "meta",
+            "source_b": "alltheplaces"
+          },
+          "rows": 6003,
+          "undefined_reasons": {
+            "no_primary_category_observations": 2
+          }
+        }
+      },
+      "emissions": [
+        {
+          "channel": "gap",
+          "component": "Est",
+          "defined_rows": 9377,
+          "rows": 9379,
+          "value_max": 0.8362068730754588,
+          "value_min": 0.025902856591194835
+        }
+      ],
+      "emissions_per_region": 1,
+      "family": "Dst",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/Dst1.parquet",
+      "rows": 9379,
+      "sha256": "cac4c507372353f5493b09b1ce6ec7c293500d185a1778fc73a68d25e5bc4281",
+      "undeclared_columns_read": []
+    },
+    "Dst2": {
+      "accessed_inputs": {
+        "caches": [
+          "eastern-ok-strata-tract-table.parquet",
+          "maricopa-az-strata-tract-table.parquet",
+          "northern-ca-strata-tract-table.parquet",
+          "south-central-tx-strata-tract-table.parquet"
+        ],
+        "csv_columns": [],
+        "layers": [
+          "census-acs-housing",
+          "pois"
+        ],
+        "parquet_columns": [
+          "eastern-ok-strata-tract-table.parquet:COUNTYFP",
+          "eastern-ok-strata-tract-table.parquet:GEOID",
+          "maricopa-az-strata-tract-table.parquet:COUNTYFP",
+          "maricopa-az-strata-tract-table.parquet:GEOID",
+          "northern-ca-strata-tract-table.parquet:COUNTYFP",
+          "northern-ca-strata-tract-table.parquet:GEOID",
+          "south-central-tx-strata-tract-table.parquet:COUNTYFP",
+          "south-central-tx-strata-tract-table.parquet:GEOID"
+        ]
+      },
+      "bytes": 24294,
+      "diagnostics": {
+        "eastern-ok": {
+          "capture_counts": {
+            "all_pois": 207369,
+            "overlap": 0,
+            "source_a": 132819,
+            "source_b": 3556,
+            "union": 136375
+          },
+          "capture_gap_distribution": {
+            "count": 0
+          },
+          "chapman_population_distribution": {
+            "count": 0
+          },
+          "defined": 0,
+          "excluded_sources": [
+            "Foursquare",
+            "Microsoft"
+          ],
+          "max_county_overlap": 0,
+          "max_tract_overlap": 0,
+          "no_fitted_parameter": true,
+          "place_layer": {
+            "assigned_points": 207369,
+            "assignment": "point strictly within tract; boundary excluded",
+            "boundary_or_outside_points": 0,
+            "category_count": 198875,
+            "foursquare_membership_used": false,
+            "layer": "pois",
+            "microsoft_membership_used": false,
+            "reader_version": 3,
+            "region": "eastern-ok",
+            "rows_scanned": 207369,
+            "rows_total": 207369,
+            "source_a": "meta",
+            "source_b": "alltheplaces"
+          },
+          "rows": 1192,
+          "source_a": "meta",
+          "source_b": "alltheplaces",
+          "tract_rows_pooled_to_county": 1192,
+          "undefined_reasons": {
+            "overlap_below_tract_and_county_floor": 1192
+          }
+        },
+        "maricopa-az": {
+          "capture_counts": {
+            "all_pois": 300044,
+            "overlap": 0,
+            "source_a": 164553,
+            "source_b": 4294,
+            "union": 168847
+          },
+          "capture_gap_distribution": {
+            "count": 0
+          },
+          "chapman_population_distribution": {
+            "count": 0
+          },
+          "defined": 0,
+          "excluded_sources": [
+            "Foursquare",
+            "Microsoft"
+          ],
+          "max_county_overlap": 0,
+          "max_tract_overlap": 0,
+          "no_fitted_parameter": true,
+          "place_layer": {
+            "assigned_points": 300044,
+            "assignment": "point strictly within tract; boundary excluded",
+            "boundary_or_outside_points": 2,
+            "category_count": 285299,
+            "foursquare_membership_used": false,
+            "layer": "pois",
+            "microsoft_membership_used": false,
+            "reader_version": 3,
+            "region": "maricopa-az",
+            "rows_scanned": 300046,
+            "rows_total": 300046,
+            "source_a": "meta",
+            "source_b": "alltheplaces"
+          },
+          "rows": 1593,
+          "source_a": "meta",
+          "source_b": "alltheplaces",
+          "tract_rows_pooled_to_county": 1593,
+          "undefined_reasons": {
+            "overlap_below_tract_and_county_floor": 1593
+          }
+        },
+        "northern-ca": {
+          "capture_counts": {
+            "all_pois": 116895,
+            "overlap": 0,
+            "source_a": 69601,
+            "source_b": 1639,
+            "union": 71240
+          },
+          "capture_gap_distribution": {
+            "count": 0
+          },
+          "chapman_population_distribution": {
+            "count": 0
+          },
+          "defined": 0,
+          "excluded_sources": [
+            "Foursquare",
+            "Microsoft"
+          ],
+          "max_county_overlap": 0,
+          "max_tract_overlap": 0,
+          "no_fitted_parameter": true,
+          "place_layer": {
+            "assigned_points": 116895,
+            "assignment": "point strictly within tract; boundary excluded",
+            "boundary_or_outside_points": 2,
+            "category_count": 112100,
+            "foursquare_membership_used": false,
+            "layer": "pois",
+            "microsoft_membership_used": false,
+            "reader_version": 3,
+            "region": "northern-ca",
+            "rows_scanned": 116897,
+            "rows_total": 116897,
+            "source_a": "meta",
+            "source_b": "alltheplaces"
+          },
+          "rows": 591,
+          "source_a": "meta",
+          "source_b": "alltheplaces",
+          "tract_rows_pooled_to_county": 591,
+          "undefined_reasons": {
+            "overlap_below_tract_and_county_floor": 591
+          }
+        },
+        "south-central-tx": {
+          "capture_counts": {
+            "all_pois": 1300287,
+            "overlap": 0,
+            "source_a": 794972,
+            "source_b": 21065,
+            "union": 816037
+          },
+          "capture_gap_distribution": {
+            "count": 0
+          },
+          "chapman_population_distribution": {
+            "count": 0
+          },
+          "defined": 0,
+          "excluded_sources": [
+            "Foursquare",
+            "Microsoft"
+          ],
+          "max_county_overlap": 0,
+          "max_tract_overlap": 0,
+          "no_fitted_parameter": true,
+          "place_layer": {
+            "assigned_points": 1300287,
+            "assignment": "point strictly within tract; boundary excluded",
+            "boundary_or_outside_points": 47,
+            "category_count": 1221186,
+            "foursquare_membership_used": false,
+            "layer": "pois",
+            "microsoft_membership_used": false,
+            "reader_version": 3,
+            "region": "south-central-tx",
+            "rows_scanned": 1300334,
+            "rows_total": 1300334,
+            "source_a": "meta",
+            "source_b": "alltheplaces"
+          },
+          "rows": 6003,
+          "source_a": "meta",
+          "source_b": "alltheplaces",
+          "tract_rows_pooled_to_county": 6003,
+          "undefined_reasons": {
+            "overlap_below_tract_and_county_floor": 6003
+          }
+        }
+      },
+      "emissions": [
+        {
+          "channel": "gap",
+          "component": "Est",
+          "defined_rows": 0,
+          "rows": 9379,
+          "value_max": null,
+          "value_min": null
+        }
+      ],
+      "emissions_per_region": 1,
+      "family": "Dst",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/Dst2.parquet",
+      "rows": 9379,
+      "sha256": "fc01b4f1782b1830500f232fbc31d9b65f77f23a69985fcbdcc54d5a29fdda6b",
+      "undeclared_columns_read": []
+    },
+    "Dst3": {
+      "accessed_inputs": {
+        "caches": [],
+        "csv_columns": [],
+        "layers": [
+          "buildings",
+          "census-acs-housing"
+        ],
+        "parquet_columns": []
+      },
+      "bytes": 25555,
+      "diagnostics": {
+        "eastern-ok": {
+          "assignment": "provided Overture footprint centroid",
+          "defined": 1192,
+          "expected_small_count_distribution": {
+            "count": 1192,
+            "max": 36.67609033652761,
+            "mean": 11.854479222690005,
+            "min": 0.0067531007800640044,
+            "p50": 10.683405434061255,
+            "p90": 21.048739821381503
+          },
+          "gap_distribution": {
+            "count": 1192,
+            "max": 1.0,
+            "mean": 0.004468709159105102,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "in_band_count_distribution": {
+            "count": 1192,
+            "max": 5431.0,
+            "mean": 1755.4127516778524,
+            "min": 1.0,
+            "p50": 1582.0,
+            "p90": 3116.900000000001
+          },
+          "lognormal_fit": {
+            "fit_domain_m2": [
+              40.0,
+              400.0
+            ],
+            "fit_features": 2092452,
+            "log_area_mean": 5.080249153406786,
+            "log_area_sd": 0.5584827479859632
+          },
+          "microsoft_reference_used": false,
+          "no_fitted_target_parameter": true,
+          "rows": 1192,
+          "small_footprint_count_distribution": {
+            "count": 1192,
+            "max": 3882.0,
+            "mean": 213.46057046979865,
+            "min": 0.0,
+            "p50": 140.0,
+            "p90": 483.8000000000002
+          },
+          "source_layer": {
+            "area_crs": "EPSG:5070",
+            "assignment": "provided footprint centroid strictly within tract",
+            "centroid_assigned_features": 2551694,
+            "in_band_features": 2092452,
+            "layer": "buildings",
+            "log_area_squared_sum": 54656592.26666866,
+            "log_area_sum": 10630177.501544336,
+            "microsoft_reference_used": false,
+            "null_geometry": 0,
+            "region": "eastern-ok",
+            "rows_scanned": 2551694,
+            "rows_total": 2551694,
+            "small_m2": 40.0,
+            "upper_m2": 400.0
+          },
+          "undefined_reasons": {
+            "no_in_band_tract_observations": 0
+          }
+        },
+        "maricopa-az": {
+          "assignment": "provided Overture footprint centroid",
+          "defined": 1592,
+          "expected_small_count_distribution": {
+            "count": 1592,
+            "max": 10.982641685348222,
+            "mean": 1.9021832400659766,
+            "min": 0.005108205435045685,
+            "p50": 1.7329586938392485,
+            "p90": 3.1480593044827816
+          },
+          "gap_distribution": {
+            "count": 1592,
+            "max": 1.0,
+            "mean": 0.001256281407035176,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "in_band_count_distribution": {
+            "count": 1592,
+            "max": 8600.0,
+            "mean": 1489.5119346733668,
+            "min": 4.0,
+            "p50": 1357.0,
+            "p90": 2465.1000000000017
+          },
+          "lognormal_fit": {
+            "fit_domain_m2": [
+              40.0,
+              400.0
+            ],
+            "fit_features": 2371303,
+            "log_area_mean": 5.241414379129432,
+            "log_area_sd": 0.5107870540975944
+          },
+          "microsoft_reference_used": false,
+          "no_fitted_target_parameter": true,
+          "rows": 1593,
+          "small_footprint_count_distribution": {
+            "count": 1592,
+            "max": 6498.0,
+            "mean": 131.63316582914572,
+            "min": 0.0,
+            "p50": 44.0,
+            "p90": 281.0
+          },
+          "source_layer": {
+            "area_crs": "EPSG:5070",
+            "assignment": "provided footprint centroid strictly within tract",
+            "centroid_assigned_features": 2908224,
+            "in_band_features": 2371303,
+            "layer": "buildings",
+            "log_area_squared_sum": 65764124.143382184,
+            "log_area_sum": 12428981.641472759,
+            "microsoft_reference_used": false,
+            "null_geometry": 0,
+            "region": "maricopa-az",
+            "rows_scanned": 2908224,
+            "rows_total": 2908224,
+            "small_m2": 40.0,
+            "upper_m2": 400.0
+          },
+          "undefined_reasons": {
+            "no_in_band_tract_observations": 1
+          }
+        },
+        "northern-ca": {
+          "assignment": "provided Overture footprint centroid",
+          "defined": 591,
+          "expected_small_count_distribution": {
+            "count": 591,
+            "max": 21.367736596700553,
+            "mean": 7.2052780797688305,
+            "min": 0.23860284135896925,
+            "p50": 6.646793437857001,
+            "p90": 11.917359772875662
+          },
+          "gap_distribution": {
+            "count": 591,
+            "max": 0.4604606070460411,
+            "mean": 0.0020405611507929217,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "in_band_count_distribution": {
+            "count": 591,
+            "max": 5015.0,
+            "mean": 1691.0761421319796,
+            "min": 56.0,
+            "p50": 1560.0,
+            "p90": 2797.0
+          },
+          "lognormal_fit": {
+            "fit_domain_m2": [
+              40.0,
+              400.0
+            ],
+            "fit_features": 999426,
+            "log_area_mean": 5.1303146829851425,
+            "log_area_sd": 0.5435599861117814
+          },
+          "microsoft_reference_used": false,
+          "no_fitted_target_parameter": true,
+          "rows": 591,
+          "small_footprint_count_distribution": {
+            "count": 591,
+            "max": 2071.0,
+            "mean": 117.72419627749576,
+            "min": 1.0,
+            "p50": 69.0,
+            "p90": 257.0
+          },
+          "source_layer": {
+            "area_crs": "EPSG:5070",
+            "assignment": "provided footprint centroid strictly within tract",
+            "centroid_assigned_features": 1164724,
+            "in_band_features": 999426,
+            "layer": "buildings",
+            "log_area_squared_sum": 26600308.85847314,
+            "log_area_sum": 5127369.882357109,
+            "microsoft_reference_used": false,
+            "null_geometry": 0,
+            "region": "northern-ca",
+            "rows_scanned": 1164724,
+            "rows_total": 1164724,
+            "small_m2": 40.0,
+            "upper_m2": 400.0
+          },
+          "undefined_reasons": {
+            "no_in_band_tract_observations": 0
+          }
+        },
+        "south-central-tx": {
+          "assignment": "provided Overture footprint centroid",
+          "defined": 6001,
+          "expected_small_count_distribution": {
+            "count": 6001,
+            "max": 48.478286798250465,
+            "mean": 5.363290583312174,
+            "min": 0.006730291100687278,
+            "p50": 4.717934061581782,
+            "p90": 9.856511316956519
+          },
+          "gap_distribution": {
+            "count": 6001,
+            "max": 1.0,
+            "mean": 0.013908630002819689,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "in_band_count_distribution": {
+            "count": 6001,
+            "max": 14406.0,
+            "mean": 1593.7767038826862,
+            "min": 2.0,
+            "p50": 1402.0,
+            "p90": 2929.0
+          },
+          "lognormal_fit": {
+            "fit_domain_m2": [
+              40.0,
+              400.0
+            ],
+            "fit_features": 9564254,
+            "log_area_mean": 5.156564906240064,
+            "log_area_sd": 0.5373167214085424
+          },
+          "microsoft_reference_used": false,
+          "no_fitted_target_parameter": true,
+          "rows": 6003,
+          "small_footprint_count_distribution": {
+            "count": 6001,
+            "max": 3277.0,
+            "mean": 139.51291451424763,
+            "min": 0.0,
+            "p50": 51.0,
+            "p90": 364.0
+          },
+          "source_layer": {
+            "area_crs": "EPSG:5070",
+            "assignment": "provided footprint centroid strictly within tract",
+            "centroid_assigned_features": 11463801,
+            "in_band_features": 9564254,
+            "layer": "buildings",
+            "log_area_squared_sum": 257076348.4382865,
+            "log_area_sum": 49318696.53076615,
+            "microsoft_reference_used": false,
+            "null_geometry": 0,
+            "region": "south-central-tx",
+            "rows_scanned": 11463801,
+            "rows_total": 11463801,
+            "small_m2": 40.0,
+            "upper_m2": 400.0
+          },
+          "undefined_reasons": {
+            "no_in_band_tract_observations": 2
+          }
+        }
+      },
+      "emissions": [
+        {
+          "channel": "gap",
+          "component": "B",
+          "defined_rows": 9376,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 0.0
+        }
+      ],
+      "emissions_per_region": 1,
+      "family": "Dst",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/Dst3.parquet",
+      "rows": 9379,
+      "sha256": "bee2e5a578847aaace78ec1642a39e6068eea4fd8df6c03fca1f9a9f2ca234f8",
+      "undeclared_columns_read": []
+    },
+    "Dst4": {
+      "accessed_inputs": {
+        "caches": [
+          "eastern-ok-strata-tract-table.parquet",
+          "maricopa-az-strata-tract-table.parquet",
+          "northern-ca-strata-tract-table.parquet",
+          "south-central-tx-strata-tract-table.parquet"
+        ],
+        "csv_columns": [],
+        "layers": [],
+        "parquet_columns": [
+          "eastern-ok-strata-tract-table.parquet:GEOID",
+          "eastern-ok-strata-tract-table.parquet:ruca_primary",
+          "maricopa-az-strata-tract-table.parquet:GEOID",
+          "maricopa-az-strata-tract-table.parquet:ruca_primary",
+          "northern-ca-strata-tract-table.parquet:GEOID",
+          "northern-ca-strata-tract-table.parquet:ruca_primary",
+          "south-central-tx-strata-tract-table.parquet:GEOID",
+          "south-central-tx-strata-tract-table.parquet:ruca_primary"
+        ]
+      },
+      "bytes": 58423,
+      "diagnostics": {
+        "eastern-ok": {
+          "components": [
+            "B",
+            "Est",
+            "F",
+            "R"
+          ],
+          "defined": 1167,
+          "gap_distribution": {
+            "count": 1167,
+            "max": 1.0,
+            "mean": 0.445821099997313,
+            "min": 0.0,
+            "p50": 0.041126168699154565,
+            "p90": 1.0
+          },
+          "groups": {
+            "rural": {
+              "feature_center": [
+                -0.0017604972910628977,
+                -0.6089575562036821,
+                -3.4213588890183626,
+                -0.47233288363814296
+              ],
+              "feature_scale": [
+                0.002105896733567476,
+                0.2005583497605668,
+                5.683859823409073,
+                1.5869278683719639
+              ],
+              "fit_rows": 218,
+              "incomplete_class": 1,
+              "iterations": 15,
+              "means_standardized": [
+                [
+                  -0.006634229592927252,
+                  -0.0028062763580888363,
+                  0.0029089230447616895,
+                  0.11732346393064981
+                ],
+                [
+                  0.47545312082646546,
+                  0.20111647232980054,
+                  -0.20847281820795907,
+                  -8.40818158169656
+                ]
+              ],
+              "status": "fitted",
+              "variances_standardized": [
+                [
+                  1.00901925077346,
+                  1.0094973557340268,
+                  0.9950233847115505,
+                  0.013711704660876758
+                ],
+                [
+                  0.12441042596757021,
+                  0.2783439485508752,
+                  1.3125900816889242,
+                  0.001
+                ]
+              ],
+              "weights": [
+                0.9862385321100917,
+                0.013761467889908258
+              ]
+            },
+            "suburban": {
+              "feature_center": [
+                -0.0021693563852006564,
+                -0.5796677592398065,
+                -6.646654967940409,
+                -8.138042559145565e-17
+              ],
+              "feature_scale": [
+                0.002545762847979509,
+                0.20748584050322094,
+                6.591735210926318,
+                1.0
+              ],
+              "fit_rows": 206,
+              "incomplete_class": 0,
+              "iterations": 86,
+              "means_standardized": [
+                [
+                  -1.4442717867916575,
+                  0.03277311276929594,
+                  0.1622341893041633,
+                  1.359669580714002e-18
+                ],
+                [
+                  0.329565370499007,
+                  -0.0074784283339171375,
+                  -0.03701988171105137,
+                  -3.102601693270541e-19
+                ]
+              ],
+              "status": "fitted",
+              "variances_standardized": [
+                [
+                  1.9062960274012477,
+                  1.1137644446724717,
+                  0.9820695347281009,
+                  0.001
+                ],
+                [
+                  0.20859889744408924,
+                  0.9737393100847884,
+                  0.9967151533804304,
+                  0.001
+                ]
+              ],
+              "weights": [
+                0.1857923480430306,
+                0.8142076519569694
+              ]
+            },
+            "urban": {
+              "feature_center": [
+                -0.006852090621320167,
+                -0.6235769756964433,
+                -9.250062366697199,
+                -7.127542163475098e-17
+              ],
+              "feature_scale": [
+                0.0501450262648825,
+                0.23285946002897148,
+                6.191663186470543,
+                1.0
+              ],
+              "fit_rows": 743,
+              "incomplete_class": 0,
+              "iterations": 5,
+              "means_standardized": [
+                [
+                  -0.052190834310899145,
+                  -0.06675656210937483,
+                  -0.7373540927166536,
+                  1.7416205100021034e-18
+                ],
+                [
+                  0.09469473346560886,
+                  0.12112270170602515,
+                  1.3378507970124398,
+                  -3.159985698072025e-18
+                ]
+              ],
+              "status": "fitted",
+              "variances_standardized": [
+                [
+                  1.5394468665521779,
+                  0.9919364915367699,
+                  0.001,
+                  0.001
+                ],
+                [
+                  0.0073215850121383375,
+                  0.9918739368580776,
+                  0.038079423705786875,
+                  0.001
+                ]
+              ],
+              "weights": [
+                0.6446837146702558,
+                0.3553162853297443
+              ]
+            }
+          },
+          "rows": 1192,
+          "source_ideas": [
+            "Dst1",
+            "Dst2",
+            "Dst3",
+            "Mx4",
+            "P2",
+            "P4",
+            "Sc5",
+            "Sca1",
+            "Tm1"
+          ],
+          "undefined_reasons": {
+            "incomplete_component_vector_or_unknown_ruca": 25
+          }
+        },
+        "maricopa-az": {
+          "components": [
+            "B",
+            "Est",
+            "F",
+            "R"
+          ],
+          "defined": 1560,
+          "gap_distribution": {
+            "count": 1560,
+            "max": 1.0,
+            "mean": 0.09974953252564926,
+            "min": 0.0,
+            "p50": 0.001398111901685773,
+            "p90": 0.37506302160175753
+          },
+          "groups": {
+            "rural": {
+              "feature_center": [
+                -0.0028810380098666355,
+                -0.5626954618523394,
+                -5.950762124216056,
+                -9.945747928933696e-17
+              ],
+              "feature_scale": [
+                0.008805986957944842,
+                0.22324073400994687,
+                6.398061859291209,
+                1.0
+              ],
+              "fit_rows": 96,
+              "incomplete_class": 0,
+              "iterations": 6,
+              "means_standardized": [
+                [
+                  0.09859632979359119,
+                  -0.24147187236620235,
+                  -1.229239198793787,
+                  3.0433745192575623e-18
+                ],
+                [
+                  -0.064597595382008,
+                  0.15820570948130624,
+                  0.8053636130028262,
+                  -1.9939350298583842e-18
+                ]
+              ],
+              "status": "fitted",
+              "variances_standardized": [
+                [
+                  0.08628780975393242,
+                  1.3045559261530668,
+                  0.001,
+                  0.001
+                ],
+                [
+                  1.5880970860484047,
+                  0.7372320833273435,
+                  0.01657734225887375,
+                  0.001
+                ]
+              ],
+              "weights": [
+                0.3958333333333333,
+                0.6041666666666666
+              ]
+            },
+            "suburban": {
+              "feature_center": [
+                -0.002691633215123665,
+                -0.5940427097741056,
+                -7.022487865528842,
+                -7.85696294350111e-17
+              ],
+              "feature_scale": [
+                0.002932122227996794,
+                0.205865566969498,
+                6.550090323510059,
+                1.0
+              ],
+              "fit_rows": 65,
+              "incomplete_class": 0,
+              "iterations": 6,
+              "means_standardized": [
+                [
+                  -0.02766816083358233,
+                  -0.41853959190662593,
+                  -1.0370883998428875,
+                  3.3609729281456393e-18
+                ],
+                [
+                  0.025226852524736856,
+                  0.3816096279148646,
+                  0.945580599856751,
+                  -3.0644164933092563e-18
+                ]
+              ],
+              "status": "fitted",
+              "variances_standardized": [
+                [
+                  1.3004888833302872,
+                  0.9779153770003852,
+                  0.001,
+                  0.001
+                ],
+                [
+                  0.7246904669681591,
+                  0.7147913337413183,
+                  0.03699136382898527,
+                  0.001
+                ]
+              ],
+              "weights": [
+                0.47692307692307695,
+                0.5230769230769231
+              ]
+            },
+            "urban": {
+              "feature_center": [
+                -0.0019489029198403918,
+                -0.6433610921112853,
+                -10.124100351330357,
+                -7.277158781853241e-17
+              ],
+              "feature_scale": [
+                0.01878429832504687,
+                0.2666155589187126,
+                5.990385246479263,
+                1.0
+              ],
+              "fit_rows": 1399,
+              "incomplete_class": 0,
+              "iterations": 94,
+              "means_standardized": [
+                [
+                  -0.8766482101816109,
+                  0.3246783579654818,
+                  0.09434758773445959,
+                  -1.807481043763615e-18
+                ],
+                [
+                  0.05785309244159232,
+                  -0.021426664469289626,
+                  -0.006226328476387252,
+                  1.1928201837040435e-19
+                ]
+              ],
+              "status": "fitted",
+              "variances_standardized": [
+                [
+                  15.265443615541281,
+                  0.9039099515851872,
+                  1.0771679167258916,
+                  0.001
+                ],
+                [
+                  0.004509513587559565,
+                  0.9989254433859267,
+                  0.9942812120759363,
+                  0.001
+                ]
+              ],
+              "weights": [
+                0.06190798480344022,
+                0.9380920151965598
+              ]
+            }
+          },
+          "rows": 1593,
+          "source_ideas": [
+            "Dst1",
+            "Dst2",
+            "Dst3",
+            "Mx4",
+            "P2",
+            "P4",
+            "Sc5",
+            "Sca1",
+            "Tm1"
+          ],
+          "undefined_reasons": {
+            "incomplete_component_vector_or_unknown_ruca": 33
+          }
+        },
+        "northern-ca": {
+          "components": [
+            "B",
+            "Est",
+            "F",
+            "R"
+          ],
+          "defined": 584,
+          "gap_distribution": {
+            "count": 584,
+            "max": 1.0,
+            "mean": 0.5186264484191968,
+            "min": 0.0,
+            "p50": 0.9999990285397973,
+            "p90": 0.9999998937977395
+          },
+          "groups": {
+            "rural": {
+              "feature_center": [
+                -0.0023789887860566927,
+                -0.5770068784222037,
+                -3.4329168028651282,
+                -1.0535789927565263e-16
+              ],
+              "feature_scale": [
+                0.0051892917339124555,
+                0.22078469719030108,
+                5.612569445481168,
+                1.0
+              ],
+              "fit_rows": 98,
+              "incomplete_class": 0,
+              "iterations": 5,
+              "means_standardized": [
+                [
+                  -0.0479005249371037,
+                  -0.8801947932998623,
+                  -1.8498824568591226,
+                  2.4614406575641226e-17
+                ],
+                [
+                  0.013865941429161442,
+                  0.25479322963943213,
+                  0.5354922901434302,
+                  -7.125222956106678e-18
+                ]
+              ],
+              "status": "fitted",
+              "variances_standardized": [
+                [
+                  0.39021266212545636,
+                  0.963038244989226,
+                  0.001,
+                  0.001
+                ],
+                [
+                  1.1756609370745497,
+                  0.7215121914310778,
+                  0.012123898087822937,
+                  0.001
+                ]
+              ],
+              "weights": [
+                0.22448979591836735,
+                0.7755102040816326
+              ]
+            },
+            "suburban": {
+              "feature_center": [
+                -0.0041474917046687935,
+                -0.5667610954497552,
+                -7.045852498297355,
+                -9.912705577010328e-17
+              ],
+              "feature_scale": [
+                0.003685643486337353,
+                0.2206631448257809,
+                6.589728434661028,
+                1.0
+              ],
+              "fit_rows": 56,
+              "incomplete_class": 0,
+              "iterations": 5,
+              "means_standardized": [
+                [
+                  0.05984830512283681,
+                  -0.4438255128453007,
+                  -1.0273045584184457,
+                  4.552501820552889e-18
+                ],
+                [
+                  -0.055720835804020326,
+                  0.4132168567870033,
+                  0.9564559681826899,
+                  -4.238536177756141e-18
+                ]
+              ],
+              "status": "fitted",
+              "variances_standardized": [
+                [
+                  0.6879909555874568,
+                  0.9743677139691516,
+                  0.001,
+                  0.001
+                ],
+                [
+                  1.2840515701550466,
+                  0.6697201880539059,
+                  0.03365488764573088,
+                  0.001
+                ]
+              ],
+              "weights": [
+                0.48214285714285715,
+                0.5178571428571429
+              ]
+            },
+            "urban": {
+              "feature_center": [
+                -0.0040484700298759795,
+                -0.6035386248053185,
+                -8.632081586551529,
+                -7.513369771300478e-17
+              ],
+              "feature_scale": [
+                0.0197019710398287,
+                0.23807244154242146,
+                6.48030055184371,
+                1.0
+              ],
+              "fit_rows": 430,
+              "incomplete_class": 0,
+              "iterations": 39,
+              "means_standardized": [
+                [
+                  0.1030522983210854,
+                  -0.19397111714513524,
+                  -0.7998747789464806,
+                  6.712693751038953e-18
+                ],
+                [
+                  -0.1485485777792159,
+                  0.27960689913365905,
+                  1.1530093239041748,
+                  -9.676262694087284e-18
+                ]
+              ],
+              "status": "fitted",
+              "variances_standardized": [
+                [
+                  0.018632885035988207,
+                  0.8879728423047328,
+                  0.001,
+                  0.001
+                ],
+                [
+                  2.3772532663901993,
+                  1.0290700428273445,
+                  0.18979370648484317,
+                  0.001
+                ]
+              ],
+              "weights": [
+                0.5904135950623512,
+                0.4095864049376489
+              ]
+            }
+          },
+          "rows": 591,
+          "source_ideas": [
+            "Dst1",
+            "Dst2",
+            "Dst3",
+            "Mx4",
+            "P2",
+            "P4",
+            "Sc5",
+            "Sca1",
+            "Tm1"
+          ],
+          "undefined_reasons": {
+            "incomplete_component_vector_or_unknown_ruca": 7
+          }
+        },
+        "south-central-tx": {
+          "components": [
+            "B",
+            "Est",
+            "F",
+            "R"
+          ],
+          "defined": 5947,
+          "gap_distribution": {
+            "count": 5947,
+            "max": 1.0,
+            "mean": 0.6183849929482266,
+            "min": 0.0,
+            "p50": 1.0,
+            "p90": 1.0
+          },
+          "groups": {
+            "rural": {
+              "feature_center": [
+                -0.005020676371906016,
+                -0.5660697329540723,
+                -4.8148181637402825,
+                -0.5941703018032938
+              ],
+              "feature_scale": [
+                0.033891173707130524,
+                0.19306790311747118,
+                6.307368840680658,
+                1.8504729249414622
+              ],
+              "fit_rows": 421,
+              "incomplete_class": 0,
+              "iterations": 51,
+              "means_standardized": [
+                [
+                  -1.292608961253994,
+                  -0.8676178857686093,
+                  -0.2617656618600027,
+                  0.16376786485873682
+                ],
+                [
+                  0.0662841361242161,
+                  0.04449087370421796,
+                  0.013423170721746022,
+                  -0.008397908240198124
+                ]
+              ],
+              "status": "fitted",
+              "variances_standardized": [
+                [
+                  18.639483316353196,
+                  2.497479834841198,
+                  1.1573390558783505,
+                  0.011424877012889745
+                ],
+                [
+                  0.005385859174859838,
+                  0.8826297047992886,
+                  0.9882378501693571,
+                  1.0492476487927176
+                ]
+              ],
+              "weights": [
+                0.04877803577934263,
+                0.9512219642206571
+              ]
+            },
+            "suburban": {
+              "feature_center": [
+                -0.003006929023605797,
+                -0.5516632544457617,
+                -6.111332420084985,
+                -9.371237358395139e-17
+              ],
+              "feature_scale": [
+                0.003753085217539453,
+                0.2043170510133785,
+                6.539176905399131,
+                1.0
+              ],
+              "fit_rows": 372,
+              "incomplete_class": 0,
+              "iterations": 7,
+              "means_standardized": [
+                [
+                  -0.10593472543623562,
+                  -0.2527588007442888,
+                  -1.178157167076833,
+                  5.968940992608156e-19
+                ],
+                [
+                  0.0756676610258822,
+                  0.18054200053163635,
+                  0.8415408336263076,
+                  -4.2635292804348335e-19
+                ]
+              ],
+              "status": "fitted",
+              "variances_standardized": [
+                [
+                  0.7857013019652733,
+                  0.9734017210506525,
+                  0.001,
+                  0.001
+                ],
+                [
+                  1.139329070775929,
+                  0.9407697771837902,
+                  0.014627375100608409,
+                  0.001
+                ]
+              ],
+              "weights": [
+                0.4166666666666667,
+                0.5833333333333334
+              ]
+            },
+            "urban": {
+              "feature_center": [
+                -0.012524838548059353,
+                -0.5709773988985026,
+                -9.53425113740538,
+                -9.943324566685531e-17
+              ],
+              "feature_scale": [
+                0.07532577963571793,
+                0.23510346285659242,
+                6.232631675086726,
+                1.0
+              ],
+              "fit_rows": 5154,
+              "incomplete_class": 0,
+              "iterations": 5,
+              "means_standardized": [
+                [
+                  -0.052718577526140634,
+                  -0.11504412978181737,
+                  -0.681226669428603,
+                  5.308398147949199e-18
+                ],
+                [
+                  0.11175572548216933,
+                  0.2438768417045709,
+                  1.4441015716338075,
+                  -1.1253032877795641e-17
+                ]
+              ],
+              "status": "fitted",
+              "variances_standardized": [
+                [
+                  1.4324954515235038,
+                  1.015194248059073,
+                  0.012537826945526132,
+                  0.001
+                ],
+                [
+                  0.06479152998348525,
+                  0.8802578885639422,
+                  0.024086496745312935,
+                  0.001
+                ]
+              ],
+              "weights": [
+                0.6794722545595654,
+                0.3205277454404346
+              ]
+            }
+          },
+          "rows": 6003,
+          "source_ideas": [
+            "Dst1",
+            "Dst2",
+            "Dst3",
+            "Mx4",
+            "P2",
+            "P4",
+            "Sc5",
+            "Sca1",
+            "Tm1"
+          ],
+          "undefined_reasons": {
+            "incomplete_component_vector_or_unknown_ruca": 56
+          }
+        }
+      },
+      "emissions": [
+        {
+          "channel": "gap",
+          "component": "C",
+          "defined_rows": 9258,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 0.0
+        }
+      ],
+      "emissions_per_region": 1,
+      "family": "Dst",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/Dst4.parquet",
+      "rows": 9379,
+      "sha256": "5295204296da32d0d6a29f5dd63c5be48e650ac989d7ea37122aefc7f4829dff",
+      "undeclared_columns_read": []
+    },
+    "Dst5": {
+      "accessed_inputs": {
+        "caches": [],
+        "csv_columns": [],
+        "layers": [],
+        "parquet_columns": []
+      },
+      "bytes": 45456,
+      "diagnostics": {
+        "eastern-ok": {
+          "calibrated_mean": 0.21000000000000013,
+          "defined": 1167,
+          "gap_distribution": {
+            "count": 1167,
+            "max": 0.5021657247518136,
+            "mean": 0.21000000000000013,
+            "min": 1.0087005586419008e-18,
+            "p50": 4.326324063102297e-11,
+            "p90": 0.5021657247518136
+          },
+          "logit_offset": -20.71460291104428,
+          "no_labels_or_reference_values": true,
+          "rows": 1192,
+          "source": "organizer-published per-region undefined-component share only",
+          "target_undefined_share": 0.21,
+          "undefined_reasons": {
+            "base_dst4_undefined": 25
+          }
+        },
+        "maricopa-az": {
+          "calibrated_mean": 0.5499999999999999,
+          "defined": 1560,
+          "gap_distribution": {
+            "count": 1560,
+            "max": 0.9999999999987228,
+            "mean": 0.5499999999999999,
+            "min": 7.830155662729839e-07,
+            "p50": 0.5229637792808208,
+            "p90": 0.9978765688867675
+          },
+          "logit_offset": 6.663153358106618,
+          "no_labels_or_reference_values": true,
+          "rows": 1593,
+          "source": "organizer-published per-region undefined-component share only",
+          "target_undefined_share": 0.55,
+          "undefined_reasons": {
+            "base_dst4_undefined": 33
+          }
+        },
+        "northern-ca": {
+          "calibrated_mean": 0.36999999999999983,
+          "defined": 584,
+          "gap_distribution": {
+            "count": 584,
+            "max": 0.9979790520587642,
+            "mean": 0.36999999999999983,
+            "min": 4.938172851793951e-16,
+            "p50": 0.3370319943178445,
+            "p90": 0.823001989660132
+          },
+          "logit_offset": -14.521100257234455,
+          "no_labels_or_reference_values": true,
+          "rows": 591,
+          "source": "organizer-published per-region undefined-component share only",
+          "target_undefined_share": 0.37,
+          "undefined_reasons": {
+            "base_dst4_undefined": 7
+          }
+        },
+        "south-central-tx": {
+          "calibrated_mean": 0.27999999999999997,
+          "defined": 5947,
+          "gap_distribution": {
+            "count": 5947,
+            "max": 0.45456891524877013,
+            "mean": 0.27999999999999997,
+            "min": 8.334121688520036e-19,
+            "p50": 0.45456891524877013,
+            "p90": 0.45456891524877013
+          },
+          "logit_offset": -20.90549279659251,
+          "no_labels_or_reference_values": true,
+          "rows": 6003,
+          "source": "organizer-published per-region undefined-component share only",
+          "target_undefined_share": 0.28,
+          "undefined_reasons": {
+            "base_dst4_undefined": 56
+          }
+        }
+      },
+      "emissions": [
+        {
+          "channel": "gap",
+          "component": "C",
+          "defined_rows": 9258,
+          "rows": 9379,
+          "value_max": 0.9999999999987228,
+          "value_min": 8.334121688520036e-19
+        }
+      ],
+      "emissions_per_region": 1,
+      "family": "Dst",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/Dst5.parquet",
+      "rows": 9379,
+      "sha256": "74a5f3d50f07c969220c9b45db05d9ffb58bfa69fb42554b096a39957e569e86",
+      "undeclared_columns_read": []
+    },
     "Mx4": {
       "accessed_inputs": {
         "caches": [
@@ -1263,7 +2924,7 @@
   },
   "preregistration": {
     "path": "config/bias60-harness-preregistered.json",
-    "sha256": "47d82cbffac84068162485874a7845d4b457a2996f5325df823e5b1f17c39364",
+    "sha256": "d5c697b46dc5b28511b148a12f45babc64ae1874074320792061910d221fdd66",
     "spec": {
       "family_count": 12,
       "idea_count": 60,
@@ -1303,7 +2964,7 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 54,
+    "declared_count": 49,
     "families_total": 12,
     "ideas_per_family": [
       5
@@ -1311,6 +2972,11 @@
     "ideas_total": 60,
     "implemented": [
       "Tm1",
+      "Dst1",
+      "Dst2",
+      "Dst3",
+      "Dst4",
+      "Dst5",
       "Mx4",
       "Sc5",
       "Sca1",
@@ -1319,10 +2985,12 @@
     ],
     "implemented_components": [
       "B",
+      "C",
+      "Est",
       "F",
       "R"
     ],
-    "implemented_count": 6
+    "implemented_count": 11
   },
   "scope": {
     "geoids_by_region": {
@@ -1345,11 +3013,18 @@
     "all_passed": true,
     "components_covered": [
       "B",
+      "C",
+      "Est",
       "F",
       "R"
     ],
-    "ideas_implemented": 6,
+    "ideas_implemented": 11,
     "parquet_files": {
+      "ideas/Dst1.parquet": "cac4c507372353f5493b09b1ce6ec7c293500d185a1778fc73a68d25e5bc4281",
+      "ideas/Dst2.parquet": "fc01b4f1782b1830500f232fbc31d9b65f77f23a69985fcbdcc54d5a29fdda6b",
+      "ideas/Dst3.parquet": "bee2e5a578847aaace78ec1642a39e6068eea4fd8df6c03fca1f9a9f2ca234f8",
+      "ideas/Dst4.parquet": "5295204296da32d0d6a29f5dd63c5be48e650ac989d7ea37122aefc7f4829dff",
+      "ideas/Dst5.parquet": "74a5f3d50f07c969220c9b45db05d9ffb58bfa69fb42554b096a39957e569e86",
       "ideas/Mx4.parquet": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
       "ideas/P2.parquet": "887ac98d8c2699ef83c48850b7696baea08b5bffbec044d9d9dc825d74e801c6",
       "ideas/P4.parquet": "12b54003b38e3be1fbbcc149a385dc80a38c605a0a33b27eab811d382ff5f29c",
@@ -1357,7 +3032,7 @@
       "ideas/Sca1.parquet": "858eadae31c242954fbbd47ffb0151276018d987a994f57b24e84c19a8e6c294",
       "ideas/Tm1.parquet": "df93396b8bb481dea6da43dd90b997eeeb47c5bf249a3fa6eac0dca6c8713885"
     },
-    "report_sha256": "1b188268bfe45e0e214a37c4ea997d38a0fb3ae3ae186394a2407af2bee24341"
+    "report_sha256": "433d176a87b9696cadf1a04d1ac6b6e7759e13a98e6176bb7efd137ab85e39eb"
   },
   "tamper_case": null
 }

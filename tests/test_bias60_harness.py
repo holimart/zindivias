@@ -125,6 +125,28 @@ class StubInputs:
                  "road_named_classes": sorted(CONFIG["seeds"]["Sc5"]["road_named_classes"]),
                  "crs": "EPSG:5070", "truncated_rows": 0})
 
+    def poi_shape_capture(self, source_a: str, source_b: str):
+        self.accessed["layers"].append("pois")
+        count = len(self.geoids)
+        return ({"n_categories": np.full(count, 10.0), "s_obs": np.full(count, 8.0),
+                 "f1": np.full(count, 2.0), "f2": np.full(count, 1.0),
+                 "poi_total": np.full(count, 12.0),
+                 "source_a": np.full(count, 5.0), "source_b": np.full(count, 3.0),
+                 "source_overlap": np.zeros(count), "source_union": np.full(count, 8.0)},
+                {"region": self.region, "layer": "pois", "rows_total": 100,
+                 "assigned_points": count, "boundary_or_outside_points": 0,
+                 "datasets_seen": [source_a, source_b], "cache_hit": True,
+                 "microsoft_membership_used": False, "foursquare_membership_used": False})
+
+    def building_area_bins(self, small_m2: float, upper_m2: float):
+        self.accessed["layers"].append("buildings")
+        count = len(self.geoids)
+        return ({"below_small": np.zeros(count), "in_band": np.full(count, 5.0)},
+                {"region": self.region, "layer": "buildings", "rows_total": 100,
+                 "in_band_features": 2000, "log_area_sum": 2000 * np.log(100.0),
+                 "log_area_squared_sum": 2000 * (np.log(100.0) ** 2 + 0.5),
+                 "cache_hit": True, "microsoft_reference_used": False})
+
 
 def stub_factory(overrides: dict | None = None):
     def factory(config, workspace, region, geoids):
@@ -184,7 +206,10 @@ class SpecAndRegistryTests(unittest.TestCase):
         gates = harness_module.validate_registry_document(registry, harness_config(), spec_parse())
         self.assertTrue(gates["three_seeds_implemented"])
         self.assertTrue(gates["seeds_span_components"])
-        self.assertEqual(len(registry["summary"]["implemented_components"]), 3)
+        expected_components = {
+            seed["component"] if "component" in seed else seed["components"][0]
+            for seed in CONFIG["seeds"].values()}
+        self.assertEqual(set(registry["summary"]["implemented_components"]), expected_components)
 
     def test_registry_gates_fail_when_an_idea_is_dropped(self) -> None:
         registry = harness_module.build_registry(spec_parse())

@@ -207,6 +207,184 @@ class ProvidedInputs:
         self._metric_tree = shapely.STRtree(metric)
         return self._metric_tree
 
+    def poi_shape_capture(self, source_a: str, source_b: str) -> tuple[dict[str, np.ndarray], dict[str, Any]]:
+        """Per-tract primary-category frequencies and non-forbidden two-source captures.
+
+        Reads only the provided overture-pois layer. Microsoft and Foursquare membership is neither
+        selected nor emitted; source A/B are preregistered public place feeds. Points strictly within
+        one provided ACS tract are assigned once; boundary/outside points are excluded and counted in
+        diagnostics rather than duplicated.
+        """
+        import collections
+        import pyarrow.parquet as pq
+        import shapely
+        from pyproj import Transformer
+
+        source_a, source_b = source_a.casefold(), source_b.casefold()
+        if source_a in {"microsoft", "foursquare"} or source_b in {"microsoft", "foursquare"}:
+            raise PermissionError("forbidden place capture source")
+        cache_dir = self.workspace / self.config["inputs"]["ideas_cache_dir"]
+        cache_dir.mkdir(parents=True, exist_ok=True)
+        cache_path = cache_dir / f"{self.region}-dst-poi-shape-{source_a}-{source_b}.npz"
+        path = self.layer_path("pois")
+        parquet_file = pq.ParquetFile(self.filesystem.open_input_file(path))
+        rows_total = int(parquet_file.metadata.num_rows)
+        if cache_path.is_file():
+            stored = np.load(cache_path, allow_pickle=False)
+            meta = json.loads(str(stored["metadata_json"]))
+            keys = ("n_categories", "s_obs", "f1", "f2", "poi_total", "source_a", "source_b",
+                    "source_overlap", "source_union")
+            if (meta.get("rows_total") == rows_total and meta.get("region") == self.region
+                    and meta.get("reader_version") == 3):
+                self.accessed["layers"].extend(["pois", self.config["inputs"]["polygon_layer"]])
+                return {key: np.asarray(stored[key], dtype=np.float64) for key in keys}, meta
+
+        required = {"categories", "sources", "geometry"}
+        available = set(parquet_file.schema_arrow.names)
+        if not required.issubset(available):
+            raise ValueError(f"provided pois layer lacks columns {sorted(required - available)}")
+        self.accessed["layers"].append("pois")
+        transformer = Transformer.from_crs("EPSG:4326", "EPSG:5070", always_xy=True)
+        tracts = self.tract_geometries()
+        metric_tracts = shapely.transform(tracts, transformer.transform, interleaved=False)
+        tree = shapely.STRtree(metric_tracts)
+        count = len(self.geoids)
+        category_counts = [collections.Counter() for _ in range(count)]
+        n_categories = np.zeros(count, dtype=np.float64)
+        poi_total = np.zeros(count, dtype=np.float64)
+        n_a = np.zeros(count, dtype=np.float64)
+        n_b = np.zeros(count, dtype=np.float64)
+        n_overlap = np.zeros(count, dtype=np.float64)
+        n_union = np.zeros(count, dtype=np.float64)
+        assigned = 0
+        boundary_or_outside = 0
+        rows_scanned = 0
+        for row_group in range(parquet_file.metadata.num_row_groups):
+            table = parquet_file.read_row_group(row_group, columns=["categories", "sources", "geometry"])
+            categories = table.column("categories").to_pylist()
+            sources = table.column("sources").to_pylist()
+            wkb = table.column("geometry").to_pylist()
+            rows_scanned += len(wkb)
+            points = shapely.from_wkb(wkb)
+            metric_points = shapely.transform(points, transformer.transform, interleaved=False)
+            pairs = tree.query(metric_points, predicate="within")
+            point_ids, tract_ids = pairs
+            multiplicity = np.bincount(point_ids, minlength=len(wkb))
+            if np.any(multiplicity > 1):
+                raise ValueError("a place point matched multiple tract polygons")
+            boundary_or_outside += int((multiplicity == 0).sum())
+            assigned += int(len(point_ids))
+            for point_id, tract_id in zip(point_ids.tolist(), tract_ids.tolist()):
+                poi_total[tract_id] += 1.0
+                primary = (categories[point_id] or {}).get("primary") if categories[point_id] else None
+                if isinstance(primary, str) and primary.strip():
+                    n_categories[tract_id] += 1.0
+                    category_counts[tract_id][primary.strip()] += 1
+                dataset_names = set()
+                for source in sources[point_id] or []:
+                    name = source.get("dataset")
+                    if isinstance(name, str) and name.strip():
+                        folded = name.strip().casefold()
+                        if folded in {source_a, source_b}:
+                            dataset_names.add(folded)
+                has_a, has_b = source_a in dataset_names, source_b in dataset_names
+                if has_a:
+                    n_a[tract_id] += 1.0
+                if has_b:
+                    n_b[tract_id] += 1.0
+                if has_a and has_b:
+                    n_overlap[tract_id] += 1.0
+                if has_a or has_b:
+                    n_union[tract_id] += 1.0
+        f1 = np.fromiter((sum(value == 1 for value in counts.values())
+                          for counts in category_counts), dtype=np.float64, count=count)
+        f2 = np.fromiter((sum(value == 2 for value in counts.values())
+                          for counts in category_counts), dtype=np.float64, count=count)
+        s_obs = np.fromiter((len(counts) for counts in category_counts),
+                            dtype=np.float64, count=count)
+        arrays = {"n_categories": n_categories, "s_obs": s_obs, "f1": f1, "f2": f2, "poi_total": poi_total,
+                  "source_a": n_a, "source_b": n_b, "source_overlap": n_overlap,
+                  "source_union": n_union}
+        meta = {"region": self.region, "layer": "pois", "rows_total": rows_total, "reader_version": 3,
+                "rows_scanned": rows_scanned, "assigned_points": assigned,
+                "boundary_or_outside_points": boundary_or_outside,
+                "category_count": int(n_categories.sum()), "source_a": source_a, "source_b": source_b,
+                "assignment": "point strictly within tract; boundary excluded",
+                "microsoft_membership_used": False, "foursquare_membership_used": False}
+        np.savez_compressed(cache_path, **arrays, metadata_json=np.array(json.dumps(meta, sort_keys=True)))
+        return arrays, meta
+
+    def building_area_bins(self, small_m2: float = 40.0, upper_m2: float = 400.0) -> tuple[dict[str, np.ndarray], dict[str, Any]]:
+        """Count provided Overture footprint areas by tract, assigning each footprint centroid once."""
+        import pyarrow.parquet as pq
+        import shapely
+        from pyproj import Transformer
+
+        cache_dir = self.workspace / self.config["inputs"]["ideas_cache_dir"]
+        cache_dir.mkdir(parents=True, exist_ok=True)
+        cache_path = cache_dir / f"{self.region}-dst-building-area-bins.npz"
+        path = self.layer_path("buildings")
+        parquet_file = pq.ParquetFile(self.filesystem.open_input_file(path))
+        rows_total = int(parquet_file.metadata.num_rows)
+        if cache_path.is_file():
+            stored = np.load(cache_path, allow_pickle=False)
+            meta = json.loads(str(stored["metadata_json"]))
+            if meta.get("rows_total") == rows_total and meta.get("region") == self.region:
+                self.accessed["layers"].extend(["buildings", self.config["inputs"]["polygon_layer"]])
+                return {key: np.asarray(stored[key], dtype=np.float64)
+                        for key in ("below_small", "in_band")}, meta
+        if "geometry" not in parquet_file.schema_arrow.names:
+            raise ValueError("provided Overture buildings layer has no geometry")
+        self.accessed["layers"].append("buildings")
+        transformer = Transformer.from_crs("EPSG:4326", "EPSG:5070", always_xy=True)
+        metric_tracts = shapely.transform(self.tract_geometries(), transformer.transform,
+                                          interleaved=False)
+        tree = shapely.STRtree(metric_tracts)
+        count = len(self.geoids)
+        below = np.zeros(count, dtype=np.float64)
+        band = np.zeros(count, dtype=np.float64)
+        log_sum = 0.0
+        log_sq_sum = 0.0
+        band_features = 0
+        rows_scanned = assigned = null_geometry = 0
+        for row_group in range(parquet_file.metadata.num_row_groups):
+            table = parquet_file.read_row_group(row_group, columns=["geometry"])
+            wkbs = table.column("geometry").to_pylist()
+            rows_scanned += len(wkbs)
+            valid_indices = np.fromiter((i for i, value in enumerate(wkbs) if value is not None),
+                                        dtype=np.int64)
+            null_geometry += len(wkbs) - len(valid_indices)
+            if not len(valid_indices):
+                continue
+            geometries = shapely.from_wkb([wkbs[i] for i in valid_indices])
+            metric = shapely.transform(geometries, transformer.transform, interleaved=False)
+            areas = shapely.area(metric)
+            centroids = shapely.centroid(metric)
+            pairs = tree.query(centroids, predicate="within")
+            feature_idx, tract_idx = pairs
+            if not len(feature_idx):
+                continue
+            assigned += len(feature_idx)
+            selected_areas = areas[feature_idx]
+            under = np.isfinite(selected_areas) & (selected_areas > 0.0) & (selected_areas < small_m2)
+            in_range = np.isfinite(selected_areas) & (selected_areas >= small_m2) & (selected_areas <= upper_m2)
+            below += np.bincount(tract_idx[under], minlength=count)
+            band += np.bincount(tract_idx[in_range], minlength=count)
+            log_values = np.log(selected_areas[in_range])
+            log_sum += float(log_values.sum())
+            log_sq_sum += float(np.square(log_values).sum())
+            band_features += int(in_range.sum())
+        arrays = {"below_small": below, "in_band": band}
+        meta = {"region": self.region, "layer": "buildings", "rows_total": rows_total,
+                "rows_scanned": rows_scanned, "centroid_assigned_features": assigned,
+                "null_geometry": null_geometry, "in_band_features": band_features,
+                "log_area_sum": log_sum, "log_area_squared_sum": log_sq_sum,
+                "small_m2": small_m2, "upper_m2": upper_m2,
+                "area_crs": "EPSG:5070", "assignment": "provided footprint centroid strictly within tract",
+                "microsoft_reference_used": False}
+        np.savez_compressed(cache_path, **arrays, metadata_json=np.array(json.dumps(meta, sort_keys=True)))
+        return arrays, meta
+
     def named_class_km(self, layer: str) -> tuple[np.ndarray, dict[str, Any]]:
         """Per-tract named-class length in km for one provided road layer, clipped in EPSG:5070.
 

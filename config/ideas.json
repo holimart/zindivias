@@ -847,7 +847,7 @@
       "failure_mode": "category granularity varies by source; Meta categories are fine-grained.",
       "family": "Dst",
       "id": "Dst1",
-      "implementation": null,
+      "implementation": "bias60.ideas.dst::dst1",
       "inputs": [
         "`pois.categories.primary`"
       ],
@@ -857,7 +857,7 @@
       "recipe": "missing mass m = f1/N (singleton categories over places). Est gap proxy = m, shrunk toward the county value.",
       "recipe_scope": "per tract",
       "signal": "a well-covered tract's category histogram has few singletons. Many singleton categories indicate an under-sampled establishment universe. Chao1 S_hat = S_obs + f1²/(2 f2) estimates unseen categories, and an analogous Good–Turing missing mass f1/N estimates the unlisted fraction.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Unseen category richness (Chao1) for establishments"
     },
     {
@@ -869,7 +869,7 @@
       "failure_mode": "Foursquare was *selected as non-overlapping* with Overture, so its overlap is near zero by design. Exclude it from the captures and use it only for Mx3. Meta and Microsoft overlap may be dependent (similar web sources), which biases N̂ low.",
       "family": "Dst",
       "id": "Dst2",
-      "implementation": null,
+      "implementation": "bias60.ideas.dst::dst2",
       "inputs": [
         "`pois.sources.dataset` (per-place multi-membership)"
       ],
@@ -879,7 +879,7 @@
       "recipe": "pool to tract or county where m < 10. Fit a log-linear model with pairwise interactions to absorb source dependence.",
       "recipe_scope": "per tract",
       "signal": "treat Meta, Microsoft, Foursquare and AllThePlaces as independent \"captures\" of the establishment universe. A conflated place's `sources` list shows which feeds captured it. The Lincoln–Petersen/Chapman estimator N̂ = (n1 + 1)(n2 + 1)/(m + 1) − 1, or a log-linear multi-list model, estimates the true number of places. Est gap = 1 − N_overture/N̂, a CBP-free extrinsic-like estimate.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Capture–recapture across place sources"
     },
     {
@@ -891,7 +891,7 @@
       "failure_mode": "real differences in building stock; urban cores have no sheds.",
       "family": "Dst",
       "id": "Dst3",
-      "implementation": null,
+      "implementation": "bias60.ideas.dst3::dst3",
       "inputs": [
         "`buildings` areas"
       ],
@@ -901,7 +901,7 @@
       "recipe": "deficit = expected count below 40 m² (from a lognormal fitted to the 40–400 m² range) − observed.",
       "recipe_scope": "per tract",
       "signal": "the log-area distribution of footprints in a homogeneous area is approximately normal or lognormal. A truncated or deficient left tail relative to region peers means small structures (sheds, garages, ADUs) are missing or absorbed. Microsoft US counts many of them.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Footprint-size left-tail deficit"
     },
     {
@@ -913,7 +913,7 @@
       "failure_mode": "the mixture may separate urban from rural instead of complete from incomplete. Condition on RUCA.",
       "family": "Dst",
       "id": "Dst4",
-      "implementation": null,
+      "implementation": "bias60.ideas.dst_meta::dst4",
       "inputs": [
         "the outputs of the other ideas"
       ],
@@ -923,7 +923,7 @@
       "recipe": "EM per region; posterior probability; class-conditional mean gap from the physical mapping.",
       "recipe_scope": "per tract",
       "signal": "fit a two- or three-class Gaussian or Poisson mixture per region on a small vector of log ratios (O/E for each component's expectation ideas). The posterior P(incomplete class) is a data-driven label-free gap score.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Latent-class mixture of completeness"
     },
     {
@@ -936,7 +936,7 @@
       "failure_mode": "the published numbers describe references, not gaps, so they constrain levels only loosely. The lane's Maricopa route-ratio band already failed once; record why.",
       "family": "Dst",
       "id": "Dst5",
-      "implementation": null,
+      "implementation": "bias60.ideas.dst_meta::dst5",
       "inputs": [
         "the rules text and our estimators"
       ],
@@ -946,7 +946,7 @@
       "recipe": "choose a monotone transform (one parameter per region and component) so that predicted definedness and ratio levels match the published numbers. This is distribution matching to official text, not to labels or the leaderboard.",
       "recipe_scope": "per region",
       "signal": "the rules publish rule-clean facts: - per-region shares of tracts with at least one undefined component (EOK 21%, NCA 37%, SCTX 28%, Maricopa 55%); - \"over half of Maricopa has no named-highway road\"; - the transport ratio Overture/TIGER of 0.71–1.59 across regions; - \"hospital category ≈ 12× reference\".",
-      "status": "declared",
+      "status": "implemented",
       "title": "Calibration to the organiser's published aggregates"
     },
     {
@@ -1459,7 +1459,7 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 54,
+    "declared_count": 49,
     "families_total": 12,
     "ideas_per_family": [
       5
@@ -1467,6 +1467,11 @@
     "ideas_total": 60,
     "implemented": [
       "Tm1",
+      "Dst1",
+      "Dst2",
+      "Dst3",
+      "Dst4",
+      "Dst5",
       "Mx4",
       "Sc5",
       "Sca1",
@@ -1475,10 +1480,12 @@
     ],
     "implemented_components": [
       "B",
+      "C",
+      "Est",
       "F",
       "R"
     ],
-    "implemented_count": 6
+    "implemented_count": 11
   },
   "vocabulary": {
     "components": [

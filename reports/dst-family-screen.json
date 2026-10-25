@@ -1,57 +1,1267 @@
 {
   "schema_version": 1,
   "family": "Dst",
-  "spec": "$ORCHESTRATOR_ROOT/docs/research/bias-60-ideas-2026-10.md#family-dst",
-  "status": "documented_not_computed",
+  "status": "all_five_computed",
   "scope": {
     "official_scored_tracts": 9379,
-    "ideas": ["Dst1", "Dst2", "Dst3", "Dst4", "Dst5"],
-    "computed": [],
-    "coverage": null,
-    "correlation_and_vif": "not measured for uncomputed ideas; existing idea orthogonality remains in reports/ideas-orthogonality.json"
+    "ideas": [
+      "Dst1",
+      "Dst2",
+      "Dst3",
+      "Dst4",
+      "Dst5"
+    ],
+    "computed": [
+      "Dst1",
+      "Dst2",
+      "Dst3",
+      "Dst4",
+      "Dst5"
+    ],
+    "all_outputs_cover_official_geoid_partition": true
   },
   "constraints": {
     "provided_datasets_only": true,
     "labels_read": false,
-    "reference_layers_read": false,
-    "leaderboard_moments_used": false,
+    "removed_reference_layers_read_or_joined": false,
+    "microsoft_building_layer_used": false,
+    "foursquare_membership_used": false,
+    "leaderboard_accessed": false,
     "uploads": 0
   },
-  "idea_dispositions": [
-    {
-      "id": "Dst1",
-      "status": "not_computed",
-      "reason": "The aligned provided-data feature cache exposes per-tract POI totals and source shares, not per-place primary-category histograms. Singleton counts f1 and f2, required for Good-Turing/Chao1, cannot be recovered from those aggregates. The harness has no approved per-place category input/cache contract; emitting zero or an aggregate-derived proxy would fabricate histogram shape.",
-      "missing_prerequisite": "A rule-clean, region-aligned per-place primary-category input and a declared harness reader, plus a preregistered county-shrinkage rule."
+  "ideas": {
+    "Dst1": {
+      "status": "computed",
+      "path": "ideas/Dst1.parquet",
+      "sha256": "cac4c507372353f5493b09b1ce6ec7c293500d185a1778fc73a68d25e5bc4281",
+      "rows": 9379,
+      "official_rows": 9379,
+      "geoid_partition_exact": true,
+      "emissions": [
+        {
+          "channel": "gap",
+          "component": "Est",
+          "defined_rows": 9377,
+          "rows": 9379,
+          "value_max": 0.8362068730754588,
+          "value_min": 0.025902856591194835
+        }
+      ],
+      "regions": {
+        "eastern-ok": {
+          "rows": 1192,
+          "defined": 1192,
+          "coverage": 1.0,
+          "gap_distribution": {
+            "count": 1192,
+            "max": 0.8327412670219064,
+            "mean": 0.4477404362849389,
+            "min": 0.05410699052965944,
+            "p50": 0.44462610647099454,
+            "p90": 0.6070546332545602
+          },
+          "key_diagnostics": {
+            "chao1_defined": 1185
+          }
+        },
+        "maricopa-az": {
+          "rows": 1593,
+          "defined": 1593,
+          "coverage": 1.0,
+          "gap_distribution": {
+            "count": 1593,
+            "max": 0.8362068730754588,
+            "mean": 0.45530805520247586,
+            "min": 0.047906779312428385,
+            "p50": 0.4621646818332954,
+            "p90": 0.6315570679087233
+          },
+          "key_diagnostics": {
+            "chao1_defined": 1545
+          }
+        },
+        "northern-ca": {
+          "rows": 591,
+          "defined": 591,
+          "coverage": 1.0,
+          "gap_distribution": {
+            "count": 591,
+            "max": 0.7589844574161333,
+            "mean": 0.43532175635506754,
+            "min": 0.07998956210373147,
+            "p50": 0.4416721705224959,
+            "p90": 0.5884248517659191
+          },
+          "key_diagnostics": {
+            "chao1_defined": 579
+          }
+        },
+        "south-central-tx": {
+          "rows": 6003,
+          "defined": 6001,
+          "coverage": 0.999667,
+          "gap_distribution": {
+            "count": 6001,
+            "max": 0.7926283379990405,
+            "mean": 0.4205328054604557,
+            "min": 0.025902856591194835,
+            "p50": 0.42065161460113204,
+            "p90": 0.5857673396123365
+          },
+          "key_diagnostics": {
+            "chao1_defined": 5934
+          }
+        }
+      },
+      "correlation_with_existing_ideas": {
+        "Dst3|B|gap": 0.004223065213603907,
+        "Dst4|C|gap": 0.0850130863594862,
+        "Dst5|C|gap": 0.10475928723075846,
+        "Mx4|B|covariate": 0.016063408699570403,
+        "Mx4|F|covariate": 0.022142468304459807,
+        "P2|F|gap": 0.20536266466972283,
+        "Sc5|R|covariate": 0.004507522483307374,
+        "Sc5|R|gap": -0.09105547645665209,
+        "Sca1|F|gap": 0.20800285626047807,
+        "Tm1|B|covariate": -0.008545070472857854,
+        "Tm1|B|gap": -0.06145384371354041
+      },
+      "vif": {
+        "column": "Dst1|Est|gap",
+        "degenerate": false,
+        "distinct_values": 9189,
+        "vif": 19.119407551757924
+      }
     },
-    {
-      "id": "Dst2",
-      "status": "not_computed",
-      "reason": "The cached tract summaries expose marginal source shares, not per-place multi-source membership or source-list intersections. Capture-recapture needs overlap counts; marginals cannot identify them. The harness therefore cannot fit Chapman or a multi-list model from the current caches without inventing overlap.",
-      "missing_prerequisite": "A provided per-place dataset-membership input with validated source semantics and preregistered pooling/model rules; exclude Foursquare as the spec directs."
+    "Dst2": {
+      "status": "computed",
+      "path": "ideas/Dst2.parquet",
+      "sha256": "fc01b4f1782b1830500f232fbc31d9b65f77f23a69985fcbdcc54d5a29fdda6b",
+      "rows": 9379,
+      "official_rows": 9379,
+      "geoid_partition_exact": true,
+      "emissions": [
+        {
+          "channel": "gap",
+          "component": "Est",
+          "defined_rows": 0,
+          "rows": 9379,
+          "value_max": null,
+          "value_min": null
+        }
+      ],
+      "regions": {
+        "eastern-ok": {
+          "rows": 1192,
+          "defined": 0,
+          "coverage": 0.0,
+          "gap_distribution": null,
+          "key_diagnostics": {
+            "capture_counts": {
+              "all_pois": 207369,
+              "overlap": 0,
+              "source_a": 132819,
+              "source_b": 3556,
+              "union": 136375
+            },
+            "max_county_overlap": 0,
+            "tract_rows_pooled_to_county": 1192
+          }
+        },
+        "maricopa-az": {
+          "rows": 1593,
+          "defined": 0,
+          "coverage": 0.0,
+          "gap_distribution": null,
+          "key_diagnostics": {
+            "capture_counts": {
+              "all_pois": 300044,
+              "overlap": 0,
+              "source_a": 164553,
+              "source_b": 4294,
+              "union": 168847
+            },
+            "max_county_overlap": 0,
+            "tract_rows_pooled_to_county": 1593
+          }
+        },
+        "northern-ca": {
+          "rows": 591,
+          "defined": 0,
+          "coverage": 0.0,
+          "gap_distribution": null,
+          "key_diagnostics": {
+            "capture_counts": {
+              "all_pois": 116895,
+              "overlap": 0,
+              "source_a": 69601,
+              "source_b": 1639,
+              "union": 71240
+            },
+            "max_county_overlap": 0,
+            "tract_rows_pooled_to_county": 591
+          }
+        },
+        "south-central-tx": {
+          "rows": 6003,
+          "defined": 0,
+          "coverage": 0.0,
+          "gap_distribution": null,
+          "key_diagnostics": {
+            "capture_counts": {
+              "all_pois": 1300287,
+              "overlap": 0,
+              "source_a": 794972,
+              "source_b": 21065,
+              "union": 816037
+            },
+            "max_county_overlap": 0,
+            "tract_rows_pooled_to_county": 6003
+          }
+        }
+      },
+      "correlation_with_existing_ideas": null,
+      "vif": null,
+      "measured_limitation": "All 4 regions had zero overlap between permitted Meta and AllThePlaces memberships; pooled county maximum overlap was zero, so no tract meets the Chapman stability floor. Dst2 is emitted over every GEOID with every row explicitly undefined; no correlation or VIF exists at zero coverage. Foursquare and Microsoft memberships were not selected into the estimator."
     },
-    {
-      "id": "Dst3",
-      "status": "not_computed",
-      "reason": "The aligned provided-data cache contains tract building counts and source-share aggregates, not individual footprint areas. The reference-layer alternative named in the idea (Microsoft buildings) is forbidden on study tracts. A left-tail deficit cannot be estimated from counts or by substituting a prohibited layer.",
-      "missing_prerequisite": "A provided-dataset per-footprint area input with declared provenance and a preregistered peer-fit/expected-count rule; do not use Microsoft reference buildings."
+    "Dst3": {
+      "status": "computed",
+      "path": "ideas/Dst3.parquet",
+      "sha256": "bee2e5a578847aaace78ec1642a39e6068eea4fd8df6c03fca1f9a9f2ca234f8",
+      "rows": 9379,
+      "official_rows": 9379,
+      "geoid_partition_exact": true,
+      "emissions": [
+        {
+          "channel": "gap",
+          "component": "B",
+          "defined_rows": 9376,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 0.0
+        }
+      ],
+      "regions": {
+        "eastern-ok": {
+          "rows": 1192,
+          "defined": 1192,
+          "coverage": 1.0,
+          "gap_distribution": {
+            "count": 1192,
+            "max": 1.0,
+            "mean": 0.004468709159105102,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "key_diagnostics": {}
+        },
+        "maricopa-az": {
+          "rows": 1593,
+          "defined": 1592,
+          "coverage": 0.999372,
+          "gap_distribution": {
+            "count": 1592,
+            "max": 1.0,
+            "mean": 0.001256281407035176,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "key_diagnostics": {}
+        },
+        "northern-ca": {
+          "rows": 591,
+          "defined": 591,
+          "coverage": 1.0,
+          "gap_distribution": {
+            "count": 591,
+            "max": 0.4604606070460411,
+            "mean": 0.0020405611507929217,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "key_diagnostics": {}
+        },
+        "south-central-tx": {
+          "rows": 6003,
+          "defined": 6001,
+          "coverage": 0.999667,
+          "gap_distribution": {
+            "count": 6001,
+            "max": 1.0,
+            "mean": 0.013908630002819689,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "key_diagnostics": {}
+        }
+      },
+      "correlation_with_existing_ideas": {
+        "Dst1|Est|gap": 0.004223065213603907,
+        "Dst4|C|gap": 0.09549073480333177,
+        "Dst5|C|gap": 0.04585818127483067,
+        "Mx4|B|covariate": -0.025037486817437723,
+        "Mx4|F|covariate": -0.01684174870738861,
+        "P2|F|gap": 0.030428916027048586,
+        "Sc5|R|covariate": 0.0005986586115000113,
+        "Sc5|R|gap": -0.0008154482360438853,
+        "Sca1|F|gap": 0.03152190068209956,
+        "Tm1|B|covariate": -0.0035333335679486495,
+        "Tm1|B|gap": 0.0642103750732192
+      },
+      "vif": {
+        "column": "Dst3|B|gap",
+        "degenerate": false,
+        "distinct_values": 108,
+        "vif": 69.5077750365412
+      }
     },
-    {
-      "id": "Dst4",
-      "status": "not_computed",
-      "reason": "The idea is a meta-estimator over per-tract component expectation/gap outputs. Current registered outputs are only Tm1, Mx4 and Sc5; the complete component-specific expectation vector and RUCA conditioning contract required to distinguish incompleteness from urbanity are not registered. Fitting a mixture to the available three heterogeneous outputs would silently change the preregistered recipe.",
-      "missing_prerequisite": "Prerequisite idea-family outputs for all intended components, a frozen feature/conditioning set, and a deterministic mixture-identifiability/label-orientation rule."
+    "Dst4": {
+      "status": "computed",
+      "path": "ideas/Dst4.parquet",
+      "sha256": "5295204296da32d0d6a29f5dd63c5be48e650ac989d7ea37122aefc7f4829dff",
+      "rows": 9379,
+      "official_rows": 9379,
+      "geoid_partition_exact": true,
+      "emissions": [
+        {
+          "channel": "gap",
+          "component": "C",
+          "defined_rows": 9258,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 0.0
+        }
+      ],
+      "regions": {
+        "eastern-ok": {
+          "rows": 1192,
+          "defined": 1167,
+          "coverage": 0.979027,
+          "gap_distribution": {
+            "count": 1167,
+            "max": 1.0,
+            "mean": 0.445821099997313,
+            "min": 0.0,
+            "p50": 0.041126168699154565,
+            "p90": 1.0
+          },
+          "key_diagnostics": {
+            "groups": {
+              "rural": {
+                "feature_center": [
+                  -0.0017604972910628977,
+                  -0.6089575562036821,
+                  -3.4213588890183626,
+                  -0.47233288363814296
+                ],
+                "feature_scale": [
+                  0.002105896733567476,
+                  0.2005583497605668,
+                  5.683859823409073,
+                  1.5869278683719639
+                ],
+                "fit_rows": 218,
+                "incomplete_class": 1,
+                "iterations": 15,
+                "means_standardized": [
+                  [
+                    -0.006634229592927252,
+                    -0.0028062763580888363,
+                    0.0029089230447616895,
+                    0.11732346393064981
+                  ],
+                  [
+                    0.47545312082646546,
+                    0.20111647232980054,
+                    -0.20847281820795907,
+                    -8.40818158169656
+                  ]
+                ],
+                "status": "fitted",
+                "variances_standardized": [
+                  [
+                    1.00901925077346,
+                    1.0094973557340268,
+                    0.9950233847115505,
+                    0.013711704660876758
+                  ],
+                  [
+                    0.12441042596757021,
+                    0.2783439485508752,
+                    1.3125900816889242,
+                    0.001
+                  ]
+                ],
+                "weights": [
+                  0.9862385321100917,
+                  0.013761467889908258
+                ]
+              },
+              "suburban": {
+                "feature_center": [
+                  -0.0021693563852006564,
+                  -0.5796677592398065,
+                  -6.646654967940409,
+                  -8.138042559145565e-17
+                ],
+                "feature_scale": [
+                  0.002545762847979509,
+                  0.20748584050322094,
+                  6.591735210926318,
+                  1.0
+                ],
+                "fit_rows": 206,
+                "incomplete_class": 0,
+                "iterations": 86,
+                "means_standardized": [
+                  [
+                    -1.4442717867916575,
+                    0.03277311276929594,
+                    0.1622341893041633,
+                    1.359669580714002e-18
+                  ],
+                  [
+                    0.329565370499007,
+                    -0.0074784283339171375,
+                    -0.03701988171105137,
+                    -3.102601693270541e-19
+                  ]
+                ],
+                "status": "fitted",
+                "variances_standardized": [
+                  [
+                    1.9062960274012477,
+                    1.1137644446724717,
+                    0.9820695347281009,
+                    0.001
+                  ],
+                  [
+                    0.20859889744408924,
+                    0.9737393100847884,
+                    0.9967151533804304,
+                    0.001
+                  ]
+                ],
+                "weights": [
+                  0.1857923480430306,
+                  0.8142076519569694
+                ]
+              },
+              "urban": {
+                "feature_center": [
+                  -0.006852090621320167,
+                  -0.6235769756964433,
+                  -9.250062366697199,
+                  -7.127542163475098e-17
+                ],
+                "feature_scale": [
+                  0.0501450262648825,
+                  0.23285946002897148,
+                  6.191663186470543,
+                  1.0
+                ],
+                "fit_rows": 743,
+                "incomplete_class": 0,
+                "iterations": 5,
+                "means_standardized": [
+                  [
+                    -0.052190834310899145,
+                    -0.06675656210937483,
+                    -0.7373540927166536,
+                    1.7416205100021034e-18
+                  ],
+                  [
+                    0.09469473346560886,
+                    0.12112270170602515,
+                    1.3378507970124398,
+                    -3.159985698072025e-18
+                  ]
+                ],
+                "status": "fitted",
+                "variances_standardized": [
+                  [
+                    1.5394468665521779,
+                    0.9919364915367699,
+                    0.001,
+                    0.001
+                  ],
+                  [
+                    0.0073215850121383375,
+                    0.9918739368580776,
+                    0.038079423705786875,
+                    0.001
+                  ]
+                ],
+                "weights": [
+                  0.6446837146702558,
+                  0.3553162853297443
+                ]
+              }
+            },
+            "source_ideas": [
+              "Dst1",
+              "Dst2",
+              "Dst3",
+              "Mx4",
+              "P2",
+              "P4",
+              "Sc5",
+              "Sca1",
+              "Tm1"
+            ]
+          }
+        },
+        "maricopa-az": {
+          "rows": 1593,
+          "defined": 1560,
+          "coverage": 0.979284,
+          "gap_distribution": {
+            "count": 1560,
+            "max": 1.0,
+            "mean": 0.09974953252564926,
+            "min": 0.0,
+            "p50": 0.001398111901685773,
+            "p90": 0.37506302160175753
+          },
+          "key_diagnostics": {
+            "groups": {
+              "rural": {
+                "feature_center": [
+                  -0.0028810380098666355,
+                  -0.5626954618523394,
+                  -5.950762124216056,
+                  -9.945747928933696e-17
+                ],
+                "feature_scale": [
+                  0.008805986957944842,
+                  0.22324073400994687,
+                  6.398061859291209,
+                  1.0
+                ],
+                "fit_rows": 96,
+                "incomplete_class": 0,
+                "iterations": 6,
+                "means_standardized": [
+                  [
+                    0.09859632979359119,
+                    -0.24147187236620235,
+                    -1.229239198793787,
+                    3.0433745192575623e-18
+                  ],
+                  [
+                    -0.064597595382008,
+                    0.15820570948130624,
+                    0.8053636130028262,
+                    -1.9939350298583842e-18
+                  ]
+                ],
+                "status": "fitted",
+                "variances_standardized": [
+                  [
+                    0.08628780975393242,
+                    1.3045559261530668,
+                    0.001,
+                    0.001
+                  ],
+                  [
+                    1.5880970860484047,
+                    0.7372320833273435,
+                    0.01657734225887375,
+                    0.001
+                  ]
+                ],
+                "weights": [
+                  0.3958333333333333,
+                  0.6041666666666666
+                ]
+              },
+              "suburban": {
+                "feature_center": [
+                  -0.002691633215123665,
+                  -0.5940427097741056,
+                  -7.022487865528842,
+                  -7.85696294350111e-17
+                ],
+                "feature_scale": [
+                  0.002932122227996794,
+                  0.205865566969498,
+                  6.550090323510059,
+                  1.0
+                ],
+                "fit_rows": 65,
+                "incomplete_class": 0,
+                "iterations": 6,
+                "means_standardized": [
+                  [
+                    -0.02766816083358233,
+                    -0.41853959190662593,
+                    -1.0370883998428875,
+                    3.3609729281456393e-18
+                  ],
+                  [
+                    0.025226852524736856,
+                    0.3816096279148646,
+                    0.945580599856751,
+                    -3.0644164933092563e-18
+                  ]
+                ],
+                "status": "fitted",
+                "variances_standardized": [
+                  [
+                    1.3004888833302872,
+                    0.9779153770003852,
+                    0.001,
+                    0.001
+                  ],
+                  [
+                    0.7246904669681591,
+                    0.7147913337413183,
+                    0.03699136382898527,
+                    0.001
+                  ]
+                ],
+                "weights": [
+                  0.47692307692307695,
+                  0.5230769230769231
+                ]
+              },
+              "urban": {
+                "feature_center": [
+                  -0.0019489029198403918,
+                  -0.6433610921112853,
+                  -10.124100351330357,
+                  -7.277158781853241e-17
+                ],
+                "feature_scale": [
+                  0.01878429832504687,
+                  0.2666155589187126,
+                  5.990385246479263,
+                  1.0
+                ],
+                "fit_rows": 1399,
+                "incomplete_class": 0,
+                "iterations": 94,
+                "means_standardized": [
+                  [
+                    -0.8766482101816109,
+                    0.3246783579654818,
+                    0.09434758773445959,
+                    -1.807481043763615e-18
+                  ],
+                  [
+                    0.05785309244159232,
+                    -0.021426664469289626,
+                    -0.006226328476387252,
+                    1.1928201837040435e-19
+                  ]
+                ],
+                "status": "fitted",
+                "variances_standardized": [
+                  [
+                    15.265443615541281,
+                    0.9039099515851872,
+                    1.0771679167258916,
+                    0.001
+                  ],
+                  [
+                    0.004509513587559565,
+                    0.9989254433859267,
+                    0.9942812120759363,
+                    0.001
+                  ]
+                ],
+                "weights": [
+                  0.06190798480344022,
+                  0.9380920151965598
+                ]
+              }
+            },
+            "source_ideas": [
+              "Dst1",
+              "Dst2",
+              "Dst3",
+              "Mx4",
+              "P2",
+              "P4",
+              "Sc5",
+              "Sca1",
+              "Tm1"
+            ]
+          }
+        },
+        "northern-ca": {
+          "rows": 591,
+          "defined": 584,
+          "coverage": 0.988156,
+          "gap_distribution": {
+            "count": 584,
+            "max": 1.0,
+            "mean": 0.5186264484191968,
+            "min": 0.0,
+            "p50": 0.9999990285397973,
+            "p90": 0.9999998937977395
+          },
+          "key_diagnostics": {
+            "groups": {
+              "rural": {
+                "feature_center": [
+                  -0.0023789887860566927,
+                  -0.5770068784222037,
+                  -3.4329168028651282,
+                  -1.0535789927565263e-16
+                ],
+                "feature_scale": [
+                  0.0051892917339124555,
+                  0.22078469719030108,
+                  5.612569445481168,
+                  1.0
+                ],
+                "fit_rows": 98,
+                "incomplete_class": 0,
+                "iterations": 5,
+                "means_standardized": [
+                  [
+                    -0.0479005249371037,
+                    -0.8801947932998623,
+                    -1.8498824568591226,
+                    2.4614406575641226e-17
+                  ],
+                  [
+                    0.013865941429161442,
+                    0.25479322963943213,
+                    0.5354922901434302,
+                    -7.125222956106678e-18
+                  ]
+                ],
+                "status": "fitted",
+                "variances_standardized": [
+                  [
+                    0.39021266212545636,
+                    0.963038244989226,
+                    0.001,
+                    0.001
+                  ],
+                  [
+                    1.1756609370745497,
+                    0.7215121914310778,
+                    0.012123898087822937,
+                    0.001
+                  ]
+                ],
+                "weights": [
+                  0.22448979591836735,
+                  0.7755102040816326
+                ]
+              },
+              "suburban": {
+                "feature_center": [
+                  -0.0041474917046687935,
+                  -0.5667610954497552,
+                  -7.045852498297355,
+                  -9.912705577010328e-17
+                ],
+                "feature_scale": [
+                  0.003685643486337353,
+                  0.2206631448257809,
+                  6.589728434661028,
+                  1.0
+                ],
+                "fit_rows": 56,
+                "incomplete_class": 0,
+                "iterations": 5,
+                "means_standardized": [
+                  [
+                    0.05984830512283681,
+                    -0.4438255128453007,
+                    -1.0273045584184457,
+                    4.552501820552889e-18
+                  ],
+                  [
+                    -0.055720835804020326,
+                    0.4132168567870033,
+                    0.9564559681826899,
+                    -4.238536177756141e-18
+                  ]
+                ],
+                "status": "fitted",
+                "variances_standardized": [
+                  [
+                    0.6879909555874568,
+                    0.9743677139691516,
+                    0.001,
+                    0.001
+                  ],
+                  [
+                    1.2840515701550466,
+                    0.6697201880539059,
+                    0.03365488764573088,
+                    0.001
+                  ]
+                ],
+                "weights": [
+                  0.48214285714285715,
+                  0.5178571428571429
+                ]
+              },
+              "urban": {
+                "feature_center": [
+                  -0.0040484700298759795,
+                  -0.6035386248053185,
+                  -8.632081586551529,
+                  -7.513369771300478e-17
+                ],
+                "feature_scale": [
+                  0.0197019710398287,
+                  0.23807244154242146,
+                  6.48030055184371,
+                  1.0
+                ],
+                "fit_rows": 430,
+                "incomplete_class": 0,
+                "iterations": 39,
+                "means_standardized": [
+                  [
+                    0.1030522983210854,
+                    -0.19397111714513524,
+                    -0.7998747789464806,
+                    6.712693751038953e-18
+                  ],
+                  [
+                    -0.1485485777792159,
+                    0.27960689913365905,
+                    1.1530093239041748,
+                    -9.676262694087284e-18
+                  ]
+                ],
+                "status": "fitted",
+                "variances_standardized": [
+                  [
+                    0.018632885035988207,
+                    0.8879728423047328,
+                    0.001,
+                    0.001
+                  ],
+                  [
+                    2.3772532663901993,
+                    1.0290700428273445,
+                    0.18979370648484317,
+                    0.001
+                  ]
+                ],
+                "weights": [
+                  0.5904135950623512,
+                  0.4095864049376489
+                ]
+              }
+            },
+            "source_ideas": [
+              "Dst1",
+              "Dst2",
+              "Dst3",
+              "Mx4",
+              "P2",
+              "P4",
+              "Sc5",
+              "Sca1",
+              "Tm1"
+            ]
+          }
+        },
+        "south-central-tx": {
+          "rows": 6003,
+          "defined": 5947,
+          "coverage": 0.990671,
+          "gap_distribution": {
+            "count": 5947,
+            "max": 1.0,
+            "mean": 0.6183849929482266,
+            "min": 0.0,
+            "p50": 1.0,
+            "p90": 1.0
+          },
+          "key_diagnostics": {
+            "groups": {
+              "rural": {
+                "feature_center": [
+                  -0.005020676371906016,
+                  -0.5660697329540723,
+                  -4.8148181637402825,
+                  -0.5941703018032938
+                ],
+                "feature_scale": [
+                  0.033891173707130524,
+                  0.19306790311747118,
+                  6.307368840680658,
+                  1.8504729249414622
+                ],
+                "fit_rows": 421,
+                "incomplete_class": 0,
+                "iterations": 51,
+                "means_standardized": [
+                  [
+                    -1.292608961253994,
+                    -0.8676178857686093,
+                    -0.2617656618600027,
+                    0.16376786485873682
+                  ],
+                  [
+                    0.0662841361242161,
+                    0.04449087370421796,
+                    0.013423170721746022,
+                    -0.008397908240198124
+                  ]
+                ],
+                "status": "fitted",
+                "variances_standardized": [
+                  [
+                    18.639483316353196,
+                    2.497479834841198,
+                    1.1573390558783505,
+                    0.011424877012889745
+                  ],
+                  [
+                    0.005385859174859838,
+                    0.8826297047992886,
+                    0.9882378501693571,
+                    1.0492476487927176
+                  ]
+                ],
+                "weights": [
+                  0.04877803577934263,
+                  0.9512219642206571
+                ]
+              },
+              "suburban": {
+                "feature_center": [
+                  -0.003006929023605797,
+                  -0.5516632544457617,
+                  -6.111332420084985,
+                  -9.371237358395139e-17
+                ],
+                "feature_scale": [
+                  0.003753085217539453,
+                  0.2043170510133785,
+                  6.539176905399131,
+                  1.0
+                ],
+                "fit_rows": 372,
+                "incomplete_class": 0,
+                "iterations": 7,
+                "means_standardized": [
+                  [
+                    -0.10593472543623562,
+                    -0.2527588007442888,
+                    -1.178157167076833,
+                    5.968940992608156e-19
+                  ],
+                  [
+                    0.0756676610258822,
+                    0.18054200053163635,
+                    0.8415408336263076,
+                    -4.2635292804348335e-19
+                  ]
+                ],
+                "status": "fitted",
+                "variances_standardized": [
+                  [
+                    0.7857013019652733,
+                    0.9734017210506525,
+                    0.001,
+                    0.001
+                  ],
+                  [
+                    1.139329070775929,
+                    0.9407697771837902,
+                    0.014627375100608409,
+                    0.001
+                  ]
+                ],
+                "weights": [
+                  0.4166666666666667,
+                  0.5833333333333334
+                ]
+              },
+              "urban": {
+                "feature_center": [
+                  -0.012524838548059353,
+                  -0.5709773988985026,
+                  -9.53425113740538,
+                  -9.943324566685531e-17
+                ],
+                "feature_scale": [
+                  0.07532577963571793,
+                  0.23510346285659242,
+                  6.232631675086726,
+                  1.0
+                ],
+                "fit_rows": 5154,
+                "incomplete_class": 0,
+                "iterations": 5,
+                "means_standardized": [
+                  [
+                    -0.052718577526140634,
+                    -0.11504412978181737,
+                    -0.681226669428603,
+                    5.308398147949199e-18
+                  ],
+                  [
+                    0.11175572548216933,
+                    0.2438768417045709,
+                    1.4441015716338075,
+                    -1.1253032877795641e-17
+                  ]
+                ],
+                "status": "fitted",
+                "variances_standardized": [
+                  [
+                    1.4324954515235038,
+                    1.015194248059073,
+                    0.012537826945526132,
+                    0.001
+                  ],
+                  [
+                    0.06479152998348525,
+                    0.8802578885639422,
+                    0.024086496745312935,
+                    0.001
+                  ]
+                ],
+                "weights": [
+                  0.6794722545595654,
+                  0.3205277454404346
+                ]
+              }
+            },
+            "source_ideas": [
+              "Dst1",
+              "Dst2",
+              "Dst3",
+              "Mx4",
+              "P2",
+              "P4",
+              "Sc5",
+              "Sca1",
+              "Tm1"
+            ]
+          }
+        }
+      },
+      "correlation_with_existing_ideas": {
+        "Dst1|Est|gap": 0.0850130863594862,
+        "Dst3|B|gap": 0.09549073480333177,
+        "Dst5|C|gap": 0.6402093323725639,
+        "Mx4|B|covariate": 0.06833827942505177,
+        "Mx4|F|covariate": 0.0682205749294811,
+        "P2|F|gap": 0.6416976899284463,
+        "Sc5|R|covariate": 0.006539141967904961,
+        "Sc5|R|gap": -0.013725681378240344,
+        "Sca1|F|gap": 0.6518349224189256,
+        "Tm1|B|covariate": -0.012178670997036694,
+        "Tm1|B|gap": 0.06640228512371582
+      },
+      "vif": {
+        "column": "Dst4|C|gap",
+        "degenerate": false,
+        "distinct_values": 3894,
+        "vif": 1.8736690233046067
+      }
     },
-    {
-      "id": "Dst5",
-      "status": "not_computed",
-      "reason": "The rules' published aggregates are permissible inputs, but they constrain regional moments rather than supplying a per-tract score. The specified monotone calibration requires base per-tract estimators and a frozen transform/selection rule. The available road estimator Sc5 is not a complete base vector for the published definedness and component-ratio moments. Using an aggregate as a tract label or fitting against leaderboard moments is forbidden.",
-      "missing_prerequisite": "A complete rule-clean per-tract base-estimator vector and preregistered monotone calibration procedure using only organizer-published aggregates."
+    "Dst5": {
+      "status": "computed",
+      "path": "ideas/Dst5.parquet",
+      "sha256": "74a5f3d50f07c969220c9b45db05d9ffb58bfa69fb42554b096a39957e569e86",
+      "rows": 9379,
+      "official_rows": 9379,
+      "geoid_partition_exact": true,
+      "emissions": [
+        {
+          "channel": "gap",
+          "component": "C",
+          "defined_rows": 9258,
+          "rows": 9379,
+          "value_max": 0.9999999999987228,
+          "value_min": 8.334121688520036e-19
+        }
+      ],
+      "regions": {
+        "eastern-ok": {
+          "rows": 1192,
+          "defined": 1167,
+          "coverage": 0.979027,
+          "gap_distribution": {
+            "count": 1167,
+            "max": 0.5021657247518136,
+            "mean": 0.21000000000000013,
+            "min": 1.0087005586419008e-18,
+            "p50": 4.326324063102297e-11,
+            "p90": 0.5021657247518136
+          },
+          "key_diagnostics": {
+            "target_undefined_share": 0.21,
+            "calibrated_mean": 0.21000000000000013
+          }
+        },
+        "maricopa-az": {
+          "rows": 1593,
+          "defined": 1560,
+          "coverage": 0.979284,
+          "gap_distribution": {
+            "count": 1560,
+            "max": 0.9999999999987228,
+            "mean": 0.5499999999999999,
+            "min": 7.830155662729839e-07,
+            "p50": 0.5229637792808208,
+            "p90": 0.9978765688867675
+          },
+          "key_diagnostics": {
+            "target_undefined_share": 0.55,
+            "calibrated_mean": 0.5499999999999999
+          }
+        },
+        "northern-ca": {
+          "rows": 591,
+          "defined": 584,
+          "coverage": 0.988156,
+          "gap_distribution": {
+            "count": 584,
+            "max": 0.9979790520587642,
+            "mean": 0.36999999999999983,
+            "min": 4.938172851793951e-16,
+            "p50": 0.3370319943178445,
+            "p90": 0.823001989660132
+          },
+          "key_diagnostics": {
+            "target_undefined_share": 0.37,
+            "calibrated_mean": 0.36999999999999983
+          }
+        },
+        "south-central-tx": {
+          "rows": 6003,
+          "defined": 5947,
+          "coverage": 0.990671,
+          "gap_distribution": {
+            "count": 5947,
+            "max": 0.45456891524877013,
+            "mean": 0.27999999999999997,
+            "min": 8.334121688520036e-19,
+            "p50": 0.45456891524877013,
+            "p90": 0.45456891524877013
+          },
+          "key_diagnostics": {
+            "target_undefined_share": 0.28,
+            "calibrated_mean": 0.27999999999999997
+          }
+        }
+      },
+      "correlation_with_existing_ideas": {
+        "Dst1|Est|gap": 0.10475928723075846,
+        "Dst3|B|gap": 0.04585818127483067,
+        "Dst4|C|gap": 0.6402093323725639,
+        "Mx4|B|covariate": 0.0313231207165106,
+        "Mx4|F|covariate": 0.037838508629702,
+        "P2|F|gap": 0.6035755766421137,
+        "Sc5|R|covariate": 9.291116160396666e-05,
+        "Sc5|R|gap": -0.05043064700474419,
+        "Sca1|F|gap": 0.6155058713158167,
+        "Tm1|B|covariate": -0.01607466265318774,
+        "Tm1|B|gap": 0.004366848635497058
+      },
+      "vif": {
+        "column": "Dst5|C|gap",
+        "degenerate": false,
+        "distinct_values": 2230,
+        "vif": 2.068099258286533
+      }
     }
-  ],
+  },
   "orthogonality": {
     "report": "reports/ideas-orthogonality.json",
-    "new_dst_columns": 0,
-    "interpretation": "No Dst correlation or VIF is claimed because no Dst estimator was computed. The existing report covers the currently implemented estimators; refresh it when a Dst implementation is admitted."
-  }
+    "file_sha256": "f3d6efd72e341fa333d3f4a2dbb78ee7104b6347921f100ccbe7d3a642337867",
+    "internal_report_sha256": "25d630cdb058774f1f76573afb6e1717cf372ccd2cf0d9d2141f5a5fe5a87ce2",
+    "summary": {
+      "all_passed": true,
+      "clusters": 10,
+      "columns_degenerate": 0,
+      "columns_evaluated": 14,
+      "columns_flagged_vif": 6,
+      "columns_included": 12,
+      "columns_numerically_null": 2,
+      "pairs_flagged": 2,
+      "report_sha256": "25d630cdb058774f1f76573afb6e1717cf372ccd2cf0d9d2141f5a5fe5a87ce2"
+    },
+    "flagged_pairs": [
+      {
+        "abs_rho": 0.995801065928555,
+        "left": "P2|F|gap",
+        "right": "Sca1|F|gap",
+        "same_component": true,
+        "same_family": false
+      },
+      {
+        "abs_rho": 0.8160240383903553,
+        "left": "Sc5|R|covariate",
+        "right": "Sc5|R|gap",
+        "same_component": true,
+        "same_family": true
+      }
+    ],
+    "vif_flags": [
+      {
+        "column": "Dst1|Est|gap",
+        "vif": 19.119407551757924
+      },
+      {
+        "column": "Dst3|B|gap",
+        "vif": 69.5077750365412
+      },
+      {
+        "column": "Sc5|R|covariate",
+        "vif": 2057.6879359195327
+      },
+      {
+        "column": "Sc5|R|gap",
+        "vif": 83.00789495402053
+      },
+      {
+        "column": "Tm1|B|covariate",
+        "vif": 69.2810891471179
+      },
+      {
+        "column": "Tm1|B|gap",
+        "vif": 29.950000514022577
+      }
+    ],
+    "excluded_low_coverage_columns": [
+      {
+        "column": "Dst2|Est|gap",
+        "coverage": 0.0
+      },
+      {
+        "column": "P4|R|gap",
+        "coverage": 0.06813093080285745
+      }
+    ],
+    "numerically_null_columns": [
+      {
+        "column": "Sc5|R|covariate",
+        "distinct_values": 20,
+        "epsilon": 1e-09,
+        "reason": "values vary only below the preregistered numerical-null epsilon, so the estimator measured no difference on the study tracts",
+        "spread": 2.7755575615628914e-15
+      },
+      {
+        "column": "Sc5|R|gap",
+        "distinct_values": 14,
+        "epsilon": 1e-09,
+        "reason": "values vary only below the preregistered numerical-null epsilon, so the estimator measured no difference on the study tracts",
+        "spread": 1.4432899320127035e-15
+      }
+    ],
+    "note": "Full pairwise matrix and VIF table remain in the refreshed orthogonality report; zero-coverage Dst2 is excluded rather than assigned fabricated correlations."
+  },
+  "dst5_calibration_rule": "Per-region mean Dst5 gap is monotone-logit calibrated to the organizer-published share with any undefined component (AZ 0.55, northern CA 0.37, eastern OK 0.21, south-central TX 0.28); no target, label, or reference-layer values used."
 }

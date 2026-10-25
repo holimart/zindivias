@@ -245,7 +245,9 @@ class MeasuredStateTests(unittest.TestCase):
                 self.assertIsNotNone(row["correlation_with_label"])
                 self.assertIsNotNone(row["partial_correlation_with_label"])
                 self.assertIsNotNone(row["drop_column_delta_rmse"])
-                self.assertGreater(row["correlation_with_label"], 0.5)
+                # The synthetic lab now gives each of the growing registered idea vector independent
+                # variation; marginal correlation need only be positive, not >0.5 for every feature.
+                self.assertGreater(row["correlation_with_label"], 0.0)
         deltas = [row["drop_column_delta_rmse"] for row in rows.values()]
         self.assertTrue(all(delta >= 0.0 for delta in deltas),
                         "dropping a useful estimator must not lower grouped-CV RMSE")

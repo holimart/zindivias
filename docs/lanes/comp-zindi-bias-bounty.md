@@ -1575,3 +1575,47 @@ refreshed; lab evaluation was regenerated with the new registry and remains `not
 (no channels measured, no weights). Tests cover Sca1 direct PMF agreement, extreme rates, invalid
 inputs and undefinedness, plus the four remaining idea-specific reasons and the correlation/merge
 record. Validation: focused suite 92 passed, 114 subtests; full repository suite **610 passed, 269 subtests** in 560.43s.
+
+## 2026-10-25 — bias60-family-dst: Dst1–Dst5 implemented on provided layers
+
+Implemented all five distributional estimators with `reference/<region>/<region>-overture-pois.parquet`
+(the provided `pois` object, not the absent `places` alias) and the provided Overture buildings layer.
+Readers assign points/footprint centroids strictly within the provided ACS tract polygons; boundary
+or outside POIs are counted as unassigned. Large raw-layer calculations and compressed count caches
+remain in `$COMPETITION_WORKSPACE/ideas/_cache`, never git. No removed reference layer, target, label,
+leaderboard data, or upload was accessed.
+
+- **Dst1** primary-category Good–Turing missing mass `f1 / N`, county-shrunk with preregistered 10
+  pseudo-observations; Chao1 richness is retained as a diagnostic. All 9,379 rows, 9,377 defined.
+  SHA-256 `cac4c507372353f5493b09b1ce6ec7c293500d185a1778fc73a68d25e5bc4281`.
+- **Dst2** Chapman capture–recapture uses only Overture `meta` and `alltheplaces` membership; Microsoft
+  and Foursquare are excluded. The measured result is a negative: across all regions and counties,
+  permitted-source overlap is zero, so no estimate meets the 10-overlap floor. Parquet still covers
+  all 9,379 GEOIDs with 0 defined; the report records the source counts, zero overlap and why no
+  correlations/VIF can be computed at zero coverage. SHA-256
+  `fc01b4f1782b1830500f232fbc31d9b65f77f23a69985fcbdcc54d5a29fdda6b`.
+- **Dst3** left-tail estimate uses only provided Overture footprint geometry; centroid-assigned area
+  counts below 40 m² and in 40–400 m², with a region-pooled lognormal moment fit. It never reads
+  Microsoft building footprints. All rows, 9,376 defined. SHA-256
+  `bee2e5a578847aaace78ec1642a39e6068eea4fd8df6c03fca1f9a9f2ca234f8`.
+- **Dst4** runs after every registered base idea artifact, averages the available gap signals into
+  the current B/Est/F/R vector, converts fixed gaps to `log(O/E)=log(1-g)`, and fits deterministic
+  two-class diagonal Gaussian mixtures separately by region and RUCA class. Lower-log-ratio class is
+  oriented as incomplete. All rows, 9,258 complete vectors. SHA-256
+  `5295204296da32d0d6a29f5dd63c5be48e650ac989d7ea37122aefc7f4829dff`.
+- **Dst5** applies a monotone logit-intercept calibration to Dst4, matching only the organizer-published
+  region shares with any undefined component (AZ .55, northern CA .37, eastern OK .21, south-central
+  TX .28). Its means match those published moments; no labels or reference values are used. All rows,
+  9,258 defined. SHA-256
+  `74a5f3d50f07c969220c9b45db05d9ffb58bfa69fb42554b096a39957e569e86`.
+
+Registry, harness and orthogonality reports refreshed. All 11 currently implemented ideas were
+measured label-free: 14 evaluated columns, 12 included, 6 VIF flags, 2 correlations above 0.8 (P2 /
+Sca1 and the two Sc5 channels); Dst2 is excluded only because its measured coverage is zero. Every
+available Dst column's correlation with the other included ideas and its VIF is in the refreshed
+`reports/ideas-orthogonality.json`; the Dst per-region coverage/distribution, exact hashes, Dst2
+negative result and Dst4 source-vector list are in `reports/dst-family-screen.json`.
+
+Tests cover Dst1 shrinkage/Chao1, Dst2 zero and nonzero overlap cases, Dst3 lognormal tail formula,
+Dst4 mixture class orientation, Dst5 monotone moment calibration, all five full-artifact reports,
+harness order/partition, and lab evaluator behavior as the registered vector grows. Full suite: **621 passed, 291 subtests in 290.68s**. The lab report remains `not_run_missing_lab`; no lab statistic was produced.
