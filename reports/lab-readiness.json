@@ -1,0 +1,1032 @@
+{
+  "acceptance": {
+    "minimum_labelled_groups": 5,
+    "note": "acceptance belongs to the build, which is gated; this readiness plan must be complete and its safety rails tested before the build is allowed to run",
+    "required_per_group": [
+      "tracts",
+      "component_defined_counts",
+      "component_undefined_counts",
+      "composite_defined_count",
+      "recipe_variant_id"
+    ],
+    "required_recipe_self_checks": [
+      "state_road_ratio_in_organiser_band",
+      "hospital_ratio_check"
+    ]
+  },
+  "access": {
+    "disclosure": "workspace files are labelled WORKSPACE:*, orchestrator files ORCHESTRATOR:*, repository files are repository-relative; no reference layer, label, score placeholder cell or platform endpoint is opened",
+    "opened_paths": [
+      "ORCHESTRATOR:docs/research/bias-60-ideas-2026-10.md",
+      "WORKSPACE:RULES.md",
+      "WORKSPACE:SampleSubmission.csv",
+      "WORKSPACE:defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+      "WORKSPACE:defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+      "WORKSPACE:defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+      "WORKSPACE:defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+      "config/bias60-lab-preregistered.json",
+      "scripts/audit_v2_component_masks.py",
+      "scripts/build_building_morphology_candidate.py",
+      "scripts/build_estimator_v2_candidates.py",
+      "scripts/build_ideas_registry.py",
+      "scripts/build_poi_confidence_candidate.py",
+      "scripts/build_road_topology_candidate.py",
+      "scripts/estimate_gaps.py",
+      "scripts/estimator_v2_building.py",
+      "scripts/estimator_v2_establishments.py",
+      "scripts/run_bias60_ideas.py",
+      "scripts/submit_zindi.py"
+    ],
+    "provided_data_reads": {
+      "official_geoid_reader": "scripts/audit_v2_component_masks.py::official_scored_ids",
+      "platform_template": "WORKSPACE:SampleSubmission.csv (GEOID column only)",
+      "strata_columns": [
+        "GEOID",
+        "STATEFP",
+        "COUNTYFP"
+      ],
+      "strata_tables": [
+        "WORKSPACE:defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+        "WORKSPACE:defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+        "WORKSPACE:defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+        "WORKSPACE:defined-flags-inputs/south-central-tx-strata-tract-table.parquet"
+      ]
+    }
+  },
+  "authorization": {
+    "all_citations_verbatim": true,
+    "blocking_row": null,
+    "blocking_row_disposition": "bias60-organiser-ruling is closed superseded by this decision: no question goes to the organisers, so no gate may block the lab on a ruling",
+    "citations": [
+      {
+        "citation": "Participants must not use reference layers, or equivalent copies obtained elsewhere, to recreate or approximate the organiser-computed targets.",
+        "present_in_saved_rules_text": true
+      },
+      {
+        "citation": "Participants are not expected or permitted to reproduce these targets using reference datasets that have been removed from the challenge package.",
+        "present_in_saved_rules_text": true
+      },
+      {
+        "citation": "The scored coverage gap computation must use only the datasets provided for this challenge; additional data sources are permitted only for the Best Bias Discovery prize.",
+        "present_in_saved_rules_text": true
+      },
+      {
+        "citation": "You may use only the datasets provided for this challenge, however you may use additional public datasets for the Best Bias Discovery prize only (documented and reproducible).",
+        "present_in_saved_rules_text": true
+      }
+    ],
+    "decided_at_utc": "2026-10-25T09:35Z",
+    "decided_by": "operator, recorded by the shared steward in orchestrator commit 901d5e3c8ee89eb9995e2adb15a3fee6c48b49ee",
+    "decision_matches_spec_verbatim": true,
+    "decision_verbatim": "**Operator decision 2026-10-25 09:35Z (overrides every \"until the organiser ruling\" below).** No question goes to the organisers. Track B is allowed: fit the weights in the external lab, on geographies outside the four study regions with every study tract and its neighbours excluded, then apply only the learned weight vector to estimators computed from the provided data. Reference layers or equivalent copies are never computed on, joined to, or used to approximate targets for study tracts. Disclose the lab method in the writeup.",
+    "lab_data_may_not_reach": [
+      "reports/candidates/",
+      "reports/candidates.json",
+      "reports/final-two.json",
+      "config/calibration.json",
+      "scripts/submit_zindi.py"
+    ],
+    "operator_conditions": [
+      {
+        "condition": "the lab sits on geographies outside the four study regions with every study tract and its neighbours excluded",
+        "enforced": true,
+        "enforced_by": "exclusion_policy (official and template GEOID exclusion plus an 8 km centroid buffer in EPSG:5070), tested in tests/test_bias60_lab_plan.py"
+      },
+      {
+        "condition": "reference layers or equivalent copies are never computed on, joined to, or used to approximate targets for study tracts",
+        "enforced": true,
+        "enforced_by": "exclusion_policy consulted before any layer is loaded for a candidate, model_and_submission_paths_cannot_read_lab firewall, and lab_data_may_not_reach"
+      },
+      {
+        "condition": "only the learned weight vector crosses into the submission, applied to estimators computed from the provided data",
+        "enforced": true,
+        "enforced_by": "track_b_controls.allowed_fields_in_a_submission_artifact and track_b_controls.never_cross"
+      },
+      {
+        "condition": "the lab method is disclosed in the writeup",
+        "enforced": true,
+        "enforced_by": "writeup_disclosure (required sections and the file that must carry them)"
+      }
+    ],
+    "operator_conditions_cover_the_decision": true,
+    "operator_question": "For the Bias Bounty Mapping Equity Challenge we would like to validate our estimators on an external lab: the same coverage-gap recipe applied to about 10,000 2020 census tracts in nine US state groups that contain none of the four study regions and no tract sharing an edge with one, using the reference layers that were removed from the participant package (TIGER/Line 2024 prisecroads, Microsoft US Building Footprints, USGS National Structures, CBP/ZBP 2023) plus the same Overture release. No lab value would ever be joined to a study GEOID or enter a submission artifact; the scored submission uses only provided data. Is building and reporting such an external lab permitted under the rule that removed reference layers or equivalent copies obtained elsewhere must not be used to recreate or approximate the targets, or is it permitted only as Best Bias Discovery documentation? May weights fitted on other US geographies using public TIGER/MS/USGS/CBP be applied to provided-data features? And are the provided `usfs_BuildingCount_sum` / `carbonplan_buildings` columns usable as features?",
+    "operator_question_note": "retained verbatim for the record because the spec's own combined question also asks whether the provided usfs_BuildingCount_sum and carbonplan_buildings columns are usable as features; the operator answered the lab question and no question goes to the organisers",
+    "operator_question_status": "withdrawn_by_operator_decision",
+    "permitted_now": [
+      "retrieve the registered sources into $COMPETITION_WORKSPACE/lab only",
+      "compute reference-derived component values for lab tracts that clear the exclusion policy",
+      "fit weights on lab labels and record them in a candidate manifest that quotes the operator decision"
+    ],
+    "rules_text_available": true,
+    "second_blocker": {
+      "consequence_if_reordered": "producing lab labels first makes the label-free Track A pre-registration impossible rather than merely earlier",
+      "requirement": "the Track A scorer is pre-registered before any lab number exists",
+      "row": "bias60-track-a-combiner",
+      "status": "still binding on sequencing; the operator decision lifts the organiser-ruling precondition, not the ordering"
+    },
+    "status": "authorized_by_operator_decision",
+    "still_prohibited": [
+      "computing any reference-layer measurement for a study or template GEOID",
+      "joining a lab value to a study GEOID, study county or the official scored list",
+      "letting a per-tract lab value, lab GEOID or reference-layer measurement enter a submission artifact",
+      "uploading anything without the guarded uploader and an operator gate"
+    ],
+    "tension_recorded": "the RULES.md sentences are quoted unchanged because it is the operator decision, not a re-reading of the rule, that authorises the lab; the mitigation the decision imposes is geographic separation with study tracts and neighbours excluded, and that no reference layer is ever computed on or joined to a study tract",
+    "track_b_controls": {
+      "allowed_fields_in_a_submission_artifact": [
+        "weights",
+        "intercept",
+        "shrinkage",
+        "component_weights",
+        "fit_provenance",
+        "operator_decision_quote"
+      ],
+      "candidate_manifest_must_quote": "rules_gate.decision_verbatim",
+      "never_cross": [
+        "per-tract lab labels",
+        "lab GEOIDs",
+        "lab-derived per-region means",
+        "reference-layer measurements",
+        "any value keyed to a study tract"
+      ],
+      "only_the_weight_vector_may_cross": true,
+      "weight_vector_is_the_only_interface": true
+    },
+    "track_b_smuggles_lab_values": [],
+    "writeup_disclosure": {
+      "documents": [
+        "docs/writeup/methodology.md",
+        "docs/writeup/bias-discovery.md"
+      ],
+      "must_state": [
+        "the sources, versions and retrieval dates of every lab layer",
+        "the recipe variants and which were selected, with the RULES.md self-check results",
+        "per-group per-component definedness counts",
+        "that no study tract appears in the lab and that only the weight vector crossed",
+        "the operator decision of 2026-10-25 09:35Z that authorised the lab"
+      ],
+      "required": true
+    }
+  },
+  "core_groups": [
+    "TX-W",
+    "AZ-R",
+    "OK-R",
+    "NM",
+    "CA-F",
+    "NV"
+  ],
+  "county_filter_consistency": {
+    "mismatches": [],
+    "required_groups": [
+      "TX-W",
+      "AZ-R",
+      "OK-R",
+      "NM",
+      "CA-F"
+    ],
+    "study_state_fips": [
+      "04",
+      "06",
+      "35",
+      "40",
+      "48"
+    ],
+    "unfiltered_groups_without_study_tracts": [
+      "NV",
+      "AR-KS",
+      "LA",
+      "CO-UT"
+    ]
+  },
+  "definedness_accounting": {
+    "note": "labels are reference-derived values on lab tracts only; no study tract can appear in these tables and no lab value can enter a submission artifact",
+    "per_group_per_component_required": [
+      "tracts",
+      "defined",
+      "undefined",
+      "undefined_share",
+      "gap_mean_over_defined",
+      "gap_p50_over_defined"
+    ],
+    "per_group_required": [
+      "composite_defined",
+      "composite_undefined",
+      "recipe_variant_id",
+      "source_versions_used"
+    ],
+    "undefined_is_not_zero": true
+  },
+  "environment": {
+    "git_commit": "323074443328c8d747de5a5ba05d97a3cace1d49",
+    "versions": {
+      "numpy": "2.5.4",
+      "pyarrow": "26.0.0",
+      "python": "3.12.3"
+    }
+  },
+  "exclusion": {
+    "county_rule_self_test": {
+      "configured_policy_defers_to_the_buffer": true,
+      "county_exclusion_configured": false,
+      "enabled_policy_rejects_study_county": true
+    },
+    "official_rows_observed": 9379,
+    "policy": {
+      "buffer_crs": "EPSG:5070",
+      "centroid_buffer_km": 8.0,
+      "fail_closed": true,
+      "official_geoids_excluded": 9379,
+      "study_counties_excluded": 298,
+      "study_points_available_for_buffer_check": 3,
+      "study_states_excluded": [
+        "04",
+        "06",
+        "35",
+        "40",
+        "48"
+      ],
+      "template_geoids_excluded": 9794,
+      "union_geoids_excluded": 9794
+    },
+    "regions": {
+      "eastern-ok": {
+        "counties": 73,
+        "rows": 1192,
+        "states": [
+          "40"
+        ]
+      },
+      "maricopa-az": {
+        "counties": 16,
+        "rows": 1593,
+        "states": [
+          "04",
+          "35"
+        ]
+      },
+      "northern-ca": {
+        "counties": 24,
+        "rows": 591,
+        "states": [
+          "06"
+        ]
+      },
+      "south-central-tx": {
+        "counties": 185,
+        "rows": 6010,
+        "states": [
+          "48"
+        ]
+      }
+    },
+    "self_test_accepted": [
+      "96001944902"
+    ],
+    "self_test_accepts_only_the_far_tract": true,
+    "self_test_expected_rejected": [
+      "04001944902",
+      "53001950100",
+      "97001944902",
+      "98001944902",
+      "99001944902"
+    ],
+    "self_test_missed_rejections": [],
+    "self_test_panel": [
+      {
+        "centroid": [
+          0.0,
+          0.0
+        ],
+        "county_fips": "04001",
+        "geoid": "04001944902",
+        "reason": "official_scored_or_template_geoid"
+      },
+      {
+        "centroid": null,
+        "county_fips": "53033",
+        "geoid": "53001950100",
+        "reason": "official_scored_or_template_geoid"
+      },
+      {
+        "centroid": [
+          0.0,
+          0.0
+        ],
+        "county_fips": "04001",
+        "geoid": "99001944902",
+        "reason": "within_neighbour_buffer_of_study_tract"
+      },
+      {
+        "centroid": [
+          1000.0,
+          0.0
+        ],
+        "county_fips": "00000",
+        "geoid": "98001944902",
+        "reason": "within_neighbour_buffer_of_study_tract"
+      },
+      {
+        "centroid": [
+          5000.0,
+          0.0
+        ],
+        "county_fips": "00000",
+        "geoid": "97001944902",
+        "reason": "within_neighbour_buffer_of_study_tract"
+      },
+      {
+        "centroid": [
+          500000.0,
+          0.0
+        ],
+        "county_fips": "00000",
+        "geoid": "96001944902",
+        "reason": null
+      }
+    ],
+    "self_test_unexpectedly_rejected": [],
+    "study_county_total": 298,
+    "template_rows_observed": 9794
+  },
+  "firewall": {
+    "hits": [],
+    "scripts_scanned": 11,
+    "tokens": [
+      "/lab",
+      "cbp23",
+      "globalmlbuildingfootprints",
+      "nationalmap",
+      "overturemaps-us-west-2",
+      "prisecroads",
+      "sciencebase",
+      "tl_2020_",
+      "tl_2024_",
+      "usbuildingfootprints",
+      "zbp23"
+    ]
+  },
+  "gates": {
+    "all_passed": true,
+    "availability_probe_stays_head_only": true,
+    "build_not_executed_this_turn": true,
+    "county_filtered_retrieval_required_recorded": true,
+    "definedness_accounting_declared": true,
+    "external_use_recorded_as_authorized": true,
+    "lab_root_outside_repo": true,
+    "model_and_submission_paths_cannot_read_lab": true,
+    "neighbour_buffer_policy_rejects_study_and_adjacent_tracts": true,
+    "no_lab_number_exists": true,
+    "no_prohibited_content_on_disk": true,
+    "operator_conditions_enforced": true,
+    "operator_decision_present_verbatim_in_spec": true,
+    "operator_question_covers_the_spec_question": true,
+    "operator_question_withdrawn_not_answered": true,
+    "plan_parsed_from_spec": true,
+    "recipe_self_checks_declared": true,
+    "report_has_no_temporal_field": true,
+    "report_is_strict_json": true,
+    "rules_citations_are_verbatim": true,
+    "source_register_complete": true,
+    "spec_hash_matches_pin": true,
+    "study_counties_enumerated": true,
+    "study_county_overlap_recorded": true,
+    "study_geoids_fully_excluded": true,
+    "track_b_crossing_surface_is_bounded": true,
+    "writeup_disclosure_required": true
+  },
+  "groups": [
+    {
+      "approx_tracts": 890,
+      "county_filter_note": "a state-level download of a removed reference layer necessarily covers study tracts, so any retrieval for this group must be county-filtered at the source or streamed-and-filtered with study counties excluded before a byte is written, per spec 4.1",
+      "county_includes": [
+        "48141",
+        "48329",
+        "48135",
+        "48011",
+        "48129",
+        "48203",
+        "48495",
+        "48065"
+      ],
+      "id": "TX-W",
+      "include_list_authority": "spec 4.2 names these areas; the build must confirm each county against the 2020 tract inventory",
+      "label": "Texas remainder",
+      "named_areas": "El Paso 48141, Midland/Ector, Amarillo, the Panhandle, Trans-Pecos",
+      "retrieval_must_be_county_filtered": true,
+      "states": [
+        "TX"
+      ],
+      "transfer_role": "same state DOT conventions as the study, best transfer for the road ratio"
+    },
+    {
+      "approx_tracts": 170,
+      "county_filter_note": "a state-level download of a removed reference layer necessarily covers study tracts, so any retrieval for this group must be county-filtered at the source or streamed-and-filtered with study counties excluded before a byte is written, per spec 4.1",
+      "county_includes": [
+        "04001",
+        "04017",
+        "04005"
+      ],
+      "id": "AZ-R",
+      "include_list_authority": "spec 4.2",
+      "label": "Arizona remainder",
+      "named_areas": "Navajo Nation and other parts of Apache/Navajo/Coconino not in the sample",
+      "retrieval_must_be_county_filtered": true,
+      "states": [
+        "AZ"
+      ],
+      "transfer_role": "tribal and heat analogue"
+    },
+    {
+      "approx_tracts": 130,
+      "county_filter_note": "a state-level download of a removed reference layer necessarily covers study tracts, so any retrieval for this group must be county-filtered at the source or streamed-and-filtered with study counties excluded before a byte is written, per spec 4.1",
+      "county_includes": [],
+      "id": "OK-R",
+      "include_list_authority": "spec 4.2 gives no county list; derive as state minus excluded set",
+      "label": "Oklahoma remainder",
+      "named_areas": "Panhandle and western counties outside the sample",
+      "retrieval_must_be_county_filtered": true,
+      "states": [
+        "OK"
+      ],
+      "transfer_role": "Plains analogue of the tribal statistical areas"
+    },
+    {
+      "approx_tracts": 610,
+      "county_filter_note": "a state-level download of a removed reference layer necessarily covers study tracts, so any retrieval for this group must be county-filtered at the source or streamed-and-filtered with study counties excluded before a byte is written, per spec 4.1",
+      "county_includes": [],
+      "id": "NM",
+      "include_list_authority": "whole state minus excluded set",
+      "label": "New Mexico",
+      "named_areas": "statewide; colonias along the border",
+      "retrieval_must_be_county_filtered": true,
+      "states": [
+        "NM"
+      ],
+      "transfer_role": "heat, drought, tribal (Navajo, Pueblos)"
+    },
+    {
+      "approx_tracts": 2500,
+      "county_filter_note": "a state-level download of a removed reference layer necessarily covers study tracts, so any retrieval for this group must be county-filtered at the source or streamed-and-filtered with study counties excluded before a byte is written, per spec 4.1",
+      "county_includes": [
+        "06097",
+        "06055",
+        "06041",
+        "06023",
+        "06005",
+        "06009",
+        "06109",
+        "06099",
+        "06043",
+        "06019",
+        "06111",
+        "06083",
+        "06073",
+        "06067",
+        "06065",
+        "06071"
+      ],
+      "id": "CA-F",
+      "include_list_authority": "spec 4.2 names the counties; Plumas 06063 must stay excluded because it is a study county",
+      "label": "California fire corridors outside the sample",
+      "named_areas": "Sonoma, Napa, Marin, rest of Humboldt, Amador, Calaveras, Tuolumne, Mariposa, Madera, Fresno foothills, SoCal WUI (Ventura, Santa Barbara, San Diego, Riverside, San Bernardino); Tubbs 2017, Woolsey 2018, Dixie 2021, Eaton and Palisades 2025; Plumas is in the sample so exclude it",
+      "retrieval_must_be_county_filtered": true,
+      "states": [
+        "CA"
+      ],
+      "transfer_role": "post-fire analogue for the building-vintage hypothesis"
+    },
+    {
+      "approx_tracts": 700,
+      "county_filter_note": "a state-level download of a removed reference layer necessarily covers study tracts, so any retrieval for this group must be county-filtered at the source or streamed-and-filtered with study counties excluded before a byte is written, per spec 4.1",
+      "county_includes": [
+        "32003",
+        "32031"
+      ],
+      "id": "NV",
+      "include_list_authority": "spec 4.2",
+      "label": "Nevada",
+      "named_areas": "Clark (extreme heat), Washoe",
+      "retrieval_must_be_county_filtered": false,
+      "states": [
+        "NV"
+      ],
+      "transfer_role": "extreme heat"
+    },
+    {
+      "approx_tracts": 1500,
+      "county_filter_note": "a state-level download of a removed reference layer necessarily covers study tracts, so any retrieval for this group must be county-filtered at the source or streamed-and-filtered with study counties excluded before a byte is written, per spec 4.1",
+      "county_includes": [],
+      "id": "AR-KS",
+      "include_list_authority": "whole states minus excluded set",
+      "label": "Arkansas and Kansas",
+      "named_areas": "Plains and Ozarks",
+      "retrieval_must_be_county_filtered": false,
+      "states": [
+        "AR",
+        "KS"
+      ],
+      "transfer_role": "analogue of Eastern Oklahoma"
+    },
+    {
+      "approx_tracts": 1300,
+      "county_filter_note": "a state-level download of a removed reference layer necessarily covers study tracts, so any retrieval for this group must be county-filtered at the source or streamed-and-filtered with study counties excluded before a byte is written, per spec 4.1",
+      "county_includes": [],
+      "id": "LA",
+      "include_list_authority": "whole state minus excluded set",
+      "label": "Louisiana",
+      "named_areas": "Gulf",
+      "retrieval_must_be_county_filtered": false,
+      "states": [
+        "LA"
+      ],
+      "transfer_role": "Gulf heat analogue of Houston"
+    },
+    {
+      "approx_tracts": 2100,
+      "county_filter_note": "a state-level download of a removed reference layer necessarily covers study tracts, so any retrieval for this group must be county-filtered at the source or streamed-and-filtered with study counties excluded before a byte is written, per spec 4.1",
+      "county_includes": [],
+      "id": "CO-UT",
+      "include_list_authority": "whole states minus excluded set",
+      "label": "Colorado and Utah",
+      "named_areas": "Front Range WUI",
+      "retrieval_must_be_county_filtered": false,
+      "states": [
+        "CO",
+        "UT"
+      ],
+      "transfer_role": "front-range wildland-urban-interface fire"
+    }
+  ],
+  "lab_root": {
+    "declared": "$COMPETITION_WORKSPACE/lab",
+    "estimated_disk_gb": [
+      10.0,
+      25.0
+    ],
+    "exists": false,
+    "file_count": 0,
+    "files": [],
+    "inside_repo": false,
+    "must_not_contain_repo_paths": [
+      "src/",
+      "scripts/",
+      "reports/",
+      "docs/"
+    ],
+    "resolved": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/lab",
+    "tracked_in_git": []
+  },
+  "offending_group_counties": [
+    "AZ-R:04001",
+    "AZ-R:04005",
+    "AZ-R:04017",
+    "CA-F:06023",
+    "CA-F:06055",
+    "CA-F:06067",
+    "CA-F:06097",
+    "TX-W:48329"
+  ],
+  "placement": {
+    "as_parsed_from_spec": {
+      "bullets": [
+        "**Writeup (always allowed):** per-idea grouped-CV RMSE and incremental value on the lab; the residual-correlation and orthogonality tables; the recipe-identification evidence; the lab analogues of the Discovery patterns (post-fire stale reference in Tubbs/Woolsey; tribal EMS in the Navajo Nation; colonias in NM and El Paso), each with URLs and retrieval dates.",
+        "**Scored submission:** Track A by default; Track B only after a written organiser ruling, quoted in `docs/submission-policy.md`. Ask one combined question: \"May weights fitted on other US geographies using public TIGER/MS/USGS/CBP be applied to provided-data features? And are the provided `usfs_BuildingCount_sum` / `carbonplan_buildings` columns usable as features?\""
+      ],
+      "combined_question": "May weights fitted on other US geographies using public TIGER/MS/USGS/CBP be applied to provided-data features? And are the provided `usfs_BuildingCount_sum` / `carbonplan_buildings` columns usable as features?",
+      "policy_document": "docs/submission-policy.md",
+      "scored_submission_default": "Track A",
+      "track_b_requires_ruling": true,
+      "writeup_declared_always_allowed": true
+    },
+    "scored_submission_per_spec": {
+      "default_track": "Track A",
+      "policy_document": "docs/submission-policy.md",
+      "track_b_requires": "a written organiser ruling, quoted in docs/submission-policy.md"
+    },
+    "spec_combined_question": "May weights fitted on other US geographies using public TIGER/MS/USGS/CBP be applied to provided-data features? And are the provided `usfs_BuildingCount_sum` / `carbonplan_buildings` columns usable as features?",
+    "tension_recorded": "spec 4.6 treats the lab as always allowed in the writeup and asks only whether lab-fitted weights may be applied to provided-data features, while RULES.md forbids using reference layers or equivalent copies obtained elsewhere to recreate or approximate the targets and scopes additional public datasets to the Best Bias Discovery prize. The lane records both texts and asks the organiser to resolve them instead of choosing between them.",
+    "writeup_always_allowed_per_spec": [
+      "per-idea grouped-CV RMSE and incremental value on the lab",
+      "residual-correlation and orthogonality tables",
+      "recipe-identification evidence",
+      "lab analogues of the Discovery patterns (post-fire stale reference in Tubbs/Woolsey; tribal EMS in the Navajo Nation; colonias in NM and El Paso), each with URLs and retrieval dates"
+    ]
+  },
+  "preregistration": {
+    "backlog_item": "bias60-external-lab-build",
+    "config_path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/config/bias60-lab-preregistered.json",
+    "config_sha256": "bc556cf81af99a72f631586ef6cf0a771aeead3e76b7877235112d2bdec77f23",
+    "intent": "Freeze the external-lab design of spec section 4 (nine state groups, ~10k tracts, sources and versions, RULES.md recipe with its variants, per-component definedness) and implement the safety rails, so that the build is one reviewed command once -- and only once -- the organiser ruling and the Track A pre-registration allow any lab number to exist. This plan itself downloads nothing and computes no target.",
+    "lane": "comp-zindi-bias-bounty",
+    "negative_controls_declared": [
+      "decision_fabricated",
+      "conditions_dropped",
+      "weights_smuggle_labels",
+      "probe_reads_content",
+      "lab_data_present",
+      "county_filter_flag_removed",
+      "buffer_removed",
+      "exclusion_emptied",
+      "source_field_dropped",
+      "lab_root_in_repo",
+      "model_reads_lab",
+      "question_drops_the_spec_question"
+    ],
+    "plan_id": "bias60-external-lab",
+    "prohibitions": {
+      "no_download_this_turn": true,
+      "no_lab_data_in_submission_artifact": true,
+      "no_lab_number_before_track_a_preregistration": true,
+      "no_secrets": true,
+      "no_study_region_tract": true,
+      "no_uploads": true,
+      "organiser_question_withdrawn": true,
+      "reference_layer_bytes_downloaded_in_this_row": 0,
+      "uploads_performed": 0
+    },
+    "spec_amendments": {
+      "amended_at_utc": "2026-10-25T09:35Z",
+      "amended_by": "operator decision recorded by the shared steward in orchestrator commit 901d5e3c8ee89eb9995e2adb15a3fee6c48b49ee",
+      "amended_spec_sha256": "f150649b34caebefb91b8eda75517e43f5cc278699ec9dba7b23fea717f16862",
+      "consequences": [
+        "no question goes to the organisers, so bias60-organiser-ruling is superseded and no gate may block on it",
+        "Track B is allowed: weights may be fitted in the external lab and only the learned weight vector may cross into a submission artifact",
+        "the lab must sit outside the four study regions with every study tract and its neighbours excluded",
+        "reference layers or equivalent copies are never computed on, joined to, or used to approximate targets for study tracts",
+        "the lab method must be disclosed in the writeup"
+      ],
+      "decision_verbatim": "**Operator decision 2026-10-25 09:35Z (overrides every \"until the organiser ruling\" below).** No question goes to the organisers. Track B is allowed: fit the weights in the external lab, on geographies outside the four study regions with every study tract and its neighbours excluded, then apply only the learned weight vector to estimators computed from the provided data. Reference layers or equivalent copies are never computed on, joined to, or used to approximate targets for study tracts. Disclose the lab method in the writeup.",
+      "supersedes_spec_sha256": "8521753accde328eaa8f279f3a2c7ff1aa05a324f9950dc521a147542b6927db"
+    },
+    "spec_path": "/home/martin/hddProjects/competitionsall/docs/research/bias-60-ideas-2026-10.md",
+    "spec_sha256": "f150649b34caebefb91b8eda75517e43f5cc278699ec9dba7b23fea717f16862",
+    "spec_sha256_pin": "f150649b34caebefb91b8eda75517e43f5cc278699ec9dba7b23fea717f16862",
+    "tamper_applied": null,
+    "title": "External lab corpus for the 60 estimators: frozen design, hard study exclusion and a rules gate"
+  },
+  "recipe": {
+    "components": {
+      "building": {
+        "acs_used": false,
+        "gap": "clip(1 - O/M, 0, 1)",
+        "observed": "Overture buildings with centroid in the tract (variant: intersects)",
+        "reference": "Microsoft footprints with centroid in the tract",
+        "undefined_when": "reference count == 0"
+      },
+      "composite": "mean of the defined components",
+      "poi": "mean of the defined halves; undefined if both halves are undefined",
+      "poi_establishments": {
+        "allocation_variants": [
+          "ZIP totals x HUD-USPS BUS_RATIO",
+          "county totals x tract share of county HUD business addresses",
+          "county totals x tract share of county housing units"
+        ],
+        "gap": "clip(1 - N_places/CBP_tract, 0, 1)",
+        "undefined_when": "CBP_tract == 0"
+      },
+      "poi_facilities": {
+        "half": "mean over defined k",
+        "observed": "Overture places in the category set, the four Sc3 definitions as variants, hospitals excluded",
+        "per_type": "for each type k with USGS count R_k > 0, g_k = clip(1 - O_k/R_k, 0, 1)",
+        "undefined_when": "all types undefined"
+      },
+      "road": {
+        "gap": "clip(1 - O/T, 0, 1)",
+        "observed": "Overture road segments with class in {motorway, trunk, primary, secondary} clipped to the tract",
+        "reference": "TIGER S1100 union S1200 clipped to the tract",
+        "undefined_when": "reference length == 0",
+        "variants": [
+          "overture filtered vs unfiltered (Sc5)",
+          "named-only (Sc1)"
+        ]
+      }
+    },
+    "projection": "EPSG:5070",
+    "self_check_status": "not_run_pending_ruling",
+    "self_checks": {
+      "hospital_ratio_check": {
+        "relative_tolerance": 0.35,
+        "rule": "reproducing a ratio near 12 confirms the place-category matching rule",
+        "source": "RULES.md: Overture's hospital category runs about 12 times the reference count overall",
+        "target": 12.0
+      },
+      "state_road_ratio_in_organiser_band": {
+        "band": [
+          0.71,
+          1.59
+        ],
+        "rule": "per-state sum(O)/sum(T) must land in or near the band, otherwise the recipe variant is rejected",
+        "source": "RULES.md: the Overture/TIGER ratio ranges from 0.71 to 1.59 across the four study regions",
+        "tolerance": 0.15
+      },
+      "undefined_share_pattern": {
+        "rule": "pick the variant combination whose per-state undefined-share pattern and ratio ranges resemble the organiser's published statistics, then prefer weights robust across all plausible variants",
+        "source": "RULES.md published undefinedness: at least one component undefined in 21% Eastern Oklahoma, 37% Northern California, 28% South-Central Texas, 55% Maricopa"
+      }
+    }
+  },
+  "source_register": {
+    "entries": 10,
+    "probe": {
+      "allowed_methods": [
+        "HEAD"
+      ],
+      "content_bytes_may_be_read": false,
+      "credentials_may_be_used": false,
+      "enabled": true,
+      "performed": false,
+      "performed_this_turn": false,
+      "reason": "the operator decision authorises retrieval, so a HEAD probe of the registered URLs is part of readiness; it confirms the URL patterns and the expected object sizes without reading a byte of reference-layer content, and this turn did not perform it"
+    },
+    "problems": [],
+    "roles": [
+      "allocation_helper",
+      "lab_tract_polygons",
+      "observed_data",
+      "recipe_identification",
+      "reference_buildings",
+      "reference_buildings_variant",
+      "reference_establishments",
+      "reference_facilities",
+      "reference_roads",
+      "reference_roads_check"
+    ]
+  },
+  "sources": [
+    {
+      "downloaded": false,
+      "expected_size_mb": [
+        10,
+        60
+      ],
+      "id": "tiger_tracts_2020",
+      "note": "matching 2020 GEOIDs, or 2024 if the package tiger_year says so; check strata/tribal-tract-table.tiger_year",
+      "retrieval_date_utc": null,
+      "role": "lab_tract_polygons",
+      "sha256": null,
+      "spec_marker": "[V] naming pattern on data.gov",
+      "url": "https://www2.census.gov/geo/tiger/TIGER2020/TRACT/tl_2020_<ss>_tract.zip",
+      "version_pattern": "tl_2020_<ss>_tract.zip"
+    },
+    {
+      "downloaded": false,
+      "expected_size_gb": [
+        3,
+        10
+      ],
+      "id": "overture_package_release",
+      "reader": "pyarrow bbox predicate; DuckDB SIGILLs on this host per DATA-ACCESS.md",
+      "retrieval_date_utc": null,
+      "role": "observed_data",
+      "sha256": null,
+      "themes": [
+        "transportation/type=segment (subtype road) plus connectors",
+        "buildings/type=building",
+        "places/type=place",
+        "base/type=infrastructure"
+      ],
+      "url": "s3://overturemaps-us-west-2/release/<rel>/",
+      "version_pattern": "same release as the challenge package, identified by matching package building id/version pairs; candidates 2026-08 and 2026-09"
+    },
+    {
+      "downloaded": false,
+      "expected_size_mb": [
+        10,
+        60
+      ],
+      "id": "tiger_prisecroads_2024",
+      "retrieval_date_utc": null,
+      "role": "reference_roads",
+      "sha256": null,
+      "spec_marker": "[V] naming pattern on data.gov",
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/PRISECRROADS/tl_2024_<ss>_prisecroads.zip",
+      "variants": [
+        "2023",
+        "2025"
+      ],
+      "version_pattern": "tl_2024_<ss>_prisecroads.zip (S1100/S1200)"
+    },
+    {
+      "downloaded": false,
+      "expected_size_mb": [
+        10,
+        60
+      ],
+      "id": "tiger_county_roads_check",
+      "retrieval_date_utc": null,
+      "role": "reference_roads_check",
+      "sha256": null,
+      "spec_marker": "[V]",
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_<ssccc>_roads.zip",
+      "version_pattern": "county All Roads release 2024-08-08, filtered to MTFCC in {S1100, S1200}"
+    },
+    {
+      "downloaded": false,
+      "expected_size_gb": [
+        0.1,
+        3.0
+      ],
+      "id": "ms_us_building_footprints",
+      "retrieval_date_utc": null,
+      "role": "reference_buildings",
+      "sha256": null,
+      "spec_marker": "[V] organiser version unknown",
+      "url": "https://github.com/microsoft/USBuildingFootprints",
+      "version_pattern": "state GeoJSON, 129.6M total, ODbL"
+    },
+    {
+      "downloaded": false,
+      "expected_size_gb": [
+        0.1,
+        3.0
+      ],
+      "id": "ms_global_ml_building_footprints",
+      "retrieval_date_utc": null,
+      "role": "reference_buildings_variant",
+      "sha256": null,
+      "spec_marker": "[M]",
+      "url": "https://github.com/microsoft/GlobalMLBuildingFootprints",
+      "version_pattern": "US quadkeys"
+    },
+    {
+      "downloaded": false,
+      "expected_size_mb": [
+        10,
+        100
+      ],
+      "id": "usgs_national_structures",
+      "retrieval_date_utc": null,
+      "role": "reference_facilities",
+      "secondary_url": "https://sciencebase.gov/catalog/item/4f70b240e4b058caae3f8e1b",
+      "sha256": null,
+      "spec_marker": "[V]",
+      "structure_codes": {
+        "ems": [
+          74001
+        ],
+        "ems_variant_with_fire": [
+          74001,
+          74026
+        ],
+        "fire": [
+          74026
+        ],
+        "schools": [
+          73002,
+          73003,
+          73004,
+          73005
+        ],
+        "schools_variant": [
+          73002,
+          73003,
+          73004,
+          73005,
+          73006,
+          73007
+        ]
+      },
+      "url": "https://apps.nationalmap.gov/downloader/",
+      "version_pattern": "Struct_Point state downloads; record loaddate"
+    },
+    {
+      "downloaded": false,
+      "expected_size_mb": [
+        1,
+        100
+      ],
+      "id": "cbp_2023",
+      "retrieval_date_utc": null,
+      "role": "reference_establishments",
+      "sha256": null,
+      "spec_marker": "[V]",
+      "url": "https://www.census.gov/data/datasets/time-series/econ/cbp/2023.html",
+      "variants": [
+        "CBP 2022"
+      ],
+      "version_pattern": "cbp23co county file; zbp23totals ZIP totals; released 2025-06-26"
+    },
+    {
+      "downloaded": false,
+      "expected_size_mb": [
+        1,
+        100
+      ],
+      "id": "hud_usps_crosswalk",
+      "retrieval_date_utc": null,
+      "role": "allocation_helper",
+      "sha256": null,
+      "spec_marker": "[M]",
+      "url": "https://www.huduser.gov/portal/datasets/usps_crosswalk.html",
+      "version_pattern": "ZIP to tract BUS_RATIO crosswalk"
+    },
+    {
+      "downloaded": false,
+      "expected_size_mb": [
+        1,
+        100
+      ],
+      "id": "hospital_check",
+      "retrieval_date_utc": null,
+      "role": "recipe_identification",
+      "sha256": null,
+      "spec_marker": "[U]",
+      "url": "USGS Health/Medical structures or HIFLD hospitals",
+      "version_pattern": "compared against the Overture hospital category to reproduce the about 12x ratio"
+    }
+  ],
+  "spec_cross_check": {
+    "all_four_reference_components_declared": true,
+    "approx_tract_counts_match": true,
+    "core_groups_are_a_prefix_of_the_nine": true,
+    "core_groups_declared": [
+      "AZ-R",
+      "CA-F",
+      "NM",
+      "NV",
+      "OK-R",
+      "TX-W"
+    ],
+    "group_count_config": 9,
+    "group_count_spec": 9,
+    "group_cv_units_match": true,
+    "recipe": {
+      "components": {
+        "building": {
+          "declared": true,
+          "uses_clip_mapping": true,
+          "variant_mentions": 2
+        },
+        "poi_establishments": {
+          "declared": true,
+          "uses_clip_mapping": true,
+          "variant_mentions": 3
+        },
+        "poi_facilities": {
+          "declared": true,
+          "uses_clip_mapping": true,
+          "variant_mentions": 3
+        },
+        "road": {
+          "declared": true,
+          "uses_clip_mapping": true,
+          "variant_mentions": 2
+        }
+      },
+      "hospital_check_declared": true,
+      "projection": "EPSG:5070",
+      "recipe_identification_declared": true,
+      "road_ratio_band_declared": true,
+      "undefined_rule_seen": "T = 0"
+    },
+    "recipe_projection_matches": true,
+    "source_families_missing_from_register": [],
+    "states_declared": [
+      "AR",
+      "AZ",
+      "CA",
+      "CO",
+      "KS",
+      "LA",
+      "NM",
+      "NV",
+      "OK",
+      "TX",
+      "UT"
+    ],
+    "structure_codes_config": [
+      73002,
+      73003,
+      73004,
+      73005,
+      73006,
+      73007,
+      74001,
+      74026
+    ],
+    "structure_codes_covered": true,
+    "structure_codes_spec": [
+      73002,
+      73005,
+      73006,
+      73007,
+      74001,
+      74026
+    ],
+    "volume_rows_config": 7,
+    "volume_rows_spec": 7
+  },
+  "summary": {
+    "authorization_status": "authorized_by_operator_decision",
+    "core_groups": 6,
+    "gates_all_passed": true,
+    "groups_planned": 9,
+    "lab_files_on_disk": 0,
+    "official_geoids_excluded": 9379,
+    "report_sha256": "75f2fdbf756ab7a0ab4ab348f458a74595f2732645aad05e94ece4e743c4322d",
+    "sources_registered": 10,
+    "study_counties_excluded": 298,
+    "template_geoids_excluded": 9794
+  }
+}
