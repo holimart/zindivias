@@ -4,11 +4,11 @@ Row: `bias-writeup-claim-evidence-audit`. Documentation screen: every quantitati
 
 ## Verdict
 
-- **84 of 84 quantitative claims fully traceable** (100.0%).
-- **998 of 998 numeric tokens (100.0%) are present in the evidence named by the claim that states them.**
-- 84 per-claim verify commands and 16 reproduce commands; every listed command's recorded exit code is 0 and every reproduce product hash-verifies.
-- Accuracy language outside the allowed classes: none. Prohibited reference/label/leaderboard sources used as scored-model evidence: none.
-- All acceptance gates: **PASS**.
+- **76 of 87 quantitative claims fully traceable** (87.4%).
+- **979 of 1026 numeric tokens (95.4%) are present in the evidence named by the claim that states them.**
+- 87 per-claim verify commands and 17 reproduce commands; every listed command's recorded exit code is 0 and every reproduce product hash-verifies.
+- Accuracy language outside the allowed classes: PRESENT. Prohibited reference/label/leaderboard sources used as scored-model evidence: none.
+- All acceptance gates: **FAIL**.
 
 ## Method
 
@@ -19,7 +19,7 @@ Each of the three writeup documents is split into quantitative claim blocks (a b
 | Document | Claims | Fully traceable | Numeric tokens | Covered |
 |---|---:|---:|---:|---:|
 | `docs/writeup/bias-discovery.md` | 28 | 28 | 253 | 253 |
-| `docs/writeup/methodology.md` | 49 | 49 | 614 | 614 |
+| `docs/writeup/methodology.md` | 52 | 41 | 642 | 595 |
 | `docs/writeup/edge-cases.md` | 7 | 7 | 131 | 131 |
 
 ## Claim inventory
@@ -65,46 +65,49 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 | `methodology-007` \| Component \| C2/v0 expected reference proxy \| Definedness and compone… | `methodology.md` | Organiser scoring context and our calc | 58-65 | `model_specification` | `scripts/estimate_gaps.py` | `def:sha256` | 7/7 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
 | `methodology-008` For missing urbanity, use finite `pct_urban`; otherwise use `pop_urban… | `methodology.md` | Organiser scoring context and our calc | 67-67 | `model_specification` | `scripts/estimate_gaps.py` | `def:sha256` | 2/2 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
 | `methodology-009` Historical alternatives C1 (region constants), C3 (v0 denominators ×1.… | `methodology.md` | Alternative components and aggregation | 73-73 | `historical_disclosure` | `reports/candidates.json` | `/` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-010` - **Buildings:** the experimental rule is a fixed building gap `0.01` … | `methodology.md` | Model-only v2 components and approval  | 85-85 | `measured_model_only` | `reports/building-v2-audit.json` | `/` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-011` - **Building morphology sensitivity:** `config/building-morphology-pre… | `methodology.md` | Model-only v2 components and approval  | 86-86 | `measured_model_only` | `reports/building-morphology-candidate.json` | `/global_sensitivity_by_beta/0.02/all_official_tracts/mean` | 7/7 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-012` - **Building-source sensitivity:** `config/building-source-prior-prere… | `methodology.md` | Model-only v2 components and approval  | 87-87 | `measured_model_only` | `reports/building-source-prior.json` | `/global_sensitivity_by_profile_and_beta/primary/0.02/all_official_tracts/mean` | 8/8 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-013` - **Cross-theme support sensitivity:** `config/cross-theme-support-pre… | `methodology.md` | Model-only v2 components and approval  | 88-88 | `measured_model_only` | `reports/cross-theme-support.json` | `/global/rows` | 10/10 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-014` - **Schema optional-attribute presence sensitivity:** `config/schema-p… | `methodology.md` | Model-only v2 components and approval  | 89-89 | `measured_model_only` | `reports/schema-presence-candidate.json` | `/measure_after/optional_field_drop_perturbation_tests/max_change_over_all_single_field_drops` | 11/11 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-015` - **Density-context sensitivity:** `config/density-context-preregister… | `methodology.md` | Model-only v2 components and approval  | 90-90 | `measured_model_only` | `reports/density-context-candidate.json` | `/method/scope/official_id_count` | 15/15 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-016` - **Facility spatial-catchment sensitivity:** `config/facility-catchme… | `methodology.md` | Model-only v2 components and approval  | 91-91 | `measured_model_only` | `reports/facility-catchment-candidate.json` | `/measure_before/facility_zero_shares_and_logistic_candidate_moments/global/observed_overture_zero_counts/fire0` | 25/25 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-017` - **Candidate stability envelope:** `config/candidate-stability-envelo… | `methodology.md` | Model-only v2 components and approval  | 92-92 | `measured_model_only` | `reports/candidate-stability-envelope.json` | `/measure_after/official_rows` | 10/10 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-018` The full edge-case table and calculation policy are in [`edge-cases.md… | `methodology.md` | Edge cases, bias discovery, and interp | 98-98 | `measured_provided_data` | `reports/edge-cases.json` | `/geometry_method` | 11/11 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-019` The opt-in route audit is `scripts/estimate_gaps.py --route-audit-only… | `methodology.md` | Route-reference transport v2 (provided | 124-124 | `measured_provided_data` | `scripts/estimate_gaps.py` | `document` | 3/3 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-020` \| Region \| `sum(L_named)/sum(L_route)` \| `L_named` / `L_route` km \| `L… | `methodology.md` | Route-reference transport v2 (provided | 128-133 | `measured_provided_data` | `reports/transport-route-ref-audit.json` | `/regions/maricopa-az/sum_L_named_over_sum_L_route` | 28/28 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-021` All four route-v2 transport + v0 building/POI any-undefined shares are… | `methodology.md` | Route-reference transport v2 (provided | 135-135 | `measured_provided_data` | `reports/transport-route-ref-audit.json` | `/regions/maricopa-az/sum_L_named_over_sum_L_route` | 10/10 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-022` The measure-before route-reference component is recomputed as `clip(1 … | `methodology.md` | Connector-graph road topology sensitiv | 141-141 | `measured_provided_data` | `reports/road-topology-candidate.json` | `/candidate_rows` | 8/8 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-023` The frozen adjustment is `0.05 × (1 − largest_component_node_share)` a… | `methodology.md` | Connector-graph road topology sensitiv | 143-143 | `measured_provided_data` | `reports/road-topology-candidate.json` | `/measure_after/diagnostics_and_candidate_by_region_and_urban_rural/all/topology_defined_rows` | 14/14 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-024` The edge audit processed 3,143,887 supplied road-segment rows and 8,49… | `methodology.md` | Connector-graph road topology sensitiv | 145-145 | `measured_provided_data` | `reports/road-topology-candidate.json` | `/measure_after/diagnostics_and_candidate_by_region_and_urban_rural/south-central-tx:Urban/topology_graph/dead_end_nodes_per_tract/variance_population` | 7/7 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-025` `reports/transport-route-variants.json` compares the three cumulative … | `methodology.md` | Route denominator sensitivity and sele | 159-159 | `measured_provided_data` | `reports/transport-route-variants.json` | `/` | 3/3 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-026` \| Variant \| Regions inside disclosed 0.71–1.59 ratio band (of 4) \| Reg… | `methodology.md` | Route denominator sensitivity and sele | 161-165 | `measured_provided_data` | `reports/transport-route-variants.json` | `/aggregate_variant_metrics` | 14/14 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-027` All three variants put all four hybrid any-undefined shares within 0.1… | `methodology.md` | Route denominator sensitivity and sele | 167-167 | `measured_provided_data` | `reports/transport-route-variants.json` | `/regions/south-central-tx/variants/state_us_interstate/sum_L_named_over_sum_L_route` | 7/7 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-028` The audit read only official `GEOID` cells from the per-region sample … | `methodology.md` | POI numerator audit and selected categ | 200-211 | `measured_provided_data` | `docs/data-inventory.md` | `document` | 2/2 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-029` \| Region \| Official tracts \| Selected fire / EMS / school POI rows \| `… | `methodology.md` | POI numerator audit and selected categ | 232-237 | `measured_provided_data` | `reports/poi-category-audit.json` | `/regions/maricopa-az/tract_index/rows` | 56/56 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-030` `Sources.dataset` is a multi-valued property: dataset row counts are n… | `methodology.md` | POI numerator audit and selected categ | 239-246 | `measured_provided_data` | `reports/poi-category-audit.json` | `/regions/south-central-tx/category_frequency` | 16/16 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-031` \| Region \| Core zero tracts fire / EMS / school \| All fire/rescue cate… | `methodology.md` | POI numerator audit and selected categ | 248-253 | `measured_provided_data` | `reports/poi-category-audit.json` | `/regions/maricopa-az/tract_zero_sensitivity/core_v0/fire/zero_tracts` | 100/100 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-032` `scripts/audit_place_duplicates.py` compares raw selected facility row… | `methodology.md` | 50 m same-name facility dedup sensitiv | 269-269 | `measured_provided_data` | `reports/place-dedup.json` | `/policy/distance` | 5/5 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-033` \| Region \| Facility rows, raw → deduplicated \| Facility rows removed \|… | `methodology.md` | 50 m same-name facility dedup sensitiv | 271-277 | `measured_provided_data` | `reports/place-dedup.json` | `/regions/maricopa-az/facility_rows/raw_unique_rows` | 50/50 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-034` All 36 removed rows are school duplicates; no fire or EMS row is remov… | `methodology.md` | 50 m same-name facility dedup sensitiv | 279-279 | `measured_provided_data` | `reports/place-dedup.json` | `/` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-035` Here `n_overture_t` is the selected exact-category count plus the prov… | `methodology.md` | Facility-miss POI v2 (fixed prior; mod | 315-315 | `measured_model_only` | `reports/poi-facility-miss-audit.json` | `/` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-036` \| Type \| Intercept \| Density slope \| Urbanity slope \| \|---\|---:\|---:\|-… | `methodology.md` | Facility-miss POI v2 (fixed prior; mod | 319-323 | `measured_model_only` | `reports/poi-facility-miss-audit.json` | `/` | 9/9 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-037` With the prior frozen, the audit reports the observed Overture zero co… | `methodology.md` | Facility-miss POI v2 (fixed prior; mod | 325-325 | `measured_model_only` | `reports/poi-facility-miss-audit.json` | `/summaries/maricopa-az/poi_v2_mean_defined` | 16/16 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-038` Before weighting, raw core counts are 5,242 fire, 2,739 EMS, and 39,43… | `methodology.md` | POI confidence-weighted count sensitiv | 342-342 | `measured_model_only` | `reports/poi-confidence-candidate.json` | `/measure_before/source_and_confidence_coverage/fire/selected_rows` | 11/11 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-039` \| Confidence threshold \| Mean POI candidate \| Variance \| Std. dev. \| M… | `methodology.md` | POI confidence-weighted count sensitiv | 344-348 | `measured_model_only` | `reports/poi-confidence-candidate.json` | `/measure_after/threshold_candidates/POI_CONFIDENCE_T050/all/score/mean` | 27/27 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-040` The deterministic diagnostic in `scripts/discovery_confidence_by_strat… | `methodology.md` | Overture POI confidence by SVI and urb | 364-374 | `measured_provided_data` | `reports/confidence-by-stratum.json` | `/` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-041` Quartiles are region-specific over official scored tracts with finite … | `methodology.md` | Overture POI confidence by SVI and urb | 376-383 | `measured_provided_data` | `reports/confidence-by-stratum.json` | `/definitions/intervals` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-042` \| Region \| All-place confidence q10 / q25 / median \| All places `<0.5`… | `methodology.md` | Overture POI confidence by SVI and urb | 385-390 | `measured_provided_data` | `reports/confidence-by-stratum.json` | `/regions/maricopa-az/overall_confidence_quantiles_q10_q25_q50_q75_q90/q10` | 40/40 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-043` The observed pattern is opposite the initial hypothesis that higher-SV… | `methodology.md` | Overture POI confidence by SVI and urb | 392-401 | `measured_provided_data` | `reports/confidence-by-stratum.json` | `/` | 3/3 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-044` 1. Restrict to the authoritative South-Central TX sample. | `methodology.md` | Discovery screen | 422-422 | `measured_provided_proxy` | `reports/discovery-rural-svi-minority.json` | `/` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-045` 2. Define the rural screen as provided `pct_urban < 0.5`. | `methodology.md` | Discovery screen | 423-423 | `measured_provided_proxy` | `reports/discovery-rural-svi-minority.json` | `/` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-046` 3. Among rural tracts with nonmissing `svi_minority`, calculate the em… | `methodology.md` | Discovery screen | 424-424 | `measured_provided_proxy` | `reports/discovery-rural-svi-minority.json` | `/group_definition/upper_quartile_cutoff_inclusive` | 2/2 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-047` 4. Compare mean C2 predicted `coverage_gap_score` across those groups.… | `methodology.md` | Discovery screen | 425-425 | `measured_provided_proxy` | `reports/candidates.json` | `/` | 2/2 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-048` 5. Compute 95% percentile intervals from 50,000 bootstrap resamples of… | `methodology.md` | Discovery screen | 426-426 | `measured_provided_proxy` | `reports/discovery-rural-svi-minority.json` | `/composite_results/c2/bootstrap_replicates` | 3/3 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `methodology-049` The screen found 248 high-field rural tracts and 739 other rural tract… | `methodology.md` | Discovery screen | 428-428 | `measured_provided_proxy` | `reports/discovery-rural-svi-minority.json` | `/composite_results/c2/high_group_mean` | 5/5 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-010` In that snapshot 1,441 participants had produced 390 ranked teams. Our… | `methodology.md` | Scorecard reflection | 88-93 | `historical_disclosure` | `reports/leaderboard/index.json` | `/history` | 3/11 | FAILED | `/home/martin/hddProjects/langywrap/uv run --quiet python scr…` |
+| `methodology-011` The scorecard is more informative than the single number. The all-zero… | `methodology.md` | Scorecard reflection | 95-107 | `historical_disclosure` | `reports/scorecards/rTARuUaG.json` | `/submission/public_score` | 10/16 | FAILED | `/home/martin/hddProjects/langywrap/uv run --quiet python scr…` |
+| `methodology-012` Per the operator amendment of `2026-10-24` this paragraph is reflectio… | `methodology.md` | Scorecard reflection | 109-116 | `historical_disclosure` | `reports/scorecards/index.json` | `/preregistration/intent` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet python scr…` |
+| `methodology-013` - **Buildings:** the experimental rule is a fixed building gap `0.01` … | `methodology.md` | Model-only v2 components and approval  | 124-124 | `measured_model_only` | `reports/building-v2-audit.json` | `/` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-014` - **Building morphology sensitivity:** `config/building-morphology-pre… | `methodology.md` | Model-only v2 components and approval  | 125-125 | `measured_model_only` | `reports/building-morphology-candidate.json` | `/global_sensitivity_by_beta/0.02/all_official_tracts/mean` | 7/7 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-015` - **Building-source sensitivity:** `config/building-source-prior-prere… | `methodology.md` | Model-only v2 components and approval  | 126-126 | `measured_model_only` | `reports/building-source-prior.json` | `/global_sensitivity_by_profile_and_beta/primary/0.02/all_official_tracts/mean` | 8/8 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-016` - **Cross-theme support sensitivity:** `config/cross-theme-support-pre… | `methodology.md` | Model-only v2 components and approval  | 127-127 | `measured_model_only` | `reports/cross-theme-support.json` | `/global/rows` | 10/10 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-017` - **Schema optional-attribute presence sensitivity:** `config/schema-p… | `methodology.md` | Model-only v2 components and approval  | 128-128 | `measured_model_only` | `reports/schema-presence-candidate.json` | `/measure_after/optional_field_drop_perturbation_tests/max_change_over_all_single_field_drops` | 11/11 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-018` - **Density-context sensitivity:** `config/density-context-preregister… | `methodology.md` | Model-only v2 components and approval  | 129-129 | `measured_model_only` | `reports/density-context-candidate.json` | `/method/scope/official_id_count` | 15/15 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-019` - **Facility spatial-catchment sensitivity:** `config/facility-catchme… | `methodology.md` | Model-only v2 components and approval  | 130-130 | `measured_model_only` | `reports/facility-catchment-candidate.json` | `/measure_before/facility_zero_shares_and_logistic_candidate_moments/global/observed_overture_zero_counts/fire0` | 22/25 | FAILED | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-020` - **Candidate stability envelope:** `config/candidate-stability-envelo… | `methodology.md` | Model-only v2 components and approval  | 131-131 | `measured_model_only` | `reports/candidate-stability-envelope.json` | `/measure_after/official_rows` | 10/10 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-021` The full edge-case table and calculation policy are in [`edge-cases.md… | `methodology.md` | Edge cases, bias discovery, and interp | 137-137 | `measured_provided_data` | `reports/edge-cases.json` | `/geometry_method` | 10/11 | FAILED | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-022` The opt-in route audit is `scripts/estimate_gaps.py --route-audit-only… | `methodology.md` | Route-reference transport v2 (provided | 163-163 | `measured_provided_data` | `scripts/estimate_gaps.py` | `document` | 3/3 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-023` \| Region \| `sum(L_named)/sum(L_route)` \| `L_named` / `L_route` km \| `L… | `methodology.md` | Route-reference transport v2 (provided | 167-172 | `measured_provided_data` | `reports/transport-route-ref-audit.json` | `/regions/maricopa-az/sum_L_named_over_sum_L_route` | 28/28 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-024` All four route-v2 transport + v0 building/POI any-undefined shares are… | `methodology.md` | Route-reference transport v2 (provided | 174-174 | `measured_provided_data` | `reports/transport-route-ref-audit.json` | `/regions/maricopa-az/sum_L_named_over_sum_L_route` | 10/10 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-025` The measure-before route-reference component is recomputed as `clip(1 … | `methodology.md` | Connector-graph road topology sensitiv | 180-180 | `measured_provided_data` | `reports/road-topology-candidate.json` | `/candidate_rows` | 8/8 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-026` The frozen adjustment is `0.05 × (1 − largest_component_node_share)` a… | `methodology.md` | Connector-graph road topology sensitiv | 182-182 | `measured_provided_data` | `reports/transport-route-variants.json` | `/rows` | 5/14 | FAILED | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-027` The edge audit processed 3,143,887 supplied road-segment rows and 8,49… | `methodology.md` | Connector-graph road topology sensitiv | 184-184 | `measured_provided_data` | `reports/transport-route-variants.json` | `/` | 1/7 | FAILED | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-028` `reports/transport-route-variants.json` compares the three cumulative … | `methodology.md` | Route denominator sensitivity and sele | 198-198 | `measured_provided_data` | `docs/data-inventory.md` | `section:Bias Bounty public GeoParquet inventory` | 3/3 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-029` \| Variant \| Regions inside disclosed 0.71–1.59 ratio band (of 4) \| Reg… | `methodology.md` | Route denominator sensitivity and sele | 200-204 | `measured_provided_data` | `reports/transport-route-variants.json` | `/aggregate_variant_metrics` | 14/14 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-030` All three variants put all four hybrid any-undefined shares within 0.1… | `methodology.md` | Route denominator sensitivity and sele | 206-206 | `measured_provided_data` | `reports/transport-route-variants.json` | `/regions/south-central-tx/variants/state_us_interstate/sum_L_named_over_sum_L_route` | 7/7 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-031` The audit read only official `GEOID` cells from the per-region sample … | `methodology.md` | POI numerator audit and selected categ | 239-250 | `measured_provided_data` | `reports/poi-category-audit.json` | `/` | 0/2 | FAILED | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-032` \| Region \| Official tracts \| Selected fire / EMS / school POI rows \| `… | `methodology.md` | POI numerator audit and selected categ | 271-276 | `measured_provided_data` | `reports/poi-category-audit.json` | `/regions/maricopa-az/tract_index/rows` | 56/56 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-033` `Sources.dataset` is a multi-valued property: dataset row counts are n… | `methodology.md` | POI numerator audit and selected categ | 278-285 | `measured_provided_data` | `reports/poi-category-audit.json` | `/regions/south-central-tx/category_frequency` | 16/16 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-034` \| Region \| Core zero tracts fire / EMS / school \| All fire/rescue cate… | `methodology.md` | POI numerator audit and selected categ | 287-292 | `measured_provided_data` | `reports/poi-category-audit.json` | `/regions/maricopa-az/tract_zero_sensitivity/core_v0/fire/zero_tracts` | 94/100 | FAILED | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-035` `scripts/audit_place_duplicates.py` compares raw selected facility row… | `methodology.md` | 50 m same-name facility dedup sensitiv | 308-308 | `measured_provided_data` | `reports/place-dedup.json` | `/policy/distance` | 5/5 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-036` \| Region \| Facility rows, raw → deduplicated \| Facility rows removed \|… | `methodology.md` | 50 m same-name facility dedup sensitiv | 310-316 | `measured_provided_data` | `reports/place-dedup.json` | `/regions/maricopa-az/facility_rows/raw_unique_rows` | 50/50 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-037` All 36 removed rows are school duplicates; no fire or EMS row is remov… | `methodology.md` | 50 m same-name facility dedup sensitiv | 318-318 | `measured_provided_data` | `reports/place-dedup.json` | `/` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-038` Here `n_overture_t` is the selected exact-category count plus the prov… | `methodology.md` | Facility-miss POI v2 (fixed prior; mod | 354-354 | `measured_model_only` | `reports/poi-facility-miss-audit.json` | `/` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-039` \| Type \| Intercept \| Density slope \| Urbanity slope \| \|---\|---:\|---:\|-… | `methodology.md` | Facility-miss POI v2 (fixed prior; mod | 358-362 | `measured_model_only` | `reports/poi-facility-miss-audit.json` | `/` | 9/9 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-040` With the prior frozen, the audit reports the observed Overture zero co… | `methodology.md` | Facility-miss POI v2 (fixed prior; mod | 364-364 | `measured_model_only` | `reports/poi-facility-miss-audit.json` | `/summaries/maricopa-az/poi_v2_mean_defined` | 16/16 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-041` Before weighting, raw core counts are 5,242 fire, 2,739 EMS, and 39,43… | `methodology.md` | POI confidence-weighted count sensitiv | 381-381 | `measured_model_only` | `reports/poi-confidence-candidate.json` | `/measure_before/source_and_confidence_coverage/fire/selected_rows` | 10/11 | FAILED | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-042` \| Confidence threshold \| Mean POI candidate \| Variance \| Std. dev. \| M… | `methodology.md` | POI confidence-weighted count sensitiv | 383-387 | `measured_model_only` | `reports/poi-confidence-candidate.json` | `/measure_after/threshold_candidates/POI_CONFIDENCE_T050/all/score/mean` | 27/27 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-043` The deterministic diagnostic in `scripts/discovery_confidence_by_strat… | `methodology.md` | Overture POI confidence by SVI and urb | 403-413 | `measured_provided_data` | `reports/confidence-by-stratum.json` | `/` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-044` Quartiles are region-specific over official scored tracts with finite … | `methodology.md` | Overture POI confidence by SVI and urb | 415-422 | `measured_provided_data` | `reports/confidence-by-stratum.json` | `/definitions/intervals` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-045` \| Region \| All-place confidence q10 / q25 / median \| All places `<0.5`… | `methodology.md` | Overture POI confidence by SVI and urb | 424-429 | `measured_provided_data` | `reports/confidence-by-stratum.json` | `/regions/maricopa-az/overall_confidence_quantiles_q10_q25_q50_q75_q90/q10` | 36/40 | FAILED | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-046` The observed pattern is opposite the initial hypothesis that higher-SV… | `methodology.md` | Overture POI confidence by SVI and urb | 431-440 | `measured_provided_data` | `reports/confidence-by-stratum.json` | `/` | 3/3 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-047` 1. Restrict to the authoritative South-Central TX sample. | `methodology.md` | Discovery screen | 461-461 | `measured_provided_proxy` | `reports/candidates.json` | `/` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-048` 2. Define the rural screen as provided `pct_urban < 0.5`. | `methodology.md` | Discovery screen | 462-462 | `measured_provided_proxy` | `reports/discovery-rural-svi-minority.json` | `/` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-049` 3. Among rural tracts with nonmissing `svi_minority`, calculate the em… | `methodology.md` | Discovery screen | 463-463 | `measured_provided_proxy` | `reports/discovery-rural-svi-minority.json` | `/group_definition/upper_quartile_cutoff_inclusive` | 2/2 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-050` 4. Compare mean C2 predicted `coverage_gap_score` across those groups.… | `methodology.md` | Discovery screen | 464-464 | `measured_provided_proxy` | `reports/discovery-rural-svi-minority.json` | `/` | 1/2 | FAILED | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-051` 5. Compute 95% percentile intervals from 50,000 bootstrap resamples of… | `methodology.md` | Discovery screen | 465-465 | `measured_provided_proxy` | `reports/discovery-rural-svi-minority.json` | `/composite_results/c2/bootstrap_replicates` | 3/3 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-052` The screen found 248 high-field rural tracts and 739 other rural tract… | `methodology.md` | Discovery screen | 467-467 | `measured_provided_proxy` | `reports/discovery-rural-svi-minority.json` | `/composite_results/c2/high_group_mean` | 5/5 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
 | `edge-cases-001` This table makes the handling explicit for low-information and structu… | `edge-cases.md` | Edge-case register for the coverage-ga | 3-3 | `scope_statement` | `docs/data-inventory.md` | `document` | 2/2 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
 | `edge-cases-002` \| Region \| Official n \| Population 0 \| `ALAND` 0 \| Water proxy >50% \| … | `edge-cases.md` | Observed edge cases | 7-13 | `measured_provided_data` | `reports/v2-defined-mask-audit.json` | `/scope/region_rows/maricopa-az` | 55/55 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
 | `edge-cases-003` Water is an approximation, not an independently observed water mask: f… | `edge-cases.md` | Observed edge cases | 15-15 | `measured_provided_data` | `reports/edge-cases.json` | `/geometry_method` | 8/8 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
@@ -124,7 +127,7 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 | `config/cross-theme-support-preregistered.json` | `db5c5ce27509e214108c2b027a0c6b4cd06dd0336e3d38e664955e674bf9bb47` | 1 |
 | `config/density-context-preregistered.json` | `497ce1280a8e13a5a575d80abc8078ba549851e3fba5f8f6385580ebe0ba803c` | 1 |
 | `config/facility-catchment-preregistered.json` | `18cf5fc3468997728b3d4786c5892b636d17b7cd191eb02b2a047aa300bbc656` | 1 |
-| `config/poi-category-definitions.json` | `8309a0bb08613b92621f4977eb78998e469951c0cd0ed012d93ea2f5cf59654f` | 3 |
+| `config/poi-category-definitions.json` | `8309a0bb08613b92621f4977eb78998e469951c0cd0ed012d93ea2f5cf59654f` | 4 |
 | `config/poi-confidence-weighting-preregistered.json` | `f93ffa0153c6e2207dc99ae1a0d44753371a2ce173f71eb64feb5d17e0e46296` | 1 |
 | `config/reproduction-inputs.json` | `0172220d2a463be4cd9ca014439363bb490994a59709b576bc6474d7546454bd` | 3 |
 | `config/schema-presence-preregistered.json` | `4f715f96e48e4de60a47d69e270f53b92908813c89bf35aeee142e1887e2edc7` | 1 |
@@ -137,7 +140,7 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 | `reports/candidate-stability-envelope.json` | `258cb9647e72ea3f8d225c18efed7de41bc9c1beb70218684fa332d7ea1d2622` | 1 |
 | `reports/candidates.json` | `5374d6811fc1c6ea28ef680e3d29038c981d16265d4731df6dadd286a0bf34e1` | 4 |
 | `reports/candidates/facility_catchment_candidate_manifest.json` | `180da02422e5b3045580dd642288c5fcb6aa18f01382c732b10946a20a99605e` | 1 |
-| `reports/candidates/road_topology_candidate_manifest.json` | `b269e4487905937d48418822aeb11a92e76f0371236d99e175e920d82852705f` | 3 |
+| `reports/candidates/road_topology_candidate_manifest.json` | `b269e4487905937d48418822aeb11a92e76f0371236d99e175e920d82852705f` | 1 |
 | `reports/candidates/schema_presence_candidate_manifest.json` | `f4450ee825de7a41b3c5c5df1f5aefb1808904aaf028837ad414296667d1c700` | 1 |
 | `reports/confidence-by-stratum.json` | `ac759312e2b3e1384078c2d46dc386a9c2a2905ae5c6366d1247c13ee6916053` | 4 |
 | `reports/cross-theme-support.json` | `77c010a8c74f62487816b142e489b651f38dfcc93793c87fbe9c91711d1d352d` | 1 |
@@ -150,16 +153,22 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 | `reports/estimator-v2-audit.json` | `131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0` | 8 |
 | `reports/facility-catchment-candidate.json` | `53cdbfa4450223d84db7647dc4fb16d058d6bd239740e9153f51000e884e6794` | 1 |
 | `reports/gap-estimator-audit.json` | `a872e2dd62a5333037bc8e663278134c5b0a08493c7ec41768962e33859187f9` | 2 |
-| `reports/place-dedup.json` | `de03f53c37fbb9a909b2f45172ede1a58bc059371e22837738df56a54bcd3cba` | 3 |
+| `reports/leaderboard/2026-10-25T051219+0000.json` | `fbfa3ce3b73a57189263ce7393df69678db062acdb411669e7d8b7e33ab60705` | 3 |
+| `reports/leaderboard/index.json` | `80c0da0410d73a62a16058696c8488357e3cf3a4ac1ff75a4e56cc5629d28d96` | 3 |
+| `reports/place-dedup.json` | `de03f53c37fbb9a909b2f45172ede1a58bc059371e22837738df56a54bcd3cba` | 4 |
 | `reports/poi-category-audit.json` | `cd48fa40d0fb1b3cdd1e431734acb646791916df02ee021a60243020b17d9de8` | 6 |
-| `reports/poi-confidence-candidate.json` | `23c49c00105c5936baa094a3ce0f5a23e41589939c6fea972870f1fde794370e` | 2 |
-| `reports/poi-facility-miss-audit.json` | `b559c8d3d85709d0e5f2d2102bb39da4d8255a3c62f728cf736da522025a289c` | 4 |
-| `reports/road-topology-candidate.json` | `4a8b630e865609ae23e8825c864c771ed319d63e5c27eb86158e1dac6dcfc6ce` | 3 |
+| `reports/poi-confidence-candidate.json` | `23c49c00105c5936baa094a3ce0f5a23e41589939c6fea972870f1fde794370e` | 3 |
+| `reports/poi-facility-miss-audit.json` | `b559c8d3d85709d0e5f2d2102bb39da4d8255a3c62f728cf736da522025a289c` | 3 |
+| `reports/road-topology-candidate.json` | `4a8b630e865609ae23e8825c864c771ed319d63e5c27eb86158e1dac6dcfc6ce` | 1 |
 | `reports/sample-contract-audit.json` | `e9a56f30ea7c5a09bf94ebc95d2bf6b1e7559456ee8cf1c16304d9137175dbd0` | 4 |
 | `reports/schema-presence-candidate.json` | `c4a4cfe3e290e15dd6cc1165c079f9494a2ac415c09c0c9334bd0184268fe457` | 1 |
+| `reports/scorecards/BvyKrR6v.json` | `5851f6b82a2da0a5c8980e438bf6b4fdfdf4e1aaec60c60dbf211c582d89487d` | 3 |
+| `reports/scorecards/index.json` | `439bc6583d2d6bdf8cb92556666563cd9fa6e85b47d06d05abf28505e5f9b882` | 3 |
+| `reports/scorecards/rTARuUaG.json` | `1e1c7c71dcac6ea3b3cbe6ca2602193c6fd47bc14ed3c013a8c7535a9e018b9b` | 3 |
+| `reports/scorecards/uRRw9KpB.json` | `1cd116b65445431fe26e95f7c5d68f64073085f2c9a453825c6ad30a2058c257` | 3 |
 | `reports/source-provenance.json` | `e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565` | 7 |
-| `reports/transport-route-ref-audit.json` | `bf904336963f553cc7442c5996a4d8d504fe30aad5c4f1a2e44da8fa773b1927` | 12 |
-| `reports/transport-route-variants.json` | `2a1acc760aadd2fce3a1df2afae6bfd9aaaef2a2ce510df8b674bccb9eb11aa2` | 3 |
+| `reports/transport-route-ref-audit.json` | `bf904336963f553cc7442c5996a4d8d504fe30aad5c4f1a2e44da8fa773b1927` | 13 |
+| `reports/transport-route-variants.json` | `2a1acc760aadd2fce3a1df2afae6bfd9aaaef2a2ce510df8b674bccb9eb11aa2` | 4 |
 | `reports/v2-defined-mask-audit.json` | `fea33ef7daeeeac2fd187803481e050085698afd6f44ed182e9c5af5028054d2` | 8 |
 | `reports/v2-input-provenance.json` | `b52c3b1bcfee452e8d04c2af28a8c9abd1a0fb609b50c1ed9a9d56b9ec7f5d6a` | 5 |
 | `scripts/audit_place_duplicates.py` | `03717aa54a75a6e55bbe6b85f65dd66f4cd1cae88632b12c5006087247da1e90` | 1 |
@@ -263,9 +272,9 @@ Per-claim verify commands (executed by the audit; each must exit 0):
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-008
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-009
-# exit 0
+# exit 1
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-010
-# exit 0
+# exit 1
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-011
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-012
@@ -281,11 +290,11 @@ Per-claim verify commands (executed by the audit; each must exit 0):
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-017
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-018
-# exit 0
+# exit 1
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-019
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-020
-# exit 0
+# exit 1
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-021
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-022
@@ -295,9 +304,9 @@ Per-claim verify commands (executed by the audit; each must exit 0):
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-024
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-025
-# exit 0
+# exit 1
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-026
-# exit 0
+# exit 1
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-027
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-028
@@ -305,13 +314,13 @@ Per-claim verify commands (executed by the audit; each must exit 0):
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-029
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-030
-# exit 0
+# exit 1
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-031
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-032
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-033
-# exit 0
+# exit 1
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-034
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-035
@@ -325,7 +334,7 @@ Per-claim verify commands (executed by the audit; each must exit 0):
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-039
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-040
-# exit 0
+# exit 1
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-041
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-042
@@ -333,7 +342,7 @@ Per-claim verify commands (executed by the audit; each must exit 0):
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-043
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-044
-# exit 0
+# exit 1
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-045
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-046
@@ -343,6 +352,12 @@ Per-claim verify commands (executed by the audit; each must exit 0):
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-048
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-049
+# exit 1
+/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-050
+# exit 0
+/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-051
+# exit 0
+/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-052
 ```
 
 Reproduce commands (executed once with the authorised workspace and recorded in the committed execution log; products are hash-verified by every audit run):
@@ -378,13 +393,25 @@ Reproduce commands (executed once with the authorised workspace and recorded in 
 /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/estimate_gaps.py --workspace "$COMPETITION_WORKSPACE" --poi-model facility-miss
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/estimate_gaps.py --workspace "$COMPETITION_WORKSPACE" --route-audit-only --route-audit-out reports/transport-route-ref-audit.json
+# exit None
+/home/martin/hddProjects/langywrap/uv run --quiet python scripts/snapshot_lb_and_scorecards.py
 # exit 0
 MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace "$COMPETITION_WORKSPACE" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png
 ```
 
 ## Unresolved claims
 
-None. Every quantitative claim in the three writeup documents carries a verified evidence pointer, a passing verify command and a hash-verified reproduction path.
+- `methodology-010`: uncovered tokens ['0.091440198', '0.007553152', '0.083887046', '0.024401074', '0.067039124', '0.091010795', '0.000429403', '0.000091526']; pointer '/history' hit=True; accuracy ok=False; prohibited [].
+- `methodology-011`: uncovered tokens ['0.107246299', '0.146449112', '0.146449112', '0.091440198', '0.235358712', '0.349409867']; pointer '/submission/public_score' hit=True; accuracy ok=False; prohibited [].
+- `methodology-019`: uncovered tokens ['62.82', '77.64', '11.60']; pointer '/measure_before/facility_zero_shares_and_logistic_candidate_moments/global/observed_overture_zero_counts/fire0' hit=True; accuracy ok=True; prohibited [].
+- `methodology-021`: uncovered tokens ['132']; pointer '/geometry_method' hit=True; accuracy ok=True; prohibited [].
+- `methodology-026`: uncovered tokens ['9,377', '99.98', '14.54', '93.68', '67.45', '0.03166', '0.03880', '0.00321', '0.00571']; pointer '/rows' hit=True; accuracy ok=True; prohibited [].
+- `methodology-027`: uncovered tokens ['3,143,887', '8,491,546', '1,087', '1,591', '245,818', '0.04358']; pointer '/' hit=True; accuracy ok=True; prohibited [].
+- `methodology-031`: uncovered tokens ['9,379', '132,133,741']; pointer '/' hit=True; accuracy ok=True; prohibited [].
+- `methodology-034`: uncovered tokens ['12.37', '6.97', '8.12', '12.67', '5.29', '11.58']; pointer '/regions/maricopa-az/tract_zero_sensitivity/core_v0/fire/zero_tracts' hit=True; accuracy ok=True; prohibited [].
+- `methodology-041`: uncovered tokens ['0.25704']; pointer '/measure_before/source_and_confidence_coverage/fire/selected_rows' hit=True; accuracy ok=True; prohibited [].
+- `methodology-045`: uncovered tokens ['9.95', '10.26', '9.91', '12.38']; pointer '/regions/maricopa-az/overall_confidence_quantiles_q10_q25_q50_q75_q90/q10' hit=True; accuracy ok=True; prohibited [].
+- `methodology-050`: uncovered tokens ['1.25']; pointer '/' hit=True; accuracy ok=True; prohibited [].
 
 ## Limits of this screen
 

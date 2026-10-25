@@ -1,0 +1,160 @@
+{
+ "competition": "bias-bounty-mapping-equity-challenge",
+ "derived": {
+  "dimensions_described_similar": 3,
+  "dimensions_flagged_not_similar": [
+   "drought_winter",
+   "heat_summer",
+   "high_cvi_vs_low_cvi",
+   "tribal_vs_nontribal",
+   "urban_rural",
+   "wildfire"
+  ],
+  "dimensions_status_ok": 9,
+  "dimensions_status_undefined": 0,
+  "dimensions_total": 9,
+  "dimensions_with_reason": [],
+  "disparity_ratios_max": 1.211,
+  "disparity_ratios_min": 0.248,
+  "largest_absolute_coverage_gap_percentage": 75.2
+ },
+ "ledger_cross_check": {
+  "agreement_applicable": true,
+  "ledger_observed_at": "2026-10-24T10:20:29+00:00",
+  "ledger_public_score": 0.235358712,
+  "ledger_status": "successful",
+  "scores_agree": true
+ },
+ "non_influence": {
+  "no_upload_performed": true,
+  "note": "reported passively; no feature, threshold, weight or parameter in the model chain reads this file",
+  "scorecard_influenced_parameters": []
+ },
+ "preregistration": {
+  "config_sha256": "66f165838f1fc810ac10f72e4dcf5de5fc241b6df63ae74c3059802f6736da93",
+  "fields_dropped": [
+   "url"
+  ],
+  "fields_dropped_reason": "the presigned download URL embeds an AWS access-key id and a request signature and must never be committed",
+  "fields_retained": [
+   "id",
+   "filename",
+   "comment",
+   "created_at",
+   "status",
+   "public_score",
+   "rubric_type",
+   "supports_rubric",
+   "chosen",
+   "submitter"
+  ],
+  "http_methods_used": [
+   "GET"
+  ],
+  "intent": "Passive reporting of where we stand and what the organiser Bias Scorecard says about our scored submissions. The row and the operator amendment of 2026-10-24 both forbid uploads and any scorecard- or leaderboard-driven feature, threshold or parameter change; this file exists so the snapshot's scope cannot drift.",
+  "lane": "comp-zindi-bias-bounty",
+  "read_only_status_path": "https://api.zindi.world/v1/competitions/bias-bounty-mapping-equity-challenge/submissions?per_page=100",
+  "row": "backlog:.langywrap/backlogs/competitions.jsonl:bias-lb-snapshot-and-scorecard",
+  "scorecard_fields_required": [
+   "bias_indicator",
+   "status",
+   "disparity_ratio",
+   "coverage_gap_percentage",
+   "coverage_gap_description",
+   "reason"
+  ]
+ },
+ "provenance": {
+  "html_note": "the authenticated status path returns the rubric as JSON only; no HTML scorecard document is exposed, so the JSON file is the committed record",
+  "platform_html_scorecard_available": false,
+  "retrieved_at_utc": "2026-10-25T05:58:14+00:00",
+  "retrieved_by": "scripts/snapshot_lb_and_scorecards.py --fetch"
+ },
+ "scorecard": {
+  "drought_summer": {
+   "bias_indicator": "Summer Drought",
+   "coverage_gap_description": "Similar",
+   "coverage_gap_percentage": 6.299999999999994,
+   "disparity_ratio": 0.937,
+   "reason": null,
+   "status": "ok"
+  },
+  "drought_winter": {
+   "bias_indicator": "Winter Drought",
+   "coverage_gap_description": "12% smaller",
+   "coverage_gap_percentage": 12.0,
+   "disparity_ratio": 0.88,
+   "reason": null,
+   "status": "ok"
+  },
+  "heat_summer": {
+   "bias_indicator": "Summer Heat",
+   "coverage_gap_description": "21% larger",
+   "coverage_gap_percentage": 21.10000000000001,
+   "disparity_ratio": 1.211,
+   "reason": null,
+   "status": "ok"
+  },
+  "high_cvi_vs_low_cvi": {
+   "bias_indicator": "High Climate Vulnerability",
+   "coverage_gap_description": "17% smaller",
+   "coverage_gap_percentage": 16.900000000000006,
+   "disparity_ratio": 0.831,
+   "reason": null,
+   "status": "ok"
+  },
+  "high_svi_vs_low_svi": {
+   "bias_indicator": "High Social Vulnerability",
+   "coverage_gap_description": "Similar",
+   "coverage_gap_percentage": 0.3000000000000003,
+   "disparity_ratio": 0.997,
+   "reason": null,
+   "status": "ok"
+  },
+  "intersectional": {
+   "bias_indicator": "High Hazard + High Vulnerability",
+   "coverage_gap_description": "Similar",
+   "coverage_gap_percentage": 5.900000000000006,
+   "disparity_ratio": 0.941,
+   "reason": null,
+   "status": "ok"
+  },
+  "tribal_vs_nontribal": {
+   "bias_indicator": "Tribal vs Non-Tribal",
+   "coverage_gap_description": "44% smaller",
+   "coverage_gap_percentage": 44.39999999999999,
+   "disparity_ratio": 0.556,
+   "reason": null,
+   "status": "ok"
+  },
+  "urban_rural": {
+   "bias_indicator": "Rural vs Urban",
+   "coverage_gap_description": "75% smaller",
+   "coverage_gap_percentage": 75.2,
+   "disparity_ratio": 0.248,
+   "reason": null,
+   "status": "ok"
+  },
+  "wildfire": {
+   "bias_indicator": "Wildfire Hazard",
+   "coverage_gap_description": "38% smaller",
+   "coverage_gap_percentage": 37.9,
+   "disparity_ratio": 0.621,
+   "reason": null,
+   "status": "ok"
+  }
+ },
+ "submission": {
+  "chosen": false,
+  "comment": "C2 5728fbbaa2e0",
+  "created_at": "2026-10-24T09:18:36.387Z",
+  "filename": "C2_component_estimator_v0.csv",
+  "id": "rTARuUaG",
+  "identity_note": "platform-recorded submitter handle, not an operator-confirmed team name for the writeup",
+  "public_score": 0.235358712,
+  "rubric_type": "bias_bounty",
+  "status": "successful",
+  "submitter_platform_recorded": "holi",
+  "supports_rubric": true
+ }
+}

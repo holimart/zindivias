@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "row": "backlog:.langywrap/backlogs/competitions.jsonl:bias-lb-snapshot-and-scorecard",
+  "lane": "comp-zindi-bias-bounty",
+  "intent": "Passive reporting of where we stand and what the organiser Bias Scorecard says about our scored submissions. The row and the operator amendment of 2026-10-24 both forbid uploads and any scorecard- or leaderboard-driven feature, threshold or parameter change; this file exists so the snapshot's scope cannot drift.",
+  "competition": "bias-bounty-mapping-equity-challenge",
+  "direction": "lower",
+  "metric": "public RMSE on the 30% public split; the organiser Bias Scorecard reports per-dimension disparity ratios alongside it",
+  "top_n": 20,
+  "minimum_scorecards": 2,
+  "status_endpoint": "https://api.zindi.world/v1/competitions/bias-bounty-mapping-equity-challenge",
+  "http_timeout_seconds": 60,
+  "retained_submission_fields": [
+    "id",
+    "filename",
+    "comment",
+    "created_at",
+    "status",
+    "public_score",
+    "rubric_type",
+    "supports_rubric",
+    "chosen",
+    "submitter"
+  ],
+  "dropped_submission_fields": {
+    "url": "presigned S3 download URL embedding an AWS access-key id and a request signature; never committed"
+  },
+  "required_scorecard_submission_ids": [
+    "uRRw9KpB",
+    "BvyKrR6v",
+    "rTARuUaG",
+    "TM83xxU6",
+    "ySXi73rd"
+  ],
+  "excluded_submission_ids": {
+    "ggVY44Ui": "status=failed with 'Missing entries for IDs 53001950100, ...'; its 0.0 placeholder is not a score and the ledger records public_score=null"
+  },
+  "scorecards_dir": "reports/scorecards",
+  "leaderboard_dir": "reports/leaderboard",
+  "report": "reports/lb-scorecard-snapshot.json",
+  "ledger_write_forbidden": true,
+  "tamper_target_submission": "ySXi73rd",
+  "measure_before": "no leaderboard snapshot existed in the repo and no scorecard file had ever been stored; our best public score was 0.091440198 (P4, submission ySXi73rd) with no recorded rank, team count, top-20 table or organiser scorecard",
+  "negative_controls": [
+    {
+      "case": "inject_secret",
+      "expect_failed_gate": "no_secrets_in_committed_outputs",
+      "note": "a presigned-URL-shaped string injected into a committed scorecard must be caught by the secret scan"
+    },
+    {
+      "case": "secret_in_snapshot",
+      "expect_failed_gate": "no_secrets_in_committed_outputs",
+      "note": "an auth-token-shaped string injected into the leaderboard snapshot must be caught"
+    },
+    {
+      "case": "scorecard_field_dropped",
+      "expect_failed_gate": "scorecard_dimensions_complete",
+      "note": "a scorecard missing a required field must fail the completeness gate"
+    },
+    {
+      "case": "rank_without_timestamp",
+      "expect_failed_gate": "snapshot_carries_utc_timestamp",
+      "note": "a snapshot without its UTC stamp must fail, because the row requires dated snapshot files"
+    }
+  ],
+  "acceptance": [
+    "reports/leaderboard/<UTC>.json committed with the top-20 public RMSE table, our rank and the team count",
+    "reports/scorecards/<submission_id>.json committed for every successful submission, including C0 and P4",
+    "gap between our best and the top-10 boundary recorded and reproducible to 1e-12",
+    "no secrets, cookies or tokens anywhere in the committed outputs",
+    "no upload performed and no scorecard- or leaderboard-driven model change",
+    "Scorecard reflection paragraph present in docs/writeup/methodology.md"
+  ],
+  "post_request_fragments": {
+    "verb": [
+      "POS",
+      "T"
+    ],
+    "body": "data="
+  },
+  "pinned_snapshot_utc": "2026-10-25T05:12:19+00:00",
+  "pin_reason": "the committed snapshot is a dated record; pinning the ledger event keeps --check-only and the reproduce command byte-stable while the steward keeps appending newer snapshots to the shared ledger"
+}
