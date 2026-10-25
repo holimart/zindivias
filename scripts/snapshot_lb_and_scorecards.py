@@ -58,6 +58,12 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def display(path: Path, root: Path = ROOT) -> str:
+    """Repo-relative when possible, otherwise the bare filename so sandboxes stay readable."""
+    resolved = Path(path)
+    return str(resolved.relative_to(root)) if resolved.is_relative_to(root) else resolved.name
+
+
 def canonical_bytes(payload: Any) -> bytes:
     return (json.dumps(payload, indent=1, sort_keys=True, ensure_ascii=False) + "\n").encode()
 
@@ -210,7 +216,8 @@ def scorecard_document(record: dict[str, Any], config: dict[str, Any], ledger_sc
 
 
 def build_scorecards(config: dict[str, Any], scorecards_dir: Path, ledger_scores: dict[str, Any],
-                     fetch: bool, tamper: str | None) -> tuple[dict[str, Any], list[str]]:
+                     fetch: bool, tamper: str | None,
+                     rewrite: bool = False) -> tuple[dict[str, Any], list[str]]:
     """Write or verify one JSON file per scored submission; return (index, written_paths)."""
     required = set(config["required_scorecard_submission_ids"])
     if fetch:
@@ -258,11 +265,11 @@ def build_scorecards(config: dict[str, Any], scorecards_dir: Path, ledger_scores
         path = scorecards_dir / f"{submission_id}.json"
         payload = canonical_bytes(document)
         if path.is_file() and path.read_bytes() == payload and tamper is None:
-            written.append(str(path.relative_to(ROOT)))
-        elif fetch or tamper is not None or not path.is_file():
+            written.append(path.name)
+        elif fetch or rewrite or tamper is not None or not path.is_file():
             scorecards_dir.mkdir(parents=True, exist_ok=True)
             path.write_bytes(payload)
-            written.append(str(path.relative_to(ROOT)))
+            written.append(path.name)
         else:
             raise SnapshotError(f"committed scorecard differs from the rebuilt document: {path}")
         rows.append({
@@ -272,7 +279,7 @@ def build_scorecards(config: dict[str, Any], scorecards_dir: Path, ledger_scores
             "created_at": document["submission"]["created_at"],
             "status": document["submission"]["status"],
             "public_score": document["submission"]["public_score"],
-            "file": str(path.relative_to(ROOT)),
+            "file": path.name,
             "sha256": sha256(path),
             "dimensions_total": document["derived"]["dimensions_total"],
             "dimensions_status_ok": document["derived"]["dimensions_status_ok"],
@@ -298,7 +305,7 @@ def build_scorecards(config: dict[str, Any], scorecards_dir: Path, ledger_scores
     index_path = scorecards_dir / "index.json"
     payload = canonical_bytes(index)
     if not (index_path.is_file() and index_path.read_bytes() == payload):
-        if fetch or tamper is not None or not index_path.is_file():
+        if fetch or rewrite or tamper is not None or not index_path.is_file():
             index_path.write_bytes(payload)
         else:
             raise SnapshotError(f"committed scorecard index differs from the rebuilt index: {index_path}")
@@ -367,7 +374,8 @@ def filename_stamp(snapshot_utc: str) -> str:
 
 def leaderboard_document(config: dict[str, Any], ledger: Path, archive: Path, archive_rows: list[dict],
                          event: dict[str, Any], ledger_scores: dict[str, Any],
-                         scorecard_index: dict[str, Any], tamper: str | None) -> dict[str, Any]:
+                         scorecard_index: dict[str, Any], tamper: str | None,
+                         scorecard_index_path: Path) -> dict[str, Any]:
     ranked = sorted((row for row in archive_rows
                      if row.get("rank") and row.get("score") is not None),
                     key=lambda row: (row["rank"], row["score"]))
@@ -441,7 +449,7 @@ def leaderboard_document(config: dict[str, Any], ledger: Path, archive: Path, ar
         },
         "top20_public_rmse": top20,
         "our_submissions_in_the_public_column": per_submission,
-        "scorecard_index_sha256": sha256(ROOT / "reports" / "scorecards" / "index.json"),
+        "scorecard_index_sha256": sha256(scorecard_index_path),
         "non_influence": {
             "scorecard_influenced_parameters": [],
             "no_upload_performed": True,
@@ -490,23 +498,28 @@ def secret_hits(payload: Any, path: str = "") -> list[str]:
 
 # --------------------------------------------------------------- driver
 
-def run(config: dict[str, Any], ledger: Path, fetch: bool, tamper: str | None) -> dict[str, Any]:
-    scorecards_dir = ROOT / config["scorecards_dir"]
-    leaderboard_dir = ROOT / config["leaderboard_dir"]
+def run(config: dict[str, Any], ledger: Path, fetch: bool, tamper: str | None,
+        args_scorecards: str | None = None, args_leaderboard: str | None = None,
+        rewrite: bool = False) -> dict[str, Any]:
+    scorecards_dir = Path(args_scorecards) if args_scorecards else ROOT / config["scorecards_dir"]
+    leaderboard_dir = Path(args_leaderboard) if args_leaderboard else ROOT / config["leaderboard_dir"]
     ledger_by_id, ledger_successful = ledger_submissions(config, ledger)
     scorecard_index, scorecard_files = build_scorecards(config, scorecards_dir, ledger_by_id,
-                                                        fetch, tamper)
+                                                        fetch, tamper, rewrite)
     archive, archive_rows = latest_archive(config, ledger)
     event = latest_event(config, ledger)
     document = leaderboard_document(config, ledger, archive, archive_rows, event,
-                                   ledger_successful, scorecard_index, tamper)
+                                   ledger_successful, scorecard_index, tamper,
+                                   scorecards_dir / "index.json")
 
-    snapshot_name = f"{filename_stamp(str(document['snapshot_utc']))}.json"
+    stamp = document.get("snapshot_utc")
+    # An undated snapshot is still written (so the gate can report it) but never under a stamp name.
+    snapshot_name = f"{filename_stamp(str(stamp))}.json" if stamp else "UNDATED.json"
     snapshot_path = leaderboard_dir / snapshot_name
     leaderboard_dir.mkdir(parents=True, exist_ok=True)
     payload = canonical_bytes(document)
     if not (snapshot_path.is_file() and snapshot_path.read_bytes() == payload):
-        if fetch or tamper is not None or not snapshot_path.is_file():
+        if fetch or rewrite or tamper is not None or not snapshot_path.is_file():
             snapshot_path.write_bytes(payload)
         else:
             raise SnapshotError(f"committed snapshot differs from the rebuilt snapshot: {snapshot_path}")
@@ -523,31 +536,41 @@ def run(config: dict[str, Any], ledger: Path, fetch: bool, tamper: str | None) -
         "competition": config["competition"],
         "history": history,
     }
-    index["snapshots"] = [{"file": str(snapshot_path.relative_to(ROOT)),
-                           "snapshot_utc": document["snapshot_utc"],
+    index["snapshots"] = [{"file": snapshot_path.name,
+                           "snapshot_utc": document.get("snapshot_utc"),
                            "sha256": sha256(snapshot_path)}]
     index_path = leaderboard_dir / "index.json"
     index_payload = canonical_bytes(index)
     if not (index_path.is_file() and index_path.read_bytes() == index_payload):
-        if fetch or tamper is not None or not index_path.is_file():
+        if fetch or rewrite or tamper is not None or not index_path.is_file():
             index_path.write_bytes(index_payload)
         else:
             raise SnapshotError(f"committed snapshot index differs from the rebuilt index: {index_path}")
 
-    return measure(config, document, scorecard_index, snapshot_path, index_path, scorecard_files)
+    return measure(config, document, scorecard_index, snapshot_path, index_path, scorecard_files,
+                   scorecards_dir / "index.json", scorecards_dir)
 
 
 def measure(config: dict[str, Any], document: dict[str, Any], scorecard_index: dict[str, Any],
-            snapshot_path: Path, index_path: Path, scorecard_files: list[str]) -> dict[str, Any]:
+            snapshot_path: Path, index_path: Path, scorecard_files: list[str],
+            scorecard_index_path: Path, scorecards_dir: Path) -> dict[str, Any]:
     standings = document["standings"]
     gaps = document["gaps"]
     successful_ids = scorecard_index["successful_scorecards_present"]
     ranked_scores = [row["public_rmse"] for row in document["top20_public_rmse"]]
-    written_files = [snapshot_path, index_path] + [ROOT / name for name in scorecard_files] + [
-        ROOT / "reports" / "scorecards" / "index.json"]
+    written_files = ([snapshot_path, index_path, scorecard_index_path]
+                     + [(scorecards_dir / name) if not Path(name).is_absolute() else Path(name)
+                        for name in scorecard_files])
     secrets: list[str] = []
     for path in written_files:
         secrets += [f"{path.name}:{hit}" for hit in secret_hits(load_json(path))]
+    fields_incomplete: list[str] = []
+    for name in scorecard_files:
+        card_path = (scorecards_dir / name) if not Path(name).is_absolute() else Path(name)
+        card = load_json(card_path)
+        for dimension, values in card["scorecard"].items():
+            if sorted(values) != sorted(SCORECARD_FIELDS):
+                fields_incomplete.append(f"{card_path.name}:{dimension}")
     ledger_root = Path(document["source"]["ledger_root"])
     gates = {
         "snapshot_carries_utc_timestamp": bool(document.get("snapshot_utc")),
@@ -572,6 +595,7 @@ def measure(config: dict[str, Any], document: dict[str, Any], scorecard_index: d
                     for row in document["our_submissions_in_the_public_column"])),
         "scorecard_dimensions_complete": all(row["dimensions_total"] == 9 for row
                                              in scorecard_index["scorecards"]),
+        "scorecard_fields_complete_per_dimension": fields_incomplete == [],
         "scorecard_scores_agree_with_ledger": all(row["ledger_scores_agree"] is not False
                                                   for row in scorecard_index["scorecards"]),
         "required_scorecards_present": (set(scorecard_index["required_submission_ids"])
@@ -592,10 +616,10 @@ def measure(config: dict[str, Any], document: dict[str, Any], scorecard_index: d
         "preregistration": document["preregistration"],
         "measure_before": config["measure_before"],
         "summary": {
-            "snapshot_utc": document["snapshot_utc"],
-            "snapshot_file": str(snapshot_path.relative_to(ROOT)),
+            "snapshot_utc": document.get("snapshot_utc"),
+            "snapshot_file": display(snapshot_path),
             "snapshot_sha256": sha256(snapshot_path),
-            "index_file": str(index_path.relative_to(ROOT)),
+            "index_file": display(index_path),
             "index_sha256": sha256(index_path),
             "participants": standings["participants"],
             "ranked_teams": standings["ranked_teams"],
@@ -609,6 +633,7 @@ def measure(config: dict[str, Any], document: dict[str, Any], scorecard_index: d
             "scorecards_committed": len(scorecard_index["scorecards"]),
             "scorecards_successful": len(successful_ids),
             "scorecard_dimensions_total": 9,
+            "scorecard_fields_incomplete": fields_incomplete,
             "secret_hits": secrets,
             "failed_gates": [key for key, value in gates.items()
                              if key != "gates_all_passed" and value is not True],
@@ -651,13 +676,21 @@ def main(argv: list[str] | None = None) -> int:
                        choices=(None, "inject_secret", "secret_in_snapshot",
                                 "scorecard_field_dropped", "rank_without_timestamp"))
     parser.add_argument("--out", default=None)
+    parser.add_argument("--rewrite", action="store_true",
+                       help="regenerate derived products from the ledger and the committed "
+                            "scorecards after a config or format change (never invents platform data)")
+    parser.add_argument("--scorecards-dir", default=None,
+                       help="write scorecards here instead of reports/scorecards (negative controls)")
+    parser.add_argument("--leaderboard-dir", default=None,
+                       help="write snapshots here instead of reports/leaderboard")
     parser.add_argument("--check-only", action="store_true")
     args = parser.parse_args(argv)
 
     config = load_json(Path(args.config))
     ledger = ledger_root(args.ledger)
     try:
-        report = run(config, ledger, args.fetch, args.tamper)
+        report = run(config, ledger, args.fetch, args.tamper, args.scorecards_dir,
+                     args.leaderboard_dir, args.rewrite)
     except SnapshotError as error:
         print(f"BLOCKED {error}", file=sys.stderr)
         return 2

@@ -76,45 +76,6 @@ Historical alternatives C1 (region constants), C3 (v0 denominators ×1.25), P4 (
 
 The archived experiments include scored submissions and cancelled/dry-run probes. The generated [`probe-log.md`](probe-log.md) lists every ledger event, each probe's parameters, successful public RMSE only when paired with its recorded platform submission ID, artifact hashes, and the score-algebra moments or explicit “no moment” status. It documents the public-subset/all-official-row composition assumption and false initial score placeholders. In particular, P4's global scale is leaderboard-derived and reproduction-only; P5/P6/region probes were not successful scores. These statistics are historical disclosure and are forbidden as v2 priors, target moments, feature thresholds, or per-tract values. The operator's no-information-probe policy supersedes the historical plans; there is no new probe upload or candidate authorization here.
 
-## Scorecard reflection
-
-The row `bias-lb-snapshot-and-scorecard` snapshots where we stand and what the organiser's Bias
-Scorecard says about our scored submissions. `scripts/snapshot_lb_and_scorecards.py` reads only the
-shared orchestrator ledger plus one read-only GET of the authenticated submission status path, writes
-the dated file `reports/leaderboard/2026-10-25T051219+0000.json` and one
-`reports/scorecards/<submission_id>.json` per submission, and contains no upload path at all;
-`reports/lb-scorecard-snapshot.json` is the machine record of the whole snapshot.
-
-In that snapshot 1,441 participants had produced 390 ranked teams. Quoted to the six decimals the
-snapshot stores, our best public RMSE was 0.091440 (P4, platform submission `ySXi73rd`) at rank 274:
-0.007553 above the ranked median 0.083887, 0.024401 above the rank-50 line 0.067039, and 0.091011
-above the rank-10 boundary 0.000429. We do not treat that boundary as a modelling target: six teams
-record an exact zero and the best positive score on the board is 0.000092, so the snapshot reports the
-median and rank-50 gaps beside it instead of implying that rank ten is reachable by modelling.
-
-The scorecard is more informative than the single number. The all-zero anchor `uRRw9KpB`
-(public 0.107246) returns all nine dimensions `undefined`, each with the organiser's reason
-"Reference group has zero mean gap; ratio is undefined", so a degenerate prediction is legible in
-this rubric on its own. The two region-constant-shaped submissions `BvyKrR6v` (public 0.146449)
-and `ySXi73rd` carry identical scorecards - summer heat disparity ratio 1.141 (14.1% larger) and
-tribal-versus-non-tribal 0.705 (29.5% smaller), with every other dimension "Similar" - while their
-public RMSE differ (0.146449 against our best 0.091440): shrinking the whole prediction scale moved
-the score and left the equity profile untouched. The component estimator `rTARuUaG` (public 0.235359) and its scaled
-variant `TM83xxU6` (public 0.349410) are where the rubric bites: rural-versus-urban 0.248 (75.2%
-smaller), tribal 0.556 (44.4% smaller) and wildfire 0.621 (37.9% smaller). Read honestly, our own
-component predictions assign systematically smaller gaps to rural, tribal and high-wildfire tracts
-than to their reference groups, and the organiser's rubric surfaces that even in submissions whose
-composite RMSE is poor.
-
-Per the operator amendment of `2026-10-24` this paragraph is reflection only. No feature, threshold,
-weight or parameter in the model chain was changed on the strength of any number above, nothing was
-uploaded to obtain them, and no scorecard value is an input to any candidate; the snapshot records
-`scorecard_influenced_parameters: []` and `no_upload_performed: true`, and the audit behind it fails
-closed if either ever changes. The rural/tribal/wildfire asymmetry is reported because the organisers
-encourage reflecting on the scorecard, and because it is consistent with the descriptive findings in
-`docs/writeup/bias-discovery.md`, which are evidence for follow-up investigation and not for any
-score-driven adjustment.
-
 ## Model-only v2 components and approval gates
 
 V2 replaces v0's proxy rates with separately audited, fixed, challenge-feature-driven blocks. These audits report aggregate predictions and sensitivity; they do not form a combined candidate and do not demonstrate score accuracy.
@@ -482,3 +443,42 @@ The script produces a deterministic JSON report with input hashes, definitions, 
 ## Limitations and interpretation
 
 This analysis is exploratory. C2/C3 are unvalidated estimates, and the contest provides no reference labels with which to establish their accuracy. A bootstrap interval around predictions is not an interval for true coverage gaps. Tract-level independence is especially questionable in spatial data; the bootstrap may understate uncertainty. The group cut is a transparent analyst-defined threshold; test other cutpoints only as separately documented sensitivity checks, not leaderboard tuning. The analysis is descriptive, not causal. `svi_minority` is used as supplied and should not be reinterpreted as an individual-level demographic label. The writeup identifies a subgroup for follow-up, not a proven disparity in organiser scores or real-world service outcomes.
+
+## Scorecard reflection
+
+The row `bias-lb-snapshot-and-scorecard` snapshots where we stand and what the organiser's Bias
+Scorecard says about our scored submissions. `scripts/snapshot_lb_and_scorecards.py` reads only the
+shared orchestrator ledger plus one read-only GET of the authenticated submission status path, writes
+the dated file `reports/leaderboard/2026-10-25T051219+0000.json` and one
+`reports/scorecards/<submission_id>.json` per submission, and contains no upload path at all;
+`reports/lb-scorecard-snapshot.json` is the machine record of the whole snapshot.
+
+In that snapshot 1,441 participants had produced 390 ranked teams. Quoted to the six decimals the
+snapshot stores, our best public RMSE was 0.091440 (P4, platform submission `ySXi73rd`) at rank 274:
+0.007553 above the ranked median 0.083887, 0.024401 above the rank-50 line 0.067039, and 0.091011
+above the rank-10 boundary 0.000429. We do not treat that boundary as a modelling target: six teams
+record an exact zero and the best positive score on the board is 0.000092, so the snapshot reports the
+median and rank-50 gaps beside it instead of implying that rank ten is reachable by modelling.
+
+The scorecard is more informative than the single number. The all-zero anchor `uRRw9KpB`
+(public 0.107246) returns all nine dimensions `undefined`, each with the organiser's reason
+"Reference group has zero mean gap; ratio is undefined", so a degenerate prediction is legible in
+this rubric on its own. The two region-constant-shaped submissions `BvyKrR6v` (public 0.146449)
+and `ySXi73rd` carry identical scorecards - summer heat disparity ratio 1.141 (14.1% larger) and
+tribal-versus-non-tribal 0.705 (29.5% smaller), with every other dimension "Similar" - while their
+public RMSE differ (0.146449 against our best 0.091440): shrinking the whole prediction scale moved
+the score and left the equity profile untouched. The component estimator `rTARuUaG` (public 0.235359) and its scaled
+variant `TM83xxU6` (public 0.349410) are where the rubric bites: rural-versus-urban 0.248 (75.2%
+smaller), tribal 0.556 (44.4% smaller) and wildfire 0.621 (37.9% smaller). Read honestly, our own
+component predictions assign systematically smaller gaps to rural, tribal and high-wildfire tracts
+than to their reference groups, and the organiser's rubric surfaces that even in submissions whose
+composite RMSE is poor.
+
+Per the operator amendment of `2026-10-24` this paragraph is reflection only. No feature, threshold,
+weight or parameter in the model chain was changed on the strength of any number above, nothing was
+uploaded to obtain them, and no scorecard value is an input to any candidate; the snapshot records
+`scorecard_influenced_parameters: []` and `no_upload_performed: true`, and the audit behind it fails
+closed if either ever changes. The rural/tribal/wildfire asymmetry is reported because the organisers
+encourage reflecting on the scorecard, and because it is consistent with the descriptive findings in
+`docs/writeup/bias-discovery.md`, which are evidence for follow-up investigation and not for any
+score-driven adjustment.
