@@ -567,8 +567,16 @@ def markdown_to_pdf(markdown: str, out_path: Path) -> None:
 
 
 # --------------------------------------------------------------------------- record
+def load_operator_inputs_template(config: dict[str, Any]) -> dict[str, Any]:
+    path = ROOT / config["assembly"]["operator_inputs_template"]
+    if path.is_file():
+        return json.loads(path.read_text(encoding="utf-8"))
+    return operator_inputs_template(config)
+
+
 def build_record(config: dict[str, Any], facts: dict[str, Any], markdown_path: Path,
-                 pdf_path: Path) -> dict[str, Any]:
+                 pdf_path: Path,
+                 bundle_summary: dict[str, Any] | None = None) -> dict[str, Any]:
     claim_report = facts["claim_audit"]
     measured = claim_report.get("summary", {})
     provided = facts["provided_audit"]
@@ -634,9 +642,16 @@ def build_record(config: dict[str, Any], facts: dict[str, Any], markdown_path: P
              "role": "writeup_pdf", "sha256": sha256_file(pdf_path),
              "bytes": pdf_path.stat().st_size}],
         "submission_record": dict(config["submission_record"]),
+        "submission_bundle": bundle_summary or {},
+        "operator_inputs_template": load_operator_inputs_template(config),
         "blocking_prerequisites": blocking_prerequisites(config, final_two["status"]),
         "commands": dict(CONFIG["commands"]),
     }
+    if bundle_summary:
+        record["writeup_files"].append({"path": bundle_summary["path"],
+                                        "role": "submission_bundle",
+                                        "sha256": bundle_summary["sha256"],
+                                        "bytes": bundle_summary["bytes"]})
     record["acceptance"] = acceptance(record, facts["authored_text"])
     record["acceptance"]["all_passed"] = all(
         value is True for key, value in record["acceptance"].items() if key != "all_passed")
@@ -666,6 +681,134 @@ def blocking_prerequisites(config: dict[str, Any], final_two_status: str) -> lis
         prerequisites.append("form submission evidence: UTC time, organiser confirmation reference "
                              "and submitter (submission_record.*)")
     return prerequisites
+
+
+def build_bundle(config: dict[str, Any], record: dict[str, Any], markdown_path: Path,
+                 pdf_path: Path) -> dict[str, Any]:
+    """Hash-tied copy-paste sheet for the human who fills the organiser form."""
+    entries = [
+        {"path": relative_or(markdown_path, config["assembly"]["output_markdown"]),
+         "role": "writeup_markdown", "sha256": sha256_file(markdown_path),
+         "bytes": markdown_path.stat().st_size},
+        {"path": relative_or(pdf_path, config["assembly"]["output_pdf"]),
+         "role": "writeup_pdf", "sha256": sha256_file(pdf_path),
+         "bytes": pdf_path.stat().st_size}]
+    submission_lines = [
+        f"{row['candidate_id']} | {row['platform_submission_id']} | {row['artifact_sha256']}"
+        for row in record["associated_leaderboard_submissions"]]
+    candidate = record["model_candidate"]
+    upload = candidate["upload_status"]
+    blocks = {
+        "zindi_identity_line": "Zindi username or team name: "
+                               + (record["identity"]["zindi_username_or_team"]
+                                  or "PENDING_OPERATOR_CONFIRMATION"),
+        "prize_request_line": config["consideration_requested"]["stated_verbatim_in_writeup"],
+        "submission_ids_block": "\n".join(submission_lines),
+        "model_candidate_block": (
+            f"{candidate['candidate_id']} | artifact {candidate['artifact']} | sha256 "
+            f"{candidate['sha256']} | uploaded {str(upload['uploaded']).lower()} | uploads used "
+            f"{upload['uploads_used_for_this_candidate']}"),
+        "writeup_hashes_block": "\n".join(
+            f"{item['path']} | sha256 {item['sha256']} | {item['bytes']} bytes" for item in entries),
+        "form_status_line": (f"Form URL: {record['form']['url']}"
+                             if record["form"]["url"] else
+                             "Form URL: to be supplied by the operator (not recoverable from the "
+                             "saved rules text or the client-rendered organiser page)")}
+    return {"schema_version": 1,
+            "purpose": "single copy-paste sheet for the organiser writeup form, hash-tied to the "
+                       "committed writeup artefacts",
+            "packet_status": record["status"],
+            "ready_for_submission": record["ready_for_submission"],
+            "pending_operator_inputs": record["pending_operator_inputs"],
+            "form_url": record["form"]["url"],
+            "files": entries,
+            "paste_blocks": blocks}
+
+
+def operator_inputs_template(config: dict[str, Any]) -> dict[str, Any]:
+    """All-null skeleton carrying exactly the whitelisted operator-owned paths."""
+    template: dict[str, Any] = {}
+    for path in ALLOWED_OPERATOR_PATHS:
+        node = template
+        parts = path.split(".")
+        for part in parts[:-1]:
+            node = node.setdefault(part, {})
+        node[parts[-1]] = (False if path == "identity.operator_confirmation_recorded"
+                           else "not recorded" if path == "submission_record.operator_review"
+                           else None)
+    return template
+
+
+def bundle_matches(record: dict[str, Any], files: dict[str, Any]) -> bool:
+    summary = record.get("submission_bundle") or {}
+    bundle = summary.get("bundle") or {}
+    entry = files.get(summary.get("path", ""))
+    if not entry or not bundle:
+        return False
+    if {item["role"] for item in bundle["files"]} != {"writeup_markdown", "writeup_pdf"}:
+        return False
+    for item in bundle["files"]:
+        mirror = next((existing for existing in record["writeup_files"]
+                       if existing["role"] == item["role"]), None)
+        if mirror is None or mirror["sha256"] != item["sha256"] or mirror["bytes"] != item["bytes"]:
+            return False
+        path = ROOT / item["path"]
+        if not path.is_file() or sha256_file(path) != item["sha256"]:
+            return False
+    summary_path = ROOT / summary["path"]
+    return (summary["sha256"] == sha256_file(summary_path)
+            and summary["bytes"] == summary_path.stat().st_size
+            and entry["sha256"] == summary["sha256"])
+
+
+def bundle_blocks_present(record: dict[str, Any], text: str) -> bool:
+    bundle = (record.get("submission_bundle") or {}).get("bundle") or {}
+    blocks = bundle.get("paste_blocks") or {}
+    expected = {"zindi_identity_line", "prize_request_line", "submission_ids_block",
+                "model_candidate_block", "writeup_hashes_block", "form_status_line"}
+    if set(blocks) != expected or not all(value for value in blocks.values()):
+        return False
+    if blocks["prize_request_line"] not in text:
+        return False
+    for line in blocks["submission_ids_block"].splitlines():
+        submission_id = line.split("|")[1].strip() if "|" in line else ""
+        if submission_id not in text:
+            return False
+    return True
+
+
+def template_matches_whitelist(record: dict[str, Any]) -> bool:
+    template = record.get("operator_inputs_template")
+    if not isinstance(template, dict) or not template:
+        return False
+    flattened: set[str] = set()
+
+    def walk(node: dict[str, Any], prefix: str = "") -> None:
+        for key, value in node.items():
+            path = f"{prefix}{key}"
+            if isinstance(value, dict):
+                walk(value, path + ".")
+            else:
+                flattened.add(path)
+
+    walk(template)
+    if flattened != set(ALLOWED_OPERATOR_PATHS):
+        return False
+    if set(record["operator_input_schema"]["fields"]) != flattened:
+        return False
+    for path in ALLOWED_OPERATOR_PATHS:
+        node: Any = template
+        for part in path.split("."):
+            node = node.get(part) if isinstance(node, dict) else None
+        if path == "identity.operator_confirmation_recorded":
+            if node is not False:
+                return False
+        elif path == "submission_record.operator_review":
+            if node != "not recorded":
+                return False
+        elif node is not None:
+            return False
+    return True
 
 
 def acceptance(record: dict[str, Any], authored_text: str = "") -> dict[str, Any]:
@@ -728,6 +871,9 @@ def acceptance(record: dict[str, Any], authored_text: str = "") -> dict[str, Any
             not submitted
             or all(record["final_two"]["selected"][slot] in registry_ids
                    for slot in ("candidate_A", "candidate_B"))),
+        "submission_bundle_hash_tied": bundle_matches(record, files),
+        "submission_bundle_paste_blocks_verbatim": bundle_blocks_present(record, text),
+        "operator_inputs_template_matches_whitelist": template_matches_whitelist(record),
         "model_candidate_artifact_hash_pinned": bool(
             record["model_candidate"]["sha256"]
             == CONFIG["model_evidence"]["frozen_candidate_sha256"]
@@ -841,6 +987,9 @@ def main() -> int:
     parser.add_argument("--check-only", action="store_true")
     parser.add_argument("--operator-inputs", type=Path, default=None,
                         help="JSON of operator-owned fields, merged into the preregistration")
+    parser.add_argument("--bundle", type=Path, default=None)
+    parser.add_argument("--write-operator-inputs-template", action="store_true",
+                        help="(re)write the all-null operator input template and exit")
     args = parser.parse_args()
 
     global CONFIG
@@ -859,8 +1008,25 @@ def main() -> int:
     args.markdown.write_text(markdown, encoding="utf-8")
     if not args.skip_pdf:
         markdown_to_pdf(markdown, args.pdf)
-    record = build_record(CONFIG, facts, args.markdown, args.pdf if not args.skip_pdf
-                          else args.markdown)
+    pdf_for_record = args.pdf if not args.skip_pdf else args.markdown
+    template_path = ROOT / CONFIG["assembly"]["operator_inputs_template"]
+    template_path.parent.mkdir(parents=True, exist_ok=True)
+    if args.write_operator_inputs_template or not template_path.is_file():
+        template_path.write_text(json.dumps(operator_inputs_template(CONFIG), indent=2,
+                                           ensure_ascii=False) + "\n", encoding="utf-8")
+        print(f"operator input template: {template_path}")
+        if args.write_operator_inputs_template:
+            return 0
+    preliminary = build_record(CONFIG, facts, args.markdown, pdf_for_record)
+    bundle = build_bundle(CONFIG, preliminary, args.markdown, pdf_for_record)
+    bundle_path = args.bundle or ROOT / CONFIG["assembly"]["output_bundle"]
+    bundle_path.parent.mkdir(parents=True, exist_ok=True)
+    bundle_path.write_text(json.dumps(bundle, indent=2, ensure_ascii=False) + "\n",
+                           encoding="utf-8")
+    summary = {"path": relative_or(bundle_path, CONFIG["assembly"]["output_bundle"]),
+               "sha256": sha256_file(bundle_path), "bytes": bundle_path.stat().st_size,
+               "bundle": bundle}
+    record = build_record(CONFIG, facts, args.markdown, pdf_for_record, summary)
     args.record.parent.mkdir(parents=True, exist_ok=True)
     with args.record.open("w", encoding="utf-8") as handle:
         json.dump(record, handle, indent=2, ensure_ascii=False, sort_keys=False)
@@ -876,6 +1042,7 @@ def main() -> int:
                       "pdf_sha256": next((item["sha256"] for item in record["writeup_files"]
                                           if item["role"] == "writeup_pdf"), None),
                       "external_sources": len(record["external_source_register"]),
+                      "bundle_sha256": (record.get("submission_bundle") or {}).get("sha256"),
                       "associated_submissions": len(record["associated_leaderboard_submissions"])},
                      indent=1))
     print(("PACKET READY FOR OPERATOR REVIEW: " if not failed else

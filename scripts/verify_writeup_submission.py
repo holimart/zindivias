@@ -146,6 +146,55 @@ def check(record: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
     require(bool(record["operator_input_schema"].get("fields")),
             "operator input schema must be recorded so filling is one command")
 
+    # -- submission bundle and operator input template -----------------------------------------
+    summary = record.get("submission_bundle") or {}
+    require(bool(summary.get("path")) and bool(summary.get("sha256")),
+            "record must pin the submission bundle")
+    bundle_path = ROOT / summary.get("path", "")
+    require(bundle_path.is_file(), "submission bundle file missing")
+    if bundle_path.is_file():
+        require(sha256_file(bundle_path) == summary["sha256"],
+                "submission bundle sha256 does not match bytes on disk")
+        require(bundle_path.stat().st_size == summary["bytes"],
+                "submission bundle byte size mismatch")
+        bundle = json.loads(bundle_path.read_text(encoding="utf-8"))
+        require(bundle == summary["bundle"], "submission bundle content differs from the record")
+        mirrors = {item["role"]: item for item in record["writeup_files"]}
+        for item in bundle["files"]:
+            mirror = mirrors.get(item["role"])
+            require(mirror is not None and mirror["sha256"] == item["sha256"]
+                    and mirror["bytes"] == item["bytes"],
+                    f"bundle {item['role']} hash does not match the record")
+            resolved = ROOT / item["path"]
+            require(resolved.is_file() and sha256_file(resolved) == item["sha256"],
+                    f"bundle {item['role']} hash does not match bytes on disk")
+        blocks = bundle["paste_blocks"]
+        require(blocks["prize_request_line"] in text, "bundle prize request line is not in the writeup")
+        for line in blocks["submission_ids_block"].splitlines():
+            require(line.split("|")[1].strip() in text if "|" in line else False,
+                    f"bundle submission id absent from writeup: {line[:40]}")
+        if record["identity"].get("zindi_username_or_team") is None:
+            require("PENDING_OPERATOR_CONFIRMATION" in blocks["zindi_identity_line"],
+                    "bundle must not offer a username the operator has not confirmed")
+    template_path = ROOT / config["assembly"]["operator_inputs_template"]
+    require(template_path.is_file(), "operator input template missing")
+    if template_path.is_file():
+        template = json.loads(template_path.read_text(encoding="utf-8"))
+        require(template == record["operator_inputs_template"],
+                "committed operator input template differs from the record")
+        require(set(flatten(template)) == set(config["operator_input_schema"]["fields"]),
+                "operator input template paths must equal the declared schema")
+        require(template["identity"]["zindi_username_or_team"] is None
+                and template["identity"]["operator_confirmation_recorded"] is False
+                and template["form"]["url"] is None
+                and template["submission_record"]["operator_review"] == "not recorded"
+                and all(template["submission_record"][key] is None for key in
+                        ("submitted_at_utc", "confirmation_reference", "submitted_by",
+                         "form_url_used"))
+                and template["final_two"]["selected"] == {"candidate_A": None,
+                                                          "candidate_B": None},
+                "committed operator input template must stay empty")
+
     # -- rules-driven content -------------------------------------------------------------------
     for prize in config["prizes"]:
         require(prize["name"] in text, f"prize not stated: {prize['name']}")
@@ -282,15 +331,60 @@ def check(record: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
     return {"ok": not failures, "failures": sorted(failures), "notes": notes}
 
 
+def flatten(node: dict, prefix: str = "") -> list[str]:
+    paths: list[str] = []
+    for key, value in node.items():
+        path = f"{prefix}{key}"
+        if isinstance(value, dict):
+            paths.extend(flatten(value, path + "."))
+        else:
+            paths.append(path)
+    return paths
+
+
+def preflight_operator_inputs(record: dict[str, Any], config: dict[str, Any],
+                              path: Path) -> int:
+    """Tell the operator exactly what is still missing from their input file."""
+    inputs = json.loads(path.read_text(encoding="utf-8"))
+    declared = set(config["operator_input_schema"]["fields"])
+    present = set(flatten(inputs))
+    ignored = sorted(present - declared)
+    filled = sorted(path_key for path_key in present & declared
+                    if _get(inputs, path_key) not in (None, False, "not recorded", ""))
+    missing = sorted(declared - set(filled))
+    ready = not [key for key in config["operator_input_schema"]["ready_requires"]
+                 if not _get(inputs, key)]
+    print(json.dumps({"input_file": str(path), "packet_status": record["status"],
+                      "whitelisted_fields": len(declared), "filled": filled,
+                      "still_missing": missing, "ignored_non_whitelisted_keys": ignored,
+                      "would_report_submitted": ready}, indent=1))
+    if ignored:
+        print(f"NOTE {len(ignored)} key(s) are not operator-owned and would be ignored")
+    print("PRE-FLIGHT OK: all submission-required operator fields are present"
+          if ready else "PRE-FLIGHT: operator fields still missing")
+    return 0
+
+
+def _get(node: dict, path: str):
+    current = node
+    for part in path.split("."):
+        current = current.get(part) if isinstance(current, dict) else None
+    return current
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=CONFIG_PATH)
     parser.add_argument("--record", type=Path,
                         default=ROOT / "reports/writeup-submission.json")
     parser.add_argument("--json", action="store_true")
+    parser.add_argument("--operator-inputs", type=Path, default=None,
+                        help="pre-flight an operator input file instead of checking the packet")
     args = parser.parse_args()
     config = load_json(args.config)
     record = load_json(args.record)
+    if args.operator_inputs:
+        return preflight_operator_inputs(record, config, args.operator_inputs)
     result = check(record, config)
     if args.json:
         print(json.dumps(result, indent=1))

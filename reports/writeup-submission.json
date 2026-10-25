@@ -57,7 +57,7 @@
     ]
   },
   "revision": {
-    "git_commit": "a727f68206290d0dd90f74c0352be1db5bb40ca0",
+    "git_commit": "7aeda7eb15db7f7a84e3acdde7101b133a3a28cc",
     "tree_clean": false,
     "pdf_engine": "reportlab==4.4.10 with canvas invariant=1 (no wall-clock in the file identity)"
   },
@@ -382,14 +382,20 @@
     {
       "path": "docs/writeup/final-writeup.md",
       "role": "writeup_markdown",
-      "sha256": "151418d0b8742b0eb2e5fa1f40e0de6fb637237042e400798a94dbffe2210273",
+      "sha256": "bbba6949ffc3a174984bf5624b74642bfbd63602f5a1e6861e00501a8f51f45e",
       "bytes": 112337
     },
     {
       "path": "reports/writeup/final-writeup.pdf",
       "role": "writeup_pdf",
-      "sha256": "377e0e0f5ee72e1b477405f0cf7ddd143f7945dca4ad7bc27e9116ada8a627a2",
+      "sha256": "5bf903579def26157475be093197387daf0791e51995cd4b9df81c7b1b4bad6b",
       "bytes": 102785
+    },
+    {
+      "path": "reports/writeup/submission-bundle.json",
+      "role": "submission_bundle",
+      "sha256": "0fa4a74ccb26bab96967c3b8113ef0a23b6af4144eb8817867aff5b1d6aa542f",
+      "bytes": 2139
     }
   ],
   "submission_record": {
@@ -398,6 +404,68 @@
     "submitted_by": null,
     "form_url_used": null,
     "operator_review": "not recorded"
+  },
+  "submission_bundle": {
+    "path": "reports/writeup/submission-bundle.json",
+    "sha256": "0fa4a74ccb26bab96967c3b8113ef0a23b6af4144eb8817867aff5b1d6aa542f",
+    "bytes": 2139,
+    "bundle": {
+      "schema_version": 1,
+      "purpose": "single copy-paste sheet for the organiser writeup form, hash-tied to the committed writeup artefacts",
+      "packet_status": "prepared_pending_operator_review",
+      "ready_for_submission": false,
+      "pending_operator_inputs": [
+        "identity.zindi_username_or_team",
+        "form.url",
+        "submission_record.submitted_at_utc",
+        "submission_record.confirmation_reference"
+      ],
+      "form_url": null,
+      "files": [
+        {
+          "path": "docs/writeup/final-writeup.md",
+          "role": "writeup_markdown",
+          "sha256": "bbba6949ffc3a174984bf5624b74642bfbd63602f5a1e6861e00501a8f51f45e",
+          "bytes": 112337
+        },
+        {
+          "path": "reports/writeup/final-writeup.pdf",
+          "role": "writeup_pdf",
+          "sha256": "5bf903579def26157475be093197387daf0791e51995cd4b9df81c7b1b4bad6b",
+          "bytes": 102785
+        }
+      ],
+      "paste_blocks": {
+        "zindi_identity_line": "Zindi username or team name: PENDING_OPERATOR_CONFIRMATION",
+        "prize_request_line": "We request consideration for both Best Bias Discovery ($1,000) and Best Documentation ($500).",
+        "submission_ids_block": "C0 | uRRw9KpB | 0edf8140123e2135489e5728fd71bce6f1e28a97f447ca411ba45fdbc02bc214\nC1 | BvyKrR6v | dc2e368194b31408cb5c313fa8ce3f3fa59a1b5965bc2df8e4217bbc9e0c82e0\nC2 | rTARuUaG | 5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514\nC3 | TM83xxU6 | e5ee50f5c2cca149550f3408638d2b77431f6ed62cf104dfe8c07d8c8416f9e4\nP4 | ySXi73rd | 8b329802d882ea4bdff2bfd8c465c160d6ffd9269cfbe28dce8be9e702b07d37",
+        "model_candidate_block": "V2_model | artifact reports/candidates/V2_model.csv | sha256 3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12 | uploaded false | uploads used 0",
+        "writeup_hashes_block": "docs/writeup/final-writeup.md | sha256 bbba6949ffc3a174984bf5624b74642bfbd63602f5a1e6861e00501a8f51f45e | 112337 bytes\nreports/writeup/final-writeup.pdf | sha256 5bf903579def26157475be093197387daf0791e51995cd4b9df81c7b1b4bad6b | 102785 bytes",
+        "form_status_line": "Form URL: to be supplied by the operator (not recoverable from the saved rules text or the client-rendered organiser page)"
+      }
+    }
+  },
+  "operator_inputs_template": {
+    "identity": {
+      "zindi_username_or_team": null,
+      "operator_confirmation_recorded": false
+    },
+    "form": {
+      "url": null
+    },
+    "submission_record": {
+      "submitted_at_utc": null,
+      "confirmation_reference": null,
+      "submitted_by": null,
+      "form_url_used": null,
+      "operator_review": "not recorded"
+    },
+    "final_two": {
+      "selected": {
+        "candidate_A": null,
+        "candidate_B": null
+      }
+    }
   },
   "blocking_prerequisites": [
     "operator confirmation of the Zindi username or team name (identity.zindi_username_or_team)",
@@ -428,6 +496,9 @@
     "submission_ids_tie_to_successful_upload_log": true,
     "submission_candidate_ids_registered": true,
     "final_two_selection_ids_registered": true,
+    "submission_bundle_hash_tied": true,
+    "submission_bundle_paste_blocks_verbatim": true,
+    "operator_inputs_template_matches_whitelist": true,
     "model_candidate_artifact_hash_pinned": true,
     "model_candidate_non_upload_disclosed": true,
     "final_two_selection_declared_not_invented": true,

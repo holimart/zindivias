@@ -248,8 +248,14 @@ class OperatorFillTests(unittest.TestCase):
         pdf_path = tmp / "final-writeup.pdf"
         markdown_path.write_text(markdown, encoding="utf-8")
         pdf_path.write_bytes(b"%PDF-1.4\nunit-test stub\n%%EOF\n")
-        record = builder.build_record(merged, facts, markdown_path, pdf_path)
-        return markdown, record
+        preliminary = builder.build_record(merged, facts, markdown_path, pdf_path)
+        bundle = builder.build_bundle(merged, preliminary, markdown_path, pdf_path)
+        bundle_path = tmp / "submission-bundle.json"
+        bundle_path.write_text(json.dumps(bundle, indent=2, ensure_ascii=False) + "\n",
+                              encoding="utf-8")
+        summary = {"path": str(bundle_path), "sha256": builder.sha256_file(bundle_path),
+                   "bytes": bundle_path.stat().st_size, "bundle": bundle}
+        return markdown, builder.build_record(merged, facts, markdown_path, pdf_path, summary)
 
     def test_full_operator_inputs_produce_a_confirmed_packet(self) -> None:
         with tempfile.TemporaryDirectory() as folder:
@@ -284,6 +290,76 @@ class OperatorFillTests(unittest.TestCase):
         self.assertEqual(merged["prizes"], CONFIG["prizes"])
         self.assertNotIn("writeup_files", merged)
         self.assertEqual(merged["identity"]["zindi_username_or_team"], "operator-supplied-team")
+
+    def test_submission_bundle_is_hash_tied_and_copy_paste_ready(self) -> None:
+        bundle = RECORD["submission_bundle"]
+        path = ROOT / bundle["path"]
+        self.assertTrue(path.is_file())
+        self.assertEqual(builder.sha256_file(path), bundle["sha256"])
+        self.assertEqual(path.stat().st_size, bundle["bytes"])
+        content = json.loads(path.read_text(encoding="utf-8"))
+        self.assertEqual(content, bundle["bundle"])
+        mirrors = {item["role"]: item for item in RECORD["writeup_files"]}
+        for item in content["files"]:
+            self.assertEqual(mirrors[item["role"]]["sha256"], item["sha256"])
+            self.assertEqual(builder.sha256_file(ROOT / item["path"]), item["sha256"])
+        blocks = content["paste_blocks"]
+        self.assertIn(blocks["prize_request_line"], MARKDOWN)
+        for line in blocks["submission_ids_block"].splitlines():
+            self.assertIn(line.split("|")[1].strip(), MARKDOWN)
+        self.assertIn("PENDING_OPERATOR_CONFIRMATION", blocks["zindi_identity_line"])
+        self.assertIn("uploads used 0", blocks["model_candidate_block"])
+
+    def test_submission_bundle_tampering_is_detected(self) -> None:
+        tampered = copy.deepcopy(RECORD)
+        tampered["submission_bundle"]["sha256"] = "0" * 64
+        failures = "".join(verify.check(tampered, CONFIG)["failures"])
+        self.assertIn("submission bundle sha256 does not match bytes on disk", failures)
+        tampered = copy.deepcopy(RECORD)
+        tampered["submission_bundle"]["bundle"]["paste_blocks"]["zindi_identity_line"] = (
+            "Zindi username or team name: invented-handle")
+        failures = "".join(verify.check(tampered, CONFIG)["failures"])
+        self.assertIn("submission bundle content differs from the record", failures)
+
+    def test_operator_inputs_template_is_empty_and_matches_the_whitelist(self) -> None:
+        path = ROOT / CONFIG["assembly"]["operator_inputs_template"]
+        self.assertTrue(path.is_file())
+        template = json.loads(path.read_text(encoding="utf-8"))
+        self.assertEqual(template, RECORD["operator_inputs_template"])
+        self.assertEqual(set(verify.flatten(template)),
+                         set(CONFIG["operator_input_schema"]["fields"]))
+        self.assertEqual(template["identity"]["zindi_username_or_team"], None)
+        self.assertIs(template["identity"]["operator_confirmation_recorded"], False)
+        self.assertEqual(template["submission_record"]["operator_review"], "not recorded")
+        self.assertEqual(builder.template_matches_whitelist(RECORD), True)
+        filled = copy.deepcopy(template)
+        filled["identity"]["zindi_username_or_team"] = "sneaked-in"
+        record = copy.deepcopy(RECORD)
+        record["operator_inputs_template"] = filled
+        self.assertEqual(builder.template_matches_whitelist(record), False)
+
+    def test_preflight_reports_missing_and_ignored_operator_keys(self) -> None:
+        import io
+        import contextlib
+        buffer = io.StringIO()
+        with contextlib.redirect_stdout(buffer):
+            code = verify.preflight_operator_inputs(
+                RECORD, CONFIG, ROOT / CONFIG["assembly"]["operator_inputs_template"])
+        self.assertEqual(code, 0)
+        report = json.JSONDecoder().raw_decode(buffer.getvalue())[0]
+        self.assertFalse(report["would_report_submitted"])
+        self.assertTrue(report["still_missing"])
+        buffer = io.StringIO()
+        inputs = copy.deepcopy(self.INPUTS)
+        inputs["prizes"] = [{"amount_usd": 1}]
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "inputs.json"
+            path.write_text(json.dumps(inputs), encoding="utf-8")
+            with contextlib.redirect_stdout(buffer):
+                verify.preflight_operator_inputs(RECORD, CONFIG, path)
+        report = json.JSONDecoder().raw_decode(buffer.getvalue())[0]
+        self.assertTrue(report["would_report_submitted"])
+        self.assertEqual(report["ignored_non_whitelisted_keys"], ["prizes"])
 
     def test_official_page_extracts_and_form_url_search_are_recorded(self) -> None:
         page = RECORD["organiser_page"]
