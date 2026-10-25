@@ -148,7 +148,8 @@
     "scripts/reproduce_candidates.py",
     "scripts/reproduce_pipeline.py",
     "scripts/submit_zindi.py",
-    "scripts/verify_writeup_claim.py"
+    "scripts/verify_writeup_claim.py",
+    "reports/discovery-postfire-county-bootstrap.json"
   ],
   "reproduce_command_aliases": {
     "SEE_DISCOVERY_RURAL_SVI": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
@@ -320,7 +321,8 @@
       "section": "Evidence",
       "occurrence": 1,
       "evidence": [
-        "reports/discovery-postfire.json"
+        "reports/discovery-postfire.json",
+        "reports/discovery-postfire-county-bootstrap.json"
       ],
       "reproduce": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
       "products": [
@@ -981,7 +983,7 @@
       ],
       "notes": "only the interval level is exempt; every count and share is checked against reports/discovery-postfire.json"
     },
-    "bias-discovery-012": {
+    "bias-discovery-013": {
       "derived_tokens": [
         {
           "value": 26,
@@ -993,7 +995,7 @@
         }
       ]
     },
-    "bias-discovery-018": {
+    "bias-discovery-019": {
       "evidence": [
         "reports/discovery-rural-svi-minority.json",
         "reports/candidates.json"
@@ -1378,6 +1380,13 @@
         "reports/leaderboard/index.json"
       ],
       "notes": "platform-recorded scores and organiser scorecard values; lb-score-algebra.json is included because it is the committed record of each public score quoted here"
+    },
+    "bias-discovery-007": {
+      "evidence": [
+        "reports/discovery-postfire.json",
+        "reports/discovery-postfire-county-bootstrap.json"
+      ],
+      "notes": "county-cluster robustness recheck of the published tract-level difference; the cluster interval, positive-draw fraction, valid-replicate fraction and county counts come from the county-bootstrap report, the point estimate and the tract-level interval from the frozen discovery report"
     }
   },
   "reproduce_disclosed_difference_paths": [
@@ -1400,5 +1409,12 @@
   ],
   "workspace_documentation_evidence": [
     "WORKSPACE:RULES.md"
-  ]
+  ],
+  "reproduce_self_referential_deselect": {
+    "command_contains": "python -m pytest -q",
+    "deselect": [
+      "tests/test_audit_writeup_claim_evidence.py::InventoryTests::test_report_is_deterministic_and_carries_no_wall_clock_key"
+    ],
+    "reason": "That single test asserts the acceptance verdict of the very report the reproduction pass is about to rewrite, and the report's reproduce tier is gated on this same test-suite command passing, so the pair is circular. The audit therefore runs the suite with that one self-referential test excluded, discloses the exclusion in the execution log, and the test itself still runs in a normal pytest invocation of the suite. Every other test in the suite must exit zero for the reproduce tier to pass."
+  }
 }

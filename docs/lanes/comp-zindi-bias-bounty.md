@@ -677,3 +677,112 @@ Verification commands and output:
 Note for the operator, from the same status path (not operator-confirmed, so the writeup still says
 `PENDING_OPERATOR_CONFIRMATION`): the platform records the submitter handle `holi` on all six Bias
 Bounty submissions.
+
+### 2026-10-25 — row `bias-discovery-postfire-county-bootstrap`, closed `negative`
+
+Rechecked the published post-fire mapping-disagreement finding for county-level dependence. The
+preregistered robustness criterion **fails**: the tract-level interval survives only as a direction,
+so the quantitative claim is now labelled exploratory in the writeup. No design was substituted after
+seeing results, no county was dropped, the `<0.8` cutoff was never retuned, and nothing in the model
+chain changed.
+
+New deliverables (SHA-256 first 16):
+
+- `config/discovery-postfire-county-bootstrap-preregistered.json` `43ba983db726e6e2` — the design
+  frozen before any result: the joint county resample as primary (the row requires preserving *all*
+  tract records of a selected county, which a within-group county resample cannot do), the three
+  acceptance criteria, the two declared secondary designs that may not change the verdict, the
+  reference control, the frozen definition pins, five negative controls, and the disclosure that the
+  derived Overture feature cache was rebuilt after the frozen report was published.
+- `scripts/audit_discovery_postfire_county_bootstrap.py` `1b83cae9cc6193cc` — 19 gates, `--check-only`,
+  and five `--tamper` controls.
+- `reports/discovery-postfire-county-bootstrap.json` `18123e36b1d95654` (report sha256
+  `810bb79f3917c018…`) — point estimate, cluster interval, positive-sign and valid-replicate fractions,
+  county/group counts, seed, input hashes, per-county table, LOO rows, secondary designs, and the
+  writeup-qualification record.
+- `tests/test_audit_discovery_postfire_county_bootstrap.py` `a4a4eaf32a29fc84` — 31 tests.
+- `docs/writeup/bias-discovery.md` `342df0d2c677861c` — the finding is now qualified in its own
+  Evidence block rather than deleted, plus the reproduction command in Reproducibility.
+
+Measured, from provided data only (`overture_buildings`, `usfs_BuildingCount_sum`,
+`mtbs_wildfire_burned_pct_land`, `COUNTYFP`; 591 official NorCal tracts, 577 in the mutually exclusive
+bins, 14 excluded for a provided burned percentage above 100, none missing):
+
+- point estimate unchanged at **+9.55209106656768 pp** (exact rational `386/4041`, agreeing to
+  `0.0` against the frozen report), high-burn 4/36, unburned 7/449;
+- 23 counties in the analysis population, high-burn tracts in 15 of them, unburned in 17, both focal
+  classes in 11;
+- **county-cluster bootstrap** (50,000 seeded replicates, seed 20261025, `multinomial` over all 23
+  counties, every tract record of a selected county preserved): **95% percentile interval
+  [-1.652893, +16.666667] percentage points**, valid-replicate fraction **1.0**, and **95.99%** of
+  valid replicates positive;
+- criteria: valid fraction ≥0.95 pass, positive-draw fraction ≥0.95 pass, **cluster lower bound > 0
+  FAIL** → verdict `exploratory`, `quantitative_claim_retained: false`;
+- concentration diagnostics (declared before results, never used to select): dropping any single
+  county leaves the point difference between **+5.559 pp** (drop 033) and **+10.708 pp** (drop 067), so
+  the widening comes from county clustering, not one influential county; the declared secondary
+  within-group county resample gives group intervals [0.0, 0.176] and [0.0, 0.024] and may not change
+  the verdict; the reference control re-runs the published tract bootstrap and reproduces its frozen
+  interval **bit-exactly** (max deviation 0.0), which is what proves the machinery;
+- 19/19 gates true, including `no_county_dropped`, `clusters_are_whole_counties` (cluster sizes equal an
+  independently recomputed per-county census, and sampled replicates provably retain non-focal tracts),
+  `cutoff_not_tuned`, `derived_input_regeneration_disclosed`, `no_forbidden_source_read`,
+  `no_leaderboard_or_target_values_used`, `no_causal_language_in_report` and
+  `writeup_qualification_matches_verdict`.
+
+Honesty controls that shaped the work:
+
+- The primary design was chosen from the row's own wording before any number was seen, and both
+  alternative designs are declared secondary with `may_change_verdict: false`. When the interval
+  crossed zero I qualified the writeup instead of re-running a friendlier design.
+- The `writeup_qualification_matches_verdict` gate was strengthened mid-row: my first version only
+  required the word "exploratory" anywhere in the document, which passed trivially because an unrelated
+  section is already called exploratory. It now requires the marker **and** the exact interval bounds
+  inside the Evidence block that carries the +9.55 pp claim, and fails closed if they are absent.
+- Two gates initially failed for real reasons and were fixed rather than relaxed: the county-size check
+  wrongly rejected the three legitimate single-tract counties (now it compares against an independent
+  per-county census), and the derived Overture feature cache hash had drifted from the publication-time
+  pin. The cache is a derived product rebuilt by `scripts/estimate_gaps.py`, so the gate now demands a
+  content-equivalence proof instead of a stale byte pin: identical burn-class table, identical
+  below-cutoff counts, identical per-tract Butte below-cutoff GEOID set, and the point difference
+  reproduced to 1e-12.
+- Adding a paragraph in the middle of `docs/writeup/bias-discovery.md` renumbered 22 positional
+  `bias-discovery-*` claim ids and silently misdirected the claim overrides and the criteria audit's
+  sampled claims. I re-keyed the overrides by matching claims on (doc, section, kind, text) rather than
+  by id, made the affected hedge test select by section and provenance class for the same reason, and
+  re-pinned the four new criteria-audit pointers.
+- One reproduce gate was self-referential: the methodology's "the suite passes" claim is reproduced by
+  running the suite, while one suite test asserts that claim audit's verdict. The runner now executes
+  that command with the single circular test excluded and records the exclusion in
+  `reports/writeup-claim-evidence-execution.json` under `self_referential_deselect`, with the reason in
+  the config; every other test must still exit zero, and the excluded test still runs in a normal
+  suite invocation.
+
+Verification commands and output:
+
+- `COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/audit_discovery_postfire_county_bootstrap.py`
+  → `PASS post-fire county-cluster bootstrap: the published difference was rechecked by resampling
+  whole counties, every county stayed in the pool, every tract record of a selected county was
+  preserved, and the writeup states the robustness verdict`; `--check-only` → `unchanged`
+- determinism: two independent runs byte-identical and equal to the committed report; the report
+  serialises no wall-clock value (`wall_clock_hits == []`)
+- negative controls, all exit non-zero with the expected gate: `drop_inconvenient_county` →
+  `no_county_dropped`; `tract_resample_disguised_as_cluster` → `clusters_are_whole_counties`;
+  `cutoff_retuned` → `cutoff_not_tuned` (plus the frozen-definition and point gates);
+  `seed_or_replicates_changed` → `replicates_and_seed_as_preregistered`; `point_estimate_perturbed` →
+  `point_estimate_matches_frozen_report`; the unmutated control passes, and a test asserts a tamper run
+  never rewrites the committed report
+- cascade after the writeup edit: `audit_writeup_claim_evidence.py --write-inventory` → 88 claims;
+  `--execute-reproduce` → `17/17 reproduce commands exited 0` with no undisclosed product changes; full
+  claim audit → `PASS` with 88/88 traceable and 1035/1035 numeric tokens covered;
+  `audit_discovery_prize_criteria.py` → `PASS` (16/16 criteria, 27/27 pointers, up from 23 with the four
+  county-bootstrap pointers added); `build_final_writeup.py` + `verify_writeup_submission.py` → `PASS …
+  staged only, nothing was submitted to the organiser`
+- full suite: `/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with pytest python -m pytest -q` →
+  `370 passed`
+
+Consequence for the discovery prize narrative: the Butte/Camp Fire ratio examples and the burn-class
+table remain published facts of the provided data, and the direction of the high-burn versus unburned
+disagreement is repeatable in almost every county resample, but the lane no longer states its size as a
+quantitatively established result. The section keeps its four-criteria support; only the strength of the
+quantitative claim changed.

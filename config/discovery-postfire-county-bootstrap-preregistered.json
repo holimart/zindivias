@@ -1,0 +1,344 @@
+{
+  "schema_version": "1.0.0",
+  "audit_id": "discovery-postfire-county-bootstrap",
+  "backlog_item": "bias-discovery-postfire-county-bootstrap",
+  "lane": "comp-zindi-bias-bounty",
+  "title": "County-cluster bootstrap recheck of the NorCal post-fire mapping-disagreement evidence",
+  "intent": "Robustness screen for one documented Best Bias Discovery finding: the difference between high-burn and unburned Northern California tracts in the share whose provided Overture-to-USFS building-count ratio falls below the preregistered disagreement cutoff. The published finding was bootstrapped by resampling tracts independently, which understates county-level dependence because tracts in one county share Overture provider mix, terrain and reference vintage. This audit rechecks that difference by resampling whole counties. It is a robustness screen, not model promotion, not an accuracy assessment, and not an estimate of any organiser target.",
+  "row_dispositions": {
+    "owner": "comp-zindi-bias-bounty",
+    "intent_from_row": "evidence robustness screen, not model promotion",
+    "preregistered_before_results": true,
+    "design_substitution_after_results_forbidden": true,
+    "primary_design_decided_by_row_wording": "The row requires 'resampling whole counties and preserving all tract records in each selected county'. Only the joint county resample of the whole analysis population preserves every tract record of a selected county; a within-group county resample would keep only the focal burn class of the selected county and therefore drops records, so it cannot be the primary design. It is retained as a declared secondary sensitivity that cannot change the verdict."
+  },
+  "prohibitions": {
+    "organiser_target_values_used": false,
+    "public_leaderboard_scores_used": false,
+    "removed_reference_layers_or_equivalent_copies_read": false,
+    "external_data_used": false,
+    "disagreement_cutoff_retuned": false,
+    "county_dropped_from_the_resampling_pool": false,
+    "causal_claim_made": false,
+    "sample_score_placeholder_values_read": false,
+    "labels_used": false,
+    "candidate_or_model_changed": false,
+    "upload_performed": false
+  },
+  "region": "northern-ca",
+  "expected_official_rows": 591,
+  "cluster_field": "COUNTYFP",
+  "strata_columns_read": [
+    "GEOID",
+    "COUNTYFP",
+    "pop_total",
+    "usfs_BuildingCount_sum",
+    "usfs_edition",
+    "mtbs_wildfire_burned_pct_land",
+    "mtbs_wildfire_last_year",
+    "mtbs_wildfire_ever",
+    "mtbs_covered"
+  ],
+  "feature_columns_read": [
+    "GEOID",
+    "overture_buildings"
+  ],
+  "sample_reader": {
+    "module": "scripts/discovery_postfire_stale_reference.py",
+    "function": "read_geoid_only",
+    "declared_columns_read": [
+      "GEOID"
+    ],
+    "score_placeholders_read": false
+  },
+  "frozen_definitions": {
+    "ratio_definition": "overture_buildings / usfs_BuildingCount_sum, both provided",
+    "disagreement_indicator": "ratio < cutoff, i.e. Overture reports materially fewer buildings than the provided USFS WRC count",
+    "cutoff_values_permitted": [
+      0.8
+    ],
+    "cutoff_source": "frozen reports/discovery-postfire.json ratio_definition and config of the original discovery row; copied here and cross-checked at run time, never retuned",
+    "burn_field": "mtbs_wildfire_burned_pct_land (provided)",
+    "burn_class_boundaries": [
+      [
+        0,
+        0,
+        "unburned_0"
+      ],
+      [
+        0,
+        5,
+        "gt0_to5"
+      ],
+      [
+        5,
+        20,
+        "gt5_to20"
+      ],
+      [
+        20,
+        50,
+        "gt20_lt50"
+      ],
+      [
+        50,
+        100,
+        "50_to100"
+      ]
+    ],
+    "burn_class_labels": {
+      "unburned_0": "0% (unburned)",
+      "gt0_to5": ">0-5%",
+      "gt5_to20": ">5-20%",
+      "gt20_lt50": ">20-<50%",
+      "50_to100": "50-100%"
+    },
+    "out_of_bin_policy": "a provided burn percentage outside [0, 100] is excluded from the mutually exclusive bins and reported in named exclusion counts; it is never clipped into a bin",
+    "focal_groups": {
+      "high_burn": "50_to100",
+      "unburned": "unburned_0"
+    },
+    "frozen_report_pin": {
+      "path": "reports/discovery-postfire.json",
+      "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
+    },
+    "frozen_report_labels": {
+      "unburned_0": "0% (unburned)",
+      "gt0_to5": ">0–5%",
+      "gt5_to20": ">5–20%",
+      "gt20_lt50": ">20–<50%",
+      "50_to100": "50–100%"
+    },
+    "frozen_report_labels_note": "the frozen report renders en dashes; these exact strings are used only to look up its table"
+  },
+  "frozen_expected_facts": {
+    "analysis_population_rows": 577,
+    "excluded_over_100": 14,
+    "excluded_negative": 0,
+    "excluded_missing": 0,
+    "bin_counts": {
+      "unburned_0": 449,
+      "gt0_to5": 28,
+      "gt5_to20": 32,
+      "gt20_lt50": 32,
+      "50_to100": 36
+    },
+    "bin_below_cutoff": {
+      "unburned_0": 7,
+      "gt0_to5": 0,
+      "gt5_to20": 0,
+      "gt20_lt50": 0,
+      "50_to100": 4
+    },
+    "point_difference_high_burn_minus_unburned": 0.0955209106656768,
+    "tract_level_reference_ci": [
+      0.005506062855728779,
+      0.2088591932689928
+    ],
+    "tract_level_reference_seed": 20261024,
+    "tract_level_reference_replicates": 50000,
+    "counties_in_analysis_population": 23,
+    "counties_with_high_burn_tracts": 15,
+    "counties_with_unburned_tracts": 17,
+    "counties_with_both_focal_classes": 11
+  },
+  "inputs": {
+    "official_sample": {
+      "path": "samples/northern-ca-sample-submission.csv",
+      "rows": 591,
+      "geoid_sequence_sha256": "324f2cb00cf3ae6eb8d69ad682df5888d731c21440f0af64af66ec88c415106f"
+    },
+    "provided_strata": {
+      "path": "defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+      "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243"
+    },
+    "provided_overture_feature_cache": {
+      "path": "gap-estimator/features/northern-ca-overture-tract-summary.parquet",
+      "sha256": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c",
+      "publication_time_sha256": "0a9f7cebb26058a6f2e5ab8d6d70df6443ad62f558dcd65e742b161737cbeef2",
+      "derived_cache": true,
+      "regeneration_disclosure": "This cache is a derived product of scripts/estimate_gaps.py, not an organiser-provided file, and it was rebuilt after reports/discovery-postfire.json was published, which changed its byte hash. Only GEOID and overture_buildings are consumed here; equivalence with the published analysis is proved content-wise rather than byte-wise: the burn-class table, both focal below-cutoff counts and the per-tract Butte below-cutoff GEOID set must match the frozen report exactly, and the point difference must reproduce it to 1e-12.",
+      "content_equivalence_fields": [
+        "northern_ca_burn_class_table",
+        "high_burn_vs_unburned_below_0_8.difference_high_burn_minus_unburned",
+        "butte_county_summary.below_ratio_0_8_geoids"
+      ]
+    }
+  },
+  "bootstrap": {
+    "primary_design": {
+      "id": "joint_county_cluster_multinomial",
+      "cluster_unit": "county (provided COUNTYFP)",
+      "pool": "every county present in the analysis population, each draw uniform over the pool",
+      "draws_per_replicate": "one draw per county in the pool (resample with replacement, equal size)",
+      "tract_handling": "all tract records of a selected county enter the replicate, including tracts of every burn class",
+      "replicates": 50000,
+      "seed": 20261025,
+      "rng": "numpy.random.default_rng(seed).multinomial(draws, [1/K]*K, size=replicates)",
+      "statistic": "share(ratio < cutoff | high_burn) - share(ratio < cutoff | unburned), computed inside each replicate",
+      "valid_replicate": "the replicate contains at least one high-burn tract and at least one unburned tract",
+      "interval": "percentile 2.5 and 97.5 of the valid replicates"
+    },
+    "robustness_criteria": {
+      "minimum_valid_replicate_fraction": 0.95,
+      "require_cluster_ci_lower_bound_above": 0.0,
+      "minimum_positive_difference_fraction_among_valid": 0.95,
+      "retain_quantitative_claim_if_all_true": true,
+      "otherwise": "label the finding exploratory in the writeup and do not substitute another design",
+      "reported_not_gated": "these three criteria decide claim retention, they are not audit integrity gates"
+    },
+    "secondary_sensitivity_designs": [
+      {
+        "id": "within_group_county_cluster",
+        "description": "counties resampled separately inside each focal group; keeps only the focal burn class of a selected county, so it does not satisfy the row's tract-preservation wording and is reported as a sensitivity only",
+        "replicates": 50000,
+        "seed": 20261025,
+        "may_change_verdict": false
+      },
+      {
+        "id": "leave_one_county_out",
+        "description": "deterministic drop-one-county recomputation over every county in the analysis population; a concentration diagnostic, reported for every county, never used to select a subset",
+        "may_change_verdict": false
+      }
+    ],
+    "reference_control": {
+      "id": "tract_level_reference_reproduction",
+      "description": "re-runs the already-published independent within-group tract bootstrap with its frozen seed to prove this audit's machinery reproduces the documented interval; it is the published design, not a substitute for the primary cluster design",
+      "may_change_verdict": false
+    }
+  },
+  "forbidden_source_scan": {
+    "prohibited_path_tokens": [
+      "submissions.jsonl",
+      "data/ledger",
+      "lb-score-algebra",
+      "lb-subset-moments",
+      "lb-calibration",
+      "standings.md",
+      "leaderboard-events",
+      "config/calibration.json",
+      "auth_token",
+      "storage_state",
+      "zindi_auth",
+      "zindi_submit"
+    ],
+    "prohibited_uri_tokens": [
+      "tiger",
+      "ms-buildings",
+      "ms_buildings",
+      "usgs-facilities",
+      "cbp-establishments",
+      "http://",
+      "https://",
+      "s3://"
+    ],
+    "sample_file_tokens": [
+      "sample-submission",
+      "SampleSubmission"
+    ],
+    "prohibited_numeric_literals": [
+      "0.3288136427728255",
+      "0.091440198",
+      "0.107246299",
+      "0.146449112",
+      "0.235358712",
+      "0.349409867"
+    ],
+    "delegated_sample_reader": "scripts/discovery_postfire_stale_reference.py"
+  },
+  "language": {
+    "required_hedges": [
+      "descriptive",
+      "does not establish cause",
+      "not evidence that",
+      "provided"
+    ],
+    "forbidden_patterns": [
+      "caused",
+      "proves",
+      "led to",
+      "the organiser scores",
+      "hidden target",
+      "true coverage gap",
+      "saves lives",
+      "dispatch failures occurred"
+    ],
+    "writeup_marker_when_retained": "county-cluster bootstrap",
+    "writeup_marker_when_not_retained": "exploratory",
+    "writeup_block": {
+      "doc": "docs/writeup/bias-discovery.md",
+      "block_heading": "## Evidence",
+      "block_ends_before": "## Section 2",
+      "note": "the qualification must live in the Evidence block that carries the published +9.55 pp claim, not anywhere in the document",
+      "required_fragments_when_retained": [
+        "county-cluster bootstrap"
+      ],
+      "required_fragments_when_not_retained": [
+        "county-cluster bootstrap",
+        "exploratory"
+      ]
+    }
+  },
+  "negative_controls": [
+    {
+      "case": "drop_inconvenient_county",
+      "mutation": "remove county 033, the largest high-burn contributor, from the resampling pool",
+      "expect_failed_gate": "no_county_dropped"
+    },
+    {
+      "case": "tract_resample_disguised_as_cluster",
+      "mutation": "treat every tract as its own cluster, i.e. resample tracts while claiming counties",
+      "expect_failed_gate": "clusters_are_whole_counties"
+    },
+    {
+      "case": "cutoff_retuned",
+      "mutation": "compute the indicator with cutoff 0.9 instead of the preregistered 0.8",
+      "expect_failed_gate": "cutoff_not_tuned"
+    },
+    {
+      "case": "seed_or_replicates_changed",
+      "mutation": "run 1000 replicates under a different seed",
+      "expect_failed_gate": "replicates_and_seed_as_preregistered"
+    },
+    {
+      "case": "point_estimate_perturbed",
+      "mutation": "assert a frozen point difference of 0.11 instead of the published value",
+      "expect_failed_gate": "point_estimate_matches_frozen_report"
+    },
+    {
+      "case": "unmutated_control",
+      "mutation": "none",
+      "expect_failed_gate": null
+    }
+  ],
+  "outputs": {
+    "report": "reports/discovery-postfire-county-bootstrap.json"
+  },
+  "environment": {
+    "numpy_pin": "2.5.4",
+    "pyarrow_pin": "26.0.0",
+    "note": "the bootstrap RNG stream is numpy-version dependent, so the run command pins numpy 2.5.4"
+  },
+  "acceptance": {
+    "inputs_hash_verified": true,
+    "official_sample_ids_reproduced": true,
+    "placeholder_score_columns_not_read": true,
+    "frozen_definitions_match_frozen_report": true,
+    "point_estimate_matches_frozen_report": true,
+    "county_partition_exact": true,
+    "no_county_dropped": true,
+    "clusters_are_whole_counties": true,
+    "replicates_and_seed_as_preregistered": true,
+    "robustness_verdict_consistent_with_criteria": true,
+    "secondary_designs_labelled_secondary": true,
+    "cutoff_not_tuned": true,
+    "no_forbidden_source_read": true,
+    "no_leaderboard_or_target_values_used": true,
+    "no_causal_language_in_report": true,
+    "writeup_qualification_matches_verdict": true,
+    "report_serialises_no_unexpected_wall_clock": true,
+    "all_passed": true,
+    "robustness_criteria_evaluated": true,
+    "derived_input_regeneration_disclosed": true
+  }
+}

@@ -2,8 +2,8 @@
 
 Row: `backlog:.langywrap/backlogs/competitions.jsonl:bias-discovery-prize-criteria-audit`. Lane: `comp-zindi-bias-bounty`. documentation screen of the Best Bias Discovery narrative; not a submission, not a model promotion, not a leaderboard probe.
 
-Audited document: `docs/writeup/bias-discovery.md` (SHA-256 `62b7fc5b6a512853b901f3d5f5248bd8230417563cb026920df14b098f3ad6bd`).
-Preregistration: `config/discovery-prize-criteria-preregistered.json` (SHA-256 `9f907ed11b7c1cbdbd1e733b542e1f3f67aa349f35eca520b4d36039e8e593b1`).
+Audited document: `docs/writeup/bias-discovery.md` (SHA-256 `342df0d2c677861c7d4a2d540469adfe0f33b6ff4ffe74650b247113ad245cd2`).
+Preregistration: `config/discovery-prize-criteria-preregistered.json` (SHA-256 `61ebd1cbcf62200e212373a1e0765650d42ed3f2ebedd851cc35725eef49951f`).
 
 This is a documentation screen. It makes no submission, changes no scored candidate, reads no leaderboard feedback, and asserts nothing about the organisers' hidden target. Every score quoted from the proxy models remains a model-side estimate, not an organiser score.
 
@@ -33,8 +33,8 @@ Verdicts are `pass` or `needs revision`. A section is accepted when all four cri
 
 - sections configured / covered: 4 / 4; unresolved: 0
 - criteria evaluated / passed: 16 / 16
-- evidence pointers verified: 23 of 23
-- quantitative claims traceable: 28 of 28 (claim audit fraction 1.0)
+- evidence pointers verified: 27 of 27
+- quantitative claims traceable: 29 of 29 (claim audit fraction 1.0)
 - unlisted external URLs in the discovery document: 0
 - hidden-target claim patterns: 0; unqualified operational patterns: 0
 - prohibited-token hits needing disclosure: prose 0, scripts 0
@@ -44,7 +44,7 @@ Verdicts are `pass` or `needs revision`. A section is accepted when all four cri
 
 ### Post-fire building-count disagreement may look like under-mapping
 
-Declared `supported`, resolved `supported`, lines 1-60, 6161 characters. Claims: `bias-discovery-001`, `bias-discovery-002`, `bias-discovery-003`, `bias-discovery-004`, `bias-discovery-005`, `bias-discovery-006`, `bias-discovery-007`, `bias-discovery-008`.
+Declared `supported`, resolved `supported`, lines 1-73, 8964 characters. Claims: `bias-discovery-001`, `bias-discovery-002`, `bias-discovery-003`, `bias-discovery-004`, `bias-discovery-005`, `bias-discovery-006`, `bias-discovery-007`, `bias-discovery-008`, `bias-discovery-009`.
 
 - **impact**: `pass` (headings: Impact)
 - **novelty**: `pass` (headings: Novelty)
@@ -60,12 +60,16 @@ Declared `supported`, resolved `supported`, lines 1-60, 6161 characters. Claims:
   | `reports/discovery-postfire.json` | `/high_burn_vs_unburned_below_0_8` | `cbf100bc833bf09c` | True |
   | `reports/discovery-postfire.json` | `/no_labels_or_removed_references_used` | `cbf100bc833bf09c` | True |
   | `reports/discovery-postfire-map.png` | `-` | `916589e0d3dc765a` | True |
+  | `reports/discovery-postfire-county-bootstrap.json` | `/robustness` | `18123e36b1d95654` | True |
+  | `reports/discovery-postfire-county-bootstrap.json` | `/county_cluster_bootstrap/cluster_95_percentile_interval` | `18123e36b1d95654` | True |
+  | `reports/discovery-postfire-county-bootstrap.json` | `/county_cluster_bootstrap/tract_preservation_checks` | `18123e36b1d95654` | True |
+  | `reports/discovery-postfire-county-bootstrap.json` | `/derived_input_content_equivalence` | `18123e36b1d95654` | True |
 
-  Reproduction: `python scripts/discovery_postfire_stale_reference.py`; script(s): `scripts/discovery_postfire_stale_reference.py`
+  Reproduction: `python scripts/discovery_postfire_stale_reference.py`; script(s): `scripts/discovery_postfire_stale_reference.py`, `scripts/audit_discovery_postfire_county_bootstrap.py`
 
 ### Scorecard strata are strongly region-composition confounded
 
-Declared `supported`, resolved `supported`, lines 62-101, 5017 characters. Claims: `bias-discovery-009`, `bias-discovery-010`, `bias-discovery-011`, `bias-discovery-012`, `bias-discovery-013`, `bias-discovery-014`, `bias-discovery-015`.
+Declared `supported`, resolved `supported`, lines 75-114, 5017 characters. Claims: `bias-discovery-010`, `bias-discovery-011`, `bias-discovery-012`, `bias-discovery-013`, `bias-discovery-014`, `bias-discovery-015`, `bias-discovery-016`.
 
 - **impact**: `pass` (headings: Impact)
 - **novelty**: `pass` (headings: Novelty)
@@ -87,7 +91,7 @@ Declared `supported`, resolved `supported`, lines 62-101, 5017 characters. Claim
 
 ### Secondary exploratory lead — rural × SVI minority-domain screen in South-Central Texas
 
-Declared `draft`, resolved `draft`, lines 103-160, 5400 characters. Claims: `bias-discovery-016`, `bias-discovery-017`, `bias-discovery-018`, `bias-discovery-019`, `bias-discovery-020`, `bias-discovery-021`. Marked in the document: 'Draft for operator review'
+Declared `draft`, resolved `draft`, lines 116-173, 5400 characters. Claims: `bias-discovery-017`, `bias-discovery-018`, `bias-discovery-019`, `bias-discovery-020`, `bias-discovery-021`, `bias-discovery-022`. Marked in the document: 'Draft for operator review'
 
 - **impact**: `pass` (headings: Why this may matter; what it does not show)
 - **novelty**: `pass` (headings: Proposed pattern outside the published scorecard grid)
@@ -112,7 +116,7 @@ Declared `draft`, resolved `draft`, lines 103-160, 5400 characters. Claims: `bia
 
 ### Overture source mix differs across tract strata
 
-Declared `supported`, resolved `supported`, lines 162-214, 7191 characters. Claims: `bias-discovery-022`, `bias-discovery-023`, `bias-discovery-024`, `bias-discovery-025`, `bias-discovery-026`, `bias-discovery-027`, `bias-discovery-028`. Marked in the document: 'descriptive discovery lead, not a measured map-completeness or hidden-score finding'
+Declared `supported`, resolved `supported`, lines 175-226, 6897 characters. Claims: `bias-discovery-023`, `bias-discovery-024`, `bias-discovery-025`, `bias-discovery-026`, `bias-discovery-027`, `bias-discovery-028`, `bias-discovery-029`. Marked in the document: 'descriptive discovery lead, not a measured map-completeness or hidden-score finding'
 
 - **impact**: `pass` (headings: Interpretation and limits)
 - **novelty**: `pass` (headings: Method and source definitions, Interpretation and limits)

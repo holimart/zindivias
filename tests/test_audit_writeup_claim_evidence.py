@@ -210,9 +210,25 @@ class NegativeControlTests(unittest.TestCase):
         self.assertFalse(audit.verify_claim(claim, POOL)["prohibited_ok"])
 
     def test_unhedged_proxy_section_is_rejected(self) -> None:
-        claim = copy.deepcopy(CLAIMS["bias-discovery-017"])
-        claim["hedge_context"] = ["The screen found 248 high-field rural tracts."]
-        self.assertFalse(audit.verify_claim(claim, POOL)["hedge_ok"])
+        """A proxy-score claim with no hedge anywhere must be rejected.
+
+        Selected by section and provenance class rather than by claim id, because claim ids are
+        positional and shift when a paragraph is added earlier in the document.
+        """
+        hedges = [phrase.lower() for phrase in CONFIG["hedge_phrases"]]
+        candidates = [claim for claim in CLAIMS.values()
+                      if claim["doc"].endswith("bias-discovery.md")
+                      and claim["section"] == "Quantified proxy evidence"
+                      and claim["provenance_class"] == "measured_provided_proxy"
+                      and not any(phrase in claim["text"].lower() for phrase in hedges)]
+        self.assertTrue(candidates, "no unhedged proxy claim available to test")
+        rejected = 0
+        for candidate in candidates:
+            claim = copy.deepcopy(candidate)
+            claim["hedge_context"] = ["The screen found 248 high-field rural tracts."]
+            if not audit.verify_claim(claim, POOL)["hedge_ok"]:
+                rejected += 1
+        self.assertGreater(rejected, 0, "an unhedged proxy claim was accepted")
 
     def test_registry_products_may_not_change_quietly(self) -> None:
         self.assertIn("reports/candidates.json", CONFIG["reproduce_never_disclosed_products"])

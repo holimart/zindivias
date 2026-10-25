@@ -770,6 +770,16 @@ def run_command(command: str, timeout: int, env_workspace: bool = False) -> int:
         return 124
 
 
+def self_referential_adjustment(command: str) -> tuple[str, list[str]]:
+    """Append the disclosed --deselect flags for the one self-referential test, if this is that command."""
+    spec = CONFIG.get("reproduce_self_referential_deselect") or {}
+    marker = str(spec.get("command_contains", ""))
+    deselect = [str(item) for item in spec.get("deselect", [])]
+    if not marker or not deselect or marker not in command:
+        return command, []
+    return command + "".join(f" --deselect {item}" for item in deselect), deselect
+
+
 def execute_reproduce(claims: list[dict[str, Any]],
                       only: str | None = None) -> dict[str, Any]:
     timeout = int(CONFIG["command_timeout_seconds"])
@@ -796,7 +806,8 @@ def execute_reproduce(claims: list[dict[str, Any]],
                            for product in claim["reproduce_products"]})
         hash_before = {path: (sha256_file(ROOT / path) if (ROOT / path).is_file() else None)
                        for path in products}
-        exit_code = run_command(command, timeout=timeout, env_workspace=True)
+        executed_command, deselected = self_referential_adjustment(command)
+        exit_code = run_command(executed_command, timeout=timeout, env_workspace=True)
         hash_after = {path: (sha256_file(ROOT / path) if (ROOT / path).is_file() else None)
                       for path in products}
         changed: list[str] = []
@@ -834,6 +845,7 @@ def execute_reproduce(claims: list[dict[str, Any]],
         subprocess.run(["git", "checkout", "--", *products], cwd=ROOT,
                        capture_output=True, text=True)
         entries.append({"command": command, "exit_code": exit_code,
+                        "self_referential_deselect": deselected,
                         "undisclosed_product_changes": changed,
                         "products": [{"path": path,
                                       "sha256": sha256_file(ROOT / path)}

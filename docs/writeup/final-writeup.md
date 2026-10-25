@@ -2,7 +2,7 @@
 
 - Competition: `bias-bounty-mapping-equity-challenge` (Zindi)
 - Lane: `comp-zindi-bias-bounty`
-- Writeup revision: git `37fc8720904058c715ea534e98faab454be10b5d` (tree clean: False)
+- Writeup revision: git `cc112f8e0561cbc4ae1f812e39446f99ce244d65` (tree clean: False)
 - Zindi username or team name: **PENDING_OPERATOR_CONFIRMATION**
 - Operator confirmation of that identity recorded: NO — pending operator
 - Form submission status: **NOT SUBMITTED — staged for operator submission**
@@ -56,7 +56,7 @@ The C0-P4 uploads above are historical calibration and probe records kept for au
 
 ## Best Bias Discovery: post-fire building-count disagreement may look like under-mapping
 
-**Status:** reproducible descriptive finding from challenge-provided inputs; not a claim about hidden organiser scores, the exact reference vintage, or measured emergency outcomes. No additional public dataset was used.
+**Status:** reproducible descriptive finding from challenge-provided inputs; not a claim about hidden organiser scores, the exact reference vintage, or measured emergency outcomes. The direction of the high-burn versus unburned disagreement is repeatable, but its quantitative size is exploratory once counties rather than tracts are resampled, as recorded below. No additional public dataset was used.
 
 ### Impact
 
@@ -93,13 +93,26 @@ Two additional supplied examples are `06089010603` (ratio 0.691; MTBS last burn 
 
 Fourteen of 591 tracts have provided burned percentages above 100 and are excluded from these bins; none are missing a burn percentage. The high-burn minus unburned difference is **+9.55 percentage points**, with a stratified 50,000-draw tract-bootstrap 95% percentile interval of **[+0.55, +20.89] percentage points**. This interval is wide and quantifies only tract-resampling variation in the binary ratio indicator; it does not capture spatial dependence, measurement error, source-vintage uncertainty, or hidden-target error. Butte County has 54 sample tracts, six below the ratio cutoff; their summed `pop_total` is 6,977.
 
+That published interval resamples tracts independently. Tracts inside one county share Overture provider mix, terrain and reference vintage, so it understates county-level dependence, and the same statistic was rechecked with a county-cluster bootstrap that was preregistered before any result was seen (`reports/discovery-postfire-county-bootstrap.json`, `scripts/audit_discovery_postfire_county_bootstrap.py`): 50,000 seeded replicates resample all 23 counties of the analysis population with replacement, every tract record of a selected county is kept, and the difference is recomputed inside each replicate. The point estimate is unchanged, every replicate contained both focal groups (valid-replicate fraction 1.0), and 95.99% of valid replicates point the same way, but the 95% percentile interval widens from [+0.55, +20.89] to [-1.65, +16.67] percentage points, so its lower bound is no longer above zero. Under the preregistered criterion the quantitative difference is therefore **exploratory**: the direction is repeatable in almost every county resample, while this sample does not support it at 95% confidence once counties, rather than tracts, are treated as the independent units. The widening is not the artefact of one influential county: dropping any single county one at a time leaves the point difference between +5.56 and +10.71 percentage points, and the 36 high-burn tracts sit in 15 of the 23 counties. This remains a descriptive statement about disagreement between two provided layers; it does not establish cause, and it is not evidence that either layer is wrong, that any map is stale, or that any response or service differs.
+
 ![NorCal and Butte tract map: fill is provided MTBS burn percentage; purple outline marks Overture/USFS ratio below 0.8. The six numbered Butte markers follow the GEOID table order.](../../reports/discovery-postfire-map.png)
 
 **Source/vintage caution:** the compared count is the provided strata field `usfs_BuildingCount_sum`; its supplied edition metadata is recorded in `reports/discovery-postfire.json`. The observed ratios support the hypothesis that a 2018-vintage Microsoft-footprint derivative may be stale after wildfire, leaving a risk-building count above the Overture count. The tract-level analysis does not independently verify the supplied count's exact vintage. It does **not** claim that the organiser used a 2018 Microsoft release or this USFS field to construct its hidden target.
 
 ### Reproducibility
 
-The script `scripts/discovery_postfire_stale_reference.py` reads the provided NorCal Overture feature cache, only selected fields from the provided strata table, GEOID values from the official sample, and GEOID/geometry columns from the challenge-provided ACS geometry object. It does not read placeholder scores, labels, removed reference layers, or DINS/external evidence. The script reproduces the ratio table, burn-class table, bootstrap CI, Butte population sum, and map; the deterministic report is `reports/discovery-postfire.json`, and the map is `reports/discovery-postfire-map.png`. No scored candidate CSV was changed; their hashes are captured in the report.
+The script `scripts/discovery_postfire_stale_reference.py` reads the provided NorCal Overture feature cache, only selected fields from the provided strata table, GEOID values from the official sample, and GEOID/geometry columns from the challenge-provided ACS geometry object. It does not read placeholder scores, labels, removed reference layers, or DINS/external evidence. The script reproduces the ratio table, burn-class table, bootstrap CI, Butte population sum, and map; the deterministic report is `reports/discovery-postfire.json`, and the map is `reports/discovery-postfire-map.png`. The county-cluster recheck is a separate deterministic script with its own preregistered configuration, `scripts/audit_discovery_postfire_county_bootstrap.py`, whose report is `reports/discovery-postfire-county-bootstrap.json`:
+
+```sh
+COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" \
+  /home/martin/hddProjects/langywrap/uv run --quiet \
+  --with numpy==2.5.4 --with pyarrow==26.0.0 \
+  python scripts/audit_discovery_postfire_county_bootstrap.py \
+  --workspace "$COMPETITION_WORKSPACE" \
+  --out reports/discovery-postfire-county-bootstrap.json
+```
+
+Two runs of that command produced byte-identical reports, and the audit fails closed if a county is missing from the resampling pool, if the resampled clusters are not whole counties, or if the writeup fails to state the robustness verdict; it re-runs the published tract-level design as a reference control and reproduces its frozen interval exactly, and it never re-tunes the ratio cutoff or drops a county. No scored candidate CSV was changed; their hashes are captured in the report.
 
 From the competition repository with the authorized workspace and network access to the provided challenge geometry object:
 
@@ -856,13 +869,13 @@ Provided-data-only check for the scored predictions (`reports/v2-input-provenanc
 
 A machine-checked claim-to-evidence audit backs every number in this writeup.
 
-- `claims_total`: 87
-- `claims_fully_traceable`: 87
+- `claims_total`: 88
+- `claims_fully_traceable`: 88
 - `fraction_quantitative_claims_traceable`: 1.0
-- `numeric_tokens_total`: 1026
-- `numeric_tokens_covered`: 1026
+- `numeric_tokens_total`: 1035
+- `numeric_tokens_covered`: 1035
 - `fraction_numeric_tokens_covered`: 1.0
-- `distinct_verify_commands`: 87
+- `distinct_verify_commands`: 88
 - `distinct_reproduce_commands`: 17
 - `derived_aggregates_verified`: 31
 - `claims_asserting_accuracy`: 2

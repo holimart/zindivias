@@ -186,7 +186,7 @@
       "level": 1,
       "status": "supported",
       "line_start": 1,
-      "line_end": 61,
+      "line_end": 74,
       "criterion_blocks": {
         "impact": [
           "Impact"
@@ -202,10 +202,12 @@
         ]
       },
       "scripts": [
-        "scripts/discovery_postfire_stale_reference.py"
+        "scripts/discovery_postfire_stale_reference.py",
+        "scripts/audit_discovery_postfire_county_bootstrap.py"
       ],
       "deterministic_reports": [
-        "reports/discovery-postfire.json"
+        "reports/discovery-postfire.json",
+        "reports/discovery-postfire-county-bootstrap.json"
       ],
       "pointers": [
         {
@@ -232,11 +234,35 @@
           "path": "reports/discovery-postfire-map.png",
           "pointer": null,
           "sha256": "916589e0d3dc765a77c133dbcfe454740906dabb26ab74fcc0db92f9ffa43da1"
+        },
+        {
+          "path": "reports/discovery-postfire-county-bootstrap.json",
+          "pointer": "/robustness",
+          "sha256": "18123e36b1d9565419c3c8e4b1adf91d6730c83b7c09099b8105fe6b1f756ccb"
+        },
+        {
+          "path": "reports/discovery-postfire-county-bootstrap.json",
+          "pointer": "/county_cluster_bootstrap/cluster_95_percentile_interval",
+          "sha256": "18123e36b1d9565419c3c8e4b1adf91d6730c83b7c09099b8105fe6b1f756ccb"
+        },
+        {
+          "path": "reports/discovery-postfire-county-bootstrap.json",
+          "pointer": "/county_cluster_bootstrap/tract_preservation_checks",
+          "sha256": "18123e36b1d9565419c3c8e4b1adf91d6730c83b7c09099b8105fe6b1f756ccb"
+        },
+        {
+          "path": "reports/discovery-postfire-county-bootstrap.json",
+          "pointer": "/derived_input_content_equivalence",
+          "sha256": "18123e36b1d9565419c3c8e4b1adf91d6730c83b7c09099b8105fe6b1f756ccb"
         }
       ],
       "reproduce_command": "python scripts/discovery_postfire_stale_reference.py",
       "sampled_claim_id": "bias-discovery-001",
-      "outside_scorecard_grid": true
+      "outside_scorecard_grid": true,
+      "reproduce_commands_all": [
+        "python scripts/discovery_postfire_stale_reference.py",
+        "python scripts/audit_discovery_postfire_county_bootstrap.py"
+      ]
     },
     {
       "id": "section-2-region-confound",
@@ -244,8 +270,8 @@
       "heading": "Section 2 — Scorecard strata are strongly region-composition confounded",
       "level": 2,
       "status": "supported",
-      "line_start": 62,
-      "line_end": 102,
+      "line_start": 75,
+      "line_end": 115,
       "criterion_blocks": {
         "impact": [
           "Impact"
@@ -308,8 +334,8 @@
       "heading": "Secondary exploratory lead — rural × SVI minority-domain screen in South-Central Texas",
       "level": 2,
       "status": "draft",
-      "line_start": 103,
-      "line_end": 161,
+      "line_start": 116,
+      "line_end": 174,
       "criterion_blocks": {
         "impact": [
           "Why this may matter; what it does not show"
@@ -374,8 +400,8 @@
       "heading": "Section 3 — Overture source mix differs across tract strata",
       "level": 2,
       "status": "supported",
-      "line_start": 162,
-      "line_end": 215,
+      "line_start": 175,
+      "line_end": 227,
       "criterion_blocks": {
         "impact": [
           "Interpretation and limits"
