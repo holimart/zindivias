@@ -2,7 +2,7 @@
 
 Row: `backlog:.langywrap/backlogs/competitions.jsonl:bias-discovery-prize-criteria-audit`. Lane: `comp-zindi-bias-bounty`. documentation screen of the Best Bias Discovery narrative; not a submission, not a model promotion, not a leaderboard probe.
 
-Audited document: `docs/writeup/bias-discovery.md` (SHA-256 `342df0d2c677861c7d4a2d540469adfe0f33b6ff4ffe74650b247113ad245cd2`).
+Audited document: `docs/writeup/bias-discovery.md` (SHA-256 `b91d96f8a30d819490317cb3d3b555bdad510a0877bea535eaa5d7f4229f748e`).
 Preregistration: `config/discovery-prize-criteria-preregistered.json` (SHA-256 `28eaad515d5dade388e82299a9c2b3231844b58f127e77fa95cdbef93a94b643`).
 
 This is a documentation screen. It makes no submission, changes no scored candidate, reads no leaderboard feedback, and asserts nothing about the organisers' hidden target. Every score quoted from the proxy models remains a model-side estimate, not an organiser score.
@@ -44,7 +44,7 @@ Verdicts are `pass` or `needs revision`. A section is accepted when all four cri
 
 ### Post-fire building-count disagreement may look like under-mapping
 
-Declared `supported`, resolved `supported`, lines 1-73, 8964 characters. Claims: `bias-discovery-001`, `bias-discovery-002`, `bias-discovery-003`, `bias-discovery-004`, `bias-discovery-005`, `bias-discovery-006`, `bias-discovery-007`, `bias-discovery-008`, `bias-discovery-009`.
+Declared `supported`, resolved `supported`, lines 1-73, 9568 characters. Claims: `bias-discovery-001`, `bias-discovery-002`, `bias-discovery-003`, `bias-discovery-004`, `bias-discovery-005`, `bias-discovery-006`, `bias-discovery-007`, `bias-discovery-008`, `bias-discovery-009`.
 
 - **impact**: `pass` (headings: Impact)
 - **novelty**: `pass` (headings: Novelty)

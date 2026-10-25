@@ -1,0 +1,359 @@
+{
+  "schema_version": 1,
+  "audit_id": "postfire-writeup-cluster-qualification",
+  "backlog_item": "bias-postfire-writeup-cluster-qualification",
+  "lane": "comp-zindi-bias-bounty",
+  "title": "County-cluster uncertainty must be visible wherever the high-burn versus unburned difference is claimed",
+  "intent": "Documentation screen. Count the inferential statements about the high-burn versus unburned difference that are not qualified by the preregistered county-cluster result, in the two organiser-facing writeups, and require exact agreement with the frozen reports. This screen does not promote an estimator, does not re-run any resampling, and does not change any preregistered design.",
+  "documents": [
+    {
+      "id": "discovery",
+      "path": "docs/writeup/bias-discovery.md",
+      "role": "source",
+      "block_start_anchor": "post-fire building-count disagreement may look like under-mapping",
+      "block_end_anchor": "## Section 2",
+      "must_qualify": true,
+      "claim_scope_end_anchor": "## Reproducibility"
+    },
+    {
+      "id": "final",
+      "path": "docs/writeup/final-writeup.md",
+      "role": "generated_from_discovery",
+      "block_start_anchor": "post-fire building-count disagreement may look like under-mapping",
+      "block_end_anchor": "### Section 2",
+      "must_qualify": true,
+      "derived_from": "docs/writeup/bias-discovery.md",
+      "note": "assembled by scripts/build_final_writeup.py; the same qualification must survive assembly, so it is checked here rather than assumed",
+      "claim_scope_end_anchor": "### Reproducibility"
+    }
+  ],
+  "frozen_reports": {
+    "county_bootstrap": {
+      "path": "reports/discovery-postfire-county-bootstrap.json",
+      "sha256": "942c39504dbcf3b2fd0fbc19c3cb3194bd9a49693fdd3688a044c3211d637d24"
+    },
+    "tract_level": {
+      "path": "reports/discovery-postfire.json",
+      "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
+    },
+    "county_bootstrap_config": {
+      "path": "config/discovery-postfire-county-bootstrap-preregistered.json",
+      "sha256": "43ba983db726e6e251ec7cbfd8804c74bc1acf2b45a58cb3498bbffb726fd66d"
+    }
+  },
+  "classification": {
+    "note": "an inferential statement about the difference is a sentence that both talks about the difference and uses an inferential, confidence or robustness cue; it is qualified when the same sentence names the clustered result. Exemptions are definitional or descriptive sentences about the ratio, the table or the exclusions, never inference about the difference.",
+    "subject_patterns": [
+      "high[- ]burn",
+      "unburned",
+      "the difference",
+      "the contrast",
+      "9\\.55 percentage",
+      "ratio below",
+      "below the ratio cutoff",
+      "burn class",
+      "interval",
+      "bootstrap",
+      "resampl",
+      "disagreement",
+      "share below",
+      "point estimate",
+      "lower bound"
+    ],
+    "inferential_cue_patterns": [
+      "significan\\w*",
+      "confiden\\w*",
+      "robust\\w*",
+      "reliab\\w*",
+      "strong\\w*",
+      "clear\\w*",
+      "\\bproves?\\b",
+      "demonstrat\\w*",
+      "shows? that",
+      "suggest\\w*",
+      "indicat\\w*",
+      "evidence (that|of)\\b",
+      "95%",
+      "probabl\\w*",
+      "\\blikely\\b",
+      "conclu\\w*",
+      "survives?\\b",
+      "repeatabl\\w*",
+      "supports?\\b",
+      "consistent with",
+      "unchanged",
+      "widens",
+      "no longer above zero",
+      "at 95% confidence",
+      "understates",
+      "not interchangeable"
+    ],
+    "cluster_qualification_patterns": [
+      "county-cluster",
+      "counties (rather than|are the independent|resampled|cluster)",
+      "when whole counties",
+      "independent units",
+      "exploratory",
+      "-1\\.65",
+      "\\+16\\.67",
+      "understates county-level dependence"
+    ],
+    "exemption_patterns": [
+      "descriptive cutoff",
+      "not an organiser score",
+      "the table below",
+      "contextual labels",
+      "excluded from these bins",
+      "pop_total",
+      "summed",
+      "does not establish cause",
+      "not evidence that",
+      "it is not evidence",
+      "the audit fails closed",
+      "byte-identical",
+      "reproduces its frozen interval",
+      "re-runs the published"
+    ],
+    "minimum_inferential_statements_per_document": 4
+  },
+  "qualification": {
+    "window_sentences": 0,
+    "point_difference_literal": "+9.55",
+    "first_mention_must_carry": [
+      "cluster_interval_literal",
+      "exploratory"
+    ],
+    "near_finding_fragments": [
+      "-1.65",
+      "+16.67",
+      "exploratory",
+      "county-cluster bootstrap",
+      "95.99%",
+      "+5.56",
+      "+10.71",
+      "23 counties"
+    ],
+    "near_finding_scope": "finding block (Status line through the end of the post-fire Reproducibility section)",
+    "contrast_requirement": {
+      "note": "one sentence must put the two designs in the same breath, so a reader cannot take tract-resampling sensitivity for clustered inference",
+      "tract_groups": [
+        "tract-level resampling",
+        "tract bootstrap",
+        "tract-resampling",
+        "resamples tracts"
+      ],
+      "cluster_groups": [
+        "counties",
+        "county-level",
+        "county-cluster"
+      ],
+      "contrast_phrases": [
+        "not interchangeable",
+        "not the interval to quote",
+        "understates county-level dependence",
+        "widens from",
+        "rather than tracts are the independent units"
+      ],
+      "all_groups_required_in_one_sentence": true
+    }
+  },
+  "frozen_statistics": [
+    {
+      "name": "point_difference_percentage_points",
+      "report": "county_bootstrap",
+      "pointer": "point_estimate.difference_percentage_points",
+      "round": 2,
+      "format": "+{:.2f}",
+      "capture_pattern": "high-burn minus unburned difference is \\*\\*([+-][0-9.]+) percentage points\\*\\*",
+      "min_occurrences": 1
+    },
+    {
+      "name": "tract_bootstrap_interval_percentage_points",
+      "report": "county_bootstrap",
+      "pointer": "published_tract_level_reference.frozen_report_interval",
+      "scale": 100.0,
+      "round": 2,
+      "format": "[{:+.2f}, {:+.2f}]",
+      "min_occurrences": 1
+    },
+    {
+      "name": "county_cluster_interval_percentage_points",
+      "report": "county_bootstrap",
+      "pointer": "robustness.cluster_95_percentile_interval_percentage_points",
+      "round": 2,
+      "format": "[{:+.2f}, {:+.2f}]",
+      "min_occurrences": 1
+    },
+    {
+      "name": "positive_difference_fraction_percent",
+      "report": "county_bootstrap",
+      "pointer": "robustness.positive_difference_fraction_of_valid_percentage_points",
+      "round": 2,
+      "format": "{:.2f}%",
+      "capture_pattern": "([0-9]{2}\\.[0-9]{2})% of valid replicates",
+      "min_occurrences": 1
+    },
+    {
+      "name": "leave_one_county_out_minimum_percentage_points",
+      "report": "county_bootstrap",
+      "pointer": "secondary_leave_one_county_out.minimum_difference_percentage_points",
+      "round": 2,
+      "format": "+{:.2f}",
+      "min_occurrences": 1
+    },
+    {
+      "name": "leave_one_county_out_maximum_percentage_points",
+      "report": "county_bootstrap",
+      "pointer": "secondary_leave_one_county_out.maximum_difference_percentage_points",
+      "round": 2,
+      "format": "+{:.2f}",
+      "min_occurrences": 1
+    }
+  ],
+  "interval_literal_pattern": "\\[([+-][0-9]+\\.[0-9]{2}), ([+-][0-9]+\\.[0-9]{2})\\] percentage points",
+  "population_literals": {
+    "counties_in_analysis_population": "23 counties",
+    "high_burn_tracts_in_counties": "36 high-burn tracts sit in 15 of the 23 counties",
+    "replicates": "50,000"
+  },
+  "preregistration_pin": {
+    "cutoff": 0.8,
+    "tract_replicates": 50000,
+    "tract_seed": 20261024,
+    "cluster_replicates": 50000,
+    "cluster_seed": 20261025,
+    "cluster_count": 23,
+    "verdict": "exploratory",
+    "quantitative_claim_retained": false,
+    "check": "the frozen reports must still carry these values, and the county-bootstrap configuration must still permit only the 0.8 cutoff: the writeup is qualified to the design that was preregistered before results, never to a design chosen afterwards"
+  },
+  "language": {
+    "required_hedges": [
+      "descriptive",
+      "does not establish cause",
+      "not evidence that",
+      "provided"
+    ],
+    "forbidden_patterns": [
+      "caused the",
+      "fire caused",
+      "proves that",
+      "demonstrates that the",
+      "led to worse",
+      "the organiser scores",
+      "hidden target",
+      "true coverage gap",
+      "saves lives",
+      "dispatch failures occurred"
+    ],
+    "hidden_target_patterns": [
+      "the hidden target uses",
+      "the organiser used",
+      "the hidden score is",
+      "labels these tracts as coverage gaps"
+    ],
+    "negation_markers": [
+      "not",
+      "never",
+      "does not",
+      "cannot",
+      "no evidence",
+      "it is not evidence"
+    ],
+    "note": "forbidden and hidden-target patterns are searched only in affirmative prose: a sentence carrying a negation marker is a disclosure, not a claim"
+  },
+  "forbidden_source_scan": {
+    "note": "prohibitions are enforced at the point of access: the audit opens exactly these five repository files, no reference layer, sample score placeholder, label file or uploader is reachable, and the emitted report must not carry a leaderboard or probe constant",
+    "opened_paths_allowlist": [
+      "docs/writeup/bias-discovery.md",
+      "docs/writeup/final-writeup.md",
+      "reports/discovery-postfire-county-bootstrap.json",
+      "reports/discovery-postfire.json",
+      "config/discovery-postfire-county-bootstrap-preregistered.json"
+    ],
+    "path_tokens": [
+      "tiger",
+      "usgs",
+      "cbp",
+      "microsoft_buildings",
+      "ms-buildings",
+      "sample-submission",
+      "sample_submission",
+      "labels",
+      "zindi_submit",
+      "config/calibration.json",
+      "storage_state",
+      "auth_token"
+    ],
+    "value_tokens": [
+      "0.0911",
+      "0.3288136427728255",
+      "0.146449112",
+      "0.107246299",
+      "0.235358712",
+      "0.349409867"
+    ],
+    "disclosure": "path tokens are matched against opened paths and value tokens against report leaves, never against prose, so naming a forbidden layer to forbid it is not a hit"
+  },
+  "negative_controls": [
+    {
+      "id": "strip_cluster_interval",
+      "expect_gate": "frozen_interval_literals_present",
+      "mutation": "remove the county-cluster interval literal from the finding block"
+    },
+    {
+      "id": "strip_exploratory_verdict",
+      "expect_gate": "exploratory_verdict_near_finding",
+      "mutation": "remove the word exploratory from the finding block"
+    },
+    {
+      "id": "unqualify_first_mention",
+      "expect_gate": "unqualified_inferential_statements_zero",
+      "mutation": "rewrite the first mention of the point difference so it quotes only the tract interval"
+    },
+    {
+      "id": "perturb_cluster_bound",
+      "expect_gate": "no_unfrozen_interval_literal",
+      "mutation": "change the cluster lower bound in the writeup from -1.65 to +0.65"
+    },
+    {
+      "id": "drop_design_contrast",
+      "expect_gate": "tract_and_cluster_designs_distinguished",
+      "mutation": "delete the sentence that contrasts the two resampling designs"
+    },
+    {
+      "id": "generated_block_diverges",
+      "expect_gate": "generated_writeup_matches_source_block",
+      "mutation": "change one sentence of the generated writeup block only"
+    },
+    {
+      "id": "cutoff_retuned",
+      "expect_gate": "preregistered_design_not_drifted",
+      "mutation": "claim in the frozen report that the cutoff used was 0.75"
+    },
+    {
+      "id": "seed_or_replicates_changed",
+      "expect_gate": "preregistered_design_not_drifted",
+      "mutation": "claim in the frozen report that the cluster design used 25,000 replicates or a different seed"
+    },
+    {
+      "id": "causal_claim",
+      "expect_gate": "no_causal_or_hidden_target_claim",
+      "mutation": "add an affirmative sentence asserting that fire caused the mapping gap"
+    }
+  ],
+  "outputs": {
+    "report": "reports/postfire-writeup-cluster-qualification.json",
+    "markdown": "docs/writeup/postfire-cluster-qualification-audit.md"
+  },
+  "prohibitions": {
+    "no_reference_layers": true,
+    "no_labels": true,
+    "no_uploads": true,
+    "no_leaderboard_values": true,
+    "no_resampling_rerun": true,
+    "no_preregistered_design_change_after_results": true,
+    "no_causal_claims": true,
+    "uploads_performed": 0
+  }
+}

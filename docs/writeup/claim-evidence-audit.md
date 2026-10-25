@@ -5,7 +5,7 @@ Row: `bias-writeup-claim-evidence-audit`. Documentation screen: every quantitati
 ## Verdict
 
 - **88 of 88 quantitative claims fully traceable** (100.0%).
-- **1035 of 1035 numeric tokens (100.0%) are present in the evidence named by the claim that states them.**
+- **1036 of 1036 numeric tokens (100.0%) are present in the evidence named by the claim that states them.**
 - 88 per-claim verify commands and 17 reproduce commands; every listed command's recorded exit code is 0 and every reproduce product hash-verifies.
 - Accuracy language outside the allowed classes: none. Prohibited reference/label/leaderboard sources used as scored-model evidence: none.
 - All acceptance gates: **PASS**.
@@ -18,7 +18,7 @@ Each of the three writeup documents is split into quantitative claim blocks (a b
 
 | Document | Claims | Fully traceable | Numeric tokens | Covered |
 |---|---:|---:|---:|---:|
-| `docs/writeup/bias-discovery.md` | 29 | 29 | 262 | 262 |
+| `docs/writeup/bias-discovery.md` | 29 | 29 | 263 | 263 |
 | `docs/writeup/methodology.md` | 52 | 52 | 642 | 642 |
 | `docs/writeup/edge-cases.md` | 7 | 7 | 131 | 131 |
 
@@ -33,7 +33,7 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 | `bias-discovery-003` \| Butte County GEOID \| Overture / provided USFS count \| Provided MTBS … | `bias-discovery.md` | Evidence | 19-26 | `measured_provided_data` | `reports/discovery-postfire.json` | `/focal_butte_2018_burn_geoids` | 24/24 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
 | `bias-discovery-004` Two additional supplied examples are `06089010603` (ratio 0.691; MTBS … | `bias-discovery.md` | Evidence | 28-28 | `measured_provided_data` | `reports/discovery-postfire.json` | `/additional_named_examples` | 8/8 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
 | `bias-discovery-005` \| Provided NorCal burn class \| Tracts \| Ratio <0.8 \| Share below 0.8 \|… | `bias-discovery.md` | Evidence | 30-36 | `measured_provided_data` | `reports/discovery-postfire.json` | `/` | 26/26 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
-| `bias-discovery-006` Fourteen of 591 tracts have provided burned percentages above 100 and … | `bias-discovery.md` | Evidence | 38-38 | `measured_provided_data` | `reports/discovery-postfire.json` | `/high_burn_vs_unburned_below_0_8/replicates` | 6/6 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-006` Fourteen of 591 tracts have provided burned percentages above 100 and … | `bias-discovery.md` | Evidence | 38-38 | `measured_provided_data` | `reports/discovery-postfire.json` | `/high_burn_vs_unburned_below_0_8/replicates` | 7/7 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
 | `bias-discovery-007` That published interval resamples tracts independently. Tracts inside … | `bias-discovery.md` | Evidence | 40-40 | `measured_provided_data` | `reports/discovery-postfire-county-bootstrap.json` | `/summary/replicates` | 9/9 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
 | `bias-discovery-008` ![NorCal and Butte tract map: fill is provided MTBS burn percentage; p… | `bias-discovery.md` | Evidence | 42-42 | `measured_provided_data` | `reports/discovery-postfire.json` | `/` | 1/1 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
 | `bias-discovery-009` **Source/vintage caution:** the compared count is the provided strata … | `bias-discovery.md` | Evidence | 44-44 | `measured_provided_data` | `reports/discovery-postfire.json` | `/interpretation` | 2/2 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |

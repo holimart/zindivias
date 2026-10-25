@@ -1,0 +1,591 @@
+{
+  "access": {
+    "allowlist": [
+      "config/discovery-postfire-county-bootstrap-preregistered.json",
+      "docs/writeup/bias-discovery.md",
+      "docs/writeup/final-writeup.md",
+      "reports/discovery-postfire-county-bootstrap.json",
+      "reports/discovery-postfire.json"
+    ],
+    "disclosure": "path tokens are matched against opened paths, never against prose",
+    "forbidden_opened_paths": [],
+    "opened_paths": [
+      "config/discovery-postfire-county-bootstrap-preregistered.json",
+      "docs/writeup/bias-discovery.md",
+      "docs/writeup/final-writeup.md",
+      "reports/discovery-postfire-county-bootstrap.json",
+      "reports/discovery-postfire.json"
+    ],
+    "unexpected_opened_paths": []
+  },
+  "design_drift": {
+    "cluster_count": 23,
+    "cluster_replicates": 50000,
+    "cluster_seed": 20261025,
+    "cutoff_used": 0.8,
+    "cutoff_values_permitted": [
+      0.8
+    ],
+    "expected": {
+      "check": "the frozen reports must still carry these values, and the county-bootstrap configuration must still permit only the 0.8 cutoff: the writeup is qualified to the design that was preregistered before results, never to a design chosen afterwards",
+      "cluster_count": 23,
+      "cluster_replicates": 50000,
+      "cluster_seed": 20261025,
+      "cutoff": 0.8,
+      "quantitative_claim_retained": false,
+      "tract_replicates": 50000,
+      "tract_seed": 20261024,
+      "verdict": "exploratory"
+    },
+    "quantitative_claim_retained": false,
+    "tract_replicates": 50000,
+    "tract_seed": 20261024,
+    "verdict": "exploratory"
+  },
+  "documents": [
+    {
+      "block_chars": 9547,
+      "causal_or_hidden_target_hits": [],
+      "claim_scope_chars": 7084,
+      "claim_scope_end_anchor": "## Reproducibility",
+      "design_contrast_sentence": "The two intervals answer different questions and are not interchangeable: the tract interval measures sensitivity to tract-level resampling of the binary ratio indicator at a fixed county composition, and because tracts inside one county share Overture provider mix, terrain and reference vintage it understates county-level dependence, so it is not the interval to quote when counties rather than tracts are the independent units; it also captures none of the spatial dependence, measurement error, source-vintage uncertainty, or hidden-target error.",
+      "first_mention": "The high-burn minus unburned difference is **+9.55 percentage points**, and its 95% percentile interval is **[+0.55, +20.89] percentage points** under the published stratified 50,000-draw tract bootstrap but **[-1.65, +16.67] percentage points** when whole counties are resampled instead of tracts; under the criterion preregistered before any result was seen, the difference is therefore **exploratory** and is not established at 95% confidence.",
+      "first_mention_carries_cluster_interval_and_verdict": true,
+      "frozen_statistics": {
+        "county_cluster_interval_percentage_points": {
+          "captures_agree": true,
+          "expected_literal": "[-1.65, +16.67]",
+          "min_occurrences": 1,
+          "occurrences": 2
+        },
+        "leave_one_county_out_maximum_percentage_points": {
+          "captures_agree": true,
+          "expected_literal": "+10.71",
+          "min_occurrences": 1,
+          "occurrences": 1
+        },
+        "leave_one_county_out_minimum_percentage_points": {
+          "captures_agree": true,
+          "expected_literal": "+5.56",
+          "min_occurrences": 1,
+          "occurrences": 1
+        },
+        "point_difference_percentage_points": {
+          "capture_pattern": "high-burn minus unburned difference is \\*\\*([+-][0-9.]+) percentage points\\*\\*",
+          "captured": [
+            "+9.55"
+          ],
+          "captures_agree": true,
+          "expected_literal": "+9.55",
+          "min_occurrences": 1,
+          "occurrences": 1
+        },
+        "positive_difference_fraction_percent": {
+          "capture_pattern": "([0-9]{2}\\.[0-9]{2})% of valid replicates",
+          "captured": [
+            "95.99"
+          ],
+          "captures_agree": true,
+          "expected_literal": "95.99%",
+          "min_occurrences": 1,
+          "occurrences": 1
+        },
+        "tract_bootstrap_interval_percentage_points": {
+          "captures_agree": true,
+          "expected_literal": "[+0.55, +20.89]",
+          "min_occurrences": 1,
+          "occurrences": 2
+        }
+      },
+      "id": "discovery",
+      "inferential_statement_text": [
+        {
+          "cues": [
+            "repeatabl\\w*"
+          ],
+          "qualification": [
+            "counties (rather than|are the independent|resampled|cluster)",
+            "exploratory"
+          ],
+          "text": "The direction of the high-burn versus unburned disagreement is repeatable, but its quantitative size is exploratory once counties rather than tracts are resampled, as recorded below."
+        },
+        {
+          "cues": [
+            "confiden\\w*",
+            "95%",
+            "at 95% confidence"
+          ],
+          "qualification": [
+            "when whole counties",
+            "exploratory",
+            "-1\\.65",
+            "\\+16\\.67"
+          ],
+          "text": "The high-burn minus unburned difference is **+9.55 percentage points**, and its 95% percentile interval is **[+0.55, +20.89] percentage points** under the published stratified 50,000-draw tract bootstrap but **[-1.65, +16.67] percentage points** when whole counties are resampled instead of tracts; under the criterion preregistered before any result was seen, the difference is therefore **exploratory** and is not established at 95% confidence."
+        },
+        {
+          "cues": [
+            "indicat\\w*",
+            "understates",
+            "not interchangeable"
+          ],
+          "qualification": [
+            "counties (rather than|are the independent|resampled|cluster)",
+            "independent units",
+            "understates county-level dependence"
+          ],
+          "text": "The two intervals answer different questions and are not interchangeable: the tract interval measures sensitivity to tract-level resampling of the binary ratio indicator at a fixed county composition, and because tracts inside one county share Overture provider mix, terrain and reference vintage it understates county-level dependence, so it is not the interval to quote when counties rather than tracts are the independent units; it also captures none of the spatial dependence, measurement error, source-vintage uncertainty, or hidden-target error."
+        },
+        {
+          "cues": [
+            "understates"
+          ],
+          "qualification": [
+            "county-cluster",
+            "understates county-level dependence"
+          ],
+          "text": "Tracts inside one county share Overture provider mix, terrain and reference vintage, so it understates county-level dependence, and the same statistic was rechecked with a county-cluster bootstrap that was preregistered before any result was seen (`reports/discovery-postfire-county-bootstrap.json`, `scripts/audit_discovery_postfire_county_bootstrap.py`): 50,000 seeded replicates resample all 23 counties of the analysis population with replacement, every tract record of a selected county is kept, and the difference is recomputed inside each replicate."
+        },
+        {
+          "cues": [
+            "95%",
+            "unchanged",
+            "widens",
+            "no longer above zero"
+          ],
+          "qualification": [
+            "-1\\.65",
+            "\\+16\\.67"
+          ],
+          "text": "The point estimate is unchanged, every replicate contained both focal groups (valid-replicate fraction 1.0), and 95.99% of valid replicates point the same way, but the 95% percentile interval widens from [+0.55, +20.89] to [-1.65, +16.67] percentage points, so its lower bound is no longer above zero."
+        },
+        {
+          "cues": [
+            "confiden\\w*",
+            "95%",
+            "repeatabl\\w*",
+            "supports?\\b",
+            "at 95% confidence"
+          ],
+          "qualification": [
+            "independent units",
+            "exploratory"
+          ],
+          "text": "Under the preregistered criterion the quantitative difference is therefore **exploratory**: the direction is repeatable in almost every county resample, while this sample does not support it at 95% confidence once counties, rather than tracts, are treated as the independent units."
+        }
+      ],
+      "inferential_statements": 6,
+      "interval_literals_found": [
+        "[+0.55, +20.89]",
+        "[-1.65, +16.67]",
+        "[-1.65, +16.67]"
+      ],
+      "missing_hedges": [],
+      "missing_near_finding_fragments": [],
+      "missing_population_literals": [],
+      "path": "docs/writeup/bias-discovery.md",
+      "role": "source",
+      "statements_examined": 40,
+      "unfrozen_interval_literals": [],
+      "unqualified_statement_text": [],
+      "unqualified_statements": 0
+    },
+    {
+      "block_chars": 9551,
+      "causal_or_hidden_target_hits": [],
+      "claim_scope_chars": 7087,
+      "claim_scope_end_anchor": "### Reproducibility",
+      "design_contrast_sentence": "The two intervals answer different questions and are not interchangeable: the tract interval measures sensitivity to tract-level resampling of the binary ratio indicator at a fixed county composition, and because tracts inside one county share Overture provider mix, terrain and reference vintage it understates county-level dependence, so it is not the interval to quote when counties rather than tracts are the independent units; it also captures none of the spatial dependence, measurement error, source-vintage uncertainty, or hidden-target error.",
+      "first_mention": "The high-burn minus unburned difference is **+9.55 percentage points**, and its 95% percentile interval is **[+0.55, +20.89] percentage points** under the published stratified 50,000-draw tract bootstrap but **[-1.65, +16.67] percentage points** when whole counties are resampled instead of tracts; under the criterion preregistered before any result was seen, the difference is therefore **exploratory** and is not established at 95% confidence.",
+      "first_mention_carries_cluster_interval_and_verdict": true,
+      "frozen_statistics": {
+        "county_cluster_interval_percentage_points": {
+          "captures_agree": true,
+          "expected_literal": "[-1.65, +16.67]",
+          "min_occurrences": 1,
+          "occurrences": 2
+        },
+        "leave_one_county_out_maximum_percentage_points": {
+          "captures_agree": true,
+          "expected_literal": "+10.71",
+          "min_occurrences": 1,
+          "occurrences": 1
+        },
+        "leave_one_county_out_minimum_percentage_points": {
+          "captures_agree": true,
+          "expected_literal": "+5.56",
+          "min_occurrences": 1,
+          "occurrences": 1
+        },
+        "point_difference_percentage_points": {
+          "capture_pattern": "high-burn minus unburned difference is \\*\\*([+-][0-9.]+) percentage points\\*\\*",
+          "captured": [
+            "+9.55"
+          ],
+          "captures_agree": true,
+          "expected_literal": "+9.55",
+          "min_occurrences": 1,
+          "occurrences": 1
+        },
+        "positive_difference_fraction_percent": {
+          "capture_pattern": "([0-9]{2}\\.[0-9]{2})% of valid replicates",
+          "captured": [
+            "95.99"
+          ],
+          "captures_agree": true,
+          "expected_literal": "95.99%",
+          "min_occurrences": 1,
+          "occurrences": 1
+        },
+        "tract_bootstrap_interval_percentage_points": {
+          "captures_agree": true,
+          "expected_literal": "[+0.55, +20.89]",
+          "min_occurrences": 1,
+          "occurrences": 2
+        }
+      },
+      "id": "final",
+      "inferential_statement_text": [
+        {
+          "cues": [
+            "repeatabl\\w*"
+          ],
+          "qualification": [
+            "counties (rather than|are the independent|resampled|cluster)",
+            "exploratory"
+          ],
+          "text": "The direction of the high-burn versus unburned disagreement is repeatable, but its quantitative size is exploratory once counties rather than tracts are resampled, as recorded below."
+        },
+        {
+          "cues": [
+            "confiden\\w*",
+            "95%",
+            "at 95% confidence"
+          ],
+          "qualification": [
+            "when whole counties",
+            "exploratory",
+            "-1\\.65",
+            "\\+16\\.67"
+          ],
+          "text": "The high-burn minus unburned difference is **+9.55 percentage points**, and its 95% percentile interval is **[+0.55, +20.89] percentage points** under the published stratified 50,000-draw tract bootstrap but **[-1.65, +16.67] percentage points** when whole counties are resampled instead of tracts; under the criterion preregistered before any result was seen, the difference is therefore **exploratory** and is not established at 95% confidence."
+        },
+        {
+          "cues": [
+            "indicat\\w*",
+            "understates",
+            "not interchangeable"
+          ],
+          "qualification": [
+            "counties (rather than|are the independent|resampled|cluster)",
+            "independent units",
+            "understates county-level dependence"
+          ],
+          "text": "The two intervals answer different questions and are not interchangeable: the tract interval measures sensitivity to tract-level resampling of the binary ratio indicator at a fixed county composition, and because tracts inside one county share Overture provider mix, terrain and reference vintage it understates county-level dependence, so it is not the interval to quote when counties rather than tracts are the independent units; it also captures none of the spatial dependence, measurement error, source-vintage uncertainty, or hidden-target error."
+        },
+        {
+          "cues": [
+            "understates"
+          ],
+          "qualification": [
+            "county-cluster",
+            "understates county-level dependence"
+          ],
+          "text": "Tracts inside one county share Overture provider mix, terrain and reference vintage, so it understates county-level dependence, and the same statistic was rechecked with a county-cluster bootstrap that was preregistered before any result was seen (`reports/discovery-postfire-county-bootstrap.json`, `scripts/audit_discovery_postfire_county_bootstrap.py`): 50,000 seeded replicates resample all 23 counties of the analysis population with replacement, every tract record of a selected county is kept, and the difference is recomputed inside each replicate."
+        },
+        {
+          "cues": [
+            "95%",
+            "unchanged",
+            "widens",
+            "no longer above zero"
+          ],
+          "qualification": [
+            "-1\\.65",
+            "\\+16\\.67"
+          ],
+          "text": "The point estimate is unchanged, every replicate contained both focal groups (valid-replicate fraction 1.0), and 95.99% of valid replicates point the same way, but the 95% percentile interval widens from [+0.55, +20.89] to [-1.65, +16.67] percentage points, so its lower bound is no longer above zero."
+        },
+        {
+          "cues": [
+            "confiden\\w*",
+            "95%",
+            "repeatabl\\w*",
+            "supports?\\b",
+            "at 95% confidence"
+          ],
+          "qualification": [
+            "independent units",
+            "exploratory"
+          ],
+          "text": "Under the preregistered criterion the quantitative difference is therefore **exploratory**: the direction is repeatable in almost every county resample, while this sample does not support it at 95% confidence once counties, rather than tracts, are treated as the independent units."
+        }
+      ],
+      "inferential_statements": 6,
+      "interval_literals_found": [
+        "[+0.55, +20.89]",
+        "[-1.65, +16.67]",
+        "[-1.65, +16.67]"
+      ],
+      "missing_hedges": [],
+      "missing_near_finding_fragments": [],
+      "missing_population_literals": [],
+      "path": "docs/writeup/final-writeup.md",
+      "role": "generated_from_discovery",
+      "statements_examined": 40,
+      "unfrozen_interval_literals": [],
+      "unqualified_statement_text": [],
+      "unqualified_statements": 0
+    }
+  ],
+  "forbidden_value_scan": [],
+  "frozen_inputs": {
+    "classification_rules": {
+      "cluster_qualification_patterns": [
+        "county-cluster",
+        "counties (rather than|are the independent|resampled|cluster)",
+        "when whole counties",
+        "independent units",
+        "exploratory",
+        "-1\\.65",
+        "\\+16\\.67",
+        "understates county-level dependence"
+      ],
+      "exemption_patterns": [
+        "descriptive cutoff",
+        "not an organiser score",
+        "the table below",
+        "contextual labels",
+        "excluded from these bins",
+        "pop_total",
+        "summed",
+        "does not establish cause",
+        "not evidence that",
+        "it is not evidence",
+        "the audit fails closed",
+        "byte-identical",
+        "reproduces its frozen interval",
+        "re-runs the published"
+      ],
+      "inferential_cue_patterns": [
+        "significan\\w*",
+        "confiden\\w*",
+        "robust\\w*",
+        "reliab\\w*",
+        "strong\\w*",
+        "clear\\w*",
+        "\\bproves?\\b",
+        "demonstrat\\w*",
+        "shows? that",
+        "suggest\\w*",
+        "indicat\\w*",
+        "evidence (that|of)\\b",
+        "95%",
+        "probabl\\w*",
+        "\\blikely\\b",
+        "conclu\\w*",
+        "survives?\\b",
+        "repeatabl\\w*",
+        "supports?\\b",
+        "consistent with",
+        "unchanged",
+        "widens",
+        "no longer above zero",
+        "at 95% confidence",
+        "understates",
+        "not interchangeable"
+      ],
+      "minimum_inferential_statements_per_document": 4,
+      "note": "an inferential statement about the difference is a sentence that both talks about the difference and uses an inferential, confidence or robustness cue; it is qualified when the same sentence names the clustered result. Exemptions are definitional or descriptive sentences about the ratio, the table or the exclusions, never inference about the difference.",
+      "subject_patterns": [
+        "high[- ]burn",
+        "unburned",
+        "the difference",
+        "the contrast",
+        "9\\.55 percentage",
+        "ratio below",
+        "below the ratio cutoff",
+        "burn class",
+        "interval",
+        "bootstrap",
+        "resampl",
+        "disagreement",
+        "share below",
+        "point estimate",
+        "lower bound"
+      ]
+    },
+    "derived_literals": {
+      "county_cluster_interval_percentage_points": "[-1.65, +16.67]",
+      "leave_one_county_out_maximum_percentage_points": "+10.71",
+      "leave_one_county_out_minimum_percentage_points": "+5.56",
+      "point_difference_percentage_points": "+9.55",
+      "positive_difference_fraction_percent": "95.99%",
+      "tract_bootstrap_interval_percentage_points": "[+0.55, +20.89]"
+    },
+    "integrity": {
+      "county_bootstrap": {
+        "actual_sha256": "942c39504dbcf3b2fd0fbc19c3cb3194bd9a49693fdd3688a044c3211d637d24",
+        "path": "reports/discovery-postfire-county-bootstrap.json",
+        "pinned_sha256": "942c39504dbcf3b2fd0fbc19c3cb3194bd9a49693fdd3688a044c3211d637d24",
+        "sha256_matches_pin": true
+      },
+      "county_bootstrap_config": {
+        "actual_sha256": "43ba983db726e6e251ec7cbfd8804c74bc1acf2b45a58cb3498bbffb726fd66d",
+        "path": "config/discovery-postfire-county-bootstrap-preregistered.json",
+        "pinned_sha256": "43ba983db726e6e251ec7cbfd8804c74bc1acf2b45a58cb3498bbffb726fd66d",
+        "sha256_matches_pin": true
+      },
+      "tract_level": {
+        "actual_sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a",
+        "path": "reports/discovery-postfire.json",
+        "pinned_sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a",
+        "sha256_matches_pin": true
+      }
+    },
+    "language": {
+      "forbidden_patterns": [
+        "caused the",
+        "fire caused",
+        "proves that",
+        "demonstrates that the",
+        "led to worse",
+        "the organiser scores",
+        "hidden target",
+        "true coverage gap",
+        "saves lives",
+        "dispatch failures occurred"
+      ],
+      "hidden_target_patterns": [
+        "the hidden target uses",
+        "the organiser used",
+        "the hidden score is",
+        "labels these tracts as coverage gaps"
+      ],
+      "negation_markers": [
+        "not",
+        "never",
+        "does not",
+        "cannot",
+        "no evidence",
+        "it is not evidence"
+      ],
+      "note": "forbidden and hidden-target patterns are searched only in affirmative prose: a sentence carrying a negation marker is a disclosure, not a claim",
+      "required_hedges": [
+        "descriptive",
+        "does not establish cause",
+        "not evidence that",
+        "provided"
+      ]
+    },
+    "qualification": {
+      "contrast_requirement": {
+        "all_groups_required_in_one_sentence": true,
+        "cluster_groups": [
+          "counties",
+          "county-level",
+          "county-cluster"
+        ],
+        "contrast_phrases": [
+          "not interchangeable",
+          "not the interval to quote",
+          "understates county-level dependence",
+          "widens from",
+          "rather than tracts are the independent units"
+        ],
+        "note": "one sentence must put the two designs in the same breath, so a reader cannot take tract-resampling sensitivity for clustered inference",
+        "tract_groups": [
+          "tract-level resampling",
+          "tract bootstrap",
+          "tract-resampling",
+          "resamples tracts"
+        ]
+      },
+      "first_mention_must_carry": [
+        "cluster_interval_literal",
+        "exploratory"
+      ],
+      "near_finding_fragments": [
+        "-1.65",
+        "+16.67",
+        "exploratory",
+        "county-cluster bootstrap",
+        "95.99%",
+        "+5.56",
+        "+10.71",
+        "23 counties"
+      ],
+      "near_finding_scope": "finding block (Status line through the end of the post-fire Reproducibility section)",
+      "point_difference_literal": "+9.55",
+      "window_sentences": 0
+    }
+  },
+  "gates": {
+    "all_passed": true,
+    "classifier_is_not_vacuous": true,
+    "documents_located": true,
+    "exploratory_verdict_near_finding": true,
+    "first_mention_carries_cluster_interval_and_verdict": true,
+    "frozen_interval_literals_present": true,
+    "frozen_report_hashes_match_pin": true,
+    "frozen_statistics_agree": true,
+    "generated_writeup_matches_source_block": true,
+    "near_finding_fragments_present": true,
+    "no_causal_or_hidden_target_claim": true,
+    "no_forbidden_path_opened": true,
+    "no_forbidden_value_in_report": true,
+    "no_unfrozen_interval_literal": true,
+    "only_allowlisted_files_opened": true,
+    "population_literals_present": true,
+    "preregistered_design_not_drifted": true,
+    "report_has_no_temporal_field": true,
+    "report_is_strict_json": true,
+    "required_hedges_present": true,
+    "tract_and_cluster_designs_distinguished": true,
+    "unqualified_inferential_statements_zero": true
+  },
+  "generated_against_source": {
+    "final==discovery": true
+  },
+  "preregistration": {
+    "audit_id": "postfire-writeup-cluster-qualification",
+    "backlog_item": "bias-postfire-writeup-cluster-qualification",
+    "config_path": "config/postfire-writeup-cluster-qualification-preregistered.json",
+    "config_sha256": "d4903f79410199dabeffe7ce60fb7303d9fe96452ecc5656e8853d3de00c53f4",
+    "intent": "Documentation screen. Count the inferential statements about the high-burn versus unburned difference that are not qualified by the preregistered county-cluster result, in the two organiser-facing writeups, and require exact agreement with the frozen reports. This screen does not promote an estimator, does not re-run any resampling, and does not change any preregistered design.",
+    "lane": "comp-zindi-bias-bounty",
+    "negative_controls_declared": [
+      "strip_cluster_interval",
+      "strip_exploratory_verdict",
+      "unqualify_first_mention",
+      "perturb_cluster_bound",
+      "drop_design_contrast",
+      "generated_block_diverges",
+      "cutoff_retuned",
+      "seed_or_replicates_changed",
+      "causal_claim"
+    ],
+    "prohibitions": {
+      "no_causal_claims": true,
+      "no_labels": true,
+      "no_leaderboard_values": true,
+      "no_preregistered_design_change_after_results": true,
+      "no_reference_layers": true,
+      "no_resampling_rerun": true,
+      "no_uploads": true,
+      "uploads_performed": 0
+    },
+    "tamper_applied": null,
+    "tamper_effects": [],
+    "title": "County-cluster uncertainty must be visible wherever the high-burn versus unburned difference is claimed"
+  },
+  "summary": {
+    "documents_audited": 2,
+    "gates_all_passed": true,
+    "inferential_statements": 12,
+    "report_sha256": "af0eeb6cdf040dab05c55c2159bf6475ac1fdaceb9a49e678111bc7a80c20528",
+    "statements_examined": 80,
+    "unqualified_inferential_statements": 0
+  },
+  "unqualified_statements": []
+}

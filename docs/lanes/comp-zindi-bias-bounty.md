@@ -926,3 +926,137 @@ for comp-zindi-bias-bounty -> /home/martin/hddProjects/competitionsall/.langywra
 Next rows in the ladder can now register ideas by id: `bias60-family-*` rows add functions under
 `src/bias60/ideas/`, and `bias60-track-a-combiner` consumes `reports/ideas-orthogonality.json` for the
 pre-registered merge decisions.
+
+### 2026-10-25 — row `bias-postfire-writeup-cluster-qualification`, closed `fixed`
+
+Made the post-fire discovery claim communicate the county-cluster result wherever it is asserted, and
+turned the row's metric ("count of unqualified inferential/high-confidence statements about the
+high-burn versus unburned difference in the two main writeups") into a mechanical screen instead of an
+opinion.
+
+MEASURE-BEFORE, measured by the new classifier before any prose edit: the frozen county-cluster report
+carries point difference +9.55209106656768 pp, 95% cluster interval [-1.6528925619834711,
++16.666666666666664] pp, positive-draw fraction 95.988%, verdict `exploratory`, quantitative claim
+retained false. In **both** writeups exactly **one** inferential statement was unqualified — the first
+mention of the finding: "The high-burn minus unburned difference is **+9.55 percentage points**, with a
+stratified 50,000-draw tract-bootstrap 95% percentile interval of **[+0.55, +20.89] percentage points**."
+A reader who stopped there took the tract interval for the interval, which is exactly the defect the row
+named.
+
+MEASURE-AFTER: **0** unqualified inferential statements in each document (12 inferential statements
+examined over 80 sentences), both intervals and the word `exploratory` now at first mention, the two
+resampling designs distinguished in one recorded sentence, and every quoted number derived from the
+frozen reports rather than typed. The new paragraph states that the tract interval "measures sensitivity
+to tract-level resampling of the binary ratio indicator at a fixed county composition … it is not the
+interval to quote when counties rather than tracts are the independent units". Nothing was softened the
+other way: the finding stays in the writeup, only its confidence level changed.
+
+New deliverables (SHA-256 first 16):
+
+- `config/postfire-writeup-cluster-qualification-preregistered.json` `323dd6b5bfe4986a` — pins the three
+  frozen artifacts by SHA-256 (`reports/discovery-postfire-county-bootstrap.json`
+  942c39504dbcf3b2…, `reports/discovery-postfire.json` cbf100bc833bf09c…, the county-bootstrap config
+  43ba983db726e6e2…), the subject/cue/qualification/exemption pattern lists, the tracked statistics with
+  their JSON pointers and precision, the language policy, the opened-path allowlist and the nine
+  negative controls.
+- `scripts/audit_postfire_writeup_cluster_qualification.py` `36592f102cec16bb`.
+- `reports/postfire-writeup-cluster-qualification.json` `561cc05249e77778` (22 gates including `all_passed`, all true) and its
+  generated companion `docs/writeup/postfire-cluster-qualification-audit.md` `5b2f48754516541e`.
+- `tests/test_audit_postfire_writeup_cluster_qualification.py` `095530ed74253a94` (30 tests).
+- Edited sources: `docs/writeup/bias-discovery.md` `b91d96f8a30d8194`; regenerated
+  `docs/writeup/final-writeup.md` `9817471d5874b232` (assembled by `scripts/build_final_writeup.py`, never
+  hand-edited).
+
+Design decisions worth keeping:
+
+- **Qualification is judged sentence-locally.** A sentence that both talks about the difference
+  (subject patterns) and uses an inferential/confidence/robustness cue must carry the clustered result in
+  that same sentence; a neighbouring sentence cannot lend it credibility. Window 0, preregistered.
+- **Claims are classified only where claims live.** The Reproducibility subsection is machinery prose
+  ("…if the writeup fails to state the robustness verdict…") and was a genuine false positive on the cue
+  `robust\w*`; rather than narrowing cues until the detector was blind, the classifier scope now ends at
+  the Reproducibility heading while the required numbers are still searched across the whole block. The
+  gate `classifier_is_not_vacuous` (≥4 inferential statements per document) stops the scope from being
+  widened until nothing is checked.
+- **Numbers are derived, not quoted into the config.** Each tracked statistic names a JSON pointer in the
+  frozen report plus a rounding/format rule, so `[-1.65, +16.67]` is recomputed at run time; a positional
+  capture pattern additionally proves the number appears *in the place* the statistic belongs to
+  ("high-burn minus unburned difference is **+9.55 percentage points**", "95.99% of valid replicates").
+  `numbers_of` compares numeric tokens so a captured `95.99` agrees with the literal `95.99%` while
+  `+0.55` and `-0.55` stay different claims.
+- **Any interval literal outside the two frozen ones fails.** One regex over the block, so retuning a
+  bound in prose is caught rather than argued about.
+- **The prose can only be qualified to a design that did not move.** `preregistered_design_not_drifted`
+  re-reads the frozen report's cutoff (0.8, permitted set [0.8]), cluster replicates 50,000, cluster seed
+  20261025, cluster count 23, tract reference 50,000/20261024, verdict `exploratory` and
+  `quantitative_claim_retained: false`; a tamper that claims the analysis used 0.75 or 25,000 draws fails.
+- **Pinned hashes fail closed.** `load_frozen` raises if a frozen artifact no longer matches its pin, so
+  the writeup cannot be qualified to a report that changed underneath it.
+- **Prohibitions are checked at access, not in prose.** The audit funnels every read through
+  `read_text`/`read_bytes` and gates that the opened set equals the five-file allowlist (two writeups,
+  two frozen reports, one frozen config) and that no opened path carries a reference-layer/label/uploader
+  token; leaderboard constants are scanned leaf-wise on the emitted report so `0.0955…` cannot self-hit
+  the retired `0.0911`. An earlier line-based prose scan produced pure self-hits (it flagged this audit's
+  own docstring for the word "leaderboard") and was replaced.
+- **Negation is clause-scoped.** "It does **not** claim that the organiser used a 2018 Microsoft release
+  … to construct its hidden target" is a disclosure, not a claim, so `is_affirmative` looks for a negation
+  marker in the clause carrying the match; sentence-level negation was too permissive and let the causal
+  tamper escape.
+- **The generated writeup is verified, not trusted.** `generated_writeup_matches_source_block` compares
+  the assembled block with the source block after collapsing heading depth, so assembly cannot quietly
+  drop the qualification.
+
+Commands and output, all from the competition repo:
+
+- `COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 python scripts/audit_postfire_writeup_cluster_qualification.py`
+  → `PASS post-fire cluster qualification: every inferential statement about the high-burn versus
+  unburned difference carries the county-cluster interval and the exploratory verdict at first mention,
+  both writeups agree with the frozen reports, and the preregistered design is unchanged`; summary
+  `documents_audited 2, statements_examined 80, inferential_statements 12,
+  unqualified_inferential_statements 0, gates_all_passed true`.
+- `... python scripts/audit_postfire_writeup_cluster_qualification.py --check-only` → `unchanged`
+- `... python scripts/build_final_writeup.py` (reportlab 4.4.10) → regenerated markdown/PDF/record;
+  `... python scripts/verify_writeup_submission.py` → `PASS writeup submission packet: assembled,
+  hash-tied and honest about its pending operator inputs; staged only, nothing was submitted to the organiser`.
+- Row's own delivery commands: `... python scripts/audit_writeup_claim_evidence.py --write-inventory` →
+  `wrote reports/writeup-claim-inventory.json with 88 claims`; the affected claim re-verified with
+  `... python scripts/verify_writeup_claim.py --claim bias-discovery-006` → `PASS claim
+  bias-discovery-006: 7/7 numeric tokens covered by 2 named evidence artifact(s); anchor=True
+  hashes=True pointer=True accuracy_ok=True prohibited_ok=True hedge_ok=True` (one changed claim, because
+  the edit rewrote one paragraph without adding or removing any).
+- Cascade, all green after the edit: claim audit `PASS v2 writeup claim audit` (88 claims, 1036/1036
+  numeric tokens covered, `failed_gates: []`); discovery prize criteria `PASS discovery prize criteria
+  audit`; county-bootstrap `--check-only` → `unchanged` (its own `writeup_qualification_matches_verdict`
+  gate still holds with the new wording); full suite
+  `/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with pytest python -m pytest -q`
+  → `446 passed, 33 subtests passed` (31 new).
+- Negative controls, nine preregistered cases, each exiting non-zero with the expected gate:
+  `strip_cluster_interval` → `frozen_interval_literals_present`; `strip_exploratory_verdict` →
+  `exploratory_verdict_near_finding`; `unqualify_first_mention` → `unqualified_inferential_statements_zero`;
+  `perturb_cluster_bound` → `no_unfrozen_interval_literal`; `drop_design_contrast` →
+  `tract_and_cluster_designs_distinguished`; `generated_block_diverges` →
+  `generated_writeup_matches_source_block`; `cutoff_retuned` and `seed_or_replicates_changed` →
+  `preregistered_design_not_drifted`; `causal_claim` → `no_causal_or_hidden_target_claim`. An unknown
+  tamper name is refused, and a test hashes all seven committed inputs/outputs before and after running
+  every tamper to prove a tamper run never rewrites a committed file.
+
+Determinism: two independent runs produced byte-identical JSON (`561cc05249e77778…`) and Markdown
+(`5b2f48754516541e…`) equal to the committed files; the report serialises no wall-clock value
+(`report_has_no_temporal_field`, plus a test asserting `wall_clock_hits == []`), is strict JSON with no
+`NaN`, and `--check-only` also detects a mutated committed report without touching it.
+
+One test from the earlier county-bootstrap row needed a principled correction, not a weakening: it
+asserted that no script outside that audit mentions the frozen report at all, which the new
+writeup-qualification consumer legitimately violates. It now enforces the promised invariant — the
+reader set must be disjoint from the preregistered `model_chain_scripts` list in
+`config/v2-strata-descriptive-preregistered.json`, and any consumer outside the model chain must be named
+in an explicit allowlist with its reason — and adds a test that the consumer itself never re-runs the
+bootstrap (`multinomial`, `default_rng` absent), never uploads, and must carry the
+`preregistered_design_not_drifted` gate.
+
+FORBID honoured: no leaderboard-driven edit (the only platform constants in the repo are named as
+prohibited value tokens and scanned leaf-wise in the emitted report), no hidden-target or causal claim
+(negation-aware clause scan, causal tamper fires), no removed reference layer or label (five-file access
+allowlist), the preregistered cutoff/seed/replicates are unchanged and no resampling was re-run, and no
+upload was made. The exploratory finding was kept, not deleted, because the interval crossing zero is a
+limitation to state rather than a result to hide.

@@ -268,16 +268,40 @@ class ProhibitionTests(unittest.TestCase):
         for hedge in CONFIG["language"]["required_hedges"]:
             self.assertIn(hedge, interpretation, hedge)
 
+    # The invariant this row promised is that no *model-chain* script reads the frozen report, so the
+    # robustness screen can never move a feature, threshold, weight or parameter. Read-only consumers
+    # outside the model chain are legitimate: the writeup-qualification screen has to quote the frozen
+    # interval, and each one is named here with its reason so the ban stays falsifiable.
+    AUDIT_CONSUMERS = {
+        "audit_postfire_writeup_cluster_qualification.py":
+            "reads the frozen cluster interval and verdict to qualify the organiser-facing writeup",
+    }
+
     def test_no_model_chain_script_reads_the_snapshot(self) -> None:
+        model_chain = json.loads(
+            (ROOT / "config/v2-strata-descriptive-preregistered.json").read_text(encoding="utf-8")
+        )["model_input_separation"]["model_chain_scripts"]
+        model_names = {Path(entry).name for entry in model_chain}
+        self.assertTrue(model_names)
         readers = []
         for path in sorted((ROOT / "scripts").glob("*.py")):
             if path.name == SCRIPT.name:
                 continue
             if "discovery-postfire-county-bootstrap" in path.read_text(encoding="utf-8"):
                 readers.append(path.name)
-        self.assertEqual(readers, [])
+        self.assertEqual(sorted(model_names.intersection(readers)), [])
+        self.assertTrue(set(readers) <= set(self.AUDIT_CONSUMERS), readers)
         self.assertIs(REPORT["non_influence"]["model_changed"], False)
         self.assertIs(REPORT["non_influence"]["upload_performed"], False)
+
+    def test_the_writeup_consumer_is_audited_itself_and_cannot_change_the_design(self) -> None:
+        consumer = ROOT / "scripts/audit_postfire_writeup_cluster_qualification.py"
+        self.assertTrue(consumer.is_file())
+        source = consumer.read_text(encoding="utf-8")
+        # it may quote the frozen design but must never re-run or re-tune it
+        for forbidden in ("multinomial", "default_rng", "zindi_submit", "requests.", "urllib"):
+            self.assertNotIn(forbidden, source, forbidden)
+        self.assertIn("preregistered_design_not_drifted", source)
 
     def test_report_serialises_no_wall_clock_value(self) -> None:
         self.assertTrue(REPORT["gates"]["report_serialises_no_unexpected_wall_clock"])
