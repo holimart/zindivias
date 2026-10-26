@@ -110,7 +110,7 @@ def main() -> int:
         }
     out = {
         "family": "T",
-        "version": "exact-recipe-reconciliation-progress-v1",
+        "version": "exact-recipe-reconciliation-progress-v2",
         "scope": "provided-data schema preflight; no v2 estimator execution yet",
         "official_scored_rows": config["inputs"]["official_scored_rows"],
         "regions": per_region,
@@ -122,6 +122,12 @@ def main() -> int:
         },
         "measure_after": {"exact_recipes": 0, "v2_artifacts_emitted": [],
                            "coverage_and_orthogonality_refreshed": False},
+        "implementation_progress": {
+            "T1": "Added and unit-tested a pure stroke-component primitive that joins identical identities only at shared connectors with strict deflection <30 degrees. It is not yet integrated with road geometry/tract lengths; T1 is not exact.",
+            "T2": "No v2 implementation yet.",
+            "T3": "No v2 implementation yet.",
+            "T4": "No v2 implementation yet; centroid input remains unresolved.",
+        },
         "prohibitions": {"row_payload_read": False, "labels_or_reference_layers_used": False,
                          "leaderboard_or_upload_used": False},
     }

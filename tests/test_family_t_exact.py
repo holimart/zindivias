@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import importlib.util
+import math
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -9,6 +11,34 @@ spec = importlib.util.spec_from_file_location(
 assert spec and spec.loader
 preflight = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(preflight)
+sys.path.insert(0, str(ROOT / "src"))
+from bias60.ideas.t_exact import deflection_degrees, stroke_components
+
+
+def test_deflection_uses_zero_degrees_for_straight_continuation():
+    assert deflection_degrees((1, 0), (-1, 0)) == 0.0
+    assert deflection_degrees((1, 0), (0, 1)) == 90.0
+
+
+def test_named_stroke_joins_only_when_deflection_is_strictly_under_30_degrees():
+    def outward(degrees):
+        angle = math.radians(degrees)
+        return (math.cos(angle), math.sin(angle))
+
+    connectors = [("a", "j"), ("j", "b"), ("j", "c")]
+    tangents = [((1, 0), (-1, 0)), (outward(29), (1, 0)),
+                (outward(30), (1, 0))]
+    labels = stroke_components(["route:x"] * 3, connectors, tangents)
+    assert labels[0] == labels[1]
+    assert labels[2] != labels[0]
+
+
+def test_stroke_does_not_cross_semantic_identity_or_unconnected_junctions():
+    labels = stroke_components(
+        ["route:x", "route:y", "route:x"],
+        [("a", "j"), ("j", "b"), ("far", "end")],
+        [((1, 0), (-1, 0)), ((1, 0), (-1, 0)), ((1, 0), (-1, 0))])
+    assert len(set(labels)) == 3
 
 
 def test_recipe_preflight_requires_the_frozen_inputs_without_claiming_conformance():
