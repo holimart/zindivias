@@ -1,0 +1,596 @@
+{
+  "schema_version": 1,
+  "screen": "Tm2 postfire building-gap adjusted by bounded Tm3 ACS housing growth; diagnostic only",
+  "formula": "adjusted_gap = Tm2_gap * (1 - clip(max(Tm3_ACS_housing_growth, 0), 0, 1))",
+  "missingness": "Adjusted value is undefined unless both registered source emissions are defined; no missing growth is filled with zero, and Tm2 remains unchanged in its source artifact.",
+  "fire_status_definition": "Fire-affected iff the registered Tm2 postfire_burn_share covariate is defined and >0; non-fire iff defined and equal to 0.",
+  "scope": {
+    "official_ids": 9379,
+    "exact_id_alignment": true,
+    "tm2_gap_defined_ids": 9377,
+    "tm2_gap_undefined_ids": 2,
+    "tm3_acs_growth_defined_ids": 9362,
+    "tm3_acs_growth_undefined_ids": 17,
+    "jointly_defined_ids": 9362,
+    "adjusted_undefined_ids": 17,
+    "adjusted_coverage_fraction": 0.9981874400255891,
+    "fire_status_defined_ids": 9377,
+    "fire_affected_tm2_defined_ids": 381,
+    "non_fire_tm2_defined_ids": 8996,
+    "joint_fire_affected_ids": 381,
+    "joint_non_fire_ids": 8981,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "Tm1_or_Tm4_inputs_used": false,
+    "candidate_modified": false,
+    "frozen_Tm2_or_Tm3_artifact_modified": false,
+    "uploads": 0
+  },
+  "before": {
+    "Tm2_building_gap": {
+      "defined_ids": 9377,
+      "official_ids": 9379,
+      "coverage_fraction": 0.9997867576500693,
+      "distribution": {
+        "n": 9377,
+        "min": 0.0,
+        "p50": 0.0,
+        "p90": 0.0,
+        "p95": 0.0,
+        "max": 0.3800692719734605,
+        "mean": 0.0004928602475212851
+      }
+    },
+    "Tm3_acs_housing_growth": {
+      "defined_ids": 9362,
+      "official_ids": 9379,
+      "coverage_fraction": 0.9981874400255891,
+      "distribution": {
+        "n": 9362,
+        "min": -1.0,
+        "p50": 0.02103754554189241,
+        "p90": 0.18056451334052928,
+        "p95": 0.25676084577483105,
+        "max": 206.9999948859216,
+        "mean": 0.053881172713862814
+      }
+    }
+  },
+  "after": {
+    "joint_defined_ids": 9362,
+    "adjusted_gap_distribution": {
+      "n": 9362,
+      "min": 0.0,
+      "p50": 0.0,
+      "p90": 0.0,
+      "p95": 0.0,
+      "max": 0.2836636188807101,
+      "mean": 0.0003847269533398549
+    },
+    "absolute_change_from_tm2": {
+      "n": 9362,
+      "min": 0.0,
+      "p50": 0.0,
+      "p90": 0.0,
+      "p95": 0.0,
+      "max": 0.3379930258596977,
+      "mean": 0.00010892296558848201
+    },
+    "nonzero_absolute_change_ids": 95,
+    "nonzero_absolute_change_fraction": 0.010147404400769066,
+    "fire_status": {
+      "fire_affected_postfire_burn_share_gt_0": {
+        "joint_defined_ids": 381,
+        "tm2_gap": {
+          "n": 381,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.022521504532694143,
+          "p95": 0.04496202018436848,
+          "max": 0.3800692719734605,
+          "mean": 0.012130053913404435
+        },
+        "recovery_adjusted_gap": {
+          "n": 381,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.019828661659807293,
+          "p95": 0.04198378677827441,
+          "max": 0.2836636188807101,
+          "mean": 0.009453579362644939
+        },
+        "absolute_change": {
+          "n": 381,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.00042419839164627637,
+          "p95": 0.0020461453649303976,
+          "max": 0.3379930258596977,
+          "mean": 0.002676474550759498
+        }
+      },
+      "non_fire_postfire_burn_share_eq_0": {
+        "joint_defined_ids": 8981,
+        "tm2_gap": {
+          "n": 8981,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "recovery_adjusted_gap": {
+          "n": 8981,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "absolute_change": {
+          "n": 8981,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        }
+      }
+    },
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "tm2_defined_ids": 1593,
+        "tm3_housing_growth_defined_ids": 1588,
+        "joint_defined_ids": 1588,
+        "fire_affected_ids": 97,
+        "non_fire_ids": 1496,
+        "tm2_gap": {
+          "n": 1588,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.09079580809408197,
+          "mean": 0.00022575950059490672
+        },
+        "tm3_acs_housing_growth": {
+          "n": 1588,
+          "min": -1.0,
+          "p50": 0.02170874091688446,
+          "p90": 0.16235292584033795,
+          "p95": 0.24769880563401198,
+          "max": 3.653990064555689,
+          "mean": 0.030639677758052427
+        },
+        "recovery_adjusted_gap": {
+          "n": 1588,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.09079580809408197,
+          "mean": 0.00020043859599435317
+        },
+        "absolute_change": {
+          "n": 1588,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.009395607955511342,
+          "mean": 2.5320904600553557e-05
+        },
+        "fire_affected": {
+          "joint_defined_ids": 97,
+          "tm2_gap": {
+            "n": 97,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.009392772536964522,
+            "p95": 0.018113646633196916,
+            "max": 0.09079580809408197,
+            "mean": 0.0036959390406671325
+          },
+          "recovery_adjusted_gap": {
+            "n": 97,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.008968111231489807,
+            "p95": 0.014710432095848658,
+            "max": 0.09079580809408197,
+            "mean": 0.003281407117928174
+          },
+          "absolute_change": {
+            "n": 97,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0002643615552217758,
+            "p95": 0.002895531069922234,
+            "max": 0.009395607955511342,
+            "mean": 0.0004145319227389592
+          }
+        },
+        "non_fire": {
+          "joint_defined_ids": 1491,
+          "tm2_gap": {
+            "n": 1491,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p95": 0.0,
+            "max": 0.0,
+            "mean": 0.0
+          },
+          "recovery_adjusted_gap": {
+            "n": 1491,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p95": 0.0,
+            "max": 0.0,
+            "mean": 0.0
+          },
+          "absolute_change": {
+            "n": 1491,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p95": 0.0,
+            "max": 0.0,
+            "mean": 0.0
+          }
+        }
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "tm2_defined_ids": 591,
+        "tm3_housing_growth_defined_ids": 591,
+        "joint_defined_ids": 591,
+        "fire_affected_ids": 93,
+        "non_fire_ids": 498,
+        "tm2_gap": {
+          "n": 591,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.00755094635864202,
+          "max": 0.3800692719734605,
+          "mean": 0.005630946136937541
+        },
+        "tm3_acs_housing_growth": {
+          "n": 591,
+          "min": -0.38598896923575055,
+          "p50": 0.014065573792076957,
+          "p90": 0.13303750962502803,
+          "p95": 0.21266326782676936,
+          "max": 3.9235117464109495,
+          "mean": 0.03321936471003372
+        },
+        "recovery_adjusted_gap": {
+          "n": 591,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.005884019056869047,
+          "max": 0.2836636188807101,
+          "mean": 0.004054630261022544
+        },
+        "absolute_change": {
+          "n": 591,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.3379930258596977,
+          "mean": 0.0015763158759149953
+        },
+        "fire_affected": {
+          "joint_defined_ids": 93,
+          "tm2_gap": {
+            "n": 93,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.11583444472604863,
+            "p95": 0.26506178191720564,
+            "max": 0.3800692719734605,
+            "mean": 0.035783754483119205
+          },
+          "recovery_adjusted_gap": {
+            "n": 93,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.1104566231078099,
+            "p95": 0.15116628126222406,
+            "max": 0.2836636188807101,
+            "mean": 0.025766521336175522
+          },
+          "absolute_change": {
+            "n": 93,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0006835021392739323,
+            "p95": 0.05668677244500363,
+            "max": 0.3379930258596977,
+            "mean": 0.01001723314694368
+          }
+        },
+        "non_fire": {
+          "joint_defined_ids": 498,
+          "tm2_gap": {
+            "n": 498,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p95": 0.0,
+            "max": 0.0,
+            "mean": 0.0
+          },
+          "recovery_adjusted_gap": {
+            "n": 498,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p95": 0.0,
+            "max": 0.0,
+            "mean": 0.0
+          },
+          "absolute_change": {
+            "n": 498,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p95": 0.0,
+            "max": 0.0,
+            "mean": 0.0
+          }
+        }
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "tm2_defined_ids": 1192,
+        "tm3_housing_growth_defined_ids": 1189,
+        "joint_defined_ids": 1189,
+        "fire_affected_ids": 89,
+        "non_fire_ids": 1103,
+        "tm2_gap": {
+          "n": 1189,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.08653906926917644,
+          "mean": 0.0004583078809955016
+        },
+        "tm3_acs_housing_growth": {
+          "n": 1189,
+          "min": -1.0,
+          "p50": 0.00572425793825726,
+          "p90": 0.12394613681592277,
+          "p95": 0.18094829140534457,
+          "max": 0.6859734248145752,
+          "mean": 0.006266558923582189
+        },
+        "recovery_adjusted_gap": {
+          "n": 1189,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.08653906926917644,
+          "mean": 0.00044284506484050545
+        },
+        "absolute_change": {
+          "n": 1189,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.002978233406094065,
+          "mean": 1.5462816154996195e-05
+        },
+        "fire_affected": {
+          "joint_defined_ids": 89,
+          "tm2_gap": {
+            "n": 89,
+            "min": 0.0,
+            "p50": 0.0003319650842329782,
+            "p90": 0.01689614367046586,
+            "p95": 0.03306275486921712,
+            "max": 0.08653906926917644,
+            "mean": 0.0061227873090297915
+          },
+          "recovery_adjusted_gap": {
+            "n": 89,
+            "min": 0.0,
+            "p50": 0.0003319650842329782,
+            "p90": 0.015806126113632628,
+            "p95": 0.032868821332058144,
+            "max": 0.08653906926917644,
+            "mean": 0.005916211034779337
+          },
+          "absolute_change": {
+            "n": 89,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0007288594247526627,
+            "p95": 0.0016734790650654735,
+            "max": 0.002978233406094065,
+            "mean": 0.00020657627425045477
+          }
+        },
+        "non_fire": {
+          "joint_defined_ids": 1100,
+          "tm2_gap": {
+            "n": 1100,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p95": 0.0,
+            "max": 0.0,
+            "mean": 0.0
+          },
+          "recovery_adjusted_gap": {
+            "n": 1100,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p95": 0.0,
+            "max": 0.0,
+            "mean": 0.0
+          },
+          "absolute_change": {
+            "n": 1100,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p95": 0.0,
+            "max": 0.0,
+            "mean": 0.0
+          }
+        }
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "tm2_defined_ids": 6001,
+        "tm3_housing_growth_defined_ids": 5994,
+        "joint_defined_ids": 5994,
+        "fire_affected_ids": 102,
+        "non_fire_ids": 5899,
+        "tm2_gap": {
+          "n": 5994,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.03439811501414213,
+          "mean": 6.510297241051729e-05
+        },
+        "tm3_acs_housing_growth": {
+          "n": 5994,
+          "min": -1.0,
+          "p50": 0.02602016222601078,
+          "p90": 0.1970391073554995,
+          "p95": 0.2783667900629646,
+          "max": 206.9999948859216,
+          "mean": 0.0715208788060773
+        },
+        "recovery_adjusted_gap": {
+          "n": 5994,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.03439811501414213,
+          "mean": 6.0174838233067007e-05
+        },
+        "absolute_change": {
+          "n": 5994,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.013937775145654255,
+          "mean": 4.928134177450282e-06
+        },
+        "fire_affected": {
+          "joint_defined_ids": 102,
+          "tm2_gap": {
+            "n": 102,
+            "min": 0.0,
+            "p50": 7.955324558693524e-05,
+            "p90": 0.013879562962236481,
+            "p95": 0.022264510407176797,
+            "max": 0.03439811501414213,
+            "mean": 0.003825757025770986
+          },
+          "recovery_adjusted_gap": {
+            "n": 102,
+            "min": 0.0,
+            "p50": 5.9699488765109087e-05,
+            "p90": 0.01178719209283396,
+            "p95": 0.022264510407176797,
+            "max": 0.03439811501414213,
+            "mean": 0.0035361566702843492
+          },
+          "absolute_change": {
+            "n": 102,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0002319376114251641,
+            "p95": 0.0007199522623609299,
+            "max": 0.013937775145654255,
+            "mean": 0.00028960035548663713
+          }
+        },
+        "non_fire": {
+          "joint_defined_ids": 5892,
+          "tm2_gap": {
+            "n": 5892,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p95": 0.0,
+            "max": 0.0,
+            "mean": 0.0
+          },
+          "recovery_adjusted_gap": {
+            "n": 5892,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p95": 0.0,
+            "max": 0.0,
+            "mean": 0.0
+          },
+          "absolute_change": {
+            "n": 5892,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0,
+            "p95": 0.0,
+            "max": 0.0,
+            "mean": 0.0
+          }
+        }
+      }
+    }
+  },
+  "acceptance": {
+    "exact_9379_id_alignment": true,
+    "all_defined_adjusted_outputs_finite_and_in_0_1": true,
+    "monotonic_discount_never_increases_tm2_gap": true,
+    "q95_absolute_change_at_least_0_01": false,
+    "q95_absolute_change_threshold": 0.01,
+    "q95_absolute_change": 0.0,
+    "acceptance_pass": false
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "7138951b53cecabf981295c57ae067a73785c7c94f2a0d4bad2614d5a61c3ab9",
+    "tm2_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Tm2.parquet",
+      "sha256": "470c23b2902cbb652dfc884c22ba2a743a85538aa819ddd179b1ff2a3aea41bc"
+    },
+    "tm3_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Tm3.parquet",
+      "sha256": "502ff5d6c66628c97db82142a9ea935cc7b2817ff4cb8a9852b5e94d9b0b2940"
+    },
+    "family_tm_summary_sha256": "71546cda0eae449c3648a36fa37cd04860815dadffffb9cd6261c2a77364e4b8",
+    "tm_status_sha256": "74fdceaba803d9c06ab3265daf3961ac0ccf99cfcfcbf13efe6fe54cc7ba0414",
+    "selected_emissions": [
+      "Tm2|B|gap",
+      "Tm2|F|covariate:postfire_burn_share",
+      "Tm3|B|covariate:acs_housing_growth"
+    ]
+  },
+  "output_artifact": {
+    "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/tm2-fire-recovery-adjustment/adjusted-tm2.parquet",
+    "rows": 9379,
+    "sha256": "8d3b49dd0a55cfe13d1407e792950769ada858625b146ce70ba0296a3ffb8a8c",
+    "deterministic_bytes": true
+  },
+  "interpretation": "The q95 absolute-change acceptance gate fails or an invariant failed. Retain frozen Tm2 unchanged; do not integrate this adjustment."
+}
