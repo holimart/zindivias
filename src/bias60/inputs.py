@@ -81,6 +81,7 @@ class ProvidedInputs:
         self._features: dict[str, np.ndarray] | None = None
         self._tracts: Any | None = None
         self._metric_tree: Any | None = None
+        self._acs_housing_units: np.ndarray | None = None
         self.idea_output_dir = self.workspace / "ideas"
 
     # ---------------------------------------------------------------- discovery
@@ -303,6 +304,39 @@ class ProvidedInputs:
             raise ValueError(f"invalid ACS tract geometry in {self.region}")
         self._tracts = tracts
         return tracts
+
+    def acs_housing_units(self) -> np.ndarray:
+        """Read provided ACS housing-unit counts and align them to official tract order.
+
+        This accessor is for explicitly declared demographic covariates only. It does not make
+        housing units available as a denominator floor in any scored component.
+        """
+        if self._acs_housing_units is not None:
+            return self._acs_housing_units.copy()
+        import pyarrow.parquet as pq
+
+        layer = self.config["inputs"]["polygon_layer"]
+        path = self.polygon_layer_path(layer)
+        parquet = pq.ParquetFile(self.filesystem.open_input_file(path))
+        required = ["GEOID", "housing_units"]
+        missing = sorted(set(required) - set(parquet.schema_arrow.names))
+        if missing:
+            raise ValueError(f"provided {layer} layer lacks housing-unit columns {missing}")
+        table = parquet.read(columns=required)
+        ids = [str(value) for value in table.column("GEOID").to_pylist()]
+        if len(set(ids)) != len(ids):
+            raise ValueError(f"duplicate ACS housing GEOIDs in {self.region}")
+        positions = {geoid: index for index, geoid in enumerate(ids)}
+        absent = [geoid for geoid in self.geoids if geoid not in positions]
+        if absent:
+            raise ValueError(f"{self.region}: {len(absent)} official GEOIDs absent from ACS housing "
+                             f"layer (first: {absent[0]})")
+        values = table.column("housing_units").take(
+            [positions[geoid] for geoid in self.geoids]).to_numpy(zero_copy_only=False)
+        self.accessed["parquet_columns"].append(
+            f"{self.region}-{layer}.parquet:GEOID,housing_units")
+        self._acs_housing_units = np.asarray(values, dtype=np.float64)
+        return self._acs_housing_units.copy()
 
     def metric_tree(self) -> Any:
         """STRtree over the official tract polygons projected to the EPSG:5070 equal-area CRS."""

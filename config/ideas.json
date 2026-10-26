@@ -490,7 +490,7 @@
       "failure_mode": "confounded with region (Hidalgo); requires within-region standardisation.",
       "family": "D",
       "id": "D1",
-      "implementation": null,
+      "implementation": "bias60.ideas.d::d1",
       "inputs": [
         "`svi_minority`",
         "`pct_urban`",
@@ -502,7 +502,7 @@
       "recipe": "svi_minority × (1 − pct_urban), and the interaction with RUCA ≥ 4.",
       "recipe_scope": "per tract",
       "signal": "Meta, Foursquare and Microsoft listings under-represent businesses that lack an online presence or have non-English names, as in colonias and rural Hispanic and Native communities. CBP still counts employer establishments there.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Minority-language / informal-economy under-listing"
     },
     {
@@ -514,7 +514,7 @@
       "failure_mode": "small n: 30 Maricopa tribal tracts, plus the OK OTSAs, which are statistical areas rather than legal ones.",
       "family": "D",
       "id": "D2",
-      "implementation": null,
+      "implementation": "bias60.ideas.d::d2",
       "inputs": [
         "`tribal_legal_pct`",
         "`aiannh_kind`",
@@ -526,7 +526,7 @@
       "recipe": "tribal_legal_pct, and its interaction with \"Overture has zero fire/EMS\".",
       "recipe_scope": "per tract",
       "signal": "on tribal legal lands, EMS and fire services are run by tribal nations, BIA or IHS. They appear in USGS and HIFLD-type inventories but rarely on Meta/Google business pages, so Overture misses them.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Tribal jurisdiction facility listing"
     },
     {
@@ -539,7 +539,7 @@
       "failure_mode": "the organiser warned that ACS dwelling density manufactures urban gaps if misused. Keep the weight learned or bounded.",
       "family": "D",
       "id": "D3",
-      "implementation": null,
+      "implementation": "bias60.ideas.d::d3",
       "inputs": [
         "`acs.housing_units`",
         "Overture building count"
@@ -550,7 +550,7 @@
       "recipe": "r = HU/O, log-standardised within region × RUCA.",
       "recipe_scope": "per tract",
       "signal": "ACS_HU / O_buildings high means multifamily. Multifamily complexes are where OSM/Esri polygons merge Microsoft structures (as in G3) and where one building holds many establishments (CBP ≫ places).",
-      "status": "declared",
+      "status": "implemented",
       "title": "Housing units per structure"
     },
     {
@@ -563,7 +563,7 @@
       "failure_mode": "group quarters (bases, prisons, dorms) produce extreme ratios.",
       "family": "D",
       "id": "D4",
-      "implementation": null,
+      "implementation": "bias60.ideas.d::d4",
       "inputs": [
         "`pop_total`",
         "`acs.housing_units`"
@@ -574,7 +574,7 @@
       "recipe": "pop/HU, standardised.",
       "recipe_scope": "per tract",
       "signal": "low pop/HU marks seasonal and vacation housing (Sierra foothills, lakes in OK, Prescott) and retirement communities. These have tourism-heavy Overture places (over-coverage relative to CBP employer establishments) and buildings that are cabins under canopy (ML misses, see P5).",
-      "status": "declared",
+      "status": "implemented",
       "title": "Occupancy ratio (population per housing unit)"
     },
     {
@@ -587,7 +587,7 @@
       "failure_mode": "CVI is crosswalked from 2010 tracts (`cvi_xwalk_coverage`), so treat coverage below 0.9 as missing.",
       "family": "D",
       "id": "D5",
-      "implementation": null,
+      "implementation": "bias60.ideas.d::d5",
       "inputs": [
         "`cvi_baseline_infrastructure`",
         "`cvi_baseline_socioeconomic`"
@@ -598,7 +598,7 @@
       "recipe": "both, z-scored within region.",
       "recipe_scope": "per tract",
       "signal": "CVI's baseline-infrastructure domain bundles broadband, transport and utility deficits. A digital divide lowers online business listings, so Overture places fall short of CBP.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Infrastructure-vulnerability domain (CVI baseline infrastructure)"
     },
     {
@@ -1459,7 +1459,7 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 30,
+    "declared_count": 25,
     "families_total": 12,
     "ideas_per_family": [
       5
@@ -1472,6 +1472,11 @@
       "G4",
       "G5",
       "Tm1",
+      "D1",
+      "D2",
+      "D3",
+      "D4",
+      "D5",
       "X1",
       "X3",
       "X4",
@@ -1504,7 +1509,7 @@
       "F",
       "R"
     ],
-    "implemented_count": 30
+    "implemented_count": 35
   },
   "vocabulary": {
     "components": [

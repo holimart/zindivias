@@ -86,6 +86,16 @@ class StubInputs:
             "ALAND": self.overrides.get("ALAND", np.array([10e6, 20e6, 30e6, 40e6, 50e6, 60e6, 70e6, 80e6][:count])),
             "pop_total": self.overrides.get("pop_total", np.array([100., 200., 300., 400., 500., 600., 700., 800.][:count])),
             "ruca_primary": self.overrides.get("ruca_primary", np.array([1., 4., 7., 8., 3., 6., 9., 10.][:count])),
+            "svi_minority": self.overrides.get("svi_minority", np.array([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8][:count])),
+            "pct_urban": self.overrides.get("pct_urban", np.array([0.0, 0.2, 0.4, 0.6, 0.8, 1.0, 0.5, 0.5][:count])),
+            "svi_covered": self.overrides.get("svi_covered", np.ones(count, dtype=np.bool_)),
+            "ruca_covered": self.overrides.get("ruca_covered", np.ones(count, dtype=np.bool_)),
+            "tribal_legal_pct": self.overrides.get("tribal_legal_pct", np.array([0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7][:count])),
+            "tribal_legal": self.overrides.get("tribal_legal", np.array([False, True, True, True, True, True, True, True][:count])),
+            "cvi_baseline_infrastructure": self.overrides.get("cvi_baseline_infrastructure", np.array([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8][:count])),
+            "cvi_baseline_socioeconomic": self.overrides.get("cvi_baseline_socioeconomic", np.array([0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1][:count])),
+            "cvi_xwalk_coverage": self.overrides.get("cvi_xwalk_coverage", np.ones(count)),
+            "cvi_covered": self.overrides.get("cvi_covered", np.ones(count, dtype=np.bool_)),
         }
         self._features = {
             "overture_buildings": self.overrides.get(
@@ -98,7 +108,11 @@ class StubInputs:
                 np.array([10.0, 20.0, 0.0, 5.0, 2.5, 1.0, 40.0, 8.0][:count])),
             "overture_poi_fire": self.overrides.get(
                 "overture_poi_fire", np.array([0.0, 1.0, 0.0, 2.0, 1.0, 2.0, 0.0, 3.0][:count])),
+            "overture_poi_ems": self.overrides.get(
+                "overture_poi_ems", np.array([1.0, 0.0, 0.0, 1.0, 2.0, 1.0, 0.0, 3.0][:count])),
         }
+        self._housing_units = self.overrides.get(
+            "housing_units", np.array([50.0, 100.0, 150.0, 200.0, 250.0, 300.0, 350.0, 400.0][:count]))
         self._km = {
             "roads": self.overrides.get("roads_km", self._features["overture_named_road_km_5070"]),
             "roads-unfiltered": self.overrides.get(
@@ -116,6 +130,12 @@ class StubInputs:
         self.accessed["parquet_columns"].extend(
             f"{self.region}-overture-tract-summary.parquet:{column}" for column in columns)
         return {column: self._features[column] for column in columns}
+
+    def acs_housing_units(self):
+        self.accessed["layers"].append("census-acs-housing")
+        self.accessed["parquet_columns"].append(
+            f"{self.region}-census-acs-housing.parquet:GEOID,housing_units")
+        return np.asarray(self._housing_units, dtype=np.float64)
 
     def named_class_km(self, layer: str):
         self.accessed["layers"].append(layer)
@@ -384,6 +404,51 @@ class SeedIdeaTests(unittest.TestCase):
 
 
 class HarnessTests(unittest.TestCase):
+    def test_incremental_refresh_hash_verifies_preserved_prior_artifacts(self) -> None:
+        cli = load_script("run_bias60_ideas.py", "bias60_run_cli_incremental_test")
+        with tempfile.TemporaryDirectory() as temporary:
+            workspace = Path(temporary)
+            prior_path = workspace / "ideas" / "Old.parquet"
+            prior_path.parent.mkdir(parents=True)
+            prior_payload = b"prior-parquet"
+            prior_path.write_bytes(prior_payload)
+            prior_hash = hashlib.sha256(prior_payload).hexdigest()
+            previous = {
+                "gates": {"all_passed": True, "emission_contract_satisfied": True,
+                          "no_label_or_leaderboard_value_used": True,
+                          "deterministic_rerun": True, "report_has_no_temporal_field": True},
+                "per_idea": {"Old": {"path": "ideas/Old.parquet", "sha256": prior_hash,
+                                       "rows": 8, "geoid_partition_exact": True,
+                                       "undeclared_columns_read": [], "forbidden_source_hits": [],
+                                       "emissions": [{"component": "B"}]}},
+                "summary": {"report_sha256": "prior"},
+            }
+            partial = {
+                "per_idea": {"D1": {"path": "ideas/D1.parquet", "sha256": "d1-hash",
+                                      "rows": 8, "geoid_partition_exact": True,
+                                      "undeclared_columns_read": [], "forbidden_source_hits": [],
+                                      "emissions": [{"component": "Est"}]}},
+                "gates": {"all_passed": True, "emission_contract_satisfied": True,
+                          "no_label_or_leaderboard_value_used": True,
+                          "deterministic_rerun": True, "report_has_no_temporal_field": True},
+                "scope": {"official_scored_rows": 8},
+                "environment": {"git_commit": "a" * 40},
+                "code_commit_at_run": "a" * 40,
+            }
+            registry = {"ideas": [{"id": "Old", "status": "implemented"},
+                                  {"id": "D1", "status": "implemented"}],
+                        "summary": {"ideas_total": 60}}
+            merged = cli.merge_partial_report(previous, partial, selected_ids={"D1"},
+                                              workspace=workspace, registry_document=registry)
+            self.assertTrue(merged["gates"]["all_passed"])
+            self.assertEqual(set(merged["per_idea"]), {"Old", "D1"})
+            self.assertTrue(merged["incremental_refresh"]["preserved_parquet_hashes_verified"])
+            self.assertEqual(merged["summary"]["ideas_implemented"], 2)
+            prior_path.write_bytes(b"tampered")
+            with self.assertRaisesRegex(ValueError, "prior parquet hash differs"):
+                cli.merge_partial_report(previous, partial, selected_ids={"D1"},
+                                         workspace=workspace, registry_document=registry)
+
     def test_every_implemented_idea_writes_one_parquet_with_the_official_partition(self) -> None:
         report, payloads = run_build()
         self.assertTrue(report["gates"]["all_passed"], report["gates"])

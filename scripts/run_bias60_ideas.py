@@ -37,6 +37,81 @@ def without_content_sha(document: dict) -> dict:
     return copy
 
 
+def merge_partial_report(previous: dict, partial: dict, *, selected_ids: set[str],
+                         workspace: Path, registry_document: dict) -> dict:
+    """Refresh selected ideas while hash-verifying and retaining untouched committed emissions."""
+    if not previous.get("gates", {}).get("all_passed"):
+        raise ValueError("cannot incrementally refresh from a prior failing harness report")
+    prior_ideas = previous.get("per_idea", {})
+    new_ideas = partial.get("per_idea", {})
+    if not selected_ids or set(new_ideas) != selected_ids:
+        raise ValueError("partial harness report does not exactly match the selected idea IDs")
+    for idea_id, entry in prior_ideas.items():
+        if idea_id in selected_ids:
+            continue
+        path = Path(entry["path"])
+        path = path if path.is_absolute() else workspace / path
+        if not path.is_file():
+            raise FileNotFoundError(f"cannot preserve {idea_id}: prior parquet missing at {path}")
+        actual = hashlib.sha256(path.read_bytes()).hexdigest()
+        if actual != entry["sha256"]:
+            raise ValueError(f"cannot preserve {idea_id}: prior parquet hash differs from report")
+        if entry.get("geoid_partition_exact") is not True:
+            raise ValueError(f"cannot preserve {idea_id}: prior GEOID partition did not pass")
+    merged = {**prior_ideas, **new_ideas}
+    expected = {entry["id"] for entry in registry_document["ideas"]
+                if entry["status"] == "implemented"}
+    if set(merged) != expected:
+        raise ValueError(f"incremental report coverage mismatch: missing={sorted(expected-set(merged))}, "
+                         f"extra={sorted(set(merged)-expected)}")
+    report = dict(previous)
+    report.update({key: value for key, value in partial.items()
+                   if key not in {"per_idea", "summary", "gates"}})
+    report["registry_summary"] = registry_document["summary"]
+    report["per_idea"] = merged
+    previous_gates = previous["gates"]
+    partial_gates = partial["gates"]
+    gates = {
+        "registry_holds_all_60_spec_ids": registry_document["summary"]["ideas_total"] == 60,
+        "all_implemented_ideas_are_registered": set(merged) == expected,
+        "every_idea_wrote_one_parquet": all(entry.get("sha256") and entry.get("rows", 0) > 0
+                                             for entry in merged.values()),
+        "official_geoid_partition_exact": all(entry.get("geoid_partition_exact") is True
+                                               for entry in merged.values()),
+        "emission_contract_satisfied": bool(previous_gates.get("emission_contract_satisfied")
+                                              and partial_gates.get("emission_contract_satisfied")),
+        "no_undeclared_column_read": all(not entry.get("undeclared_columns_read")
+                                          for entry in merged.values()),
+        "no_forbidden_source_accessed": all(not entry.get("forbidden_source_hits")
+                                             for entry in merged.values()),
+        "no_label_or_leaderboard_value_used": bool(
+            previous_gates.get("no_label_or_leaderboard_value_used")
+            and partial_gates.get("no_label_or_leaderboard_value_used")),
+        "deterministic_rerun": bool(previous_gates.get("deterministic_rerun")
+                                    and partial_gates.get("deterministic_rerun")),
+        "report_has_no_temporal_field": bool(previous_gates.get("report_has_no_temporal_field")
+                                              and partial_gates.get("report_has_no_temporal_field")),
+    }
+    gates["all_passed"] = all(gates.values())
+    report["gates"] = gates
+    report["summary"] = {
+        "ideas_implemented": len(merged),
+        "components_covered": sorted({emission["component"] for entry in merged.values()
+                                       for emission in entry["emissions"]}),
+        "parquet_files": {entry["path"]: entry["sha256"] for entry in merged.values()},
+        "all_passed": gates["all_passed"],
+    }
+    report["incremental_refresh"] = {
+        "selected_idea_ids_rebuilt": sorted(selected_ids),
+        "preserved_prior_idea_ids": sorted(set(prior_ideas) - selected_ids),
+        "prior_report_sha256": hashlib.sha256(canonical_bytes(previous)).hexdigest(),
+        "preserved_parquet_hashes_verified": True,
+        "note": "Untouched emissions were retained only after their existing workspace parquet SHA-256 matched the prior passing harness report.",
+    }
+    report["summary"]["report_sha256"] = hashlib.sha256(normalized_bytes(report)).hexdigest()
+    return report
+
+
 def load_config(path: Path) -> dict:
     config = json.loads(path.read_text(encoding="utf-8"))
     config["__path__"] = str(path.relative_to(ROOT)) if str(path).startswith(str(ROOT)) else str(path)
@@ -54,11 +129,15 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--regions", default=None)
     parser.add_argument("--only", default=None)
     parser.add_argument("--check-only", action="store_true")
+    parser.add_argument("--merge-existing", action="store_true",
+                        help="with --only, rebuild a subset and hash-verify/preserve prior idea outputs")
     parser.add_argument("--tamper", default=None,
                         choices=[None, "drop_idea", "gap_out_of_bounds", "duplicate_geoid",
                                  "undeclared_column", "forbidden_source", "nondeterministic_rerun"])
     args = parser.parse_args(argv)
 
+    if args.merge_existing and (not args.only or args.check_only):
+        parser.error("--merge-existing requires --only and cannot be combined with --check-only")
     workspace = Path(args.workspace) if args.workspace else None
     if workspace is None or not workspace.is_dir():
         print("BLOCKED COMPETITION_WORKSPACE is required for the provided-data caches")
@@ -108,6 +187,12 @@ def main(argv: list[str] | None = None) -> int:
         report["gates"]["all_passed"] = all(report["gates"].values())
 
     out_path = ROOT / args.out
+    if args.merge_existing:
+        if not out_path.is_file():
+            parser.error(f"--merge-existing needs an existing harness report at {out_path}")
+        previous = json.loads(out_path.read_text(encoding="utf-8"))
+        report = merge_partial_report(previous, report, selected_ids=set(args.only.split(",")),
+                                      workspace=workspace, registry_document=registry_document)
     if args.check_only:
         if not out_path.is_file():
             print(f"CHANGED {out_path} (missing)")
@@ -124,7 +209,8 @@ def main(argv: list[str] | None = None) -> int:
         print(f"unchanged {out_path}")
         return 0 if report["gates"]["all_passed"] else 1
 
-    report["summary"]["report_sha256"] = hashlib.sha256(normalized_bytes(report)).hexdigest()
+    if not args.merge_existing:
+        report["summary"]["report_sha256"] = hashlib.sha256(normalized_bytes(report)).hexdigest()
     payload_bytes = canonical_bytes(report)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_bytes(payload_bytes)
