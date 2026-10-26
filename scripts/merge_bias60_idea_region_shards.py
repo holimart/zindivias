@@ -102,8 +102,8 @@ def main() -> int:
         expected_pairs = {(region, geoid) for geoid in ids_by_region[region]}
         for component, channel in (("B", "covariate:multi_property_share"),
                                   ("R", "covariate:multi_property_share")):
-            rows = table.filter((pc_field(table, "component") == component)
-                                & (pc_field(table, "channel") == channel))
+            rows = table.filter(pc_and(pc_field(table, "component", component),
+                                       pc_field(table, "channel", channel)))
             actual = list(zip(rows["region"].to_pylist(), rows["GEOID"].to_pylist()))
             if set(actual) != expected_pairs or len(actual) != len(expected_pairs):
                 raise ValueError(f"{region}: {component}/{channel} does not cover its official GEOIDs once")
@@ -113,17 +113,16 @@ def main() -> int:
             accessed.setdefault(key, set()).update(values)
         shard_gates.append(document["gates"])
         shard_bytes[region] = {"path": str(path), "sha256": entry["sha256"],
-                               "rows": int(table.num_rows), "report_path": str(reports[region][1].get(""))}
+                               "rows": int(table.num_rows)}
 
     full_table = pa.concat_tables(table_parts)
     out_path = args.workspace / "ideas" / f"{args.idea}.parquet"
     write_parquet(out_path, full_table)
     digest = sha256(out_path)
     # Verify complete full-study partition after concatenation, independently of shard gates.
-    geoids = [geoid for geoid, _ in pairs if _ in regions]
     expected = [(region, geoid) for region in regions for geoid in ids_by_region[region]]
     for component in ("B", "R"):
-        filtered = full_table.filter(pc_field(full_table, "component") == component)
+        filtered = full_table.filter(pc_field(full_table, "component", component))
         actual = list(zip(filtered["region"].to_pylist(), filtered["GEOID"].to_pylist()))
         if actual != expected:
             raise ValueError(f"merged {component} emission is not in exact official region/GEOID order")
@@ -180,9 +179,14 @@ def main() -> int:
     return 0 if merged["gates"]["all_passed"] else 1
 
 
-def pc_field(table: pa.Table, name: str):
+def pc_field(table: pa.Table, name: str, value: str):
     import pyarrow.compute as pc
-    return pc.struct_field(table[name], name) if pa.types.is_struct(table[name].type) else table[name]
+    return pc.equal(table[name], value)
+
+
+def pc_and(left, right):
+    import pyarrow.compute as pc
+    return pc.and_(left, right)
 
 
 if __name__ == "__main__":
