@@ -1,0 +1,328 @@
+{
+  "schema_version": 1,
+  "screen": "Within-region midpercentile discordance between Tm5 POI and building p90 versions; unregistered label-free sensitivity",
+  "method": {
+    "rank": "Within each official region and separately for each channel's own defined values, stable-sort values and assign average 1-based ranks to ties. Normalize midrank as (average_rank−1)/(n−1), mapping sample minimum to 0 and maximum to 1; singleton defined groups map to 0.5.",
+    "candidate": "Absolute difference between POI and building normalized midranks, measured only on the joint-defined GEOIDs. Each channel is ranked over its own defined regional observations before taking the joint intersection.",
+    "nulls": "Source values and ranks retain their individual defined masks; cross-layer difference is null unless both source channels are defined.",
+    "unregistered": true
+  },
+  "measure_before": {
+    "POI_p90_version_range": [
+      1.0,
+      13.0
+    ],
+    "building_p90_version_range": [
+      1.0,
+      5.0
+    ],
+    "POI_p90_Mx4_interaction_coverage": 0.9997867576500693,
+    "POI_p90_Mx4_interaction_p95_change": 0.9415887339401863,
+    "building_p90_Mx4_interaction_coverage": 0.9997867576500693,
+    "building_p90_Mx4_interaction_p95_change": 0.7737056144690831,
+    "discordance_previously_measured": false,
+    "poi_interaction_report_sha256": "b3bda1e4e76fef1447d0df9415d07676637559f0b21c1ca8761ab5178297814b",
+    "building_interaction_report_sha256": "36e517175ed929593e57ac2c5a0d417be45405007ea4335b70db8e9a14ebf90b"
+  },
+  "scope": {
+    "official_ids": 9379,
+    "exact_official_geoid_region_partition": true,
+    "poi_defined_ids": 9377,
+    "building_defined_ids": 9377,
+    "joint_defined_ids": 9377,
+    "joint_undefined_ids": 2,
+    "joint_coverage_fraction": 0.9997867576500693,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_reference_data_read": false,
+    "external_data_read": false,
+    "leaderboard_feedback_used": false,
+    "registry_integration": false,
+    "frozen_Tm5_modified": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "absolute_cross_layer_percentile_difference": {
+      "n": 9377,
+      "min": 0.004166666666666666,
+      "p50": 0.24291666666666667,
+      "p90": 0.5471105527638191,
+      "p95": 0.7056666666666667,
+      "max": 0.9824999999999999,
+      "mean": 0.27274288847472333
+    },
+    "p95_absolute_cross_layer_percentile_difference": 0.7056666666666667,
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "poi_defined_ids": 1593,
+        "building_defined_ids": 1593,
+        "joint_defined_ids": 1593,
+        "joint_coverage_fraction": 1.0,
+        "poi_source_version_distribution": {
+          "n": 1593,
+          "min": 3.0,
+          "p50": 10.0,
+          "p90": 11.0,
+          "p95": 11.0,
+          "max": 13.0,
+          "mean": 10.13998744507219
+        },
+        "building_source_version_distribution": {
+          "n": 1593,
+          "min": 1.0,
+          "p50": 2.0,
+          "p90": 3.0,
+          "p95": 3.0,
+          "max": 5.0,
+          "mean": 2.3063402385436285
+        },
+        "poi_midpercentile_distribution": {
+          "n": 1593,
+          "min": 0.0,
+          "p50": 0.4280778894472362,
+          "p90": 0.9042085427135679,
+          "p95": 0.9042085427135679,
+          "max": 1.0,
+          "mean": 0.5
+        },
+        "building_midpercentile_distribution": {
+          "n": 1593,
+          "min": 0.008793969849246231,
+          "p50": 0.35709798994974873,
+          "p90": 0.8385678391959799,
+          "p95": 0.8385678391959799,
+          "max": 0.9996859296482412,
+          "mean": 0.49999999999999994
+        },
+        "absolute_cross_layer_percentile_difference": {
+          "n": 1593,
+          "min": 0.014447236180904523,
+          "p50": 0.07097989949748745,
+          "p90": 0.5471105527638191,
+          "p95": 0.5471105527638191,
+          "max": 0.8954145728643217,
+          "mean": 0.236882781768226
+        }
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "poi_defined_ids": 591,
+        "building_defined_ids": 591,
+        "joint_defined_ids": 591,
+        "joint_coverage_fraction": 1.0,
+        "poi_source_version_distribution": {
+          "n": 591,
+          "min": 7.0,
+          "p50": 10.0,
+          "p90": 11.0,
+          "p95": 11.0,
+          "max": 12.0,
+          "mean": 10.143824027072759
+        },
+        "building_source_version_distribution": {
+          "n": 591,
+          "min": 2.0,
+          "p50": 3.0,
+          "p90": 3.0,
+          "p95": 4.0,
+          "max": 4.0,
+          "mean": 2.8307952622673436
+        },
+        "poi_midpercentile_distribution": {
+          "n": 591,
+          "min": 0.0,
+          "p50": 0.4245762711864407,
+          "p90": 0.9110169491525424,
+          "p95": 0.9110169491525424,
+          "max": 1.0,
+          "mean": 0.4999999999999999
+        },
+        "building_midpercentile_distribution": {
+          "n": 591,
+          "min": 0.11949152542372882,
+          "p50": 0.5847457627118644,
+          "p90": 0.5847457627118644,
+          "p95": 0.9652542372881356,
+          "max": 0.9652542372881356,
+          "mean": 0.4999999999999999
+        },
+        "absolute_cross_layer_percentile_difference": {
+          "n": 591,
+          "min": 0.05423728813559325,
+          "p50": 0.1601694915254237,
+          "p90": 0.5406779661016949,
+          "p95": 0.5830508474576271,
+          "max": 0.8805084745762712,
+          "mean": 0.26463620981387476
+        }
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "poi_defined_ids": 1192,
+        "building_defined_ids": 1192,
+        "joint_defined_ids": 1192,
+        "joint_coverage_fraction": 1.0,
+        "poi_source_version_distribution": {
+          "n": 1192,
+          "min": 8.0,
+          "p50": 10.0,
+          "p90": 11.0,
+          "p95": 11.0,
+          "max": 13.0,
+          "mean": 10.184563758389261
+        },
+        "building_source_version_distribution": {
+          "n": 1192,
+          "min": 2.0,
+          "p50": 3.0,
+          "p90": 3.0,
+          "p95": 3.0,
+          "max": 5.0,
+          "mean": 2.848993288590604
+        },
+        "poi_midpercentile_distribution": {
+          "n": 1192,
+          "min": 0.0,
+          "p50": 0.4080604534005038,
+          "p90": 0.8946263643996641,
+          "p95": 0.8946263643996641,
+          "max": 1.0,
+          "mean": 0.5
+        },
+        "building_midpercentile_distribution": {
+          "n": 1192,
+          "min": 0.09109991603694374,
+          "p50": 0.5759865659109992,
+          "p90": 0.5759865659109992,
+          "p95": 0.5759865659109992,
+          "max": 1.0,
+          "mean": 0.5
+        },
+        "absolute_cross_layer_percentile_difference": {
+          "n": 1192,
+          "min": 0.07766582703610411,
+          "p50": 0.16792611251049538,
+          "p90": 0.31863979848866497,
+          "p95": 0.5764063811922754,
+          "max": 0.9710327455919395,
+          "mean": 0.25795606309062935
+        }
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "poi_defined_ids": 6001,
+        "building_defined_ids": 6001,
+        "joint_defined_ids": 6001,
+        "joint_coverage_fraction": 0.9996668332500417,
+        "poi_source_version_distribution": {
+          "n": 6001,
+          "min": 1.0,
+          "p50": 10.0,
+          "p90": 11.0,
+          "p95": 11.0,
+          "max": 12.0,
+          "mean": 10.1568071988002
+        },
+        "building_source_version_distribution": {
+          "n": 6001,
+          "min": 1.0,
+          "p50": 3.0,
+          "p90": 3.0,
+          "p95": 3.0,
+          "max": 5.0,
+          "mean": 2.6362272954507584
+        },
+        "poi_midpercentile_distribution": {
+          "n": 6001,
+          "min": 0.0,
+          "p50": 0.41841666666666666,
+          "p90": 0.9025,
+          "p95": 0.9025,
+          "max": 0.9996666666666667,
+          "mean": 0.49999999999999983
+        },
+        "building_midpercentile_distribution": {
+          "n": 6001,
+          "min": 0.021833333333333333,
+          "p50": 0.6613333333333333,
+          "p90": 0.6613333333333333,
+          "p95": 0.6613333333333333,
+          "max": 0.99875,
+          "mean": 0.5
+        },
+        "absolute_cross_layer_percentile_difference": {
+          "n": 6001,
+          "min": 0.004166666666666666,
+          "p50": 0.24291666666666667,
+          "p90": 0.5666666666666667,
+          "p95": 0.7056666666666667,
+          "max": 0.9824999999999999,
+          "mean": 0.2859976948286397
+        }
+      }
+    }
+  },
+  "thresholds": {
+    "minimum_joint_coverage_inclusive": 0.9859,
+    "percentile_and_difference_bounds_inclusive": [
+      0.0,
+      1.0
+    ],
+    "minimum_p95_discordance_inclusive": 0.05
+  },
+  "acceptance": {
+    "exact_9379_official_id_alignment": true,
+    "joint_defined_ids": 9377,
+    "joint_coverage_fraction": 0.9997867576500693,
+    "coverage_at_least_98_59_percent": true,
+    "joint_nulls_preserved_exactly": true,
+    "percentiles_and_discordance_finite_bounded_0_1": true,
+    "p95_absolute_cross_layer_percentile_difference": 0.7056666666666667,
+    "p95_discordance_at_least_0_05": true,
+    "frozen_Tm5_and_registry_unchanged": true,
+    "distinct_cross_layer_screen_pass": true
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "Tm5_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Tm5.parquet",
+      "sha256_before": "ae363dff82f4ee47546485f45cd71250150a402479718795b0247585efdfe45e",
+      "sha256_after": "ae363dff82f4ee47546485f45cd71250150a402479718795b0247585efdfe45e",
+      "poi_p90_version_emission_sha256": "fb120409c05b33cefe486745ec9f44e6e76760041e7f69b7a757800975f47d8c",
+      "building_p90_version_emission_sha256": "d0cbbc4deb159daca30e576d8828f75c3c2e302df7f8050e33e707f86fa670e7"
+    },
+    "source_reports": {
+      "poi_p90_mx4": {
+        "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/tm5-p90-version-mx4-interaction.json",
+        "sha256": "b3bda1e4e76fef1447d0df9415d07676637559f0b21c1ca8761ab5178297814b"
+      },
+      "building_p90_mx4": {
+        "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/tm5-building-p90-mx4-interaction.json",
+        "sha256": "36e517175ed929593e57ac2c5a0d417be45405007ea4335b70db8e9a14ebf90b"
+      }
+    },
+    "registry_sha256_before": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "registry_sha256_after": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "script_sha256": "53bffbc88e6da152bbc0eb11295051309343621bcfdddbf92d28a54ca8d9b177",
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/tm5-poi-building-version-discordance/version-discordance.parquet",
+      "rows": 9379,
+      "sha256": "8ed28f993f75f0fa7ed872341101b2bcd6c881f80d79245fb2184a2573bcf7fb",
+      "columns": [
+        "GEOID",
+        "region",
+        "tm5_poi_p90_version",
+        "poi_version_defined",
+        "poi_within_region_midpercentile",
+        "tm5_building_p90_version",
+        "building_version_defined",
+        "building_within_region_midpercentile",
+        "joint_defined",
+        "absolute_cross_layer_percentile_difference"
+      ],
+      "deterministic_bytes": true
+    }
+  },
+  "interpretation": "Cross-layer percentile discordance passes coverage, bounds and p95 effect gates; retain only as an unregistered sensitivity, with no frozen-feature or registry changes."
+}
