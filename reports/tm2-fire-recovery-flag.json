@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "screen": "Tm2 positive building-gap and Tm3 ACS housing-growth >=10% binary recovery flag; label-free diagnostic only",
+  "definition": "On jointly-defined IDs: recovery_flag=1 iff Tm2 building gap > 0 and Tm3 ACS housing growth >= 0.10; otherwise 0. Undefined unless both source emissions are defined. Tm2 postfire-burn-share is recorded only for context and is not an additional flag condition.",
+  "thresholds": {
+    "tm2_building_gap_exclusive_minimum": 0.0,
+    "tm3_acs_housing_growth_inclusive_minimum": 0.1,
+    "minimum_flagged_ids": 20,
+    "minimum_regions_with_flags": 2
+  },
+  "measure_before": {
+    "log_scaled_fire_conditional_p95_absolute_change": 0.007985380024531023,
+    "log_screen_threshold": 0.01,
+    "log_adjustment_effect_gate_passed": false,
+    "tm2_postfire_burn_share_positive_ids": 381,
+    "log_scale_baseline_report_sha256": "1e1f2650f578b9a9eef96dc676733994e5d4aeec71a4485c630a322a1b2d2588"
+  },
+  "scope": {
+    "official_ids": 9379,
+    "exact_official_id_alignment": true,
+    "tm2_gap_defined_ids": 9377,
+    "tm3_growth_defined_ids": 9362,
+    "joint_defined_ids": 9362,
+    "flagged_ids": 30,
+    "flagged_fire_affected_ids": 30,
+    "flagged_ids_outside_fire_affected": 0,
+    "unflagged_joint_ids": 9332,
+    "undefined_ids": 17,
+    "coverage_fraction": 0.9981874400255891,
+    "fire_status_defined_ids": 9377,
+    "tm2_postfire_burn_share_positive_ids": 381,
+    "flagged_regions": 4,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "Tm1_or_Tm4_inputs_read": false,
+    "removed_or_equivalent_reference_data_read": false,
+    "leaderboard_values_used": false,
+    "candidate_or_registry_modified": false,
+    "frozen_Tm2_or_Tm3_modified": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "flagged_ids": 30,
+    "flagged_fire_affected_ids": 30,
+    "flagged_ids_outside_fire_affected": 0,
+    "flagged_regions": 4,
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "tm2_gap_defined_ids": 1593,
+        "tm3_growth_defined_ids": 1588,
+        "joint_defined_ids": 1588,
+        "flagged_ids": 8,
+        "unflagged_joint_ids": 1580,
+        "undefined_ids": 5,
+        "fire_affected_ids": 97,
+        "flagged_fire_affected_ids": 8,
+        "flagged_geoids": [
+          "04003000101",
+          "04003001401",
+          "04003001402",
+          "04003002002",
+          "04007940400",
+          "04009961600",
+          "04013050603",
+          "04013980100"
+        ]
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "tm2_gap_defined_ids": 591,
+        "tm3_growth_defined_ids": 591,
+        "joint_defined_ids": 591,
+        "flagged_ids": 7,
+        "unflagged_joint_ids": 584,
+        "undefined_ids": 0,
+        "fire_affected_ids": 93,
+        "flagged_fire_affected_ids": 7,
+        "flagged_geoids": [
+          "06007001800",
+          "06007001900",
+          "06007002000",
+          "06007002100",
+          "06007002200",
+          "06007002300",
+          "06033000501"
+        ]
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "tm2_gap_defined_ids": 1192,
+        "tm3_growth_defined_ids": 1189,
+        "joint_defined_ids": 1189,
+        "flagged_ids": 8,
+        "unflagged_joint_ids": 1181,
+        "undefined_ids": 3,
+        "fire_affected_ids": 89,
+        "flagged_fire_affected_ids": 8,
+        "flagged_geoids": [
+          "40021977600",
+          "40103956600",
+          "40113940011",
+          "40147001000",
+          "40147001100",
+          "40147001200",
+          "40151954201",
+          "40153953100"
+        ]
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "tm2_gap_defined_ids": 6001,
+        "tm3_growth_defined_ids": 5994,
+        "joint_defined_ids": 5994,
+        "flagged_ids": 7,
+        "unflagged_joint_ids": 5987,
+        "undefined_ids": 9,
+        "fire_affected_ids": 102,
+        "flagged_fire_affected_ids": 7,
+        "flagged_geoids": [
+          "48013960602",
+          "48099980000",
+          "48221160302",
+          "48251130100",
+          "48305950600",
+          "48367140713",
+          "48367140714"
+        ]
+      }
+    }
+  },
+  "acceptance": {
+    "exact_9379_official_geoid_region_alignment": true,
+    "flag_defined_exactly_on_joint_Tm2_Tm3_mask": true,
+    "defined_flags_are_binary_and_match_threshold_rule": true,
+    "all_undefined_flags_remain_null": true,
+    "at_least_20_flags_across_at_least_two_regions": true,
+    "frozen_Tm2_Tm3_registry_and_candidates_unchanged": true,
+    "acceptance_pass": true
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "7138951b53cecabf981295c57ae067a73785c7c94f2a0d4bad2614d5a61c3ab9",
+    "source_fire_log_scale_report_sha256": "1e1f2650f578b9a9eef96dc676733994e5d4aeec71a4485c630a322a1b2d2588",
+    "frozen_inputs": {
+      "Tm2": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Tm2.parquet",
+        "sha256": "470c23b2902cbb652dfc884c22ba2a743a85538aa819ddd179b1ff2a3aea41bc",
+        "sha256_after": "470c23b2902cbb652dfc884c22ba2a743a85538aa819ddd179b1ff2a3aea41bc",
+        "gap_emission_sha256": "3d828d0f8c29ea062ceac19380c0d92b5b13e757e1f4d1e78ffafbf1587a1721",
+        "fire_share_emission_sha256": "cb73b343e6c8cd2c6dc10519b18fbff1a7d8c80731b70fba2189db7c54e97e80"
+      },
+      "Tm3": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Tm3.parquet",
+        "sha256": "502ff5d6c66628c97db82142a9ea935cc7b2817ff4cb8a9852b5e94d9b0b2940",
+        "sha256_after": "502ff5d6c66628c97db82142a9ea935cc7b2817ff4cb8a9852b5e94d9b0b2940",
+        "acs_housing_growth_emission_sha256": "2151960c1824f76bbd03763babd0c267378879a5afb5d015d35dbc91cb4b1361"
+      }
+    },
+    "registry_sha256_before": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "registry_sha256_after": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "candidate_manifest_sha256_before": "7fda4aff8e63d0c2854c261798abc073ab01c465d999d7c25732e152a9d4d396",
+    "candidate_manifest_sha256_after": "7fda4aff8e63d0c2854c261798abc073ab01c465d999d7c25732e152a9d4d396",
+    "script_sha256": "14eb5f61a9b77d386246a989df4906173aedd4e53090997ee94165a92edbcf0d"
+  },
+  "output_artifact": {
+    "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/tm2-fire-recovery-flag/tm2-fire-recovery-flag.parquet",
+    "rows": 9379,
+    "sha256": "5a51033b3c8c6cec395f5f51c6f86bd6d60e3c95098b5586ae13ca946e09d133",
+    "columns": [
+      "GEOID",
+      "region",
+      "tm2_building_gap",
+      "tm2_defined",
+      "tm3_acs_housing_growth",
+      "tm3_defined",
+      "tm2_postfire_burn_share",
+      "fire_status_defined",
+      "fire_affected",
+      "recovery_flag",
+      "recovery_flag_defined"
+    ],
+    "deterministic_bytes": true
+  },
+  "interpretation": "The flag meets its sparse diagnostic screen and may be retained only as an unregistered label-free sensitivity; frozen Tm2/Tm3, candidates, and registry remain unchanged."
+}
