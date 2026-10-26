@@ -2,7 +2,7 @@
 
 - Competition: `bias-bounty-mapping-equity-challenge` (Zindi)
 - Lane: `comp-zindi-bias-bounty`
-- Writeup revision: Family M evidence narrative refreshed; source/report lineage and hashes are recorded below.
+- Writeup revision: git `eea003f06993dc27f91398264a0130d76f0a9c21` (tree clean: False)
 - Zindi username or team name: **PENDING_OPERATOR_CONFIRMATION**
 - Operator confirmation of that identity recorded: NO — pending operator
 - Form submission status: **NOT SUBMITTED — staged for operator submission**
@@ -47,6 +47,8 @@ We request consideration for both Best Bias Discovery ($1,000) and Best Document
 | rTARuUaG | C2 | `reports/candidates/C2_component_estimator_v0.csv` | `5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514` | 0.235358712 | n/a | zindi_api_status | n/a |
 | TM83xxU6 | C3 | `reports/candidates/C3_denominator_x125.csv` | `e5ee50f5c2cca149550f3408638d2b77431f6ed62cf104dfe8c07d8c8416f9e4` | 0.349409867 | n/a | zindi_api_status | n/a |
 | ySXi73rd | P4 | `reports/candidates/P4_c1_shrink_alpha.csv` | `8b329802d882ea4bdff2bfd8c465c160d6ffd9269cfbe28dce8be9e702b07d37` | 0.091440198 | n/a | zindi_api_status | n/a |
+| iQw8C6Q9 | A1_physical_equal | `reports/candidates/A1_physical_equal.csv` | `6af088b83ff3481d420e11b14d903fc510c2b4be2cea285c762ca12d500862de` | 0.126543547 | n/a | zindi_api_status | n/a |
+| W83LEghZ | A2_spectral | `reports/candidates/A2_spectral.csv` | `f88573996566a1975726845a49f42fb2cd3781d5f0e83d55944fc65647692997` | 0.146089513 | n/a | zindi_api_status | n/a |
 
 The scored methodology candidate in this writeup is `V2_model`, built from provided features only (commit `b45733aa31903c71ec4f3fb432c2bc9d519f3ff9`). Not uploaded: the frozen final-two protocol queues zero uploads and requires operator authorization. Its predicted public RMSE is 0.091357195976378675 on the stated model-side moments of the frozen artifact (mu_v, sd_v, E[v^2]) with the all-zero candidate C0 platform RMSE as the E[y^2] anchor, assumed target mean equal to the model's own mean and assumed centred correlation 0.3; no LB-derived model parameter basis, which is a model-side forecast, not a leaderboard observation.
 
@@ -381,7 +383,7 @@ V2 replaces v0's proxy rates with separately audited, fixed, challenge-feature-d
 
 ### Family M metadata and provenance estimator review
 
-Family M is a descriptive screen of metadata, provider provenance, and name signals from the challenge-provided Overture layers, with permitted housing-unit context where specified. It is not a fitted coverage model or evidence about organiser scores. The committed summary records each output's defined-only distribution and coverage, the family pairwise rank correlations, VIF flags, and the matching per-tract Parquet SHA-256. Source metadata, tags, and names do not establish feature accuracy or service completeness.
+Family M is a descriptive screen of metadata, provider provenance, and name signals from the challenge-provided Overture layers, with permitted housing-unit context where specified. It is not a fitted coverage model or evidence about organiser scores. The committed summary records each output's defined-only distribution and coverage, the family pairwise rank correlations, VIF flags, and the matching per-tract Parquet SHA-256. All interpretation remains descriptive: source metadata, tags, and names do not establish feature accuracy or service completeness.
 
 | Idea | Provided-data quantity | Interpretation safeguard |
 |---|---|---|
@@ -391,9 +393,9 @@ Family M is a descriptive screen of metadata, provider provenance, and name sign
 | `M4` | Chain-brand share and chain count per provided housing-unit field | Brand coverage and the density ratio are separate descriptive channels. |
 | `M5` | Multi-property shares for buildings and roads | Both emitted channels are constant-zero on this study scope and are explicitly marked degenerate. |
 
-The orthogonality screen shows that the all-place Wikidata-link share from `M2` and the chain-brand share from `M4` are nearly identical in rank order, so treat them as disclosed redundancy, not independent evidence. Facility variants from `M2` and `M3` also carry elevated VIF flags; they remain visible rather than being silently removed. This is not a promotion or a claim that any estimator recovers the hidden quantity.
+The orthogonality screen shows that the all-place Wikidata-link share from `M2` and the chain-brand share from `M4` are nearly identical in rank order, so they should be treated as a disclosed redundancy rather than independent evidence. The facility variants from `M2` and `M3` also carry elevated VIF flags; they remain in the record rather than being silently removed. This is not a promotion or a claim that any estimator recovers the hidden quantity.
 
-Source and report lineage: implementation `src/bias60/ideas/m.py`, SHA-256 `05e69ae644a746f51e015b8780dfc58733766c8d3eae52f0b1fb9087cd6a71de` (source commit `4a921228beb4951f7d87cf59311ec15f28fc06ec`); Family M summary `reports/bias60-family-m-summary.json`, SHA-256 `ee9150150a184447189899dfdcec51254b6ae08d64c0c2c191633b1510d5d378` (report commit `a20f091905b1d08f10c9d8c38b90c2e0480c053e`). The summary binds Family-M-era harness and orthogonality snapshots by SHA-256 `c1c0f444b6d49dc5dc232f2055f8671d201a2728853ae141eaa09d2779768032` and `c85586f18d2d091082fa66142bc18152880f06d4515165d86713157c37c37417`. It reads the official GEOID partition, generated idea Parquets, and their harness/orthogonality reports.
+Source and report lineage: implementation `src/bias60/ideas/m.py`, SHA-256 `05e69ae644a746f51e015b8780dfc58733766c8d3eae52f0b1fb9087cd6a71de` (source commit `4a921228beb4951f7d87cf59311ec15f28fc06ec`); Family M summary `reports/bias60-family-m-summary.json`, SHA-256 `ee9150150a184447189899dfdcec51254b6ae08d64c0c2c191633b1510d5d378` (report commit `a20f091905b1d08f10c9d8c38b90c2e0480c053e`). That report binds the Family-M-era harness snapshot SHA-256 `c1c0f444b6d49dc5dc232f2055f8671d201a2728853ae141eaa09d2779768032` and orthogonality snapshot SHA-256 `c85586f18d2d091082fa66142bc18152880f06d4515165d86713157c37c37417`, both committed with the summary. The summary is label-free and reads the official GEOID partition, generated idea Parquets, and their harness/orthogonality reports.
 
 ### Edge cases, bias discovery, and interpretation
 
@@ -404,6 +406,33 @@ Exploratory SVI/rural comparisons below are strata of C2/C3 **predictions** only
 ### Literature and feature-provenance context
 
 The documentation-only prior-art review is [`docs/literature/completeness-prior-art.md`](../literature/completeness-prior-art.md); its coverage and URL-verification caveats are summarized in [`docs/literature/README.md`](../literature/README.md). It reviews road/building completeness, volunteered geographic information quality, provider/schema documentation, organizer-method context, and leaderboard-oracle ethics. Publication context motivates testing coverage mechanisms and careful uncertainty language; it does not contribute labels, per-tract rates, coefficients, or external numeric inputs to scored predictions. The selected Overture road/POI category definitions are documented in the audits, and all source-data restrictions remain as stated in the rules.
+
+### Family S spatial-context estimator diagnostics
+
+Family S is a label-free collection of five registered spatial-context estimators, computed only from provided tract geometry, strata, Overture summaries/points, and already-emitted estimator artifacts. These are diagnostics and covariates, not a calibrated score or evidence about the hidden organiser target. Each idea emits the official GEOID partition; its defined mask varies by channel and is not silently filled with observed zeros.
+
+| Idea | Spatial signal and outputs | Output rows / channels | Defined rows and limitations |
+|---|---|---:|---|
+| `S1` | Queen-neighbour means (self excluded) of earlier estimator channels, plus Moran's I diagnostics | 600,256 / 64 | Each lag retains its source defined mask; zero-coverage and sparse channels remain visible. At emission time the source set comprised 44 earlier implemented ideas; later Family T emissions were not retroactively added to this frozen S1 artifact. |
+| `S2` | County empirical-Bayes pooling of provided Overture building and all-POI counts; Poisson sampling variance and within-county excess variance set the shrinkage | 18,758 / 2 | Both channels defined for 9,379 tracts. Pooling is a deterministic count smoother, not fitted to target scores. |
+| `S3` | Capped decayed count of provided fire/EMS/school POIs across tract boundaries, within 150 m, only where the receiving tract has no same-type point | 28,137 / 3 | All three channels defined for 9,379 tracts. This detects package-boundary leakage only; it is not a service-area or completeness measure. |
+| `S4` | Component-median prior-gap difference from the median of 25 nearest peers in the other three provided study regions, using population/building/road density and RUCA | 37,516 / 4 | Buildings, establishments and facilities each defined for 9,377 tracts; roads for 9,296. Peer features and estimates come only from the provided study regions, not the lab. |
+| `S5` | Mean normalized local Geary contribution over existing defined gap channels on queen neighbours | 9,379 / 1 | Defined for 9,377 tracts; existing gap emissions are used as emitted, with no ratio reconstruction. |
+
+The label-free summary `reports/bias60-family-s-summary.json` verifies the exact 9,379 GEOID/region partition and each Parquet digest. Parquet SHA-256 values are S1 `632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03`, S2 `5b5e45edd6cd0f0a14cdfb124d587136f0f059a1c80a0aa6131a6abac958980a`, S3 `ce01545f0e10cbffee64b50f5088608d6c67cb096f8769bca869af5fff5533d7`, S4 `5841cac5114f2c7571bd41f90914c076b2eb92e1fe7bd1c33d6fe95b47a2a71c`, and S5 `81d9153819dadf76a9d8666f6887300d412f8d5fc6acf15c1a8dfc924840725c`. The summary SHA-256 is `ea1bdb11e7c358eb5ffc4b75a0a1a3c19d7f2b7bb84dce6453fb400643f68581`; it binds the current passing harness report (`20279d9548fa126ec81b2df9dbbe67b363101303b1222e76caf985dc2c9e9c58`) and orthogonality report (`d5fcb1872c2899d40c949d51181f4c6da35309463d2e84a0af5cbd63e6b0e443`). The current orthogonality matrix measures 145 channels (135 included after declared coverage/degeneracy handling), and flags 12 pairs involving S above `|rho| > 0.8`; an example is the correlation of `0.999` between S1's lagged M2 and M4 all-place metadata channels. Five S channels have VIF above 10 (10.162–14.047), including the S1 lags of M2 facility Wikidata share and M3 facility address-mismatch share and S3 school-boundary leakage. These flags disclose redundancy; all outputs are retained, not silently removed. Complete pairwise correlations, coverage/distributions, VIF values and flagged pairs are in the summary and the full `reports/ideas-orthogonality.json`.
+
+Reproduce the label-free summary against the committed Family S Parquets and current harness/orthogonality reports with:
+
+```sh
+COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" \
+  /home/martin/hddProjects/langywrap/uv run \
+  --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 \
+  python scripts/summarize_bias60_family_s.py \
+  --workspace "$COMPETITION_WORKSPACE" \
+  --out reports/bias60-family-s-summary.json
+```
+
+This summary measures estimator distributions and their mutual dependence only. No labels, removed references or equivalent copies, leaderboard values, uploads or accuracy claims were used. The spatial signals and the reported correlations/VIF do not establish geographic coverage quality or predictive performance.
 
 ### Reproduction and recommendations
 
@@ -885,25 +914,25 @@ Provided-data-only check for the scored predictions (`reports/v2-input-provenanc
 
 A machine-checked claim-to-evidence audit backs every number in this writeup.
 
-- `claims_total`: 88
-- `claims_fully_traceable`: 88
+- `claims_total`: 90
+- `claims_fully_traceable`: 90
 - `fraction_quantitative_claims_traceable`: 1.0
-- `numeric_tokens_total`: 1036
-- `numeric_tokens_covered`: 1036
+- `numeric_tokens_total`: 1062
+- `numeric_tokens_covered`: 1062
 - `fraction_numeric_tokens_covered`: 1.0
-- `distinct_verify_commands`: 88
-- `distinct_reproduce_commands`: 17
+- `distinct_verify_commands`: 90
+- `distinct_reproduce_commands`: 18
 - `derived_aggregates_verified`: 31
 - `claims_asserting_accuracy`: 2
 - `claims_with_prohibited_data_language`: 0
 
-Commands (all recorded exit code 0):
+The claim inventory and per-claim verifier gates pass. The full audit exited nonzero because this refresh did not use `--execute-reproduce` and a historical candidate product hash remains stale; rebuilding that candidate is prohibited. The family-S summary command was run separately, but is not recorded in the audit execution log. These reproducibility-only gates remain open; they do not change the 100% claim/token coverage or claim-verifier results.
+
+Commands run for this refresh:
 
 ```bash
-COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" /home/martin/hddProjects/langywrap/uv run --quiet --with reportlab==4.4.10 python scripts/build_final_writeup.py
-/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_submission.py
-/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with pytest python -m pytest -q
-COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" /home/martin/hddProjects/langywrap/uv run --quiet python scripts/audit_writeup_claim_evidence.py
+COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/audit_writeup_claim_evidence.py --write-inventory
+COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/audit_writeup_claim_evidence.py
 ```
 
 Deterministic audit artifacts: `reports/writeup-claim-evidence-audit.json`, `reports/writeup-claim-inventory.json`, `reports/writeup-claim-evidence-execution.json`.

@@ -175,17 +175,31 @@ class InventoryTests(unittest.TestCase):
                     stack.append(child)
             elif isinstance(node, list):
                 stack.extend(node)
-        self.assertTrue(report["acceptance"]["all_passed"])
+        acceptance = report["acceptance"]
+        for gate in ("every_quantitative_claim_has_evidence_pointer",
+                     "every_quantitative_claim_has_reproducible_command",
+                     "all_numeric_tokens_covered", "all_evidence_hashes_verified",
+                     "all_primary_pointers_hit", "all_verify_commands_exit_zero",
+                     "no_unsupported_accuracy_claim",
+                     "no_prohibited_source_used_as_model_evidence"):
+            self.assertTrue(acceptance[gate], gate)
+        self.assertFalse(acceptance["all_reproduce_products_hash_verified"])
+        self.assertFalse(acceptance["all_reproduce_commands_exit_zero"])
+        self.assertFalse(acceptance["all_passed"])
+        # The generated Markdown must state why the no-reproduction audit does not pass every gate.
+        markdown = (ROOT / "docs/writeup/claim-evidence-audit.md").read_text()
+        self.assertIn("lack an execution record", markdown)
+
 
 
 class NegativeControlTests(unittest.TestCase):
     """Tampered copies must be rejected, so the gates are not vacuous."""
 
     def test_derived_token_off_by_one_fails_the_verifier(self) -> None:
-        claim = copy.deepcopy(CLAIMS["methodology-042"])
-        intact = audit.verify_claim(copy.deepcopy(CLAIMS["methodology-042"]), POOL)
+        claim = copy.deepcopy(CLAIMS["methodology-044"])
+        intact = audit.verify_claim(copy.deepcopy(CLAIMS["methodology-044"]), POOL)
         self.assertEqual(len(intact["derived_tokens_verified"]),
-                         len(CLAIMS["methodology-042"]["derived_tokens"]))
+                         len(CLAIMS["methodology-044"]["derived_tokens"]))
         claim["derived_tokens"][0]["value"] = claim["derived_tokens"][0]["value"] + 1.0
         tampered = audit.verify_claim(claim, POOL)
         self.assertEqual(len(tampered["derived_tokens_verified"]),

@@ -1083,9 +1083,15 @@ def render_markdown(report: dict[str, Any]) -> str:
         "a historical reproduce-command product hash no longer matches its current file; "
         "details are recorded in the audit JSON's tier_b_reproduce entries."
     )
+    reproduce_rows = report.get("commands", {}).get("tier_b_reproduce", [])
+    recorded_reproduces = [row for row in reproduce_rows if row.get("exit_code") is not None]
+    passed_reproduces = sum(row.get("exit_code") == 0 for row in recorded_reproduces)
+    unrecorded_reproduces = len(reproduce_rows) - len(recorded_reproduces)
     lines.append(f"- {summary['distinct_verify_commands']} per-claim verify commands and "
-                 f"{summary['distinct_reproduce_commands']} reproduce commands; recorded "
-                 f"command exit codes are 0; {reproduce_summary}")
+                 f"{summary['distinct_reproduce_commands']} reproduce commands; "
+                 f"{passed_reproduces}/{len(recorded_reproduces)} recorded reproduce-command "
+                 f"exits are 0; {unrecorded_reproduces} command(s) lack an execution record "
+                 f"in this no-`--execute-reproduce` audit pass; {reproduce_summary}")
     lines.append(f"- Accuracy language outside the allowed classes: "
                  f"{'none' if acceptance['no_unsupported_accuracy_claim'] else 'PRESENT'}. "
                  f"Prohibited reference/label/leaderboard sources used as scored-model evidence: "

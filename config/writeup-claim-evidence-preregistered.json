@@ -38,6 +38,7 @@
     "reports/building-source-prior.json",
     "reports/building-v2-audit.json",
     "reports/bias60-family-m-summary.json",
+    "reports/bias60-family-s-summary.json",
     "reports/candidate-stability-envelope.json",
     "reports/candidates.json",
     "reports/candidates/candidate_stability_envelope_manifest.json",
@@ -117,6 +118,7 @@
     "scripts/audit_v2_prior_envelope.py",
     "scripts/audit_v2_strata_distribution.py",
     "scripts/audit_writeup_claim_evidence.py",
+    "scripts/summarize_bias60_family_s.py",
     "scripts/build_building_morphology_candidate.py",
     "scripts/build_building_source_prior.py",
     "scripts/build_c0_candidate.py",
@@ -157,7 +159,8 @@
   ],
   "reproduce_command_aliases": {
     "SEE_DISCOVERY_RURAL_SVI": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
-    "SEE_EDGE_CASES": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/audit_edge_cases.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/edge-cases.json"
+    "SEE_EDGE_CASES": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/audit_edge_cases.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/edge-cases.json",
+    "SUMMARIZE_BIAS60_FAMILY_S": "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json"
   },
   "tokenizer": {
     "pattern": "(?<![A-Za-z0-9_.+-])\\d[\\d,]*(?:\\.\\d+)?(?![A-Za-z0-9_])",
@@ -610,6 +613,20 @@
     },
     {
       "doc": "docs/writeup/methodology.md",
+      "section": "Family S spatial-context estimator diagnostics",
+      "evidence": [
+        "reports/bias60-family-s-summary.json",
+        "reports/ideas-harness.json",
+        "reports/ideas-orthogonality.json"
+      ],
+      "reproduce": "SUMMARIZE_BIAS60_FAMILY_S",
+      "products": [
+        "reports/bias60-family-s-summary.json"
+      ],
+      "provenance_class": "measured_provided_data"
+    },
+    {
+      "doc": "docs/writeup/methodology.md",
       "section": "Route-reference transport v2 (provided Overture only)",
       "evidence": [
         "reports/transport-route-ref-audit.json"
@@ -1005,7 +1022,7 @@
         "reports/candidates.json"
       ]
     },
-    "methodology-047": {
+    "methodology-049": {
       "evidence": [
         "reports/discovery-rural-svi-minority.json",
         "reports/candidates.json"
@@ -1151,7 +1168,7 @@
         }
       ]
     },
-    "methodology-024": {
+    "methodology-026": {
       "derived_tokens": [
         {
           "value": 3143887,
@@ -1187,19 +1204,19 @@
         }
       ]
     },
-    "methodology-026": {
-      "evidence": [
-        "reports/transport-route-variants.json",
-        "reports/transport-route-ref-audit.json"
-      ]
-    },
-    "methodology-027": {
-      "evidence": [
-        "reports/transport-route-variants.json",
-        "reports/transport-route-ref-audit.json"
-      ]
-    },
     "methodology-028": {
+      "evidence": [
+        "reports/transport-route-variants.json",
+        "reports/transport-route-ref-audit.json"
+      ]
+    },
+    "methodology-029": {
+      "evidence": [
+        "reports/transport-route-variants.json",
+        "reports/transport-route-ref-audit.json"
+      ]
+    },
+    "methodology-030": {
       "evidence": [
         "reports/poi-category-audit.json",
         "docs/data-inventory.md",
@@ -1216,7 +1233,7 @@
         }
       ]
     },
-    "methodology-031": {
+    "methodology-033": {
       "derived_tokens": [
         {
           "value": 12.37,
@@ -1286,21 +1303,21 @@
         }
       ]
     },
-    "methodology-033": {
+    "methodology-035": {
       "evidence": [
         "reports/place-dedup.json",
         "config/poi-category-definitions.json",
         "reports/poi-category-audit.json"
       ]
     },
-    "methodology-038": {
+    "methodology-040": {
       "evidence": [
         "reports/poi-confidence-candidate.json",
         "reports/poi-facility-miss-audit.json",
         "config/poi-confidence-weighting-preregistered.json"
       ]
     },
-    "methodology-042": {
+    "methodology-044": {
       "derived_tokens": [
         {
           "value": 9.95,
@@ -1340,37 +1357,37 @@
         }
       ]
     },
-    "methodology-050": {
-      "evidence": [
-        "reports/leaderboard/2026-10-25T051219+0000.json",
-        "reports/lb-score-algebra.json",
-        "reports/lb-scorecard-snapshot.json",
-        "reports/scorecards/index.json",
-        "reports/scorecards/ySXi73rd.json",
-        "reports/scorecards/BvyKrR6v.json",
-        "reports/scorecards/rTARuUaG.json",
-        "reports/scorecards/TM83xxU6.json",
-        "reports/scorecards/uRRw9KpB.json",
-        "reports/leaderboard/index.json"
-      ],
-      "notes": "platform-recorded scores and organiser scorecard values; lb-score-algebra.json is included because it is the committed record of each public score quoted here"
-    },
-    "methodology-051": {
-      "evidence": [
-        "reports/leaderboard/2026-10-25T051219+0000.json",
-        "reports/lb-score-algebra.json",
-        "reports/lb-scorecard-snapshot.json",
-        "reports/scorecards/index.json",
-        "reports/scorecards/ySXi73rd.json",
-        "reports/scorecards/BvyKrR6v.json",
-        "reports/scorecards/rTARuUaG.json",
-        "reports/scorecards/TM83xxU6.json",
-        "reports/scorecards/uRRw9KpB.json",
-        "reports/leaderboard/index.json"
-      ],
-      "notes": "platform-recorded scores and organiser scorecard values; lb-score-algebra.json is included because it is the committed record of each public score quoted here"
-    },
     "methodology-052": {
+      "evidence": [
+        "reports/leaderboard/2026-10-25T051219+0000.json",
+        "reports/lb-score-algebra.json",
+        "reports/lb-scorecard-snapshot.json",
+        "reports/scorecards/index.json",
+        "reports/scorecards/ySXi73rd.json",
+        "reports/scorecards/BvyKrR6v.json",
+        "reports/scorecards/rTARuUaG.json",
+        "reports/scorecards/TM83xxU6.json",
+        "reports/scorecards/uRRw9KpB.json",
+        "reports/leaderboard/index.json"
+      ],
+      "notes": "platform-recorded scores and organiser scorecard values; lb-score-algebra.json is included because it is the committed record of each public score quoted here"
+    },
+    "methodology-053": {
+      "evidence": [
+        "reports/leaderboard/2026-10-25T051219+0000.json",
+        "reports/lb-score-algebra.json",
+        "reports/lb-scorecard-snapshot.json",
+        "reports/scorecards/index.json",
+        "reports/scorecards/ySXi73rd.json",
+        "reports/scorecards/BvyKrR6v.json",
+        "reports/scorecards/rTARuUaG.json",
+        "reports/scorecards/TM83xxU6.json",
+        "reports/scorecards/uRRw9KpB.json",
+        "reports/leaderboard/index.json"
+      ],
+      "notes": "platform-recorded scores and organiser scorecard values; lb-score-algebra.json is included because it is the committed record of each public score quoted here"
+    },
+    "methodology-054": {
       "evidence": [
         "reports/leaderboard/2026-10-25T051219+0000.json",
         "reports/lb-score-algebra.json",

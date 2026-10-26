@@ -364,11 +364,20 @@ def reproducibility_section(audit: dict[str, Any]) -> list[str]:
                 "claims_asserting_accuracy", "claims_with_prohibited_data_language"):
         if key in measured:
             lines.append(f"- `{key}`: {measured[key]}")
-    lines += ["", "Commands (all recorded exit code 0):", "", "```bash",
-              CONFIG["commands"]["build"], CONFIG["commands"]["verify"],
-              CONFIG["commands"]["tests"],
+    lines += ["", "The claim inventory and per-claim verifier gates pass. The full audit "
+              "exited nonzero because this refresh did not use `--execute-reproduce` and a "
+              "historical candidate product hash remains stale; rebuilding that candidate is "
+              "prohibited. The family-S summary command was run separately, but is not recorded "
+              "in the audit execution log. These reproducibility-only gates remain open; they "
+              "do not change the 100% claim/token coverage or claim-verifier results.", "",
+              "Commands run for this refresh:", "", "```bash",
               'COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" '
-              "/home/martin/hddProjects/langywrap/uv run --quiet python "
+              "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 "
+              "--with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python "
+              "scripts/audit_writeup_claim_evidence.py --write-inventory",
+              'COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" '
+              "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 "
+              "--with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python "
               "scripts/audit_writeup_claim_evidence.py", "```", "",
               "Deterministic audit artifacts: "
               "`reports/writeup-claim-evidence-audit.json`, "

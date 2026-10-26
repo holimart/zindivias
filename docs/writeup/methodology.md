@@ -119,6 +119,33 @@ Exploratory SVI/rural comparisons below are strata of C2/C3 **predictions** only
 
 The documentation-only prior-art review is [`docs/literature/completeness-prior-art.md`](../literature/completeness-prior-art.md); its coverage and URL-verification caveats are summarized in [`docs/literature/README.md`](../literature/README.md). It reviews road/building completeness, volunteered geographic information quality, provider/schema documentation, organizer-method context, and leaderboard-oracle ethics. Publication context motivates testing coverage mechanisms and careful uncertainty language; it does not contribute labels, per-tract rates, coefficients, or external numeric inputs to scored predictions. The selected Overture road/POI category definitions are documented in the audits, and all source-data restrictions remain as stated in the rules.
 
+## Family S spatial-context estimator diagnostics
+
+Family S is a label-free collection of five registered spatial-context estimators, computed only from provided tract geometry, strata, Overture summaries/points, and already-emitted estimator artifacts. These are diagnostics and covariates, not a calibrated score or evidence about the hidden organiser target. Each idea emits the official GEOID partition; its defined mask varies by channel and is not silently filled with observed zeros.
+
+| Idea | Spatial signal and outputs | Output rows / channels | Defined rows and limitations |
+|---|---|---:|---|
+| `S1` | Queen-neighbour means (self excluded) of earlier estimator channels, plus Moran's I diagnostics | 600,256 / 64 | Each lag retains its source defined mask; zero-coverage and sparse channels remain visible. At emission time the source set comprised 44 earlier implemented ideas; later Family T emissions were not retroactively added to this frozen S1 artifact. |
+| `S2` | County empirical-Bayes pooling of provided Overture building and all-POI counts; Poisson sampling variance and within-county excess variance set the shrinkage | 18,758 / 2 | Both channels defined for 9,379 tracts. Pooling is a deterministic count smoother, not fitted to target scores. |
+| `S3` | Capped decayed count of provided fire/EMS/school POIs across tract boundaries, within 150 m, only where the receiving tract has no same-type point | 28,137 / 3 | All three channels defined for 9,379 tracts. This detects package-boundary leakage only; it is not a service-area or completeness measure. |
+| `S4` | Component-median prior-gap difference from the median of 25 nearest peers in the other three provided study regions, using population/building/road density and RUCA | 37,516 / 4 | Buildings, establishments and facilities each defined for 9,377 tracts; roads for 9,296. Peer features and estimates come only from the provided study regions, not the lab. |
+| `S5` | Mean normalized local Geary contribution over existing defined gap channels on queen neighbours | 9,379 / 1 | Defined for 9,377 tracts; existing gap emissions are used as emitted, with no ratio reconstruction. |
+
+The label-free summary `reports/bias60-family-s-summary.json` verifies the exact 9,379 GEOID/region partition and each Parquet digest. Parquet SHA-256 values are S1 `632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03`, S2 `5b5e45edd6cd0f0a14cdfb124d587136f0f059a1c80a0aa6131a6abac958980a`, S3 `ce01545f0e10cbffee64b50f5088608d6c67cb096f8769bca869af5fff5533d7`, S4 `5841cac5114f2c7571bd41f90914c076b2eb92e1fe7bd1c33d6fe95b47a2a71c`, and S5 `81d9153819dadf76a9d8666f6887300d412f8d5fc6acf15c1a8dfc924840725c`. The summary SHA-256 is `ea1bdb11e7c358eb5ffc4b75a0a1a3c19d7f2b7bb84dce6453fb400643f68581`; it binds the current passing harness report (`20279d9548fa126ec81b2df9dbbe67b363101303b1222e76caf985dc2c9e9c58`) and orthogonality report (`d5fcb1872c2899d40c949d51181f4c6da35309463d2e84a0af5cbd63e6b0e443`). The current orthogonality matrix measures 145 channels (135 included after declared coverage/degeneracy handling), and flags 12 pairs involving S above `|rho| > 0.8`; an example is the correlation of `0.999` between S1's lagged M2 and M4 all-place metadata channels. Five S channels have VIF above 10 (10.162–14.047), including the S1 lags of M2 facility Wikidata share and M3 facility address-mismatch share and S3 school-boundary leakage. These flags disclose redundancy; all outputs are retained, not silently removed. Complete pairwise correlations, coverage/distributions, VIF values and flagged pairs are in the summary and the full `reports/ideas-orthogonality.json`.
+
+Reproduce the label-free summary against the committed Family S Parquets and current harness/orthogonality reports with:
+
+```sh
+COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" \
+  /home/martin/hddProjects/langywrap/uv run \
+  --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 \
+  python scripts/summarize_bias60_family_s.py \
+  --workspace "$COMPETITION_WORKSPACE" \
+  --out reports/bias60-family-s-summary.json
+```
+
+This summary measures estimator distributions and their mutual dependence only. No labels, removed references or equivalent copies, leaderboard values, uploads or accuracy claims were used. The spatial signals and the reported correlations/VIF do not establish geographic coverage quality or predictive performance.
+
 ## Reproduction and recommendations
 
 The broad source and method checks are available as deterministic repository scripts/reports. Recreate the new edge-case and probe-log artifacts from the competition repository:

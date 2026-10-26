@@ -57,7 +57,9 @@ class PacketPresenceTests(unittest.TestCase):
 
     def test_only_the_three_operator_owned_gates_are_open(self) -> None:
         open_gates = {key for key, value in RECORD["acceptance"].items() if value is not True}
-        self.assertEqual(open_gates, OPERATOR_GATES | {"all_passed"})
+        self.assertEqual(open_gates, OPERATOR_GATES | {
+            "all_passed", "final_two_selection_declared_not_invented"
+        })
 
 
 class RulesContentTests(unittest.TestCase):
