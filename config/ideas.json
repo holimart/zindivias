@@ -614,7 +614,7 @@
       "failure_mode": "smooths away genuine idiosyncratic gaps such as single-tract facility misses.",
       "family": "S",
       "id": "S1",
-      "implementation": null,
+      "implementation": "bias60.ideas.s::s1",
       "inputs": [
         "the outputs of the other ideas; queen contiguity from `acs` polygons"
       ],
@@ -624,7 +624,7 @@
       "recipe": "W·e_i excluding the tract itself, plus Moran's I for each e_i (diagnostic).",
       "recipe_scope": "per tract",
       "signal": "mapping conventions (DOT classing, county GIS donations, Meta coverage) are spatially autocorrelated, so the neighbours' mean of an estimator denoises single-tract noise.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Spatial lag of every other estimator"
     },
     {
@@ -640,7 +640,7 @@
       "failure_mode": "single-county dominance (Harris has 1,094 tracts).",
       "family": "S",
       "id": "S2",
-      "implementation": null,
+      "implementation": "bias60.ideas.s::s2",
       "inputs": [
         "any count-based idea plus COUNTYFP"
       ],
@@ -650,7 +650,7 @@
       "recipe": "θ̂ = λ·e_tract + (1 − λ)·e_county, with λ = τ²/(τ² + σ²_tract) and σ² from Poisson counts.",
       "recipe_scope": "per tract",
       "signal": "county is the unit of Esri Community Maps donations, county highway systems (TIGER S1200 includes them) and CBP disclosure. Pool tract estimators toward county means with weights from tract-level sampling variance (James–Stein / Fay–Herriot style).",
-      "status": "declared",
+      "status": "implemented",
       "title": "County empirical-Bayes pooling"
     },
     {
@@ -662,7 +662,7 @@
       "failure_mode": "the USGS point may be at the same position as Overture's, in which case there is no gap.",
       "family": "S",
       "id": "S3",
-      "implementation": null,
+      "implementation": "bias60.ideas.s::s3",
       "inputs": [
         "`pois` (facility categories)",
         "`acs` polygons"
@@ -673,7 +673,7 @@
       "recipe": "P_leak = Σ over outside places of exp(−d/50 m). Emit expected gap contribution min(1, P_leak) when O_k = 0.",
       "recipe_scope": "per tract and type k",
       "signal": "when the tract has no Overture station or school of type k but one lies within 150 m outside its boundary, positional differences between Overture and USGS points make it likely that the USGS point sits inside the tract. The tract then gets a per-type gap of 1, while the neighbour's extra place is clipped at 0.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Cross-boundary facility leakage"
     },
     {
@@ -685,7 +685,7 @@
       "failure_mode": "no peers for unique tracts such as reservations and downtowns. Gate with Meyer–Pebesma AOA.",
       "family": "S",
       "id": "S4",
-      "implementation": null,
+      "implementation": "bias60.ideas.s::s4",
       "inputs": [
         "label-free features of all four regions"
       ],
@@ -695,7 +695,7 @@
       "recipe": "e_i(tract) − median e_i(peers).",
       "recipe_scope": "per tract",
       "signal": "for each tract, find k = 25 nearest peers in standardised urban-form feature space (density, RUCA, building size, road density) *in the other three regions*. The difference between a tract's estimators and its peers' estimators isolates region-specific conventions, such as the primary/secondary boundary that the organiser says varies by region.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Cross-region peer matching (counterfactual region)"
     },
     {
@@ -707,7 +707,7 @@
       "failure_mode": "noisy in small tracts.",
       "family": "S",
       "id": "S5",
-      "implementation": null,
+      "implementation": "bias60.ideas.s::s5",
       "inputs": [
         "outputs of the count ideas"
       ],
@@ -717,7 +717,7 @@
       "recipe": "local Geary's c of the O/E ratio; flag pairs where ratio_i < 0.5 < 1.5 < ratio_j.",
       "recipe_scope": "per tract",
       "signal": "high local variance among neighbours' estimators, or a sign flip between a tract and its neighbours, marks misallocation (features assigned to the wrong tract) rather than absence. Misallocation drives clipped-gap inflation because only deficits count.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Local estimator disagreement"
     },
     {
@@ -1459,7 +1459,7 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 16,
+    "declared_count": 11,
     "families_total": 12,
     "ideas_per_family": [
       5
@@ -1482,6 +1482,11 @@
       "D3",
       "D4",
       "D5",
+      "S1",
+      "S2",
+      "S3",
+      "S4",
+      "S5",
       "X1",
       "X3",
       "X4",
@@ -1518,7 +1523,7 @@
       "F",
       "R"
     ],
-    "implemented_count": 44
+    "implemented_count": 49
   },
   "vocabulary": {
     "components": [

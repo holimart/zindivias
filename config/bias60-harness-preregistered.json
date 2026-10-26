@@ -1369,6 +1369,52 @@
       "property_rule": "more than one distinct nonempty sources.property path per feature",
       "assignment": "bbox center to one official ACS tract",
       "note": "Feature share only; provider identity and record_id are not emitted."
+    },
+    "S1": {
+      "component": "all",
+      "contiguity": "queen",
+      "exclude_self": true,
+      "lag": "mean over defined neighbor values",
+      "moran_diagnostic": "global Moran's I for each predecessor emission"
+    },
+    "S2": {
+      "component": "all",
+      "kind": "covariate",
+      "count_columns": ["overture_buildings", "overture_poi_all"],
+      "county_columns": ["STATEFP", "COUNTYFP"],
+      "sampling_variance": "Poisson max(count,1)",
+      "tau_squared": "max(sample variance within county minus county mean,0)"
+    },
+    "S3": {
+      "component": "F",
+      "kind": "covariate",
+      "poi_layer": "pois",
+      "poi_columns": ["basic_category", "categories", "taxonomy", "geometry"],
+      "types": ["fire", "ems", "schools"],
+      "definition": "primary category, alternate, taxonomy hierarchy, or basic category",
+      "category_sets": {
+        "fire": ["fire_department", "fire_protection_service"],
+        "ems": ["ambulance_and_ems_services"],
+        "schools": ["charter_school", "elementary_school", "high_school", "middle_school", "montessori_school", "preschool", "private_school", "public_school", "religious_school", "school"]
+      },
+      "distance_m": 150.0,
+      "decay_m": 50.0
+    },
+    "S4": {
+      "component": "R",
+      "kind": "covariate",
+      "peer_k": 25,
+      "feature_columns": ["overture_buildings", "overture_named_road_km_5070"],
+      "strata_columns": ["ALAND", "pop_total", "ruca_primary"],
+      "peer_scope": "other three provided study regions only",
+      "estimator_summary": "median of existing gap emissions by component"
+    },
+    "S5": {
+      "component": "C",
+      "kind": "covariate",
+      "contiguity": "queen",
+      "source": "existing gap emissions",
+      "statistic": "normalized local Geary contribution"
     }
   },
   "spec_amendments": {

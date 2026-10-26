@@ -270,9 +270,13 @@ def build_report(*, config: dict[str, Any], registry_document: dict[str, Any],
     # Sca2 needs P2; Sca5 consumes all component gaps plus the P3/X1 probability inputs. Dst4/Dst5
     # consume component gaps after those producers. Keep the public registry order in the report.
     post_estimators = {"Sca2", "Sca5", "Dst4", "Dst5"}
-    run_order = ([idea_id for idea_id in implemented if idea_id not in post_estimators]
-                  + [idea_id for idea_id in ("Sca2", "Sca5", "Dst4", "Dst5")
-                     if idea_id in implemented])
+    spatial_estimators = {"S1", "S2", "S3", "S4", "S5"}
+    run_order = ([idea_id for idea_id in implemented
+                  if idea_id not in post_estimators | spatial_estimators]
+                 + [idea_id for idea_id in ("Sca2", "Sca5", "Dst4", "Dst5")
+                    if idea_id in implemented]
+                 + [idea_id for idea_id in ("S1", "S2", "S3", "S4", "S5")
+                    if idea_id in implemented])
     for idea_id in run_order:
         if tamper == "drop_idea" and idea_id == implemented[0]:
             # Keep the dependency artifact available to later post-estimators while omitting this

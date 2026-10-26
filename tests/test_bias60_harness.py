@@ -59,6 +59,19 @@ def harness_config() -> dict:
     return config
 
 
+def expected_seed_components() -> set[str]:
+    output: set[str] = set()
+    for seed in CONFIG["seeds"].values():
+        component = seed.get("component")
+        if component == "all":
+            output.update(seed.get("components", ["R", "B", "F", "Est", "C"]))
+        elif component:
+            output.add(component)
+        else:
+            output.update(seed.get("components", []))
+    return output
+
+
 def stub_geoids(region: str) -> list[str]:
     return [f"{region[:2]}{index:06d}00" for index in range(1, 9)]
 
@@ -180,7 +193,8 @@ def _stub_g_implementations():
                                                             "Sc1", "Sc2", "Sc3", "Sc4", "Sca2", "Sca3",
                                                             "Sca4", "Sca5", "X1", "X3", "X4", "X5",
                                                             "M1", "M2", "M3", "M4", "M5",
-                                                            "Mx1", "Mx2", "Mx3", "Mx4", "Mx5"]}
+                                                            "Mx1", "Mx2", "Mx3", "Mx4", "Mx5",
+                                                            "S1", "S2", "S3", "S4", "S5"]}
     def stub(idea_id, specification):
         def execute(inputs):
             from bias60.contracts import Emission, IdeaOutput
@@ -215,7 +229,12 @@ def _stub_g_implementations():
                      ("F", "covariate:school_category_mismatch_share_microsoft"),
                      ("F", "covariate:school_category_mismatch_share_foursquare"),
                      ("F", "covariate:school_category_mismatch_share_alltheplaces"),
-                     ("F", "covariate:school_category_mismatch_share_other")]}
+                     ("F", "covariate:school_category_mismatch_share_other")],
+             "S1": [("R", "covariate:synthetic_lag")],
+             "S2": [("all", "covariate:synthetic_county_pool")],
+             "S3": [("F", "covariate:synthetic_leak")],
+             "S4": [("R", "covariate:synthetic_peer")],
+             "S5": [("C", "covariate:synthetic_geary")]}
     IMPLEMENTATIONS.update({idea: stub(idea, specs[idea]) for idea in specs})
     return originals
 
@@ -256,10 +275,8 @@ class SpecAndRegistryTests(unittest.TestCase):
         self.assertEqual(registry["summary"]["ideas_total"], 60)
         self.assertEqual(sorted(registry["summary"]["by_family"].values()), [5] * 12)
         self.assertEqual(sorted(registry["summary"]["implemented"]), sorted(implemented_ids()))
-        expected_components = {
-            seed["component"] if "component" in seed else seed["components"][0]
-            for seed in CONFIG["seeds"].values()}
-        self.assertEqual(set(registry["summary"]["implemented_components"]), expected_components)
+        self.assertEqual(set(registry["summary"]["implemented_components"]),
+                         expected_seed_components())
         for idea in registry["ideas"]:
             self.assertIn(idea["component"], CONFIG["vocabulary"]["components"])
             self.assertIn(idea["cost"], CONFIG["vocabulary"]["costs"])
@@ -276,10 +293,8 @@ class SpecAndRegistryTests(unittest.TestCase):
         gates = harness_module.validate_registry_document(registry, harness_config(), spec_parse())
         self.assertTrue(gates["three_seeds_implemented"])
         self.assertTrue(gates["seeds_span_components"])
-        expected_components = {
-            seed["component"] if "component" in seed else seed["components"][0]
-            for seed in CONFIG["seeds"].values()}
-        self.assertEqual(set(registry["summary"]["implemented_components"]), expected_components)
+        self.assertEqual(set(registry["summary"]["implemented_components"]),
+                         expected_seed_components())
 
     def test_registry_gates_fail_when_an_idea_is_dropped(self) -> None:
         registry = harness_module.build_registry(spec_parse())
