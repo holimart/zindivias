@@ -1,0 +1,6539 @@
+{
+  "schema_version": 1,
+  "audit": "Region-stratified nonlinear mutual-information screen for S1-S5; diagnostic only, no feature integration",
+  "method": {
+    "scope": "Every registered S1-S5 emission versus every emission from a different currently implemented idea, including cross-pairs among S1-S5; same-idea emission pairs are excluded. Each unordered feature pair is evaluated once per official region.",
+    "continuous_encoding": "Within each region, use deterministic empirical deciles (NumPy linear quantiles at 0.1 through 0.9; ties may collapse bins); bins are computed from that feature's region-defined values before pairwise masking.",
+    "categorical_encoding": "Keep integer-valued features with at most 10 distinct region-defined values as categories; this retains binary/flag features as categories. Other features use empirical-decile bins.",
+    "pairwise_mask": "Only rows with both emissions defined and finite are included; calculate NMI when joint count >=30.",
+    "nmi": "Symmetric arithmetic normalization: 2*MI/(H(X)+H(Y)) using natural-log entropy; if either/both encodings have zero entropy, report NMI=0 as non-informative. Numerical results are clipped only for floating-point roundoff into [0,1].",
+    "threshold": 0.8
+  },
+  "scope": {
+    "official_ids": 9379,
+    "exact_9379_id_partition": true,
+    "official_ids_by_region": {
+      "maricopa-az": 1593,
+      "northern-ca": 591,
+      "eastern-ok": 1192,
+      "south-central-tx": 6003
+    },
+    "registered_ideas": 57,
+    "registered_feature_emissions": 159,
+    "s_family_feature_emissions": 74,
+    "candidate_feature_pairs": 6965,
+    "eligible_region_pair_measurements": 26706,
+    "flagged_region_pairs_nmi_ge_0_80": 1,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "external_or_removed_reference_inputs_read": false,
+    "features_integrated_or_registry_changed": false,
+    "uploads": 0
+  },
+  "pair_accounting": {
+    "candidate_feature_pairs_per_region": {
+      "maricopa-az": 6965,
+      "northern-ca": 6965,
+      "eastern-ok": 6965,
+      "south-central-tx": 6965
+    },
+    "eligible_pairs_per_region": {
+      "maricopa-az": 6559,
+      "northern-ca": 6557,
+      "eastern-ok": 6795,
+      "south-central-tx": 6795
+    },
+    "excluded_below_30_per_region": {
+      "maricopa-az": 406,
+      "northern-ca": 408,
+      "eastern-ok": 170,
+      "south-central-tx": 170
+    },
+    "nmi_measurements_total": 26706,
+    "pair_result_row_schema": [
+      "left_feature_index",
+      "right_feature_index",
+      "region_index",
+      "joint_defined",
+      "nmi"
+    ],
+    "complete": true
+  },
+  "feature_catalog": [
+    {
+      "index": 0,
+      "key": "D1|Est|covariate",
+      "idea": "D1",
+      "family": "D",
+      "component": "Est",
+      "channel": "covariate"
+    },
+    {
+      "index": 1,
+      "key": "D2|F|covariate",
+      "idea": "D2",
+      "family": "D",
+      "component": "F",
+      "channel": "covariate"
+    },
+    {
+      "index": 2,
+      "key": "D3|B|covariate",
+      "idea": "D3",
+      "family": "D",
+      "component": "B",
+      "channel": "covariate"
+    },
+    {
+      "index": 3,
+      "key": "D4|Est|covariate",
+      "idea": "D4",
+      "family": "D",
+      "component": "Est",
+      "channel": "covariate"
+    },
+    {
+      "index": 4,
+      "key": "D5|Est|covariate",
+      "idea": "D5",
+      "family": "D",
+      "component": "Est",
+      "channel": "covariate"
+    },
+    {
+      "index": 5,
+      "key": "Dst1|Est|gap",
+      "idea": "Dst1",
+      "family": "Dst",
+      "component": "Est",
+      "channel": "gap"
+    },
+    {
+      "index": 6,
+      "key": "Dst2|Est|gap",
+      "idea": "Dst2",
+      "family": "Dst",
+      "component": "Est",
+      "channel": "gap"
+    },
+    {
+      "index": 7,
+      "key": "Dst3|B|gap",
+      "idea": "Dst3",
+      "family": "Dst",
+      "component": "B",
+      "channel": "gap"
+    },
+    {
+      "index": 8,
+      "key": "Dst4|C|gap",
+      "idea": "Dst4",
+      "family": "Dst",
+      "component": "C",
+      "channel": "gap"
+    },
+    {
+      "index": 9,
+      "key": "Dst5|C|gap",
+      "idea": "Dst5",
+      "family": "Dst",
+      "component": "C",
+      "channel": "gap"
+    },
+    {
+      "index": 10,
+      "key": "G1|R|covariate",
+      "idea": "G1",
+      "family": "G",
+      "component": "R",
+      "channel": "covariate"
+    },
+    {
+      "index": 11,
+      "key": "G1|R|gap",
+      "idea": "G1",
+      "family": "G",
+      "component": "R",
+      "channel": "gap"
+    },
+    {
+      "index": 12,
+      "key": "G2|R|gap",
+      "idea": "G2",
+      "family": "G",
+      "component": "R",
+      "channel": "gap"
+    },
+    {
+      "index": 13,
+      "key": "G3|B|gap",
+      "idea": "G3",
+      "family": "G",
+      "component": "B",
+      "channel": "gap"
+    },
+    {
+      "index": 14,
+      "key": "G4|B|covariate",
+      "idea": "G4",
+      "family": "G",
+      "component": "B",
+      "channel": "covariate"
+    },
+    {
+      "index": 15,
+      "key": "G5|Est|covariate",
+      "idea": "G5",
+      "family": "G",
+      "component": "Est",
+      "channel": "covariate"
+    },
+    {
+      "index": 16,
+      "key": "G5|F|covariate",
+      "idea": "G5",
+      "family": "G",
+      "component": "F",
+      "channel": "covariate"
+    },
+    {
+      "index": 17,
+      "key": "M1|R|covariate:low_version_tertiary_share",
+      "idea": "M1",
+      "family": "M",
+      "component": "R",
+      "channel": "covariate:low_version_tertiary_share"
+    },
+    {
+      "index": 18,
+      "key": "M1|R|covariate:named_mean_version",
+      "idea": "M1",
+      "family": "M",
+      "component": "R",
+      "channel": "covariate:named_mean_version"
+    },
+    {
+      "index": 19,
+      "key": "M1|R|covariate:tertiary_mean_version",
+      "idea": "M1",
+      "family": "M",
+      "component": "R",
+      "channel": "covariate:tertiary_mean_version"
+    },
+    {
+      "index": 20,
+      "key": "M2|Est|covariate:all_wikidata_link_share",
+      "idea": "M2",
+      "family": "M",
+      "component": "Est",
+      "channel": "covariate:all_wikidata_link_share"
+    },
+    {
+      "index": 21,
+      "key": "M2|F|covariate:facility_wikidata_link_share",
+      "idea": "M2",
+      "family": "M",
+      "component": "F",
+      "channel": "covariate:facility_wikidata_link_share"
+    },
+    {
+      "index": 22,
+      "key": "M3|Est|covariate:address_mismatch_share",
+      "idea": "M3",
+      "family": "M",
+      "component": "Est",
+      "channel": "covariate:address_mismatch_share"
+    },
+    {
+      "index": 23,
+      "key": "M3|F|covariate:facility_incoming_address_mismatch_share",
+      "idea": "M3",
+      "family": "M",
+      "component": "F",
+      "channel": "covariate:facility_incoming_address_mismatch_share"
+    },
+    {
+      "index": 24,
+      "key": "M4|Est|covariate:chain_brand_share",
+      "idea": "M4",
+      "family": "M",
+      "component": "Est",
+      "channel": "covariate:chain_brand_share"
+    },
+    {
+      "index": 25,
+      "key": "M4|Est|covariate:chain_count_per_housing_unit",
+      "idea": "M4",
+      "family": "M",
+      "component": "Est",
+      "channel": "covariate:chain_count_per_housing_unit"
+    },
+    {
+      "index": 26,
+      "key": "M5|B|covariate:multi_property_share",
+      "idea": "M5",
+      "family": "M",
+      "component": "B",
+      "channel": "covariate:multi_property_share"
+    },
+    {
+      "index": 27,
+      "key": "M5|R|covariate:multi_property_share",
+      "idea": "M5",
+      "family": "M",
+      "component": "R",
+      "channel": "covariate:multi_property_share"
+    },
+    {
+      "index": 28,
+      "key": "Mx1|R|covariate:tomtom_named_length_share",
+      "idea": "Mx1",
+      "family": "Mx",
+      "component": "R",
+      "channel": "covariate:tomtom_named_length_share"
+    },
+    {
+      "index": 29,
+      "key": "Mx1|R|covariate:tomtom_tertiary_length_share",
+      "idea": "Mx1",
+      "family": "Mx",
+      "component": "R",
+      "channel": "covariate:tomtom_tertiary_length_share"
+    },
+    {
+      "index": 30,
+      "key": "Mx2|Est|covariate:microsoft_only_place_share",
+      "idea": "Mx2",
+      "family": "Mx",
+      "component": "Est",
+      "channel": "covariate:microsoft_only_place_share"
+    },
+    {
+      "index": 31,
+      "key": "Mx2|F|covariate:facility_microsoft_only_place_share",
+      "idea": "Mx2",
+      "family": "Mx",
+      "component": "F",
+      "channel": "covariate:facility_microsoft_only_place_share"
+    },
+    {
+      "index": 32,
+      "key": "Mx3|Est|covariate:foursquare_only_place_share",
+      "idea": "Mx3",
+      "family": "Mx",
+      "component": "Est",
+      "channel": "covariate:foursquare_only_place_share"
+    },
+    {
+      "index": 33,
+      "key": "Mx4|B|covariate",
+      "idea": "Mx4",
+      "family": "Mx",
+      "component": "B",
+      "channel": "covariate"
+    },
+    {
+      "index": 34,
+      "key": "Mx4|F|covariate",
+      "idea": "Mx4",
+      "family": "Mx",
+      "component": "F",
+      "channel": "covariate"
+    },
+    {
+      "index": 35,
+      "key": "Mx5|F|covariate:school_category_mismatch_share_alltheplaces",
+      "idea": "Mx5",
+      "family": "Mx",
+      "component": "F",
+      "channel": "covariate:school_category_mismatch_share_alltheplaces"
+    },
+    {
+      "index": 36,
+      "key": "Mx5|F|covariate:school_category_mismatch_share_foursquare",
+      "idea": "Mx5",
+      "family": "Mx",
+      "component": "F",
+      "channel": "covariate:school_category_mismatch_share_foursquare"
+    },
+    {
+      "index": 37,
+      "key": "Mx5|F|covariate:school_category_mismatch_share_meta",
+      "idea": "Mx5",
+      "family": "Mx",
+      "component": "F",
+      "channel": "covariate:school_category_mismatch_share_meta"
+    },
+    {
+      "index": 38,
+      "key": "Mx5|F|covariate:school_category_mismatch_share_microsoft",
+      "idea": "Mx5",
+      "family": "Mx",
+      "component": "F",
+      "channel": "covariate:school_category_mismatch_share_microsoft"
+    },
+    {
+      "index": 39,
+      "key": "Mx5|F|covariate:school_category_mismatch_share_other",
+      "idea": "Mx5",
+      "family": "Mx",
+      "component": "F",
+      "channel": "covariate:school_category_mismatch_share_other"
+    },
+    {
+      "index": 40,
+      "key": "P1|Est|gap",
+      "idea": "P1",
+      "family": "P",
+      "component": "Est",
+      "channel": "gap"
+    },
+    {
+      "index": 41,
+      "key": "P2|F|gap",
+      "idea": "P2",
+      "family": "P",
+      "component": "F",
+      "channel": "gap"
+    },
+    {
+      "index": 42,
+      "key": "P3|F|covariate",
+      "idea": "P3",
+      "family": "P",
+      "component": "F",
+      "channel": "covariate"
+    },
+    {
+      "index": 43,
+      "key": "P4|R|gap",
+      "idea": "P4",
+      "family": "P",
+      "component": "R",
+      "channel": "gap"
+    },
+    {
+      "index": 44,
+      "key": "S1|B|covariate:lag_d3_b_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "B",
+      "channel": "covariate:lag_d3_b_covariate"
+    },
+    {
+      "index": 45,
+      "key": "S1|B|covariate:lag_dst3_b_gap",
+      "idea": "S1",
+      "family": "S",
+      "component": "B",
+      "channel": "covariate:lag_dst3_b_gap"
+    },
+    {
+      "index": 46,
+      "key": "S1|B|covariate:lag_g3_b_gap",
+      "idea": "S1",
+      "family": "S",
+      "component": "B",
+      "channel": "covariate:lag_g3_b_gap"
+    },
+    {
+      "index": 47,
+      "key": "S1|B|covariate:lag_g4_b_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "B",
+      "channel": "covariate:lag_g4_b_covariate"
+    },
+    {
+      "index": 48,
+      "key": "S1|B|covariate:lag_m5_b_covariate_multi_property_share",
+      "idea": "S1",
+      "family": "S",
+      "component": "B",
+      "channel": "covariate:lag_m5_b_covariate_multi_property_share"
+    },
+    {
+      "index": 49,
+      "key": "S1|B|covariate:lag_mx4_b_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "B",
+      "channel": "covariate:lag_mx4_b_covariate"
+    },
+    {
+      "index": 50,
+      "key": "S1|B|covariate:lag_sca3_b_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "B",
+      "channel": "covariate:lag_sca3_b_covariate"
+    },
+    {
+      "index": 51,
+      "key": "S1|B|covariate:lag_tm1_b_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "B",
+      "channel": "covariate:lag_tm1_b_covariate"
+    },
+    {
+      "index": 52,
+      "key": "S1|B|covariate:lag_tm1_b_gap",
+      "idea": "S1",
+      "family": "S",
+      "component": "B",
+      "channel": "covariate:lag_tm1_b_gap"
+    },
+    {
+      "index": 53,
+      "key": "S1|C|covariate:lag_dst4_c_gap",
+      "idea": "S1",
+      "family": "S",
+      "component": "C",
+      "channel": "covariate:lag_dst4_c_gap"
+    },
+    {
+      "index": 54,
+      "key": "S1|C|covariate:lag_dst5_c_gap",
+      "idea": "S1",
+      "family": "S",
+      "component": "C",
+      "channel": "covariate:lag_dst5_c_gap"
+    },
+    {
+      "index": 55,
+      "key": "S1|C|covariate:lag_sca2_c_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "C",
+      "channel": "covariate:lag_sca2_c_covariate"
+    },
+    {
+      "index": 56,
+      "key": "S1|C|covariate:lag_sca5_c_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "C",
+      "channel": "covariate:lag_sca5_c_covariate"
+    },
+    {
+      "index": 57,
+      "key": "S1|Est|covariate:lag_d1_est_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "Est",
+      "channel": "covariate:lag_d1_est_covariate"
+    },
+    {
+      "index": 58,
+      "key": "S1|Est|covariate:lag_d4_est_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "Est",
+      "channel": "covariate:lag_d4_est_covariate"
+    },
+    {
+      "index": 59,
+      "key": "S1|Est|covariate:lag_d5_est_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "Est",
+      "channel": "covariate:lag_d5_est_covariate"
+    },
+    {
+      "index": 60,
+      "key": "S1|Est|covariate:lag_dst1_est_gap",
+      "idea": "S1",
+      "family": "S",
+      "component": "Est",
+      "channel": "covariate:lag_dst1_est_gap"
+    },
+    {
+      "index": 61,
+      "key": "S1|Est|covariate:lag_dst2_est_gap",
+      "idea": "S1",
+      "family": "S",
+      "component": "Est",
+      "channel": "covariate:lag_dst2_est_gap"
+    },
+    {
+      "index": 62,
+      "key": "S1|Est|covariate:lag_g5_est_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "Est",
+      "channel": "covariate:lag_g5_est_covariate"
+    },
+    {
+      "index": 63,
+      "key": "S1|Est|covariate:lag_m2_est_covariate_all_wikidata_link_share",
+      "idea": "S1",
+      "family": "S",
+      "component": "Est",
+      "channel": "covariate:lag_m2_est_covariate_all_wikidata_link_share"
+    },
+    {
+      "index": 64,
+      "key": "S1|Est|covariate:lag_m3_est_covariate_address_mismatch_share",
+      "idea": "S1",
+      "family": "S",
+      "component": "Est",
+      "channel": "covariate:lag_m3_est_covariate_address_mismatch_share"
+    },
+    {
+      "index": 65,
+      "key": "S1|Est|covariate:lag_m4_est_covariate_chain_brand_share",
+      "idea": "S1",
+      "family": "S",
+      "component": "Est",
+      "channel": "covariate:lag_m4_est_covariate_chain_brand_share"
+    },
+    {
+      "index": 66,
+      "key": "S1|Est|covariate:lag_m4_est_covariate_chain_count_per_housing_unit",
+      "idea": "S1",
+      "family": "S",
+      "component": "Est",
+      "channel": "covariate:lag_m4_est_covariate_chain_count_per_housing_unit"
+    },
+    {
+      "index": 67,
+      "key": "S1|Est|covariate:lag_mx2_est_covariate_microsoft_only_place_share",
+      "idea": "S1",
+      "family": "S",
+      "component": "Est",
+      "channel": "covariate:lag_mx2_est_covariate_microsoft_only_place_share"
+    },
+    {
+      "index": 68,
+      "key": "S1|Est|covariate:lag_mx3_est_covariate_foursquare_only_place_share",
+      "idea": "S1",
+      "family": "S",
+      "component": "Est",
+      "channel": "covariate:lag_mx3_est_covariate_foursquare_only_place_share"
+    },
+    {
+      "index": 69,
+      "key": "S1|Est|covariate:lag_p1_est_gap",
+      "idea": "S1",
+      "family": "S",
+      "component": "Est",
+      "channel": "covariate:lag_p1_est_gap"
+    },
+    {
+      "index": 70,
+      "key": "S1|Est|covariate:lag_sca4_est_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "Est",
+      "channel": "covariate:lag_sca4_est_covariate"
+    },
+    {
+      "index": 71,
+      "key": "S1|Est|covariate:lag_x3_est_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "Est",
+      "channel": "covariate:lag_x3_est_covariate"
+    },
+    {
+      "index": 72,
+      "key": "S1|F|covariate:lag_d2_f_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "F",
+      "channel": "covariate:lag_d2_f_covariate"
+    },
+    {
+      "index": 73,
+      "key": "S1|F|covariate:lag_g5_f_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "F",
+      "channel": "covariate:lag_g5_f_covariate"
+    },
+    {
+      "index": 74,
+      "key": "S1|F|covariate:lag_m2_f_covariate_facility_wikidata_link_share",
+      "idea": "S1",
+      "family": "S",
+      "component": "F",
+      "channel": "covariate:lag_m2_f_covariate_facility_wikidata_link_share"
+    },
+    {
+      "index": 75,
+      "key": "S1|F|covariate:lag_m3_f_covariate_facility_incoming_address_mismatch_share",
+      "idea": "S1",
+      "family": "S",
+      "component": "F",
+      "channel": "covariate:lag_m3_f_covariate_facility_incoming_address_mismatch_share"
+    },
+    {
+      "index": 76,
+      "key": "S1|F|covariate:lag_mx2_f_covariate_facility_microsoft_only_place_share",
+      "idea": "S1",
+      "family": "S",
+      "component": "F",
+      "channel": "covariate:lag_mx2_f_covariate_facility_microsoft_only_place_share"
+    },
+    {
+      "index": 77,
+      "key": "S1|F|covariate:lag_mx4_f_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "F",
+      "channel": "covariate:lag_mx4_f_covariate"
+    },
+    {
+      "index": 78,
+      "key": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_alltheplaces",
+      "idea": "S1",
+      "family": "S",
+      "component": "F",
+      "channel": "covariate:lag_mx5_f_covariate_school_category_mismatch_share_alltheplaces"
+    },
+    {
+      "index": 79,
+      "key": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_foursquare",
+      "idea": "S1",
+      "family": "S",
+      "component": "F",
+      "channel": "covariate:lag_mx5_f_covariate_school_category_mismatch_share_foursquare"
+    },
+    {
+      "index": 80,
+      "key": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_meta",
+      "idea": "S1",
+      "family": "S",
+      "component": "F",
+      "channel": "covariate:lag_mx5_f_covariate_school_category_mismatch_share_meta"
+    },
+    {
+      "index": 81,
+      "key": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_microsoft",
+      "idea": "S1",
+      "family": "S",
+      "component": "F",
+      "channel": "covariate:lag_mx5_f_covariate_school_category_mismatch_share_microsoft"
+    },
+    {
+      "index": 82,
+      "key": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_other",
+      "idea": "S1",
+      "family": "S",
+      "component": "F",
+      "channel": "covariate:lag_mx5_f_covariate_school_category_mismatch_share_other"
+    },
+    {
+      "index": 83,
+      "key": "S1|F|covariate:lag_p2_f_gap",
+      "idea": "S1",
+      "family": "S",
+      "component": "F",
+      "channel": "covariate:lag_p2_f_gap"
+    },
+    {
+      "index": 84,
+      "key": "S1|F|covariate:lag_p3_f_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "F",
+      "channel": "covariate:lag_p3_f_covariate"
+    },
+    {
+      "index": 85,
+      "key": "S1|F|covariate:lag_sc2_f_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "F",
+      "channel": "covariate:lag_sc2_f_covariate"
+    },
+    {
+      "index": 86,
+      "key": "S1|F|covariate:lag_sc3_f_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "F",
+      "channel": "covariate:lag_sc3_f_covariate"
+    },
+    {
+      "index": 87,
+      "key": "S1|F|covariate:lag_sc3_f_gap",
+      "idea": "S1",
+      "family": "S",
+      "component": "F",
+      "channel": "covariate:lag_sc3_f_gap"
+    },
+    {
+      "index": 88,
+      "key": "S1|F|covariate:lag_sca1_f_gap",
+      "idea": "S1",
+      "family": "S",
+      "component": "F",
+      "channel": "covariate:lag_sca1_f_gap"
+    },
+    {
+      "index": 89,
+      "key": "S1|F|covariate:lag_x1_f_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "F",
+      "channel": "covariate:lag_x1_f_covariate"
+    },
+    {
+      "index": 90,
+      "key": "S1|F|covariate:lag_x5_f_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "F",
+      "channel": "covariate:lag_x5_f_covariate"
+    },
+    {
+      "index": 91,
+      "key": "S1|R|covariate:lag_g1_r_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "R",
+      "channel": "covariate:lag_g1_r_covariate"
+    },
+    {
+      "index": 92,
+      "key": "S1|R|covariate:lag_g1_r_gap",
+      "idea": "S1",
+      "family": "S",
+      "component": "R",
+      "channel": "covariate:lag_g1_r_gap"
+    },
+    {
+      "index": 93,
+      "key": "S1|R|covariate:lag_g2_r_gap",
+      "idea": "S1",
+      "family": "S",
+      "component": "R",
+      "channel": "covariate:lag_g2_r_gap"
+    },
+    {
+      "index": 94,
+      "key": "S1|R|covariate:lag_m1_r_covariate_low_version_tertiary_share",
+      "idea": "S1",
+      "family": "S",
+      "component": "R",
+      "channel": "covariate:lag_m1_r_covariate_low_version_tertiary_share"
+    },
+    {
+      "index": 95,
+      "key": "S1|R|covariate:lag_m1_r_covariate_named_mean_version",
+      "idea": "S1",
+      "family": "S",
+      "component": "R",
+      "channel": "covariate:lag_m1_r_covariate_named_mean_version"
+    },
+    {
+      "index": 96,
+      "key": "S1|R|covariate:lag_m1_r_covariate_tertiary_mean_version",
+      "idea": "S1",
+      "family": "S",
+      "component": "R",
+      "channel": "covariate:lag_m1_r_covariate_tertiary_mean_version"
+    },
+    {
+      "index": 97,
+      "key": "S1|R|covariate:lag_m5_r_covariate_multi_property_share",
+      "idea": "S1",
+      "family": "S",
+      "component": "R",
+      "channel": "covariate:lag_m5_r_covariate_multi_property_share"
+    },
+    {
+      "index": 98,
+      "key": "S1|R|covariate:lag_mx1_r_covariate_tomtom_named_length_share",
+      "idea": "S1",
+      "family": "S",
+      "component": "R",
+      "channel": "covariate:lag_mx1_r_covariate_tomtom_named_length_share"
+    },
+    {
+      "index": 99,
+      "key": "S1|R|covariate:lag_mx1_r_covariate_tomtom_tertiary_length_share",
+      "idea": "S1",
+      "family": "S",
+      "component": "R",
+      "channel": "covariate:lag_mx1_r_covariate_tomtom_tertiary_length_share"
+    },
+    {
+      "index": 100,
+      "key": "S1|R|covariate:lag_p4_r_gap",
+      "idea": "S1",
+      "family": "S",
+      "component": "R",
+      "channel": "covariate:lag_p4_r_gap"
+    },
+    {
+      "index": 101,
+      "key": "S1|R|covariate:lag_sc1_r_gap",
+      "idea": "S1",
+      "family": "S",
+      "component": "R",
+      "channel": "covariate:lag_sc1_r_gap"
+    },
+    {
+      "index": 102,
+      "key": "S1|R|covariate:lag_sc4_r_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "R",
+      "channel": "covariate:lag_sc4_r_covariate"
+    },
+    {
+      "index": 103,
+      "key": "S1|R|covariate:lag_sc5_r_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "R",
+      "channel": "covariate:lag_sc5_r_covariate"
+    },
+    {
+      "index": 104,
+      "key": "S1|R|covariate:lag_sc5_r_gap",
+      "idea": "S1",
+      "family": "S",
+      "component": "R",
+      "channel": "covariate:lag_sc5_r_gap"
+    },
+    {
+      "index": 105,
+      "key": "S1|R|covariate:lag_sca3_r_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "R",
+      "channel": "covariate:lag_sca3_r_covariate"
+    },
+    {
+      "index": 106,
+      "key": "S1|R|covariate:lag_x4_r_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "R",
+      "channel": "covariate:lag_x4_r_covariate"
+    },
+    {
+      "index": 107,
+      "key": "S1|R|covariate:lag_x5_r_covariate",
+      "idea": "S1",
+      "family": "S",
+      "component": "R",
+      "channel": "covariate:lag_x5_r_covariate"
+    },
+    {
+      "index": 108,
+      "key": "S2|all|covariate:county_eb_buildings",
+      "idea": "S2",
+      "family": "S",
+      "component": "all",
+      "channel": "covariate:county_eb_buildings"
+    },
+    {
+      "index": 109,
+      "key": "S2|all|covariate:county_eb_poi_all",
+      "idea": "S2",
+      "family": "S",
+      "component": "all",
+      "channel": "covariate:county_eb_poi_all"
+    },
+    {
+      "index": 110,
+      "key": "S3|F|covariate:boundary_leak_ems",
+      "idea": "S3",
+      "family": "S",
+      "component": "F",
+      "channel": "covariate:boundary_leak_ems"
+    },
+    {
+      "index": 111,
+      "key": "S3|F|covariate:boundary_leak_fire",
+      "idea": "S3",
+      "family": "S",
+      "component": "F",
+      "channel": "covariate:boundary_leak_fire"
+    },
+    {
+      "index": 112,
+      "key": "S3|F|covariate:boundary_leak_schools",
+      "idea": "S3",
+      "family": "S",
+      "component": "F",
+      "channel": "covariate:boundary_leak_schools"
+    },
+    {
+      "index": 113,
+      "key": "S4|B|covariate:peer_gap_delta",
+      "idea": "S4",
+      "family": "S",
+      "component": "B",
+      "channel": "covariate:peer_gap_delta"
+    },
+    {
+      "index": 114,
+      "key": "S4|Est|covariate:peer_gap_delta",
+      "idea": "S4",
+      "family": "S",
+      "component": "Est",
+      "channel": "covariate:peer_gap_delta"
+    },
+    {
+      "index": 115,
+      "key": "S4|F|covariate:peer_gap_delta",
+      "idea": "S4",
+      "family": "S",
+      "component": "F",
+      "channel": "covariate:peer_gap_delta"
+    },
+    {
+      "index": 116,
+      "key": "S4|R|covariate:peer_gap_delta",
+      "idea": "S4",
+      "family": "S",
+      "component": "R",
+      "channel": "covariate:peer_gap_delta"
+    },
+    {
+      "index": 117,
+      "key": "S5|C|covariate:local_geary_gap",
+      "idea": "S5",
+      "family": "S",
+      "component": "C",
+      "channel": "covariate:local_geary_gap"
+    },
+    {
+      "index": 118,
+      "key": "Sc1|R|gap",
+      "idea": "Sc1",
+      "family": "Sc",
+      "component": "R",
+      "channel": "gap"
+    },
+    {
+      "index": 119,
+      "key": "Sc2|F|covariate",
+      "idea": "Sc2",
+      "family": "Sc",
+      "component": "F",
+      "channel": "covariate"
+    },
+    {
+      "index": 120,
+      "key": "Sc3|F|covariate",
+      "idea": "Sc3",
+      "family": "Sc",
+      "component": "F",
+      "channel": "covariate"
+    },
+    {
+      "index": 121,
+      "key": "Sc3|F|gap",
+      "idea": "Sc3",
+      "family": "Sc",
+      "component": "F",
+      "channel": "gap"
+    },
+    {
+      "index": 122,
+      "key": "Sc4|R|covariate",
+      "idea": "Sc4",
+      "family": "Sc",
+      "component": "R",
+      "channel": "covariate"
+    },
+    {
+      "index": 123,
+      "key": "Sc5|R|covariate",
+      "idea": "Sc5",
+      "family": "Sc",
+      "component": "R",
+      "channel": "covariate"
+    },
+    {
+      "index": 124,
+      "key": "Sc5|R|gap",
+      "idea": "Sc5",
+      "family": "Sc",
+      "component": "R",
+      "channel": "gap"
+    },
+    {
+      "index": 125,
+      "key": "Sca1|F|gap",
+      "idea": "Sca1",
+      "family": "Sca",
+      "component": "F",
+      "channel": "gap"
+    },
+    {
+      "index": 126,
+      "key": "Sca2|C|covariate",
+      "idea": "Sca2",
+      "family": "Sca",
+      "component": "C",
+      "channel": "covariate"
+    },
+    {
+      "index": 127,
+      "key": "Sca3|B|covariate",
+      "idea": "Sca3",
+      "family": "Sca",
+      "component": "B",
+      "channel": "covariate"
+    },
+    {
+      "index": 128,
+      "key": "Sca3|R|covariate",
+      "idea": "Sca3",
+      "family": "Sca",
+      "component": "R",
+      "channel": "covariate"
+    },
+    {
+      "index": 129,
+      "key": "Sca4|Est|covariate",
+      "idea": "Sca4",
+      "family": "Sca",
+      "component": "Est",
+      "channel": "covariate"
+    },
+    {
+      "index": 130,
+      "key": "Sca5|C|covariate",
+      "idea": "Sca5",
+      "family": "Sca",
+      "component": "C",
+      "channel": "covariate"
+    },
+    {
+      "index": 131,
+      "key": "T1|R|covariate",
+      "idea": "T1",
+      "family": "T",
+      "component": "R",
+      "channel": "covariate"
+    },
+    {
+      "index": 132,
+      "key": "T1|R|gap",
+      "idea": "T1",
+      "family": "T",
+      "component": "R",
+      "channel": "gap"
+    },
+    {
+      "index": 133,
+      "key": "T2|R|covariate:orphan_link_length_km",
+      "idea": "T2",
+      "family": "T",
+      "component": "R",
+      "channel": "covariate:orphan_link_length_km"
+    },
+    {
+      "index": 134,
+      "key": "T2|R|covariate:orphan_link_segments",
+      "idea": "T2",
+      "family": "T",
+      "component": "R",
+      "channel": "covariate:orphan_link_segments"
+    },
+    {
+      "index": 135,
+      "key": "T3|R|covariate:grade_sep_per_km2",
+      "idea": "T3",
+      "family": "T",
+      "component": "R",
+      "channel": "covariate:grade_sep_per_km2"
+    },
+    {
+      "index": 136,
+      "key": "T4|R|gap",
+      "idea": "T4",
+      "family": "T",
+      "component": "R",
+      "channel": "gap"
+    },
+    {
+      "index": 137,
+      "key": "T5|C|covariate:buildings_over_150m_from_road",
+      "idea": "T5",
+      "family": "T",
+      "component": "C",
+      "channel": "covariate:buildings_over_150m_from_road"
+    },
+    {
+      "index": 138,
+      "key": "Tm1|B|covariate",
+      "idea": "Tm1",
+      "family": "Tm",
+      "component": "B",
+      "channel": "covariate"
+    },
+    {
+      "index": 139,
+      "key": "Tm1|B|gap",
+      "idea": "Tm1",
+      "family": "Tm",
+      "component": "B",
+      "channel": "gap"
+    },
+    {
+      "index": 140,
+      "key": "Tm2|B|gap",
+      "idea": "Tm2",
+      "family": "Tm",
+      "component": "B",
+      "channel": "gap"
+    },
+    {
+      "index": 141,
+      "key": "Tm2|F|covariate:postfire_burn_share",
+      "idea": "Tm2",
+      "family": "Tm",
+      "component": "F",
+      "channel": "covariate:postfire_burn_share"
+    },
+    {
+      "index": 142,
+      "key": "Tm3|B|covariate:acs_housing_growth",
+      "idea": "Tm3",
+      "family": "Tm",
+      "component": "B",
+      "channel": "covariate:acs_housing_growth"
+    },
+    {
+      "index": 143,
+      "key": "Tm3|B|covariate:overture_building_growth",
+      "idea": "Tm3",
+      "family": "Tm",
+      "component": "B",
+      "channel": "covariate:overture_building_growth"
+    },
+    {
+      "index": 144,
+      "key": "Tm3|Est|covariate:population_growth",
+      "idea": "Tm3",
+      "family": "Tm",
+      "component": "Est",
+      "channel": "covariate:population_growth"
+    },
+    {
+      "index": 145,
+      "key": "Tm5|Est|covariate:tm5_poi_mean_version",
+      "idea": "Tm5",
+      "family": "Tm",
+      "component": "Est",
+      "channel": "covariate:tm5_poi_mean_version"
+    },
+    {
+      "index": 146,
+      "key": "Tm5|Est|covariate:tm5_poi_p90_version",
+      "idea": "Tm5",
+      "family": "Tm",
+      "component": "Est",
+      "channel": "covariate:tm5_poi_p90_version"
+    },
+    {
+      "index": 147,
+      "key": "Tm5|Est|covariate:tm5_poi_version0_share",
+      "idea": "Tm5",
+      "family": "Tm",
+      "component": "Est",
+      "channel": "covariate:tm5_poi_version0_share"
+    },
+    {
+      "index": 148,
+      "key": "Tm5|F|covariate:tm5_buildings_mean_version",
+      "idea": "Tm5",
+      "family": "Tm",
+      "component": "F",
+      "channel": "covariate:tm5_buildings_mean_version"
+    },
+    {
+      "index": 149,
+      "key": "Tm5|F|covariate:tm5_buildings_p90_version",
+      "idea": "Tm5",
+      "family": "Tm",
+      "component": "F",
+      "channel": "covariate:tm5_buildings_p90_version"
+    },
+    {
+      "index": 150,
+      "key": "Tm5|F|covariate:tm5_buildings_version0_share",
+      "idea": "Tm5",
+      "family": "Tm",
+      "component": "F",
+      "channel": "covariate:tm5_buildings_version0_share"
+    },
+    {
+      "index": 151,
+      "key": "Tm5|R|covariate:tm5_road_mean_version",
+      "idea": "Tm5",
+      "family": "Tm",
+      "component": "R",
+      "channel": "covariate:tm5_road_mean_version"
+    },
+    {
+      "index": 152,
+      "key": "Tm5|R|covariate:tm5_road_p90_version",
+      "idea": "Tm5",
+      "family": "Tm",
+      "component": "R",
+      "channel": "covariate:tm5_road_p90_version"
+    },
+    {
+      "index": 153,
+      "key": "Tm5|R|covariate:tm5_road_version0_share",
+      "idea": "Tm5",
+      "family": "Tm",
+      "component": "R",
+      "channel": "covariate:tm5_road_version0_share"
+    },
+    {
+      "index": 154,
+      "key": "X1|F|covariate",
+      "idea": "X1",
+      "family": "X",
+      "component": "F",
+      "channel": "covariate"
+    },
+    {
+      "index": 155,
+      "key": "X3|Est|covariate",
+      "idea": "X3",
+      "family": "X",
+      "component": "Est",
+      "channel": "covariate"
+    },
+    {
+      "index": 156,
+      "key": "X4|R|covariate",
+      "idea": "X4",
+      "family": "X",
+      "component": "R",
+      "channel": "covariate"
+    },
+    {
+      "index": 157,
+      "key": "X5|F|covariate",
+      "idea": "X5",
+      "family": "X",
+      "component": "F",
+      "channel": "covariate"
+    },
+    {
+      "index": 158,
+      "key": "X5|R|covariate",
+      "idea": "X5",
+      "family": "X",
+      "component": "R",
+      "channel": "covariate"
+    }
+  ],
+  "region_catalog": [
+    {
+      "index": 0,
+      "region": "maricopa-az"
+    },
+    {
+      "index": 1,
+      "region": "northern-ca"
+    },
+    {
+      "index": 2,
+      "region": "eastern-ok"
+    },
+    {
+      "index": 3,
+      "region": "south-central-tx"
+    }
+  ],
+  "feature_encodings_by_region": [
+    {
+      "feature": 0,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 1575
+    },
+    {
+      "feature": 0,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 591
+    },
+    {
+      "feature": 0,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 6,
+      "defined": 1189
+    },
+    {
+      "feature": 0,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 4,
+      "defined": 5975
+    },
+    {
+      "feature": 1,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1593
+    },
+    {
+      "feature": 1,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 1,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 1,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 6003
+    },
+    {
+      "feature": 2,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1566
+    },
+    {
+      "feature": 2,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 2,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1182
+    },
+    {
+      "feature": 2,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 5960
+    },
+    {
+      "feature": 3,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1566
+    },
+    {
+      "feature": 3,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 3,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1182
+    },
+    {
+      "feature": 3,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 5960
+    },
+    {
+      "feature": 4,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 4,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 4,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 4,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6001
+    },
+    {
+      "feature": 5,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 5,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 5,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 5,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6001
+    },
+    {
+      "feature": 6,
+      "region": 0,
+      "encoding": "empty",
+      "categories_or_bins": 0,
+      "defined": 0
+    },
+    {
+      "feature": 6,
+      "region": 1,
+      "encoding": "empty",
+      "categories_or_bins": 0,
+      "defined": 0
+    },
+    {
+      "feature": 6,
+      "region": 2,
+      "encoding": "empty",
+      "categories_or_bins": 0,
+      "defined": 0
+    },
+    {
+      "feature": 6,
+      "region": 3,
+      "encoding": "empty",
+      "categories_or_bins": 0,
+      "defined": 0
+    },
+    {
+      "feature": 7,
+      "region": 0,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 2,
+      "defined": 1592
+    },
+    {
+      "feature": 7,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 7,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 7,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 6001
+    },
+    {
+      "feature": 8,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1570
+    },
+    {
+      "feature": 8,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 4,
+      "defined": 586
+    },
+    {
+      "feature": 8,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1175
+    },
+    {
+      "feature": 8,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 5965
+    },
+    {
+      "feature": 9,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1570
+    },
+    {
+      "feature": 9,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 586
+    },
+    {
+      "feature": 9,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1175
+    },
+    {
+      "feature": 9,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 5965
+    },
+    {
+      "feature": 10,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 1570
+    },
+    {
+      "feature": 10,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 586
+    },
+    {
+      "feature": 10,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1172
+    },
+    {
+      "feature": 10,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 5957
+    },
+    {
+      "feature": 11,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 1570
+    },
+    {
+      "feature": 11,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 586
+    },
+    {
+      "feature": 11,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1172
+    },
+    {
+      "feature": 11,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 5957
+    },
+    {
+      "feature": 12,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1560
+    },
+    {
+      "feature": 12,
+      "region": 1,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 584
+    },
+    {
+      "feature": 12,
+      "region": 2,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 1164
+    },
+    {
+      "feature": 12,
+      "region": 3,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 5939
+    },
+    {
+      "feature": 13,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 9,
+      "defined": 1500
+    },
+    {
+      "feature": 13,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 582
+    },
+    {
+      "feature": 13,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1162
+    },
+    {
+      "feature": 13,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 5634
+    },
+    {
+      "feature": 14,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 9,
+      "defined": 770
+    },
+    {
+      "feature": 14,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 413
+    },
+    {
+      "feature": 14,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 9,
+      "defined": 701
+    },
+    {
+      "feature": 14,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 3879
+    },
+    {
+      "feature": 15,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 1593
+    },
+    {
+      "feature": 15,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 4,
+      "defined": 591
+    },
+    {
+      "feature": 15,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 1192
+    },
+    {
+      "feature": 15,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 4,
+      "defined": 6001
+    },
+    {
+      "feature": 16,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 9,
+      "defined": 1552
+    },
+    {
+      "feature": 16,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 584
+    },
+    {
+      "feature": 16,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 7,
+      "defined": 1178
+    },
+    {
+      "feature": 16,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 9,
+      "defined": 5824
+    },
+    {
+      "feature": 17,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 7,
+      "defined": 1500
+    },
+    {
+      "feature": 17,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 9,
+      "defined": 563
+    },
+    {
+      "feature": 17,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 1132
+    },
+    {
+      "feature": 17,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 5780
+    },
+    {
+      "feature": 18,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1560
+    },
+    {
+      "feature": 18,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 584
+    },
+    {
+      "feature": 18,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1164
+    },
+    {
+      "feature": 18,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 5939
+    },
+    {
+      "feature": 19,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1500
+    },
+    {
+      "feature": 19,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 563
+    },
+    {
+      "feature": 19,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1132
+    },
+    {
+      "feature": 19,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 5780
+    },
+    {
+      "feature": 20,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 1593
+    },
+    {
+      "feature": 20,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 7,
+      "defined": 591
+    },
+    {
+      "feature": 20,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 1192
+    },
+    {
+      "feature": 20,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 6001
+    },
+    {
+      "feature": 21,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1229
+    },
+    {
+      "feature": 21,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 502
+    },
+    {
+      "feature": 21,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1011
+    },
+    {
+      "feature": 21,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 4979
+    },
+    {
+      "feature": 22,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 7,
+      "defined": 1593
+    },
+    {
+      "feature": 22,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 6,
+      "defined": 591
+    },
+    {
+      "feature": 22,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 7,
+      "defined": 1192
+    },
+    {
+      "feature": 22,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 7,
+      "defined": 6001
+    },
+    {
+      "feature": 23,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1221
+    },
+    {
+      "feature": 23,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 502
+    },
+    {
+      "feature": 23,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1010
+    },
+    {
+      "feature": 23,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 4973
+    },
+    {
+      "feature": 24,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 1593
+    },
+    {
+      "feature": 24,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 7,
+      "defined": 591
+    },
+    {
+      "feature": 24,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 1192
+    },
+    {
+      "feature": 24,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 6001
+    },
+    {
+      "feature": 25,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 1566
+    },
+    {
+      "feature": 25,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 7,
+      "defined": 591
+    },
+    {
+      "feature": 25,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 1182
+    },
+    {
+      "feature": 25,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 5960
+    },
+    {
+      "feature": 26,
+      "region": 0,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 1593
+    },
+    {
+      "feature": 26,
+      "region": 1,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 26,
+      "region": 2,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 26,
+      "region": 3,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 6001
+    },
+    {
+      "feature": 27,
+      "region": 0,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 1592
+    },
+    {
+      "feature": 27,
+      "region": 1,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 27,
+      "region": 2,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 27,
+      "region": 3,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 5999
+    },
+    {
+      "feature": 28,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1560
+    },
+    {
+      "feature": 28,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 584
+    },
+    {
+      "feature": 28,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1164
+    },
+    {
+      "feature": 28,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 5939
+    },
+    {
+      "feature": 29,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1500
+    },
+    {
+      "feature": 29,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 563
+    },
+    {
+      "feature": 29,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1132
+    },
+    {
+      "feature": 29,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 5780
+    },
+    {
+      "feature": 30,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 30,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 30,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 30,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6001
+    },
+    {
+      "feature": 31,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1222
+    },
+    {
+      "feature": 31,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 502
+    },
+    {
+      "feature": 31,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1010
+    },
+    {
+      "feature": 31,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 4975
+    },
+    {
+      "feature": 32,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 32,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 32,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 32,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6001
+    },
+    {
+      "feature": 33,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 1593
+    },
+    {
+      "feature": 33,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 591
+    },
+    {
+      "feature": 33,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 1192
+    },
+    {
+      "feature": 33,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 6001
+    },
+    {
+      "feature": 34,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 1593
+    },
+    {
+      "feature": 34,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 591
+    },
+    {
+      "feature": 34,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 1192
+    },
+    {
+      "feature": 34,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 6003
+    },
+    {
+      "feature": 35,
+      "region": 0,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 2,
+      "defined": 29
+    },
+    {
+      "feature": 35,
+      "region": 1,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 2,
+      "defined": 15
+    },
+    {
+      "feature": 35,
+      "region": 2,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 316
+    },
+    {
+      "feature": 35,
+      "region": 3,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 2,
+      "defined": 114
+    },
+    {
+      "feature": 36,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 306
+    },
+    {
+      "feature": 36,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 150
+    },
+    {
+      "feature": 36,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 251
+    },
+    {
+      "feature": 36,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 1249
+    },
+    {
+      "feature": 37,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 7,
+      "defined": 1294
+    },
+    {
+      "feature": 37,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 7,
+      "defined": 534
+    },
+    {
+      "feature": 37,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 7,
+      "defined": 1007
+    },
+    {
+      "feature": 37,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 7,
+      "defined": 5210
+    },
+    {
+      "feature": 38,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 287
+    },
+    {
+      "feature": 38,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 97
+    },
+    {
+      "feature": 38,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 146
+    },
+    {
+      "feature": 38,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 1090
+    },
+    {
+      "feature": 39,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 4,
+      "defined": 548
+    },
+    {
+      "feature": 39,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 4,
+      "defined": 206
+    },
+    {
+      "feature": 39,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 230
+    },
+    {
+      "feature": 39,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 4,
+      "defined": 1847
+    },
+    {
+      "feature": 40,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 6,
+      "defined": 943
+    },
+    {
+      "feature": 40,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 460
+    },
+    {
+      "feature": 40,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 6,
+      "defined": 955
+    },
+    {
+      "feature": 40,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 6,
+      "defined": 4375
+    },
+    {
+      "feature": 41,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 1593
+    },
+    {
+      "feature": 41,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 4,
+      "defined": 591
+    },
+    {
+      "feature": 41,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 4,
+      "defined": 1192
+    },
+    {
+      "feature": 41,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 6001
+    },
+    {
+      "feature": 42,
+      "region": 0,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 3,
+      "defined": 1593
+    },
+    {
+      "feature": 42,
+      "region": 1,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 3,
+      "defined": 591
+    },
+    {
+      "feature": 42,
+      "region": 2,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 4,
+      "defined": 1192
+    },
+    {
+      "feature": 42,
+      "region": 3,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 5,
+      "defined": 6003
+    },
+    {
+      "feature": 43,
+      "region": 0,
+      "encoding": "empty",
+      "categories_or_bins": 0,
+      "defined": 0
+    },
+    {
+      "feature": 43,
+      "region": 1,
+      "encoding": "empty",
+      "categories_or_bins": 0,
+      "defined": 0
+    },
+    {
+      "feature": 43,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 9,
+      "defined": 218
+    },
+    {
+      "feature": 43,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 9,
+      "defined": 421
+    },
+    {
+      "feature": 44,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 44,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 44,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 44,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 45,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1593
+    },
+    {
+      "feature": 45,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 45,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 45,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 6003
+    },
+    {
+      "feature": 46,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 46,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 46,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 46,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 47,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1413
+    },
+    {
+      "feature": 47,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 581
+    },
+    {
+      "feature": 47,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1156
+    },
+    {
+      "feature": 47,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 5599
+    },
+    {
+      "feature": 48,
+      "region": 0,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 1593
+    },
+    {
+      "feature": 48,
+      "region": 1,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 48,
+      "region": 2,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 48,
+      "region": 3,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 6003
+    },
+    {
+      "feature": 49,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 1593
+    },
+    {
+      "feature": 49,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 591
+    },
+    {
+      "feature": 49,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 4,
+      "defined": 1192
+    },
+    {
+      "feature": 49,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 6003
+    },
+    {
+      "feature": 50,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 1593
+    },
+    {
+      "feature": 50,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 591
+    },
+    {
+      "feature": 50,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 50,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 6003
+    },
+    {
+      "feature": 51,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 1593
+    },
+    {
+      "feature": 51,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 591
+    },
+    {
+      "feature": 51,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 7,
+      "defined": 1192
+    },
+    {
+      "feature": 51,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 7,
+      "defined": 6003
+    },
+    {
+      "feature": 52,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 52,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 52,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 52,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 53,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 53,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 6,
+      "defined": 591
+    },
+    {
+      "feature": 53,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 53,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 54,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 54,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 6,
+      "defined": 591
+    },
+    {
+      "feature": 54,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 54,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 55,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1440
+    },
+    {
+      "feature": 55,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 560
+    },
+    {
+      "feature": 55,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1112
+    },
+    {
+      "feature": 55,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 5411
+    },
+    {
+      "feature": 56,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 56,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 56,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 56,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 57,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 6,
+      "defined": 1593
+    },
+    {
+      "feature": 57,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 591
+    },
+    {
+      "feature": 57,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 1192
+    },
+    {
+      "feature": 57,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 7,
+      "defined": 6003
+    },
+    {
+      "feature": 58,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 58,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 58,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 58,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 59,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 59,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 59,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 59,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 60,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 60,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 60,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 60,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 61,
+      "region": 0,
+      "encoding": "empty",
+      "categories_or_bins": 0,
+      "defined": 0
+    },
+    {
+      "feature": 61,
+      "region": 1,
+      "encoding": "empty",
+      "categories_or_bins": 0,
+      "defined": 0
+    },
+    {
+      "feature": 61,
+      "region": 2,
+      "encoding": "empty",
+      "categories_or_bins": 0,
+      "defined": 0
+    },
+    {
+      "feature": 61,
+      "region": 3,
+      "encoding": "empty",
+      "categories_or_bins": 0,
+      "defined": 0
+    },
+    {
+      "feature": 62,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 9,
+      "defined": 1593
+    },
+    {
+      "feature": 62,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 591
+    },
+    {
+      "feature": 62,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 7,
+      "defined": 1192
+    },
+    {
+      "feature": 62,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 9,
+      "defined": 6003
+    },
+    {
+      "feature": 63,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 63,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 63,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 63,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 64,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 64,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 64,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 64,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 65,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 65,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 65,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 65,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 66,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 66,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 66,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 66,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 67,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 67,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 67,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 67,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 68,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 68,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 68,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 68,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 69,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 9,
+      "defined": 1552
+    },
+    {
+      "feature": 69,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 589
+    },
+    {
+      "feature": 69,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1187
+    },
+    {
+      "feature": 69,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 9,
+      "defined": 5911
+    },
+    {
+      "feature": 70,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 70,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 70,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 70,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 71,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 1593
+    },
+    {
+      "feature": 71,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 591
+    },
+    {
+      "feature": 71,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 1192
+    },
+    {
+      "feature": 71,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 7,
+      "defined": 6003
+    },
+    {
+      "feature": 72,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 1593
+    },
+    {
+      "feature": 72,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 591
+    },
+    {
+      "feature": 72,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 72,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 6003
+    },
+    {
+      "feature": 73,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 73,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 9,
+      "defined": 591
+    },
+    {
+      "feature": 73,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 9,
+      "defined": 1192
+    },
+    {
+      "feature": 73,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 74,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1590
+    },
+    {
+      "feature": 74,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 74,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1189
+    },
+    {
+      "feature": 74,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 5995
+    },
+    {
+      "feature": 75,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1590
+    },
+    {
+      "feature": 75,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 75,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 1189
+    },
+    {
+      "feature": 75,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 5995
+    },
+    {
+      "feature": 76,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 1590
+    },
+    {
+      "feature": 76,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 4,
+      "defined": 591
+    },
+    {
+      "feature": 76,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 1189
+    },
+    {
+      "feature": 76,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 5995
+    },
+    {
+      "feature": 77,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 1593
+    },
+    {
+      "feature": 77,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 591
+    },
+    {
+      "feature": 77,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 4,
+      "defined": 1192
+    },
+    {
+      "feature": 77,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 6003
+    },
+    {
+      "feature": 78,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 164
+    },
+    {
+      "feature": 78,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 90
+    },
+    {
+      "feature": 78,
+      "region": 2,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 930
+    },
+    {
+      "feature": 78,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 646
+    },
+    {
+      "feature": 79,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 1143
+    },
+    {
+      "feature": 79,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 6,
+      "defined": 465
+    },
+    {
+      "feature": 79,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 872
+    },
+    {
+      "feature": 79,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 6,
+      "defined": 4461
+    },
+    {
+      "feature": 80,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1592
+    },
+    {
+      "feature": 80,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 589
+    },
+    {
+      "feature": 80,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1188
+    },
+    {
+      "feature": 80,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 5993
+    },
+    {
+      "feature": 81,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 1073
+    },
+    {
+      "feature": 81,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 4,
+      "defined": 358
+    },
+    {
+      "feature": 81,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 616
+    },
+    {
+      "feature": 81,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 3868
+    },
+    {
+      "feature": 82,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 7,
+      "defined": 1378
+    },
+    {
+      "feature": 82,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 496
+    },
+    {
+      "feature": 82,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 4,
+      "defined": 810
+    },
+    {
+      "feature": 82,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 7,
+      "defined": 4997
+    },
+    {
+      "feature": 83,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 83,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 83,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 83,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 84,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1593
+    },
+    {
+      "feature": 84,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 84,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 1192
+    },
+    {
+      "feature": 84,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 6003
+    },
+    {
+      "feature": 85,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1593
+    },
+    {
+      "feature": 85,
+      "region": 1,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 85,
+      "region": 2,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 85,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 6003
+    },
+    {
+      "feature": 86,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 86,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 86,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1189
+    },
+    {
+      "feature": 86,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6000
+    },
+    {
+      "feature": 87,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 87,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 87,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1189
+    },
+    {
+      "feature": 87,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6000
+    },
+    {
+      "feature": 88,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 88,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 88,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 88,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 89,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1593
+    },
+    {
+      "feature": 89,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 89,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 89,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 6003
+    },
+    {
+      "feature": 90,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 6,
+      "defined": 1593
+    },
+    {
+      "feature": 90,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 591
+    },
+    {
+      "feature": 90,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 1192
+    },
+    {
+      "feature": 90,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 6003
+    },
+    {
+      "feature": 91,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 91,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 91,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 91,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 92,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 92,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 92,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 92,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 93,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 1593
+    },
+    {
+      "feature": 93,
+      "region": 1,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 93,
+      "region": 2,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 93,
+      "region": 3,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 6003
+    },
+    {
+      "feature": 94,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 94,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 94,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 94,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6002
+    },
+    {
+      "feature": 95,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 95,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 95,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 95,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 96,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 96,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 96,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 96,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6002
+    },
+    {
+      "feature": 97,
+      "region": 0,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 1593
+    },
+    {
+      "feature": 97,
+      "region": 1,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 97,
+      "region": 2,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 97,
+      "region": 3,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 6003
+    },
+    {
+      "feature": 98,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 1593
+    },
+    {
+      "feature": 98,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 591
+    },
+    {
+      "feature": 98,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 1192
+    },
+    {
+      "feature": 98,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 6003
+    },
+    {
+      "feature": 99,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 1593
+    },
+    {
+      "feature": 99,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 99,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 99,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 6002
+    },
+    {
+      "feature": 100,
+      "region": 0,
+      "encoding": "empty",
+      "categories_or_bins": 0,
+      "defined": 0
+    },
+    {
+      "feature": 100,
+      "region": 1,
+      "encoding": "empty",
+      "categories_or_bins": 0,
+      "defined": 0
+    },
+    {
+      "feature": 100,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 353
+    },
+    {
+      "feature": 100,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 905
+    },
+    {
+      "feature": 101,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 101,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 101,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 101,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 102,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 1593
+    },
+    {
+      "feature": 102,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 591
+    },
+    {
+      "feature": 102,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 1192
+    },
+    {
+      "feature": 102,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 6003
+    },
+    {
+      "feature": 103,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 103,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 103,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 103,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 104,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 104,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 9,
+      "defined": 591
+    },
+    {
+      "feature": 104,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 9,
+      "defined": 1192
+    },
+    {
+      "feature": 104,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 105,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 105,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 105,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 105,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 106,
+      "region": 0,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 1593
+    },
+    {
+      "feature": 106,
+      "region": 1,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 106,
+      "region": 2,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 106,
+      "region": 3,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 6003
+    },
+    {
+      "feature": 107,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1593
+    },
+    {
+      "feature": 107,
+      "region": 1,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 107,
+      "region": 2,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 107,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 6003
+    },
+    {
+      "feature": 108,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 108,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 108,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 108,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 109,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 109,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 109,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 109,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 110,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1593
+    },
+    {
+      "feature": 110,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 110,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 110,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 6003
+    },
+    {
+      "feature": 111,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 1593
+    },
+    {
+      "feature": 111,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 591
+    },
+    {
+      "feature": 111,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 1192
+    },
+    {
+      "feature": 111,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 6003
+    },
+    {
+      "feature": 112,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1593
+    },
+    {
+      "feature": 112,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 112,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 112,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 6003
+    },
+    {
+      "feature": 113,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 113,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 113,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 113,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6001
+    },
+    {
+      "feature": 114,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 114,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 114,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 114,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6001
+    },
+    {
+      "feature": 115,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 1593
+    },
+    {
+      "feature": 115,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 7,
+      "defined": 591
+    },
+    {
+      "feature": 115,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 7,
+      "defined": 1192
+    },
+    {
+      "feature": 115,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 6,
+      "defined": 6001
+    },
+    {
+      "feature": 116,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1570
+    },
+    {
+      "feature": 116,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 586
+    },
+    {
+      "feature": 116,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1175
+    },
+    {
+      "feature": 116,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 5965
+    },
+    {
+      "feature": 117,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 117,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 117,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 117,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6001
+    },
+    {
+      "feature": 118,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 1560
+    },
+    {
+      "feature": 118,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 9,
+      "defined": 584
+    },
+    {
+      "feature": 118,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 1164
+    },
+    {
+      "feature": 118,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 5939
+    },
+    {
+      "feature": 119,
+      "region": 0,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 2,
+      "defined": 1593
+    },
+    {
+      "feature": 119,
+      "region": 1,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 119,
+      "region": 2,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 119,
+      "region": 3,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 2,
+      "defined": 6003
+    },
+    {
+      "feature": 120,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 6,
+      "defined": 1397
+    },
+    {
+      "feature": 120,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 6,
+      "defined": 554
+    },
+    {
+      "feature": 120,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 1104
+    },
+    {
+      "feature": 120,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 5502
+    },
+    {
+      "feature": 121,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 9,
+      "defined": 1397
+    },
+    {
+      "feature": 121,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 554
+    },
+    {
+      "feature": 121,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1104
+    },
+    {
+      "feature": 121,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 9,
+      "defined": 5502
+    },
+    {
+      "feature": 122,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1593
+    },
+    {
+      "feature": 122,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 122,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 122,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 6003
+    },
+    {
+      "feature": 123,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 1560
+    },
+    {
+      "feature": 123,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 584
+    },
+    {
+      "feature": 123,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 1164
+    },
+    {
+      "feature": 123,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 6,
+      "defined": 5939
+    },
+    {
+      "feature": 124,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 1560
+    },
+    {
+      "feature": 124,
+      "region": 1,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 8,
+      "defined": 584
+    },
+    {
+      "feature": 124,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 1164
+    },
+    {
+      "feature": 124,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 4,
+      "defined": 5939
+    },
+    {
+      "feature": 125,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 1593
+    },
+    {
+      "feature": 125,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 6,
+      "defined": 591
+    },
+    {
+      "feature": 125,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 6,
+      "defined": 1192
+    },
+    {
+      "feature": 125,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 6001
+    },
+    {
+      "feature": 126,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 487
+    },
+    {
+      "feature": 126,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 271
+    },
+    {
+      "feature": 126,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 542
+    },
+    {
+      "feature": 126,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 2147
+    },
+    {
+      "feature": 127,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1593
+    },
+    {
+      "feature": 127,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 127,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 127,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 6003
+    },
+    {
+      "feature": 128,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 128,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 128,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 128,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6003
+    },
+    {
+      "feature": 129,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1525
+    },
+    {
+      "feature": 129,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 579
+    },
+    {
+      "feature": 129,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1168
+    },
+    {
+      "feature": 129,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 5700
+    },
+    {
+      "feature": 130,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1570
+    },
+    {
+      "feature": 130,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 586
+    },
+    {
+      "feature": 130,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1175
+    },
+    {
+      "feature": 130,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 5965
+    },
+    {
+      "feature": 131,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 1581
+    },
+    {
+      "feature": 131,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 590
+    },
+    {
+      "feature": 131,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 131,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 9,
+      "defined": 5984
+    },
+    {
+      "feature": 132,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 1581
+    },
+    {
+      "feature": 132,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 590
+    },
+    {
+      "feature": 132,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 132,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 9,
+      "defined": 5984
+    },
+    {
+      "feature": 133,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 1593
+    },
+    {
+      "feature": 133,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 591
+    },
+    {
+      "feature": 133,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 1192
+    },
+    {
+      "feature": 133,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 6003
+    },
+    {
+      "feature": 134,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 1593
+    },
+    {
+      "feature": 134,
+      "region": 1,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 134,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 1192
+    },
+    {
+      "feature": 134,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 6003
+    },
+    {
+      "feature": 135,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 4,
+      "defined": 1593
+    },
+    {
+      "feature": 135,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 591
+    },
+    {
+      "feature": 135,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 6,
+      "defined": 1192
+    },
+    {
+      "feature": 135,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 6001
+    },
+    {
+      "feature": 136,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1592
+    },
+    {
+      "feature": 136,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 136,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 136,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 5998
+    },
+    {
+      "feature": 137,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 1593
+    },
+    {
+      "feature": 137,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 5,
+      "defined": 591
+    },
+    {
+      "feature": 137,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 6,
+      "defined": 1192
+    },
+    {
+      "feature": 137,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 4,
+      "defined": 6001
+    },
+    {
+      "feature": 138,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 1593
+    },
+    {
+      "feature": 138,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 591
+    },
+    {
+      "feature": 138,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 1192
+    },
+    {
+      "feature": 138,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 6001
+    },
+    {
+      "feature": 139,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 6,
+      "defined": 1593
+    },
+    {
+      "feature": 139,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 7,
+      "defined": 591
+    },
+    {
+      "feature": 139,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 8,
+      "defined": 1192
+    },
+    {
+      "feature": 139,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 7,
+      "defined": 6001
+    },
+    {
+      "feature": 140,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1593
+    },
+    {
+      "feature": 140,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 140,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 140,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 6001
+    },
+    {
+      "feature": 141,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1593
+    },
+    {
+      "feature": 141,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 591
+    },
+    {
+      "feature": 141,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 141,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 6001
+    },
+    {
+      "feature": 142,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1588
+    },
+    {
+      "feature": 142,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 142,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1189
+    },
+    {
+      "feature": 142,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 5994
+    },
+    {
+      "feature": 143,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 143,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 143,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 143,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6001
+    },
+    {
+      "feature": 144,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1590
+    },
+    {
+      "feature": 144,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 144,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1190
+    },
+    {
+      "feature": 144,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 5993
+    },
+    {
+      "feature": 145,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 145,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 145,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 145,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6001
+    },
+    {
+      "feature": 146,
+      "region": 0,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 9,
+      "defined": 1593
+    },
+    {
+      "feature": 146,
+      "region": 1,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 6,
+      "defined": 591
+    },
+    {
+      "feature": 146,
+      "region": 2,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 5,
+      "defined": 1192
+    },
+    {
+      "feature": 146,
+      "region": 3,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 9,
+      "defined": 6001
+    },
+    {
+      "feature": 147,
+      "region": 0,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 1593
+    },
+    {
+      "feature": 147,
+      "region": 1,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 147,
+      "region": 2,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 147,
+      "region": 3,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 6001
+    },
+    {
+      "feature": 148,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 148,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 148,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 148,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 6001
+    },
+    {
+      "feature": 149,
+      "region": 0,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 5,
+      "defined": 1593
+    },
+    {
+      "feature": 149,
+      "region": 1,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 3,
+      "defined": 591
+    },
+    {
+      "feature": 149,
+      "region": 2,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 4,
+      "defined": 1192
+    },
+    {
+      "feature": 149,
+      "region": 3,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 5,
+      "defined": 6001
+    },
+    {
+      "feature": 150,
+      "region": 0,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 1593
+    },
+    {
+      "feature": 150,
+      "region": 1,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 150,
+      "region": 2,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 150,
+      "region": 3,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 6001
+    },
+    {
+      "feature": 151,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1593
+    },
+    {
+      "feature": 151,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 591
+    },
+    {
+      "feature": 151,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 1192
+    },
+    {
+      "feature": 151,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 10,
+      "defined": 5999
+    },
+    {
+      "feature": 152,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 4,
+      "defined": 1593
+    },
+    {
+      "feature": 152,
+      "region": 1,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 7,
+      "defined": 591
+    },
+    {
+      "feature": 152,
+      "region": 2,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 8,
+      "defined": 1192
+    },
+    {
+      "feature": 152,
+      "region": 3,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 8,
+      "defined": 5999
+    },
+    {
+      "feature": 153,
+      "region": 0,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 1593
+    },
+    {
+      "feature": 153,
+      "region": 1,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 153,
+      "region": 2,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 153,
+      "region": 3,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 5999
+    },
+    {
+      "feature": 154,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1593
+    },
+    {
+      "feature": 154,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 154,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 154,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 6003
+    },
+    {
+      "feature": 155,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 1593
+    },
+    {
+      "feature": 155,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 591
+    },
+    {
+      "feature": 155,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 1192
+    },
+    {
+      "feature": 155,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 6003
+    },
+    {
+      "feature": 156,
+      "region": 0,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 1593
+    },
+    {
+      "feature": 156,
+      "region": 1,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 156,
+      "region": 2,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 156,
+      "region": 3,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 6003
+    },
+    {
+      "feature": 157,
+      "region": 0,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 1593
+    },
+    {
+      "feature": 157,
+      "region": 1,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 591
+    },
+    {
+      "feature": 157,
+      "region": 2,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 2,
+      "defined": 1192
+    },
+    {
+      "feature": 157,
+      "region": 3,
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 1,
+      "defined": 6003
+    },
+    {
+      "feature": 158,
+      "region": 0,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 2,
+      "defined": 1593
+    },
+    {
+      "feature": 158,
+      "region": 1,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 591
+    },
+    {
+      "feature": 158,
+      "region": 2,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 1,
+      "defined": 1192
+    },
+    {
+      "feature": 158,
+      "region": 3,
+      "encoding": "category_integer_low_cardinality",
+      "categories_or_bins": 6,
+      "defined": 6003
+    }
+  ],
+  "maximum_nmi": 0.8201528016239874,
+  "flagged_pairs_ge_0_80": [
+    {
+      "left": "Mx4|F|covariate",
+      "right": "S1|F|covariate:lag_mx4_f_covariate",
+      "region": "eastern-ok",
+      "joint_defined": 1192,
+      "nmi": 0.8201528016239874,
+      "left_encoding": "empirical_decile_bins",
+      "right_encoding": "empirical_decile_bins",
+      "left_categories_or_bins": 3,
+      "right_categories_or_bins": 4
+    }
+  ],
+  "inputs": {
+    "idea_artifacts": {
+      "D1": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/D1.parquet",
+        "sha256": "cd389595f543483747281f6342a43ec183e858a08a559ad7f557d654024ebae3",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "D2": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/D2.parquet",
+        "sha256": "68dc61099c9c9adcf2c028400671934874b2499208150bd521da4608340e5395",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "D3": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/D3.parquet",
+        "sha256": "5a254127dd2adcd0f36e080a21b54fe9d9def46aeb93c068b8bf80c03359b36c",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "D4": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/D4.parquet",
+        "sha256": "0fe71ba583e333f15dd0509e2ca4a229eafff3cfb1eaddf860198f464313bec9",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "D5": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/D5.parquet",
+        "sha256": "57952de4bed5c2309426b7a850354a0ee743dc06a244b0738211eafc5b6d3f2e",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "Dst1": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Dst1.parquet",
+        "sha256": "cac4c507372353f5493b09b1ce6ec7c293500d185a1778fc73a68d25e5bc4281",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "Dst2": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Dst2.parquet",
+        "sha256": "fc01b4f1782b1830500f232fbc31d9b65f77f23a69985fcbdcc54d5a29fdda6b",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "Dst3": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Dst3.parquet",
+        "sha256": "bee2e5a578847aaace78ec1642a39e6068eea4fd8df6c03fca1f9a9f2ca234f8",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "Dst4": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Dst4.parquet",
+        "sha256": "9bccac9c8045501642899f45ab8eb960b92e675825b99a041a6a602b90d9d108",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "Dst5": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Dst5.parquet",
+        "sha256": "efca7188e3c3eca4c83b4937b8f353ef6588fc4cfc255be3cec51f991e98b5a9",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "G1": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/G1.parquet",
+        "sha256": "6d870a5a32700934a79d4a4ebf1fd9e65d563a16478fff9dc788e13252621b9f",
+        "rows": 18758,
+        "features": 2,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "G2": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/G2.parquet",
+        "sha256": "c2b03ab287ffe2033706eb3a6d51035ae5109e93c7b8c5be616b3d5e2517d5eb",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "G3": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/G3.parquet",
+        "sha256": "95041b75f9d7758dff3065fe31906b2ae69d7cfd4147b843c9d859633e093953",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "G4": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/G4.parquet",
+        "sha256": "65e380272552b0f8362acdbd73a9a7dcbc5eb544eaff38d744788d299e02317e",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "G5": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/G5.parquet",
+        "sha256": "3df5cf68ea2bc952380d86bfecb3703dc1db2b15555c2943ceafbfaa11f34e0a",
+        "rows": 18758,
+        "features": 2,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "M1": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/M1.parquet",
+        "sha256": "ddc48fc70558cb920659484b870819a9c4be43f3488e7fe3f59eed148b6e9f37",
+        "rows": 28137,
+        "features": 3,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "M2": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/M2.parquet",
+        "sha256": "88aa794ff46b30824781d933cac2f6f4fb1898654c8c7726990e1ed70e605702",
+        "rows": 18758,
+        "features": 2,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "M3": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/M3.parquet",
+        "sha256": "f560064aa9271e6f00f31f16c67242e30d9001c2ca427882bc873f97e0ab5538",
+        "rows": 18758,
+        "features": 2,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "M4": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/M4.parquet",
+        "sha256": "ad2bffe71bc4f3ee5aa1bd8a1967e8825b97afcf67d3392b135b9a1b2d266678",
+        "rows": 18758,
+        "features": 2,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "M5": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/M5.parquet",
+        "sha256": "5788ad26199e00cd371cc581e6a0d38dd9314fed9f618980539b750abd305545",
+        "rows": 18758,
+        "features": 2,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "Mx1": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx1.parquet",
+        "sha256": "ed5336a90e9364b8373ba15d334468b60ed42a68620f2408f13f0fb34bcf2f66",
+        "rows": 18758,
+        "features": 2,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "Mx2": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx2.parquet",
+        "sha256": "86990bc1a1f6a54ff2d2579dfd689b6ee67e31113aa9c336cec59ca914e58821",
+        "rows": 18758,
+        "features": 2,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "Mx3": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx3.parquet",
+        "sha256": "2feacc8c08c6b7e88067cfaf97b5c8623a9319899eb1959ba7e8f6deaddeb87b",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "Mx4": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx4.parquet",
+        "sha256": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+        "rows": 18758,
+        "features": 2,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "Mx5": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx5.parquet",
+        "sha256": "2201d3a99d9c539fe94c72f0b2b800f7696f1bd7aaf0dac2327fb20802be01b8",
+        "rows": 46895,
+        "features": 5,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "P1": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/P1.parquet",
+        "sha256": "5bda0f80ba8397abecb31731caa09dec6500248d1ab072fcfb9f95f1199a7d3e",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "P2": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/P2.parquet",
+        "sha256": "887ac98d8c2699ef83c48850b7696baea08b5bffbec044d9d9dc825d74e801c6",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "P3": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/P3.parquet",
+        "sha256": "2e9a063759f697d0b2419152c3c0907e68e41dd04b8d901a16425f3207776fa1",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "P4": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/P4.parquet",
+        "sha256": "12b54003b38e3be1fbbcc149a385dc80a38c605a0a33b27eab811d382ff5f29c",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "S1": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/S1.parquet",
+        "sha256": "632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03",
+        "rows": 600256,
+        "features": 64,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "S2": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/S2.parquet",
+        "sha256": "5b5e45edd6cd0f0a14cdfb124d587136f0f059a1c80a0aa6131a6abac958980a",
+        "rows": 18758,
+        "features": 2,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "S3": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/S3.parquet",
+        "sha256": "ce01545f0e10cbffee64b50f5088608d6c67cb096f8769bca869af5fff5533d7",
+        "rows": 28137,
+        "features": 3,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "S4": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/S4.parquet",
+        "sha256": "5841cac5114f2c7571bd41f90914c076b2eb92e1fe7bd1c33d6fe95b47a2a71c",
+        "rows": 37516,
+        "features": 4,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "S5": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/S5.parquet",
+        "sha256": "81d9153819dadf76a9d8666f6887300d412f8d5fc6acf15c1a8dfc924840725c",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "Sc1": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Sc1.parquet",
+        "sha256": "8a73aa7cee295120db8a8f38e30fb4faca63588f49336a2f0f13fc825881a780",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "Sc2": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Sc2.parquet",
+        "sha256": "f9f91c2802826e004e4674972c5230e6fe8db4d20c0b4da4d7dc2f8d0b03571e",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "Sc3": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Sc3.parquet",
+        "sha256": "d212396db58a0ee82d5bcdbf83cea1c87b9d41124636a25edda29b75a41ea6f9",
+        "rows": 18758,
+        "features": 2,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "Sc4": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Sc4.parquet",
+        "sha256": "9aa62ada6e97d28d20f8e3b5d25b6d697ce0d40beea4e9fc4af9b136f36d5884",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "Sc5": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Sc5.parquet",
+        "sha256": "c8603a948b060344f23d2250da22b02a95254401c4a67d64d74a55d4cf4ee720",
+        "rows": 18758,
+        "features": 2,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "Sca1": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Sca1.parquet",
+        "sha256": "858eadae31c242954fbbd47ffb0151276018d987a994f57b24e84c19a8e6c294",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "Sca2": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Sca2.parquet",
+        "sha256": "76095bdd1699342886386958dc3515c8a7a7e372820e3fa6157b8404c930efd5",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "Sca3": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Sca3.parquet",
+        "sha256": "25bbb9d2c6dc08daebef712c1219f0f953172342f127db05c657beb553eb8426",
+        "rows": 18758,
+        "features": 2,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "Sca4": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Sca4.parquet",
+        "sha256": "6b9e8fc49b0af80dbb0c1a076520355e24aa43c65a5b12b90dfd073c3c259a16",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "Sca5": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Sca5.parquet",
+        "sha256": "7a60d0df7eb48dd1e8dbfa19fd3e4a214d9a7d72589688ef5554389350f58ad1",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "T1": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/T1.parquet",
+        "sha256": "96faeb4ce17ffc4558ed40c1750f723fa653ef289af7a8567dcf2b3d6d1fd23c",
+        "rows": 18758,
+        "features": 2,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "T2": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/T2.parquet",
+        "sha256": "6258a7f3a15ad7a240ad73d5f76e11e488e10130e29e6c2ade064ad236060570",
+        "rows": 18758,
+        "features": 2,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "T3": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/T3.parquet",
+        "sha256": "6816bc3734c980ec290a6f3843d6c73e3a421c6864ae7b528e888c449bdc4fa5",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "T4": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/T4.parquet",
+        "sha256": "b88b6d970077d2d9f8cd272cd3ebe80588cf9bfbb60f9281425554522337ee06",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "T5": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/T5.parquet",
+        "sha256": "feb7af5722fabacf90ed8915c2842ba5c5edddad8bad5d75028277f88af80140",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "Tm1": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Tm1.parquet",
+        "sha256": "df93396b8bb481dea6da43dd90b997eeeb47c5bf249a3fa6eac0dca6c8713885",
+        "rows": 18758,
+        "features": 2,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "Tm2": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Tm2.parquet",
+        "sha256": "470c23b2902cbb652dfc884c22ba2a743a85538aa819ddd179b1ff2a3aea41bc",
+        "rows": 18758,
+        "features": 2,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "Tm3": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Tm3.parquet",
+        "sha256": "502ff5d6c66628c97db82142a9ea935cc7b2817ff4cb8a9852b5e94d9b0b2940",
+        "rows": 28137,
+        "features": 3,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "Tm5": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Tm5.parquet",
+        "sha256": "ae363dff82f4ee47546485f45cd71250150a402479718795b0247585efdfe45e",
+        "rows": 84411,
+        "features": 9,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "X1": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/X1.parquet",
+        "sha256": "3352248e0e2ea195691ec2f6cdddc50de45be8a73115055a869592f4d7a0f262",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "X3": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/X3.parquet",
+        "sha256": "a9875575506caa832f4bad35b5bd52a7401c543e0481feec46c86e9f6c8e47fa",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "X4": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/X4.parquet",
+        "sha256": "6f0c03139dfa07ad16d62c44c0cec23561ab36b76f6bee92799187a96fabb278",
+        "rows": 9379,
+        "features": 1,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      },
+      "X5": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/X5.parquet",
+        "sha256": "c5b864512c1f191f9db866190e3b7c3b2208c702b2ba7c125b1d41c851a718f0",
+        "rows": 18758,
+        "features": 2,
+        "official_ids_per_feature_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6003
+        }
+      }
+    },
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "harness_report_sha256": "1203d2acf10fa9682852abba3382d55f53c42b6fa7c03071c44cbe915d3f7a85",
+    "registry_sha256": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "harness_config_sha256": "12a15e11cd0459299e407e5f1f7056fa16a6a8ddad5d7bfd826b20dbe476d558"
+  },
+  "provenance": {
+    "script_sha256": "f1f523eae08ea8357672359ce9f9670fcfe91eccfd72253ac62b833747d35200",
+    "registered_outputs_only": true
+  },
+  "acceptance": {
+    "all_registered_spatial_feature_pairs_accounted": true,
+    "eligible_nmi_finite_bounded": true,
+    "minimum_joint_defined": 30,
+    "high_nmi_threshold": 0.8,
+    "flagged_pairs_explicit": true
+  },
+  "interpretation": "Diagnostic NMI flags are for reviewer decisions only; no registered estimator or frozen feature was changed.",
+  "pair_measurements": {
+    "path": "reports/s-family-nonlinear-orthogonality-pairs.csv",
+    "sha256": "e73b2e94d60d3331e07c8b57cabc39b6da13a41b7a2db768e938646dfec9cb15",
+    "rows": 26706,
+    "columns": [
+      "left_feature_index",
+      "right_feature_index",
+      "region_index",
+      "joint_defined",
+      "nmi"
+    ],
+    "feature_indexes": "See feature_catalog; region_index refers to region_catalog."
+  }
+}
