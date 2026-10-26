@@ -109,6 +109,13 @@ class StubInputs:
             "cvi_baseline_socioeconomic": self.overrides.get("cvi_baseline_socioeconomic", np.array([0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1][:count])),
             "cvi_xwalk_coverage": self.overrides.get("cvi_xwalk_coverage", np.ones(count)),
             "cvi_covered": self.overrides.get("cvi_covered", np.ones(count, dtype=np.bool_)),
+            "mtbs_covered": self.overrides.get("mtbs_covered", np.ones(count, dtype=np.bool_)),
+            "mtbs_wildfire_burned_pct_land": self.overrides.get("mtbs_wildfire_burned_pct_land", np.array([0., 0., 10., 0., 5., 0., 0., 0.][:count])),
+            "mtbs_wildfire_last_year": self.overrides.get("mtbs_wildfire_last_year", np.array([np.nan, np.nan, 2020., np.nan, 2019., np.nan, np.nan, np.nan][:count])),
+            "usfs_covered": self.overrides.get("usfs_covered", np.ones(count, dtype=np.bool_)),
+            "usfs_BuildingCount_sum": self.overrides.get("usfs_BuildingCount_sum", np.array([50., 55., 60., 65., 70., 75., 80., 85.][:count])),
+            "usfs_HUCount_sum": self.overrides.get("usfs_HUCount_sum", np.array([50., 55., 60., 65., 70., 75., 80., 85.][:count])),
+            "usfs_PopCount_sum": self.overrides.get("usfs_PopCount_sum", np.array([100., 200., 300., 400., 500., 600., 700., 800.][:count])),
         }
         self._features = {
             "overture_buildings": self.overrides.get(
@@ -149,6 +156,30 @@ class StubInputs:
         self.accessed["parquet_columns"].append(
             f"{self.region}-census-acs-housing.parquet:GEOID,housing_units")
         return np.asarray(self._housing_units, dtype=np.float64)
+
+    def iter_layer_batches(self, layer, columns):
+        import shapely
+        self.accessed["layers"].append(layer)
+        self.accessed["parquet_columns"].extend(
+            f"{self.region}-overture-{layer}.parquet:{column}" for column in columns)
+        class Column:
+            def __init__(self, values): self.values = values
+            def to_pylist(self): return self.values
+        class Table:
+            def __init__(self, values): self.values = values
+            def column(self, name): return Column(self.values[name])
+        if layer == "pois":
+            geometries = [shapely.to_wkb(shapely.Point(i * 0.2 + 0.05, 0.05))
+                          for i in range(len(self.geoids))]
+        elif layer == "buildings":
+            geometries = [shapely.to_wkb(shapely.box(i * 0.2 + 0.02, 0.02, i * 0.2 + 0.08, 0.08))
+                          for i in range(len(self.geoids))]
+        else:
+            geometries = [shapely.to_wkb(shapely.LineString([(i * 0.2 + 0.01, 0.05),
+                                                              (i * 0.2 + 0.09, 0.05)]))
+                          for i in range(len(self.geoids))]
+        yield Table({"geometry": geometries,
+                     "version": [int(i % 4 + 1) for i in range(len(self.geoids))]})
 
     def named_class_km(self, layer: str):
         self.accessed["layers"].append(layer)

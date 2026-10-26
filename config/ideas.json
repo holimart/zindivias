@@ -393,7 +393,7 @@
       "failure_mode": "rebuilt areas (Paradise rebuild by 2026).",
       "family": "Tm",
       "id": "Tm2",
-      "implementation": null,
+      "implementation": "bias60.ideas.tm::tm2",
       "inputs": [
         "`strata` MTBS/NIFC burned_km2",
         "last_year and burned_pct_land; `usfs_BuildingCount_sum` (2022); Overture count"
@@ -404,7 +404,7 @@
       "recipe": "loss = burned_pct(years ≥ 2018) × max(0, usfs_count − O)/usfs_count, or with the burned share alone as a fallback.",
       "recipe_scope": "per tract",
       "signal": "structures burned after the reference imagery date (Microsoft US imagery is 2012–2021, with a large 2019–2020 share) remain in the reference but not in Overture. The Camp Fire (2018) and later Northern CA fires are the obvious cases.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Post-reference-epoch fire loss"
     },
     {
@@ -417,7 +417,7 @@
       "failure_mode": "ACS vintage noise and margins of error in small tracts.",
       "family": "Tm",
       "id": "Tm3",
-      "implementation": null,
+      "implementation": "bias60.ideas.tm::tm3",
       "inputs": [
         "`acs.housing_units`",
         "`strata.usfs_HUCount_sum` (2022)",
@@ -430,7 +430,7 @@
       "recipe": "g = ACS_HU / usfs_HU − 1 and O / usfs_BuildingCount − 1. Emit a growth index that enters with a *negative* expected weight.",
       "recipe_scope": "per tract",
       "signal": "fast-growing tracts (Maricopa and Pinal fringe, Austin–San Antonio corridor, Collin and Denton) have more structures today than in the 2018-vintage Microsoft reference, so the building gap clips to 0. New roads are mostly local, so TIGER S1200 is unaffected. The CBP year lags Overture, so the establishments gap shrinks.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Growth since the reference epoch"
     },
     {
@@ -467,7 +467,7 @@
       "failure_mode": "version semantics may have been reset at the GERS migration **[U]**.",
       "family": "Tm",
       "id": "Tm5",
-      "implementation": null,
+      "implementation": "bias60.ideas.tm::tm5",
       "inputs": [
         "the `version` column in `pois`",
         "`buildings` and `roads`"
@@ -478,7 +478,7 @@
       "recipe": "mean and p90 of version per theme; share of places with version 0 (new this release).",
       "recipe_scope": "per tract",
       "signal": "the integer `version` on Overture places, buildings and segments counts how often the entity changed across releases. High place-version churn marks unstable conflation, with places moved, merged or recategorised. The 2025-02 conflation rework added about 12% more places.",
-      "status": "declared",
+      "status": "implemented",
       "title": "GERS feature-version churn"
     },
     {
@@ -1459,7 +1459,7 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 6,
+    "declared_count": 3,
     "families_total": 12,
     "ideas_per_family": [
       5
@@ -1482,6 +1482,9 @@
       "M4",
       "M5",
       "Tm1",
+      "Tm2",
+      "Tm3",
+      "Tm5",
       "D1",
       "D2",
       "D3",
@@ -1528,7 +1531,7 @@
       "F",
       "R"
     ],
-    "implemented_count": 54
+    "implemented_count": 57
   },
   "vocabulary": {
     "components": [

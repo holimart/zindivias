@@ -418,7 +418,47 @@
       "south-central-tx-strata-tract-table.parquet:svi_covered",
       "south-central-tx-strata-tract-table.parquet:svi_minority",
       "south-central-tx-strata-tract-table.parquet:tribal_legal",
-      "south-central-tx-strata-tract-table.parquet:tribal_legal_pct"
+      "south-central-tx-strata-tract-table.parquet:tribal_legal_pct",
+      "eastern-ok-strata-tract-table.parquet:mtbs_covered",
+      "eastern-ok-strata-tract-table.parquet:mtbs_wildfire_burned_pct_land",
+      "eastern-ok-strata-tract-table.parquet:mtbs_wildfire_last_year",
+      "eastern-ok-strata-tract-table.parquet:usfs_covered",
+      "eastern-ok-strata-tract-table.parquet:usfs_BuildingCount_sum",
+      "eastern-ok-strata-tract-table.parquet:usfs_HUCount_sum",
+      "eastern-ok-strata-tract-table.parquet:usfs_PopCount_sum",
+      "maricopa-az-strata-tract-table.parquet:mtbs_covered",
+      "maricopa-az-strata-tract-table.parquet:mtbs_wildfire_burned_pct_land",
+      "maricopa-az-strata-tract-table.parquet:mtbs_wildfire_last_year",
+      "maricopa-az-strata-tract-table.parquet:usfs_covered",
+      "maricopa-az-strata-tract-table.parquet:usfs_BuildingCount_sum",
+      "maricopa-az-strata-tract-table.parquet:usfs_HUCount_sum",
+      "maricopa-az-strata-tract-table.parquet:usfs_PopCount_sum",
+      "northern-ca-strata-tract-table.parquet:mtbs_covered",
+      "northern-ca-strata-tract-table.parquet:mtbs_wildfire_burned_pct_land",
+      "northern-ca-strata-tract-table.parquet:mtbs_wildfire_last_year",
+      "northern-ca-strata-tract-table.parquet:usfs_covered",
+      "northern-ca-strata-tract-table.parquet:usfs_BuildingCount_sum",
+      "northern-ca-strata-tract-table.parquet:usfs_HUCount_sum",
+      "northern-ca-strata-tract-table.parquet:usfs_PopCount_sum",
+      "south-central-tx-strata-tract-table.parquet:mtbs_covered",
+      "south-central-tx-strata-tract-table.parquet:mtbs_wildfire_burned_pct_land",
+      "south-central-tx-strata-tract-table.parquet:mtbs_wildfire_last_year",
+      "south-central-tx-strata-tract-table.parquet:usfs_covered",
+      "south-central-tx-strata-tract-table.parquet:usfs_BuildingCount_sum",
+      "south-central-tx-strata-tract-table.parquet:usfs_HUCount_sum",
+      "south-central-tx-strata-tract-table.parquet:usfs_PopCount_sum",
+      "eastern-ok-overture-pois.parquet:version",
+      "eastern-ok-overture-buildings.parquet:version",
+      "eastern-ok-overture-roads.parquet:version",
+      "maricopa-az-overture-pois.parquet:version",
+      "maricopa-az-overture-buildings.parquet:version",
+      "maricopa-az-overture-roads.parquet:version",
+      "northern-ca-overture-pois.parquet:version",
+      "northern-ca-overture-buildings.parquet:version",
+      "northern-ca-overture-roads.parquet:version",
+      "south-central-tx-overture-pois.parquet:version",
+      "south-central-tx-overture-buildings.parquet:version",
+      "south-central-tx-overture-roads.parquet:version"
     ]
   },
   "orthogonality": {
@@ -439,7 +479,27 @@
       "coverage_column": "carbonplan_covered",
       "current_column": "overture_buildings",
       "covariate_maximum": 25.0,
-      "note": "spec Tm1: delta = O_now/O_cp - 1; gap proxy max(0,-delta) is exactly clip(1-O/E,0,1) with E the provided earlier-release count"
+      "note": "spec Tm1: delta = O_now/O_cp - 1; gap proxy max(0,-delta) is exactly clip(1-O/E,0,1) with E the provided earlier-release count; pending policy/ruling review, do not promote"
+    },
+    "Tm2": {
+      "component": "B",
+      "fire_component": "F",
+      "strata_columns": ["mtbs_covered", "mtbs_wildfire_burned_pct_land", "mtbs_wildfire_last_year", "usfs_covered", "usfs_BuildingCount_sum"],
+      "current_column": "overture_buildings",
+      "post_reference_year": 2018,
+      "note": "loss = post-2018 burned land share times positive USFS-provided building-count shortfall; burned share alone when the count denominator is unavailable"
+    },
+    "Tm3": {
+      "strata_columns": ["usfs_covered", "usfs_HUCount_sum", "usfs_BuildingCount_sum", "usfs_PopCount_sum", "pop_total"],
+      "current_building_column": "overture_buildings",
+      "housing_component": "B",
+      "population_component": "Est",
+      "note": "emit ACS housing-unit/USFS HU minus one and provided current population/USFS population minus one; building-count ratio is also emitted as a documented demographic-growth cross-check"
+    },
+    "Tm5": {
+      "layers": ["pois", "buildings", "roads"],
+      "columns": ["version", "geometry"],
+      "note": "per tract feature-centroid assignment; emit theme-specific mean/p90 version and version-zero share; pois->Est, buildings->F, roads->R"
     },
     "Mx1": {
       "components": ["R"],

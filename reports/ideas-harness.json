@@ -1,7 +1,7 @@
 {
-  "code_commit_at_run": "d18e14d636849cb566036c7189536a00d0e73222",
+  "code_commit_at_run": "89ce01d92e127c3e25001489f85ec85d4c4703fd",
   "environment": {
-    "git_commit": "d18e14d636849cb566036c7189536a00d0e73222",
+    "git_commit": "89ce01d92e127c3e25001489f85ec85d4c4703fd",
     "versions": {
       "numpy": "2.5.4",
       "pyarrow": "26.0.0",
@@ -72,18 +72,21 @@
       "Sca4",
       "Sca5",
       "T1",
+      "T2",
       "T3",
       "T4",
       "T5",
       "Tm1",
+      "Tm2",
+      "Tm3",
       "X1",
       "X3",
       "X4",
       "X5"
     ],
-    "prior_report_sha256": "29f1e7f6080006d9d091355ed780a6b64bb2e0c2dfa0a9c2ae3c96ac27239904",
+    "prior_report_sha256": "5bf98163aeac8b386381418753942e9d62aa8eb89da13950ac8a4e865ec2e85d",
     "selected_idea_ids_rebuilt": [
-      "T2"
+      "Tm5"
     ]
   },
   "partition_problems": [],
@@ -20546,6 +20549,515 @@
       "sha256": "df93396b8bb481dea6da43dd90b997eeeb47c5bf249a3fa6eac0dca6c8713885",
       "undeclared_columns_read": []
     },
+    "Tm2": {
+      "accessed_inputs": {
+        "caches": [
+          "eastern-ok-overture-tract-summary.parquet",
+          "eastern-ok-strata-tract-table.parquet",
+          "maricopa-az-overture-tract-summary.parquet",
+          "maricopa-az-strata-tract-table.parquet",
+          "northern-ca-overture-tract-summary.parquet",
+          "northern-ca-strata-tract-table.parquet",
+          "south-central-tx-overture-tract-summary.parquet",
+          "south-central-tx-strata-tract-table.parquet"
+        ],
+        "csv_columns": [],
+        "idea_artifacts": [],
+        "layers": [],
+        "parquet_columns": [
+          "eastern-ok-overture-tract-summary.parquet:GEOID",
+          "eastern-ok-overture-tract-summary.parquet:overture_buildings",
+          "eastern-ok-strata-tract-table.parquet:GEOID",
+          "eastern-ok-strata-tract-table.parquet:mtbs_covered",
+          "eastern-ok-strata-tract-table.parquet:mtbs_wildfire_burned_pct_land",
+          "eastern-ok-strata-tract-table.parquet:mtbs_wildfire_last_year",
+          "eastern-ok-strata-tract-table.parquet:usfs_BuildingCount_sum",
+          "eastern-ok-strata-tract-table.parquet:usfs_covered",
+          "maricopa-az-overture-tract-summary.parquet:GEOID",
+          "maricopa-az-overture-tract-summary.parquet:overture_buildings",
+          "maricopa-az-strata-tract-table.parquet:GEOID",
+          "maricopa-az-strata-tract-table.parquet:mtbs_covered",
+          "maricopa-az-strata-tract-table.parquet:mtbs_wildfire_burned_pct_land",
+          "maricopa-az-strata-tract-table.parquet:mtbs_wildfire_last_year",
+          "maricopa-az-strata-tract-table.parquet:usfs_BuildingCount_sum",
+          "maricopa-az-strata-tract-table.parquet:usfs_covered",
+          "northern-ca-overture-tract-summary.parquet:GEOID",
+          "northern-ca-overture-tract-summary.parquet:overture_buildings",
+          "northern-ca-strata-tract-table.parquet:GEOID",
+          "northern-ca-strata-tract-table.parquet:mtbs_covered",
+          "northern-ca-strata-tract-table.parquet:mtbs_wildfire_burned_pct_land",
+          "northern-ca-strata-tract-table.parquet:mtbs_wildfire_last_year",
+          "northern-ca-strata-tract-table.parquet:usfs_BuildingCount_sum",
+          "northern-ca-strata-tract-table.parquet:usfs_covered",
+          "south-central-tx-overture-tract-summary.parquet:GEOID",
+          "south-central-tx-overture-tract-summary.parquet:overture_buildings",
+          "south-central-tx-strata-tract-table.parquet:GEOID",
+          "south-central-tx-strata-tract-table.parquet:mtbs_covered",
+          "south-central-tx-strata-tract-table.parquet:mtbs_wildfire_burned_pct_land",
+          "south-central-tx-strata-tract-table.parquet:mtbs_wildfire_last_year",
+          "south-central-tx-strata-tract-table.parquet:usfs_BuildingCount_sum",
+          "south-central-tx-strata-tract-table.parquet:usfs_covered"
+        ]
+      },
+      "bytes": 30310,
+      "diagnostics": {
+        "eastern-ok": {
+          "burn_percent_capped_at_100": true,
+          "defined": 1192,
+          "fallback_rows": 0,
+          "no_target_or_reference_data_read": true,
+          "post_fire_rows": 89,
+          "sources": [
+            "provided MTBS strata",
+            "provided USFS structure-count strata",
+            "provided Overture building summary"
+          ]
+        },
+        "maricopa-az": {
+          "burn_percent_capped_at_100": true,
+          "defined": 1593,
+          "fallback_rows": 0,
+          "no_target_or_reference_data_read": true,
+          "post_fire_rows": 97,
+          "sources": [
+            "provided MTBS strata",
+            "provided USFS structure-count strata",
+            "provided Overture building summary"
+          ]
+        },
+        "northern-ca": {
+          "burn_percent_capped_at_100": true,
+          "defined": 591,
+          "fallback_rows": 0,
+          "no_target_or_reference_data_read": true,
+          "post_fire_rows": 93,
+          "sources": [
+            "provided MTBS strata",
+            "provided USFS structure-count strata",
+            "provided Overture building summary"
+          ]
+        },
+        "south-central-tx": {
+          "burn_percent_capped_at_100": true,
+          "defined": 6001,
+          "fallback_rows": 0,
+          "no_target_or_reference_data_read": true,
+          "post_fire_rows": 102,
+          "sources": [
+            "provided MTBS strata",
+            "provided USFS structure-count strata",
+            "provided Overture building summary"
+          ]
+        }
+      },
+      "emissions": [
+        {
+          "channel": "gap",
+          "component": "B",
+          "defined_rows": 9377,
+          "rows": 9379,
+          "value_max": 0.3800692719734605,
+          "value_min": 0.0
+        },
+        {
+          "channel": "covariate:postfire_burn_share",
+          "component": "F",
+          "defined_rows": 9377,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 0.0
+        }
+      ],
+      "emissions_per_region": 2,
+      "family": "Tm",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/Tm2.parquet",
+      "rows": 18758,
+      "sha256": "470c23b2902cbb652dfc884c22ba2a743a85538aa819ddd179b1ff2a3aea41bc",
+      "undeclared_columns_read": []
+    },
+    "Tm3": {
+      "accessed_inputs": {
+        "caches": [
+          "eastern-ok-overture-tract-summary.parquet",
+          "eastern-ok-strata-tract-table.parquet",
+          "maricopa-az-overture-tract-summary.parquet",
+          "maricopa-az-strata-tract-table.parquet",
+          "northern-ca-overture-tract-summary.parquet",
+          "northern-ca-strata-tract-table.parquet",
+          "south-central-tx-overture-tract-summary.parquet",
+          "south-central-tx-strata-tract-table.parquet"
+        ],
+        "csv_columns": [],
+        "idea_artifacts": [],
+        "layers": [
+          "census-acs-housing"
+        ],
+        "parquet_columns": [
+          "eastern-ok-census-acs-housing.parquet:GEOID,housing_units",
+          "eastern-ok-overture-tract-summary.parquet:GEOID",
+          "eastern-ok-overture-tract-summary.parquet:overture_buildings",
+          "eastern-ok-strata-tract-table.parquet:GEOID",
+          "eastern-ok-strata-tract-table.parquet:pop_total",
+          "eastern-ok-strata-tract-table.parquet:usfs_BuildingCount_sum",
+          "eastern-ok-strata-tract-table.parquet:usfs_HUCount_sum",
+          "eastern-ok-strata-tract-table.parquet:usfs_PopCount_sum",
+          "eastern-ok-strata-tract-table.parquet:usfs_covered",
+          "maricopa-az-census-acs-housing.parquet:GEOID,housing_units",
+          "maricopa-az-overture-tract-summary.parquet:GEOID",
+          "maricopa-az-overture-tract-summary.parquet:overture_buildings",
+          "maricopa-az-strata-tract-table.parquet:GEOID",
+          "maricopa-az-strata-tract-table.parquet:pop_total",
+          "maricopa-az-strata-tract-table.parquet:usfs_BuildingCount_sum",
+          "maricopa-az-strata-tract-table.parquet:usfs_HUCount_sum",
+          "maricopa-az-strata-tract-table.parquet:usfs_PopCount_sum",
+          "maricopa-az-strata-tract-table.parquet:usfs_covered",
+          "northern-ca-census-acs-housing.parquet:GEOID,housing_units",
+          "northern-ca-overture-tract-summary.parquet:GEOID",
+          "northern-ca-overture-tract-summary.parquet:overture_buildings",
+          "northern-ca-strata-tract-table.parquet:GEOID",
+          "northern-ca-strata-tract-table.parquet:pop_total",
+          "northern-ca-strata-tract-table.parquet:usfs_BuildingCount_sum",
+          "northern-ca-strata-tract-table.parquet:usfs_HUCount_sum",
+          "northern-ca-strata-tract-table.parquet:usfs_PopCount_sum",
+          "northern-ca-strata-tract-table.parquet:usfs_covered",
+          "south-central-tx-census-acs-housing.parquet:GEOID,housing_units",
+          "south-central-tx-overture-tract-summary.parquet:GEOID",
+          "south-central-tx-overture-tract-summary.parquet:overture_buildings",
+          "south-central-tx-strata-tract-table.parquet:GEOID",
+          "south-central-tx-strata-tract-table.parquet:pop_total",
+          "south-central-tx-strata-tract-table.parquet:usfs_BuildingCount_sum",
+          "south-central-tx-strata-tract-table.parquet:usfs_HUCount_sum",
+          "south-central-tx-strata-tract-table.parquet:usfs_PopCount_sum",
+          "south-central-tx-strata-tract-table.parquet:usfs_covered"
+        ]
+      },
+      "bytes": 251761,
+      "diagnostics": {
+        "eastern-ok": {
+          "defined_buildings": 1192,
+          "defined_housing": 1189,
+          "defined_population": 1190,
+          "growth_values_enter_with_negative_expected_weight": true,
+          "no_target_or_reference_data_read": true
+        },
+        "maricopa-az": {
+          "defined_buildings": 1593,
+          "defined_housing": 1588,
+          "defined_population": 1590,
+          "growth_values_enter_with_negative_expected_weight": true,
+          "no_target_or_reference_data_read": true
+        },
+        "northern-ca": {
+          "defined_buildings": 591,
+          "defined_housing": 591,
+          "defined_population": 591,
+          "growth_values_enter_with_negative_expected_weight": true,
+          "no_target_or_reference_data_read": true
+        },
+        "south-central-tx": {
+          "defined_buildings": 6001,
+          "defined_housing": 5994,
+          "defined_population": 5993,
+          "growth_values_enter_with_negative_expected_weight": true,
+          "no_target_or_reference_data_read": true
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate:acs_housing_growth",
+          "component": "B",
+          "defined_rows": 9362,
+          "rows": 9379,
+          "value_max": 206.9999948859216,
+          "value_min": -1.0
+        },
+        {
+          "channel": "covariate:overture_building_growth",
+          "component": "B",
+          "defined_rows": 9377,
+          "rows": 9379,
+          "value_max": 5.594059405940594,
+          "value_min": -0.913496864286053
+        },
+        {
+          "channel": "covariate:population_growth",
+          "component": "Est",
+          "defined_rows": 9364,
+          "rows": 9379,
+          "value_max": 436.55732240427096,
+          "value_min": -1.0
+        }
+      ],
+      "emissions_per_region": 3,
+      "family": "Tm",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/Tm3.parquet",
+      "rows": 28137,
+      "sha256": "502ff5d6c66628c97db82142a9ea935cc7b2817ff4cb8a9852b5e94d9b0b2940",
+      "undeclared_columns_read": []
+    },
+    "Tm5": {
+      "accessed_inputs": {
+        "caches": [],
+        "csv_columns": [],
+        "idea_artifacts": [],
+        "layers": [
+          "buildings",
+          "census-acs-housing",
+          "pois",
+          "roads"
+        ],
+        "parquet_columns": [
+          "eastern-ok-census-acs-housing:GEOID,geometry",
+          "eastern-ok-overture-buildings.parquet:geometry",
+          "eastern-ok-overture-buildings.parquet:version",
+          "eastern-ok-overture-pois.parquet:geometry",
+          "eastern-ok-overture-pois.parquet:version",
+          "eastern-ok-overture-roads.parquet:geometry",
+          "eastern-ok-overture-roads.parquet:version",
+          "maricopa-az-census-acs-housing:GEOID,geometry",
+          "maricopa-az-overture-buildings.parquet:geometry",
+          "maricopa-az-overture-buildings.parquet:version",
+          "maricopa-az-overture-pois.parquet:geometry",
+          "maricopa-az-overture-pois.parquet:version",
+          "maricopa-az-overture-roads.parquet:geometry",
+          "maricopa-az-overture-roads.parquet:version",
+          "northern-ca-census-acs-housing:GEOID,geometry",
+          "northern-ca-overture-buildings.parquet:geometry",
+          "northern-ca-overture-buildings.parquet:version",
+          "northern-ca-overture-pois.parquet:geometry",
+          "northern-ca-overture-pois.parquet:version",
+          "northern-ca-overture-roads.parquet:geometry",
+          "northern-ca-overture-roads.parquet:version",
+          "south-central-tx-census-acs-housing:GEOID,geometry",
+          "south-central-tx-overture-buildings.parquet:geometry",
+          "south-central-tx-overture-buildings.parquet:version",
+          "south-central-tx-overture-pois.parquet:geometry",
+          "south-central-tx-overture-pois.parquet:version",
+          "south-central-tx-overture-roads.parquet:geometry",
+          "south-central-tx-overture-roads.parquet:version"
+        ]
+      },
+      "bytes": 274586,
+      "diagnostics": {
+        "eastern-ok": {
+          "layers": {
+            "buildings": {
+              "assignment": "feature centroid strictly within provided ACS tract",
+              "centroid_assigned": 2551694,
+              "defined_tracts": 1192,
+              "null_geometry": 0,
+              "null_version": 0,
+              "rows_read": 2551694,
+              "version0_interpreted_as_new_this_release": true
+            },
+            "pois": {
+              "assignment": "feature centroid strictly within provided ACS tract",
+              "centroid_assigned": 207369,
+              "defined_tracts": 1192,
+              "null_geometry": 0,
+              "null_version": 0,
+              "rows_read": 207369,
+              "version0_interpreted_as_new_this_release": true
+            },
+            "roads": {
+              "assignment": "feature centroid strictly within provided ACS tract",
+              "centroid_assigned": 520439,
+              "defined_tracts": 1192,
+              "null_geometry": 0,
+              "null_version": 0,
+              "rows_read": 520550,
+              "version0_interpreted_as_new_this_release": true
+            }
+          },
+          "no_target_or_reference_data_read": true
+        },
+        "maricopa-az": {
+          "layers": {
+            "buildings": {
+              "assignment": "feature centroid strictly within provided ACS tract",
+              "centroid_assigned": 2908224,
+              "defined_tracts": 1593,
+              "null_geometry": 0,
+              "null_version": 0,
+              "rows_read": 2908224,
+              "version0_interpreted_as_new_this_release": true
+            },
+            "pois": {
+              "assignment": "feature centroid strictly within provided ACS tract",
+              "centroid_assigned": 300044,
+              "defined_tracts": 1593,
+              "null_geometry": 0,
+              "null_version": 0,
+              "rows_read": 300046,
+              "version0_interpreted_as_new_this_release": true
+            },
+            "roads": {
+              "assignment": "feature centroid strictly within provided ACS tract",
+              "centroid_assigned": 494427,
+              "defined_tracts": 1593,
+              "null_geometry": 0,
+              "null_version": 0,
+              "rows_read": 494492,
+              "version0_interpreted_as_new_this_release": true
+            }
+          },
+          "no_target_or_reference_data_read": true
+        },
+        "northern-ca": {
+          "layers": {
+            "buildings": {
+              "assignment": "feature centroid strictly within provided ACS tract",
+              "centroid_assigned": 1164724,
+              "defined_tracts": 591,
+              "null_geometry": 0,
+              "null_version": 0,
+              "rows_read": 1164724,
+              "version0_interpreted_as_new_this_release": true
+            },
+            "pois": {
+              "assignment": "feature centroid strictly within provided ACS tract",
+              "centroid_assigned": 116895,
+              "defined_tracts": 591,
+              "null_geometry": 0,
+              "null_version": 0,
+              "rows_read": 116897,
+              "version0_interpreted_as_new_this_release": true
+            },
+            "roads": {
+              "assignment": "feature centroid strictly within provided ACS tract",
+              "centroid_assigned": 191557,
+              "defined_tracts": 591,
+              "null_geometry": 0,
+              "null_version": 0,
+              "rows_read": 191836,
+              "version0_interpreted_as_new_this_release": true
+            }
+          },
+          "no_target_or_reference_data_read": true
+        },
+        "south-central-tx": {
+          "layers": {
+            "buildings": {
+              "assignment": "feature centroid strictly within provided ACS tract",
+              "centroid_assigned": 11463801,
+              "defined_tracts": 6001,
+              "null_geometry": 0,
+              "null_version": 0,
+              "rows_read": 11463801,
+              "version0_interpreted_as_new_this_release": true
+            },
+            "pois": {
+              "assignment": "feature centroid strictly within provided ACS tract",
+              "centroid_assigned": 1300287,
+              "defined_tracts": 6001,
+              "null_geometry": 0,
+              "null_version": 0,
+              "rows_read": 1300334,
+              "version0_interpreted_as_new_this_release": true
+            },
+            "roads": {
+              "assignment": "feature centroid strictly within provided ACS tract",
+              "centroid_assigned": 1936808,
+              "defined_tracts": 5999,
+              "null_geometry": 0,
+              "null_version": 0,
+              "rows_read": 1937009,
+              "version0_interpreted_as_new_this_release": true
+            }
+          },
+          "no_target_or_reference_data_read": true
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate:tm5_poi_mean_version",
+          "component": "Est",
+          "defined_rows": 9377,
+          "rows": 9379,
+          "value_max": 10.0,
+          "value_min": 1.1975476839237058
+        },
+        {
+          "channel": "covariate:tm5_poi_p90_version",
+          "component": "Est",
+          "defined_rows": 9377,
+          "rows": 9379,
+          "value_max": 13.0,
+          "value_min": 1.0
+        },
+        {
+          "channel": "covariate:tm5_poi_version0_share",
+          "component": "Est",
+          "defined_rows": 9377,
+          "rows": 9379,
+          "value_max": 0.0,
+          "value_min": 0.0
+        },
+        {
+          "channel": "covariate:tm5_buildings_mean_version",
+          "component": "F",
+          "defined_rows": 9377,
+          "rows": 9379,
+          "value_max": 3.8838862559241707,
+          "value_min": 1.0
+        },
+        {
+          "channel": "covariate:tm5_buildings_p90_version",
+          "component": "F",
+          "defined_rows": 9377,
+          "rows": 9379,
+          "value_max": 5.0,
+          "value_min": 1.0
+        },
+        {
+          "channel": "covariate:tm5_buildings_version0_share",
+          "component": "F",
+          "defined_rows": 9377,
+          "rows": 9379,
+          "value_max": 0.0,
+          "value_min": 0.0
+        },
+        {
+          "channel": "covariate:tm5_road_mean_version",
+          "component": "R",
+          "defined_rows": 9375,
+          "rows": 9379,
+          "value_max": 3.6085526315789473,
+          "value_min": 1.0
+        },
+        {
+          "channel": "covariate:tm5_road_p90_version",
+          "component": "R",
+          "defined_rows": 9375,
+          "rows": 9379,
+          "value_max": 11.0,
+          "value_min": 1.0
+        },
+        {
+          "channel": "covariate:tm5_road_version0_share",
+          "component": "R",
+          "defined_rows": 9375,
+          "rows": 9379,
+          "value_max": 0.0,
+          "value_min": 0.0
+        }
+      ],
+      "emissions_per_region": 9,
+      "family": "Tm",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/Tm5.parquet",
+      "rows": 84411,
+      "sha256": "ae363dff82f4ee47546485f45cd71250150a402479718795b0247585efdfe45e",
+      "undeclared_columns_read": []
+    },
     "X1": {
       "accessed_inputs": {
         "caches": [],
@@ -21529,7 +22041,7 @@
   },
   "preregistration": {
     "path": "config/bias60-harness-preregistered.json",
-    "sha256": "db9ded87cd05721fbdbf91ba54b4f1722cfbde4328466a4fc78ceaac4a3e35f2",
+    "sha256": "b29611b51fd11b9b6a73881d6d5d5b916ca153a0066e88c160bf709191f4dbdc",
     "spec": {
       "family_count": 12,
       "idea_count": 60,
@@ -21569,7 +22081,7 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 6,
+    "declared_count": 3,
     "families_total": 12,
     "ideas_per_family": [
       5
@@ -21592,6 +22104,9 @@
       "M4",
       "M5",
       "Tm1",
+      "Tm2",
+      "Tm3",
+      "Tm5",
       "D1",
       "D2",
       "D3",
@@ -21638,7 +22153,7 @@
       "F",
       "R"
     ],
-    "implemented_count": 54
+    "implemented_count": 57
   },
   "scope": {
     "geoids_by_region": {
@@ -21667,7 +22182,7 @@
       "R",
       "all"
     ],
-    "ideas_implemented": 54,
+    "ideas_implemented": 57,
     "parquet_files": {
       "ideas/D1.parquet": "cd389595f543483747281f6342a43ec183e858a08a559ad7f557d654024ebae3",
       "ideas/D2.parquet": "68dc61099c9c9adcf2c028400671934874b2499208150bd521da4608340e5395",
@@ -21719,12 +22234,15 @@
       "ideas/T4.parquet": "b88b6d970077d2d9f8cd272cd3ebe80588cf9bfbb60f9281425554522337ee06",
       "ideas/T5.parquet": "feb7af5722fabacf90ed8915c2842ba5c5edddad8bad5d75028277f88af80140",
       "ideas/Tm1.parquet": "df93396b8bb481dea6da43dd90b997eeeb47c5bf249a3fa6eac0dca6c8713885",
+      "ideas/Tm2.parquet": "470c23b2902cbb652dfc884c22ba2a743a85538aa819ddd179b1ff2a3aea41bc",
+      "ideas/Tm3.parquet": "502ff5d6c66628c97db82142a9ea935cc7b2817ff4cb8a9852b5e94d9b0b2940",
+      "ideas/Tm5.parquet": "ae363dff82f4ee47546485f45cd71250150a402479718795b0247585efdfe45e",
       "ideas/X1.parquet": "3352248e0e2ea195691ec2f6cdddc50de45be8a73115055a869592f4d7a0f262",
       "ideas/X3.parquet": "a9875575506caa832f4bad35b5bd52a7401c543e0481feec46c86e9f6c8e47fa",
       "ideas/X4.parquet": "6f0c03139dfa07ad16d62c44c0cec23561ab36b76f6bee92799187a96fabb278",
       "ideas/X5.parquet": "c5b864512c1f191f9db866190e3b7c3b2208c702b2ba7c125b1d41c851a718f0"
     },
-    "report_sha256": "b8e7887c12459d174e8273b0857eaa53fb45a1421c86f4f0bcd7c660093936c3"
+    "report_sha256": "e47a45692162d06959cdf2a2709ca56061892bdef8e098bb9662811edb869d2e"
   },
   "tamper_case": null
 }
