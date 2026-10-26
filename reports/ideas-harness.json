@@ -1,7 +1,7 @@
 {
-  "code_commit_at_run": "de6e1a627bc9fb082b522c2cc24fccce9f29beec",
+  "code_commit_at_run": "d1005d598d176e1a866c169fa7d3bf5a6b75a327",
   "environment": {
-    "git_commit": "de6e1a627bc9fb082b522c2cc24fccce9f29beec",
+    "git_commit": "d1005d598d176e1a866c169fa7d3bf5a6b75a327",
     "versions": {
       "numpy": "2.5.4",
       "pyarrow": "26.0.0",
@@ -59,6 +59,7 @@
       "S1",
       "S2",
       "S3",
+      "S4",
       "S5",
       "Sc1",
       "Sc2",
@@ -76,9 +77,9 @@
       "X4",
       "X5"
     ],
-    "prior_report_sha256": "954d8514141259c7f06102ad042fa9af31085242ff29e3d3831b1f409d32df80",
+    "prior_report_sha256": "a511ad852fe5441c9331c88042c5613145b44ab959add2fe69382ea006c6d899",
     "selected_idea_ids_rebuilt": [
-      "S4"
+      "T1"
     ]
   },
   "partition_problems": [],
@@ -10419,6 +10420,129 @@
       "sha256": "7a60d0df7eb48dd1e8dbfa19fd3e4a214d9a7d72589688ef5554389350f58ad1",
       "undeclared_columns_read": []
     },
+    "T1": {
+      "accessed_inputs": {
+        "caches": [],
+        "csv_columns": [],
+        "idea_artifacts": [],
+        "layers": [
+          "census-acs-housing",
+          "roads-unfiltered"
+        ],
+        "parquet_columns": [
+          "eastern-ok-census-acs-housing:GEOID,geometry",
+          "eastern-ok-overture-roads-unfiltered.parquet:class",
+          "eastern-ok-overture-roads-unfiltered.parquet:geometry",
+          "eastern-ok-overture-roads-unfiltered.parquet:names",
+          "eastern-ok-overture-roads-unfiltered.parquet:routes",
+          "maricopa-az-census-acs-housing:GEOID,geometry",
+          "maricopa-az-overture-roads-unfiltered.parquet:class",
+          "maricopa-az-overture-roads-unfiltered.parquet:geometry",
+          "maricopa-az-overture-roads-unfiltered.parquet:names",
+          "maricopa-az-overture-roads-unfiltered.parquet:routes",
+          "northern-ca-census-acs-housing:GEOID,geometry",
+          "northern-ca-overture-roads-unfiltered.parquet:class",
+          "northern-ca-overture-roads-unfiltered.parquet:geometry",
+          "northern-ca-overture-roads-unfiltered.parquet:names",
+          "northern-ca-overture-roads-unfiltered.parquet:routes",
+          "south-central-tx-census-acs-housing:GEOID,geometry",
+          "south-central-tx-overture-roads-unfiltered.parquet:class",
+          "south-central-tx-overture-roads-unfiltered.parquet:geometry",
+          "south-central-tx-overture-roads-unfiltered.parquet:names",
+          "south-central-tx-overture-roads-unfiltered.parquet:routes"
+        ]
+      },
+      "bytes": 150379,
+      "diagnostics": {
+        "eastern-ok": {
+          "eligible_named_identities": 2127,
+          "identity_rule": "casefolded names.primary; fallback route network/ref",
+          "length_crs": "EPSG:5070",
+          "named_class_set": [
+            "motorway",
+            "primary",
+            "secondary",
+            "trunk"
+          ],
+          "no_target_or_reference_data_read": true,
+          "outside_named_share_threshold": 0.7,
+          "rows_read": 1037555,
+          "stroke_angle_rule": "not applied; exact identity continuity only (conservative proxy)"
+        },
+        "maricopa-az": {
+          "eligible_named_identities": 1284,
+          "identity_rule": "casefolded names.primary; fallback route network/ref",
+          "length_crs": "EPSG:5070",
+          "named_class_set": [
+            "motorway",
+            "primary",
+            "secondary",
+            "trunk"
+          ],
+          "no_target_or_reference_data_read": true,
+          "outside_named_share_threshold": 0.7,
+          "rows_read": 1170165,
+          "stroke_angle_rule": "not applied; exact identity continuity only (conservative proxy)"
+        },
+        "northern-ca": {
+          "eligible_named_identities": 837,
+          "identity_rule": "casefolded names.primary; fallback route network/ref",
+          "length_crs": "EPSG:5070",
+          "named_class_set": [
+            "motorway",
+            "primary",
+            "secondary",
+            "trunk"
+          ],
+          "no_target_or_reference_data_read": true,
+          "outside_named_share_threshold": 0.7,
+          "rows_read": 479596,
+          "stroke_angle_rule": "not applied; exact identity continuity only (conservative proxy)"
+        },
+        "south-central-tx": {
+          "eligible_named_identities": 8635,
+          "identity_rule": "casefolded names.primary; fallback route network/ref",
+          "length_crs": "EPSG:5070",
+          "named_class_set": [
+            "motorway",
+            "primary",
+            "secondary",
+            "trunk"
+          ],
+          "no_target_or_reference_data_read": true,
+          "outside_named_share_threshold": 0.7,
+          "rows_read": 4122701,
+          "stroke_angle_rule": "not applied; exact identity continuity only (conservative proxy)"
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate",
+          "component": "R",
+          "defined_rows": 9347,
+          "rows": 9379,
+          "value_max": 237.3875063182366,
+          "value_min": 0.0
+        },
+        {
+          "channel": "gap",
+          "component": "R",
+          "defined_rows": 9347,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 0.0
+        }
+      ],
+      "emissions_per_region": 2,
+      "family": "T",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/T1.parquet",
+      "rows": 18758,
+      "sha256": "96faeb4ce17ffc4558ed40c1750f723fa653ef289af7a8567dcf2b3d6d1fd23c",
+      "undeclared_columns_read": []
+    },
     "Tm1": {
       "accessed_inputs": {
         "caches": [
@@ -11582,7 +11706,7 @@
   },
   "preregistration": {
     "path": "config/bias60-harness-preregistered.json",
-    "sha256": "0eb66858af26f8136654c752afba9dc997ff78c6eb246af5a05de265f45d9358",
+    "sha256": "99a591a436efb27db72d7d7776099a469edc9d5da69fd34d601b5de7ff4128dd",
     "spec": {
       "family_count": 12,
       "idea_count": 60,
@@ -11622,7 +11746,7 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 11,
+    "declared_count": 10,
     "families_total": 12,
     "ideas_per_family": [
       5
@@ -11634,6 +11758,7 @@
       "G3",
       "G4",
       "G5",
+      "T1",
       "M1",
       "M2",
       "M3",
@@ -11686,7 +11811,7 @@
       "F",
       "R"
     ],
-    "implemented_count": 49
+    "implemented_count": 50
   },
   "scope": {
     "geoids_by_region": {
@@ -11715,7 +11840,7 @@
       "R",
       "all"
     ],
-    "ideas_implemented": 49,
+    "ideas_implemented": 50,
     "parquet_files": {
       "ideas/D1.parquet": "cd389595f543483747281f6342a43ec183e858a08a559ad7f557d654024ebae3",
       "ideas/D2.parquet": "68dc61099c9c9adcf2c028400671934874b2499208150bd521da4608340e5395",
@@ -11761,13 +11886,14 @@
       "ideas/Sca3.parquet": "25bbb9d2c6dc08daebef712c1219f0f953172342f127db05c657beb553eb8426",
       "ideas/Sca4.parquet": "6b9e8fc49b0af80dbb0c1a076520355e24aa43c65a5b12b90dfd073c3c259a16",
       "ideas/Sca5.parquet": "7a60d0df7eb48dd1e8dbfa19fd3e4a214d9a7d72589688ef5554389350f58ad1",
+      "ideas/T1.parquet": "96faeb4ce17ffc4558ed40c1750f723fa653ef289af7a8567dcf2b3d6d1fd23c",
       "ideas/Tm1.parquet": "df93396b8bb481dea6da43dd90b997eeeb47c5bf249a3fa6eac0dca6c8713885",
       "ideas/X1.parquet": "3352248e0e2ea195691ec2f6cdddc50de45be8a73115055a869592f4d7a0f262",
       "ideas/X3.parquet": "a9875575506caa832f4bad35b5bd52a7401c543e0481feec46c86e9f6c8e47fa",
       "ideas/X4.parquet": "6f0c03139dfa07ad16d62c44c0cec23561ab36b76f6bee92799187a96fabb278",
       "ideas/X5.parquet": "c5b864512c1f191f9db866190e3b7c3b2208c702b2ba7c125b1d41c851a718f0"
     },
-    "report_sha256": "dee0949222dabd46bfaef294b06fb6cd55e9a27ca43d5c7c073ac1141ab490b0"
+    "report_sha256": "7968a9af2304fbadb5be5888c6cf5a0f2fb8576b448c712488a3c0c7099834f5"
   },
   "tamper_case": null
 }

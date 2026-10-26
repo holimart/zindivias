@@ -134,7 +134,7 @@
       "failure_mode": "real downgrades at city limits, where TIGER also changes.",
       "family": "T",
       "id": "T1",
-      "implementation": null,
+      "implementation": "bias60.ideas.t::t1",
       "inputs": [
         "`roads-unfiltered`: class",
         "names",
@@ -146,7 +146,7 @@
       "recipe": "build strokes from name continuity plus a deflection angle under 30° (Jiang et al. natural roads). For strokes whose length outside the tract is at least 70% named-class, sum the non-named-class length inside the tract (L_drop). ĝ = L_drop/(L_named + L_drop).",
       "recipe_scope": "per tract",
       "signal": "a named highway (same `names.primary` or route) that is primary/secondary on both sides but tertiary inside one tract shows the mapper's class boundary, not the real highway. TIGER keeps S1200 continuous.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Class-drop at a continuous stroke"
     },
     {
@@ -1459,7 +1459,7 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 11,
+    "declared_count": 10,
     "families_total": 12,
     "ideas_per_family": [
       5
@@ -1471,6 +1471,7 @@
       "G3",
       "G4",
       "G5",
+      "T1",
       "M1",
       "M2",
       "M3",
@@ -1523,7 +1524,7 @@
       "F",
       "R"
     ],
-    "implemented_count": 49
+    "implemented_count": 50
   },
   "vocabulary": {
     "components": [

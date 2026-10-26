@@ -1419,6 +1419,13 @@
       "contiguity": "queen",
       "source": "existing gap emissions",
       "statistic": "normalized local Geary contribution"
+    },
+    "T1": {
+      "unfiltered_layer": "roads-unfiltered",
+      "named_classes": ["motorway", "trunk", "primary", "secondary"],
+      "outside_named_share_threshold": 0.7,
+      "identity_precedence": ["names.primary", "routes.network/ref"],
+      "note": "T1 uses exact normalized name/route identities as a conservative continuous-stroke proxy; the preregistered <30-degree deflection test is not implemented and is disclosed in per-tract diagnostics."
     }
   },
   "spec_amendments": {
