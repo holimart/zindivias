@@ -10,7 +10,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from bias60.ideas.x import (_facility_type, _x3_commercial_class, _x5_semantics,
+from bias60.ideas.x import (_facility_type, _x3_commercial_class, _x4_clusters, _x5_semantics,
                             soft_facility_definedness, x3_expected_missing)  # noqa: E402
 
 
@@ -27,6 +27,12 @@ class X1ProbabilityTests(unittest.TestCase):
         with self.assertRaises(ValueError): soft_facility_definedness(np.array([[1., -1., 0.]]))
         with self.assertRaises(ValueError): soft_facility_definedness(np.ones((2, 2)))
         with self.assertRaises(ValueError): soft_facility_definedness(np.array([[np.nan, 0., 0.]]))
+
+    def test_x4_weighted_cluster_screen(self) -> None:
+        clusters = _x4_clusters({(0, 0): 300, (20, 20): 25, (20, 0): 20})
+        self.assertEqual(len(clusters), 1)
+        self.assertGreaterEqual(clusters[0][2], 300)
+        self.assertEqual(_x4_clusters({(0, 0): 299}), [])
 
     def test_x3_class_and_expected_missing_rate(self) -> None:
         seed = {"commercial_building_classes": ["commercial", "retail", "industrial", "office"]}

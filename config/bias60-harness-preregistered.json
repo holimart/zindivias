@@ -310,7 +310,11 @@
       "south-central-tx-overture-infrastructure.parquet:subtype",
       "south-central-tx-overture-infrastructure.parquet:names",
       "south-central-tx-overture-infrastructure.parquet:source_tags",
-      "south-central-tx-overture-infrastructure.parquet:geometry"
+      "south-central-tx-overture-infrastructure.parquet:geometry",
+      "maricopa-az-overture-roads.parquet:routes",
+      "northern-ca-overture-roads.parquet:routes",
+      "eastern-ok-overture-roads.parquet:routes",
+      "south-central-tx-overture-roads.parquet:routes"
     ]
   },
   "orthogonality": {
@@ -949,6 +953,34 @@
       "large_building_area_m2": 1000.0,
       "poi_distance_m": 30.0,
       "note": "Commercial/retail/industrial/office footprints lacking a provided commercial Overture POI within 30m; local occupied-building POI-per-area rate projects expected missing establishments. Large footprints qualify only in tracts with commercial Overture POIs."
+    },
+    "X4": {
+      "component": "R",
+      "kind": "covariate",
+      "building_layer": "buildings",
+      "building_columns": [
+        "sources",
+        "geometry"
+      ],
+      "road_layer": "roads",
+      "road_columns": [
+        "class",
+        "names",
+        "routes",
+        "geometry"
+      ],
+      "cell_size_m": 50,
+      "cluster_radius_m": 150,
+      "cluster_min_buildings": 300,
+      "named_road_max_distance_m": 3000,
+      "named_road_classes": [
+        "motorway",
+        "trunk",
+        "primary",
+        "secondary",
+        "tertiary"
+      ],
+      "note": "Per tract, weighted 50m cell cores approximate 150m DBSCAN clusters with at least 300 provided non-Microsoft building centroids; count clusters whose centroids are >3km from a named-class Overture road. Nearest-network gap is a connector-length lower-bound diagnostic, not a target reference."
     },
     "X5": {
       "components": [

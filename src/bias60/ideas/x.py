@@ -110,6 +110,109 @@ def _read_x1(inputs, seed):
     return witnesses, counts, {"buildings": building_meta, "pois": poi_meta}
 
 
+def _x4_clusters(cells: dict[tuple[int, int], int], *, cell_m: int = 50,
+                 radius_m: int = 150, min_buildings: int = 300) -> list[tuple[float, float, int]]:
+    """Deterministic weighted-grid approximation to DBSCAN(eps=150m,min_samples=300)."""
+    reach = math.ceil(radius_m / cell_m)
+    neighborhood = {(x, y) for x in range(-reach, reach + 1) for y in range(-reach, reach + 1)}
+    local_counts = {cell: sum(cells.get((cell[0] + dx, cell[1] + dy), 0)
+                              for dx, dy in neighborhood) for cell in cells}
+    core = {cell for cell, count in local_counts.items() if count >= min_buildings}
+    components=[]
+    while core:
+        stack=[core.pop()];component=[]
+        while stack:
+            cell=stack.pop();component.append(cell)
+            for dx in (-1,0,1):
+                for dy in (-1,0,1):
+                    neighbor=(cell[0]+dx,cell[1]+dy)
+                    if neighbor in core:core.remove(neighbor);stack.append(neighbor)
+        components.append(component)
+    clusters=[]
+    for component in components:
+        core_set=set(component);members=set(component)
+        for cell in cells:
+            if cell in core_set:continue
+            if any((cell[0]+dx,cell[1]+dy) in core_set for dx,dy in neighborhood):members.add(cell)
+        total=sum(cells[cell] for cell in members)
+        if total < min_buildings:continue
+        x=sum((cell[0]+0.5)*cell_m*cells[cell] for cell in members)/total
+        y=sum((cell[1]+0.5)*cell_m*cells[cell] for cell in members)/total
+        clusters.append((x,y,total))
+    return sorted(clusters)
+
+
+@implements("X4")
+def x4(inputs) -> IdeaOutput:
+    import collections
+    import pyarrow.parquet as pq
+    import shapely
+    from pyproj import Transformer
+    seed=inputs.config["seeds"]["X4"]; transformer=Transformer.from_crs("EPSG:4326","EPSG:5070",always_xy=True)
+    tracts=shapely.transform(inputs.tract_geometries(),transformer.transform,interleaved=False)
+    tract_tree=shapely.STRtree(tracts);n=len(inputs.geoids);cells_by_tract=collections.defaultdict(collections.Counter)
+    bcols=seed["building_columns"];bpath=inputs.layer_path("buildings");bpf=pq.ParquetFile(inputs.filesystem.open_input_file(bpath))
+    missing=sorted(set(bcols)-set(bpf.schema_arrow.names))
+    if missing:raise ValueError(f"buildings lack X4 columns {missing}")
+    inputs.accessed["parquet_columns"].extend(f"{inputs.region}-overture-buildings.parquet:{c}" for c in bcols)
+    scanned=assigned=0;cell_m=int(seed["cell_size_m"])
+    for rg in range(bpf.metadata.num_row_groups):
+        tab=bpf.read_row_group(rg,columns=bcols);sources=tab.column("sources").to_pylist();wkbs=tab.column("geometry").to_pylist();scanned+=len(wkbs)
+        keep=[i for i,w in enumerate(wkbs) if w is not None and _rule_clean_building(sources[i])]
+        if not keep:continue
+        geoms=shapely.from_wkb([wkbs[i] for i in keep]);geoms=shapely.transform(geoms,transformer.transform,interleaved=False)
+        centers=shapely.centroid(geoms);xs=np.asarray(shapely.get_x(centers));ys=np.asarray(shapely.get_y(centers))
+        left,right=tract_tree.query(centers,predicate="within");assigned+=len(left)
+        for local,tract_id in zip(left.tolist(),right.tolist()):
+            cell=(math.floor(xs[local]/cell_m),math.floor(ys[local]/cell_m));cells_by_tract[int(tract_id)][cell]+=1
+    clusters_by_tract={i:_x4_clusters(cells,cell_m=cell_m,radius_m=int(seed["cluster_radius_m"]),
+                                      min_buildings=int(seed["cluster_min_buildings"]))
+                      for i,cells in cells_by_tract.items()}
+    road_cols=seed["road_columns"];road_path=inputs.layer_path("roads");rpf=pq.ParquetFile(inputs.filesystem.open_input_file(road_path))
+    missing=sorted(set(road_cols)-set(rpf.schema_arrow.names))
+    if missing:raise ValueError(f"roads lack X4 columns {missing}")
+    inputs.accessed["parquet_columns"].extend(f"{inputs.region}-overture-roads.parquet:{c}" for c in road_cols)
+    named_lines=[];road_scanned=0;named_rows=0
+    for rg in range(rpf.metadata.num_row_groups):
+        tab=rpf.read_row_group(rg,columns=road_cols);classes=tab.column("class").to_pylist()
+        names=tab.column("names").to_pylist();routes=tab.column("routes").to_pylist();wkbs=tab.column("geometry").to_pylist();road_scanned+=len(wkbs)
+        keep=[]
+        for i,wkb in enumerate(wkbs):
+            if wkb is None:continue
+            cls=str(classes[i] or "").casefold()
+            has_name=any(True for _ in _strings(names[i])) or any(True for _ in _strings(routes[i]))
+            if cls in set(seed["named_road_classes"]) and has_name:keep.append(i)
+        if keep:
+            lines=shapely.from_wkb([wkbs[i] for i in keep]);lines=shapely.transform(lines,transformer.transform,interleaved=False)
+            named_lines.extend(list(lines));named_rows+=len(keep)
+    road_tree=shapely.STRtree(named_lines) if named_lines else None
+    clusters=[]
+    for tract_id,items in clusters_by_tract.items():
+        for x,y,count in items:clusters.append((tract_id,x,y,count))
+    counts=np.zeros(n,dtype=np.float64);connector_min=np.zeros(n,dtype=np.float64);qualifying_clusters=0
+    if clusters:
+        centers=shapely.points(np.asarray([x for _,x,_,_ in clusters]),np.asarray([y for _,_,y,_ in clusters]))
+        distances=np.full(len(clusters),np.inf,dtype=np.float64)
+        if road_tree is not None:
+            pairs,d=road_tree.query_nearest(centers,return_distance=True,all_matches=True)
+            np.minimum.at(distances,pairs[0],d)
+        threshold=float(seed["named_road_max_distance_m"])
+        for i,(tract_id,_,_,_) in enumerate(clusters):
+            if distances[i]>threshold:
+                counts[tract_id]+=1.;qualifying_clusters+=1
+                old=connector_min[tract_id]
+                connector_min[tract_id]=distances[i] if old==0.0 else min(old,distances[i])
+    defined=np.ones(n,dtype=np.bool_)
+    return IdeaOutput("X4",inputs.region,list(inputs.geoids),[Emission("R","covariate",counts,defined)],
+        {"rows":n,"defined":n,"clusters_screened":len(clusters),"clusters_over_threshold":qualifying_clusters,
+         "cluster_count_distribution":quantiles(counts),"best_nearest_named_road_gap_m":quantiles(connector_min),
+         "building_rows_scanned":scanned,"building_centroids_assigned":assigned,"occupied_grid_cells":sum(len(v) for v in cells_by_tract.values()),
+         "road_rows_scanned":road_scanned,"named_class_road_rows":named_rows,"named_road_segment_count":len(named_lines),
+         "cluster_rule":f"weighted 50m grid approximation to DBSCAN eps={seed['cluster_radius_m']}m,min_samples={seed['cluster_min_buildings']}; centroid distance to nearest named-class road >{threshold if clusters else seed['named_road_max_distance_m']}m",
+         "connecting_length_note":"nearest named-network gap recorded as a lower-bound connector-length proxy; no road network path is inferred",
+         "microsoft_membership_used":False})
+
+
 def _x3_commercial_class(value: Any, seed: dict[str, Any]) -> bool:
     cls = str(value or "").casefold().replace("-", "_").replace(" ", "_")
     return cls in set(seed["commercial_building_classes"])

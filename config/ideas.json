@@ -798,7 +798,7 @@
       "failure_mode": "subdivisions inside metros that connect via arterials TIGER also classes as local.",
       "family": "X",
       "id": "X4",
-      "implementation": null,
+      "implementation": "bias60.ideas.x::x4",
       "inputs": [
         "`buildings` centroids",
         "`roads`"
@@ -809,7 +809,7 @@
       "recipe": "the count of such clusters and the length of the best non-named connecting road (shortest path to the named network).",
       "recipe_scope": "per tract",
       "signal": "in the US, almost every settlement over a few hundred structures is reached by a US, State or County highway, which TIGER classes S1200. A building cluster (DBSCAN, eps 150 m, at least 300 buildings) whose nearest named-class Overture road is more than 3 km away implies a TIGER S1200 road that Overture classes lower.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Settlements without a named highway"
     },
     {
@@ -1459,7 +1459,7 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 35,
+    "declared_count": 34,
     "families_total": 12,
     "ideas_per_family": [
       5
@@ -1474,6 +1474,7 @@
       "Tm1",
       "X1",
       "X3",
+      "X4",
       "X5",
       "Dst1",
       "Dst2",
@@ -1499,7 +1500,7 @@
       "F",
       "R"
     ],
-    "implemented_count": 25
+    "implemented_count": 26
   },
   "vocabulary": {
     "components": [
