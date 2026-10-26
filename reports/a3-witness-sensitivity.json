@@ -1,0 +1,726 @@
+{
+  "schema_version": 1,
+  "audit": "A3 Dawid-Skene leave-one-witness-out sensitivity; measurement only, no promotion",
+  "scope": {
+    "official_ids": 9379,
+    "geoids_exactly_covered": 9379,
+    "regions": {
+      "maricopa-az": 1593,
+      "northern-ca": 591,
+      "eastern-ok": 1192,
+      "south-central-tx": 6003
+    },
+    "sample_score_values_read": false,
+    "target_labels_read": false,
+    "candidate_modified": false,
+    "uploads": 0
+  },
+  "frozen_inputs": {
+    "track_a_report": {
+      "path": "reports/track-a-build.json",
+      "sha256": "349d3a0e4fd3c7ebeb83f4624bbbde5e4e3394f37fd664d2e889f0c4a5c59a11",
+      "candidate_artifact_sha256_reference_only": "6d588f2f7a45a58b128860a049ac19995b21902f7f98d3b2ab39d1d9fbb073b3",
+      "witness_order": [
+        "X1",
+        "Sc2",
+        "P3",
+        "X5"
+      ]
+    },
+    "config": {
+      "path": "config/track-a-preregistered.json",
+      "sha256": "df030f9bdece5ba0a741fa8e7b25742e0c7d121ce943b9cf684ddd109eb41899"
+    },
+    "frozen_idea_registry_sha256": "b8cb842ba01ca3d6703d6fd89f019777aacfffac30d8a8bb9e2231e9d6c31e91",
+    "current_idea_registry_sha256": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "frozen_harness_report_sha256": "dec7c6bcd0b405216a36ff1f14b6b1338b6a7189d2efe8e17fef5afc69af535d",
+    "current_harness_report_sha256": "1203d2acf10fa9682852abba3382d55f53c42b6fa7c03071c44cbe915d3f7a85",
+    "registry_and_harness_changed_since_A3_build": true,
+    "witness_artifacts": {
+      "X1": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/X1.parquet",
+        "rows": 9379,
+        "sha256": "3352248e0e2ea195691ec2f6cdddc50de45be8a73115055a869592f4d7a0f262",
+        "defined_ids": 9379,
+        "positive_bits": 74,
+        "selected_components": {
+          "F": 9379
+        },
+        "binary_threshold": 0.5,
+        "track_a_sha256": "3352248e0e2ea195691ec2f6cdddc50de45be8a73115055a869592f4d7a0f262",
+        "family": "X",
+        "component": "F"
+      },
+      "Sc2": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Sc2.parquet",
+        "rows": 9379,
+        "sha256": "f9f91c2802826e004e4674972c5230e6fe8db4d20c0b4da4d7dc2f8d0b03571e",
+        "defined_ids": 9379,
+        "positive_bits": 11,
+        "selected_components": {
+          "F": 9379
+        },
+        "binary_threshold": 0.5,
+        "track_a_sha256": "f9f91c2802826e004e4674972c5230e6fe8db4d20c0b4da4d7dc2f8d0b03571e",
+        "family": "Sc",
+        "component": "F"
+      },
+      "P3": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/P3.parquet",
+        "rows": 9379,
+        "sha256": "2e9a063759f697d0b2419152c3c0907e68e41dd04b8d901a16425f3207776fa1",
+        "defined_ids": 9379,
+        "positive_bits": 194,
+        "selected_components": {
+          "F": 9379
+        },
+        "binary_threshold": 0.5,
+        "track_a_sha256": "2e9a063759f697d0b2419152c3c0907e68e41dd04b8d901a16425f3207776fa1",
+        "family": "P",
+        "component": "F"
+      },
+      "X5": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/X5.parquet",
+        "rows": 18758,
+        "sha256": "c5b864512c1f191f9db866190e3b7c3b2208c702b2ba7c125b1d41c851a718f0",
+        "defined_ids": 9379,
+        "positive_bits": 943,
+        "selected_components": {
+          "F": 9379
+        },
+        "binary_threshold": 0.5,
+        "track_a_sha256": "c5b864512c1f191f9db866190e3b7c3b2208c702b2ba7c125b1d41c851a718f0",
+        "family": "X",
+        "component": "R"
+      }
+    },
+    "binary_rule": "registered witness value >= 0.5 indicates evidence for a facility-miss event; undefined witness is missing, not negative",
+    "dawid_skene_recipe": "deterministic binary Dawid-Skene EM, alpha=1 Laplace smoothing for prevalence/sensitivity/specificity, initialize latent prevalence to clipped observed positive share and each annotator sensitivity/specificity to 0.75; use posterior miss probability for F when at least two witness ideas are available, otherwise retain A2 F; other components use A2; compose by equal mean of defined R/B/POI"
+  },
+  "full_model_baseline": {
+    "reported": {
+      "iterations": 500,
+      "prevalence": 0.0025040821854080317,
+      "sensitivity": [
+        0.39934971103521555,
+        0.1435579954678657,
+        0.6190103405106038,
+        0.15952943980960518
+      ],
+      "specificity": [
+        0.992924128549697,
+        0.9989865746394756,
+        0.9806764153672827,
+        0.8994398598559417
+      ],
+      "witnesses": [
+        "X1",
+        "Sc2",
+        "P3",
+        "X5"
+      ]
+    },
+    "recomputed": {
+      "iterations": 500,
+      "prevalence": 0.0025040821854080317,
+      "sensitivity": [
+        0.39934971103521555,
+        0.1435579954678657,
+        0.6190103405106038,
+        0.15952943980960518
+      ],
+      "specificity": [
+        0.992924128549697,
+        0.9989865746394756,
+        0.9806764153672827,
+        0.8994398598559417
+      ]
+    },
+    "matches_frozen_report": true,
+    "facility_miss_posterior_distribution_by_region": {
+      "maricopa-az": {
+        "n": 1593,
+        "mean": 0.0017252990549547144,
+        "median": 0.0004724044767410497,
+        "q95": 0.0008017435547448801,
+        "max": 0.9983382311767581
+      },
+      "northern-ca": {
+        "n": 591,
+        "mean": 0.0038051823147840697,
+        "median": 0.0004724044767410497,
+        "q95": 0.0008017435547448801,
+        "max": 0.7842913190310493
+      },
+      "eastern-ok": {
+        "n": 1192,
+        "mean": 0.0018867705657044538,
+        "median": 0.0004724044767410497,
+        "q95": 0.0008017435547448801,
+        "max": 0.0696465484398833
+      },
+      "south-central-tx": {
+        "n": 6003,
+        "mean": 0.002539480313911843,
+        "median": 0.0004724044767410497,
+        "q95": 0.0008017435547448801,
+        "max": 0.865578917186608
+      }
+    }
+  },
+  "metric": "95th percentile absolute per-tract change in A3 facility-miss posterior, compared with full four-witness fit",
+  "omissions": {
+    "X1": {
+      "witnesses_retained": [
+        "Sc2",
+        "P3",
+        "X5"
+      ],
+      "posterior_shift": {
+        "n": 9379,
+        "mean": 0.007142830883498115,
+        "median": 0.0027616648899373058,
+        "q95": 0.007998102195561201,
+        "max": 0.6103292081268238
+      },
+      "regions": {
+        "maricopa-az": {
+          "posterior_shift": {
+            "n": 1593,
+            "mean": 0.004947641391890127,
+            "median": 0.0027616648899373058,
+            "q95": 0.007998102195561201,
+            "max": 0.30352761426941816
+          },
+          "full_posterior": {
+            "n": 1593,
+            "mean": 0.0017252990549547144,
+            "median": 0.0004724044767410497,
+            "q95": 0.0008017435547448801,
+            "max": 0.9983382311767581
+          },
+          "loo_posterior": {
+            "n": 1593,
+            "mean": 0.006219373446479929,
+            "median": 0.0032340693666783557,
+            "q95": 0.008799845750306082,
+            "max": 0.9319095898916071
+          },
+          "official_ids": 1593
+        },
+        "northern-ca": {
+          "posterior_shift": {
+            "n": 591,
+            "mean": 0.006833516275135432,
+            "median": 0.0027616648899373058,
+            "q95": 0.007998102195561201,
+            "max": 0.6103292081268238
+          },
+          "full_posterior": {
+            "n": 591,
+            "mean": 0.0038051823147840697,
+            "median": 0.0004724044767410497,
+            "q95": 0.0008017435547448801,
+            "max": 0.7842913190310493
+          },
+          "loo_posterior": {
+            "n": 591,
+            "mean": 0.005906040367072846,
+            "median": 0.0032340693666783557,
+            "q95": 0.008799845750306082,
+            "max": 0.17396211090422553
+          },
+          "official_ids": 591
+        },
+        "eastern-ok": {
+          "posterior_shift": {
+            "n": 1192,
+            "mean": 0.007922564704339637,
+            "median": 0.0027616648899373058,
+            "q95": 0.007998102195561201,
+            "max": 0.30352761426941816
+          },
+          "full_posterior": {
+            "n": 1192,
+            "mean": 0.0018867705657044538,
+            "median": 0.0004724044767410497,
+            "q95": 0.0008017435547448801,
+            "max": 0.0696465484398833
+          },
+          "loo_posterior": {
+            "n": 1192,
+            "mean": 0.009249207859851437,
+            "median": 0.0032340693666783557,
+            "q95": 0.008799845750306082,
+            "max": 0.36558357333496483
+          },
+          "official_ids": 1192
+        },
+        "south-central-tx": {
+          "posterior_shift": {
+            "n": 6003,
+            "mean": 0.007600984986318503,
+            "median": 0.0027616648899373058,
+            "q95": 0.007998102195561201,
+            "max": 0.6103292081268238
+          },
+          "full_posterior": {
+            "n": 6003,
+            "mean": 0.002539480313911843,
+            "median": 0.0004724044767410497,
+            "q95": 0.0008017435547448801,
+            "max": 0.865578917186608
+          },
+          "loo_posterior": {
+            "n": 6003,
+            "mean": 0.008659761501677545,
+            "median": 0.0032340693666783557,
+            "q95": 0.008799845750306082,
+            "max": 0.9319095898916071
+          },
+          "official_ids": 6003
+        }
+      },
+      "refit": {
+        "iterations": 500,
+        "prevalence": 0.008251522846252616,
+        "sensitivity": [
+          0.05651332733677846,
+          0.5236114182704164,
+          0.23234817344363567
+        ],
+        "specificity": [
+          0.9990790645269544,
+          0.9833474792622737,
+          0.9003951913170021
+        ]
+      }
+    },
+    "Sc2": {
+      "witnesses_retained": [
+        "X1",
+        "P3",
+        "X5"
+      ],
+      "posterior_shift": {
+        "n": 9379,
+        "mean": 0.01790850477420655,
+        "median": 0.010833223245825804,
+        "q95": 0.025902726903364696,
+        "max": 0.633797643251925
+      },
+      "regions": {
+        "maricopa-az": {
+          "posterior_shift": {
+            "n": 1593,
+            "mean": 0.015303355767285755,
+            "median": 0.010833223245825804,
+            "q95": 0.025902726903364696,
+            "max": 0.3578760504789371
+          },
+          "full_posterior": {
+            "n": 1593,
+            "mean": 0.0017252990549547144,
+            "median": 0.0004724044767410497,
+            "q95": 0.0008017435547448801,
+            "max": 0.9983382311767581
+          },
+          "loo_posterior": {
+            "n": 1593,
+            "mean": 0.016806924849712593,
+            "median": 0.011305627722566854,
+            "q95": 0.026704470458109576,
+            "max": 0.882861601065555
+          },
+          "official_ids": 1593
+        },
+        "northern-ca": {
+          "posterior_shift": {
+            "n": 591,
+            "mean": 0.01582633913102838,
+            "median": 0.010833223245825804,
+            "q95": 0.025902726903364696,
+            "max": 0.33701973023551646
+          },
+          "full_posterior": {
+            "n": 591,
+            "mean": 0.0038051823147840697,
+            "median": 0.0004724044767410497,
+            "q95": 0.0008017435547448801,
+            "max": 0.7842913190310493
+          },
+          "loo_posterior": {
+            "n": 591,
+            "mean": 0.019631521445812452,
+            "median": 0.011305627722566854,
+            "q95": 0.026704470458109576,
+            "max": 0.882861601065555
+          },
+          "official_ids": 591
+        },
+        "eastern-ok": {
+          "posterior_shift": {
+            "n": 1192,
+            "mean": 0.01927043308075583,
+            "median": 0.010833223245825804,
+            "q95": 0.025902726903364696,
+            "max": 0.3578760504789371
+          },
+          "full_posterior": {
+            "n": 1192,
+            "mean": 0.0018867705657044538,
+            "median": 0.0004724044767410497,
+            "q95": 0.0008017435547448801,
+            "max": 0.0696465484398833
+          },
+          "loo_posterior": {
+            "n": 1192,
+            "mean": 0.021157203646460284,
+            "median": 0.011305627722566854,
+            "q95": 0.026704470458109576,
+            "max": 0.4199320095444838
+          },
+          "official_ids": 1192
+        },
+        "south-central-tx": {
+          "posterior_shift": {
+            "n": 6003,
+            "mean": 0.01853438245565522,
+            "median": 0.010833223245825804,
+            "q95": 0.025902726903364696,
+            "max": 0.633797643251925
+          },
+          "full_posterior": {
+            "n": 6003,
+            "mean": 0.002539480313911843,
+            "median": 0.0004724044767410497,
+            "q95": 0.0008017435547448801,
+            "max": 0.865578917186608
+          },
+          "loo_posterior": {
+            "n": 6003,
+            "mean": 0.020699767154937737,
+            "median": 0.011305627722566854,
+            "q95": 0.026704470458109576,
+            "max": 0.882861601065555
+          },
+          "official_ids": 6003
+        }
+      },
+      "refit": {
+        "iterations": 500,
+        "prevalence": 0.020131728966820084,
+        "sensitivity": [
+          0.12497183398976486,
+          0.29088872992809,
+          0.20769800498479893
+        ],
+        "specificity": [
+          0.9943138737547748,
+          0.9846871648763805,
+          0.9014953627480063
+        ]
+      }
+    },
+    "P3": {
+      "witnesses_retained": [
+        "X1",
+        "Sc2",
+        "X5"
+      ],
+      "posterior_shift": {
+        "n": 9379,
+        "mean": 0.0029264072259694495,
+        "median": 0.0007259298874554957,
+        "q95": 0.002676184240580175,
+        "max": 0.7313328210981876
+      },
+      "regions": {
+        "maricopa-az": {
+          "posterior_shift": {
+            "n": 1593,
+            "mean": 0.0017815781323875033,
+            "median": 0.0007259298874554957,
+            "q95": 0.002676184240580175,
+            "max": 0.213968761333772
+          },
+          "full_posterior": {
+            "n": 1593,
+            "mean": 0.0017252990549547144,
+            "median": 0.0004724044767410497,
+            "q95": 0.0008017435547448801,
+            "max": 0.9983382311767581
+          },
+          "loo_posterior": {
+            "n": 1593,
+            "mean": 0.002775236590226921,
+            "median": 0.0011983343641965454,
+            "q95": 0.003477927795325055,
+            "max": 0.9462065957647674
+          },
+          "official_ids": 1593
+        },
+        "northern-ca": {
+          "posterior_shift": {
+            "n": 591,
+            "mean": 0.004248491593234876,
+            "median": 0.0007259298874554957,
+            "q95": 0.002676184240580175,
+            "max": 0.6644978654461307
+          },
+          "full_posterior": {
+            "n": 591,
+            "mean": 0.0038051823147840697,
+            "median": 0.0004724044767410497,
+            "q95": 0.0008017435547448801,
+            "max": 0.7842913190310493
+          },
+          "loo_posterior": {
+            "n": 591,
+            "mean": 0.002941828314839198,
+            "median": 0.0011983343641965454,
+            "q95": 0.003477927795325055,
+            "max": 0.2836153097736553
+          },
+          "official_ids": 591
+        },
+        "eastern-ok": {
+          "posterior_shift": {
+            "n": 1192,
+            "mean": 0.002588546918867401,
+            "median": 0.0007259298874554957,
+            "q95": 0.002676184240580175,
+            "max": 0.213968761333772
+          },
+          "full_posterior": {
+            "n": 1192,
+            "mean": 0.0018867705657044538,
+            "median": 0.0004724044767410497,
+            "q95": 0.0008017435547448801,
+            "max": 0.0696465484398833
+          },
+          "loo_posterior": {
+            "n": 1192,
+            "mean": 0.0023860598141081267,
+            "median": 0.0011983343641965454,
+            "q95": 0.003477927795325055,
+            "max": 0.2836153097736553
+          },
+          "official_ids": 1192
+        },
+        "south-central-tx": {
+          "posterior_shift": {
+            "n": 6003,
+            "mean": 0.0031671352571351697,
+            "median": 0.0007259298874554957,
+            "q95": 0.002676184240580175,
+            "max": 0.7313328210981876
+          },
+          "full_posterior": {
+            "n": 6003,
+            "mean": 0.002539480313911843,
+            "median": 0.0004724044767410497,
+            "q95": 0.0008017435547448801,
+            "max": 0.865578917186608
+          },
+          "loo_posterior": {
+            "n": 6003,
+            "mean": 0.0027939178466115672,
+            "median": 0.0011983343641965454,
+            "q95": 0.003477927795325055,
+            "max": 0.2836153097736553
+          },
+          "official_ids": 6003
+        }
+      },
+      "refit": {
+        "iterations": 500,
+        "prevalence": 0.002854242037514932,
+        "sensitivity": [
+          0.43799255097546264,
+          0.11840112477908066,
+          0.24485200822584777
+        ],
+        "specificity": [
+          0.9931765960749325,
+          0.9989619348425677,
+          0.8997138879833451
+        ]
+      }
+    },
+    "X5": {
+      "witnesses_retained": [
+        "X1",
+        "Sc2",
+        "P3"
+      ],
+      "posterior_shift": {
+        "n": 9379,
+        "mean": 0.0002717780832333952,
+        "median": 6.755143808335855e-05,
+        "q95": 0.00039689051608718894,
+        "max": 0.028489149558915364
+      },
+      "regions": {
+        "maricopa-az": {
+          "posterior_shift": {
+            "n": 1593,
+            "mean": 0.0001760798498311313,
+            "median": 6.755143808335855e-05,
+            "q95": 0.00039689051608718894,
+            "max": 0.028489149558915364
+          },
+          "full_posterior": {
+            "n": 1593,
+            "mean": 0.0017252990549547144,
+            "median": 0.0004724044767410497,
+            "q95": 0.0008017435547448801,
+            "max": 0.9983382311767581
+          },
+          "loo_posterior": {
+            "n": 1593,
+            "mean": 0.0015494982749098178,
+            "median": 0.00040485303865769114,
+            "q95": 0.00040485303865769114,
+            "max": 0.9985605102614941
+          },
+          "official_ids": 1593
+        },
+        "northern-ca": {
+          "posterior_shift": {
+            "n": 591,
+            "mean": 0.00020210899491068638,
+            "median": 6.755143808335855e-05,
+            "q95": 0.00039689051608718894,
+            "max": 0.028489149558915364
+          },
+          "full_posterior": {
+            "n": 591,
+            "mean": 0.0038051823147840697,
+            "median": 0.0004724044767410497,
+            "q95": 0.0008017435547448801,
+            "max": 0.7842913190310493
+          },
+          "loo_posterior": {
+            "n": 591,
+            "mean": 0.0036322477771490807,
+            "median": 0.00040485303865769114,
+            "q95": 0.00040485303865769114,
+            "max": 0.7886018450935335
+          },
+          "official_ids": 591
+        },
+        "eastern-ok": {
+          "posterior_shift": {
+            "n": 1192,
+            "mean": 0.00036284277490331084,
+            "median": 6.755143808335855e-05,
+            "q95": 0.00039689051608718894,
+            "max": 0.028489149558915364
+          },
+          "full_posterior": {
+            "n": 1192,
+            "mean": 0.0018867705657044538,
+            "median": 0.0004724044767410497,
+            "q95": 0.0008017435547448801,
+            "max": 0.0696465484398833
+          },
+          "loo_posterior": {
+            "n": 1192,
+            "mean": 0.001523927790801143,
+            "median": 0.00040485303865769114,
+            "q95": 0.00040485303865769114,
+            "max": 0.041157398880967935
+          },
+          "official_ids": 1192
+        },
+        "south-central-tx": {
+          "posterior_shift": {
+            "n": 6003,
+            "mean": 0.00028594976481560204,
+            "median": 6.755143808335855e-05,
+            "q95": 0.00039689051608718894,
+            "max": 0.028489149558915364
+          },
+          "full_posterior": {
+            "n": 6003,
+            "mean": 0.002539480313911843,
+            "median": 0.0004724044767410497,
+            "q95": 0.0008017435547448801,
+            "max": 0.865578917186608
+          },
+          "loo_posterior": {
+            "n": 6003,
+            "mean": 0.002259904933263467,
+            "median": 0.00040485303865769114,
+            "q95": 0.00040485303865769114,
+            "max": 0.8674695270146028
+          },
+          "official_ids": 6003
+        }
+      },
+      "refit": {
+        "iterations": 391,
+        "prevalence": 0.0022383264501910243,
+        "sensitivity": [
+          0.4313041758250474,
+          0.15894318219259088,
+          0.6328844361206843
+        ],
+        "specificity": [
+          0.9928947477150589,
+          0.998984765853954,
+          0.9805493079262585
+        ]
+      }
+    }
+  },
+  "acceptance": {
+    "overall_q95_maximum": 0.05,
+    "per_region_q95_maximum": 0.1,
+    "robust": true,
+    "sensitivity_limited": false,
+    "all_overall_q95_pass": true,
+    "all_region_q95_pass": true,
+    "max_absolute_shift_by_omission": {
+      "X1": 0.6103292081268238,
+      "Sc2": 0.633797643251925,
+      "P3": 0.7313328210981876,
+      "X5": 0.028489149558915364
+    },
+    "largest_max_shift_witness": "P3"
+  },
+  "per_tract_artifacts": {
+    "X1": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/a3-witness-sensitivity/leave-one-out-omit-X1.parquet",
+      "sha256": "d8a17f107d9efa3adde89789fbc452b5e09ed8f98c5505d39b093c15608f2b90",
+      "rows": 9379,
+      "deterministic_bytes": true
+    },
+    "Sc2": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/a3-witness-sensitivity/leave-one-out-omit-Sc2.parquet",
+      "sha256": "a72666ac40c75a59a3302f5949db72b3710c7e064969cc72ef1d407a7101f6dc",
+      "rows": 9379,
+      "deterministic_bytes": true
+    },
+    "P3": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/a3-witness-sensitivity/leave-one-out-omit-P3.parquet",
+      "sha256": "12db2848e600d8e982e7dc3c889b969168955d89e7d70661c70b09a36a042dac",
+      "rows": 9379,
+      "deterministic_bytes": true
+    },
+    "X5": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/a3-witness-sensitivity/leave-one-out-omit-X5.parquet",
+      "sha256": "02ed9e5651e09014a61364738695d33746f10f95074197d64981262a8d9640d6",
+      "rows": 9379,
+      "deterministic_bytes": true
+    }
+  },
+  "determinism": {
+    "full_fit_repeated_exactly": true,
+    "all_leave_one_out_fits_repeated_exactly": true,
+    "serialized_parquet_bytes_repeated_exactly": true
+  },
+  "forbidden_data_used": false,
+  "result_interpretation": "Frozen q95 robustness thresholds pass, but rare per-tract maxima remain large (largest absolute shift 0.731333 when omitting P3); treat as quantile-robust, not pointwise invariant. This sensitivity screen alone does not promote A3."
+}
