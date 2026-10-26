@@ -1,7 +1,7 @@
 {
-  "code_commit_at_run": "9e563c4e766a100b765c10e36489b36c60c7701d",
+  "code_commit_at_run": "4a921228beb4951f7d87cf59311ec15f28fc06ec",
   "environment": {
-    "git_commit": "9e563c4e766a100b765c10e36489b36c60c7701d",
+    "git_commit": "4a921228beb4951f7d87cf59311ec15f28fc06ec",
     "versions": {
       "numpy": "2.5.4",
       "pyarrow": "26.0.0",
@@ -27,6 +27,11 @@
     "note": "Untouched emissions were retained only after their existing workspace parquet SHA-256 matched the prior passing harness report.",
     "preserved_parquet_hashes_verified": true,
     "preserved_prior_idea_ids": [
+      "D1",
+      "D2",
+      "D3",
+      "D4",
+      "D5",
       "Dst1",
       "Dst2",
       "Dst3",
@@ -37,6 +42,10 @@
       "G3",
       "G4",
       "G5",
+      "M1",
+      "M2",
+      "M4",
+      "M5",
       "Mx4",
       "P1",
       "P2",
@@ -58,13 +67,9 @@
       "X4",
       "X5"
     ],
-    "prior_report_sha256": "dec7c6bcd0b405216a36ff1f14b6b1338b6a7189d2efe8e17fef5afc69af535d",
+    "prior_report_sha256": "d0e3fb1f8a33180a179702449fd7f354bc914bf2d0e22e3e963f2ecf7dcd2944",
     "selected_idea_ids_rebuilt": [
-      "D1",
-      "D2",
-      "D3",
-      "D4",
-      "D5"
+      "M3"
     ]
   },
   "partition_problems": [],
@@ -3226,6 +3231,637 @@
       "path": "ideas/G5.parquet",
       "rows": 18758,
       "sha256": "3df5cf68ea2bc952380d86bfecb3703dc1db2b15555c2943ceafbfaa11f34e0a",
+      "undeclared_columns_read": []
+    },
+    "M1": {
+      "accessed_inputs": {
+        "caches": [],
+        "csv_columns": [],
+        "idea_artifacts": [],
+        "layers": [
+          "census-acs-housing",
+          "roads"
+        ],
+        "parquet_columns": [
+          "eastern-ok-census-acs-housing:GEOID,geometry",
+          "eastern-ok-overture-roads.parquet:class",
+          "eastern-ok-overture-roads.parquet:geometry",
+          "eastern-ok-overture-roads.parquet:sources",
+          "maricopa-az-census-acs-housing:GEOID,geometry",
+          "maricopa-az-overture-roads.parquet:class",
+          "maricopa-az-overture-roads.parquet:geometry",
+          "maricopa-az-overture-roads.parquet:sources",
+          "northern-ca-census-acs-housing:GEOID,geometry",
+          "northern-ca-overture-roads.parquet:class",
+          "northern-ca-overture-roads.parquet:geometry",
+          "northern-ca-overture-roads.parquet:sources",
+          "south-central-tx-census-acs-housing:GEOID,geometry",
+          "south-central-tx-overture-roads.parquet:class",
+          "south-central-tx-overture-roads.parquet:geometry",
+          "south-central-tx-overture-roads.parquet:sources"
+        ]
+      },
+      "bytes": 232230,
+      "diagnostics": {
+        "eastern-ok": {
+          "coverage_named": 1164,
+          "coverage_tertiary": 1132,
+          "features_with_parsed_osm_way_version": 97751,
+          "multiple_way_versions_per_geometry": "deduplicate IDs and use their arithmetic mean; clip geometry length to official tract polygons",
+          "named_or_tertiary_features": 97842,
+          "no_target_or_reference_data_read": true,
+          "non_way_osm_record_ids_not_used": 61253,
+          "rows_scanned": 520550,
+          "version_parser": "OpenStreetMap source record_id matching ^w<digits>@<version>$; version is parsed only from documented way IDs"
+        },
+        "maricopa-az": {
+          "coverage_named": 1560,
+          "coverage_tertiary": 1500,
+          "features_with_parsed_osm_way_version": 103904,
+          "multiple_way_versions_per_geometry": "deduplicate IDs and use their arithmetic mean; clip geometry length to official tract polygons",
+          "named_or_tertiary_features": 104043,
+          "no_target_or_reference_data_read": true,
+          "non_way_osm_record_ids_not_used": 20062,
+          "rows_scanned": 494492,
+          "version_parser": "OpenStreetMap source record_id matching ^w<digits>@<version>$; version is parsed only from documented way IDs"
+        },
+        "northern-ca": {
+          "coverage_named": 584,
+          "coverage_tertiary": 563,
+          "features_with_parsed_osm_way_version": 46329,
+          "multiple_way_versions_per_geometry": "deduplicate IDs and use their arithmetic mean; clip geometry length to official tract polygons",
+          "named_or_tertiary_features": 46551,
+          "no_target_or_reference_data_read": true,
+          "non_way_osm_record_ids_not_used": 14733,
+          "rows_scanned": 191836,
+          "version_parser": "OpenStreetMap source record_id matching ^w<digits>@<version>$; version is parsed only from documented way IDs"
+        },
+        "south-central-tx": {
+          "coverage_named": 5939,
+          "coverage_tertiary": 5780,
+          "features_with_parsed_osm_way_version": 545592,
+          "multiple_way_versions_per_geometry": "deduplicate IDs and use their arithmetic mean; clip geometry length to official tract polygons",
+          "named_or_tertiary_features": 546699,
+          "no_target_or_reference_data_read": true,
+          "non_way_osm_record_ids_not_used": 224953,
+          "rows_scanned": 1937009,
+          "version_parser": "OpenStreetMap source record_id matching ^w<digits>@<version>$; version is parsed only from documented way IDs"
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate:low_version_tertiary_share",
+          "component": "R",
+          "defined_rows": 8975,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 0.0
+        },
+        {
+          "channel": "covariate:named_mean_version",
+          "component": "R",
+          "defined_rows": 9247,
+          "rows": 9379,
+          "value_max": 116.68796500751417,
+          "value_min": 1.0
+        },
+        {
+          "channel": "covariate:tertiary_mean_version",
+          "component": "R",
+          "defined_rows": 8975,
+          "rows": 9379,
+          "value_max": 84.26184309767837,
+          "value_min": 1.0
+        }
+      ],
+      "emissions_per_region": 3,
+      "family": "M",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/M1.parquet",
+      "rows": 28137,
+      "sha256": "ddc48fc70558cb920659484b870819a9c4be43f3488e7fe3f59eed148b6e9f37",
+      "undeclared_columns_read": []
+    },
+    "M2": {
+      "accessed_inputs": {
+        "caches": [],
+        "csv_columns": [],
+        "idea_artifacts": [],
+        "layers": [
+          "census-acs-housing",
+          "infrastructure",
+          "pois"
+        ],
+        "parquet_columns": [
+          "eastern-ok-census-acs-housing:GEOID,geometry",
+          "eastern-ok-overture-infrastructure.parquet:bbox",
+          "eastern-ok-overture-infrastructure.parquet:names",
+          "eastern-ok-overture-infrastructure.parquet:wikidata",
+          "eastern-ok-overture-pois.parquet:bbox",
+          "eastern-ok-overture-pois.parquet:brand",
+          "eastern-ok-overture-pois.parquet:names",
+          "maricopa-az-census-acs-housing:GEOID,geometry",
+          "maricopa-az-overture-infrastructure.parquet:bbox",
+          "maricopa-az-overture-infrastructure.parquet:names",
+          "maricopa-az-overture-infrastructure.parquet:wikidata",
+          "maricopa-az-overture-pois.parquet:bbox",
+          "maricopa-az-overture-pois.parquet:brand",
+          "maricopa-az-overture-pois.parquet:names",
+          "northern-ca-census-acs-housing:GEOID,geometry",
+          "northern-ca-overture-infrastructure.parquet:bbox",
+          "northern-ca-overture-infrastructure.parquet:names",
+          "northern-ca-overture-infrastructure.parquet:wikidata",
+          "northern-ca-overture-pois.parquet:bbox",
+          "northern-ca-overture-pois.parquet:brand",
+          "northern-ca-overture-pois.parquet:names",
+          "south-central-tx-census-acs-housing:GEOID,geometry",
+          "south-central-tx-overture-infrastructure.parquet:bbox",
+          "south-central-tx-overture-infrastructure.parquet:names",
+          "south-central-tx-overture-infrastructure.parquet:wikidata",
+          "south-central-tx-overture-pois.parquet:bbox",
+          "south-central-tx-overture-pois.parquet:brand",
+          "south-central-tx-overture-pois.parquet:names"
+        ]
+      },
+      "bytes": 55826,
+      "diagnostics": {
+        "eastern-ok": {
+          "assigned_infrastructure": 2726,
+          "assigned_pois": 207369,
+          "facility_defined_tracts": 1011,
+          "facility_link_share_denominator": "facility-name-regex places plus facility-name-regex infrastructure features; numerator is linked facilities in those groups",
+          "facility_name_infrastructure": 15,
+          "facility_regex": "\\b(fire\\s+(?:station|department|company|rescue)|firehouse|ems\\s+(?:station|base)|ambulance\\s+(?:station|service)|emergency\\s+medical|elementary\\s+school|middle\\s+school|high\\s+school|primary\\s+school|school)\\b",
+          "no_target_or_reference_data_read": true,
+          "outside_or_unassigned_rows": 0,
+          "poi_defined_tracts": 1192,
+          "rows_scanned_infrastructure": 2726,
+          "rows_scanned_pois": 207369
+        },
+        "maricopa-az": {
+          "assigned_infrastructure": 9482,
+          "assigned_pois": 300046,
+          "facility_defined_tracts": 1229,
+          "facility_link_share_denominator": "facility-name-regex places plus facility-name-regex infrastructure features; numerator is linked facilities in those groups",
+          "facility_name_infrastructure": 242,
+          "facility_regex": "\\b(fire\\s+(?:station|department|company|rescue)|firehouse|ems\\s+(?:station|base)|ambulance\\s+(?:station|service)|emergency\\s+medical|elementary\\s+school|middle\\s+school|high\\s+school|primary\\s+school|school)\\b",
+          "no_target_or_reference_data_read": true,
+          "outside_or_unassigned_rows": 0,
+          "poi_defined_tracts": 1593,
+          "rows_scanned_infrastructure": 9482,
+          "rows_scanned_pois": 300046
+        },
+        "northern-ca": {
+          "assigned_infrastructure": 3318,
+          "assigned_pois": 116897,
+          "facility_defined_tracts": 502,
+          "facility_link_share_denominator": "facility-name-regex places plus facility-name-regex infrastructure features; numerator is linked facilities in those groups",
+          "facility_name_infrastructure": 22,
+          "facility_regex": "\\b(fire\\s+(?:station|department|company|rescue)|firehouse|ems\\s+(?:station|base)|ambulance\\s+(?:station|service)|emergency\\s+medical|elementary\\s+school|middle\\s+school|high\\s+school|primary\\s+school|school)\\b",
+          "no_target_or_reference_data_read": true,
+          "outside_or_unassigned_rows": 0,
+          "poi_defined_tracts": 591,
+          "rows_scanned_infrastructure": 3318,
+          "rows_scanned_pois": 116897
+        },
+        "south-central-tx": {
+          "assigned_infrastructure": 13622,
+          "assigned_pois": 1300331,
+          "facility_defined_tracts": 4979,
+          "facility_link_share_denominator": "facility-name-regex places plus facility-name-regex infrastructure features; numerator is linked facilities in those groups",
+          "facility_name_infrastructure": 56,
+          "facility_regex": "\\b(fire\\s+(?:station|department|company|rescue)|firehouse|ems\\s+(?:station|base)|ambulance\\s+(?:station|service)|emergency\\s+medical|elementary\\s+school|middle\\s+school|high\\s+school|primary\\s+school|school)\\b",
+          "no_target_or_reference_data_read": true,
+          "outside_or_unassigned_rows": 3,
+          "poi_defined_tracts": 6001,
+          "rows_scanned_infrastructure": 13622,
+          "rows_scanned_pois": 1300334
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate:all_wikidata_link_share",
+          "component": "Est",
+          "defined_rows": 9377,
+          "rows": 9379,
+          "value_max": 0.1875,
+          "value_min": 0.0
+        },
+        {
+          "channel": "covariate:facility_wikidata_link_share",
+          "component": "F",
+          "defined_rows": 7721,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 0.0
+        }
+      ],
+      "emissions_per_region": 2,
+      "family": "M",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/M2.parquet",
+      "rows": 18758,
+      "sha256": "88aa794ff46b30824781d933cac2f6f4fb1898654c8c7726990e1ed70e605702",
+      "undeclared_columns_read": []
+    },
+    "M3": {
+      "accessed_inputs": {
+        "caches": [],
+        "csv_columns": [],
+        "idea_artifacts": [],
+        "layers": [
+          "census-acs-housing",
+          "pois"
+        ],
+        "parquet_columns": [
+          "eastern-ok-census-acs-housing:GEOID,geometry",
+          "eastern-ok-overture-pois.parquet:addresses",
+          "eastern-ok-overture-pois.parquet:bbox",
+          "eastern-ok-overture-pois.parquet:names",
+          "maricopa-az-census-acs-housing:GEOID,geometry",
+          "maricopa-az-overture-pois.parquet:addresses",
+          "maricopa-az-overture-pois.parquet:bbox",
+          "maricopa-az-overture-pois.parquet:names",
+          "northern-ca-census-acs-housing:GEOID,geometry",
+          "northern-ca-overture-pois.parquet:addresses",
+          "northern-ca-overture-pois.parquet:bbox",
+          "northern-ca-overture-pois.parquet:names",
+          "south-central-tx-census-acs-housing:GEOID,geometry",
+          "south-central-tx-overture-pois.parquet:addresses",
+          "south-central-tx-overture-pois.parquet:bbox",
+          "south-central-tx-overture-pois.parquet:names"
+        ]
+      },
+      "bytes": 53717,
+      "diagnostics": {
+        "eastern-ok": {
+          "address_key_rule": "first valid 5-digit ZIP prefix; otherwise normalized locality; no key for missing address",
+          "assigned_address_records": 206796,
+          "facility_address_records": 3702,
+          "locality_rule": "majority key within tract, ties lexical; a non-dominant key also observed in any edge-touching tract is excluded as a possible cross-boundary address",
+          "neighbor_foreign_records_diagnostic": 201153,
+          "no_target_or_reference_data_read": true,
+          "outside_or_unassigned_rows": 0,
+          "rows_scanned": 207369,
+          "tracts_with_address_coverage": 1192,
+          "tracts_with_facility_address_coverage": 1010
+        },
+        "maricopa-az": {
+          "address_key_rule": "first valid 5-digit ZIP prefix; otherwise normalized locality; no key for missing address",
+          "assigned_address_records": 298959,
+          "facility_address_records": 3616,
+          "locality_rule": "majority key within tract, ties lexical; a non-dominant key also observed in any edge-touching tract is excluded as a possible cross-boundary address",
+          "neighbor_foreign_records_diagnostic": 295303,
+          "no_target_or_reference_data_read": true,
+          "outside_or_unassigned_rows": 0,
+          "rows_scanned": 300046,
+          "tracts_with_address_coverage": 1593,
+          "tracts_with_facility_address_coverage": 1221
+        },
+        "northern-ca": {
+          "address_key_rule": "first valid 5-digit ZIP prefix; otherwise normalized locality; no key for missing address",
+          "assigned_address_records": 116274,
+          "facility_address_records": 1892,
+          "locality_rule": "majority key within tract, ties lexical; a non-dominant key also observed in any edge-touching tract is excluded as a possible cross-boundary address",
+          "neighbor_foreign_records_diagnostic": 111848,
+          "no_target_or_reference_data_read": true,
+          "outside_or_unassigned_rows": 0,
+          "rows_scanned": 116897,
+          "tracts_with_address_coverage": 591,
+          "tracts_with_facility_address_coverage": 502
+        },
+        "south-central-tx": {
+          "address_key_rule": "first valid 5-digit ZIP prefix; otherwise normalized locality; no key for missing address",
+          "assigned_address_records": 1298830,
+          "facility_address_records": 16673,
+          "locality_rule": "majority key within tract, ties lexical; a non-dominant key also observed in any edge-touching tract is excluded as a possible cross-boundary address",
+          "neighbor_foreign_records_diagnostic": 1282431,
+          "no_target_or_reference_data_read": true,
+          "outside_or_unassigned_rows": 3,
+          "rows_scanned": 1300334,
+          "tracts_with_address_coverage": 6001,
+          "tracts_with_facility_address_coverage": 4973
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate:address_mismatch_share",
+          "component": "Est",
+          "defined_rows": 9377,
+          "rows": 9379,
+          "value_max": 0.6440677966101694,
+          "value_min": 0.0
+        },
+        {
+          "channel": "covariate:facility_incoming_address_mismatch_share",
+          "component": "F",
+          "defined_rows": 7706,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 0.0
+        }
+      ],
+      "emissions_per_region": 2,
+      "family": "M",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/M3.parquet",
+      "rows": 18758,
+      "sha256": "f560064aa9271e6f00f31f16c67242e30d9001c2ca427882bc873f97e0ab5538",
+      "undeclared_columns_read": []
+    },
+    "M4": {
+      "accessed_inputs": {
+        "caches": [],
+        "csv_columns": [],
+        "idea_artifacts": [],
+        "layers": [
+          "census-acs-housing",
+          "pois"
+        ],
+        "parquet_columns": [
+          "eastern-ok-census-acs-housing.parquet:GEOID,housing_units",
+          "eastern-ok-census-acs-housing:GEOID,geometry",
+          "eastern-ok-overture-pois.parquet:bbox",
+          "eastern-ok-overture-pois.parquet:brand",
+          "eastern-ok-overture-pois.parquet:sources",
+          "maricopa-az-census-acs-housing.parquet:GEOID,housing_units",
+          "maricopa-az-census-acs-housing:GEOID,geometry",
+          "maricopa-az-overture-pois.parquet:bbox",
+          "maricopa-az-overture-pois.parquet:brand",
+          "maricopa-az-overture-pois.parquet:sources",
+          "northern-ca-census-acs-housing.parquet:GEOID,housing_units",
+          "northern-ca-census-acs-housing:GEOID,geometry",
+          "northern-ca-overture-pois.parquet:bbox",
+          "northern-ca-overture-pois.parquet:brand",
+          "northern-ca-overture-pois.parquet:sources",
+          "south-central-tx-census-acs-housing.parquet:GEOID,housing_units",
+          "south-central-tx-census-acs-housing:GEOID,geometry",
+          "south-central-tx-overture-pois.parquet:bbox",
+          "south-central-tx-overture-pois.parquet:brand",
+          "south-central-tx-overture-pois.parquet:sources"
+        ]
+      },
+      "bytes": 96392,
+      "diagnostics": {
+        "eastern-ok": {
+          "assigned_places": 207369,
+          "brand_rule": "brand.wikidata or brand.names.primary nonempty, and sources.dataset includes AllThePlaces",
+          "chain_brand_places": 2795,
+          "housing_source": "provided census-acs-housing housing_units",
+          "housing_units_defined": 1182,
+          "no_housing_unit_denominator_floor_used": true,
+          "no_target_or_reference_data_read": true,
+          "outside_or_unassigned_rows": 0,
+          "rows_scanned": 207369,
+          "tracts_with_place_coverage": 1192
+        },
+        "maricopa-az": {
+          "assigned_places": 300046,
+          "brand_rule": "brand.wikidata or brand.names.primary nonempty, and sources.dataset includes AllThePlaces",
+          "chain_brand_places": 4016,
+          "housing_source": "provided census-acs-housing housing_units",
+          "housing_units_defined": 1566,
+          "no_housing_unit_denominator_floor_used": true,
+          "no_target_or_reference_data_read": true,
+          "outside_or_unassigned_rows": 0,
+          "rows_scanned": 300046,
+          "tracts_with_place_coverage": 1593
+        },
+        "northern-ca": {
+          "assigned_places": 116897,
+          "brand_rule": "brand.wikidata or brand.names.primary nonempty, and sources.dataset includes AllThePlaces",
+          "chain_brand_places": 1456,
+          "housing_source": "provided census-acs-housing housing_units",
+          "housing_units_defined": 591,
+          "no_housing_unit_denominator_floor_used": true,
+          "no_target_or_reference_data_read": true,
+          "outside_or_unassigned_rows": 0,
+          "rows_scanned": 116897,
+          "tracts_with_place_coverage": 591
+        },
+        "south-central-tx": {
+          "assigned_places": 1300331,
+          "brand_rule": "brand.wikidata or brand.names.primary nonempty, and sources.dataset includes AllThePlaces",
+          "chain_brand_places": 19812,
+          "housing_source": "provided census-acs-housing housing_units",
+          "housing_units_defined": 5960,
+          "no_housing_unit_denominator_floor_used": true,
+          "no_target_or_reference_data_read": true,
+          "outside_or_unassigned_rows": 3,
+          "rows_scanned": 1300334,
+          "tracts_with_place_coverage": 6001
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate:chain_brand_share",
+          "component": "Est",
+          "defined_rows": 9377,
+          "rows": 9379,
+          "value_max": 0.1875,
+          "value_min": 0.0
+        },
+        {
+          "channel": "covariate:chain_count_per_housing_unit",
+          "component": "Est",
+          "defined_rows": 9299,
+          "rows": 9379,
+          "value_max": 0.6666666666666666,
+          "value_min": 0.0
+        }
+      ],
+      "emissions_per_region": 2,
+      "family": "M",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/M4.parquet",
+      "rows": 18758,
+      "sha256": "ad2bffe71bc4f3ee5aa1bd8a1967e8825b97afcf67d3392b135b9a1b2d266678",
+      "undeclared_columns_read": []
+    },
+    "M5": {
+      "accessed_inputs": {
+        "caches": [],
+        "csv_columns": [],
+        "idea_artifacts": [],
+        "layers": [
+          "buildings",
+          "census-acs-housing",
+          "roads"
+        ],
+        "parquet_columns": [
+          "eastern-ok-census-acs-housing:GEOID,geometry",
+          "eastern-ok-overture-buildings.parquet:bbox",
+          "eastern-ok-overture-buildings.parquet:sources",
+          "eastern-ok-overture-roads.parquet:bbox",
+          "eastern-ok-overture-roads.parquet:sources",
+          "maricopa-az-census-acs-housing:GEOID,geometry",
+          "maricopa-az-overture-buildings.parquet:bbox",
+          "maricopa-az-overture-buildings.parquet:sources",
+          "maricopa-az-overture-roads.parquet:bbox",
+          "maricopa-az-overture-roads.parquet:sources",
+          "northern-ca-census-acs-housing:GEOID,geometry",
+          "northern-ca-overture-buildings.parquet:bbox",
+          "northern-ca-overture-buildings.parquet:sources",
+          "northern-ca-overture-roads.parquet:bbox",
+          "northern-ca-overture-roads.parquet:sources",
+          "south-central-tx-census-acs-housing:GEOID,geometry",
+          "south-central-tx-overture-buildings.parquet:bbox",
+          "south-central-tx-overture-buildings.parquet:sources",
+          "south-central-tx-overture-roads.parquet:bbox",
+          "south-central-tx-overture-roads.parquet:sources"
+        ]
+      },
+      "bytes": 25241,
+      "diagnostics": {
+        "eastern-ok": {
+          "buildings": {
+            "assigned_features": 2551694,
+            "assignment": "bbox center to one provided ACS tract; boundary ties to first tract index",
+            "defined_tracts": 1192,
+            "features_with_sources": 2551694,
+            "multi_property_features": 0,
+            "outside_or_unassigned_rows": 0,
+            "property_rule": "count a feature if its sources list has >1 distinct nonempty property path",
+            "rows_scanned": 2551694
+          },
+          "no_target_or_reference_data_read": true,
+          "roads": {
+            "assigned_features": 520423,
+            "assignment": "bbox center to one provided ACS tract; boundary ties to first tract index",
+            "defined_tracts": 1192,
+            "features_with_sources": 520423,
+            "multi_property_features": 0,
+            "outside_or_unassigned_rows": 127,
+            "property_rule": "count a feature if its sources list has >1 distinct nonempty property path",
+            "rows_scanned": 520550
+          }
+        },
+        "maricopa-az": {
+          "buildings": {
+            "assigned_features": 2908224,
+            "assignment": "bbox center to one provided ACS tract; boundary ties to first tract index",
+            "defined_tracts": 1593,
+            "features_with_sources": 2908224,
+            "multi_property_features": 0,
+            "outside_or_unassigned_rows": 0,
+            "property_rule": "count a feature if its sources list has >1 distinct nonempty property path",
+            "rows_scanned": 2908224
+          },
+          "no_target_or_reference_data_read": true,
+          "roads": {
+            "assigned_features": 494401,
+            "assignment": "bbox center to one provided ACS tract; boundary ties to first tract index",
+            "defined_tracts": 1592,
+            "features_with_sources": 494401,
+            "multi_property_features": 0,
+            "outside_or_unassigned_rows": 91,
+            "property_rule": "count a feature if its sources list has >1 distinct nonempty property path",
+            "rows_scanned": 494492
+          }
+        },
+        "northern-ca": {
+          "buildings": {
+            "assigned_features": 1164723,
+            "assignment": "bbox center to one provided ACS tract; boundary ties to first tract index",
+            "defined_tracts": 591,
+            "features_with_sources": 1164723,
+            "multi_property_features": 0,
+            "outside_or_unassigned_rows": 1,
+            "property_rule": "count a feature if its sources list has >1 distinct nonempty property path",
+            "rows_scanned": 1164724
+          },
+          "no_target_or_reference_data_read": true,
+          "roads": {
+            "assigned_features": 191509,
+            "assignment": "bbox center to one provided ACS tract; boundary ties to first tract index",
+            "defined_tracts": 591,
+            "features_with_sources": 191509,
+            "multi_property_features": 0,
+            "outside_or_unassigned_rows": 327,
+            "property_rule": "count a feature if its sources list has >1 distinct nonempty property path",
+            "rows_scanned": 191836
+          }
+        },
+        "south-central-tx": {
+          "buildings": {
+            "assigned_features": 11463800,
+            "assignment": "bbox center to one provided ACS tract; boundary ties to first tract index",
+            "defined_tracts": 6001,
+            "features_with_sources": 11463800,
+            "multi_property_features": 0,
+            "outside_or_unassigned_rows": 1,
+            "property_rule": "count a feature if its sources list has >1 distinct nonempty property path",
+            "rows_scanned": 11463801
+          },
+          "no_target_or_reference_data_read": true,
+          "roads": {
+            "assigned_features": 1936744,
+            "assignment": "bbox center to one provided ACS tract; boundary ties to first tract index",
+            "defined_tracts": 5999,
+            "features_with_sources": 1936744,
+            "multi_property_features": 0,
+            "outside_or_unassigned_rows": 265,
+            "property_rule": "count a feature if its sources list has >1 distinct nonempty property path",
+            "rows_scanned": 1937009
+          }
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate:multi_property_share",
+          "component": "B",
+          "defined_rows": 9377,
+          "rows": 9379,
+          "value_max": 0.0,
+          "value_min": 0.0
+        },
+        {
+          "channel": "covariate:multi_property_share",
+          "component": "R",
+          "defined_rows": 9374,
+          "rows": 9379,
+          "value_max": 0.0,
+          "value_min": 0.0
+        }
+      ],
+      "emissions_per_region": 2,
+      "family": "M",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/M5.parquet",
+      "region_shards": {
+        "eastern-ok": {
+          "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/_m5_shards/eastern-ok/M5.parquet",
+          "rows": 2384,
+          "sha256": "0f8e7286e3060f99446171151c1d3e84c0c21799907a27b21488a269afc96959"
+        },
+        "maricopa-az": {
+          "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/_m5_shards/maricopa-az/M5.parquet",
+          "rows": 3186,
+          "sha256": "4b3acd75487cb7ba01aa39f018029d8370b868306128d2461027d10662cc7b4b"
+        },
+        "northern-ca": {
+          "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/_m5_shards/northern-ca/M5.parquet",
+          "rows": 1182,
+          "sha256": "a4256a72f4bef8f31f60034407046550e5c7db4b81359b62f80090284b67e71a"
+        },
+        "south-central-tx": {
+          "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/_m5_shards/south-central-tx/M5.parquet",
+          "rows": 12006,
+          "sha256": "d4104d3e737c4445a1dec576834fe70f955b8c41ce59526c852c2250f7563e1a"
+        }
+      },
+      "rows": 18758,
+      "sha256": "5788ad26199e00cd371cc581e6a0d38dd9314fed9f618980539b750abd305545",
       "undeclared_columns_read": []
     },
     "Mx4": {
@@ -8689,7 +9325,7 @@
   },
   "preregistration": {
     "path": "config/bias60-harness-preregistered.json",
-    "sha256": "10f79b4162c9862b846ed8c15af5789df76369d6ffb004f6d016147f2b7ae795",
+    "sha256": "a40138f1ff6965cc10e3459e140105d69b0eb9fa1dc27c7098fd6b4cdd248b80",
     "spec": {
       "family_count": 12,
       "idea_count": 60,
@@ -8729,7 +9365,7 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 25,
+    "declared_count": 20,
     "families_total": 12,
     "ideas_per_family": [
       5
@@ -8741,6 +9377,11 @@
       "G3",
       "G4",
       "G5",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
       "Tm1",
       "D1",
       "D2",
@@ -8779,7 +9420,7 @@
       "F",
       "R"
     ],
-    "implemented_count": 35
+    "implemented_count": 40
   },
   "scope": {
     "geoids_by_region": {
@@ -8807,7 +9448,7 @@
       "F",
       "R"
     ],
-    "ideas_implemented": 35,
+    "ideas_implemented": 40,
     "parquet_files": {
       "ideas/D1.parquet": "cd389595f543483747281f6342a43ec183e858a08a559ad7f557d654024ebae3",
       "ideas/D2.parquet": "68dc61099c9c9adcf2c028400671934874b2499208150bd521da4608340e5395",
@@ -8824,6 +9465,11 @@
       "ideas/G3.parquet": "95041b75f9d7758dff3065fe31906b2ae69d7cfd4147b843c9d859633e093953",
       "ideas/G4.parquet": "65e380272552b0f8362acdbd73a9a7dcbc5eb544eaff38d744788d299e02317e",
       "ideas/G5.parquet": "3df5cf68ea2bc952380d86bfecb3703dc1db2b15555c2943ceafbfaa11f34e0a",
+      "ideas/M1.parquet": "ddc48fc70558cb920659484b870819a9c4be43f3488e7fe3f59eed148b6e9f37",
+      "ideas/M2.parquet": "88aa794ff46b30824781d933cac2f6f4fb1898654c8c7726990e1ed70e605702",
+      "ideas/M3.parquet": "f560064aa9271e6f00f31f16c67242e30d9001c2ca427882bc873f97e0ab5538",
+      "ideas/M4.parquet": "ad2bffe71bc4f3ee5aa1bd8a1967e8825b97afcf67d3392b135b9a1b2d266678",
+      "ideas/M5.parquet": "5788ad26199e00cd371cc581e6a0d38dd9314fed9f618980539b750abd305545",
       "ideas/Mx4.parquet": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
       "ideas/P1.parquet": "5bda0f80ba8397abecb31731caa09dec6500248d1ab072fcfb9f95f1199a7d3e",
       "ideas/P2.parquet": "887ac98d8c2699ef83c48850b7696baea08b5bffbec044d9d9dc825d74e801c6",
@@ -8845,7 +9491,7 @@
       "ideas/X4.parquet": "6f0c03139dfa07ad16d62c44c0cec23561ab36b76f6bee92799187a96fabb278",
       "ideas/X5.parquet": "c5b864512c1f191f9db866190e3b7c3b2208c702b2ba7c125b1d41c851a718f0"
     },
-    "report_sha256": "e5bf6c3722ee386e407f604405ac394637bb7cee89b9fd161a235e7a08ebcdfd"
+    "report_sha256": "9f101a25908109c5520d27c7010f15bef1886bccfa73dab5ca53aee9c3a54d50"
   },
   "tamper_case": null
 }
