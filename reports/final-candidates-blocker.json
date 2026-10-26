@@ -25,8 +25,8 @@
     "Only V2_model is registered in the frozen final-two protocol; there is no successful public score from which to choose candidate A or construct candidate B under that protocol.",
     "The V2_model prediction does not clear the registered improvement noise guard; calibration upload would still need the required explicit upload authorization.",
     "The frozen final-two record says no upload is queued and V2_model.upload_authorized is false.",
-    "No scripts/zindi_submit.py uploader exists in the competition repo or orchestrator scripts tree, so the requested guarded upload path is unavailable.",
-    "External lab artifacts are absent and Track A scorer preregistration is not recorded; no Track B weights are available or used."
+    "The shared guarded uploader exists at competitionsall/scripts/zindi_submit.py, but the final-two record says no upload is queued and V2_model.upload_authorized is false; the uploader also requires a purpose field, which the V2_model candidate card lacks. No live upload was attempted.",
+    "External lab artifacts are absent and Track A scorer preregistration is not recorded; no Track B weights are available or used. The current eligible-candidate pool is not a final-two cohort from the 60-estimator scorer."
   ],
   "actions": {
     "uploads": 0,
@@ -42,5 +42,5 @@
     "reports/lab-evaluation.json",
     "reports/lab-prerequisites.json"
   ],
-  "recommendation": "Keep this row blocked until an authorized guarded upload mechanism exists and two eligible candidate artifacts can be scored under the frozen protocol. Do not bypass the uploader, protocol or upload authorization."
+  "recommendation": "Keep this row blocked until the Track A scorer/final-two cohort and upload purpose are preregistered, and the frozen protocol's upload authorization is resolved. Do not bypass the uploader, protocol or upload authorization."
 }
