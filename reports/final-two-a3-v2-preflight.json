@@ -1,0 +1,156 @@
+{
+  "as_of_utc": "2026-10-26",
+  "budget_state": {
+    "2026-10-26_guard_reported_submissions_today_before": 2,
+    "2026-10-26_lane_daily_cap": 2,
+    "2026-10-27_completed_uploads_in_frozen_record": 0,
+    "2026-10-27_planned_slots_of_daily_cap": "2/2",
+    "2026-10-27_queued_candidates": [
+      "A3_dawid_skene",
+      "V2_model"
+    ],
+    "as_of_utc_date_local_records": "2026-10-26",
+    "note": "The 2026-10-27 schedule is exactly two authorized candidates, equal to the lane cap. Total account capacity remains unverified in the frozen registration; the live guarded uploader will enforce current UTC-day capacity at upload time.",
+    "total_account_capacity_verified": false
+  },
+  "candidate_artifacts_modified": false,
+  "candidates": {
+    "A3_dawid_skene": {
+      "artifact": "reports/candidates/A3_dawid_skene.csv",
+      "build_manifest": "reports/candidates/A3_dawid_skene_manifest.json",
+      "build_manifest_sha256": "3bb36fc7e0977886d2f73d4e5a05d52ca9eb1ca0f6693c2659d60a97c4b6873f",
+      "frozen_card": "reports/final-candidate-cards/track-a-cohort-2026-10-26.json",
+      "frozen_card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb",
+      "guard_dry_run_command": "python3 -I \"/home/martin/hddProjects/competitionsall/scripts/zindi_submit.py\" --competition bias-bounty-mapping-equity-challenge --repo \"$COMPETITION_REPO\" --candidate A3_dawid_skene",
+      "guard_dry_run_executed": true,
+      "live_flag_present": false,
+      "purpose": "calibration",
+      "scheduled_utc": "2026-10-27",
+      "sha256": "6d588f2f7a45a58b128860a049ac19995b21902f7f98d3b2ab39d1d9fbb073b3",
+      "upload_performed": false
+    },
+    "V2_model": {
+      "artifact": "reports/candidates/V2_model.csv",
+      "build_manifest": "reports/candidates.json#V2_model",
+      "build_manifest_sha256": null,
+      "frozen_card": "reports/final-candidate-cards/track-a-cohort-2026-10-26.json",
+      "frozen_card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb",
+      "guard_dry_run_command": "python3 -I \"/home/martin/hddProjects/competitionsall/scripts/zindi_submit.py\" --competition bias-bounty-mapping-equity-challenge --repo \"$COMPETITION_REPO\" --candidate V2_model",
+      "guard_dry_run_executed": true,
+      "live_flag_present": false,
+      "purpose": "calibration",
+      "scheduled_utc": "2026-10-27",
+      "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12",
+      "upload_performed": false
+    }
+  },
+  "checks": [
+    {
+      "artifact": "reports/candidates/A3_dawid_skene.csv",
+      "id": "A3_dawid_skene:frozen_artifact_hash",
+      "passed": true,
+      "rows": 9794,
+      "sha256": "6d588f2f7a45a58b128860a049ac19995b21902f7f98d3b2ab39d1d9fbb073b3"
+    },
+    {
+      "card": "reports/final-candidate-cards/track-a-cohort-2026-10-26.json",
+      "card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb",
+      "id": "A3_dawid_skene:authorized_registered_card",
+      "passed": true,
+      "preregistration_commit": "5926d7ad4d73553f79910eafafcf8f38559d8e33"
+    },
+    {
+      "forecast_status": "approved no-change C0 prior; not a measured local held-out score or candidate-specific accuracy estimate; no improvement claim",
+      "id": "A3_dawid_skene:calibration_purpose_and_prior_label",
+      "local_measured_holdout_rmse": null,
+      "passed": true,
+      "previous_calibration_record": false,
+      "purpose": "calibration"
+    },
+    {
+      "guard_dry_run": {
+        "daily_cap": 2,
+        "live_upload": false,
+        "our_score": null,
+        "platform_submission_id": null,
+        "status": "dry_run_validated",
+        "submissions_today_before": 2
+      },
+      "id": "A3_dawid_skene:scheduled_daily_cap",
+      "lane_daily_cap": 2,
+      "passed": true,
+      "planned_slots": 2,
+      "queued_for_date": [
+        "A3_dawid_skene",
+        "V2_model"
+      ],
+      "scheduled_utc": "2026-10-27"
+    },
+    {
+      "artifact": "reports/candidates/V2_model.csv",
+      "id": "V2_model:frozen_artifact_hash",
+      "passed": true,
+      "rows": 9794,
+      "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12"
+    },
+    {
+      "card": "reports/final-candidate-cards/track-a-cohort-2026-10-26.json",
+      "card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb",
+      "id": "V2_model:authorized_registered_card",
+      "passed": true,
+      "preregistration_commit": "5926d7ad4d73553f79910eafafcf8f38559d8e33"
+    },
+    {
+      "forecast_status": "existing preregistered model-moment forecast; not a measured local held-out score",
+      "id": "V2_model:calibration_purpose_and_prior_label",
+      "local_measured_holdout_rmse": null,
+      "passed": true,
+      "previous_calibration_record": false,
+      "purpose": "calibration"
+    },
+    {
+      "guard_dry_run": {
+        "daily_cap": 2,
+        "live_upload": false,
+        "our_score": null,
+        "platform_submission_id": null,
+        "status": "dry_run_validated",
+        "submissions_today_before": 2
+      },
+      "id": "V2_model:scheduled_daily_cap",
+      "lane_daily_cap": 2,
+      "passed": true,
+      "planned_slots": 2,
+      "queued_for_date": [
+        "A3_dawid_skene",
+        "V2_model"
+      ],
+      "scheduled_utc": "2026-10-27"
+    }
+  ],
+  "checks_passed": 8,
+  "checks_required": 8,
+  "commands": [
+    "python3 -I \"/home/martin/hddProjects/competitionsall/scripts/zindi_submit.py\" --competition bias-bounty-mapping-equity-challenge --repo \"$COMPETITION_REPO\" --candidate A3_dawid_skene",
+    "python3 -I \"/home/martin/hddProjects/competitionsall/scripts/zindi_submit.py\" --competition bias-bounty-mapping-equity-challenge --repo \"$COMPETITION_REPO\" --candidate V2_model"
+  ],
+  "guard_dry_runs": {
+    "checks": {
+      "A3_dawid_skene": true,
+      "V2_model": true
+    },
+    "mode": "default dry-run; no --live flag",
+    "note": "Guarded dry-runs validate the exact candidate packages and query current submission counts; they do not POST/upload. The preflight script itself is local-only.",
+    "remote_uploads": 0
+  },
+  "scheduled_upload_utc": "2026-10-27",
+  "schema_version": 1,
+  "source_hashes": {
+    "calibration_ledger": "8de79a3ca7a98f2ec1caff06c1721f7f140292782e7e678d838def24cae0e5a5",
+    "candidates_manifest": "7fda4aff8e63d0c2854c261798abc073ab01c465d999d7c25732e152a9d4d396",
+    "final_two_registration": "80f699d8c65c1834d26c5a72726420eb15f9e8742b899a3449ce45f3e1e52a47",
+    "frozen_card": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb"
+  },
+  "status": "PASS",
+  "upload_performed": false
+}
