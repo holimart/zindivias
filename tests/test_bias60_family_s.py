@@ -112,7 +112,8 @@ def test_s3_detects_a_provided_facility_across_a_shared_boundary():
     point = shapely.Point(-0.001, 0).wkb
     config = {"seeds": {"S3": {
         "poi_layer": "pois", "poi_columns": ["basic_category", "categories", "taxonomy", "geometry"],
-        "types": ["fire", "ems", "schools"], "definition": "primary",
+        "types": ["fire", "ems", "schools"],
+        "definitions": ["primary", "primary_alternate", "taxonomy_hierarchy", "basic_category"],
         "category_sets": {"fire": ["fire_department"], "ems": ["ambulance_and_ems_services"],
                            "schools": ["school"]}, "distance_m": 150.0, "decay_m": 50.0
     }}}

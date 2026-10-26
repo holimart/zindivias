@@ -151,8 +151,10 @@ def s2(inputs) -> IdeaOutput:
 def _facility_types(categories: Any, basic: Any, taxonomy: Any, seed: dict[str, Any]) -> set[str]:
     category = categories if isinstance(categories, dict) else {}
     values = _category_values(category.get("primary"), category.get("alternate"), taxonomy, basic)
+    definitions = seed["definitions"]
     return {kind for kind in seed["types"]
-            if _semantic_type_match(kind, values[seed["definition"]], seed["category_sets"])}
+            if any(_semantic_type_match(kind, values[definition], seed["category_sets"])
+                   for definition in definitions)}
 
 
 def _boundary_leaks(points: Any, types_by_point: list[set[str]], polygons: Any,
