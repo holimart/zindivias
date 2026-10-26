@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "audit": "Eastern Oklahoma Mx4 F versus S1 lagged Mx4 F: seeded permutation null for flagged empirical-decile NMI",
+  "scope": {
+    "region": "eastern-ok",
+    "official_region_ids": 1192,
+    "joint_defined_pairwise_ids": 1192,
+    "pairwise_missing_count": 0,
+    "exact_official_id_reconciliation": true,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_reference_data_read": false,
+    "external_data_read": false,
+    "leaderboard_feedback_used": false,
+    "candidate_or_registry_changed": false,
+    "uploads": 0
+  },
+  "pair": {
+    "left_feature": "Mx4|F|covariate",
+    "right_feature": "S1|F|covariate:lag_mx4_f_covariate",
+    "left_encoding": {
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 3,
+      "defined": 1192
+    },
+    "right_encoding": {
+      "encoding": "empirical_decile_bins",
+      "categories_or_bins": 4,
+      "defined": 1192
+    },
+    "pairwise_definedness": "The original per-feature empirical-decile codes are computed over all finite values within Eastern Oklahoma; NMI/permutation/bootstrap then use only IDs where both feature values are defined. Every permutation shuffles one encoded feature only over that fixed paired-ID set.",
+    "raw_nmi": 0.8201528016239874,
+    "nmi_normalization": "same as source audit: 2*MI/(H(left)+H(right)); natural-log entropy"
+  },
+  "adjusted_mutual_information": {
+    "mutual_information_nats": 0.6775115512424985,
+    "expected_mutual_information_nats": 0.002649862192217243,
+    "entropy_left_nats": 0.8106583325192591,
+    "entropy_right_nats": 0.8415009965739428,
+    "arithmetic_entropy_mean_minus_expected_mi_nats": 0.8234298023543838,
+    "adjusted_mutual_information": 0.819574039123541,
+    "definition": "Exact expected mutual information under the fixed-margin hypergeometric permutation model; AMI=(MI-EMI)/(arithmetic mean of marginal entropies-EMI), in natural-log units."
+  },
+  "permutation_test": {
+    "replicates": 2000,
+    "seed": 20261027,
+    "procedure": "independent uniform permutation of the right feature labels over the pairwise-defined Eastern Oklahoma tracts; left labels and pairwise-defined ID set held fixed",
+    "tail": "one-sided upper tail for NMI >= observed",
+    "observed_raw_nmi": 0.8201528016239874,
+    "null_mean_nmi": 0.0031748139692704697,
+    "null_sd_nmi": 0.0017827225906600099,
+    "null_quantiles_nmi": {
+      "0.5": 0.0028867981679785975,
+      "0.95": 0.00666407704202666,
+      "0.99": 0.008558427324911749
+    },
+    "exceedances_ge_observed": 0,
+    "p_value_plus_one": 0.0004997501249375312,
+    "permutation_bias_corrected_nmi_observed_minus_null_mean": 0.816977987654717
+  },
+  "paired_tract_bootstrap": {
+    "replicates": 2000,
+    "seed": 20261028,
+    "confidence_level": 0.95,
+    "method": "paired tract bootstrap with replacement; percentile interval",
+    "raw_nmi_mean": 0.8215325468220491,
+    "raw_nmi_standard_error": 0.016699169154712673,
+    "raw_nmi_interval": [
+      0.7897254399448241,
+      0.8543656570187835
+    ]
+  },
+  "decision": {
+    "confirmed_redundancy": true,
+    "rule": "confirmed only if one-sided permutation p<=0.01 and adjusted MI>=0.50; otherwise unconfirmed warning",
+    "permutation_p_at_most_0_01": true,
+    "adjusted_mi_at_least_0_50": true,
+    "interpretation": "Confirmed nonlinear redundancy under the registered diagnostic rule."
+  },
+  "inputs": {
+    "registered_feature_artifacts": {
+      "Mx4": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx4.parquet",
+        "sha256": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+        "registered_harness_sha256": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af"
+      },
+      "S1": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/S1.parquet",
+        "sha256": "632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03",
+        "registered_harness_sha256": "632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03"
+      }
+    },
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "source_nmi_report_sha256": "94ec546de6fec58bd315dc0160373ec6f39c70178da741a2fdd6ea6490d6f809",
+    "harness_report_sha256": "1203d2acf10fa9682852abba3382d55f53c42b6fa7c03071c44cbe915d3f7a85",
+    "registry_sha256": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6"
+  },
+  "provenance": {
+    "script_sha256": "6e1295f8f88f02a23005d6209d3278e7b62ae5ef6ca24dbc0f1e41aed73e0957",
+    "random_generator": "numpy.random.default_rng / PCG64",
+    "permutations": 2000,
+    "permutation_seed": 20261027,
+    "bootstrap_replicates": 2000,
+    "bootstrap_seed": 20261028
+  },
+  "interpretation": "Bounded label-free diagnostic only. No feature or registry decision is made by this screen; any confirmed flag is for reviewer interpretation, not automatic removal or promotion."
+}
