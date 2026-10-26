@@ -38,14 +38,31 @@
       "status": "pending_implementation"
     },
     "X5": {
-      "status": "pending_implementation"
+      "status": "computed",
+      "rows": 18758,
+      "geoids": 9379,
+      "defined_rows_per_component": 9379,
+      "components": [
+        "R",
+        "F"
+      ],
+      "artifact": "workspace:ideas/X5.parquet",
+      "sha256": "c5b864512c1f191f9db866190e3b7c3b2208c702b2ba7c125b1d41c851a718f0",
+      "harness_report": "workspace:ideas/x5-harness.json",
+      "harness_report_sha256": "1d6e75a5b564bf042552bc4061f08a57e0ba836cc5894d6548cc7cd5da78c6a5",
+      "measurement": "Provided infrastructure highway-number bridge/toll witnesses for R and soft probability for emergency/helipad features with no provided non-Microsoft EMS POI within 500 m for F."
     }
   },
   "orthogonality": {
     "report": "reports/ideas-orthogonality.json",
-    "sha256": "f2cc34b7dec4c3948773c6b6eca1b3842a1a814d3f697b674594343758acac17",
+    "sha256": "388dcee403f59be48dfd36f45ab60920ba067076a83b516544366e2ba16da51e",
     "x1_included": true,
-    "full_family_screen_complete": false
+    "full_family_screen_complete": false,
+    "x5_included": true,
+    "columns_evaluated": 31,
+    "columns_included": 29,
+    "pairs_flagged": 3,
+    "vif_flags": 11
   },
   "validation": {
     "tests": "pytest tests/test_bias60_family_x.py tests/test_bias60_harness.py -q -k 'not CommittedArtifactTests'",
@@ -53,7 +70,9 @@
     "idea_harness": "python scripts/run_bias60_ideas.py --only X1 --out $COMPETITION_WORKSPACE/ideas/x1-harness.json",
     "idea_harness_result": "PASS; one contract-valid artifact on all 9,379 official GEOIDs",
     "orthogonality_refresh": "python scripts/report_ideas_orthogonality.py",
-    "orthogonality_result": "PASS; 29 columns evaluated, 27 included, 3 pair flags, 10 VIF flags"
+    "orthogonality_result": "PASS; 29 columns evaluated, 27 included, 3 pair flags, 10 VIF flags",
+    "x5_harness": "python scripts/run_bias60_ideas.py --only X5 --out $COMPETITION_WORKSPACE/ideas/x5-harness.json",
+    "x5_harness_result": "PASS; contract-valid R/F outputs for all 9,379 official GEOIDs (18,758 component rows)"
   },
-  "code_commit": "807a06f839ea67a84a1ccf39a4d23859c102cd6b"
+  "code_commit": "c8166fecf26560b8624593aa50a43c401652c457"
 }

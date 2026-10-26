@@ -1,7 +1,7 @@
 {
-  "code_commit_at_run": "807a06f839ea67a84a1ccf39a4d23859c102cd6b",
+  "code_commit_at_run": "c8166fecf26560b8624593aa50a43c401652c457",
   "environment": {
-    "git_commit": "807a06f839ea67a84a1ccf39a4d23859c102cd6b",
+    "git_commit": "c8166fecf26560b8624593aa50a43c401652c457",
     "versions": {
       "numpy": "2.5.4",
       "pyarrow": "26.0.0",
@@ -5351,11 +5351,206 @@
       "rows": 9379,
       "sha256": "3352248e0e2ea195691ec2f6cdddc50de45be8a73115055a869592f4d7a0f262",
       "undeclared_columns_read": []
+    },
+    "X5": {
+      "accessed_inputs": {
+        "caches": [],
+        "csv_columns": [],
+        "layers": [
+          "census-acs-housing",
+          "infrastructure",
+          "pois"
+        ],
+        "parquet_columns": [
+          "eastern-ok-census-acs-housing:GEOID,geometry",
+          "eastern-ok-overture-infrastructure.parquet:class",
+          "eastern-ok-overture-infrastructure.parquet:geometry",
+          "eastern-ok-overture-infrastructure.parquet:names",
+          "eastern-ok-overture-infrastructure.parquet:source_tags",
+          "eastern-ok-overture-infrastructure.parquet:subtype",
+          "eastern-ok-overture-pois.parquet:categories",
+          "eastern-ok-overture-pois.parquet:geometry",
+          "eastern-ok-overture-pois.parquet:sources",
+          "maricopa-az-census-acs-housing:GEOID,geometry",
+          "maricopa-az-overture-infrastructure.parquet:class",
+          "maricopa-az-overture-infrastructure.parquet:geometry",
+          "maricopa-az-overture-infrastructure.parquet:names",
+          "maricopa-az-overture-infrastructure.parquet:source_tags",
+          "maricopa-az-overture-infrastructure.parquet:subtype",
+          "maricopa-az-overture-pois.parquet:categories",
+          "maricopa-az-overture-pois.parquet:geometry",
+          "maricopa-az-overture-pois.parquet:sources",
+          "northern-ca-census-acs-housing:GEOID,geometry",
+          "northern-ca-overture-infrastructure.parquet:class",
+          "northern-ca-overture-infrastructure.parquet:geometry",
+          "northern-ca-overture-infrastructure.parquet:names",
+          "northern-ca-overture-infrastructure.parquet:source_tags",
+          "northern-ca-overture-infrastructure.parquet:subtype",
+          "northern-ca-overture-pois.parquet:categories",
+          "northern-ca-overture-pois.parquet:geometry",
+          "northern-ca-overture-pois.parquet:sources",
+          "south-central-tx-census-acs-housing:GEOID,geometry",
+          "south-central-tx-overture-infrastructure.parquet:class",
+          "south-central-tx-overture-infrastructure.parquet:geometry",
+          "south-central-tx-overture-infrastructure.parquet:names",
+          "south-central-tx-overture-infrastructure.parquet:source_tags",
+          "south-central-tx-overture-infrastructure.parquet:subtype",
+          "south-central-tx-overture-pois.parquet:categories",
+          "south-central-tx-overture-pois.parquet:geometry",
+          "south-central-tx-overture-pois.parquet:sources"
+        ]
+      },
+      "bytes": 27616,
+      "diagnostics": {
+        "eastern-ok": {
+          "defined": 1192,
+          "emergency_features_checked": 210,
+          "emergency_without_near_ems_probability": {
+            "count": 1192,
+            "max": 0.9996645373720975,
+            "mean": 0.07671373352890601,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.6321205588285577
+          },
+          "ems_distance_m": 500.0,
+          "infrastructure_rows_assigned": 2726,
+          "infrastructure_rows_scanned": 2726,
+          "infrastructure_rows_total": 2726,
+          "microsoft_poi_memberships_used": false,
+          "provided_ems_places": 114,
+          "road_semantic_witnesses": 0,
+          "road_witness_count": {
+            "count": 1192,
+            "max": 0.0,
+            "mean": 0.0,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "rows": 1192,
+          "semantic_rule": "highway-number bridges/toll features as R witnesses; emergency/helipad infrastructure without a provided Overture EMS place within 500m as soft F witness"
+        },
+        "maricopa-az": {
+          "defined": 1593,
+          "emergency_features_checked": 441,
+          "emergency_without_near_ems_probability": {
+            "count": 1593,
+            "max": 0.9999999999861121,
+            "mean": 0.09035395884846353,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.6321205588285577
+          },
+          "ems_distance_m": 500.0,
+          "infrastructure_rows_assigned": 9482,
+          "infrastructure_rows_scanned": 9482,
+          "infrastructure_rows_total": 9482,
+          "microsoft_poi_memberships_used": false,
+          "provided_ems_places": 67,
+          "road_semantic_witnesses": 1,
+          "road_witness_count": {
+            "count": 1593,
+            "max": 1.0,
+            "mean": 0.0006277463904582549,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "rows": 1593,
+          "semantic_rule": "highway-number bridges/toll features as R witnesses; emergency/helipad infrastructure without a provided Overture EMS place within 500m as soft F witness"
+        },
+        "northern-ca": {
+          "defined": 591,
+          "emergency_features_checked": 149,
+          "emergency_without_near_ems_probability": {
+            "count": 591,
+            "max": 0.9999991684712809,
+            "mean": 0.08863953271183511,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.6321205588285577
+          },
+          "ems_distance_m": 500.0,
+          "infrastructure_rows_assigned": 3318,
+          "infrastructure_rows_scanned": 3318,
+          "infrastructure_rows_total": 3318,
+          "microsoft_poi_memberships_used": false,
+          "provided_ems_places": 37,
+          "road_semantic_witnesses": 0,
+          "road_witness_count": {
+            "count": 591,
+            "max": 0.0,
+            "mean": 0.0,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "rows": 591,
+          "semantic_rule": "highway-number bridges/toll features as R witnesses; emergency/helipad infrastructure without a provided Overture EMS place within 500m as soft F witness"
+        },
+        "south-central-tx": {
+          "defined": 6003,
+          "emergency_features_checked": 847,
+          "emergency_without_near_ems_probability": {
+            "count": 6003,
+            "max": 0.9999998874648253,
+            "mean": 0.06275115539723164,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "ems_distance_m": 500.0,
+          "infrastructure_rows_assigned": 13622,
+          "infrastructure_rows_scanned": 13622,
+          "infrastructure_rows_total": 13622,
+          "microsoft_poi_memberships_used": false,
+          "provided_ems_places": 532,
+          "road_semantic_witnesses": 37,
+          "road_witness_count": {
+            "count": 6003,
+            "max": 11.0,
+            "mean": 0.006163584874229552,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "rows": 6003,
+          "semantic_rule": "highway-number bridges/toll features as R witnesses; emergency/helipad infrastructure without a provided Overture EMS place within 500m as soft F witness"
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate",
+          "component": "F",
+          "defined_rows": 9379,
+          "rows": 9379,
+          "value_max": 0.9999999999861121,
+          "value_min": 0.0
+        },
+        {
+          "channel": "covariate",
+          "component": "R",
+          "defined_rows": 9379,
+          "rows": 9379,
+          "value_max": 11.0,
+          "value_min": 0.0
+        }
+      ],
+      "emissions_per_region": 2,
+      "family": "X",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/X5.parquet",
+      "rows": 18758,
+      "sha256": "c5b864512c1f191f9db866190e3b7c3b2208c702b2ba7c125b1d41c851a718f0",
+      "undeclared_columns_read": []
     }
   },
   "preregistration": {
     "path": "config/bias60-harness-preregistered.json",
-    "sha256": "a602fee6dec4efd46fff4dc45645c1c2249ddc5315a3a751e8727921cb492548",
+    "sha256": "9410c230b5c029041686b29c918b38a2b875b03d4efc2ba84c791afa09b29ce0",
     "spec": {
       "family_count": 12,
       "idea_count": 60,
@@ -5395,7 +5590,7 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 37,
+    "declared_count": 36,
     "families_total": 12,
     "ideas_per_family": [
       5
@@ -5409,6 +5604,7 @@
       "G5",
       "Tm1",
       "X1",
+      "X5",
       "Dst1",
       "Dst2",
       "Dst3",
@@ -5433,7 +5629,7 @@
       "F",
       "R"
     ],
-    "implemented_count": 23
+    "implemented_count": 24
   },
   "scope": {
     "geoids_by_region": {
@@ -5461,7 +5657,7 @@
       "F",
       "R"
     ],
-    "ideas_implemented": 23,
+    "ideas_implemented": 24,
     "parquet_files": {
       "ideas/Dst1.parquet": "cac4c507372353f5493b09b1ce6ec7c293500d185a1778fc73a68d25e5bc4281",
       "ideas/Dst2.parquet": "fc01b4f1782b1830500f232fbc31d9b65f77f23a69985fcbdcc54d5a29fdda6b",
@@ -5485,9 +5681,10 @@
       "ideas/Sc5.parquet": "c8603a948b060344f23d2250da22b02a95254401c4a67d64d74a55d4cf4ee720",
       "ideas/Sca1.parquet": "858eadae31c242954fbbd47ffb0151276018d987a994f57b24e84c19a8e6c294",
       "ideas/Tm1.parquet": "df93396b8bb481dea6da43dd90b997eeeb47c5bf249a3fa6eac0dca6c8713885",
-      "ideas/X1.parquet": "3352248e0e2ea195691ec2f6cdddc50de45be8a73115055a869592f4d7a0f262"
+      "ideas/X1.parquet": "3352248e0e2ea195691ec2f6cdddc50de45be8a73115055a869592f4d7a0f262",
+      "ideas/X5.parquet": "c5b864512c1f191f9db866190e3b7c3b2208c702b2ba7c125b1d41c851a718f0"
     },
-    "report_sha256": "f5c592efe34e24cbfc19cc1cf4c4ec0e5433b384a41bb3d8d4ce8f2c7a61dcde"
+    "report_sha256": "2b5357a15af520611b6e48743a80136b30c7e8bf1181003d49719093c31b29af"
   },
   "tamper_case": null
 }
