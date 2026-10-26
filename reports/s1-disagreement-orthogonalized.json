@@ -1,0 +1,597 @@
+{
+  "schema_version": 1,
+  "audit": "Cross-fitted residual of absolute Queen/Rook S1 disagreement after frozen Mx4 F and S1 lagged-Mx4 F; unregistered label-free screen",
+  "method": {
+    "candidate": "Reuse the frozen Queen and Rook innovations without recomputation; absolute disagreement = |Queen innovation − Rook innovation|, defined only where both source diagnostics are defined.",
+    "residualization": "Five deterministic region-local GEOID folds. For each fold, fit OLS with intercept, frozen Mx4 F, and frozen S1 lagged-Mx4 F on the other four folds only; residual is held-out disagreement minus held-out prediction.",
+    "NMI": "Within-region arithmetic normalized mutual information between frozen Mx4 F and the cross-fitted residual, using the existing deterministic empirical-decile/category encoders; measured on complete-case residual support.",
+    "variance_ratio": "Pooled population variance (ddof=0) of cross-fitted held-out residuals divided by raw Queen/Rook disagreement variance on the same complete-case support; region-specific ratios descriptive.",
+    "nulls": "Source disagreement nulls remain null; residuals are defined only where Queen, Rook, Mx4 F and S1 lagged-Mx4 F are all defined.",
+    "unregistered": true
+  },
+  "measure_before": {
+    "raw_disagreement_maximum_within_region_NMI": 0.8162118656676006,
+    "raw_disagreement_crossfit_residual_variance_ratio": 1.1851634404575098,
+    "raw_disagreement_coverage_fraction": 1.0,
+    "source_report_sha256": "b2f97dc16ed08c587cb0b3fe779eef082d925401187a1d7dfadc5540c28bb8d6",
+    "no_orthogonalized_residual_screen_previously_measured": true
+  },
+  "scope": {
+    "official_ids": 9379,
+    "exact_official_geoid_region_partition": true,
+    "queen_defined_ids": 9379,
+    "rook_defined_ids": 9379,
+    "disagreement_defined_ids": 9379,
+    "disagreement_undefined_ids": 0,
+    "crossfit_joint_defined_ids": 9379,
+    "coverage_fraction": 1.0,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_reference_data_read": false,
+    "external_inputs_read": false,
+    "leaderboard_feedback_used": false,
+    "frozen_Mx4_S1_modified": false,
+    "registry_integration": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "raw_disagreement_variance_on_joint_support": 1.5544549733081612e-05,
+    "crossfit_residual_variance": 1.5925057099144644e-05,
+    "crossfit_residual_variance_ratio": 1.0244785067819135,
+    "crossfit_residual_distribution": {
+      "n": 9379,
+      "min": -0.010467351600210069,
+      "p05": -0.002413998210898466,
+      "p50": -0.0002502019560215518,
+      "p95": 0.00038397767302419527,
+      "max": 0.09744190303407854,
+      "mean": 1.2339573126673048e-05,
+      "variance": 1.5925057099144644e-05
+    },
+    "maximum_within_region_NMI_residual_vs_Mx4_F": 0.4904168102022829,
+    "region_with_maximum_residual_NMI": "south-central-tx",
+    "region_NMI": {
+      "maricopa-az": 0.35347056413112876,
+      "northern-ca": 0.2300172816322561,
+      "eastern-ok": 0.4171320234309736,
+      "south-central-tx": 0.4904168102022829
+    },
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "queen_defined_ids": 1593,
+        "rook_defined_ids": 1593,
+        "disagreement_defined_ids": 1593,
+        "crossfit_joint_defined_ids": 1593,
+        "coverage_fraction": 1.0,
+        "source_disagreement_distribution": {
+          "n": 1593,
+          "min": 2.154078182827531e-05,
+          "p05": 3.417949877664028e-05,
+          "p50": 0.00021835074416250155,
+          "p95": 0.0004391979381259117,
+          "max": 0.07957100139137657,
+          "mean": 0.0005313399808775123,
+          "variance": 1.4855333409945261e-05
+        },
+        "crossfit_residual_distribution": {
+          "n": 1593,
+          "min": -0.00962741206408438,
+          "p05": -0.00037297303219140175,
+          "p50": -0.00019085312615225037,
+          "p95": 0.00014516323986832737,
+          "max": 0.0829518527778763,
+          "mean": -3.5268627213236706e-06,
+          "variance": 1.5600409986099682e-05
+        },
+        "crossfit_residual_variance_ratio": 1.0501554933567234,
+        "maximum_within_region_NMI_residual_vs_Mx4_F": {
+          "status": "measured",
+          "joint_defined": 1593,
+          "nmi": 0.35347056413112876,
+          "current_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 3,
+            "defined": 1593
+          },
+          "innovation_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 9,
+            "defined": 1593
+          }
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "train_defined_ids": 1285,
+            "heldout_defined_ids": 308,
+            "design_rank": 3,
+            "design_columns": 3,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              0.00035378796851622186,
+              0.0047412787723181546,
+              0.0006539480082512813
+            ],
+            "heldout_residual_variance": 1.6074393437849637e-05,
+            "minimum_singular_value": 0.6790415342865683
+          },
+          {
+            "fold": 1,
+            "train_defined_ids": 1266,
+            "heldout_defined_ids": 327,
+            "design_rank": 3,
+            "design_columns": 3,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              0.00029403469825758433,
+              -0.023442314259793484,
+              0.02753304371344702
+            ],
+            "heldout_residual_variance": 4.8707422441331515e-05,
+            "minimum_singular_value": 0.5652994676504423
+          },
+          {
+            "fold": 2,
+            "train_defined_ids": 1263,
+            "heldout_defined_ids": 330,
+            "design_rank": 3,
+            "design_columns": 3,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              0.0003446612343193436,
+              0.014272994359823637,
+              -0.008638821890646537
+            ],
+            "heldout_residual_variance": 1.043701965556734e-05,
+            "minimum_singular_value": 0.6665553833027658
+          },
+          {
+            "fold": 3,
+            "train_defined_ids": 1281,
+            "heldout_defined_ids": 312,
+            "design_rank": 3,
+            "design_columns": 3,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              0.00035460117089431044,
+              0.0013629984143869577,
+              0.006176167085022782
+            ],
+            "heldout_residual_variance": 7.133462396978883e-07,
+            "minimum_singular_value": 0.7107697737632233
+          },
+          {
+            "fold": 4,
+            "train_defined_ids": 1277,
+            "heldout_defined_ids": 316,
+            "design_rank": 3,
+            "design_columns": 3,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              0.0003608833570262256,
+              0.00013460657238980722,
+              0.007021378489314698
+            ],
+            "heldout_residual_variance": 5.212103914416334e-07,
+            "minimum_singular_value": 0.7209454474392094
+          }
+        ]
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "queen_defined_ids": 591,
+        "rook_defined_ids": 591,
+        "disagreement_defined_ids": 591,
+        "crossfit_joint_defined_ids": 591,
+        "coverage_fraction": 1.0,
+        "source_disagreement_distribution": {
+          "n": 591,
+          "min": 0.00029973843461285343,
+          "p05": 0.0002997384346128608,
+          "p50": 0.0002997384346128608,
+          "p95": 0.001720149372550689,
+          "max": 0.06075677905610284,
+          "mean": 0.001220296898866431,
+          "variance": 2.5629397320625234e-05
+        },
+        "crossfit_residual_distribution": {
+          "n": 591,
+          "min": -0.00772218492577814,
+          "p05": -0.0018188333001883947,
+          "p50": -0.0003534313518964215,
+          "p95": -3.2048308551693787e-05,
+          "max": 0.06403243397512842,
+          "mean": 6.304104843635296e-05,
+          "variance": 2.8373682983270682e-05
+        },
+        "crossfit_residual_variance_ratio": 1.1070757001545637,
+        "maximum_within_region_NMI_residual_vs_Mx4_F": {
+          "status": "measured",
+          "joint_defined": 591,
+          "nmi": 0.2300172816322561,
+          "current_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 2,
+            "defined": 591
+          },
+          "innovation_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 8,
+            "defined": 591
+          }
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "train_defined_ids": 478,
+            "heldout_defined_ids": 113,
+            "design_rank": 3,
+            "design_columns": 3,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              0.0006531697865092823,
+              -0.033888746434364285,
+              0.0596446385753459
+            ],
+            "heldout_residual_variance": 5.942719347273127e-06,
+            "minimum_singular_value": 0.42564800823571636
+          },
+          {
+            "fold": 1,
+            "train_defined_ids": 469,
+            "heldout_defined_ids": 122,
+            "design_rank": 3,
+            "design_columns": 3,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              0.0006280396897342235,
+              -0.05841305602758933,
+              0.07831450231948851
+            ],
+            "heldout_residual_variance": 4.704814848897246e-05,
+            "minimum_singular_value": 0.43864189116914154
+          },
+          {
+            "fold": 2,
+            "train_defined_ids": 470,
+            "heldout_defined_ids": 121,
+            "design_rank": 3,
+            "design_columns": 3,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              0.000675423214882839,
+              -0.0293523854764949,
+              0.05274915832167023
+            ],
+            "heldout_residual_variance": 4.768373933712875e-06,
+            "minimum_singular_value": 0.4537224358669525
+          },
+          {
+            "fold": 3,
+            "train_defined_ids": 470,
+            "heldout_defined_ids": 121,
+            "design_rank": 3,
+            "design_columns": 3,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              0.0006948277930352993,
+              -0.029566262015660313,
+              0.05152260957278204
+            ],
+            "heldout_residual_variance": 9.732711481111496e-06,
+            "minimum_singular_value": 0.4590443372887076
+          },
+          {
+            "fold": 4,
+            "train_defined_ids": 477,
+            "heldout_defined_ids": 114,
+            "design_rank": 3,
+            "design_columns": 3,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              0.0005825461932799506,
+              0.022299251716702412,
+              -0.007603023660186663
+            ],
+            "heldout_residual_variance": 7.3109499595901e-05,
+            "minimum_singular_value": 0.37705440535525403
+          }
+        ]
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "queen_defined_ids": 1192,
+        "rook_defined_ids": 1192,
+        "disagreement_defined_ids": 1192,
+        "crossfit_joint_defined_ids": 1192,
+        "coverage_fraction": 1.0,
+        "source_disagreement_distribution": {
+          "n": 1192,
+          "min": 0.0001067472089618278,
+          "p05": 0.00027468962544713316,
+          "p50": 0.00038452319500655637,
+          "p95": 0.005779512224462479,
+          "max": 0.09697582866448329,
+          "mean": 0.0019060306998149301,
+          "variance": 5.851519920019406e-05
+        },
+        "crossfit_residual_distribution": {
+          "n": 1192,
+          "min": -0.010467351600210069,
+          "p05": -0.0037823302412218762,
+          "p50": -0.0006912717326322479,
+          "p95": 0.0039335341870095995,
+          "max": 0.09744190303407854,
+          "mean": 4.8153840262397474e-05,
+          "variance": 6.150964711845833e-05
+        },
+        "crossfit_residual_variance_ratio": 1.0511738481487447,
+        "maximum_within_region_NMI_residual_vs_Mx4_F": {
+          "status": "measured",
+          "joint_defined": 1192,
+          "nmi": 0.4171320234309736,
+          "current_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 3,
+            "defined": 1192
+          },
+          "innovation_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 8,
+            "defined": 1192
+          }
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "train_defined_ids": 951,
+            "heldout_defined_ids": 241,
+            "design_rank": 3,
+            "design_columns": 3,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              0.0011219539736629352,
+              0.03314113755397414,
+              -0.027759111207587596
+            ],
+            "heldout_residual_variance": 2.418899887223534e-05,
+            "minimum_singular_value": 0.7796332708145044
+          },
+          {
+            "fold": 1,
+            "train_defined_ids": 956,
+            "heldout_defined_ids": 236,
+            "design_rank": 3,
+            "design_columns": 3,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              0.0009641957122454284,
+              0.05166480543532459,
+              -0.04638780548276252
+            ],
+            "heldout_residual_variance": 7.429856586089637e-05,
+            "minimum_singular_value": 0.8255034584462789
+          },
+          {
+            "fold": 2,
+            "train_defined_ids": 943,
+            "heldout_defined_ids": 249,
+            "design_rank": 3,
+            "design_columns": 3,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              0.0009165381944681525,
+              0.02747566693487025,
+              -0.022295164674915317
+            ],
+            "heldout_residual_variance": 6.329998748049519e-05,
+            "minimum_singular_value": 0.8022342035116039
+          },
+          {
+            "fold": 3,
+            "train_defined_ids": 949,
+            "heldout_defined_ids": 243,
+            "design_rank": 3,
+            "design_columns": 3,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              0.0010757949276388042,
+              0.007376786579360496,
+              -0.0016982455033175527
+            ],
+            "heldout_residual_variance": 3.8078237690311935e-05,
+            "minimum_singular_value": 0.8604591420472412
+          },
+          {
+            "fold": 4,
+            "train_defined_ids": 969,
+            "heldout_defined_ids": 223,
+            "design_rank": 3,
+            "design_columns": 3,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              0.0008835276039065835,
+              -0.009781419655210316,
+              0.014926237244147197
+            ],
+            "heldout_residual_variance": 0.00010982526859490042,
+            "minimum_singular_value": 0.7429920606235458
+          }
+        ]
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "queen_defined_ids": 6003,
+        "rook_defined_ids": 6003,
+        "disagreement_defined_ids": 6003,
+        "crossfit_joint_defined_ids": 6003,
+        "coverage_fraction": 1.0,
+        "source_disagreement_distribution": {
+          "n": 6003,
+          "min": 2.7414296832565274e-05,
+          "p05": 5.9103233931582784e-05,
+          "p50": 5.9103233931582784e-05,
+          "p95": 0.000709040693384802,
+          "max": 0.06346420587511883,
+          "mean": 0.0005420160703542667,
+          "variance": 5.858989541574272e-06
+        },
+        "crossfit_residual_distribution": {
+          "n": 6003,
+          "min": -0.004278922760885356,
+          "p05": -0.000865978460355138,
+          "p50": -0.0002502019560215518,
+          "p95": 0.0003943027062180232,
+          "max": 0.0641469127157149,
+          "mean": 4.4468618110066105e-06,
+          "variance": 5.733381351296346e-06
+        },
+        "crossfit_residual_variance_ratio": 0.9785614585268273,
+        "maximum_within_region_NMI_residual_vs_Mx4_F": {
+          "status": "measured",
+          "joint_defined": 6003,
+          "nmi": 0.4904168102022829,
+          "current_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 5,
+            "defined": 6003
+          },
+          "innovation_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 9,
+            "defined": 6003
+          }
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "train_defined_ids": 4834,
+            "heldout_defined_ids": 1169,
+            "design_rank": 3,
+            "design_columns": 3,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              0.0003093051899531346,
+              -0.022511536179327645,
+              0.0331984186520744
+            ],
+            "heldout_residual_variance": 7.461728085373483e-06,
+            "minimum_singular_value": 0.5846895976181716
+          },
+          {
+            "fold": 1,
+            "train_defined_ids": 4845,
+            "heldout_defined_ids": 1158,
+            "design_rank": 3,
+            "design_columns": 3,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              0.0002893794360447853,
+              -0.002856407612092606,
+              0.014050786745413938
+            ],
+            "heldout_residual_variance": 6.7275057255569935e-06,
+            "minimum_singular_value": 0.5612553453100836
+          },
+          {
+            "fold": 2,
+            "train_defined_ids": 4792,
+            "heldout_defined_ids": 1211,
+            "design_rank": 3,
+            "design_columns": 3,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              0.000311501858869809,
+              -0.004780882660537148,
+              0.01683996126655257
+            ],
+            "heldout_residual_variance": 2.5486345896737995e-06,
+            "minimum_singular_value": 0.5969942515410819
+          },
+          {
+            "fold": 3,
+            "train_defined_ids": 4749,
+            "heldout_defined_ids": 1254,
+            "design_rank": 3,
+            "design_columns": 3,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              0.00030007292336413393,
+              -0.01188565434522351,
+              0.021953443146550154
+            ],
+            "heldout_residual_variance": 6.927039265135688e-06,
+            "minimum_singular_value": 0.5482654103401683
+          },
+          {
+            "fold": 4,
+            "train_defined_ids": 4792,
+            "heldout_defined_ids": 1211,
+            "design_rank": 3,
+            "design_columns": 3,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              0.0003145220717178167,
+              0.01198561139966802,
+              -0.000879278504108327
+            ],
+            "heldout_residual_variance": 5.0199695237063805e-06,
+            "minimum_singular_value": 0.5559656528165197
+          }
+        ]
+      }
+    }
+  },
+  "thresholds": {
+    "minimum_coverage_inclusive": 0.9859,
+    "minimum_crossfit_residual_variance_ratio_inclusive": 0.1,
+    "maximum_within_region_NMI_exclusive": 0.8
+  },
+  "acceptance": {
+    "exact_9379_official_geoid_region_partition": true,
+    "Queen_Rook_alignment_and_nulls_preserved": true,
+    "coverage_fraction": 1.0,
+    "coverage_at_least_98_59_percent": true,
+    "crossfit_residual_variance_ratio": 1.0244785067819135,
+    "residual_variance_at_least_10_percent": true,
+    "maximum_within_region_NMI_residual_vs_Mx4_F": 0.4904168102022829,
+    "region_with_maximum_residual_NMI": "south-central-tx",
+    "maximum_region_NMI_below_0_80": true,
+    "frozen_Mx4_S1_Queen_Rook_and_registry_unchanged": true,
+    "distinct_screen_pass": true
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "queen_rook_source_report_sha256": "b2f97dc16ed08c587cb0b3fe779eef082d925401187a1d7dfadc5540c28bb8d6",
+    "queen_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/s1-mx4-lagged-innovation/s1-mx4-lagged-innovation.parquet",
+      "sha256_before": "ed97287937b26d01dc40bf8255c8136a43749cacf24518a98d8e29e73611fa76",
+      "sha256_after": "ed97287937b26d01dc40bf8255c8136a43749cacf24518a98d8e29e73611fa76"
+    },
+    "rook_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/s1-rook-mx4-innovation/s1-rook-mx4-innovation.parquet",
+      "sha256_before": "b9b74f547515ee272f89dcee8b38197e2010565fa69e472218b8bc72038d8260",
+      "sha256_after": "b9b74f547515ee272f89dcee8b38197e2010565fa69e472218b8bc72038d8260"
+    },
+    "Mx4_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx4.parquet",
+      "sha256_before": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+      "sha256_after": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af"
+    },
+    "S1_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/S1.parquet",
+      "sha256_before": "632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03",
+      "sha256_after": "632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03",
+      "lagged_Mx4_F_emission_sha256": "a42f98c3227968863f126484258b12274b3bf7e75255afc3b67e99a6ddee1195"
+    },
+    "registry_sha256_before": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "registry_sha256_after": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "script_sha256": "89410fe220382b0a39929c341168ec46afadb49522ddbd04614921ca49d7780f",
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/s1-disagreement-orthogonalized/orthogonalized-disagreement.parquet",
+      "rows": 9379,
+      "sha256": "437b8995e9aa97cc3cf0337cf4338c34e21ade2edaa6dc258700956695feab1e",
+      "columns": [
+        "GEOID",
+        "region",
+        "Queen_innovation",
+        "Queen_defined",
+        "Rook_innovation",
+        "Rook_defined",
+        "absolute_Queen_Rook_disagreement",
+        "disagreement_defined",
+        "Mx4_F",
+        "Mx4_F_defined",
+        "S1_lagged_Mx4_F",
+        "S1_lagged_Mx4_F_defined",
+        "crossfit_joint_defined",
+        "fold",
+        "crossfit_prediction",
+        "crossfit_residual"
+      ],
+      "deterministic_bytes": true
+    }
+  },
+  "interpretation": "Orthogonalized disagreement passes all gates; retain as unregistered diagnostic sensitivity only."
+}
