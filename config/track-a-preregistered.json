@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "preregistration_id": "bias60-track-a-v1",
+  "created_before_candidates": true,
+  "frozen_before_lab_evaluation_numbers": true,
+  "rule_basis": "Scored predictions use challenge-provided study-region estimator outputs only. No hidden labels, removed reference layers, external lab values, leaderboard scores, or LB-derived constants are inputs. Eastern-WA is a platform-only deterministic zero fill.",
+  "scope": {
+    "regions": ["maricopa-az", "northern-ca", "eastern-ok", "south-central-tx"],
+    "official_rows": 9379,
+    "template_rows": 9794,
+    "template_only_region": "eastern-wa",
+    "template_only_rows": 415,
+    "candidate_output_columns": ["GEOID", "transport_gap", "building_gap", "poi_gap", "coverage_gap_score"]
+  },
+  "inputs": {
+    "workspace_idea_parquets": "$COMPETITION_WORKSPACE/ideas/<idea>.parquet",
+    "idea_harness_report": "reports/ideas-harness.json",
+    "idea_registry": "config/ideas.json",
+    "official_samples": "$COMPETITION_WORKSPACE/samples/<region>-sample-submission.csv",
+    "platform_template": "$COMPETITION_WORKSPACE/SampleSubmission.csv",
+    "columns_read_from_samples": ["GEOID"],
+    "columns_read_from_template": ["GEOID", "region"],
+    "score_placeholders_read": false
+  },
+  "selection": {
+    "registry_driven": true,
+    "eligible_idea_rule": "implemented idea with channel='gap', component in R/B/F/Est, and a complete official-ID parquet; recomputed on every build so later families plug in without editing this config",
+    "undefined_rows": "exclude from that component mean; do not turn undefined into a zero-valued observation",
+    "multi_component_poi": "average available F and Est component estimates with equal weight",
+    "poi_composite": "average whichever of F and Est is defined; if neither is defined, POI is undefined",
+    "composite": "equal mean of defined R, B, and POI components for A2/A3",
+    "a1_composite": "use Sca5 official-tract output as the expected-definedness composite; apply a region-wise additive level offset so its region mean equals the mean of Dst5, then clip to [0,1]",
+    "a1_components": "equal arithmetic mean of all eligible gap-scale ideas within each component, one vote per idea",
+    "a2_family_reduction": "arithmetic mean of eligible ideas within each family and component before factor weighting",
+    "a2_factor": "on each component's family means, center and standardize each family over official tracts; first eigenvector of the off-diagonal Pearson correlation matrix estimates one-factor loadings; orient to positive correlation with the equal-family anchor; weights are max(loading,0)/max(1-loading^2,0.05), normalized to sum one; if fewer than two families or degenerate covariance, use equal family weights",
+    "a3_witnesses": ["X1", "Sc2", "Mx5", "P3", "S3", "D2", "X5"],
+    "a3_binary_witness": "registered witness value >= 0.5 indicates evidence for a facility-miss event; undefined witness is missing, not negative",
+    "a3_dawid_skene": "deterministic binary Dawid-Skene EM, alpha=1 Laplace smoothing for prevalence/sensitivity/specificity, initialize latent prevalence to clipped observed positive share and each annotator sensitivity/specificity to 0.75; use posterior miss probability for F when at least two witness ideas are available, otherwise retain A2 F; other components use A2; compose by equal mean of defined R/B/POI",
+    "random_seed": 0,
+    "wa_fill": 0.0
+  },
+  "candidates": [
+    {"id": "A1_physical_equal", "method": "A1", "purpose": "fixed physical gap mappings, equal weights within component, Sca5 composite, and Dst5 published-aggregate region level"},
+    {"id": "A2_spectral", "method": "A2", "purpose": "label-free one-factor spectral/Bartlett-style family weights; family members averaged first"},
+    {"id": "A3_dawid_skene", "method": "A3", "purpose": "unsupervised Dawid-Skene facility-miss posterior plus A2 component estimates"}
+  ],
+  "forbidden": ["lab-fitted weights", "X2", "Tm1", "LB-derived constants", "uploads", "hidden labels", "removed reference layers or equivalent copies", "lab values on study GEOIDs"],
+  "forecast": {
+    "status": "not_claimed_no_labels",
+    "predicted_score": null,
+    "reason": "No local target labels or permitted holdout exists; candidate forecasts must not be fabricated. No upload is authorized by this preregistration."
+  }
+}
