@@ -128,7 +128,6 @@ def m1(inputs) -> IdeaOutput:
                 continue
             rows_classified += 1
             versions: set[int] = set()
-            saw_osm_record = False
             for source in sources[index] or []:
                 if not isinstance(source, dict) or str(source.get("dataset") or "").casefold() != "openstreetmap":
                     continue
@@ -136,7 +135,6 @@ def m1(inputs) -> IdeaOutput:
                 match = WAY_VERSION.fullmatch(record_id)
                 if match:
                     versions.add(int(match.group(1)))
-                    saw_osm_record = True
                 elif record_id:
                     rows_with_non_way_ids += 1
             if not versions or wkbs[index] is None:
@@ -252,6 +250,7 @@ def m2(inputs) -> IdeaOutput:
 def _address_key(addresses: Any) -> str | None:
     if not isinstance(addresses, list):
         return None
+    first_locality = None
     for address in addresses:
         if not isinstance(address, dict):
             continue
@@ -259,9 +258,9 @@ def _address_key(addresses: Any) -> str | None:
         if len(postcode) >= 5:
             return f"zip:{postcode[:5]}"
         locality = re.sub(r"\s+", " ", str(address.get("locality") or "").strip().casefold())
-        if locality:
-            return f"locality:{locality}"
-    return None
+        if locality and first_locality is None:
+            first_locality = locality
+    return f"locality:{first_locality}" if first_locality else None
 
 
 def _neighbors(polygons: Any) -> list[set[int]]:

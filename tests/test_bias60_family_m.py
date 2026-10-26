@@ -12,6 +12,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from bias60.contracts import Emission, IdeaOutput  # noqa: E402
 from bias60.ideas import IMPLEMENTATIONS  # noqa: E402
+from bias60.ideas.m import _address_key  # noqa: E402
 
 
 class Column:
@@ -96,6 +97,10 @@ def test_m2_link_shares_use_place_brand_and_infrastructure_wikidata():
     assert np.isclose(emission(out, "Est", "covariate:all_wikidata_link_share").values[0], 0.5)
     assert np.isclose(emission(out, "F", "covariate:facility_wikidata_link_share").values[0], 1.0)
     assert emission(out, "Est", "covariate:all_wikidata_link_share").defined.tolist() == [True, False]
+
+
+def test_m3_prefers_any_valid_postcode_before_locality_fallback():
+    assert _address_key([{"locality": "Alpha"}, {"postcode": "12345-6789", "locality": "Beta"}]) == "zip:12345"
 
 
 def test_m3_excludes_neighbor_postcodes_from_mismatch_and_reports_facility_subset():
