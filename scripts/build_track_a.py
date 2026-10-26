@@ -522,10 +522,19 @@ def main() -> int:
     parser.add_argument('--workspace', type=Path, default=WORKSPACE)
     parser.add_argument('--ideas-dir', type=Path, default=None)
     args = parser.parse_args()
-    report = build(args.workspace, args.ideas_dir)
-    for candidate, item in report['candidate_set'].items():
+    first = build(args.workspace, args.ideas_dir)
+    first_hashes = {name: (item['sha256'], sha256_file(ROOT / item['artifact']))
+                    for name, item in first['candidate_set'].items()}
+    second = build(args.workspace, args.ideas_dir)
+    second_hashes = {name: (item['sha256'], sha256_file(ROOT / item['artifact']))
+                     for name, item in second['candidate_set'].items()}
+    if first_hashes != second_hashes:
+        raise ValueError(f'Track A rerun is not byte-identical: {first_hashes} != {second_hashes}')
+    second['validation']['deterministic_rerun'] = True
+    (ROOT / 'reports/track-a-build.json').write_bytes(canonical_bytes(second))
+    for candidate, item in second['candidate_set'].items():
         print(f"PASS {candidate}: rows={item['rows']} sha256={item['sha256']}")
-    print('PASS Track A: preregistered candidates built; no upload or accuracy claim')
+    print('PASS Track A: 3 candidates are byte-identical on rerun; no upload or accuracy claim')
     return 0
 
 if __name__ == '__main__':
