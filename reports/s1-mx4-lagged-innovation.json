@@ -1,0 +1,375 @@
+{
+  "schema_version": 1,
+  "audit": "S1 lagged-Mx4 F leave-one-out empirical-decile innovation; label-free unregistered sensitivity screen",
+  "method": {
+    "definition": "Within each named study region, assign Mx4 F values to empirical decile bins using linear quantiles (NumPy method=linear; ties share bins). For each tract with pairwise-defined Mx4 F and S1 lagged-Mx4 F, subtract the mean S1 lag over other pairwise-defined tracts in the same Mx4 bin; the focal tract is excluded. If no other defined peer exists, leave its innovation null.",
+    "definedness": "Innovation is defined only when both original features are defined and at least one other pairwise-defined tract exists in its same-region Mx4 empirical-decile bin.",
+    "NMI": "Within-region arithmetic normalized mutual information 2*MI/(H(current Mx4)+H(innovation)), natural logarithms; each side uses the same deterministic encoder as the registered family nonlinear-orthogonality screen (categorical for integer low-cardinality data, otherwise empirical deciles). NMI is calculated on innovation-defined pairwise rows.",
+    "variance_ratio": "Population variance (ddof=0) of pooled innovation values divided by population variance of S1 lagged-Mx4 values on the same innovation-defined support; the registered 10% gate is pooled across official GEOIDs and region-specific ratios are descriptive.",
+    "input_scope": "Only the exact Mx4 F covariate and S1 F lagged-Mx4 emission are materialized from their registered Parquets. No other S1 channels or Tm1/Tm4 source artifacts are used.",
+    "unregistered": true
+  },
+  "scope": {
+    "official_ids": 9379,
+    "exact_official_geoid_region_partition": true,
+    "pairwise_defined_source_ids": 9379,
+    "innovation_defined_ids": 9379,
+    "innovation_undefined_ids": 0,
+    "coverage_fraction": 1.0,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_reference_data_read": false,
+    "external_inputs_read": false,
+    "leaderboard_feedback_used": false,
+    "Mx4_or_S1_modified": false,
+    "registry_changed_or_innovation_registered": false,
+    "only_declared_Mx4_and_S1_lagged_Mx4_emissions_used": true,
+    "Tm1_or_Tm4_feature_values_used": false,
+    "uploads": 0
+  },
+  "measure_before": {
+    "eastern_ok_Mx4_F_vs_S1_lagged_Mx4_F_raw_NMI": 0.8201528016239874,
+    "eastern_ok_pairwise_defined": 1192,
+    "adjusted_MI": 0.819574039123541,
+    "permutation_p": 0.0004997501249375312,
+    "source_audit_report_sha256": "99f572c9db6cecff5db713b6712fe2bb5dae4722b301c56d7946056b040366a2"
+  },
+  "measure_after": {
+    "maximum_within_region_NMI": 0.7486023400935238,
+    "region_with_maximum_NMI": "maricopa-az",
+    "pooled_innovation_variance": 0.0024959250990067073,
+    "pooled_source_S1_lag_variance_on_innovation_support": 0.014145495657421105,
+    "pooled_remaining_variance_ratio": 0.1764466342822903,
+    "source_S1_lagged_Mx4_distribution_on_innovation_support": {
+      "n": 9379,
+      "min": 0.0,
+      "p05": 0.0,
+      "p50": 0.0,
+      "p95": 0.28039582838161387,
+      "max": 0.6143039330945796,
+      "mean": 0.0419943333815336,
+      "variance": 0.014145495657421105
+    },
+    "innovation_distribution": {
+      "n": 9379,
+      "min": -0.28752494824681424,
+      "p05": -0.03426145460970938,
+      "p50": -0.000616114941181961,
+      "p95": 0.026880537337430954,
+      "max": 0.4883471438756514,
+      "mean": 3.634059799124886e-18,
+      "variance": 0.0024959250990067073
+    },
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "Mx4_F_defined_ids": 1593,
+        "S1_lagged_Mx4_F_defined_ids": 1593,
+        "pairwise_defined_source_ids": 1593,
+        "innovation_defined_ids": 1593,
+        "innovation_undefined_ids": 0,
+        "innovation_coverage_fraction": 1.0,
+        "current_Mx4_decile_edges": [
+          0.0,
+          0.0,
+          0.006465800800706727,
+          0.011455566251921123,
+          0.011455566251921123,
+          0.011455566251921123,
+          0.011455566251921123,
+          0.011455566251921123,
+          0.011455566251921123
+        ],
+        "unique_current_Mx4_decile_bins": [
+          2,
+          3,
+          9
+        ],
+        "peer_count_min": 94,
+        "peer_count_max": 1080,
+        "source_S1_lagged_Mx4_F_distribution_on_innovation_support": {
+          "n": 1593,
+          "min": 0.0,
+          "p05": 0.0,
+          "p50": 0.011455566251921123,
+          "p95": 0.14068130896503098,
+          "max": 0.5324098239371093,
+          "mean": 0.03191897405504934,
+          "variance": 0.010963754242469731
+        },
+        "innovation_distribution": {
+          "n": 1593,
+          "min": -0.03882256549180398,
+          "p05": -0.03308947886294902,
+          "p50": -0.03308947886294902,
+          "p95": 0.12005478101695358,
+          "max": 0.4883471438756514,
+          "mean": 8.92081275279473e-18,
+          "variance": 0.0106493582404545
+        },
+        "remaining_variance_ratio": 0.9713240560612557,
+        "NMI_innovation_vs_current_Mx4_F": {
+          "status": "measured",
+          "joint_defined": 1593,
+          "nmi": 0.7486023400935238,
+          "current_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 3,
+            "defined": 1593
+          },
+          "innovation_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 4,
+            "defined": 1593
+          }
+        }
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "Mx4_F_defined_ids": 591,
+        "S1_lagged_Mx4_F_defined_ids": 591,
+        "pairwise_defined_source_ids": 591,
+        "innovation_defined_ids": 591,
+        "innovation_undefined_ids": 0,
+        "innovation_coverage_fraction": 1.0,
+        "current_Mx4_decile_edges": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.11204476515251427
+        ],
+        "unique_current_Mx4_decile_bins": [
+          8,
+          9
+        ],
+        "peer_count_min": 78,
+        "peer_count_max": 511,
+        "source_S1_lagged_Mx4_F_distribution_on_innovation_support": {
+          "n": 591,
+          "min": 0.0,
+          "p05": 0.0,
+          "p50": 0.0,
+          "p95": 0.12249953056490628,
+          "max": 0.3412486922879533,
+          "mean": 0.026462149278431532,
+          "variance": 0.00504209283120103
+        },
+        "innovation_distribution": {
+          "n": 591,
+          "min": -0.1273523763350094,
+          "p05": -0.06251960363290163,
+          "p50": -0.0037398526284502616,
+          "p95": 0.07639240813671608,
+          "max": 0.20141004614035452,
+          "mean": -5.682613620120302e-18,
+          "variance": 0.0017311816719935832
+        },
+        "remaining_variance_ratio": 0.3433458545786462,
+        "NMI_innovation_vs_current_Mx4_F": {
+          "status": "measured",
+          "joint_defined": 591,
+          "nmi": 0.6338293374619174,
+          "current_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 2,
+            "defined": 591
+          },
+          "innovation_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 3,
+            "defined": 591
+          }
+        }
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "Mx4_F_defined_ids": 1192,
+        "S1_lagged_Mx4_F_defined_ids": 1192,
+        "pairwise_defined_source_ids": 1192,
+        "innovation_defined_ids": 1192,
+        "innovation_undefined_ids": 0,
+        "innovation_coverage_fraction": 1.0,
+        "current_Mx4_decile_edges": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.29456562941521075,
+          0.6143039330945795,
+          0.6143039330945795
+        ],
+        "unique_current_Mx4_decile_bins": [
+          6,
+          7,
+          9
+        ],
+        "peer_count_min": 107,
+        "peer_count_max": 817,
+        "source_S1_lagged_Mx4_F_distribution_on_innovation_support": {
+          "n": 1192,
+          "min": 0.0,
+          "p05": 0.0,
+          "p50": 0.0,
+          "p95": 0.6143039330945795,
+          "max": 0.6143039330945796,
+          "mean": 0.16667642641933383,
+          "variance": 0.06363092660709954
+        },
+        "innovation_distribution": {
+          "n": 1192,
+          "min": -0.28752494824681424,
+          "p05": -0.03584374579160071,
+          "p50": -0.004657321436374132,
+          "p95": 0.046569460632801284,
+          "max": 0.3370403647266655,
+          "mean": 3.39027836378823e-17,
+          "variance": 0.001582339317056448
+        },
+        "remaining_variance_ratio": 0.024867456776590465,
+        "NMI_innovation_vs_current_Mx4_F": {
+          "status": "measured",
+          "joint_defined": 1192,
+          "nmi": 0.7085241161587786,
+          "current_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 3,
+            "defined": 1192
+          },
+          "innovation_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 3,
+            "defined": 1192
+          }
+        }
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "Mx4_F_defined_ids": 6003,
+        "S1_lagged_Mx4_F_defined_ids": 6003,
+        "pairwise_defined_source_ids": 6003,
+        "innovation_defined_ids": 6003,
+        "innovation_undefined_ids": 0,
+        "innovation_coverage_fraction": 1.0,
+        "current_Mx4_decile_edges": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          2.4453465055998432e-05,
+          0.003177292657439012,
+          0.03638391763393565,
+          0.10477726666777439
+        ],
+        "unique_current_Mx4_decile_bins": [
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "peer_count_min": 513,
+        "peer_count_max": 3600,
+        "source_S1_lagged_Mx4_F_distribution_on_innovation_support": {
+          "n": 6003,
+          "min": 0.0,
+          "p05": 0.0,
+          "p50": 0.0,
+          "p95": 0.10477726666777439,
+          "max": 0.28039582838161387,
+          "mean": 0.021439363085175918,
+          "variance": 0.002499820313772368
+        },
+        "innovation_distribution": {
+          "n": 6003,
+          "min": -0.10998032563017648,
+          "p05": -0.03426145460970938,
+          "p50": -0.000616114941181961,
+          "p95": 0.021290504999475664,
+          "max": 0.14162239194055584,
+          "mean": -1.2576239492672104e-18,
+          "variance": 0.0005889683479027818
+        },
+        "remaining_variance_ratio": 0.2356042730983315,
+        "NMI_innovation_vs_current_Mx4_F": {
+          "status": "measured",
+          "joint_defined": 6003,
+          "nmi": 0.7298232062503702,
+          "current_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 5,
+            "defined": 6003
+          },
+          "innovation_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 6,
+            "defined": 6003
+          }
+        }
+      }
+    }
+  },
+  "acceptance_thresholds": {
+    "maximum_NMI_exclusive": 0.8,
+    "minimum_coverage_inclusive": 0.9859,
+    "minimum_remaining_variance_ratio_inclusive": 0.1,
+    "empirical_deciles": 10
+  },
+  "acceptance": {
+    "exact_9379_official_geoid_region_partition": true,
+    "pairwise_definedness_preserved": true,
+    "finite_coverage_at_least_98_59_percent": true,
+    "maximum_within_region_NMI_below_0_80": true,
+    "at_least_10_percent_of_S1_lag_variance_remains": true,
+    "frozen_Mx4_S1_and_registry_unchanged": true,
+    "distinct_innovation_flag": true
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "frozen_input_artifacts": {
+      "Mx4": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx4.parquet",
+        "sha256": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+        "selected_emission_sha256": "13ca669c349b48e29003bdd71c40652da2659124e164880b62035d7a75e77f7c",
+        "sha256_after": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af"
+      },
+      "S1": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/S1.parquet",
+        "sha256": "632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03",
+        "selected_emission_sha256": "a42f98c3227968863f126484258b12274b3bf7e75255afc3b67e99a6ddee1195",
+        "sha256_after": "632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03"
+      }
+    },
+    "registry_sha256_before": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "registry_sha256_after": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "harness_report_sha256": "1203d2acf10fa9682852abba3382d55f53c42b6fa7c03071c44cbe915d3f7a85",
+    "script_sha256": "93fb4adbacf0b4736e24b6082b563992d6bba1a6a40ebd1b0df8b957c5b9189b"
+  },
+  "output_artifact": {
+    "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/s1-mx4-lagged-innovation/s1-mx4-lagged-innovation.parquet",
+    "rows": 9379,
+    "sha256": "ed97287937b26d01dc40bf8255c8136a43749cacf24518a98d8e29e73611fa76",
+    "columns": [
+      "GEOID",
+      "region",
+      "Mx4_F",
+      "Mx4_F_defined",
+      "S1_lagged_Mx4_F",
+      "S1_lagged_Mx4_F_defined",
+      "Mx4_empirical_decile",
+      "peer_bin_mean_S1_lagged_Mx4_F",
+      "peer_count",
+      "innovation",
+      "innovation_defined"
+    ],
+    "deterministic_bytes": true
+  },
+  "interpretation": "The label-free screen meets the distinct-innovation thresholds; keep as a separate diagnostic sensitivity only, without registry integration or changes to frozen Mx4/S1."
+}
