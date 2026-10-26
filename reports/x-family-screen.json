@@ -32,7 +32,14 @@
       "reason": "The USFS/USA Structures-derived usfs_BuildingCount_sum is an external reference-equivalent signal under the binding competition rule. It was not read or used. Keep the idea out of Track A pending governance clearance."
     },
     "X3": {
-      "status": "pending_implementation"
+      "status": "computed",
+      "rows": 9379,
+      "defined_rows": 9379,
+      "artifact": "workspace:ideas/X3.parquet",
+      "sha256": "a9875575506caa832f4bad35b5bd52a7401c543e0481feec46c86e9f6c8e47fa",
+      "harness_report": "workspace:ideas/x3-harness.json",
+      "harness_report_sha256": "ca390666d088ec52a8901c5d5f79c189b9913d8a509fea1ac99711bf5007bef6",
+      "measurement": "Est covariate: expected missing establishments from empty commercial footprint area times occupied commercial POI-per-area rate; commercial Overture POI within 30m marks occupied. Large >1,000 m2 buildings qualify only in tracts with commercial POIs. Label-free proxy; no Microsoft membership used."
     },
     "X4": {
       "status": "pending_implementation"
@@ -55,14 +62,15 @@
   },
   "orthogonality": {
     "report": "reports/ideas-orthogonality.json",
-    "sha256": "388dcee403f59be48dfd36f45ab60920ba067076a83b516544366e2ba16da51e",
+    "sha256": "4c1804e62fb70fb11322bfd904b2fba79151ea2ca90a7d7cef3b120fdedb5681",
     "x1_included": true,
     "full_family_screen_complete": false,
     "x5_included": true,
-    "columns_evaluated": 31,
-    "columns_included": 29,
+    "columns_evaluated": 32,
+    "columns_included": 30,
     "pairs_flagged": 3,
-    "vif_flags": 11
+    "vif_flags": 12,
+    "x3_included": true
   },
   "validation": {
     "tests": "pytest tests/test_bias60_family_x.py tests/test_bias60_harness.py -q -k 'not CommittedArtifactTests'",
@@ -74,7 +82,9 @@
     "x5_harness": "python scripts/run_bias60_ideas.py --only X5 --out $COMPETITION_WORKSPACE/ideas/x5-harness.json",
     "x5_harness_result": "PASS; contract-valid R/F outputs for all 9,379 official GEOIDs (18,758 component rows)",
     "full_test_suite": "COMPETITION_WORKSPACE=$COMPETITION_WORKSPACE uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with pyproj==3.8.0 --with pyshp --with pytest python -m pytest -q",
-    "full_test_result": "639 passed, 317 subtests passed"
+    "full_test_result": "639 passed, 317 subtests passed",
+    "x3_harness": "python scripts/run_bias60_ideas.py --only X3 --out $COMPETITION_WORKSPACE/ideas/x3-harness.json",
+    "x3_harness_result": "PASS; Est output on all 9,379 official GEOIDs; all regions defined"
   },
-  "code_commit": "c8166fecf26560b8624593aa50a43c401652c457"
+  "code_commit": "0c9ef151d7dcf70ec6f1806fb57e78b0c0eb653d"
 }
