@@ -1,0 +1,275 @@
+{
+  "schema_version": 1,
+  "audit": "Pooled Mx5 education-name taxonomy mismatch covariate coverage; label-free screen, not promotion",
+  "feature": {
+    "definition": "per-tract count of provided education-name Overture POI rows whose categories.primary is outside frozen Mx5 school category set, divided by all assigned education-name rows; each row contributes once regardless of provider memberships",
+    "frozen_education_name_regex": "\\b(school|academy|education|elementary|middle school|high school|kindergarten|preschool|college|university)\\b",
+    "frozen_school_categories": [
+      "charter_school",
+      "elementary_school",
+      "high_school",
+      "middle_school",
+      "montessori_school",
+      "preschool",
+      "private_school",
+      "public_school",
+      "religious_school",
+      "school"
+    ],
+    "bbox_assignment": "existing Mx5 center-of-bbox assignment to at most one official tract; ties by first tract index",
+    "zero_denominator": "share is null/undefined when eligible place count is zero; never filled with zero"
+  },
+  "scope": {
+    "official_ids": 9379,
+    "exact_geoid_partition": true,
+    "defined_ids": 8311,
+    "undefined_zero_denominator_ids": 1068,
+    "coverage_fraction": 0.8861285851370082,
+    "multi_source_education_rows_counted_once": 0,
+    "pooled_place_count": 42729,
+    "provider_bucket_memberships_for_parity_only": 42729,
+    "sample_score_values_read": false,
+    "labels_read": false,
+    "external_or_removed_reference_data_read": false,
+    "uploads": 0,
+    "existing_mx5_feature_modified_or_replaced": false
+  },
+  "baseline": {
+    "source_specific_defined_tract_fraction": {
+      "meta": {
+        "defined_ids": 8045,
+        "official_ids": 9379,
+        "coverage_fraction": 0.8577673525962256
+      },
+      "microsoft": {
+        "defined_ids": 1620,
+        "official_ids": 9379,
+        "coverage_fraction": 0.17272630344386394
+      },
+      "foursquare": {
+        "defined_ids": 1956,
+        "official_ids": 9379,
+        "coverage_fraction": 0.2085510182322209
+      },
+      "alltheplaces": {
+        "defined_ids": 474,
+        "official_ids": 9379,
+        "coverage_fraction": 0.05053843693357501
+      },
+      "other": {
+        "defined_ids": 2831,
+        "official_ids": 9379,
+        "coverage_fraction": 0.3018445463269005
+      }
+    },
+    "best_single_source": "meta",
+    "best_single_source_coverage_fraction": 0.8577673525962256,
+    "parity_with_frozen_mx5_source_slices": true,
+    "frozen_mx5_artifact_sha256": "2201d3a99d9c539fe94c72f0b2b800f7696f1bd7aaf0dac2327fb20802be01b8"
+  },
+  "after": {
+    "pooled_coverage": {
+      "defined_ids": 8311,
+      "official_ids": 9379,
+      "fraction": 0.8861285851370082
+    },
+    "pooled_mismatch_share_distribution": {
+      "n": 8311,
+      "min": 0.0,
+      "p50": 0.42857142857142855,
+      "p95": 1.0,
+      "max": 1.0,
+      "mean": 0.4313894152385541
+    },
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "defined_ids": 1363,
+        "undefined_zero_denominator_ids": 230,
+        "coverage_fraction": 0.8556183301946014,
+        "education_name_places": 6589,
+        "category_mismatches": 3230,
+        "multisource_education_places_counted_once": 0,
+        "pooled_mismatch_share_distribution": {
+          "n": 1363,
+          "min": 0.0,
+          "p50": 0.42857142857142855,
+          "p95": 1.0,
+          "max": 1.0,
+          "mean": 0.4200914992789267
+        },
+        "selected_input_rows_sha256": "2a067fc6269768055caacdebce6eb8b3ae26659a03227b1d718f4d2f209fb06a"
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "defined_ids": 550,
+        "undefined_zero_denominator_ids": 41,
+        "coverage_fraction": 0.9306260575296108,
+        "education_name_places": 3038,
+        "category_mismatches": 1303,
+        "multisource_education_places_counted_once": 0,
+        "pooled_mismatch_share_distribution": {
+          "n": 550,
+          "min": 0.0,
+          "p50": 0.3333333333333333,
+          "p95": 1.0,
+          "max": 1.0,
+          "mean": 0.3633275256656906
+        },
+        "selected_input_rows_sha256": "0fcf005185e4acfe0f98be3db539233b7f3291cd899f1cc6877b6b6942f7d6c5"
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "defined_ids": 1050,
+        "undefined_zero_denominator_ids": 142,
+        "coverage_fraction": 0.8808724832214765,
+        "education_name_places": 4952,
+        "category_mismatches": 2507,
+        "multisource_education_places_counted_once": 0,
+        "pooled_mismatch_share_distribution": {
+          "n": 1050,
+          "min": 0.0,
+          "p50": 0.5,
+          "p95": 1.0,
+          "max": 1.0,
+          "mean": 0.44157021426532755
+        },
+        "selected_input_rows_sha256": "792c5592c3c6fe18c93f946ce92f9dc2c2eb5cd91e7af280bdebe5796d015136"
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "defined_ids": 5348,
+        "undefined_zero_denominator_ids": 655,
+        "coverage_fraction": 0.890887889388639,
+        "education_name_places": 28150,
+        "category_mismatches": 14194,
+        "multisource_education_places_counted_once": 0,
+        "pooled_mismatch_share_distribution": {
+          "n": 5348,
+          "min": 0.0,
+          "p50": 0.4444444444444444,
+          "p95": 1.0,
+          "max": 1.0,
+          "mean": 0.4392696059154305
+        },
+        "selected_input_rows_sha256": "d1ab8673aa6184bb7d6e99eb93691760996ddc16bf10a451cda9de4b1816eb8a"
+      }
+    }
+  },
+  "acceptance": {
+    "coverage_minimum": 0.95,
+    "coverage_pass": false,
+    "lift_over_best_single_source_minimum_percentage_points": 9.22,
+    "lift_over_best_single_source_percentage_points": 2.83612325407826,
+    "lift_pass": false,
+    "best_single_source": "meta",
+    "exact_geoid_partition": true,
+    "defined_values_finite_bounded": true,
+    "undefined_to_zero_fills": 0,
+    "acceptance_pass": false
+  },
+  "provenance": {
+    "harness_config": {
+      "path": "config/bias60-harness-preregistered.json",
+      "sha256": "12a15e11cd0459299e407e5f1f7056fa16a6a8ddad5d7bfd826b20dbe476d558"
+    },
+    "harness_report": {
+      "path": "reports/ideas-harness.json",
+      "sha256": "1203d2acf10fa9682852abba3382d55f53c42b6fa7c03071c44cbe915d3f7a85"
+    },
+    "mx_implementation": {
+      "path": "src/bias60/ideas/mx.py",
+      "sha256": "8c689d46ef5bf7351e1802e0e923e919146937bc23951d740c1ac146b8475403"
+    },
+    "audit_script": {
+      "path": "scripts/audit_mx5_pooled_provider_coverage.py",
+      "sha256": "f376adb99e9894819edc5e3b38e2f939866dcf49729be9299a7b7eeb3c040554"
+    },
+    "frozen_mx5_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx5.parquet",
+      "sha256": "2201d3a99d9c539fe94c72f0b2b800f7696f1bd7aaf0dac2327fb20802be01b8"
+    },
+    "official_geoid_partition_sha256": "7138951b53cecabf981295c57ae067a73785c7c94f2a0d4bad2614d5a61c3ab9",
+    "selected_provided_poi_input_hashes": {
+      "maricopa-az": "2a067fc6269768055caacdebce6eb8b3ae26659a03227b1d718f4d2f209fb06a",
+      "northern-ca": "0fcf005185e4acfe0f98be3db539233b7f3291cd899f1cc6877b6b6942f7d6c5",
+      "eastern-ok": "792c5592c3c6fe18c93f946ce92f9dc2c2eb5cd91e7af280bdebe5796d015136",
+      "south-central-tx": "d1ab8673aa6184bb7d6e99eb93691760996ddc16bf10a451cda9de4b1816eb8a"
+    },
+    "selected_input_definition": "SHA-256 over canonical JSON rows (in provided parquet row order) of only bbox,sources,names,categories read from the provided overture-pois objects",
+    "accessed_inputs": {
+      "maricopa-az": {
+        "parquet_columns": [
+          "maricopa-az-census-acs-housing:GEOID,geometry",
+          "maricopa-az-overture-pois.parquet:bbox",
+          "maricopa-az-overture-pois.parquet:categories",
+          "maricopa-az-overture-pois.parquet:names",
+          "maricopa-az-overture-pois.parquet:sources"
+        ],
+        "csv_columns": [],
+        "layers": [
+          "census-acs-housing",
+          "pois"
+        ],
+        "caches": []
+      },
+      "northern-ca": {
+        "parquet_columns": [
+          "northern-ca-census-acs-housing:GEOID,geometry",
+          "northern-ca-overture-pois.parquet:bbox",
+          "northern-ca-overture-pois.parquet:categories",
+          "northern-ca-overture-pois.parquet:names",
+          "northern-ca-overture-pois.parquet:sources"
+        ],
+        "csv_columns": [],
+        "layers": [
+          "census-acs-housing",
+          "pois"
+        ],
+        "caches": []
+      },
+      "eastern-ok": {
+        "parquet_columns": [
+          "eastern-ok-census-acs-housing:GEOID,geometry",
+          "eastern-ok-overture-pois.parquet:bbox",
+          "eastern-ok-overture-pois.parquet:categories",
+          "eastern-ok-overture-pois.parquet:names",
+          "eastern-ok-overture-pois.parquet:sources"
+        ],
+        "csv_columns": [],
+        "layers": [
+          "census-acs-housing",
+          "pois"
+        ],
+        "caches": []
+      },
+      "south-central-tx": {
+        "parquet_columns": [
+          "south-central-tx-census-acs-housing:GEOID,geometry",
+          "south-central-tx-overture-pois.parquet:bbox",
+          "south-central-tx-overture-pois.parquet:categories",
+          "south-central-tx-overture-pois.parquet:names",
+          "south-central-tx-overture-pois.parquet:sources"
+        ],
+        "csv_columns": [],
+        "layers": [
+          "census-acs-housing",
+          "pois"
+        ],
+        "caches": []
+      }
+    },
+    "provided_package_bucket": "us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge"
+  },
+  "per_tract_artifact": {
+    "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/mx5-pooled-provider-coverage/pooled-mx5.parquet",
+    "rows": 9379,
+    "sha256": "34ae81e4dd810ff3e43c6f0478bcf19ecc0d0260fb3bbbf92ccd9f1e3d3cc6cd",
+    "deterministic_bytes": true
+  },
+  "determinism": {
+    "aggregate_calculation_input_order_fixed": true,
+    "serialized_bytes_repeatable": true
+  },
+  "interpretation": "Pooled feature misses at least one preregistered coverage/lift threshold; report the measured limit and do not integrate."
+}
