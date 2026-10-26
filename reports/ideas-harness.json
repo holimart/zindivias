@@ -1,7 +1,7 @@
 {
-  "code_commit_at_run": "4a921228beb4951f7d87cf59311ec15f28fc06ec",
+  "code_commit_at_run": "52a7519ef603220686e65ee05188eddbf324ff29",
   "environment": {
-    "git_commit": "4a921228beb4951f7d87cf59311ec15f28fc06ec",
+    "git_commit": "52a7519ef603220686e65ee05188eddbf324ff29",
     "versions": {
       "numpy": "2.5.4",
       "pyarrow": "26.0.0",
@@ -44,8 +44,12 @@
       "G5",
       "M1",
       "M2",
+      "M3",
       "M4",
       "M5",
+      "Mx1",
+      "Mx2",
+      "Mx3",
       "Mx4",
       "P1",
       "P2",
@@ -67,9 +71,9 @@
       "X4",
       "X5"
     ],
-    "prior_report_sha256": "d0e3fb1f8a33180a179702449fd7f354bc914bf2d0e22e3e963f2ecf7dcd2944",
+    "prior_report_sha256": "85c96ac6151924afd5f4b0cc6cd1ebb9737d8a779136abc0204521c963face99",
     "selected_idea_ids_rebuilt": [
-      "M3"
+      "Mx5"
     ]
   },
   "partition_problems": [],
@@ -3864,6 +3868,307 @@
       "sha256": "5788ad26199e00cd371cc581e6a0d38dd9314fed9f618980539b750abd305545",
       "undeclared_columns_read": []
     },
+    "Mx1": {
+      "accessed_inputs": {
+        "caches": [],
+        "csv_columns": [],
+        "idea_artifacts": [],
+        "layers": [
+          "census-acs-housing",
+          "roads"
+        ],
+        "parquet_columns": [
+          "eastern-ok-census-acs-housing:GEOID,geometry",
+          "eastern-ok-overture-roads.parquet:class",
+          "eastern-ok-overture-roads.parquet:geometry",
+          "eastern-ok-overture-roads.parquet:sources",
+          "maricopa-az-census-acs-housing:GEOID,geometry",
+          "maricopa-az-overture-roads.parquet:class",
+          "maricopa-az-overture-roads.parquet:geometry",
+          "maricopa-az-overture-roads.parquet:sources",
+          "northern-ca-census-acs-housing:GEOID,geometry",
+          "northern-ca-overture-roads.parquet:class",
+          "northern-ca-overture-roads.parquet:geometry",
+          "northern-ca-overture-roads.parquet:sources",
+          "south-central-tx-census-acs-housing:GEOID,geometry",
+          "south-central-tx-overture-roads.parquet:class",
+          "south-central-tx-overture-roads.parquet:geometry",
+          "south-central-tx-overture-roads.parquet:sources"
+        ]
+      },
+      "bytes": 34097,
+      "diagnostics": {
+        "eastern-ok": {
+          "classified_road_rows": 97842,
+          "coverage_by_class": {
+            "named": 1164,
+            "tertiary": 1132
+          },
+          "geometry": "WKB linework transformed to EPSG:5070 and clipped to official tract polygons",
+          "named_length_m": 27944027.76408843,
+          "no_target_or_reference_data_read": true,
+          "rows_scanned": 520550,
+          "source_membership_rule": "count each clipped feature once in its class denominator; numerator when sources.dataset includes TomTom, case-insensitive",
+          "tertiary_length_m": 14078117.929057317,
+          "tomtom_named_length_m": 5062.601446973571,
+          "tomtom_tertiary_length_m": 1161.5748441192607
+        },
+        "maricopa-az": {
+          "classified_road_rows": 104043,
+          "coverage_by_class": {
+            "named": 1560,
+            "tertiary": 1500
+          },
+          "geometry": "WKB linework transformed to EPSG:5070 and clipped to official tract polygons",
+          "named_length_m": 22113712.847938314,
+          "no_target_or_reference_data_read": true,
+          "rows_scanned": 494492,
+          "source_membership_rule": "count each clipped feature once in its class denominator; numerator when sources.dataset includes TomTom, case-insensitive",
+          "tertiary_length_m": 13119627.569671493,
+          "tomtom_named_length_m": 1952.4951127043764,
+          "tomtom_tertiary_length_m": 3045.5628355570475
+        },
+        "northern-ca": {
+          "classified_road_rows": 46551,
+          "coverage_by_class": {
+            "named": 584,
+            "tertiary": 563
+          },
+          "geometry": "WKB linework transformed to EPSG:5070 and clipped to official tract polygons",
+          "named_length_m": 12203647.742818603,
+          "no_target_or_reference_data_read": true,
+          "rows_scanned": 191836,
+          "source_membership_rule": "count each clipped feature once in its class denominator; numerator when sources.dataset includes TomTom, case-insensitive",
+          "tertiary_length_m": 10827592.874255022,
+          "tomtom_named_length_m": 1144.0881192746133,
+          "tomtom_tertiary_length_m": 240.22660388146622
+        },
+        "south-central-tx": {
+          "classified_road_rows": 546699,
+          "coverage_by_class": {
+            "named": 5939,
+            "tertiary": 5780
+          },
+          "geometry": "WKB linework transformed to EPSG:5070 and clipped to official tract polygons",
+          "named_length_m": 118176381.6858997,
+          "no_target_or_reference_data_read": true,
+          "rows_scanned": 1937009,
+          "source_membership_rule": "count each clipped feature once in its class denominator; numerator when sources.dataset includes TomTom, case-insensitive",
+          "tertiary_length_m": 51815976.83875697,
+          "tomtom_named_length_m": 25420.224120830637,
+          "tomtom_tertiary_length_m": 3420.3540359056387
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate:tomtom_named_length_share",
+          "component": "R",
+          "defined_rows": 9247,
+          "rows": 9379,
+          "value_max": 0.3260383265046299,
+          "value_min": 0.0
+        },
+        {
+          "channel": "covariate:tomtom_tertiary_length_share",
+          "component": "R",
+          "defined_rows": 8975,
+          "rows": 9379,
+          "value_max": 0.09288719361494192,
+          "value_min": 0.0
+        }
+      ],
+      "emissions_per_region": 2,
+      "family": "Mx",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/Mx1.parquet",
+      "rows": 18758,
+      "sha256": "ed5336a90e9364b8373ba15d334468b60ed42a68620f2408f13f0fb34bcf2f66",
+      "undeclared_columns_read": []
+    },
+    "Mx2": {
+      "accessed_inputs": {
+        "caches": [],
+        "csv_columns": [],
+        "idea_artifacts": [],
+        "layers": [
+          "census-acs-housing",
+          "pois"
+        ],
+        "parquet_columns": [
+          "eastern-ok-census-acs-housing:GEOID,geometry",
+          "eastern-ok-overture-pois.parquet:bbox",
+          "eastern-ok-overture-pois.parquet:names",
+          "eastern-ok-overture-pois.parquet:sources",
+          "maricopa-az-census-acs-housing:GEOID,geometry",
+          "maricopa-az-overture-pois.parquet:bbox",
+          "maricopa-az-overture-pois.parquet:names",
+          "maricopa-az-overture-pois.parquet:sources",
+          "northern-ca-census-acs-housing:GEOID,geometry",
+          "northern-ca-overture-pois.parquet:bbox",
+          "northern-ca-overture-pois.parquet:names",
+          "northern-ca-overture-pois.parquet:sources",
+          "south-central-tx-census-acs-housing:GEOID,geometry",
+          "south-central-tx-overture-pois.parquet:bbox",
+          "south-central-tx-overture-pois.parquet:names",
+          "south-central-tx-overture-pois.parquet:sources"
+        ]
+      },
+      "bytes": 71757,
+      "diagnostics": {
+        "eastern-ok": {
+          "assigned_places": 207369,
+          "facility_microsoft_only_places": 60,
+          "facility_name_places": 3704,
+          "facility_name_rule": "shared M-family facility name regex",
+          "microsoft_only_places": 31847,
+          "microsoft_only_rule": "after excluding administrative Overture and Overture Signals source records, the deduplicated provider set equals {'microsoft'}; mixed-provider features excluded",
+          "no_target_or_reference_data_read": true,
+          "outside_or_unassigned_rows": 0,
+          "rows_scanned": 207369
+        },
+        "maricopa-az": {
+          "assigned_places": 300046,
+          "facility_microsoft_only_places": 129,
+          "facility_name_places": 3627,
+          "facility_name_rule": "shared M-family facility name regex",
+          "microsoft_only_places": 54746,
+          "microsoft_only_rule": "after excluding administrative Overture and Overture Signals source records, the deduplicated provider set equals {'microsoft'}; mixed-provider features excluded",
+          "no_target_or_reference_data_read": true,
+          "outside_or_unassigned_rows": 0,
+          "rows_scanned": 300046
+        },
+        "northern-ca": {
+          "assigned_places": 116897,
+          "facility_microsoft_only_places": 54,
+          "facility_name_places": 1894,
+          "facility_name_rule": "shared M-family facility name regex",
+          "microsoft_only_places": 18427,
+          "microsoft_only_rule": "after excluding administrative Overture and Overture Signals source records, the deduplicated provider set equals {'microsoft'}; mixed-provider features excluded",
+          "no_target_or_reference_data_read": true,
+          "outside_or_unassigned_rows": 0,
+          "rows_scanned": 116897
+        },
+        "south-central-tx": {
+          "assigned_places": 1300331,
+          "facility_microsoft_only_places": 580,
+          "facility_name_places": 16703,
+          "facility_name_rule": "shared M-family facility name regex",
+          "microsoft_only_places": 211635,
+          "microsoft_only_rule": "after excluding administrative Overture and Overture Signals source records, the deduplicated provider set equals {'microsoft'}; mixed-provider features excluded",
+          "no_target_or_reference_data_read": true,
+          "outside_or_unassigned_rows": 3,
+          "rows_scanned": 1300334
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate:microsoft_only_place_share",
+          "component": "Est",
+          "defined_rows": 9377,
+          "rows": 9379,
+          "value_max": 0.5849056603773585,
+          "value_min": 0.0
+        },
+        {
+          "channel": "covariate:facility_microsoft_only_place_share",
+          "component": "F",
+          "defined_rows": 7709,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 0.0
+        }
+      ],
+      "emissions_per_region": 2,
+      "family": "Mx",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/Mx2.parquet",
+      "rows": 18758,
+      "sha256": "86990bc1a1f6a54ff2d2579dfd689b6ee67e31113aa9c336cec59ca914e58821",
+      "undeclared_columns_read": []
+    },
+    "Mx3": {
+      "accessed_inputs": {
+        "caches": [],
+        "csv_columns": [],
+        "idea_artifacts": [],
+        "layers": [
+          "census-acs-housing",
+          "pois"
+        ],
+        "parquet_columns": [
+          "eastern-ok-census-acs-housing:GEOID,geometry",
+          "eastern-ok-overture-pois.parquet:bbox",
+          "eastern-ok-overture-pois.parquet:sources",
+          "maricopa-az-census-acs-housing:GEOID,geometry",
+          "maricopa-az-overture-pois.parquet:bbox",
+          "maricopa-az-overture-pois.parquet:sources",
+          "northern-ca-census-acs-housing:GEOID,geometry",
+          "northern-ca-overture-pois.parquet:bbox",
+          "northern-ca-overture-pois.parquet:sources",
+          "south-central-tx-census-acs-housing:GEOID,geometry",
+          "south-central-tx-overture-pois.parquet:bbox",
+          "south-central-tx-overture-pois.parquet:sources"
+        ]
+      },
+      "bytes": 62921,
+      "diagnostics": {
+        "eastern-ok": {
+          "assigned_places": 207369,
+          "foursquare_only_places": 13985,
+          "foursquare_only_rule": "after excluding administrative Overture and Overture Signals source records, the deduplicated provider set equals {'foursquare'}",
+          "no_target_or_reference_data_read": true,
+          "outside_or_unassigned_rows": 0,
+          "rows_scanned": 207369
+        },
+        "maricopa-az": {
+          "assigned_places": 300046,
+          "foursquare_only_places": 24120,
+          "foursquare_only_rule": "after excluding administrative Overture and Overture Signals source records, the deduplicated provider set equals {'foursquare'}",
+          "no_target_or_reference_data_read": true,
+          "outside_or_unassigned_rows": 0,
+          "rows_scanned": 300046
+        },
+        "northern-ca": {
+          "assigned_places": 116897,
+          "foursquare_only_places": 8992,
+          "foursquare_only_rule": "after excluding administrative Overture and Overture Signals source records, the deduplicated provider set equals {'foursquare'}",
+          "no_target_or_reference_data_read": true,
+          "outside_or_unassigned_rows": 0,
+          "rows_scanned": 116897
+        },
+        "south-central-tx": {
+          "assigned_places": 1300331,
+          "foursquare_only_places": 92173,
+          "foursquare_only_rule": "after excluding administrative Overture and Overture Signals source records, the deduplicated provider set equals {'foursquare'}",
+          "no_target_or_reference_data_read": true,
+          "outside_or_unassigned_rows": 3,
+          "rows_scanned": 1300334
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate:foursquare_only_place_share",
+          "component": "Est",
+          "defined_rows": 9377,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 0.0
+        }
+      ],
+      "emissions_per_region": 1,
+      "family": "Mx",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/Mx3.parquet",
+      "rows": 9379,
+      "sha256": "2feacc8c08c6b7e88067cfaf97b5c8623a9319899eb1959ba7e8f6deaddeb87b",
+      "undeclared_columns_read": []
+    },
     "Mx4": {
       "accessed_inputs": {
         "caches": [
@@ -4030,6 +4335,317 @@
       "path": "ideas/Mx4.parquet",
       "rows": 18758,
       "sha256": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+      "undeclared_columns_read": []
+    },
+    "Mx5": {
+      "accessed_inputs": {
+        "caches": [],
+        "csv_columns": [],
+        "idea_artifacts": [],
+        "layers": [
+          "census-acs-housing",
+          "pois"
+        ],
+        "parquet_columns": [
+          "eastern-ok-census-acs-housing:GEOID,geometry",
+          "eastern-ok-overture-pois.parquet:bbox",
+          "eastern-ok-overture-pois.parquet:categories",
+          "eastern-ok-overture-pois.parquet:names",
+          "eastern-ok-overture-pois.parquet:sources",
+          "maricopa-az-census-acs-housing:GEOID,geometry",
+          "maricopa-az-overture-pois.parquet:bbox",
+          "maricopa-az-overture-pois.parquet:categories",
+          "maricopa-az-overture-pois.parquet:names",
+          "maricopa-az-overture-pois.parquet:sources",
+          "northern-ca-census-acs-housing:GEOID,geometry",
+          "northern-ca-overture-pois.parquet:bbox",
+          "northern-ca-overture-pois.parquet:categories",
+          "northern-ca-overture-pois.parquet:names",
+          "northern-ca-overture-pois.parquet:sources",
+          "south-central-tx-census-acs-housing:GEOID,geometry",
+          "south-central-tx-overture-pois.parquet:bbox",
+          "south-central-tx-overture-pois.parquet:categories",
+          "south-central-tx-overture-pois.parquet:names",
+          "south-central-tx-overture-pois.parquet:sources"
+        ]
+      },
+      "bytes": 75989,
+      "diagnostics": {
+        "eastern-ok": {
+          "category_rule": "categories.primary only; missing or non-school value is outside the registered school category set",
+          "coverage_by_source": {
+            "alltheplaces": {
+              "category_mismatches": 421,
+              "defined_tracts": 316,
+              "education_name_places": 421
+            },
+            "foursquare": {
+              "category_mismatches": 146,
+              "defined_tracts": 251,
+              "education_name_places": 305
+            },
+            "meta": {
+              "category_mismatches": 1566,
+              "defined_tracts": 1007,
+              "education_name_places": 3729
+            },
+            "microsoft": {
+              "category_mismatches": 150,
+              "defined_tracts": 146,
+              "education_name_places": 171
+            },
+            "other": {
+              "category_mismatches": 224,
+              "defined_tracts": 230,
+              "education_name_places": 326
+            }
+          },
+          "education_name_places": 4952,
+          "education_name_regex": "\\b(school|academy|education|elementary|middle school|high school|kindergarten|preschool|college|university)\\b",
+          "multisource_education_places": 0,
+          "multisource_rule": "a place contributes to each recognized source bucket it lists; otherwise to other",
+          "no_target_or_reference_data_read": true,
+          "outside_or_unassigned_rows": 0,
+          "rows_scanned": 207369,
+          "school_categories": [
+            "charter_school",
+            "elementary_school",
+            "high_school",
+            "middle_school",
+            "montessori_school",
+            "preschool",
+            "private_school",
+            "public_school",
+            "religious_school",
+            "school"
+          ],
+          "source_buckets": [
+            "meta",
+            "microsoft",
+            "foursquare",
+            "alltheplaces",
+            "other"
+          ]
+        },
+        "maricopa-az": {
+          "category_rule": "categories.primary only; missing or non-school value is outside the registered school category set",
+          "coverage_by_source": {
+            "alltheplaces": {
+              "category_mismatches": 30,
+              "defined_tracts": 29,
+              "education_name_places": 33
+            },
+            "foursquare": {
+              "category_mismatches": 266,
+              "defined_tracts": 306,
+              "education_name_places": 416
+            },
+            "meta": {
+              "category_mismatches": 1991,
+              "defined_tracts": 1294,
+              "education_name_places": 4816
+            },
+            "microsoft": {
+              "category_mismatches": 307,
+              "defined_tracts": 287,
+              "education_name_places": 385
+            },
+            "other": {
+              "category_mismatches": 636,
+              "defined_tracts": 548,
+              "education_name_places": 939
+            }
+          },
+          "education_name_places": 6589,
+          "education_name_regex": "\\b(school|academy|education|elementary|middle school|high school|kindergarten|preschool|college|university)\\b",
+          "multisource_education_places": 0,
+          "multisource_rule": "a place contributes to each recognized source bucket it lists; otherwise to other",
+          "no_target_or_reference_data_read": true,
+          "outside_or_unassigned_rows": 0,
+          "rows_scanned": 300046,
+          "school_categories": [
+            "charter_school",
+            "elementary_school",
+            "high_school",
+            "middle_school",
+            "montessori_school",
+            "preschool",
+            "private_school",
+            "public_school",
+            "religious_school",
+            "school"
+          ],
+          "source_buckets": [
+            "meta",
+            "microsoft",
+            "foursquare",
+            "alltheplaces",
+            "other"
+          ]
+        },
+        "northern-ca": {
+          "category_rule": "categories.primary only; missing or non-school value is outside the registered school category set",
+          "coverage_by_source": {
+            "alltheplaces": {
+              "category_mismatches": 16,
+              "defined_tracts": 15,
+              "education_name_places": 17
+            },
+            "foursquare": {
+              "category_mismatches": 111,
+              "defined_tracts": 150,
+              "education_name_places": 193
+            },
+            "meta": {
+              "category_mismatches": 819,
+              "defined_tracts": 534,
+              "education_name_places": 2336
+            },
+            "microsoft": {
+              "category_mismatches": 98,
+              "defined_tracts": 97,
+              "education_name_places": 127
+            },
+            "other": {
+              "category_mismatches": 259,
+              "defined_tracts": 206,
+              "education_name_places": 365
+            }
+          },
+          "education_name_places": 3038,
+          "education_name_regex": "\\b(school|academy|education|elementary|middle school|high school|kindergarten|preschool|college|university)\\b",
+          "multisource_education_places": 0,
+          "multisource_rule": "a place contributes to each recognized source bucket it lists; otherwise to other",
+          "no_target_or_reference_data_read": true,
+          "outside_or_unassigned_rows": 0,
+          "rows_scanned": 116897,
+          "school_categories": [
+            "charter_school",
+            "elementary_school",
+            "high_school",
+            "middle_school",
+            "montessori_school",
+            "preschool",
+            "private_school",
+            "public_school",
+            "religious_school",
+            "school"
+          ],
+          "source_buckets": [
+            "meta",
+            "microsoft",
+            "foursquare",
+            "alltheplaces",
+            "other"
+          ]
+        },
+        "south-central-tx": {
+          "category_rule": "categories.primary only; missing or non-school value is outside the registered school category set",
+          "coverage_by_source": {
+            "alltheplaces": {
+              "category_mismatches": 109,
+              "defined_tracts": 114,
+              "education_name_places": 132
+            },
+            "foursquare": {
+              "category_mismatches": 996,
+              "defined_tracts": 1249,
+              "education_name_places": 1620
+            },
+            "meta": {
+              "category_mismatches": 9747,
+              "defined_tracts": 5210,
+              "education_name_places": 21803
+            },
+            "microsoft": {
+              "category_mismatches": 1315,
+              "defined_tracts": 1090,
+              "education_name_places": 1587
+            },
+            "other": {
+              "category_mismatches": 2027,
+              "defined_tracts": 1847,
+              "education_name_places": 3008
+            }
+          },
+          "education_name_places": 28150,
+          "education_name_regex": "\\b(school|academy|education|elementary|middle school|high school|kindergarten|preschool|college|university)\\b",
+          "multisource_education_places": 0,
+          "multisource_rule": "a place contributes to each recognized source bucket it lists; otherwise to other",
+          "no_target_or_reference_data_read": true,
+          "outside_or_unassigned_rows": 3,
+          "rows_scanned": 1300334,
+          "school_categories": [
+            "charter_school",
+            "elementary_school",
+            "high_school",
+            "middle_school",
+            "montessori_school",
+            "preschool",
+            "private_school",
+            "public_school",
+            "religious_school",
+            "school"
+          ],
+          "source_buckets": [
+            "meta",
+            "microsoft",
+            "foursquare",
+            "alltheplaces",
+            "other"
+          ]
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate:school_category_mismatch_share_alltheplaces",
+          "component": "F",
+          "defined_rows": 474,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 0.0
+        },
+        {
+          "channel": "covariate:school_category_mismatch_share_foursquare",
+          "component": "F",
+          "defined_rows": 1956,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 0.0
+        },
+        {
+          "channel": "covariate:school_category_mismatch_share_meta",
+          "component": "F",
+          "defined_rows": 8045,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 0.0
+        },
+        {
+          "channel": "covariate:school_category_mismatch_share_microsoft",
+          "component": "F",
+          "defined_rows": 1620,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 0.0
+        },
+        {
+          "channel": "covariate:school_category_mismatch_share_other",
+          "component": "F",
+          "defined_rows": 2831,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 0.0
+        }
+      ],
+      "emissions_per_region": 5,
+      "family": "Mx",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/Mx5.parquet",
+      "rows": 46895,
+      "sha256": "2201d3a99d9c539fe94c72f0b2b800f7696f1bd7aaf0dac2327fb20802be01b8",
       "undeclared_columns_read": []
     },
     "P1": {
@@ -9325,7 +9941,7 @@
   },
   "preregistration": {
     "path": "config/bias60-harness-preregistered.json",
-    "sha256": "a40138f1ff6965cc10e3459e140105d69b0eb9fa1dc27c7098fd6b4cdd248b80",
+    "sha256": "516c9609672a8d4a1c43ede79b0c84d29e3526cce134d5cea515342edf7775da",
     "spec": {
       "family_count": 12,
       "idea_count": 60,
@@ -9365,7 +9981,7 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 20,
+    "declared_count": 16,
     "families_total": 12,
     "ideas_per_family": [
       5
@@ -9397,7 +10013,11 @@
       "Dst3",
       "Dst4",
       "Dst5",
+      "Mx1",
+      "Mx2",
+      "Mx3",
       "Mx4",
+      "Mx5",
       "Sc1",
       "Sc2",
       "Sc3",
@@ -9420,7 +10040,7 @@
       "F",
       "R"
     ],
-    "implemented_count": 40
+    "implemented_count": 44
   },
   "scope": {
     "geoids_by_region": {
@@ -9448,7 +10068,7 @@
       "F",
       "R"
     ],
-    "ideas_implemented": 40,
+    "ideas_implemented": 44,
     "parquet_files": {
       "ideas/D1.parquet": "cd389595f543483747281f6342a43ec183e858a08a559ad7f557d654024ebae3",
       "ideas/D2.parquet": "68dc61099c9c9adcf2c028400671934874b2499208150bd521da4608340e5395",
@@ -9470,7 +10090,11 @@
       "ideas/M3.parquet": "f560064aa9271e6f00f31f16c67242e30d9001c2ca427882bc873f97e0ab5538",
       "ideas/M4.parquet": "ad2bffe71bc4f3ee5aa1bd8a1967e8825b97afcf67d3392b135b9a1b2d266678",
       "ideas/M5.parquet": "5788ad26199e00cd371cc581e6a0d38dd9314fed9f618980539b750abd305545",
+      "ideas/Mx1.parquet": "ed5336a90e9364b8373ba15d334468b60ed42a68620f2408f13f0fb34bcf2f66",
+      "ideas/Mx2.parquet": "86990bc1a1f6a54ff2d2579dfd689b6ee67e31113aa9c336cec59ca914e58821",
+      "ideas/Mx3.parquet": "2feacc8c08c6b7e88067cfaf97b5c8623a9319899eb1959ba7e8f6deaddeb87b",
       "ideas/Mx4.parquet": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+      "ideas/Mx5.parquet": "2201d3a99d9c539fe94c72f0b2b800f7696f1bd7aaf0dac2327fb20802be01b8",
       "ideas/P1.parquet": "5bda0f80ba8397abecb31731caa09dec6500248d1ab072fcfb9f95f1199a7d3e",
       "ideas/P2.parquet": "887ac98d8c2699ef83c48850b7696baea08b5bffbec044d9d9dc825d74e801c6",
       "ideas/P3.parquet": "2e9a063759f697d0b2419152c3c0907e68e41dd04b8d901a16425f3207776fa1",
@@ -9491,7 +10115,7 @@
       "ideas/X4.parquet": "6f0c03139dfa07ad16d62c44c0cec23561ab36b76f6bee92799187a96fabb278",
       "ideas/X5.parquet": "c5b864512c1f191f9db866190e3b7c3b2208c702b2ba7c125b1d41c851a718f0"
     },
-    "report_sha256": "9f101a25908109c5520d27c7010f15bef1886bccfa73dab5ca53aee9c3a54d50"
+    "report_sha256": "dc55c1fdc36a507307e9867b88248359d9ebbe3f8bc1e65521c3bb5ab94821bf"
   },
   "tamper_case": null
 }
