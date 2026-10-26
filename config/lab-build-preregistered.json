@@ -19,7 +19,7 @@
     "lab_plan_config_sha256": "e7106107d63c5bd823c4b65fa3a32c5733cb02500ec5ee539cf99ddde01233cb",
     "prerequisite_report": "reports/lab-prerequisites.json",
     "lab_commit_source": "git rev-parse HEAD",
-    "prerequisite_report_sha256": "cdde80d09bfdb4595787570238df5a36848277985f7d6e5cb5ae6887625b8825",
+    "prerequisite_report_sha256": "a2afb485cffa556ed248500111143d343dd3219db1e51b2951f544dcff6f2fc1",
     "lab_plan_module_sha256": "e106db411a7289a3e76d750d99935756a99530b15b75e257e1bdcceac7377249"
   },
   "operator_decision": {
@@ -347,6 +347,12 @@
       "field": "pins.prerequisite_report_sha256",
       "supersedes": "0bdf7d185b7aa2e366e6bf60094b8380219d8fb2b3753f7583eea2b34d34eb23",
       "reason": "the probe now covers all nine spec 4.2 groups: 9,526 of 11,099 candidates survive the frozen exclusion, and TX-W and CA-F are measured so the fifth fold is chosen by the preregistered order rather than by which ratio looks best"
+    },
+    {
+      "field": "pins.prerequisite_report_sha256",
+      "supersedes": "cdde80d09bfdb4595787570238df5a36848277985f7d6e5cb5ae6887625b8825",
+      "now": "a2afb485cffa556ed248500111143d343dd3219db1e51b2951f544dcff6f2fc1",
+      "reason": "the lab-plan amendment retires AZ-R (30 of 170 candidates) and OK-R (13 of 130), replaces non-answering source endpoints, and the re-probe confirms all seven active CV groups clear the 30-tract floor and all ten source HEAD endpoints answer 200. Existing staging is unchanged; this pin makes subsequent build checks consume the amended readiness report."
     }
   ],
   "amendments": [

@@ -1,10 +1,10 @@
 # External lab corpus for the 60 estimators: frozen design, hard study exclusion and a rules gate
 
 - Plan: `bias60-external-lab` (backlog item `bias60-external-lab-build`)
-- Preregistered configuration: `/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/config/bias60-lab-preregistered.json` (SHA-256 `8d195030963130be...`)
+- Preregistered configuration: `/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/config/bias60-lab-preregistered.json` (SHA-256 `6efee3fd9475e0ec...`)
 - Spec: `/home/martin/hddProjects/competitionsall/docs/research/bias-60-ideas-2026-10.md` (SHA-256 `f150649b34caebef...`, matches its pin: True)
 - Status: **authorized_by_operator_decision** by operator, recorded by the shared steward in orchestrator commit 901d5e3c8ee89eb9995e2adb15a3fee6c48b49ee at 2026-10-25T09:35Z; organiser question `withdrawn_by_operator_decision`; sequencing blocker `bias60-track-a-combiner` (still binding on sequencing; the operator decision lifts the organiser-ruling precondition, not the ordering)
-- Readiness verdict: **PASS** -- the design is frozen, the exclusion policy is proved on a self-test panel, the lab root holds only staged build output (871 files, none promoted, none keyed to a study region), and no model or submission path can read a lab file
+- Readiness verdict: **PASS** -- the design is frozen, the exclusion policy is proved on a self-test panel, the lab root holds only staged build output (883 files, none promoted, none keyed to a study region), and no model or submission path can read a lab file
 
 ## Operator decision that authorises the lab
 
@@ -53,20 +53,26 @@ Why the text is still quoted: the RULES.md sentences are quoted unchanged becaus
 | LA | LA | 1300 | Gulf heat analogue of Houston | 0 |
 | CO-UT | CO/UT | 2100 | front-range wildland-urban-interface fire | 0 |
 
+## Active cross-validation group amendment
+
+- Active groups: ['NV', 'CO-UT', 'NM', 'LA', 'AR-KS', 'TX-W', 'CA-F']
+- Excluded from CV: ['AZ-R', 'OK-R']
+- Rule: Only the seven measured groups in active_group_ids are CV candidates; both groups below the planned robustness threshold are retained in the spec catalog but cannot be selected or counted as folds.
+
 ## Source register (nothing retrieved yet)
 
 | Source | Role | URL | Version pattern | Retrieved | SHA-256 |
 |---|---|---|---|---|---|
 | `tiger_tracts_2020` | lab_tract_polygons | https://www2.census.gov/geo/tiger/TIGER2020/TRACT/tl_2020_<ss>_tract.zip | tl_2020_<ss>_tract.zip | None | None |
-| `overture_package_release` | observed_data | s3://overturemaps-us-west-2/release/<rel>/ | same release as the challenge package, identified by matching package building id/version pairs; candidates 2026-08 and 2026-09 | None | None |
-| `tiger_prisecroads_2024` | reference_roads | https://www2.census.gov/geo/tiger/TIGER2024/PRISECRROADS/tl_2024_<ss>_prisecroads.zip | tl_2024_<ss>_prisecroads.zip (S1100/S1200) | None | None |
-| `tiger_county_roads_check` | reference_roads_check | https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_<ssccc>_roads.zip | county All Roads release 2024-08-08, filtered to MTFCC in {S1100, S1200} | None | None |
+| `overture_package_release` | observed_data | https://overturemaps-us-west-2.s3.amazonaws.com/?list-type=2&prefix=release/2026-09-23.1/&max-keys=1 | anonymous ListObjects V2 HEAD availability check for pinned release 2026-09-23.1; object URLs are separately pinned by the build | None | None |
+| `tiger_county_roads_check` | reference_roads | https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_<ssccc>_roads.zip | TIGER2024 county All Roads, filtered to MTFCC S1100/S1200; representative county 32003 HEAD verified 200 | None | None |
+| `tiger_county_roads_validation` | reference_roads_check | https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32031_roads.zip | TIGER2024 county All Roads, representative second county 32031 HEAD verified 200 | None | None |
 | `ms_us_building_footprints` | reference_buildings | https://github.com/microsoft/USBuildingFootprints | state GeoJSON, 129.6M total, ODbL | None | None |
 | `ms_global_ml_building_footprints` | reference_buildings_variant | https://github.com/microsoft/GlobalMLBuildingFootprints | US quadkeys | None | None |
 | `usgs_national_structures` | reference_facilities | https://apps.nationalmap.gov/downloader/ | Struct_Point state downloads; record loaddate | None | None |
-| `cbp_2023` | reference_establishments | https://www.census.gov/data/datasets/time-series/econ/cbp/2023.html | cbp23co county file; zbp23totals ZIP totals; released 2025-06-26 | None | None |
-| `hud_usps_crosswalk` | allocation_helper | https://www.huduser.gov/portal/datasets/usps_crosswalk.html | ZIP to tract BUS_RATIO crosswalk | None | None |
-| `hospital_check` | recipe_identification | USGS Health/Medical structures or HIFLD hospitals | compared against the Overture hospital category to reproduce the about 12x ratio | None | None |
+| `cbp_2022` | reference_establishments | https://www2.census.gov/programs-surveys/cbp/datasets/2022/ | official www2.census.gov 2022 CBP directory index; use cbp22co where available | None | None |
+| `acs5_tract_housing_units` | allocation_helper | https://api.census.gov/data/2022/acs/acs5?get=B25001_001E&for=tract:*&in=state:<ss> | 2022 ACS 5-year B25001_001E tract housing-unit totals; used only for the preregistered county-total housing-share allocation fallback | None | None |
+| `hospital_check` | recipe_identification | https://apps.nationalmap.gov/tnmaccess/api/datasets?output=json&formats=Shapefile&q=hospitals | USGS TNM dataset-catalogue metadata query for hospitals; HEAD reachability only, not evidence that a usable hospital reference dataset is present | None | None |
 
 ## Study exclusion, measured
 

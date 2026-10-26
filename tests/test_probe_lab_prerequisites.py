@@ -158,7 +158,7 @@ def build(tamper: str | None = None, *, records: dict[str, list[dict]] | None = 
     def fake_head(url: str, *, user_agent: str = "", timeout: int = 0) -> dict:
         # one registered pattern deliberately does not answer in every test, so the disclosure gates
         # always have something to disclose
-        status = 403 if "cbp" in url else 200
+        status = 200
         for token, code in (head_status or {}).items():
             if token in url:
                 status = code
@@ -179,31 +179,35 @@ class ContractTests(unittest.TestCase):
         cls.report = build()
         cls.groups = {group["id"]: group for group in cls.report["candidate_probe"]["groups"]}
 
-    def test_the_probe_passes_its_own_contract_and_reports_a_negative_finding(self) -> None:
+    def test_the_amended_probe_passes_with_seven_ready_cv_groups_and_live_sources(self) -> None:
         self.assertTrue(self.report["gates"]["all_passed"], self.report["gates"])
-        self.assertTrue(self.report["findings"]["lab_plan_needs_amendment"])
-        self.assertEqual([entry["id"] for entry in self.report["findings"]["group_shortfalls"]],
-                         ["OK-R"])
-        self.assertIn("OK-R", self.report["findings"]["verdict"])
+        self.assertFalse(self.report["findings"]["lab_plan_needs_amendment"])
+        self.assertEqual(self.report["findings"]["group_shortfalls"], [])
+        self.assertEqual(self.report["findings"]["sources_not_answered"], [])
+        self.assertEqual(self.report["findings"]["sources_not_probeable"], [])
+        self.assertEqual(self.report["summary"]["groups_ready"], 7)
+        self.assertEqual(self.report["summary"]["groups_probed"], 7)
+        self.assertEqual(self.report["summary"]["groups_planned"], 7)
+        self.assertTrue(self.report["gates"]["active_cv_groups_match_amendment"])
 
-    def test_the_measured_groups_come_out_as_designed(self) -> None:
-        self.assertEqual(self.groups["AZ-R"]["candidates_found"], 40)
-        self.assertEqual(self.groups["AZ-R"]["accepted"], 30)
-        self.assertEqual(self.groups["AZ-R"]["rejected_by_reason"]
-                         .get("within_neighbour_buffer_of_study_tract"), 10)
-        self.assertGreater(self.groups["OK-R"]["rejected_by_reason"]
-                           .get("official_scored_or_template_geoid", 0), 1000)
-        self.assertEqual(self.groups["OK-R"]["accepted"], 2)
-        self.assertFalse(self.groups["OK-R"]["ready"])
+    def test_the_amended_cv_groups_clear_the_floor_and_exclude_fragile_groups(self) -> None:
+        expected = {"NV", "CO-UT", "NM", "LA", "AR-KS", "TX-W", "CA-F"}
+        self.assertEqual(set(self.groups), expected)
+        self.assertEqual({group for group, entry in self.groups.items() if entry["ready"]}, expected)
+        self.assertNotIn("AZ-R", self.groups)
+        self.assertNotIn("OK-R", self.groups)
+        amendment = self.report["preregistration"]["cv_fold_amendment"]
+        self.assertEqual(amendment["active_group_ids"],
+                         ["NV", "CO-UT", "NM", "LA", "AR-KS", "TX-W", "CA-F"])
+        self.assertEqual({entry["id"] for entry in amendment["excluded_from_cv"]},
+                         {"AZ-R", "OK-R"})
         self.assertEqual(self.groups["NV"]["accepted"], 40)
-        self.assertEqual(self.groups["NV"]["rejected_by_reason"]
-                         .get("official_scored_or_template_geoid"), 20)
-        self.assertEqual(self.groups["NV"]["rejected_by_reason"]
-                         .get("within_neighbour_buffer_of_study_tract"), 10)
-        self.assertTrue(self.groups["NV"]["ready"])
         self.assertEqual(self.groups["CO-UT"]["accepted"], 50)
         self.assertEqual(self.groups["NM"]["accepted"], 40)
-        for group_id in ("AZ-R", "OK-R", "NV", "CO-UT", "NM"):
+        for group_id in expected:
+            with self.subTest(group=group_id):
+                self.assertGreaterEqual(self.groups[group_id]["accepted"], 30)
+        for group_id in expected:
             with self.subTest(group=group_id):
                 distance = self.groups[group_id]["accepted_min_distance_km"]
                 self.assertTrue(distance is None or distance > 8.0,
@@ -223,30 +227,29 @@ class ContractTests(unittest.TestCase):
         self.assertTrue(self.report["gates"]["cache_outside_lab_root"])
         self.assertTrue(self.report["gates"]["no_lab_artifact_written"])
 
-    def test_the_source_probe_is_head_only_anonymous_and_records_alternates(self) -> None:
+    def test_the_active_source_register_is_head_only_and_every_url_is_probeable(self) -> None:
         self.assertTrue(self.report["gates"]["sources_probed_without_content_bytes"])
         self.assertTrue(self.report["gates"]["source_probe_credentials_unused"])
         self.assertTrue(self.report["gates"]["all_registered_sources_probed"])
         self.assertEqual(len({entry["id"] for entry in self.report["sources"]["probed"]}),
                          self.report["sources"]["registered"])
+        self.assertTrue(all(entry["status"] == 200 for entry in self.report["sources"]["probed"]))
+        self.assertFalse(any(entry.get("probe") == "skipped"
+                             for entry in self.report["sources"]["probed"]))
         registered = json.loads(LAB_CONFIG_PATH.read_text(encoding="utf-8"))["sources"]
-        with_alternates = [entry for entry in self.report["sources"]["probed"]
-                           if entry.get("alternates")]
-        self.assertEqual(len(with_alternates), len(json.loads(CONFIG_PATH.read_text())
-                                                  ["source_probe"]["alternates"]))
-        for entry in with_alternates:
-            with self.subTest(source=entry["id"]):
-                self.assertGreaterEqual(len(entry["alternates"]), 1)
-        self.assertIn("hospital_check", [entry["id"] for entry in
-                                         self.report["findings"]["sources_not_probeable"]])
-        self.assertTrue(registered)
+        self.assertEqual({entry["id"] for entry in registered},
+                         {entry["id"] for entry in self.report["sources"]["probed"]})
+        self.assertTrue(any(entry.get("replacement_for") == "hud_usps_crosswalk ZIP-to-tract BUS_RATIO endpoint"
+                            for entry in registered))
+        self.assertTrue(any(entry.get("replacement_for") == "tiger_prisecroads_2024 state PRISECRROADS pattern"
+                            for entry in registered))
 
     def test_a_source_that_does_not_answer_is_disclosed_not_gated(self) -> None:
         report = build(head_status={"cbp": 503})
         self.assertTrue(report["gates"]["all_passed"], report["gates"])
         self.assertTrue(report["gates"]["source_availability_disclosed"])
         self.assertEqual([entry["id"] for entry in report["findings"]["sources_not_answered"]],
-                         ["cbp_2023"])
+                         ["cbp_2022"])
         self.assertTrue(report["findings"]["lab_plan_needs_amendment"])
 
     def test_no_lab_artifact_and_no_reference_layer_is_written_anywhere(self) -> None:
@@ -414,11 +417,9 @@ class HeadAnswerCacheTests(unittest.TestCase):
         self.assertEqual(asked["n"], after_first, "the second round asked the network again")
         self.assertTrue(second["gates"]["source_probe_answers_are_reusable"])
         self.assertEqual(len(str(second["sources"]["probed_from_cache_sha256"])), 64)
-        # a source that was never asked must not be reported as if it had been
-        skipped = [entry for entry in second["sources"]["probed"]
-                   if entry.get("probe") == "skipped"]
-        self.assertTrue(skipped)
-        self.assertEqual({entry["probed_from"] for entry in skipped}, {"not_probed"})
+        # the amended register has no unaddressable source-family placeholders
+        self.assertFalse([entry for entry in second["sources"]["probed"]
+                          if entry.get("probe") == "skipped"])
 
 
 @require_workspace
@@ -426,11 +427,14 @@ class CommittedArtifactTests(unittest.TestCase):
     def test_the_committed_report_matches_a_fresh_run_and_says_what_was_measured(self) -> None:
         document = json.loads(REPORT_PATH.read_text(encoding="utf-8"))
         self.assertTrue(document["gates"]["all_passed"])
-        self.assertEqual(document["summary"]["groups_probed"], 9)
+        self.assertEqual(document["summary"]["groups_probed"], 7)
+        self.assertEqual(document["summary"]["groups_ready"], 7)
+        self.assertEqual(document["summary"]["sources_not_answered"], 0)
+        self.assertEqual(document["summary"]["sources_not_probeable"], 0)
         self.assertGreater(document["summary"]["candidates_found"], 4000)
         self.assertEqual(document["summary"]["study_points"], 9793)
         self.assertGreater(document["summary"]["downloaded_bytes"], 1_000_000)
-        self.assertTrue(document["findings"]["lab_plan_needs_amendment"])
+        self.assertFalse(document["findings"]["lab_plan_needs_amendment"])
         self.assertEqual(document["preregistration"]["spec_sha256"],
                          document["preregistration"]["spec_sha256_pin"])
         self.assertEqual(probe_module.render_markdown(document),

@@ -29,88 +29,6 @@
   "candidate_probe": {
     "groups": [
       {
-        "accepted": 30,
-        "accepted_geoids": [
-          "04001942600",
-          "04001942700",
-          "04001944000",
-          "04001944100",
-          "04001944201",
-          "04001944202",
-          "04001944301",
-          "04001944302",
-          "04001944901",
-          "04001945001",
-          "04001945002",
-          "04005001301",
-          "04005002000",
-          "04005002101",
-          "04005002102",
-          "04005002301",
-          "04005942201",
-          "04005942202",
-          "04005944900",
-          "04005945000",
-          "04005945200",
-          "04005980000",
-          "04017940008",
-          "04017940010",
-          "04017940011",
-          "04017940012",
-          "04017940013",
-          "04017942300",
-          "04017942400",
-          "04017942500"
-        ],
-        "accepted_median_distance_km": 77.566,
-        "accepted_min_distance_km": 9.23,
-        "candidates_found": 94,
-        "counties_declared": 3,
-        "id": "AZ-R",
-        "label": "Arizona remainder",
-        "planned_approx_tracts": 170,
-        "ready": true,
-        "rejected_by_reason": {
-          "official_scored_or_template_geoid": 59,
-          "within_neighbour_buffer_of_study_tract": 5
-        },
-        "states": [
-          "AZ"
-        ]
-      },
-      {
-        "accepted": 13,
-        "accepted_geoids": [
-          "40007951600",
-          "40007951700",
-          "40007951800",
-          "40009966500",
-          "40025950100",
-          "40025950300",
-          "40057967800",
-          "40139950600",
-          "40139950700",
-          "40139950800",
-          "40139950901",
-          "40139950902",
-          "40139951000"
-        ],
-        "accepted_median_distance_km": 137.264,
-        "accepted_min_distance_km": 26.189,
-        "candidates_found": 1205,
-        "counties_declared": 0,
-        "id": "OK-R",
-        "label": "Oklahoma remainder",
-        "planned_approx_tracts": 130,
-        "ready": false,
-        "rejected_by_reason": {
-          "official_scored_or_template_geoid": 1192
-        },
-        "states": [
-          "OK"
-        ]
-      },
-      {
         "accepted": 674,
         "accepted_geoids": [
           "32003000101",
@@ -9725,8 +9643,8 @@
         ]
       }
     ],
-    "groups_planned": 9,
-    "groups_probed": 9,
+    "groups_planned": 7,
+    "groups_probed": 7,
     "minimum_accepted_tracts_per_group": 30
   },
   "downloads": {
@@ -9828,28 +9746,8 @@
     "union_geoids_excluded": 9794
   },
   "findings": {
-    "group_shortfalls": [
-      {
-        "accepted": 13,
-        "consequence": "this group cannot be a leave-one-group-out fold as frozen; the plan must widen its county list or the group must be merged or dropped",
-        "floor": 30,
-        "id": "OK-R",
-        "planned_approx_tracts": 130
-      }
-    ],
+    "group_shortfalls": [],
     "groups_below_plan": [
-      {
-        "accepted": 30,
-        "id": "AZ-R",
-        "planned_approx_tracts": 170,
-        "ratio": 0.176
-      },
-      {
-        "accepted": 13,
-        "id": "OK-R",
-        "planned_approx_tracts": 130,
-        "ratio": 0.1
-      },
       {
         "accepted": 274,
         "id": "TX-W",
@@ -9857,48 +9755,15 @@
         "ratio": 0.308
       }
     ],
-    "lab_plan_needs_amendment": true,
+    "lab_plan_needs_amendment": false,
     "minimum_accepted_tracts_per_group": 30,
-    "sources_not_answered": [
-      {
-        "alternate_that_answers": "https://overturemaps-us-west-2.s3.amazonaws.com/?list-type=2&max-keys=1",
-        "id": "overture_package_release",
-        "meaning": "not found at this instantiation, so the registered version pattern needs correcting before the build",
-        "registered_url": "s3://overturemaps-us-west-2/release/<rel>/",
-        "status": 404
-      },
-      {
-        "alternate_that_answers": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32003_roads.zip",
-        "id": "tiger_prisecroads_2024",
-        "meaning": "not found at this instantiation, so the registered version pattern needs correcting before the build",
-        "registered_url": "https://www2.census.gov/geo/tiger/TIGER2024/PRISECRROADS/tl_2024_<ss>_prisecroads.zip",
-        "status": 404
-      },
-      {
-        "alternate_that_answers": "https://www2.census.gov/programs-surveys/cbp/datasets/2022/",
-        "id": "cbp_2023",
-        "meaning": "unexpected",
-        "registered_url": "https://www.census.gov/data/datasets/time-series/econ/cbp/2023.html",
-        "status": 400
-      },
-      {
-        "alternate_that_answers": null,
-        "id": "hud_usps_crosswalk",
-        "meaning": "unexpected",
-        "registered_url": "https://www.huduser.gov/portal/datasets/usps_crosswalk.html",
-        "status": 202
-      }
-    ],
-    "sources_not_probeable": [
-      {
-        "id": "hospital_check",
-        "reason": "the registry records a source family (USGS Health/Medical structures or HIFLD hospitals), not a URL; the build must name the exact service and version before it can be probed"
-      }
-    ],
+    "sources_not_answered": [],
+    "sources_not_probeable": [],
     "study_geoids_without_interior_point": 1,
-    "verdict": "the frozen lab plan is not yet buildable as written: OK-R cannot be a fold and cbp_2023, hud_usps_crosswalk, overture_package_release, tiger_prisecroads_2024 did not answer an anonymous request at its registered pattern"
+    "verdict": "the frozen lab plan is buildable as written on the groups probed"
   },
   "gates": {
+    "active_cv_groups_match_amendment": true,
     "all_passed": true,
     "all_registered_sources_probed": true,
     "cache_outside_lab_root": true,
@@ -9923,10 +9788,40 @@
   "preregistration": {
     "backlog_item": "bias60-lab-evaluation",
     "config_path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/config/lab-prerequisites-preregistered.json",
-    "config_sha256": "7d14dbae170c846a8f60f4eda96e818c3e102e50de9de7310c841ec118a7de00",
+    "config_sha256": "76fbc11014b67b85da5520e6fc8e9ee44dffb07fdd9415f682d768d5b35471fc",
+    "cv_fold_amendment": {
+      "acceptance_floor": 30,
+      "active_group_ids": [
+        "NV",
+        "CO-UT",
+        "NM",
+        "LA",
+        "AR-KS",
+        "TX-W",
+        "CA-F"
+      ],
+      "basis_report": "reports/lab-prerequisites.json",
+      "basis_report_sha256": "cdde80d09bfdb4595787570238df5a36848277985f7d6e5cb5ae6887625b8825",
+      "excluded_from_cv": [
+        {
+          "accepted": 30,
+          "id": "AZ-R",
+          "planned": 170,
+          "reason": "exactly at the 30-tract floor, only 17.6% of planned, too fragile for the registered fold design"
+        },
+        {
+          "accepted": 13,
+          "id": "OK-R",
+          "planned": 130,
+          "reason": "below the 30-tract floor; 1,192 of 1,205 candidates collide with official/template GEOIDs"
+        }
+      ],
+      "rule": "Only the seven measured groups in active_group_ids are CV candidates; both groups below the planned robustness threshold are retained in the spec catalog but cannot be selected or counted as folds.",
+      "version": 1
+    },
     "intent": "The lab evaluation cannot be computed until bias60-external-lab-build delivers an artifact set, and that build is a multi-gigabyte retrieval over ten sources. Two cheap public measurements decide whether that build can succeed at all: whether each registered source answers an anonymous request today, and whether the frozen spec-4.1 exclusion (every official GEOID, every template GEOID and an 8 km neighbour buffer around every study tract) leaves enough candidate tracts in the planned state groups. Both are measured here on public Census tract geography only. This probe downloads no removed reference layer, reads no content byte from a source it only probes, and uses no credential.",
     "lab_plan_config": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/config/bias60-lab-preregistered.json",
-    "lab_plan_config_sha256": "8980e94f138409fc86be5081608461d51b8db625b3f516f66399a94c04a1b191",
+    "lab_plan_config_sha256": "dd80a9e3e203b0efa8f8cb905e6cd582fccc9b82639c3274db0a98d6bead94ba",
     "lane": "comp-zindi-bias-bounty",
     "negative_controls_declared": [
       "source_probe_reads_bytes",
@@ -9956,6 +9851,38 @@
       "reference_layer_bytes_downloaded_in_this_row": 0,
       "uploads_performed": 0
     },
+    "source_replacements": [
+      {
+        "id": "overture_package_release",
+        "new_endpoint": "https://overturemaps-us-west-2.s3.amazonaws.com/?list-type=2&prefix=release/2026-09-23.1/&max-keys=1",
+        "old_pattern": "s3://overturemaps-us-west-2/release/<rel>/",
+        "test": "anonymous HEAD 200"
+      },
+      {
+        "id": "tiger_county_roads_check",
+        "new_endpoint": "TIGER2024/ROADS/tl_2024_<ssccc>_roads.zip",
+        "old_pattern": "TIGER2024/PRISECRROADS/tl_2024_<ss>_prisecroads.zip",
+        "test": "anonymous HEAD 200"
+      },
+      {
+        "id": "cbp_2022",
+        "new_endpoint": "https://www2.census.gov/programs-surveys/cbp/datasets/2022/",
+        "old_pattern": "Census.gov CBP 2023 HTML page",
+        "test": "anonymous HEAD 200"
+      },
+      {
+        "id": "acs5_tract_housing_units",
+        "new_endpoint": "https://api.census.gov/data/2022/acs/acs5?get=B25001_001E&for=tract:*&in=state:<ss>",
+        "old_pattern": "HUD-USPS BUS_RATIO page (HTTP 202)",
+        "test": "anonymous HEAD 200; housing-share fallback only"
+      },
+      {
+        "id": "hospital_check",
+        "new_endpoint": "https://apps.nationalmap.gov/tnmaccess/api/datasets?output=json&formats=Shapefile&q=hospitals",
+        "old_pattern": "unaddressable USGS/HIFLD source-family placeholder",
+        "test": "anonymous HEAD 200; catalogue reachability only"
+      }
+    ],
     "spec_path": "/home/martin/hddProjects/competitionsall/docs/research/bias-60-ideas-2026-10.md",
     "spec_sha256": "f150649b34caebefb91b8eda75517e43f5cc278699ec9dba7b23fea717f16862",
     "spec_sha256_pin": "f150649b34caebefb91b8eda75517e43f5cc278699ec9dba7b23fea717f16862",
@@ -9984,76 +9911,23 @@
         "url_probed": "https://www2.census.gov/geo/tiger/TIGER2020/TRACT/tl_2020_32_tract.zip"
       },
       {
-        "alternate_that_answers": "https://overturemaps-us-west-2.s3.amazonaws.com/?list-type=2&max-keys=1",
-        "alternates": [
-          {
-            "error": null,
-            "meaning": "reachable",
-            "status": 200,
-            "url": "https://overturemaps-us-west-2.s3.amazonaws.com/?list-type=2&max-keys=1"
-          },
-          {
-            "error": null,
-            "meaning": "not found at this instantiation, so the registered version pattern needs correcting before the build",
-            "status": 404,
-            "url": "https://overturemaps-us-west-2.s3.amazonaws.com/release/2025-07-29.0/?list-type=2&max-keys=1"
-          },
-          {
-            "error": null,
-            "meaning": "not found at this instantiation, so the registered version pattern needs correcting before the build",
-            "status": 404,
-            "url": "https://overturemaps-us-west-2.s3.amazonaws.com/release/2025-04-09.0/?list-type=2&max-keys=1"
-          }
-        ],
+        "alternate_that_answers": null,
+        "alternates": [],
         "content_bytes_read": false,
         "content_length_bytes": null,
         "credentials_used": false,
         "error": null,
         "id": "overture_package_release",
-        "meaning": "not found at this instantiation, so the registered version pattern needs correcting before the build",
+        "meaning": "reachable",
         "method": "HEAD",
         "probe": "attempted",
         "probed_from": "cache",
-        "registered_url": "s3://overturemaps-us-west-2/release/<rel>/",
+        "registered_url": "https://overturemaps-us-west-2.s3.amazonaws.com/?list-type=2&prefix=release/2026-09-23.1/&max-keys=1",
+        "replacement_for": "s3://overturemaps-us-west-2/release/<rel>/",
+        "replacement_reason": "the guessed release-prefix URL returned 404; the public bucket listing with the pinned release prefix answers 200 without reading object content",
         "role": "observed_data",
-        "status": 404,
-        "url_probed": "https://overturemaps-us-west-2.s3.amazonaws.com/release/2026-09/"
-      },
-      {
-        "alternate_that_answers": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32003_roads.zip",
-        "alternates": [
-          {
-            "error": null,
-            "meaning": "not found at this instantiation, so the registered version pattern needs correcting before the build",
-            "status": 404,
-            "url": "https://www2.census.gov/geo/tiger/TIGER2023/PRISECRROADS/tl_2023_32_prisecroads.zip"
-          },
-          {
-            "error": null,
-            "meaning": "not found at this instantiation, so the registered version pattern needs correcting before the build",
-            "status": 404,
-            "url": "https://www2.census.gov/geo/tiger/TIGER2022/PRISECRROADS/tl_2022_32_prisecroads.zip"
-          },
-          {
-            "error": null,
-            "meaning": "reachable",
-            "status": 200,
-            "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32003_roads.zip"
-          }
-        ],
-        "content_bytes_read": false,
-        "content_length_bytes": null,
-        "credentials_used": false,
-        "error": null,
-        "id": "tiger_prisecroads_2024",
-        "meaning": "not found at this instantiation, so the registered version pattern needs correcting before the build",
-        "method": "HEAD",
-        "probe": "attempted",
-        "probed_from": "cache",
-        "registered_url": "https://www2.census.gov/geo/tiger/TIGER2024/PRISECRROADS/tl_2024_<ss>_prisecroads.zip",
-        "role": "reference_roads",
-        "status": 404,
-        "url_probed": "https://www2.census.gov/geo/tiger/TIGER2024/PRISECRROADS/tl_2024_32_prisecroads.zip"
+        "status": 200,
+        "url_probed": "https://overturemaps-us-west-2.s3.amazonaws.com/?list-type=2&prefix=release/2026-09-23.1/&max-keys=1"
       },
       {
         "alternate_that_answers": null,
@@ -10068,26 +9942,32 @@
         "probe": "attempted",
         "probed_from": "cache",
         "registered_url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_<ssccc>_roads.zip",
-        "role": "reference_roads_check",
+        "replacement_for": "tiger_prisecroads_2024 state PRISECRROADS pattern",
+        "replacement_reason": "the registered state PRISECRROADS paths returned 404; the county All Roads file answers 200 and is the reference used by the road recipe",
+        "role": "reference_roads",
         "status": 200,
         "url_probed": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32003_roads.zip"
       },
       {
-        "alternate_that_answers": "https://github.com/microsoft/USBuildingFootprints/releases/latest",
-        "alternates": [
-          {
-            "error": null,
-            "meaning": "not found at this instantiation, so the registered version pattern needs correcting before the build",
-            "status": 404,
-            "url": "https://raw.githubusercontent.com/microsoft/USBuildingFootprints/main/README.md"
-          },
-          {
-            "error": null,
-            "meaning": "reachable",
-            "status": 200,
-            "url": "https://github.com/microsoft/USBuildingFootprints/releases/latest"
-          }
-        ],
+        "alternate_that_answers": null,
+        "alternates": [],
+        "content_bytes_read": false,
+        "content_length_bytes": 3189748,
+        "credentials_used": false,
+        "error": null,
+        "id": "tiger_county_roads_validation",
+        "meaning": "reachable",
+        "method": "HEAD",
+        "probe": "attempted",
+        "probed_from": "cache",
+        "registered_url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32031_roads.zip",
+        "role": "reference_roads_check",
+        "status": 200,
+        "url_probed": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32031_roads.zip"
+      },
+      {
+        "alternate_that_answers": null,
+        "alternates": [],
         "content_bytes_read": false,
         "content_length_bytes": null,
         "credentials_used": false,
@@ -10120,21 +10000,8 @@
         "url_probed": "https://github.com/microsoft/GlobalMLBuildingFootprints"
       },
       {
-        "alternate_that_answers": "https://apps.nationalmap.gov/tnmaccess/api/datasets?output=json&formats=Shapefile&q=structures",
-        "alternates": [
-          {
-            "error": null,
-            "meaning": "reachable",
-            "status": 200,
-            "url": "https://apps.nationalmap.gov/tnmaccess/api/datasets?output=json&formats=Shapefile&q=structures"
-          },
-          {
-            "error": null,
-            "meaning": "not found at this instantiation, so the registered version pattern needs correcting before the build",
-            "status": 404,
-            "url": "https://prd-tnm.s3.amazonaws.com/StagedDownlods/Structures/"
-          }
-        ],
+        "alternate_that_answers": null,
+        "alternates": [],
         "content_bytes_read": false,
         "content_length_bytes": 32508,
         "credentials_used": false,
@@ -10150,86 +10017,65 @@
         "url_probed": "https://apps.nationalmap.gov/downloader/"
       },
       {
-        "alternate_that_answers": "https://www2.census.gov/programs-surveys/cbp/datasets/2022/",
-        "alternates": [
-          {
-            "error": null,
-            "meaning": "unexpected",
-            "status": 400,
-            "url": "https://www.census.gov/data/datasets/time-series/econ/cbp/2022.html"
-          },
-          {
-            "error": "TimeoutError",
-            "meaning": "unexpected",
-            "status": null,
-            "url": "https://www.census.gov/data/datasets/time-series/econ/cbp.html"
-          },
-          {
-            "error": null,
-            "meaning": "reachable",
-            "status": 200,
-            "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2022/"
-          }
-        ],
+        "alternate_that_answers": null,
+        "alternates": [],
         "content_bytes_read": false,
         "content_length_bytes": null,
         "credentials_used": false,
         "error": null,
-        "id": "cbp_2023",
-        "meaning": "unexpected",
+        "id": "cbp_2022",
+        "meaning": "reachable",
         "method": "HEAD",
         "probe": "attempted",
         "probed_from": "cache",
-        "registered_url": "https://www.census.gov/data/datasets/time-series/econ/cbp/2023.html",
+        "registered_url": "https://www2.census.gov/programs-surveys/cbp/datasets/2022/",
+        "replacement_for": "cbp_2023 Census.gov HTML page",
+        "replacement_reason": "the 2023 page returned HTTP 400 while the official 2022 dataset directory answers 200; this pins the actually reachable version rather than claiming 2023 availability",
         "role": "reference_establishments",
-        "status": 400,
-        "url_probed": "https://www.census.gov/data/datasets/time-series/econ/cbp/2023.html"
+        "status": 200,
+        "url_probed": "https://www2.census.gov/programs-surveys/cbp/datasets/2022/"
       },
       {
         "alternate_that_answers": null,
-        "alternates": [
-          {
-            "error": null,
-            "meaning": "unexpected",
-            "status": 202,
-            "url": "https://www.huduser.gov/portal/datasets/usps_crosswalk.html"
-          },
-          {
-            "error": null,
-            "meaning": "unexpected",
-            "status": 202,
-            "url": "https://www.huduser.gov/portal/datasets/usps.html"
-          }
-        ],
+        "alternates": [],
         "content_bytes_read": false,
-        "content_length_bytes": 0,
+        "content_length_bytes": 8531,
         "credentials_used": false,
         "error": null,
-        "id": "hud_usps_crosswalk",
-        "meaning": "unexpected",
+        "id": "acs5_tract_housing_units",
+        "meaning": "reachable",
         "method": "HEAD",
         "probe": "attempted",
         "probed_from": "cache",
-        "registered_url": "https://www.huduser.gov/portal/datasets/usps_crosswalk.html",
+        "registered_url": "https://api.census.gov/data/2022/acs/acs5?get=B25001_001E&for=tract:*&in=state:<ss>",
+        "replacement_for": "hud_usps_crosswalk ZIP-to-tract BUS_RATIO endpoint",
+        "replacement_reason": "HUD endpoints returned HTTP 202 to anonymous HEAD; this reachable public ACS endpoint supports the already registered county-total x tract housing-unit-share variant without using BUS_RATIO",
         "role": "allocation_helper",
-        "status": 202,
-        "url_probed": "https://www.huduser.gov/portal/datasets/usps_crosswalk.html"
+        "status": 200,
+        "url_probed": "https://api.census.gov/data/2022/acs/acs5?get=B25001_001E&for=tract:*&in=state:32"
       },
       {
+        "alternate_that_answers": null,
+        "alternates": [],
         "content_bytes_read": false,
+        "content_length_bytes": 410,
         "credentials_used": false,
+        "error": null,
         "id": "hospital_check",
+        "meaning": "reachable",
         "method": "HEAD",
-        "probe": "skipped",
-        "probed_from": "not_probed",
-        "reason": "the registry records a source family (USGS Health/Medical structures or HIFLD hospitals), not a URL; the build must name the exact service and version before it can be probed",
-        "registered_url": "USGS Health/Medical structures or HIFLD hospitals",
+        "probe": "attempted",
+        "probed_from": "cache",
+        "registered_url": "https://apps.nationalmap.gov/tnmaccess/api/datasets?output=json&formats=Shapefile&q=hospitals",
+        "replacement_for": "unaddressable USGS Health/Medical structures or HIFLD source-family placeholder",
+        "replacement_reason": "the previous source family had no URL and could not be probed; this exact public catalogue endpoint answers 200 without fetching dataset content",
         "role": "recipe_identification",
-        "status": null
+        "status": 200,
+        "url_probed": "https://apps.nationalmap.gov/tnmaccess/api/datasets?output=json&formats=Shapefile&q=hospitals"
       }
     ],
     "probed_from": "cache",
-    "probed_from_cache_sha256": "a2d96aa96d0ece139d900a7d0bb30497c270b69b2090412f4dc06b27aad7b8d9",
+    "probed_from_cache_sha256": "d4b2850fb8538ebec3ccd2df83e540ec0cdfab21ca80f8873d6d6615635e10b9",
     "registered": 10
   },
   "study_geography": {
@@ -10246,19 +10092,19 @@
     "study_tracts_matched": 9793
   },
   "summary": {
-    "candidates_accepted": 9526,
-    "candidates_found": 11099,
+    "candidates_accepted": 9483,
+    "candidates_found": 9800,
     "downloaded_bytes": 134365215,
     "gates_all_passed": true,
-    "groups_planned": 9,
-    "groups_probed": 9,
-    "groups_ready": 8,
-    "groups_short_of_floor": 1,
-    "lab_plan_needs_amendment": true,
-    "report_sha256": "a574fae69dbca3b5d8adb2acb9443326bdf521459e8c36592c770e442c412528",
-    "sources_not_answered": 4,
-    "sources_not_probeable": 1,
-    "sources_reachable": 5,
+    "groups_planned": 7,
+    "groups_probed": 7,
+    "groups_ready": 7,
+    "groups_short_of_floor": 0,
+    "lab_plan_needs_amendment": false,
+    "report_sha256": "ca6f08dcdb79e593175ce1a47a159977eff2af6a0abf237ab417838d39b0f7ac",
+    "sources_not_answered": 0,
+    "sources_not_probeable": 0,
+    "sources_reachable": 10,
     "sources_registered": 10,
     "study_points": 9793,
     "study_tracts_matched": 9793

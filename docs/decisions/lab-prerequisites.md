@@ -1,7 +1,7 @@
 # Measure the preconditions of the external lab before the lab build spends its bandwidth: are the registered sources reachable, and do the planned lab groups still have tracts after the study exclusion runs on real census geography?
 
 - Plan: `lab-prerequisites` (backlog item `bias60-lab-evaluation`)
-- Preregistered configuration: `/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/config/lab-prerequisites-preregistered.json` (SHA-256 `7d14dbae170c846a…`)
+- Preregistered configuration: `/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/config/lab-prerequisites-preregistered.json` (SHA-256 `76fbc11014b67b85…`)
 - Lab plan consumed: `/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/config/bias60-lab-preregistered.json`
 - Spec: `/home/martin/hddProjects/competitionsall/docs/research/bias-60-ideas-2026-10.md` (SHA-256 `f150649b34caebef…`, matches its pin: True)
 - Verdict: **PASS**
@@ -18,33 +18,31 @@
 
 ## Measured
 
-- Registered sources: 10; answering 200 anonymously: 5; not probeable as registered: 1
+- Registered sources: 10; answering 200 anonymously: 10; not probeable as registered: 0
 - Public census geography downloaded: 134365215 bytes across 12 files
 - Study interior points established: 9793 from 9793 matched study tracts in EPSG:5070
-- Planned lab groups: 9; probed: 9; with enough surviving tracts: 8
-- Candidate tracts inspected: 11099; accepted by the frozen exclusion: 9526
+- Planned lab groups: 7; probed: 7; with enough surviving tracts: 7
+- Candidate tracts inspected: 9800; accepted by the frozen exclusion: 9483
 
 ## Source availability
 
-| source | probe | status | meaning | bytes advertised | alternate that answers |
+| source | probe | status | meaning | bytes advertised | registered replacement |
 | --- | --- | --- | --- | --- | --- |
 | `tiger_tracts_2020` | attempted | 200 | reachable | 3182444 | None |
-| `overture_package_release` | attempted | 404 | not found at this instantiation, so the registered version pattern needs correcting before the build | None | https://overturemaps-us-west-2.s3.amazonaws.com/?list-type=2&max-keys=1 |
-| `tiger_prisecroads_2024` | attempted | 404 | not found at this instantiation, so the registered version pattern needs correcting before the build | None | https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32003_roads.zip |
-| `tiger_county_roads_check` | attempted | 200 | reachable | 10125154 | None |
-| `ms_us_building_footprints` | attempted | 200 | reachable | None | https://github.com/microsoft/USBuildingFootprints/releases/latest |
+| `overture_package_release` | attempted | 200 | reachable | None | replaces `s3://overturemaps-us-west-2/release/<rel>/`: the guessed release-prefix URL returned 404; the public bucket listing with the pinned release prefix answers 200 without reading object content |
+| `tiger_county_roads_check` | attempted | 200 | reachable | 10125154 | replaces `tiger_prisecroads_2024 state PRISECRROADS pattern`: the registered state PRISECRROADS paths returned 404; the county All Roads file answers 200 and is the reference used by the road recipe |
+| `tiger_county_roads_validation` | attempted | 200 | reachable | 3189748 | None |
+| `ms_us_building_footprints` | attempted | 200 | reachable | None | None |
 | `ms_global_ml_building_footprints` | attempted | 200 | reachable | None | None |
-| `usgs_national_structures` | attempted | 200 | reachable | 32508 | https://apps.nationalmap.gov/tnmaccess/api/datasets?output=json&formats=Shapefile&q=structures |
-| `cbp_2023` | attempted | 400 | unexpected | None | https://www2.census.gov/programs-surveys/cbp/datasets/2022/ |
-| `hud_usps_crosswalk` | attempted | 202 | unexpected | 0 | None |
-| `hospital_check` | skipped | None | the registry records a source family (USGS Health/Medical structures or HIFLD hospitals), not a URL; the build must name the exact service and version before it can be probed | None | None |
+| `usgs_national_structures` | attempted | 200 | reachable | 32508 | None |
+| `cbp_2022` | attempted | 200 | reachable | None | replaces `cbp_2023 Census.gov HTML page`: the 2023 page returned HTTP 400 while the official 2022 dataset directory answers 200; this pins the actually reachable version rather than claiming 2023 availability |
+| `acs5_tract_housing_units` | attempted | 200 | reachable | 8531 | replaces `hud_usps_crosswalk ZIP-to-tract BUS_RATIO endpoint`: HUD endpoints returned HTTP 202 to anonymous HEAD; this reachable public ACS endpoint supports the already registered county-total x tract housing-unit-share variant without using BUS_RATIO |
+| `hospital_check` | attempted | 200 | reachable | 410 | replaces `unaddressable USGS Health/Medical structures or HIFLD source-family placeholder`: the previous source family had no URL and could not be probed; this exact public catalogue endpoint answers 200 without fetching dataset content |
 
 ## Candidate tracts after the frozen exclusion
 
 | group | states | counties | planned | candidates | accepted | rejected | min km to a study tract | ready |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `AZ-R` | AZ | 3 | 170 | 94 | 30 | 64 | 9.23 | yes |
-| `OK-R` | OK | 0 | 130 | 1205 | 13 | 1192 | 26.189 | no |
 | `NV` | NV | 2 | 700 | 674 | 674 | 0 | 33.707 | yes |
 | `CO-UT` | CO, UT | 0 | 2100 | 2163 | 2163 | 0 | 162.964 | yes |
 | `NM` | NM | 0 | 610 | 612 | 611 | 1 | 37.097 | yes |
@@ -55,35 +53,20 @@
 
 ## Findings the build has to know
 
-- Lab plan needs amendment: **True**
-- Verdict: the frozen lab plan is not yet buildable as written: OK-R cannot be a fold and cbp_2023, hud_usps_crosswalk, overture_package_release, tiger_prisecroads_2024 did not answer an anonymous request at its registered pattern
-
-| group | planned | accepted | floor | consequence |
-| --- | --- | --- | --- | --- |
-| `OK-R` | 130 | 13 | 30 | this group cannot be a leave-one-group-out fold as frozen; the plan must widen its county list or the group must be merged or dropped |
+- Lab plan needs amendment: **False**
+- Verdict: the frozen lab plan is buildable as written on the groups probed
 
 Groups far below their planned tract count (plan numbers to correct):
 
-- `AZ-R`: planned 170, accepted 30 (ratio 0.176)
-- `OK-R`: planned 130, accepted 13 (ratio 0.1)
 - `TX-W`: planned 890, accepted 274 (ratio 0.308)
-
-| source | status | meaning | alternate that answers |
-| --- | --- | --- | --- |
-| `overture_package_release` | 404 | not found at this instantiation, so the registered version pattern needs correcting before the build | https://overturemaps-us-west-2.s3.amazonaws.com/?list-type=2&max-keys=1 |
-| `tiger_prisecroads_2024` | 404 | not found at this instantiation, so the registered version pattern needs correcting before the build | https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32003_roads.zip |
-| `cbp_2023` | 400 | unexpected | https://www2.census.gov/programs-surveys/cbp/datasets/2022/ |
-| `hud_usps_crosswalk` | 202 | unexpected | None |
-
-- `hospital_check` is not probeable as registered: the registry records a source family (USGS Health/Medical structures or HIFLD hospitals), not a URL; the build must name the exact service and version before it can be probed
 
 - Excluded study GEOIDs with no interior point in the census file: 1
 
 
 ## Rejections by reason
 
-- `official_scored_or_template_geoid`: 1464
-- `within_neighbour_buffer_of_study_tract`: 109
+- `official_scored_or_template_geoid`: 213
+- `within_neighbour_buffer_of_study_tract`: 104
 
 ## Exclusion policy as executed
 
@@ -99,6 +82,7 @@ Groups far below their planned tract count (plan numbers to correct):
 
 ## Gates
 
+- `active_cv_groups_match_amendment`: True
 - `all_passed`: True
 - `all_registered_sources_probed`: True
 - `cache_outside_lab_root`: True

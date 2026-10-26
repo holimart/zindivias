@@ -199,6 +199,22 @@
       "CO-UT"
     ]
   },
+  "cv_fold_amendment": {
+    "active_group_ids": [
+      "NV",
+      "CO-UT",
+      "NM",
+      "LA",
+      "AR-KS",
+      "TX-W",
+      "CA-F"
+    ],
+    "excluded_group_ids": [
+      "AZ-R",
+      "OK-R"
+    ],
+    "rule": "Only the seven measured groups in active_group_ids are CV candidates; both groups below the planned robustness threshold are retained in the spec catalog but cannot be selected or counted as folds."
+  },
   "definedness_accounting": {
     "note": "labels are reference-derived values on lab tracts only; no study tract can appear in these tables and no lab value can enter a submission artifact",
     "per_group_per_component_required": [
@@ -218,7 +234,7 @@
     "undefined_is_not_zero": true
   },
   "environment": {
-    "git_commit": "6a11e3c9a87485625e03ca946ea01155afac0e0b",
+    "git_commit": "ad76aa9c096e9f57c3095105b14d34c8a96ddda0",
     "versions": {
       "numpy": "2.5.4",
       "pyarrow": "26.0.0",
@@ -568,11 +584,13 @@
       25.0
     ],
     "exists": true,
-    "file_count": 871,
+    "file_count": 883,
     "files": [
       "staging",
       "staging/AR-KS",
       "staging/AR-KS/defineness.json",
+      "staging/AR-KS/estimators.json",
+      "staging/AR-KS/estimators.parquet",
       "staging/AR-KS/labels.parquet",
       "staging/AR-KS/manifest.json",
       "staging/AR-KS/road_measurement.parquet",
@@ -587,9 +605,7 @@
       "staging/AR-KS/sources/overture/part-00018-f8fb797d-239f-5523-ba36-20d059d5ff2a-c000.zstd.parquet",
       "staging/AR-KS/sources/overture/part-00018-f8fb797d-239f-5523-ba36-20d059d5ff2a-c000.zstd.parquet.provenance.json",
       "staging/AR-KS/sources/overture/part-00020-c7386af9-d7ba-5c82-b095-b781ca7ce8f5-c000.zstd.parquet",
-      "staging/AR-KS/sources/overture/part-00020-c7386af9-d7ba-5c82-b095-b781ca7ce8f5-c000.zstd.parquet.provenance.json",
-      "staging/AR-KS/sources/overture/part-00021-d4f98d77-a95f-554e-8126-cd895cb5c8ab-c000.zstd.parquet",
-      "staging/AR-KS/sources/overture/part-00021-d4f98d77-a95f-554e-8126-cd895cb5c8ab-c000.zstd.parquet.provenance.json"
+      "staging/AR-KS/sources/overture/part-00020-c7386af9-d7ba-5c82-b095-b781ca7ce8f5-c000.zstd.parquet.provenance.json"
     ],
     "inside_repo": false,
     "must_not_contain_repo_paths": [
@@ -600,7 +616,7 @@
     ],
     "promoted_artifacts_present": [],
     "resolved": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/lab",
-    "staged_file_count": 871,
+    "staged_file_count": 883,
     "staging_only": true,
     "tracked_in_git": [],
     "unexpected_root_entries": []
@@ -644,7 +660,7 @@
   "preregistration": {
     "backlog_item": "bias60-external-lab-build",
     "config_path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/config/bias60-lab-preregistered.json",
-    "config_sha256": "8d195030963130be0ff839f6a41a54220dfa1f7c59ea3de3e5061d16d784adad",
+    "config_sha256": "6efee3fd9475e0ec57fda2abaafa8658ce32df65371e055e1f3694d828a3c627",
     "intent": "Freeze the external-lab design of spec section 4 (nine state groups, ~10k tracts, sources and versions, RULES.md recipe with its variants, per-component definedness) and implement the safety rails, so that the build is one reviewed command once -- and only once -- the organiser ruling and the Track A pre-registration allow any lab number to exist. This plan itself downloads nothing and computes no target.",
     "lane": "comp-zindi-bias-bounty",
     "negative_controls_declared": [
@@ -706,9 +722,7 @@
       "poi": "mean of the defined halves; undefined if both halves are undefined",
       "poi_establishments": {
         "allocation_variants": [
-          "ZIP totals x HUD-USPS BUS_RATIO",
-          "county totals x tract share of county HUD business addresses",
-          "county totals x tract share of county housing units"
+          "county totals x tract share of county 2022 ACS5 housing units (B25001_001E); the HUD BUS_RATIO variants are held because the registered endpoint returned HTTP 202"
         ],
         "gap": "clip(1 - N_places/CBP_tract, 0, 1)",
         "undefined_when": "CBP_tract == 0"
@@ -722,7 +736,7 @@
       "road": {
         "gap": "clip(1 - O/T, 0, 1)",
         "observed": "Overture road segments with class in {motorway, trunk, primary, secondary} clipped to the tract",
-        "reference": "TIGER S1100 union S1200 clipped to the tract",
+        "reference": "TIGER2024 county All Roads, filtered to MTFCC S1100/S1200, clipped to the tract",
         "undefined_when": "reference length == 0",
         "variants": [
           "overture filtered vs unfiltered (Sc5)",
@@ -807,6 +821,8 @@
       ],
       "id": "overture_package_release",
       "reader": "pyarrow bbox predicate; DuckDB SIGILLs on this host per DATA-ACCESS.md",
+      "replacement_for": "s3://overturemaps-us-west-2/release/<rel>/",
+      "replacement_reason": "the guessed release-prefix URL returned 404; the public bucket listing with the pinned release prefix answers 200 without reading object content",
       "retrieval_date_utc": null,
       "role": "observed_data",
       "sha256": null,
@@ -816,26 +832,8 @@
         "places/type=place",
         "base/type=infrastructure"
       ],
-      "url": "s3://overturemaps-us-west-2/release/<rel>/",
-      "version_pattern": "same release as the challenge package, identified by matching package building id/version pairs; candidates 2026-08 and 2026-09"
-    },
-    {
-      "downloaded": false,
-      "expected_size_mb": [
-        10,
-        60
-      ],
-      "id": "tiger_prisecroads_2024",
-      "retrieval_date_utc": null,
-      "role": "reference_roads",
-      "sha256": null,
-      "spec_marker": "[V] naming pattern on data.gov",
-      "url": "https://www2.census.gov/geo/tiger/TIGER2024/PRISECRROADS/tl_2024_<ss>_prisecroads.zip",
-      "variants": [
-        "2023",
-        "2025"
-      ],
-      "version_pattern": "tl_2024_<ss>_prisecroads.zip (S1100/S1200)"
+      "url": "https://overturemaps-us-west-2.s3.amazonaws.com/?list-type=2&prefix=release/2026-09-23.1/&max-keys=1",
+      "version_pattern": "anonymous ListObjects V2 HEAD availability check for pinned release 2026-09-23.1; object URLs are separately pinned by the build"
     },
     {
       "downloaded": false,
@@ -844,12 +842,28 @@
         60
       ],
       "id": "tiger_county_roads_check",
+      "replacement_for": "tiger_prisecroads_2024 state PRISECRROADS pattern",
+      "replacement_reason": "the registered state PRISECRROADS paths returned 404; the county All Roads file answers 200 and is the reference used by the road recipe",
+      "retrieval_date_utc": null,
+      "role": "reference_roads",
+      "sha256": null,
+      "spec_marker": "[V]",
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_<ssccc>_roads.zip",
+      "version_pattern": "TIGER2024 county All Roads, filtered to MTFCC S1100/S1200; representative county 32003 HEAD verified 200"
+    },
+    {
+      "downloaded": false,
+      "expected_size_mb": [
+        10,
+        60
+      ],
+      "id": "tiger_county_roads_validation",
       "retrieval_date_utc": null,
       "role": "reference_roads_check",
       "sha256": null,
       "spec_marker": "[V]",
-      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_<ssccc>_roads.zip",
-      "version_pattern": "county All Roads release 2024-08-08, filtered to MTFCC in {S1100, S1200}"
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32031_roads.zip",
+      "version_pattern": "TIGER2024 county All Roads, representative second county 32031 HEAD verified 200"
     },
     {
       "downloaded": false,
@@ -926,16 +940,18 @@
         1,
         100
       ],
-      "id": "cbp_2023",
+      "id": "cbp_2022",
+      "replacement_for": "cbp_2023 Census.gov HTML page",
+      "replacement_reason": "the 2023 page returned HTTP 400 while the official 2022 dataset directory answers 200; this pins the actually reachable version rather than claiming 2023 availability",
       "retrieval_date_utc": null,
       "role": "reference_establishments",
       "sha256": null,
       "spec_marker": "[V]",
-      "url": "https://www.census.gov/data/datasets/time-series/econ/cbp/2023.html",
+      "url": "https://www2.census.gov/programs-surveys/cbp/datasets/2022/",
       "variants": [
         "CBP 2022"
       ],
-      "version_pattern": "cbp23co county file; zbp23totals ZIP totals; released 2025-06-26"
+      "version_pattern": "official www2.census.gov 2022 CBP directory index; use cbp22co where available"
     },
     {
       "downloaded": false,
@@ -943,13 +959,15 @@
         1,
         100
       ],
-      "id": "hud_usps_crosswalk",
+      "id": "acs5_tract_housing_units",
+      "replacement_for": "hud_usps_crosswalk ZIP-to-tract BUS_RATIO endpoint",
+      "replacement_reason": "HUD endpoints returned HTTP 202 to anonymous HEAD; this reachable public ACS endpoint supports the already registered county-total x tract housing-unit-share variant without using BUS_RATIO",
       "retrieval_date_utc": null,
       "role": "allocation_helper",
       "sha256": null,
       "spec_marker": "[M]",
-      "url": "https://www.huduser.gov/portal/datasets/usps_crosswalk.html",
-      "version_pattern": "ZIP to tract BUS_RATIO crosswalk"
+      "url": "https://api.census.gov/data/2022/acs/acs5?get=B25001_001E&for=tract:*&in=state:<ss>",
+      "version_pattern": "2022 ACS 5-year B25001_001E tract housing-unit totals; used only for the preregistered county-total housing-share allocation fallback"
     },
     {
       "downloaded": false,
@@ -958,12 +976,14 @@
         100
       ],
       "id": "hospital_check",
+      "replacement_for": "unaddressable USGS Health/Medical structures or HIFLD source-family placeholder",
+      "replacement_reason": "the previous source family had no URL and could not be probed; this exact public catalogue endpoint answers 200 without fetching dataset content",
       "retrieval_date_utc": null,
       "role": "recipe_identification",
       "sha256": null,
       "spec_marker": "[U]",
-      "url": "USGS Health/Medical structures or HIFLD hospitals",
-      "version_pattern": "compared against the Overture hospital category to reproduce the about 12x ratio"
+      "url": "https://apps.nationalmap.gov/tnmaccess/api/datasets?output=json&formats=Shapefile&q=hospitals",
+      "version_pattern": "USGS TNM dataset-catalogue metadata query for hospitals; HEAD reachability only, not evidence that a usable hospital reference dataset is present"
     }
   ],
   "spec_cross_check": {
@@ -1052,11 +1072,11 @@
     "core_groups": 6,
     "gates_all_passed": true,
     "groups_planned": 9,
-    "lab_files_on_disk": 871,
+    "lab_files_on_disk": 883,
     "lab_promoted_artifacts": [],
-    "lab_staged_files": 871,
+    "lab_staged_files": 883,
     "official_geoids_excluded": 9379,
-    "report_sha256": "05cf3912967f869c6a6c717eb00d48f1bb5ace0eb8c091fb4ad19b51ca1fbdd5",
+    "report_sha256": "b65151d7d6e09b0aa43ee89385de588bab9cd228ddd4d79fa2aaa304495ad15d",
     "sources_registered": 10,
     "study_counties_excluded": 298,
     "template_geoids_excluded": 9794

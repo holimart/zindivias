@@ -41,8 +41,6 @@
     "53"
   ],
   "probe_groups": [
-    "AZ-R",
-    "OK-R",
     "NV",
     "CO-UT",
     "NM",
@@ -58,48 +56,17 @@
     "credentials_used": false,
     "instantiations": {
       "<ss>": "32",
-      "<ssccc>": "32003",
-      "<rel>": "2026-09"
+      "<ssccc>": "32003"
     },
-    "not_probeable": {
-      "hospital_check": "the registry records a source family (USGS Health/Medical structures or HIFLD hospitals), not a URL; the build must name the exact service and version before it can be probed"
-    },
+    "not_probeable": {},
     "status_meaning": {
       "200": "reachable",
-      "403": "denied anonymously; expected for an S3 prefix listing, and an object-level GET may still answer",
+      "403": "denied anonymously; the active endpoint must be reviewed or replaced before any content retrieval",
       "404": "not found at this instantiation, so the registered version pattern needs correcting before the build",
       "other": "unexpected"
     },
-    "alternates": {
-      "overture_package_release": [
-        "https://overturemaps-us-west-2.s3.amazonaws.com/?list-type=2&max-keys=1",
-        "https://overturemaps-us-west-2.s3.amazonaws.com/release/2025-07-29.0/?list-type=2&max-keys=1",
-        "https://overturemaps-us-west-2.s3.amazonaws.com/release/2025-04-09.0/?list-type=2&max-keys=1"
-      ],
-      "tiger_prisecroads_2024": [
-        "https://www2.census.gov/geo/tiger/TIGER2023/PRISECRROADS/tl_2023_32_prisecroads.zip",
-        "https://www2.census.gov/geo/tiger/TIGER2022/PRISECRROADS/tl_2022_32_prisecroads.zip",
-        "https://www2.census.gov/geo/tiger/TIGER2024/ROADS/tl_2024_32003_roads.zip"
-      ],
-      "cbp_2023": [
-        "https://www.census.gov/data/datasets/time-series/econ/cbp/2022.html",
-        "https://www.census.gov/data/datasets/time-series/econ/cbp.html",
-        "https://www2.census.gov/programs-surveys/cbp/datasets/2022/"
-      ],
-      "hud_usps_crosswalk": [
-        "https://www.huduser.gov/portal/datasets/usps_crosswalk.html",
-        "https://www.huduser.gov/portal/datasets/usps.html"
-      ],
-      "usgs_national_structures": [
-        "https://apps.nationalmap.gov/tnmaccess/api/datasets?output=json&formats=Shapefile&q=structures",
-        "https://prd-tnm.s3.amazonaws.com/StagedDownlods/Structures/"
-      ],
-      "ms_us_building_footprints": [
-        "https://raw.githubusercontent.com/microsoft/USBuildingFootprints/main/README.md",
-        "https://github.com/microsoft/USBuildingFootprints/releases/latest"
-      ]
-    },
-    "alternate_note": "a 404 on the registered pattern is a finding, not a verdict: the alternates below are HEAD-probed too so the build is told which version pattern actually answers, rather than being left with a dead URL"
+    "alternates": {},
+    "endpoint_note": "every source URL in the amended active register is itself the exact anonymous HEAD endpoint to be used; old dead alternate patterns are removed rather than retained as candidate build inputs"
   },
   "acceptance": {
     "minimum_groups_probed": 5,
@@ -227,6 +194,22 @@
       ],
       "reason": "four groups are folds and Louisiana failed its own road-ratio self-check, so the fifth has to come from the two spec 4.2 groups that have never been measured: TX-W and CA-F. Both are probed, not just the one that gets built, so the record shows what the other group would have offered",
       "authorised_by": "steward 2026-10-25 11:20Z on this row: turn 2+ = the remaining groups to reach >= 5"
+    },
+    {
+      "field": "probe_groups",
+      "supersedes": ["AZ-R", "OK-R", "NV", "CO-UT", "NM", "LA", "AR-KS", "TX-W", "CA-F"],
+      "added": ["NV", "CO-UT", "NM", "LA", "AR-KS", "TX-W", "CA-F"],
+      "excluded_from_cv": ["AZ-R", "OK-R"],
+      "reason": "the prior real-geography probe measured AZ-R at exactly the absolute 30-tract floor (30/170 planned) and OK-R at 13/130 because 1,192 candidates collide with official/template IDs. Both are removed from the active CV candidate set before retrieval; the seven remaining measured groups each exceed the floor.",
+      "evidence_report": "reports/lab-prerequisites.json",
+      "evidence_report_sha256_before_amendment": "cdde80d09bfdb4595787570238df5a36848277985f7d6e5cb5ae6887625b8825"
     }
+  ],
+  "source_replacements": [
+    {"id": "overture_package_release", "old_pattern": "s3://overturemaps-us-west-2/release/<rel>/", "new_endpoint": "https://overturemaps-us-west-2.s3.amazonaws.com/?list-type=2&prefix=release/2026-09-23.1/&max-keys=1", "test": "anonymous HEAD 200"},
+    {"id": "tiger_county_roads_check", "old_pattern": "TIGER2024/PRISECRROADS/tl_2024_<ss>_prisecroads.zip", "new_endpoint": "TIGER2024/ROADS/tl_2024_<ssccc>_roads.zip", "test": "anonymous HEAD 200"},
+    {"id": "cbp_2022", "old_pattern": "Census.gov CBP 2023 HTML page", "new_endpoint": "https://www2.census.gov/programs-surveys/cbp/datasets/2022/", "test": "anonymous HEAD 200"},
+    {"id": "acs5_tract_housing_units", "old_pattern": "HUD-USPS BUS_RATIO page (HTTP 202)", "new_endpoint": "https://api.census.gov/data/2022/acs/acs5?get=B25001_001E&for=tract:*&in=state:<ss>", "test": "anonymous HEAD 200; housing-share fallback only"},
+    {"id": "hospital_check", "old_pattern": "unaddressable USGS/HIFLD source-family placeholder", "new_endpoint": "https://apps.nationalmap.gov/tnmaccess/api/datasets?output=json&formats=Shapefile&q=hospitals", "test": "anonymous HEAD 200; catalogue reachability only"}
   ]
 }

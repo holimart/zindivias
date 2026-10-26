@@ -248,6 +248,9 @@ def probe_sources(config: dict[str, Any], lab_config: dict[str, Any], *,
         entry: dict[str, Any] = {"id": source["id"], "role": source.get("role"),
                                  "registered_url": source.get("url"), "method": "HEAD",
                                  "content_bytes_read": False, "credentials_used": False}
+        for field in ("replacement_for", "replacement_reason"):
+            if source.get(field):
+                entry[field] = source[field]
         url = source.get("url")
         if not url or source["id"] in settings["not_probeable"]:
             entry.update({"status": None, "probe": "skipped", "probed_from": "not_probed",
@@ -392,6 +395,8 @@ def probe(config: dict[str, Any], lab_config: dict[str, Any], workspace: Path, c
             "spec_sha256": lab_plan.sha256_file(Path(config["spec"]["path"])),
             "spec_sha256_pin": config["spec"]["sha256"],
             "operator_decision_reference": config["operator_decision_reference"],
+            "cv_fold_amendment": lab_config.get("cv_fold_amendment"),
+            "source_replacements": config.get("source_replacements", []),
             "prohibitions": config["prohibitions"], "tamper_applied": tamper,
             "negative_controls_declared": [case["id"] for case in config["negative_controls"]],
         },
@@ -418,7 +423,7 @@ def probe(config: dict[str, Any], lab_config: dict[str, Any], workspace: Path, c
                             "projection": geometry["projection"],
                             "excluded_geoids_in_policy": len(base_policy.excluded_geoids)},
         "candidate_probe": {"groups": groups, "groups_probed": len(groups),
-                            "groups_planned": len(lab_config["groups"]),
+                            "groups_planned": len(config["probe_groups"]),
                             "minimum_accepted_tracts_per_group":
                                 config["acceptance"]["minimum_accepted_tracts_per_group"]},
         "exclusion_policy": policy.summary(),
@@ -516,6 +521,13 @@ def evaluate_gates(report: dict[str, Any], config: dict[str, Any],
             or group["accepted_min_distance_km"] > buffer_km for group in groups),
         "every_planned_group_measured": len(groups) >= config["acceptance"][
             "minimum_groups_probed"] and all(group["candidates_found"] >= 0 for group in groups),
+        "active_cv_groups_match_amendment": (
+            sorted(config["probe_groups"])
+            == sorted(lab_config.get("cv_fold_amendment", {}).get("active_group_ids", []))
+            and len(groups) >= config["acceptance"]["minimum_groups_probed"]
+            and not (set(config["probe_groups"])
+                     & {entry["id"] for entry in
+                        lab_config.get("cv_fold_amendment", {}).get("excluded_from_cv", [])})),
         "shortfalls_disclosed": not undisclosed_shorts and (
             findings["lab_plan_needs_amendment"] is bool(shorted or findings["sources_not_answered"])
             or findings["lab_plan_needs_amendment"] is True) and all(
@@ -569,6 +581,12 @@ def build_report(config: dict[str, Any], *, workspace: Path,
                                                 study_points=[]).excluded_geoids
     floor = config["acceptance"]["minimum_accepted_tracts_per_group"]
     probed_groups = report["candidate_probe"]["groups"]
+    if tamper == "group_without_survivors_reported_as_ready" and probed_groups:
+        probed_groups[0]["accepted"] = floor - 1
+        probed_groups[0]["ready"] = False
+    if tamper == "source_unavailability_hidden" and report["sources"]["probed"]:
+        report["sources"]["probed"][0]["status"] = 503
+        report["sources"]["probed"][0]["meaning"] = "unexpected"
     unanswered = [entry for entry in report["sources"]["probed"]
                   if entry.get("status") != 200 and entry.get("probe") != "skipped"]
     report["findings"] = {
@@ -676,13 +694,15 @@ def render_markdown(report: dict[str, Any]) -> str:
              f"with enough surviving tracts: {summary['groups_ready']}",
              f"- Candidate tracts inspected: {summary['candidates_found']}; accepted by the frozen "
              f"exclusion: {summary['candidates_accepted']}", "", "## Source availability", "",
-             "| source | probe | status | meaning | bytes advertised | alternate that answers |",
+             "| source | probe | status | meaning | bytes advertised | registered replacement |",
              "| --- | --- | --- | --- | --- | --- |"]
     for entry in report["sources"]["probed"]:
         note = entry.get("meaning") or entry.get("reason", "")
+        replacement = (f"replaces `{entry['replacement_for']}`: {entry['replacement_reason']}"
+                       if entry.get("replacement_for") else
+                       str(entry.get("alternate_that_answers")))
         lines.append(f"| `{entry['id']}` | {entry.get('probe')} | {entry.get('status')} | {note} | "
-                     f"{entry.get('content_length_bytes')} | "
-                     f"{entry.get('alternate_that_answers')} |")
+                     f"{entry.get('content_length_bytes')} | {replacement} |")
     lines += ["", "## Candidate tracts after the frozen exclusion", "",
               "| group | states | counties | planned | candidates | accepted | rejected | "
               "min km to a study tract | ready |",

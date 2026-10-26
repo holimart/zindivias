@@ -361,12 +361,13 @@ def cross_check(config: dict[str, Any], parsed: dict[str, Any]) -> dict[str, Any
 _FAMILY_ALIASES = {
     "tiger_tracts": {"tiger_tracts_2020"},
     "overture": {"overture_package_release"},
-    "tiger_prisecroads": {"tiger_prisecroads_2024", "tiger_county_roads_check"},
+    "tiger_prisecroads": {"tiger_prisecroads_2024", "tiger_county_roads_check",
+                           "tiger_county_roads_validation"},
     "microsoft": {"ms_us_building_footprints"},
     "global_ml_variant": {"ms_global_ml_building_footprints"},
     "usgs_structures": {"usgs_national_structures"},
-    "cbp_zbp": {"cbp_2023"},
-    "hud_crosswalk": {"hud_usps_crosswalk"},
+    "cbp_zbp": {"cbp_2023", "cbp_2022"},
+    "hud_crosswalk": {"hud_usps_crosswalk", "acs5_tract_housing_units"},
     "hospital_check": {"hospital_check"},
 }
 

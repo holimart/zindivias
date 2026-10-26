@@ -538,6 +538,12 @@ def build_report(config: dict[str, Any], *, workspace: Path, lab_root: Path,
         "authorization": authorization,
         "groups": config["groups"],
         "core_groups": config["core_groups"],
+        "cv_fold_amendment": {
+            "active_group_ids": config.get("cv_fold_amendment", {}).get("active_group_ids", []),
+            "excluded_group_ids": [entry["id"] for entry in
+                                   config.get("cv_fold_amendment", {}).get("excluded_from_cv", [])],
+            "rule": config.get("cv_fold_amendment", {}).get("rule", ""),
+        },
         "spec_cross_check": findings,
         "source_register": sources,
         "sources": config["sources"],
@@ -579,6 +585,7 @@ def build_report(config: dict[str, Any], *, workspace: Path, lab_root: Path,
     report["gates"]["report_is_strict_json"] = "NaN" not in json.dumps(report)
     report["gates"]["report_has_no_temporal_field"] = not wall_clock_hits({
         "authorization": authorization, "groups": config["groups"],
+        "cv_fold_amendment": report["cv_fold_amendment"],
         "spec_cross_check": findings, "exclusion": exclusion, "lab_root": lab})
     report["gates"]["all_passed"] = all(bool(value) for value in report["gates"].values())
     report["summary"]["gates_all_passed"] = report["gates"]["all_passed"]
@@ -670,6 +677,13 @@ def _render_markdown_body(report: dict[str, Any]) -> str:
     for group in report["groups"]:
         lines.append(f"| {group['id']} | {'/'.join(group['states'])} | {group['approx_tracts']} | "
                      f"{group['transfer_role']} | {len(group['county_includes'])} |")
+    lines.append("")
+    amendment = report["cv_fold_amendment"]
+    lines.append("## Active cross-validation group amendment")
+    lines.append("")
+    lines.append(f"- Active groups: {amendment['active_group_ids']}")
+    lines.append(f"- Excluded from CV: {amendment['excluded_group_ids']}")
+    lines.append(f"- Rule: {amendment['rule']}")
     lines.append("")
     lines.append("## Source register (nothing retrieved yet)")
     lines.append("")
