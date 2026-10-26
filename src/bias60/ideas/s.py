@@ -287,8 +287,13 @@ def _read_component_gap_medians(inputs, regions: list[str], geoids_by_region: di
         for component in COMPONENTS:
             matrices = columns[region][component]
             if matrices:
-                with np.errstate(invalid="ignore"):
-                    output[region][component] = np.nanmedian(np.column_stack(matrices), axis=1)
+                matrix = np.column_stack(matrices)
+                medians = np.full(matrix.shape[0], np.nan, dtype=np.float64)
+                for row, values in enumerate(matrix):
+                    finite = values[np.isfinite(values)]
+                    if finite.size:
+                        medians[row] = float(np.median(finite))
+                output[region][component] = medians
             else:
                 output[region][component] = np.full(len(geoids_by_region[region]), np.nan)
     return output
