@@ -1,0 +1,566 @@
+{
+  "schema_version": 1,
+  "audit": "Mx4 population-weighted leave-one-tract-out county median; label-free unregistered sensitivity screen",
+  "method": {
+    "source": "frozen registered Mx4 B covariate: provided Overture building Esri-only source share",
+    "aggregation": "Within each (region, COUNTYFP), for each focal tract compute the lower population-weighted median of other eligible tracts' Mx4 B source shares; eligible donors have defined share and finite positive provided pop_total. Focal tract omitted from peers.",
+    "weighted_median_definition": "Sort values ascending with stable mergesort and return the first value whose cumulative positive population weight is at least half the peer weight.",
+    "crossfit": "Five region-local folds assigned by SHA-256 of mx4p-conditional-innovation-v1|region|GEOID modulo five. Each fold held out once; fit region-specific OLS with intercept, frozen Mx4 F and S1 lagged-Mx4 F; no labels, tuning or imputation.",
+    "variance_ratio": "Pooled population variance (ddof=0) of held-out residuals divided by the candidate variance on the same jointly defined support.",
+    "nulls": "Undefined if no eligible peer population remains; serialized null with peer_defined=false and excluded from all metrics.",
+    "unregistered_sensitivity_only": true
+  },
+  "scope": {
+    "official_ids": 9379,
+    "exact_geoid_region_partition": true,
+    "candidate_defined_ids": 9347,
+    "candidate_undefined_ids": 32,
+    "candidate_coverage_fraction": 0.9965881224011088,
+    "jointly_defined_for_innovation": 9347,
+    "joint_coverage_fraction": 0.9965881224011088,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "pending_policy_Tm1_Tm4_artifacts_read": false,
+    "removed_or_equivalent_reference_data_read": false,
+    "external_inputs_read": false,
+    "leaderboard_feedback_used": false,
+    "registry_integration": false,
+    "frozen_Mx4_or_S1_modified": false,
+    "uploads": 0
+  },
+  "measure_before": {
+    "population_weighted_mean_coverage": 9347,
+    "population_weighted_mean_coverage_fraction": 0.9965881224011088,
+    "population_weighted_mean_conditional_residual_variance_ratio": 0.006577271031853296,
+    "population_weighted_mean_max_abs_r_before_conditional_innovation": 0.99553044,
+    "frozen_Mx4_S1_unchanged": true
+  },
+  "measure_after": {
+    "candidate_distribution": {
+      "n": 9347,
+      "min": 0.0,
+      "p50": 0.0,
+      "p95": 0.12268188302425106,
+      "max": 0.691436338921613,
+      "mean": 0.027772649577517933,
+      "variance": 0.01467599276953908
+    },
+    "eligible_peer_count_distribution": {
+      "n": 9347,
+      "min": 1.0,
+      "p50": 210.0,
+      "p95": 1091.0,
+      "max": 1092.0,
+      "mean": 383.6127099604151,
+      "variance": 157047.29517599836
+    },
+    "jointly_defined_ids": 9347,
+    "joint_coverage_fraction": 0.9965881224011088,
+    "candidate_variance_on_joint_support": 0.01467599276953908,
+    "pooled_crossfit_residual_variance": 0.0008580468826937733,
+    "pooled_crossfit_residual_variance_ratio": 0.05846601972131671,
+    "crossfit_residual_distribution": {
+      "n": 9347,
+      "min": -0.32275122844798554,
+      "p50": 0.002240427711767769,
+      "p95": 0.029807231337700107,
+      "max": 0.11073139958461983,
+      "mean": 1.2704325187790182e-05,
+      "variance": 0.0008580468826937733
+    },
+    "candidate_pearson_r_with_Mx4_F": 0.934552336673731,
+    "candidate_pearson_r_with_S1_lagged_Mx4_F": 0.9249166691142697,
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "median_defined_ids": 1593,
+        "pairwise_joint_defined_ids": 1593,
+        "joint_coverage_fraction": 1.0,
+        "median_distribution": {
+          "n": 1593,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.4105814739688979,
+          "mean": 0.017489211058419666,
+          "variance": 0.00646279576334271
+        },
+        "eligible_peer_count_distribution": {
+          "n": 1593,
+          "min": 1.0,
+          "p50": 1000.0,
+          "p95": 1000.0,
+          "max": 1001.0,
+          "mean": 689.8543628374136,
+          "variance": 170583.87081743777
+        },
+        "candidate_pearson_r_with_Mx4_F": 0.9988842358470644,
+        "candidate_pearson_r_with_S1_lagged_Mx4_F": 0.9688178746640992,
+        "crossfit_residual_pearson_r_with_Mx4_F": 0.001177856118317038,
+        "crossfit_residual_pearson_r_with_S1_lagged_Mx4_F": 0.002085309757273347,
+        "folds": [
+          {
+            "fold": 0,
+            "train_joint_defined": 1285,
+            "heldout_joint_defined": 308,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              -0.005863207132566027,
+              0.7264464930993438,
+              0.010247726259068335
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.6790415342865683
+          },
+          {
+            "fold": 1,
+            "train_joint_defined": 1266,
+            "heldout_joint_defined": 327,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              -0.005895982742737329,
+              0.7274693332445817,
+              0.010107721195968145
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.5652994676504423
+          },
+          {
+            "fold": 2,
+            "train_joint_defined": 1263,
+            "heldout_joint_defined": 330,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              -0.005951640733842624,
+              0.7259262239564918,
+              0.010120911409214117
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.6665553833027658
+          },
+          {
+            "fold": 3,
+            "train_joint_defined": 1281,
+            "heldout_joint_defined": 312,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              -0.005890054374919463,
+              0.7265932059842615,
+              0.011381432967054628
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.7107697737632233
+          },
+          {
+            "fold": 4,
+            "train_joint_defined": 1277,
+            "heldout_joint_defined": 316,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              -0.005874392341955925,
+              0.7249996195299387,
+              0.012417778015537118
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.7209454474392094
+          }
+        ]
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "median_defined_ids": 587,
+        "pairwise_joint_defined_ids": 587,
+        "joint_coverage_fraction": 0.9932318104906938,
+        "median_distribution": {
+          "n": 587,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0797970479704797,
+          "max": 0.28041543026706234,
+          "mean": 0.017817066334171527,
+          "variance": 0.0029153779011206827
+        },
+        "eligible_peer_count_distribution": {
+          "n": 587,
+          "min": 2.0,
+          "p50": 53.0,
+          "p95": 200.0,
+          "max": 200.0,
+          "mean": 94.43270868824531,
+          "variance": 6293.216511061645
+        },
+        "candidate_pearson_r_with_Mx4_F": 0.9987341920616029,
+        "candidate_pearson_r_with_S1_lagged_Mx4_F": 0.9399674687534979,
+        "crossfit_residual_pearson_r_with_Mx4_F": 0.012147587576075928,
+        "crossfit_residual_pearson_r_with_S1_lagged_Mx4_F": 0.0062226792927769685,
+        "folds": [
+          {
+            "fold": 0,
+            "train_joint_defined": 476,
+            "heldout_joint_defined": 111,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              -0.00012407880544382187,
+              0.7057766554622554,
+              -0.013066570062757021
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.4256343596322486
+          },
+          {
+            "fold": 1,
+            "train_joint_defined": 465,
+            "heldout_joint_defined": 122,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              -0.00024280206257023995,
+              0.6995375790691101,
+              0.0005177892239420778
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.37956439430982597
+          },
+          {
+            "fold": 2,
+            "train_joint_defined": 467,
+            "heldout_joint_defined": 120,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              -0.0001726157290096346,
+              0.7146968624426404,
+              -0.01543062271293194
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.39739689128159716
+          },
+          {
+            "fold": 3,
+            "train_joint_defined": 467,
+            "heldout_joint_defined": 120,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              -0.00021286468926619243,
+              0.7029990217523749,
+              -0.003168241278645456
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.40446357940398586
+          },
+          {
+            "fold": 4,
+            "train_joint_defined": 473,
+            "heldout_joint_defined": 114,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              -0.00022574837064266154,
+              0.6993360113851048,
+              -0.002720634654238774
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.3070573861510922
+          }
+        ]
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "median_defined_ids": 1191,
+        "pairwise_joint_defined_ids": 1191,
+        "joint_coverage_fraction": 0.9991610738255033,
+        "median_distribution": {
+          "n": 1191,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.6774774774774774,
+          "max": 0.691436338921613,
+          "mean": 0.16480068617407764,
+          "variance": 0.08122826967339915
+        },
+        "eligible_peer_count_distribution": {
+          "n": 1191,
+          "min": 1.0,
+          "p50": 36.0,
+          "p95": 264.0,
+          "max": 265.0,
+          "mean": 107.32745591939546,
+          "variance": 11999.877659270727
+        },
+        "candidate_pearson_r_with_Mx4_F": 0.963380870549951,
+        "candidate_pearson_r_with_S1_lagged_Mx4_F": 0.9519389862560473,
+        "crossfit_residual_pearson_r_with_Mx4_F": 0.0027580449448431606,
+        "crossfit_residual_pearson_r_with_S1_lagged_Mx4_F": 0.0018833203974342409,
+        "folds": [
+          {
+            "fold": 0,
+            "train_joint_defined": 950,
+            "heldout_joint_defined": 241,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              -0.012797356478914487,
+              1.2161526340357316,
+              -0.15368579523500647
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.7796294394734972
+          },
+          {
+            "fold": 1,
+            "train_joint_defined": 955,
+            "heldout_joint_defined": 236,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              -0.012917258932286712,
+              1.2075946166956404,
+              -0.1424482629413253
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.8255016062103496
+          },
+          {
+            "fold": 2,
+            "train_joint_defined": 942,
+            "heldout_joint_defined": 249,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              -0.01418098551032791,
+              1.0717701579397219,
+              -0.0080874682637595
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.8022331955446733
+          },
+          {
+            "fold": 3,
+            "train_joint_defined": 948,
+            "heldout_joint_defined": 243,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              -0.013665366517594863,
+              1.1412692976341554,
+              -0.08187751179340341
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.8604563949751823
+          },
+          {
+            "fold": 4,
+            "train_joint_defined": 969,
+            "heldout_joint_defined": 222,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              -0.013521672257567719,
+              1.049075173033709,
+              0.018136742474476497
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.7429920606235458
+          }
+        ]
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "median_defined_ids": 5976,
+        "pairwise_joint_defined_ids": 5976,
+        "joint_coverage_fraction": 0.9955022488755623,
+        "median_distribution": {
+          "n": 5976,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.14290301862556198,
+          "mean": 0.004182464393158035,
+          "variance": 0.00042031164556238044
+        },
+        "eligible_peer_count_distribution": {
+          "n": 5976,
+          "min": 1.0,
+          "p50": 219.0,
+          "p95": 1091.0,
+          "max": 1092.0,
+          "mean": 385.4469544846051,
+          "variance": 148724.21104159497
+        },
+        "candidate_pearson_r_with_Mx4_F": 0.7824928863357022,
+        "candidate_pearson_r_with_S1_lagged_Mx4_F": 0.749131218624962,
+        "crossfit_residual_pearson_r_with_Mx4_F": 0.0030208236545962103,
+        "crossfit_residual_pearson_r_with_S1_lagged_Mx4_F": 0.002491039612070221,
+        "folds": [
+          {
+            "fold": 0,
+            "train_joint_defined": 4811,
+            "heldout_joint_defined": 1165,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              -0.0023181955790101574,
+              0.39381393309159535,
+              -0.09094920078208146
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.5838515217196327
+          },
+          {
+            "fold": 1,
+            "train_joint_defined": 4825,
+            "heldout_joint_defined": 1151,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              -0.002140044692898546,
+              0.4140816648899489,
+              -0.11878182391357006
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.5603873889259146
+          },
+          {
+            "fold": 2,
+            "train_joint_defined": 4770,
+            "heldout_joint_defined": 1206,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              -0.002280439553905718,
+              0.4157176482914394,
+              -0.12047437097404534
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.5961739791603693
+          },
+          {
+            "fold": 3,
+            "train_joint_defined": 4727,
+            "heldout_joint_defined": 1249,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              -0.0022665986126185903,
+              0.3727487908223025,
+              -0.07657016188110377
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.5475657726230576
+          },
+          {
+            "fold": 4,
+            "train_joint_defined": 4771,
+            "heldout_joint_defined": 1205,
+            "coefficients_intercept_mx4_f_s1_lag": [
+              -0.002240427711767769,
+              0.4207165005077619,
+              -0.12030423240752586
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.5557583648389445
+          }
+        ]
+      }
+    }
+  },
+  "acceptance_thresholds": {
+    "candidate_coverage_minimum": 0.9859,
+    "bounds_inclusive": [
+      0.0,
+      1.0
+    ],
+    "residual_variance_ratio_minimum": 0.1,
+    "absolute_pearson_correlation_maximum_exclusive": 0.8
+  },
+  "acceptance": {
+    "exact_9379_geoid_region_partition": true,
+    "coverage_at_least_98_59_percent": true,
+    "values_finite_and_in_0_1": true,
+    "pooled_crossfit_residual_variance_ratio": 0.05846601972131671,
+    "residual_variance_at_least_10_percent": false,
+    "pearson_r_Mx4_F": 0.934552336673731,
+    "abs_pearson_below_0_8_Mx4_F": false,
+    "pearson_r_S1_lagged_Mx4_F": 0.9249166691142697,
+    "abs_pearson_below_0_8_S1_lagged_Mx4_F": false,
+    "frozen_Mx4_S1_and_registry_unchanged": true,
+    "acceptance_pass": false
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "frozen_input_artifacts": {
+      "Mx4": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx4.parquet",
+        "sha256": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+        "sha256_after": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af"
+      },
+      "S1": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/S1.parquet",
+        "sha256": "632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03",
+        "sha256_after": "632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03"
+      }
+    },
+    "strata_inputs": {
+      "maricopa-az": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+        "sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd",
+        "columns_read": [
+          "GEOID",
+          "COUNTYFP",
+          "pop_total"
+        ]
+      },
+      "northern-ca": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+        "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+        "columns_read": [
+          "GEOID",
+          "COUNTYFP",
+          "pop_total"
+        ]
+      },
+      "eastern-ok": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+        "sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54",
+        "columns_read": [
+          "GEOID",
+          "COUNTYFP",
+          "pop_total"
+        ]
+      },
+      "south-central-tx": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+        "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354",
+        "columns_read": [
+          "GEOID",
+          "COUNTYFP",
+          "pop_total"
+        ]
+      }
+    },
+    "registry_sha256_before": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "registry_sha256_after": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "harness_report_sha256": "1203d2acf10fa9682852abba3382d55f53c42b6fa7c03071c44cbe915d3f7a85",
+    "mean_baseline_report_sha256": "aa9dfc7f0e534ff78eaa9df6a8d7d6d3ce38ac26967fc7d5384c525ecb455a6f",
+    "conditional_innovation_baseline_report_sha256": "a44c6055f948015903ef7e6fd8ba306717c4b745a0bf7446f7112b9618a1f775",
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/mx4-population-weighted-median/mx4-population-weighted-median.parquet",
+      "rows": 9379,
+      "sha256": "387f6bdfb38da952788e509198afaa9246d41e3d8f2e5a04627c9696518b87f0",
+      "columns": [
+        "GEOID",
+        "region",
+        "peer_population_weighted_median_share",
+        "peer_defined",
+        "eligible_peer_count",
+        "mx4_b_source_share",
+        "mx4_b_defined",
+        "mx4_f_county_source_share",
+        "mx4_f_defined",
+        "s1_lagged_mx4_f",
+        "s1_lag_defined",
+        "fold",
+        "jointly_defined",
+        "crossfit_prediction",
+        "crossfit_residual"
+      ],
+      "deterministic_bytes": true
+    },
+    "selected_emission_sha256": {
+      "Mx4_B": "d799de206f60835058c026fecf699256ca2ff42a0959a93a501d26b315cb2ed6",
+      "Mx4_F": "13ca669c349b48e29003bdd71c40652da2659124e164880b62035d7a75e77f7c",
+      "S1_lagged_Mx4_F": "a42f98c3227968863f126484258b12274b3bf7e75255afc3b67e99a6ddee1195"
+    },
+    "script_sha256": "1bc1eea02b1a9123e5da107f37af570a689ac9fede92045e0e7f22e7e7fcf8e8"
+  },
+  "interpretation": "At least one specified coverage, residual-variance, or correlation gate fails; do not integrate or promote the median sensitivity and leave frozen Mx4/S1 unchanged."
+}
