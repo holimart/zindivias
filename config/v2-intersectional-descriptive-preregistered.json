@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0.0",
+  "audit_id": "v2-intersectional-descriptive-audit",
+  "backlog_item": "bias-v2-intersectional-strata-audit",
+  "title": "Intersectional descriptive distribution of the frozen V2 composite across provided strata",
+  "intent": "Descriptive screen of the frozen model prediction distribution across intersections of provided region, urban/rural, vulnerability, tribal, and hazard strata. Not target validation, accuracy assessment, causal analysis, or operational claim.",
+  "candidate": {
+    "id": "V2_model",
+    "artifact": "reports/candidates/V2_model.csv",
+    "score_column": "coverage_gap_score",
+    "official_scored_rows": 9379,
+    "official_regions": ["eastern-ok", "maricopa-az", "northern-ca", "south-central-tx"]
+  },
+  "frozen_pins": {
+    "mask_config": "config/v2-component-mask-audit-preregistered.json",
+    "mask_audit": "reports/v2-defined-mask-audit.json",
+    "strata_config": "config/v2-strata-descriptive-preregistered.json",
+    "strata_report": "reports/v2-strata-descriptive-audit.json",
+    "provenance_manifest": "reports/candidates/v2_input_provenance_manifest.json"
+  },
+  "cell_threshold": 30,
+  "intersection_families": [
+    {
+      "id": "region_urban_svi_cvi_tribal_drought",
+      "axes": ["region", "urban_rural.ur_class", "svi.svi_overall_band", "cvi.cvi_overall_band", "tribal.tribal_any", "hazard_drought.usdm_summer_pct_d2plus_band"]
+    },
+    {
+      "id": "region_urban_svi_cvi_tribal_wildfire",
+      "axes": ["region", "urban_rural.ur_class", "svi.svi_overall_band", "cvi.cvi_overall_band", "tribal.tribal_any", "hazard_wildfire.usfs_flep8_band"]
+    },
+    {
+      "id": "region_urban_svi_cvi_tribal_heat",
+      "axes": ["region", "urban_rural.ur_class", "svi.svi_overall_band", "cvi.cvi_overall_band", "tribal.tribal_any", "hazard_heat.gehe_wbgt30_days_band"]
+    },
+    {
+      "id": "region_urban_svi_cvi_tribal_flood",
+      "axes": ["region", "urban_rural.ur_class", "svi.svi_overall_band", "cvi.cvi_overall_band", "tribal.tribal_any", "hazard_flood.carbonplan_rps_2011_band"]
+    }
+  ],
+  "statistics": {
+    "cell_summary": "count and arithmetic mean/sample standard deviation of the frozen V2 score; score summaries are emitted only for cells with count >= cell_threshold",
+    "metric": "maximum absolute pairwise standardized mean difference among eligible cells within each intersection family; reported overall maximum is the maximum of those family maxima",
+    "standardized_mean_difference": "abs(mean_a - mean_b) / sqrt(((n_a - 1) * sd_a^2 + (n_b - 1) * sd_b^2) / (n_a + n_b - 2)); sample standard deviations use ddof=1",
+    "comparison_scope": "all unordered pairs of distinct eligible observed cells within the same intersection family; no comparisons across different hazard-family partitions",
+    "missing_policy": "Use the existing v2-strata-descriptive-preregistered.json labels and assign_label rules. Missing/undefined provided values are explicit categories; never impute or silently drop a scored GEOID.",
+    "zero_cell_policy": "Report observed cells (count > 0) as eligible or suppressed. Unobserved Cartesian combinations have count zero and are counted separately, not represented as observed cells.",
+    "interpretation": "Purely descriptive differences among model predictions; no organizer targets, inferential significance, causal effect, or operational impact is implied."
+  },
+  "prohibitions": {
+    "organizer_targets_or_labels_used": false,
+    "leaderboard_values_used": false,
+    "removed_reference_layers_or_equivalents_used": false,
+    "external_data_used": false,
+    "per_cell_fitting_or_tuning_performed": false,
+    "causal_or_operational_claims_made": false,
+    "candidate_modified": false,
+    "upload_performed": false
+  },
+  "acceptance": {
+    "candidate_matches_manifest_and_build_hashes": true,
+    "scores_finite_in_unit_interval": true,
+    "all_scored_ids_covered_exactly_once": true,
+    "every_score_has_at_least_one_defined_component": true,
+    "all_observed_cells_reported_or_explicitly_suppressed": true,
+    "eligible_threshold_respected": true,
+    "all_pairs_of_eligible_cells_compared": true,
+    "no_forbidden_data_or_target_claims": true,
+    "deterministic_output": true,
+    "all_passed": true
+  }
+}
