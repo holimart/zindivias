@@ -72,7 +72,9 @@
     "orthogonality_refresh": "python scripts/report_ideas_orthogonality.py",
     "orthogonality_result": "PASS; 29 columns evaluated, 27 included, 3 pair flags, 10 VIF flags",
     "x5_harness": "python scripts/run_bias60_ideas.py --only X5 --out $COMPETITION_WORKSPACE/ideas/x5-harness.json",
-    "x5_harness_result": "PASS; contract-valid R/F outputs for all 9,379 official GEOIDs (18,758 component rows)"
+    "x5_harness_result": "PASS; contract-valid R/F outputs for all 9,379 official GEOIDs (18,758 component rows)",
+    "full_test_suite": "COMPETITION_WORKSPACE=$COMPETITION_WORKSPACE uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with pyproj==3.8.0 --with pyshp --with pytest python -m pytest -q",
+    "full_test_result": "639 passed, 317 subtests passed"
   },
   "code_commit": "c8166fecf26560b8624593aa50a43c401652c457"
 }
