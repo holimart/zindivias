@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "audit": "Pooled Mx5 hierarchical region-median fallback after county imputation; label-free sensitivity, not integration",
+  "method": {
+    "fallback": "Only county-tier undefined GEOIDs are considered. Fill from the median of original observed pooled-Mx5 shares in the same named study region, excluding the target GEOID; require at least 30 other observed donors.",
+    "donors": "Original observed values only (`observed_defined=true` in the county-peer artifact); county-imputed values are preserved but never donate to regional fallback.",
+    "hierarchy": "Original observed > previously accepted county-peer imputation > region-median imputation > null. Existing higher-priority values are copied unchanged.",
+    "null_semantics": "If fewer than 30 observed regional donors exist, retain null with defined=false; never substitute zero.",
+    "feature": "Pooled Mx5 education-name school-taxonomy-mismatch share; bounded [0,1].",
+    "minimum_other_observed_region_peers": 30
+  },
+  "measure_before": {
+    "official_ids": 9379,
+    "county_defined_ids": 9322,
+    "county_imputed_ids": 1011,
+    "remaining_null_ids": 57,
+    "county_coverage_fraction": 0.9939225930269752,
+    "region_fallback_ids": 0
+  },
+  "measure_after": {
+    "official_ids": 9379,
+    "observed_ids": 8311,
+    "county_imputed_ids": 1011,
+    "region_imputed_ids": 57,
+    "remaining_null_ids": 0,
+    "final_defined_ids": 9379,
+    "final_coverage_fraction": 1.0,
+    "additional_region_imputation_fraction": 0.006077406973024843,
+    "final_value_distribution": {
+      "n": 9379,
+      "min": 0.0,
+      "p50": 0.4444444444444444,
+      "p95": 1.0,
+      "max": 1.0,
+      "mean": 0.432049102403905
+    },
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "observed_ids": 1363,
+        "county_imputed_ids": 228,
+        "region_imputed_ids": 2,
+        "remaining_null_ids": 0,
+        "final_defined_ids": 1593,
+        "final_coverage_fraction": 1.0,
+        "additional_region_imputation_fraction_of_region": 0.0012554927809165098,
+        "observed_donor_count": 1363,
+        "observed_donor_median": 0.42857142857142855,
+        "region_imputed_donor_count_min": 1363,
+        "region_imputed_donor_count_max": 1363,
+        "final_value_distribution": {
+          "n": 1593,
+          "min": 0.0,
+          "p50": 0.4494949494949495,
+          "p95": 1.0,
+          "max": 1.0,
+          "mean": 0.4241453694576504
+        }
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "observed_ids": 550,
+        "county_imputed_ids": 41,
+        "region_imputed_ids": 0,
+        "remaining_null_ids": 0,
+        "final_defined_ids": 591,
+        "final_coverage_fraction": 1.0,
+        "additional_region_imputation_fraction_of_region": 0.0,
+        "observed_donor_count": 550,
+        "observed_donor_median": 0.3333333333333333,
+        "region_imputed_donor_count_min": null,
+        "region_imputed_donor_count_max": null,
+        "final_value_distribution": {
+          "n": 591,
+          "min": 0.0,
+          "p50": 0.3333333333333333,
+          "p95": 1.0,
+          "max": 1.0,
+          "mean": 0.3605950354021263
+        }
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "observed_ids": 1050,
+        "county_imputed_ids": 130,
+        "region_imputed_ids": 12,
+        "remaining_null_ids": 0,
+        "final_defined_ids": 1192,
+        "final_coverage_fraction": 1.0,
+        "additional_region_imputation_fraction_of_region": 0.010067114093959731,
+        "observed_donor_count": 1050,
+        "observed_donor_median": 0.5,
+        "region_imputed_donor_count_min": 1050,
+        "region_imputed_donor_count_max": 1050,
+        "final_value_distribution": {
+          "n": 1192,
+          "min": 0.0,
+          "p50": 0.5,
+          "p95": 1.0,
+          "max": 1.0,
+          "mean": 0.4392017961375083
+        }
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "observed_ids": 5348,
+        "county_imputed_ids": 612,
+        "region_imputed_ids": 43,
+        "remaining_null_ids": 0,
+        "final_defined_ids": 6003,
+        "final_coverage_fraction": 1.0,
+        "additional_region_imputation_fraction_of_region": 0.007163085124104614,
+        "observed_donor_count": 5348,
+        "observed_donor_median": 0.4444444444444444,
+        "region_imputed_donor_count_min": 5348,
+        "region_imputed_donor_count_max": 5348,
+        "final_value_distribution": {
+          "n": 6003,
+          "min": 0.0,
+          "p50": 0.45454545454545453,
+          "p95": 1.0,
+          "max": 1.0,
+          "mean": 0.4397609113745828
+        }
+      }
+    }
+  },
+  "scope": {
+    "official_ids": 9379,
+    "exact_official_geoid_region_partition": true,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_reference_data_read": false,
+    "external_data_read": false,
+    "leaderboard_feedback_used": false,
+    "frozen_Mx5_modified": false,
+    "automatic_integration_or_registry_change": false,
+    "uploads": 0
+  },
+  "acceptance_thresholds": {
+    "final_coverage_minimum": 0.999,
+    "additional_region_imputation_fraction_maximum": 0.007,
+    "minimum_other_observed_region_peers": 30
+  },
+  "acceptance": {
+    "exact_official_geoid_region_partition": true,
+    "final_coverage_at_least_99_9_percent": true,
+    "additional_region_imputations_at_most_0_7_percent": true,
+    "every_region_fallback_has_at_least_30_other_observed_region_peers": true,
+    "observed_values_preserved_exactly": true,
+    "county_imputed_values_preserved_exactly": true,
+    "remaining_undefined_values_remain_null": true,
+    "all_defined_values_finite_and_in_0_1": true,
+    "county_artifact_and_frozen_Mx5_unchanged": true,
+    "acceptance_pass": true
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "7138951b53cecabf981295c57ae067a73785c7c94f2a0d4bad2614d5a61c3ab9",
+    "county_peer_source_report": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/mx5-county-peer-imputation.json",
+      "sha256": "d3a994f380eb937f1e996f43ed8dd68ad0755ccb569c07ae1ebb3956495d9043"
+    },
+    "county_peer_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/mx5-county-peer-imputation/county-peer-mx5.parquet",
+      "sha256": "3363869ddf2ecaa05f09fe0b07bb24cb70d9310f564625afcbc0903ab165d77f",
+      "sha256_after": "3363869ddf2ecaa05f09fe0b07bb24cb70d9310f564625afcbc0903ab165d77f",
+      "rows": 9379
+    },
+    "frozen_Mx5_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx5.parquet",
+      "sha256": "2201d3a99d9c539fe94c72f0b2b800f7696f1bd7aaf0dac2327fb20802be01b8",
+      "sha256_after": "2201d3a99d9c539fe94c72f0b2b800f7696f1bd7aaf0dac2327fb20802be01b8"
+    },
+    "script_sha256": "edb797fa04c40c2a3b832d077e6f60c23571db284ade6000cb11926812aeb399"
+  },
+  "output_artifact": {
+    "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/mx5-region-fallback/region-fallback-mx5.parquet",
+    "rows": 9379,
+    "sha256": "cffb8c3084d6dba069ad87748e948e13f1c4d85a123d4edaf4563ecbc033fdf1",
+    "columns": [
+      "GEOID",
+      "region",
+      "observed_share",
+      "observed_defined",
+      "county_peer_share",
+      "county_defined",
+      "county_imputed",
+      "region_median_if_imputed",
+      "region_observed_donor_count",
+      "region_imputed",
+      "final_share",
+      "final_defined"
+    ],
+    "deterministic_bytes": true
+  },
+  "interpretation": "Region fallback meets the registered coverage and imputation bounds; preserve as a separately reviewed sensitivity only, without modifying or automatically integrating frozen Mx5."
+}
