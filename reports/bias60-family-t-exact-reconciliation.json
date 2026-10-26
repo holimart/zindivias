@@ -1,7 +1,7 @@
 {
   "family": "T",
-  "version": "exact-recipe-reconciliation-progress-v2",
-  "scope": "provided-data schema preflight; no v2 estimator execution yet",
+  "version": "exact-recipe-reconciliation-progress-v3",
+  "scope": "provided-data exact T1-v2 build; T2-T4 remain pending",
   "official_scored_rows": 9379,
   "regions": {
     "maricopa-az": {
@@ -366,19 +366,126 @@
     }
   },
   "measure_after": {
-    "exact_recipes": 0,
-    "v2_artifacts_emitted": [],
+    "exact_recipes": 1,
+    "exact_recipes_total": 4,
+    "v2_artifacts_emitted": [
+      {
+        "id": "T1-v2",
+        "base_id": "T1",
+        "version": 2,
+        "family": "T",
+        "status": "implemented_exact_recipe",
+        "path": "ideas/T1-v2.parquet",
+        "sha256": "508a885905e6ba269c72aa421ca848bc26363b60fb2f0030c7bd520bfd1288cc",
+        "official_rows": 9379,
+        "defined_rows": 2057,
+        "defined_rows_by_region": {
+          "maricopa-az": 319,
+          "northern-ca": 156,
+          "eastern-ok": 279,
+          "south-central-tx": 1303
+        },
+        "recipe": "same name.primary or route identity; join shared connectors only below 30-degree deflection; per-tract drop ratio for strokes with >=70% named-class length outside the tract"
+      }
+    ],
     "coverage_and_orthogonality_refreshed": false
   },
   "implementation_progress": {
-    "T1": "Added and unit-tested a pure stroke-component primitive that joins identical identities only at shared connectors with strict deflection <30 degrees. It is not yet integrated with road geometry/tract lengths; T1 is not exact.",
+    "T1": "Implemented and built T1-v2 using the strict <30-degree identity-connected stroke rule; defined coverage is reported by region.",
     "T2": "No v2 implementation yet.",
     "T3": "No v2 implementation yet.",
-    "T4": "No v2 implementation yet; centroid input remains unresolved."
+    "T4": "No v2 implementation yet; supplied centroid interpretation remains unresolved."
   },
   "prohibitions": {
-    "row_payload_read": false,
+    "provided_row_payload_read": true,
     "labels_or_reference_layers_used": false,
-    "leaderboard_or_upload_used": false
+    "leaderboard_or_upload_used": false,
+    "v1_artifacts_overwritten": false
+  },
+  "T1_v2_coverage_by_region": {
+    "maricopa-az": {
+      "official_rows": 1593,
+      "defined_rows": 319,
+      "undefined_rows": 1274,
+      "diagnostics": {
+        "identity": "same names.primary, fallback same routes.network/ref",
+        "deflection_limit_degrees": 30.0,
+        "deflection_comparison": "strictly less than 30 degrees",
+        "outside_named_share_threshold": 0.7,
+        "rows_read": 1170165,
+        "segments_with_identity_and_geometry": 477336,
+        "length_crs": "EPSG:5070",
+        "no_target_or_reference_data_read": true
+      }
+    },
+    "northern-ca": {
+      "official_rows": 591,
+      "defined_rows": 156,
+      "undefined_rows": 435,
+      "diagnostics": {
+        "identity": "same names.primary, fallback same routes.network/ref",
+        "deflection_limit_degrees": 30.0,
+        "deflection_comparison": "strictly less than 30 degrees",
+        "outside_named_share_threshold": 0.7,
+        "rows_read": 479596,
+        "segments_with_identity_and_geometry": 185568,
+        "length_crs": "EPSG:5070",
+        "no_target_or_reference_data_read": true
+      }
+    },
+    "eastern-ok": {
+      "official_rows": 1192,
+      "defined_rows": 279,
+      "undefined_rows": 913,
+      "diagnostics": {
+        "identity": "same names.primary, fallback same routes.network/ref",
+        "deflection_limit_degrees": 30.0,
+        "deflection_comparison": "strictly less than 30 degrees",
+        "outside_named_share_threshold": 0.7,
+        "rows_read": 1037555,
+        "segments_with_identity_and_geometry": 428542,
+        "length_crs": "EPSG:5070",
+        "no_target_or_reference_data_read": true
+      }
+    },
+    "south-central-tx": {
+      "official_rows": 6003,
+      "defined_rows": 1303,
+      "undefined_rows": 4700,
+      "diagnostics": {
+        "identity": "same names.primary, fallback same routes.network/ref",
+        "deflection_limit_degrees": 30.0,
+        "deflection_comparison": "strictly less than 30 degrees",
+        "outside_named_share_threshold": 0.7,
+        "rows_read": 4122701,
+        "segments_with_identity_and_geometry": 1675644,
+        "length_crs": "EPSG:5070",
+        "no_target_or_reference_data_read": true
+      }
+    }
+  },
+  "T1_v2_artifact": {
+    "id": "T1-v2",
+    "base_id": "T1",
+    "version": 2,
+    "family": "T",
+    "status": "implemented_exact_recipe",
+    "path": "ideas/T1-v2.parquet",
+    "sha256": "508a885905e6ba269c72aa421ca848bc26363b60fb2f0030c7bd520bfd1288cc",
+    "official_rows": 9379,
+    "defined_rows": 2057,
+    "defined_rows_by_region": {
+      "maricopa-az": 319,
+      "northern-ca": 156,
+      "eastern-ok": 279,
+      "south-central-tx": 1303
+    },
+    "recipe": "same name.primary or route identity; join shared connectors only below 30-degree deflection; per-tract drop ratio for strokes with >=70% named-class length outside the tract"
+  },
+  "validation": {
+    "test_command": "uv run --python 3.12.3 --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with pyproj==3.8.0 --with pytest python -m pytest tests/test_family_t_exact.py tests/test_bias60_family_t.py -q",
+    "test_output": "14 passed",
+    "artifact_checks": "9,379 unique official GEOIDs; 2,057 defined; SHA-256 verified; all T1-T4 v1 hashes re-verified unchanged",
+    "orthogonality_refresh": "not run; remaining T2-v2 through T4-v2 are incomplete"
   }
 }

@@ -41,6 +41,50 @@ def test_stroke_does_not_cross_semantic_identity_or_unconnected_junctions():
     assert len(set(labels)) == 3
 
 
+def test_t1_exact_runs_end_to_end_on_a_synthetic_named_stroke(tmp_path):
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+    import shapely
+    from bias60.ideas.t_exact import t1_exact
+
+    coordinates = [(-0.02, 0.0), (0.004, 0.0), (0.006, 0.0), (0.02, 0.0)]
+    rows = []
+    classes = ["primary", "tertiary", "primary"]
+    for i, cls in enumerate(classes):
+        rows.append({
+            "class": cls, "names": {"primary": "Test Highway"}, "routes": [],
+            "connectors": [{"connector_id": f"n{i}", "at": 0.0},
+                           {"connector_id": f"n{i+1}", "at": 1.0}],
+            "geometry": shapely.to_wkb(shapely.LineString(coordinates[i:i+2])),
+        })
+    road_path = tmp_path / "roads.parquet"
+    pq.write_table(pa.Table.from_pylist(rows), road_path)
+
+    class Inputs:
+        region = "unit-test"
+        geoids = ["00000000001"]
+        config = {"seeds": {"T1": {
+            "named_classes": ["motorway", "trunk", "primary", "secondary"],
+            "outside_named_share_threshold": 0.7,
+            "unfiltered_layer": "roads-unfiltered",
+        }}}
+        filesystem = __import__("pyarrow.fs", fromlist=["LocalFileSystem"]).LocalFileSystem()
+        accessed = {"layers": [], "parquet_columns": []}
+        def layer_path(self, layer):
+            assert layer == "roads-unfiltered"
+            return str(road_path)
+        def tract_geometries(self):
+            import numpy as np
+            return np.asarray([shapely.box(0.0, -0.01, 0.01, 0.01)], dtype=object)
+
+    output = t1_exact(Inputs())
+    emission = output.emissions[0]
+    assert output.idea_id == "T1-v2"
+    assert emission.defined.tolist() == [True]
+    assert 0.0 < emission.values[0] < 1.0
+    assert output.diagnostics["deflection_limit_degrees"] == 30.0
+
+
 def test_recipe_preflight_requires_the_frozen_inputs_without_claiming_conformance():
     roads = {"class", "names", "routes", "connectors", "subclass", "road_flags",
              "rail_flags", "level_rules", "geometry"}
@@ -69,3 +113,13 @@ def test_preflight_keeps_all_four_v1_fidelity_gaps_explicit():
     assert set(preflight.KNOWN_V1_GAPS) == {"T1", "T2", "T3", "T4"}
     assert all(config["seeds"][idea] for idea in preflight.KNOWN_V1_GAPS)
     assert all("v1" in value for value in preflight.KNOWN_V1_GAPS.values())
+
+
+def test_versioned_family_registry_keeps_pending_recipes_visible():
+    registry = __import__("json").loads(
+        (ROOT / "config/bias60-family-t-exact-registry.json").read_text())
+    entries = {entry["id"]: entry for entry in registry["entries"]}
+    assert set(entries) == {"T1-v2", "T2-v2", "T3-v2", "T4-v2"}
+    assert entries["T1-v2"]["status"] == "implemented_exact_recipe"
+    assert entries["T1-v2"]["official_rows"] == 9379
+    assert all(entries[f"T{i}-v2"]["status"] == "pending" for i in (2, 3, 4))
