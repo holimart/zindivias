@@ -1,0 +1,311 @@
+{
+  "schema_version": 1,
+  "screen": "Tm5 POI version-zero share × Mx4 F source-context interaction; unregistered sensitivity",
+  "inputs": {
+    "Tm5": "Registered Tm5 Est covariate:tm5_poi_version0_share, the provided Overture POI share whose version is 0 (new this release); this naturally bounded [0,1] share is used as the specified place-version churn input.",
+    "Mx4": "Frozen registered Mx4 F covariate (county building source share), naturally bounded [0,1].",
+    "formula": "interaction = clip(Tm5_poi_version0_share,0,1) * clip(Mx4_F,0,1); comparison baseline is clipped Tm5 input on the pairwise-defined support."
+  },
+  "scope": {
+    "official_ids": 9379,
+    "exact_id_alignment": true,
+    "Tm5_defined_ids": 9377,
+    "Mx4_defined_ids": 9379,
+    "pairwise_defined_ids": 9377,
+    "pairwise_coverage_fraction": 0.9997867576500693,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "Tm1_or_Tm4_inputs_or_artifacts_read": false,
+    "removed_or_equivalent_reference_data_read": false,
+    "external_inputs_read": false,
+    "leaderboard_feedback_used": false,
+    "registry_integration": false,
+    "frozen_Tm5_or_Mx4_modified": false,
+    "uploads": 0
+  },
+  "measure_before": {
+    "Tm2_Tm3_Tm5_maximum_region_NMI": 0.4504048379892671,
+    "Tm2_Tm3_Tm5_source_partition_exact": true,
+    "no_prior_Tm5_Mx4_interaction_measured": true,
+    "Tm5_source_distribution": {
+      "n": 9377,
+      "min": 0.0,
+      "p50": 0.0,
+      "p90": 0.0,
+      "p95": 0.0,
+      "max": 0.0,
+      "mean": 0.0
+    },
+    "Mx4_source_distribution": {
+      "n": 9379,
+      "min": 0.0,
+      "p50": 0.0,
+      "p90": 0.10477726666777439,
+      "p95": 0.29456562941521075,
+      "max": 0.6143039330945795,
+      "mean": 0.04206103511116616
+    }
+  },
+  "measure_after": {
+    "pairwise_defined_ids": 9377,
+    "pairwise_coverage_fraction": 0.9997867576500693,
+    "Tm5_clip_count": 0,
+    "Mx4_clip_count": 0,
+    "interaction_distribution": {
+      "n": 9377,
+      "min": 0.0,
+      "p50": 0.0,
+      "p90": 0.0,
+      "p95": 0.0,
+      "max": 0.0,
+      "mean": 0.0
+    },
+    "absolute_change_from_tm5": {
+      "n": 9377,
+      "min": 0.0,
+      "p50": 0.0,
+      "p90": 0.0,
+      "p95": 0.0,
+      "max": 0.0,
+      "mean": 0.0
+    },
+    "changed_ids": 0,
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "tm5_defined_ids": 1593,
+        "mx4_defined_ids": 1593,
+        "pairwise_defined_ids": 1593,
+        "pairwise_coverage_fraction": 1.0,
+        "tm5_place_version0_share": {
+          "n": 1593,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "mx4_f_source_share": {
+          "n": 1593,
+          "min": 0.0,
+          "p50": 0.011455566251921123,
+          "p90": 0.011455566251921123,
+          "p95": 0.011455566251921123,
+          "max": 0.5324098239371093,
+          "mean": 0.03171927244785461
+        },
+        "interaction": {
+          "n": 1593,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "absolute_change_from_tm5": {
+          "n": 1593,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "changed_ids": 0
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "tm5_defined_ids": 591,
+        "mx4_defined_ids": 591,
+        "pairwise_defined_ids": 591,
+        "pairwise_coverage_fraction": 1.0,
+        "tm5_place_version0_share": {
+          "n": 591,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "mx4_f_source_share": {
+          "n": 591,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.11204476515251427,
+          "p95": 0.11204476515251427,
+          "max": 0.44783599088838266,
+          "mean": 0.026406218676665736
+        },
+        "interaction": {
+          "n": 591,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "absolute_change_from_tm5": {
+          "n": 591,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "changed_ids": 0
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "tm5_defined_ids": 1192,
+        "mx4_defined_ids": 1192,
+        "pairwise_defined_ids": 1192,
+        "pairwise_coverage_fraction": 1.0,
+        "tm5_place_version0_share": {
+          "n": 1192,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "mx4_f_source_share": {
+          "n": 1192,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.6143039330945795,
+          "p95": 0.6143039330945795,
+          "max": 0.6143039330945795,
+          "mean": 0.16736733081595326
+        },
+        "interaction": {
+          "n": 1192,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "absolute_change_from_tm5": {
+          "n": 1192,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "changed_ids": 0
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "tm5_defined_ids": 6001,
+        "mx4_defined_ids": 6003,
+        "pairwise_defined_ids": 6001,
+        "pairwise_coverage_fraction": 0.9996668332500417,
+        "tm5_place_version0_share": {
+          "n": 6001,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "mx4_f_source_share": {
+          "n": 6003,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.10477726666777439,
+          "p95": 0.10477726666777439,
+          "max": 0.2803958283816138,
+          "mean": 0.02146488651135588
+        },
+        "interaction": {
+          "n": 6001,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "absolute_change_from_tm5": {
+          "n": 6001,
+          "min": 0.0,
+          "p50": 0.0,
+          "p90": 0.0,
+          "p95": 0.0,
+          "max": 0.0,
+          "mean": 0.0
+        },
+        "changed_ids": 0
+      }
+    }
+  },
+  "acceptance_thresholds": {
+    "minimum_pairwise_coverage": 0.9859,
+    "interaction_bounds_inclusive": [
+      0.0,
+      1.0
+    ],
+    "minimum_p95_absolute_change": 0.01
+  },
+  "acceptance": {
+    "exact_9379_geoid_region_alignment": true,
+    "pairwise_defined_ids": 9377,
+    "pairwise_coverage_fraction": 0.9997867576500693,
+    "pairwise_coverage_at_least_98_59_percent": true,
+    "all_interaction_values_finite_and_in_0_1": true,
+    "p95_absolute_change_from_existing_tm5": 0.0,
+    "p95_absolute_change_at_least_0_01": false,
+    "acceptance_pass": false
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "frozen_inputs": {
+      "Tm5": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Tm5.parquet",
+        "sha256": "ae363dff82f4ee47546485f45cd71250150a402479718795b0247585efdfe45e",
+        "sha256_after": "ae363dff82f4ee47546485f45cd71250150a402479718795b0247585efdfe45e",
+        "selected_emission_sha256": "02e05c859ce131807af501b2f94c454b68010917133abb7982dcaea691d2b51e"
+      },
+      "Mx4": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx4.parquet",
+        "sha256": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+        "sha256_after": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+        "selected_emission_sha256": "13ca669c349b48e29003bdd71c40652da2659124e164880b62035d7a75e77f7c"
+      }
+    },
+    "registry_sha256_before": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "registry_sha256_after": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "harness_report_sha256": "1203d2acf10fa9682852abba3382d55f53c42b6fa7c03071c44cbe915d3f7a85",
+    "Tm_nonlinear_orthogonality_report_sha256": "428c5bd9a5ea07001b3e723e34cd631d337ff2fda74fe0256660253875d15183",
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/tm5-mx4-churn-interaction/tm5-mx4-product.parquet",
+      "rows": 9379,
+      "sha256": "a6fd120ae46e2e1b9967f2eb2621a735ebc4993b98ad8b9bdcf3d8fdfc2e454d",
+      "columns": [
+        "GEOID",
+        "region",
+        "tm5_poi_version0_share",
+        "tm5_defined",
+        "mx4_f_source_share",
+        "mx4_defined",
+        "tm5_clipped_0_1",
+        "mx4_clipped_0_1",
+        "tm5_mx4_product",
+        "interaction_defined"
+      ],
+      "deterministic_bytes": true
+    },
+    "script_sha256": "f2522e4709bcc13a06844955c6da7fc3af35648c4d8b28d7ff5dbb8eac6dd3d7"
+  },
+  "interpretation": "The p95 absolute-change criterion fails or another invariant failed; retain frozen Tm5 unchanged and do not integrate the interaction."
+}
