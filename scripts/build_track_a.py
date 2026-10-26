@@ -54,9 +54,11 @@ def canonical_bytes(value: Any) -> bytes:
 
 
 def git_commit() -> str:
+    """Pin the last committed builder revision, independent of later artifact-only commits."""
     try:
-        return subprocess.check_output(['git', '-C', str(ROOT), 'rev-parse', 'HEAD'],
-                                       text=True).strip()
+        return subprocess.check_output(
+            ['git', '-C', str(ROOT), 'log', '-1', '--format=%H', '--', 'scripts/build_track_a.py'],
+            text=True).strip()
     except (OSError, subprocess.CalledProcessError):
         return 'unknown'
 
