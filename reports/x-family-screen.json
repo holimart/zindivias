@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "family": "X",
+  "status": "in_progress",
+  "scope": {
+    "official_scored_geoids": 9379,
+    "regions": [
+      "maricopa-az",
+      "northern-ca",
+      "eastern-ok",
+      "south-central-tx"
+    ],
+    "labels_read": false,
+    "leaderboard_accessed": false,
+    "uploads": 0
+  },
+  "ideas": {
+    "X1": {
+      "status": "computed",
+      "rows": 9379,
+      "defined_rows": 9379,
+      "artifact": "workspace:ideas/X1.parquet",
+      "sha256": "3352248e0e2ea195691ec2f6cdddc50de45be8a73115055a869592f4d7a0f262",
+      "harness_report": "workspace:ideas/x1-harness.json",
+      "harness_report_sha256": "ad992baed719956b4e8dcd916a9d1164204ed4182d5ab6421eadf5241cb2ba91",
+      "measurement": "Poisson unit-rate soft probability of at least one fire/EMS/school facility reference, from provided non-Microsoft building class/name witnesses only where the corresponding provided Overture POI category is absent.",
+      "limitations": "Uncalibrated soft probability proxy; not a hard defined flag. The witness categories are sparse."
+    },
+    "X2": {
+      "status": "held_pending_ruling",
+      "artifact": null,
+      "reason": "The USFS/USA Structures-derived usfs_BuildingCount_sum is an external reference-equivalent signal under the binding competition rule. It was not read or used. Keep the idea out of Track A pending governance clearance."
+    },
+    "X3": {
+      "status": "pending_implementation"
+    },
+    "X4": {
+      "status": "pending_implementation"
+    },
+    "X5": {
+      "status": "pending_implementation"
+    }
+  },
+  "orthogonality": {
+    "report": "reports/ideas-orthogonality.json",
+    "sha256": "f2cc34b7dec4c3948773c6b6eca1b3842a1a814d3f697b674594343758acac17",
+    "x1_included": true,
+    "full_family_screen_complete": false
+  },
+  "validation": {
+    "tests": "pytest tests/test_bias60_family_x.py tests/test_bias60_harness.py -q -k 'not CommittedArtifactTests'",
+    "test_result": "43 passed, 3 deselected, 7 subtests passed",
+    "idea_harness": "python scripts/run_bias60_ideas.py --only X1 --out $COMPETITION_WORKSPACE/ideas/x1-harness.json",
+    "idea_harness_result": "PASS; one contract-valid artifact on all 9,379 official GEOIDs",
+    "orthogonality_refresh": "python scripts/report_ideas_orthogonality.py",
+    "orthogonality_result": "PASS; 29 columns evaluated, 27 included, 3 pair flags, 10 VIF flags"
+  },
+  "code_commit": "807a06f839ea67a84a1ccf39a4d23859c102cd6b"
+}
