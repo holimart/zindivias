@@ -1,0 +1,200 @@
+{
+  "schema_version": 1,
+  "audit": "Pooled Mx5 county-peer median fallback: observed/imputed coverage sensitivity, not integration",
+  "method": {
+    "fallback": "For each source-undefined tract, median the pooled Mx5 shares of other source-defined tracts in the same (region, COUNTYFP) group, excluding the focal GEOID.",
+    "minimum_other_defined_peers": 5,
+    "donors": "Observed pooled-Mx5 values only; imputed values never donate to other rows.",
+    "zero_denominator": "Source undefined values remain null unless eligible county peer median exists; if it does not, final value remains null, never zero-filled.",
+    "observed_values": "Copied unchanged from the completed pooled-Mx5 artifact."
+  },
+  "scope": {
+    "official_ids": 9379,
+    "exact_geoid_partition": true,
+    "observed_defined_ids": 8311,
+    "imputed_ids": 1011,
+    "remaining_undefined_ids": 57,
+    "final_defined_ids": 9322,
+    "observed_coverage_fraction": 0.8861285851370082,
+    "imputed_fraction_of_official_ids": 0.10779400788996694,
+    "remaining_undefined_fraction": 0.006077406973024843,
+    "total_coverage_fraction": 0.9939225930269752,
+    "county_groups_region_local": 297,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_reference_data_read": false,
+    "external_data_read": false,
+    "leaderboard_feedback_used": false,
+    "frozen_mx5_modified": false,
+    "uploads": 0
+  },
+  "regions": {
+    "maricopa-az": {
+      "official_ids": 1593,
+      "observed_defined_ids": 1363,
+      "imputed_ids": 228,
+      "remaining_undefined_ids": 2,
+      "observed_coverage_fraction": 0.8556183301946014,
+      "imputed_fraction_of_official_ids": 0.1431261770244821,
+      "remaining_undefined_fraction": 0.0012554927809165098,
+      "total_defined_ids": 1591,
+      "total_coverage_fraction": 0.9987445072190835,
+      "imputed_share_distribution": {
+        "n": 1591,
+        "min": 0.0,
+        "p50": 0.4494949494949495,
+        "p95": 1.0,
+        "max": 1.0,
+        "mean": 0.4241398055869857
+      },
+      "imputed_peer_count_min": 6,
+      "imputed_peer_count_max": 879
+    },
+    "northern-ca": {
+      "official_ids": 591,
+      "observed_defined_ids": 550,
+      "imputed_ids": 41,
+      "remaining_undefined_ids": 0,
+      "observed_coverage_fraction": 0.9306260575296108,
+      "imputed_fraction_of_official_ids": 0.06937394247038917,
+      "remaining_undefined_fraction": 0.0,
+      "total_defined_ids": 591,
+      "total_coverage_fraction": 1.0,
+      "imputed_share_distribution": {
+        "n": 591,
+        "min": 0.0,
+        "p50": 0.3333333333333333,
+        "p95": 1.0,
+        "max": 1.0,
+        "mean": 0.3605950354021263
+      },
+      "imputed_peer_count_min": 5,
+      "imputed_peer_count_max": 187
+    },
+    "eastern-ok": {
+      "official_ids": 1192,
+      "observed_defined_ids": 1050,
+      "imputed_ids": 130,
+      "remaining_undefined_ids": 12,
+      "observed_coverage_fraction": 0.8808724832214765,
+      "imputed_fraction_of_official_ids": 0.10906040268456375,
+      "remaining_undefined_fraction": 0.010067114093959731,
+      "total_defined_ids": 1180,
+      "total_coverage_fraction": 0.9899328859060402,
+      "imputed_share_distribution": {
+        "n": 1180,
+        "min": 0.0,
+        "p50": 0.5,
+        "p95": 1.0,
+        "max": 1.0,
+        "mean": 0.4385835093185677
+      },
+      "imputed_peer_count_min": 6,
+      "imputed_peer_count_max": 227
+    },
+    "south-central-tx": {
+      "official_ids": 6003,
+      "observed_defined_ids": 5348,
+      "imputed_ids": 612,
+      "remaining_undefined_ids": 43,
+      "observed_coverage_fraction": 0.890887889388639,
+      "imputed_fraction_of_official_ids": 0.10194902548725637,
+      "remaining_undefined_fraction": 0.007163085124104614,
+      "total_defined_ids": 5960,
+      "total_coverage_fraction": 0.9928369148758954,
+      "imputed_share_distribution": {
+        "n": 5960,
+        "min": 0.0,
+        "p50": 0.4759725400457666,
+        "p95": 1.0,
+        "max": 1.0,
+        "mean": 0.43972712078364257
+      },
+      "imputed_peer_count_min": 5,
+      "imputed_peer_count_max": 960
+    }
+  },
+  "acceptance_threshold": 0.95,
+  "acceptance": {
+    "exact_9379_id_partition": true,
+    "total_coverage_at_least_95_percent": true,
+    "every_imputed_value_has_at_least_5_other_observed_peers": true,
+    "undefined_values_remain_null_not_zero": true,
+    "observed_values_preserved_exactly": true,
+    "all_defined_values_finite_and_in_0_1": true,
+    "acceptance_pass": true
+  },
+  "inputs": {
+    "pooled_mx5_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/mx5-pooled-provider-coverage/pooled-mx5.parquet",
+      "sha256": "34ae81e4dd810ff3e43c6f0478bcf19ecc0d0260fb3bbbf92ccd9f1e3d3cc6cd",
+      "rows": 9379
+    },
+    "pooled_mx5_source_report_sha256": "dc12f689e9102f6d0448ee1ae065553d49eacf8191aa4e3464fea1e0f0f4ca6f",
+    "frozen_mx5_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx5.parquet",
+      "sha256": "2201d3a99d9c539fe94c72f0b2b800f7696f1bd7aaf0dac2327fb20802be01b8"
+    },
+    "countyfp_selected_values_sha256_by_region": {
+      "maricopa-az": "c103fdb81ee7be3f729b658f70db13dd1f80aa324431f6c8b1c9b6d96160246b",
+      "northern-ca": "c74a11bcdff8ef010cbf9d0a322dad2ca2deda7b19a50c4184ffb10d13cbcba4",
+      "eastern-ok": "86492830e6083227022483b25bd6fe48888218a1baa848d1407cb2fe5ac1aa4f",
+      "south-central-tx": "c7ff56c14c3d5e446133cbe8067e5c90743bbff85409a1bc613457ddefb38e39"
+    },
+    "countyfp_accessed_columns_by_region": {
+      "maricopa-az": {
+        "parquet_columns": [
+          "maricopa-az-strata-tract-table.parquet:COUNTYFP",
+          "maricopa-az-strata-tract-table.parquet:GEOID"
+        ],
+        "csv_columns": [],
+        "layers": [],
+        "caches": [
+          "maricopa-az-strata-tract-table.parquet"
+        ]
+      },
+      "northern-ca": {
+        "parquet_columns": [
+          "northern-ca-strata-tract-table.parquet:COUNTYFP",
+          "northern-ca-strata-tract-table.parquet:GEOID"
+        ],
+        "csv_columns": [],
+        "layers": [],
+        "caches": [
+          "northern-ca-strata-tract-table.parquet"
+        ]
+      },
+      "eastern-ok": {
+        "parquet_columns": [
+          "eastern-ok-strata-tract-table.parquet:COUNTYFP",
+          "eastern-ok-strata-tract-table.parquet:GEOID"
+        ],
+        "csv_columns": [],
+        "layers": [],
+        "caches": [
+          "eastern-ok-strata-tract-table.parquet"
+        ]
+      },
+      "south-central-tx": {
+        "parquet_columns": [
+          "south-central-tx-strata-tract-table.parquet:COUNTYFP",
+          "south-central-tx-strata-tract-table.parquet:GEOID"
+        ],
+        "csv_columns": [],
+        "layers": [],
+        "caches": [
+          "south-central-tx-strata-tract-table.parquet"
+        ]
+      }
+    },
+    "official_geoid_region_sha256": "7138951b53cecabf981295c57ae067a73785c7c94f2a0d4bad2614d5a61c3ab9",
+    "harness_config_sha256": "12a15e11cd0459299e407e5f1f7056fa16a6a8ddad5d7bfd826b20dbe476d558"
+  },
+  "output_artifact": {
+    "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/mx5-county-peer-imputation/county-peer-mx5.parquet",
+    "rows": 9379,
+    "sha256": "3363869ddf2ecaa05f09fe0b07bb24cb70d9310f564625afcbc0903ab165d77f",
+    "deterministic_bytes": true
+  },
+  "interpretation": "Coverage screen passes its criteria; retain as a separately reviewed sensitivity and do not integrate automatically."
+}
