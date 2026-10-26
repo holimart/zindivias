@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "report_id": "track-a-forecast-feasibility-v1",
+  "status": "no_defensible_preregistered_public_rmse_forecast",
+  "scope": {
+    "candidate_ids": ["A1_physical_equal", "A2_spectral", "A3_dawid_skene"],
+    "official_scored_rows": 9379,
+    "template_only_rows_excluded": 415,
+    "public_split_membership_accessed": false,
+    "leaderboard_accessed": false,
+    "labels_or_score_placeholders_read": false,
+    "removed_references_or_equivalents_used": false
+  },
+  "method_check": {
+    "existing_model_only_forecast": "The V2 forecast in reports/final-two.json uses C0 public RMSE squared as an E[y^2] anchor, assumes target mean equals candidate mean, and assumes centered correlation 0.3.",
+    "c0_public_rmse_anchor": 0.107246299,
+    "assessment": "This forecast is not transferable as a preregistered Track A method: the target mean and covariance are unknown, and the public subset is not identified. Using each candidate's full official-ID mean as a rough proxy for its public mean would make the assumed target variance C0_RMSE^2 - candidate_mean^2 negative for all three candidates. These full-scope diagnostics do not estimate public RMSE or establish a score ranking; they show the V2 assumption cannot be applied without a different, explicitly approved target-moment prior."
+  },
+  "candidate_diagnostics": [
+    {
+      "candidate_id": "A1_physical_equal",
+      "artifact": "reports/candidates/A1_physical_equal.csv",
+      "sha256": "6af088b83ff3481d420e11b14d903fc510c2b4be2cea285c762ca12d500862de",
+      "official_rows": 9379,
+      "coverage_gap_score_mean": 0.3196664071120907,
+      "coverage_gap_score_sd": 0.13668144300159105,
+      "coverage_gap_score_rms": 0.3476613707286878,
+      "manifest_predicted_score": null,
+      "manifest_forecast_status": "not_claimed_no_labels"
+    },
+    {
+      "candidate_id": "A2_spectral",
+      "artifact": "reports/candidates/A2_spectral.csv",
+      "sha256": "f88573996566a1975726845a49f42fb2cd3781d5f0e83d55944fc65647692997",
+      "official_rows": 9379,
+      "coverage_gap_score_mean": 0.2880142139710168,
+      "coverage_gap_score_sd": 0.09805285917045195,
+      "coverage_gap_score_rms": 0.3042475154226294,
+      "manifest_predicted_score": null,
+      "manifest_forecast_status": "not_claimed_no_labels"
+    },
+    {
+      "candidate_id": "A3_dawid_skene",
+      "artifact": "reports/candidates/A3_dawid_skene.csv",
+      "sha256": "6d588f2f7a45a58b128860a049ac19995b21902f7f98d3b2ab39d1d9fbb073b3",
+      "official_rows": 9379,
+      "coverage_gap_score_mean": 0.16696041412967058,
+      "coverage_gap_score_sd": 0.07202398639012896,
+      "coverage_gap_score_rms": 0.1818329851866173,
+      "manifest_predicted_score": null,
+      "manifest_forecast_status": "not_claimed_no_labels"
+    }
+  ],
+  "inputs_and_reproduction": {
+    "candidate_predictions": "The three frozen Track A CSV artifacts; SHA-256 values recorded above.",
+    "official_ids": "$COMPETITION_WORKSPACE/samples/{maricopa-az,northern-ca,eastern-ok,south-central-tx}-sample-submission.csv; only GEOID values were read, never score columns/placeholders.",
+    "command": "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" python3 - <<'PY' ... (CSV DictReader; read GEOID from the four official samples, read coverage_gap_score from the candidate artifacts only for those IDs, compute n/mean/population-SD/RMS and compare the mean-aligned C0 moment assumption) ... PY",
+    "result": "All 3 candidates had 9,379 official rows and artifact hashes matching their manifests. Candidate output moments are descriptive model-output statistics only, not organizer-target measurements or public RMSE predictions."
+  },
+  "decision": {
+    "registered_in_guarded_manifest": false,
+    "predicted_score_written": false,
+    "upload_attempted": false,
+    "reason": "No approved no-label forecasting method currently yields a defensible candidate-specific predicted score. The final-candidate row forbids uploads without that preregistered score. Do not substitute a guessed point estimate or use public leaderboard feedback to construct one.",
+    "unblock": "Approve a target-moment/forecast method that is explicit, preregistered, and uses no labels, leaderboard probes, or forbidden references; then freeze the selected candidate cards and upload only through the guarded orchestrator path."
+  }
+}
