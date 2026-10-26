@@ -40,8 +40,14 @@ def without_content_sha(document: dict) -> dict:
 def merge_partial_report(previous: dict, partial: dict, *, selected_ids: set[str],
                          workspace: Path, registry_document: dict) -> dict:
     """Refresh selected ideas while hash-verifying and retaining untouched committed emissions."""
-    if not previous.get("gates", {}).get("all_passed"):
-        raise ValueError("cannot incrementally refresh from a prior failing harness report")
+    previous_gates = previous.get("gates", {})
+    failed_before = {key for key, value in previous_gates.items() if not value}
+    # A family may be registered before its five ideas are built. During that narrow multi-turn
+    # progression, the only allowed temporary failure is the completeness gate below; all existing
+    # emissions must still have passed every source, schema, determinism and GEOID invariant.
+    if failed_before and failed_before != {"every_idea_wrote_one_parquet", "all_passed"}:
+        raise ValueError("cannot incrementally refresh from a prior failing harness report: "
+                         + ", ".join(sorted(failed_before)))
     prior_ideas = previous.get("per_idea", {})
     new_ideas = partial.get("per_idea", {})
     if not selected_ids or set(new_ideas) != selected_ids:
@@ -61,9 +67,8 @@ def merge_partial_report(previous: dict, partial: dict, *, selected_ids: set[str
     merged = {**prior_ideas, **new_ideas}
     expected = {entry["id"] for entry in registry_document["ideas"]
                 if entry["status"] == "implemented"}
-    if set(merged) != expected:
-        raise ValueError(f"incremental report coverage mismatch: missing={sorted(expected-set(merged))}, "
-                         f"extra={sorted(set(merged)-expected)}")
+    if not set(merged).issubset(expected):
+        raise ValueError(f"incremental report has unregistered ideas: {sorted(set(merged)-expected)}")
     report = dict(previous)
     report.update({key: value for key, value in partial.items()
                    if key not in {"per_idea", "summary", "gates"}})
@@ -73,9 +78,9 @@ def merge_partial_report(previous: dict, partial: dict, *, selected_ids: set[str
     partial_gates = partial["gates"]
     gates = {
         "registry_holds_all_60_spec_ids": registry_document["summary"]["ideas_total"] == 60,
-        "all_implemented_ideas_are_registered": set(merged) == expected,
-        "every_idea_wrote_one_parquet": all(entry.get("sha256") and entry.get("rows", 0) > 0
-                                             for entry in merged.values()),
+        "all_implemented_ideas_are_registered": set(merged).issubset(expected),
+        "every_idea_wrote_one_parquet": set(merged) == expected and all(
+            entry.get("sha256") and entry.get("rows", 0) > 0 for entry in merged.values()),
         "official_geoid_partition_exact": all(entry.get("geoid_partition_exact") is True
                                                for entry in merged.values()),
         "emission_contract_satisfied": bool(previous_gates.get("emission_contract_satisfied")

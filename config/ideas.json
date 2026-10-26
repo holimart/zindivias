@@ -253,7 +253,7 @@
       "failure_mode": "bot edits inflate versions.",
       "family": "M",
       "id": "M1",
-      "implementation": null,
+      "implementation": "bias60.ideas.m::m1",
       "inputs": [
         "`roads` `sources`"
       ],
@@ -263,7 +263,7 @@
       "recipe": "length-weighted mean version of named-class and of tertiary segments, and the share of tertiary length at version ≤ 2.",
       "recipe_scope": "per tract",
       "signal": "for OSM-sourced segments, `sources.record_id` encodes the way and its version (e.g. `w123@7`) **[U: confirm the format in the package]**. Version 1–2 ways are untouched TIGER imports whose class came from TIGER CFCC, so they agree with TIGER. Heavily edited ways have been reclassified by mappers or DOT conventions and diverge in either direction.",
-      "status": "declared",
+      "status": "implemented",
       "title": "OSM edit depth of road ways"
     },
     {
@@ -276,7 +276,7 @@
       "failure_mode": "sparse field. It may be close to zero everywhere in the US, so check the coverage matrix first.",
       "family": "M",
       "id": "M2",
-      "implementation": null,
+      "implementation": "bias60.ideas.m::m2",
       "inputs": [
         "`pois.brand.wikidata`",
         "`infrastructure.wikidata`"
@@ -287,7 +287,7 @@
       "recipe": "linked share among facility-name-regex places, plus linked share among all places.",
       "recipe_scope": "per tract",
       "signal": "places and infrastructure with a `wikidata` or `brand.wikidata` link are curated entities. Schools and fire stations with wikidata links are more likely to be categorised correctly. Tracts where facility-like names lack linkage carry more mis-categorisation risk.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Wikidata / knowledge-graph linkage density"
     },
     {
@@ -300,7 +300,7 @@
       "failure_mode": "ZIPs routinely straddle tracts, so use only postcodes absent from the tract and its first-order neighbours.",
       "family": "M",
       "id": "M3",
-      "implementation": null,
+      "implementation": "bias60.ideas.m::m3",
       "inputs": [
         "`pois.addresses`"
       ],
@@ -310,7 +310,7 @@
       "recipe": "mismatch share. Also the \"incoming\" mismatch, where a place's address is in another postcode but it was placed here.",
       "recipe_scope": "per tract",
       "signal": "a place whose `addresses.postcode` or locality disagrees with the tract's dominant postcode (the mode across places in the tract) is probably mis-geocoded. Mis-geocoding moves POIs between tracts.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Address–locality mismatch"
     },
     {
@@ -322,7 +322,7 @@
       "failure_mode": "interstate interchanges, which are all chains but also sparse in CBP.",
       "family": "M",
       "id": "M4",
-      "implementation": null,
+      "implementation": "bias60.ideas.m::m4",
       "inputs": [
         "`pois.brand`",
         "`pois.sources.dataset`"
@@ -333,7 +333,7 @@
       "recipe": "brand share and brand count per housing unit.",
       "recipe_scope": "per tract",
       "signal": "chain outlets (`brand` present, AllThePlaces source) are near-complete in Overture. CBP also counts non-storefront establishments: contractors, offices, home-based businesses and agriculture services. Tracts dominated by chains show apparent completeness; tracts with low chain share hide large non-storefront deficits.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Brand / chain share"
     },
     {
@@ -346,7 +346,7 @@
       "failure_mode": "the property field may be mostly empty **[U]**.",
       "family": "M",
       "id": "M5",
-      "implementation": null,
+      "implementation": "bias60.ideas.m::m5",
       "inputs": [
         "`buildings.sources.property`",
         "`roads.sources.property`"
@@ -357,7 +357,7 @@
       "recipe": "share of features whose sources list has more than one distinct property path.",
       "recipe_scope": "per tract",
       "signal": "Overture records which source supplied which property, for example geometry from Microsoft with height or class from OSM. Mixed-property features show active conflation and mapping attention. Pure ML geometry with no property-level enrichment marks unattended areas.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Attribute-level provenance (`sources.property`)"
     },
     {
@@ -1459,7 +1459,7 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 25,
+    "declared_count": 20,
     "families_total": 12,
     "ideas_per_family": [
       5
@@ -1471,6 +1471,11 @@
       "G3",
       "G4",
       "G5",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
       "Tm1",
       "D1",
       "D2",
@@ -1509,7 +1514,7 @@
       "F",
       "R"
     ],
-    "implemented_count": 35
+    "implemented_count": 40
   },
   "vocabulary": {
     "components": [

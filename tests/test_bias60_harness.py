@@ -178,7 +178,8 @@ def _stub_g_implementations():
     """Keep common harness tests isolated from raw-geometry package I/O."""
     originals = {idea: IMPLEMENTATIONS[idea] for idea in [*(f"G{i}" for i in range(1, 6)), "P1", "P3",
                                                             "Sc1", "Sc2", "Sc3", "Sc4", "Sca2", "Sca3",
-                                                            "Sca4", "Sca5", "X1", "X3", "X4", "X5"]}
+                                                            "Sca4", "Sca5", "X1", "X3", "X4", "X5",
+                                                            "M1", "M2", "M3", "M4", "M5"]}
     def stub(idea_id, specification):
         def execute(inputs):
             from bias60.contracts import Emission, IdeaOutput
@@ -199,7 +200,10 @@ def _stub_g_implementations():
              "Sca4": [("Est", "covariate")], "Sca5": [("C", "covariate")],
              "X1": [("F", "covariate")],
              "X3": [("Est", "covariate")], "X4": [("R", "covariate")],
-             "X5": [("R", "covariate"), ("F", "covariate")]}
+             "X5": [("R", "covariate"), ("F", "covariate")],
+             "M1": [("R", "covariate")], "M2": [("Est", "covariate"), ("F", "covariate")],
+             "M3": [("Est", "covariate"), ("F", "covariate")],
+             "M4": [("Est", "covariate")], "M5": [("B", "covariate"), ("R", "covariate")]}
     IMPLEMENTATIONS.update({idea: stub(idea, specs[idea]) for idea in specs})
     return originals
 
@@ -448,6 +452,42 @@ class HarnessTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "prior parquet hash differs"):
                 cli.merge_partial_report(previous, partial, selected_ids={"D1"},
                                          workspace=workspace, registry_document=registry)
+
+    def test_incremental_refresh_can_progress_through_registered_family_batches(self) -> None:
+        cli = load_script("run_bias60_ideas.py", "bias60_run_cli_incremental_family_test")
+        with tempfile.TemporaryDirectory() as temporary:
+            workspace = Path(temporary)
+            per_idea = {}
+            for idea in ("Old", "D1", "D2"):
+                path = workspace / "ideas" / f"{idea}.parquet"
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(idea.encode())
+                per_idea[idea] = {"path": str(path.relative_to(workspace),),
+                                  "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                                  "rows": 8, "geoid_partition_exact": True,
+                                  "undeclared_columns_read": [], "forbidden_source_hits": [],
+                                  "emissions": [{"component": "Est"}]}
+            gate_ok = {"all_passed": True, "emission_contract_satisfied": True,
+                       "no_label_or_leaderboard_value_used": True, "deterministic_rerun": True,
+                       "report_has_no_temporal_field": True}
+            previous = {"gates": gate_ok, "per_idea": {"Old": per_idea["Old"]},
+                        "summary": {"report_sha256": "prior"}}
+            def partial(idea):
+                return {"per_idea": {idea: per_idea[idea]}, "gates": gate_ok,
+                        "scope": {"official_scored_rows": 8},
+                        "environment": {"git_commit": "a" * 40},
+                        "code_commit_at_run": "a" * 40}
+            registry = {"ideas": [{"id": x, "status": "implemented"} for x in ("Old", "D1", "D2")],
+                        "summary": {"ideas_total": 60}}
+            first = cli.merge_partial_report(previous, partial("D1"), selected_ids={"D1"},
+                                             workspace=workspace, registry_document=registry)
+            self.assertFalse(first["gates"]["every_idea_wrote_one_parquet"])
+            self.assertFalse(first["gates"]["all_passed"])
+            second = cli.merge_partial_report(first, partial("D2"), selected_ids={"D2"},
+                                              workspace=workspace, registry_document=registry)
+            self.assertTrue(second["gates"]["every_idea_wrote_one_parquet"])
+            self.assertTrue(second["gates"]["all_passed"])
+            self.assertEqual(set(second["per_idea"]), {"Old", "D1", "D2"})
 
     def test_every_implemented_idea_writes_one_parquet_with_the_official_partition(self) -> None:
         report, payloads = run_build()

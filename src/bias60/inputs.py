@@ -119,6 +119,25 @@ class ProvidedInputs:
         self.accessed["layers"].append(layer)
         return path
 
+    def iter_layer_batches(self, layer: str, columns: list[str]):
+        """Yield row-group tables from an explicitly named provided Overture layer/column set.
+
+        This is the general streaming accessor for ideas that need provider metadata not present in
+        the tract-summary cache. Layer paths are checked against the frozen forbidden-source list
+        before access, and only the requested fields are read.
+        """
+        import pyarrow.parquet as pq
+
+        path = self.layer_path(layer)
+        parquet = pq.ParquetFile(self.filesystem.open_input_file(path))
+        missing = sorted(set(columns) - set(parquet.schema_arrow.names))
+        if missing:
+            raise ValueError(f"provided {layer} layer lacks requested columns {missing}")
+        self.accessed["parquet_columns"].extend(
+            f"{self.region}-overture-{layer}.parquet:{column}" for column in columns)
+        for row_group in range(parquet.metadata.num_row_groups):
+            yield parquet.read_row_group(row_group, columns=columns)
+
     @staticmethod
     def validate_places_schema(schema: Any) -> None:
         """Fail closed unless the provided Overture places object has its declared Arrow schema."""

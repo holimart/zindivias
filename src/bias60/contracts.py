@@ -11,9 +11,12 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
+import re
+
 import numpy as np
 
 CHANNELS = ("gap", "covariate")
+CHANNEL_PATTERN = re.compile(r"^(gap|covariate)(?::[a-z0-9_]+)?$")
 
 
 def clip_one_minus_ratio(observed: np.ndarray, expectation: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
@@ -56,7 +59,7 @@ class Emission:
     def validate(self, *, n_rows: int, config: dict[str, Any]) -> None:
         if self.component not in config["vocabulary"]["components"]:
             raise ValueError(f"unknown component {self.component!r}")
-        if self.channel not in CHANNELS:
+        if not CHANNEL_PATTERN.fullmatch(self.channel):
             raise ValueError(f"unknown channel {self.channel!r}")
         if self.values.shape != (n_rows,) or self.defined.shape != (n_rows,):
             raise ValueError(f"{self.component}/{self.channel}: arrays must have {n_rows} rows")
@@ -69,7 +72,7 @@ class Emission:
             raise ValueError(f"{self.component}/{self.channel}: non-finite value where undefined")
         if (self.values[~known] != 0.0).any():
             raise ValueError(f"{self.component}/{self.channel}: undefined rows must carry exactly 0.0")
-        if self.channel == "gap":
+        if self.channel.split(":", 1)[0] == "gap":
             gap = self.values[known]
             low, high = config["vocabulary"]["gap_bounds"]
             if gap.size and (gap.min() < low - 1e-12 or gap.max() > high + 1e-12):
