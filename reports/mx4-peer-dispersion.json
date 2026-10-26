@@ -1,0 +1,714 @@
+{
+  "schema_version": 1,
+  "audit": "Leave-one-tract-out population-weighted county Mx4 peer interquartile range; unregistered label-free sensitivity",
+  "method": {
+    "candidate": "Within each (region, provided COUNTYFP), compute weighted Q75 minus weighted Q25 of other eligible tracts' frozen Mx4 B covariate (overture_building_esri_source_share), excluding the focal tract. Eligible peers require defined Mx4 B share and finite positive provided pop_total.",
+    "weighted_quantile": "Sort values ascending with stable mergesort; return first value whose cumulative positive population weight is at least q times total peer weight. If no eligible peers remain, candidate is undefined; a single eligible peer yields IQR zero.",
+    "crossfit": "Five region-local folds assigned via SHA-256 of mx4p-conditional-innovation-v1|region|GEOID modulo five. For each fold, fit intercept+frozen Mx4 F+frozen S1 lagged-Mx4 F OLS on other four folds, then predict held-out dispersion. No tuning, labels, regularization, or imputation.",
+    "variance_ratio": "Pooled population variance (ddof=0) of held-out residuals divided by candidate dispersion variance on the same complete-case candidate/Mx4 F/S1-lag support.",
+    "pearson_gate": "Pearson r of candidate dispersion with each frozen predictor, calculated on the same complete-case support."
+  },
+  "measure_before": {
+    "weighted_median_residual_variance_ratio": 0.05846601972131671,
+    "weighted_median_pearson_r_with_Mx4_F": 0.934552336673731,
+    "weighted_median_pearson_r_with_S1_lagged_Mx4_F": 0.9249166691142697,
+    "weighted_mean_residual_variance_ratio": 0.006577271031853296,
+    "median_baseline_report_sha256": "1e18ed319abdd63bb9e595f2a186071f5108aea8ba44324667c57ccb08d8e4c2",
+    "mean_baseline_report_sha256": "a44c6055f948015903ef7e6fd8ba306717c4b745a0bf7446f7112b9618a1f775"
+  },
+  "scope": {
+    "official_ids": 9379,
+    "exact_id_partition": true,
+    "candidate_defined_ids": 9347,
+    "candidate_undefined_ids": 32,
+    "candidate_coverage_fraction": 0.9965881224011088,
+    "crossfit_joint_defined_ids": 9347,
+    "crossfit_joint_undefined_ids": 32,
+    "county_groups": 297,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_reference_data_read": false,
+    "external_inputs_read": false,
+    "leaderboard_feedback_used": false,
+    "frozen_Mx4_S1_modified": false,
+    "registry_integration": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "dispersion_distribution": {
+      "n": 9347,
+      "min": 0.0,
+      "p05": 0.0,
+      "p50": 0.0,
+      "p95": 0.38498789346246975,
+      "max": 0.7182221877484535,
+      "mean": 0.049268832695112744,
+      "sd": 0.14374503124279273,
+      "variance": 0.02066263400699146
+    },
+    "eligible_peer_count_distribution": {
+      "n": 9347,
+      "min": 1.0,
+      "p05": 6.0,
+      "p50": 210.0,
+      "p95": 1091.0,
+      "max": 1092.0,
+      "mean": 383.6127099604151,
+      "sd": 396.29193175738305,
+      "variance": 157047.29517599836
+    },
+    "candidate_variance_on_crossfit_support": 0.02066263400699146,
+    "crossfit_residual_variance": 0.00116345756776268,
+    "crossfit_residual_variance_ratio": 0.05630732109802699,
+    "crossfit_residual_distribution": {
+      "n": 9347,
+      "min": -0.18500406874033815,
+      "p05": -0.01947931424451797,
+      "p50": -0.005494773379081959,
+      "p95": 0.07969917676269829,
+      "max": 0.27863452937548305,
+      "mean": -4.397681636783107e-05,
+      "sd": 0.034109493806896055,
+      "variance": 0.00116345756776268
+    },
+    "candidate_pearson_r_with_Mx4_F": 0.9702608059818014,
+    "candidate_pearson_r_with_S1_lagged_Mx4_F": 0.9568959948174032,
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "candidate_defined_ids": 1593,
+        "crossfit_joint_defined_ids": 1593,
+        "candidate_coverage_fraction": 1.0,
+        "dispersion_distribution": {
+          "n": 1593,
+          "min": 0.0,
+          "p05": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "max": 0.639984283162851,
+          "mean": 0.02875960638640988,
+          "sd": 0.13218967034113657,
+          "variance": 0.017474108944898363
+        },
+        "peer_count_min": 1,
+        "peer_count_median": 1000.0,
+        "peer_count_max": 1001,
+        "crossfit_residual_variance_ratio": 0.002114976719423325,
+        "pearson_r_dispersion_with_mx4_f": 0.998942693179582,
+        "pearson_r_dispersion_with_s1_lagged_mx4_f": 0.9686042183894871,
+        "folds": [
+          {
+            "fold": 0,
+            "train_joint_defined": 1285,
+            "heldout_joint_defined": 308,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              -0.009629540010784615,
+              1.2002122574289533,
+              0.011105080320283678
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.6790415342865683,
+            "maximum_singular_value": 35.880312073013044,
+            "heldout_residual_mean": -0.00018193281681770735,
+            "heldout_residual_variance": 3.547565979489607e-05
+          },
+          {
+            "fold": 1,
+            "train_joint_defined": 1266,
+            "heldout_joint_defined": 327,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              -0.009667596674524315,
+              1.2016100843599977,
+              0.00905952059083226
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.5652994676504423,
+            "maximum_singular_value": 35.620345671132526,
+            "heldout_residual_mean": 0.00011611272914175872,
+            "heldout_residual_variance": 3.5504742288557326e-05
+          },
+          {
+            "fold": 2,
+            "train_joint_defined": 1263,
+            "heldout_joint_defined": 330,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              -0.009813077142365715,
+              1.197235043412512,
+              0.01642237938082658
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.6665553833027658,
+            "maximum_singular_value": 35.574678515371616,
+            "heldout_residual_mean": 0.00035274571979745624,
+            "heldout_residual_variance": 4.0620757282081756e-05
+          },
+          {
+            "fold": 3,
+            "train_joint_defined": 1281,
+            "heldout_joint_defined": 312,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              -0.009655721046683302,
+              1.200581925314779,
+              0.011188225892629133
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.7107697737632233,
+            "maximum_singular_value": 35.82740329192764,
+            "heldout_residual_mean": -0.00011934451657841505,
+            "heldout_residual_variance": 3.728214968856709e-05
+          },
+          {
+            "fold": 4,
+            "train_joint_defined": 1277,
+            "heldout_joint_defined": 316,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              -0.009639782016019373,
+              1.1979148479943245,
+              0.013815297017016781
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.7209454474392094,
+            "maximum_singular_value": 35.77495901815025,
+            "heldout_residual_mean": -0.00019443239243284818,
+            "heldout_residual_variance": 3.553019931158946e-05
+          }
+        ]
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "candidate_defined_ids": 587,
+        "crossfit_joint_defined_ids": 587,
+        "candidate_coverage_fraction": 0.9932318104906938,
+        "dispersion_distribution": {
+          "n": 587,
+          "min": 0.0,
+          "p05": 0.0,
+          "p50": 0.0,
+          "p95": 0.19219569015725102,
+          "max": 0.4147900449017351,
+          "mean": 0.03460352763755844,
+          "sd": 0.09557670575532813,
+          "variance": 0.009134906683040574
+        },
+        "peer_count_min": 2,
+        "peer_count_median": 53.0,
+        "peer_count_max": 200,
+        "crossfit_residual_variance_ratio": 0.02903582808968733,
+        "pearson_r_dispersion_with_mx4_f": 0.9855670945552131,
+        "pearson_r_dispersion_with_s1_lagged_mx4_f": 0.9322990296476642,
+        "folds": [
+          {
+            "fold": 0,
+            "train_joint_defined": 476,
+            "heldout_joint_defined": 111,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.002628829912178781,
+              1.1822368344910836,
+              0.03687071847941026
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.4256343596322486,
+            "maximum_singular_value": 21.83151186434926,
+            "heldout_residual_mean": 0.0024872845074481653,
+            "heldout_residual_variance": 0.00032169240046861915
+          },
+          {
+            "fold": 1,
+            "train_joint_defined": 465,
+            "heldout_joint_defined": 122,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.0030901482812498568,
+              1.2047728146673449,
+              0.022722662442331898
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.37956439430982597,
+            "maximum_singular_value": 21.57923103595535,
+            "heldout_residual_mean": -0.0009562114197222762,
+            "heldout_residual_variance": 0.00024123212376124412
+          },
+          {
+            "fold": 2,
+            "train_joint_defined": 467,
+            "heldout_joint_defined": 120,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.0029098593844212664,
+              1.1846078551625452,
+              0.04946421733478901
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.39739689128159716,
+            "maximum_singular_value": 21.627165134501013,
+            "heldout_residual_mean": -0.0010027874006931065,
+            "heldout_residual_variance": 0.00030995476086711067
+          },
+          {
+            "fold": 3,
+            "train_joint_defined": 467,
+            "heldout_joint_defined": 120,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.0028374410204800443,
+              1.1670928767206272,
+              0.04915887235941874
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.40446357940398586,
+            "maximum_singular_value": 21.624386269261223,
+            "heldout_residual_mean": 0.0016034325646095424,
+            "heldout_residual_variance": 0.00024614888585791254
+          },
+          {
+            "fold": 4,
+            "train_joint_defined": 473,
+            "heldout_joint_defined": 114,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.003105265970841781,
+              1.1687806261401001,
+              0.06490947044275919
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.3070573861510922,
+            "maximum_singular_value": 21.762838014761723,
+            "heldout_residual_mean": -0.0020606836455900283,
+            "heldout_residual_variance": 0.00019397805972098622
+          }
+        ]
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "candidate_defined_ids": 1191,
+        "crossfit_joint_defined_ids": 1191,
+        "candidate_coverage_fraction": 0.9991610738255033,
+        "dispersion_distribution": {
+          "n": 1191,
+          "min": 0.0,
+          "p05": 0.0,
+          "p50": 0.0,
+          "p95": 0.6901145451121988,
+          "max": 0.7182221877484535,
+          "mean": 0.1953868817439771,
+          "sd": 0.2965137875748508,
+          "variance": 0.08792042622198373
+        },
+        "peer_count_min": 1,
+        "peer_count_median": 36.0,
+        "peer_count_max": 265,
+        "crossfit_residual_variance_ratio": 0.00730601931538456,
+        "pearson_r_dispersion_with_mx4_f": 0.996366820643516,
+        "pearson_r_dispersion_with_s1_lagged_mx4_f": 0.9864131925695372,
+        "folds": [
+          {
+            "fold": 0,
+            "train_joint_defined": 950,
+            "heldout_joint_defined": 241,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.003106966690388254,
+              1.1474763081172947,
+              -0.002375380124610471
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.7796294394734972,
+            "maximum_singular_value": 31.79481073736589,
+            "heldout_residual_mean": 0.002297342126469087,
+            "heldout_residual_variance": 0.0008792385121118167
+          },
+          {
+            "fold": 1,
+            "train_joint_defined": 955,
+            "heldout_joint_defined": 236,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.0033240910142626656,
+              1.1101007790433264,
+              0.0387936640714891
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.8255016062103496,
+            "maximum_singular_value": 31.939585780923256,
+            "heldout_residual_mean": -0.0018128976116731346,
+            "heldout_residual_variance": 0.00036981365039998135
+          },
+          {
+            "fold": 2,
+            "train_joint_defined": 942,
+            "heldout_joint_defined": 249,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.003144016458059263,
+              1.1127882048021371,
+              0.0356156928527418
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.8022331955446733,
+            "maximum_singular_value": 31.634179203531833,
+            "heldout_residual_mean": -0.00047440784262339607,
+            "heldout_residual_variance": 0.0006134190050848323
+          },
+          {
+            "fold": 3,
+            "train_joint_defined": 948,
+            "heldout_joint_defined": 243,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.003264877055474428,
+              1.1337396771910713,
+              0.015878053442966222
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.8604563949751823,
+            "maximum_singular_value": 31.697752785254497,
+            "heldout_residual_mean": -0.0021419323087434146,
+            "heldout_residual_variance": 0.0005554363353487776
+          },
+          {
+            "fold": 4,
+            "train_joint_defined": 969,
+            "heldout_joint_defined": 222,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.002897977472135492,
+              1.1092401995255865,
+              0.037779066753389934
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.7429920606235458,
+            "maximum_singular_value": 32.10482743460706,
+            "heldout_residual_mean": 0.0020401940359972425,
+            "heldout_residual_variance": 0.0007838400097827048
+          }
+        ]
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "candidate_defined_ids": 5976,
+        "crossfit_joint_defined_ids": 5976,
+        "candidate_coverage_fraction": 0.9955022488755623,
+        "dispersion_distribution": {
+          "n": 5976,
+          "min": 0.0,
+          "p05": 0.0,
+          "p50": 0.0,
+          "p95": 0.19186576691592194,
+          "max": 0.45264089701976984,
+          "mean": 0.027055501898819338,
+          "sd": 0.0660215804430282,
+          "variance": 0.004358849084195243
+        },
+        "peer_count_min": 1,
+        "peer_count_median": 219.0,
+        "peer_count_max": 1092,
+        "crossfit_residual_variance_ratio": 0.37987730555921706,
+        "pearson_r_dispersion_with_mx4_f": 0.7915112966292195,
+        "pearson_r_dispersion_with_s1_lagged_mx4_f": 0.7725044952916451,
+        "folds": [
+          {
+            "fold": 0,
+            "train_joint_defined": 4811,
+            "heldout_joint_defined": 1165,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.005811216368255901,
+              0.9800600099944649,
+              0.003582186091682371
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.5838515217196327,
+            "maximum_singular_value": 69.39488832638207,
+            "heldout_residual_mean": 0.00018087063307115555,
+            "heldout_residual_variance": 0.0015519791222972973
+          },
+          {
+            "fold": 1,
+            "train_joint_defined": 4825,
+            "heldout_joint_defined": 1151,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.005178541685650409,
+              0.9861287771114403,
+              0.03497104606689061
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.5603873889259146,
+            "maximum_singular_value": 69.49375733866255,
+            "heldout_residual_mean": -0.0007192392381733437,
+            "heldout_residual_variance": 0.0016088618012091833
+          },
+          {
+            "fold": 2,
+            "train_joint_defined": 4770,
+            "heldout_joint_defined": 1206,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.005517802872199519,
+              0.8415966029693147,
+              0.14561663638100747
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.5961739791603693,
+            "maximum_singular_value": 69.09685463349611,
+            "heldout_residual_mean": 0.0012738661161361955,
+            "heldout_residual_variance": 0.0018723652753133944
+          },
+          {
+            "fold": 3,
+            "train_joint_defined": 4727,
+            "heldout_joint_defined": 1249,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.00568675115680006,
+              1.195198751973463,
+              -0.1846770771370121
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.5475657726230576,
+            "maximum_singular_value": 68.78521272829802,
+            "heldout_residual_mean": -0.002043055488363468,
+            "heldout_residual_variance": 0.0015951296550714587
+          },
+          {
+            "fold": 4,
+            "train_joint_defined": 4771,
+            "heldout_joint_defined": 1205,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.005494773379081959,
+              0.8339091165325246,
+              0.15633970463148505
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.5557583648389445,
+            "maximum_singular_value": 69.1049373211744,
+            "heldout_residual_mean": 0.0010665536641101842,
+            "heldout_residual_variance": 0.0016396909793014861
+          }
+        ]
+      }
+    }
+  },
+  "acceptance_thresholds": {
+    "minimum_candidate_coverage": 0.9859,
+    "dispersion_bounds_inclusive": [
+      0.0,
+      1.0
+    ],
+    "minimum_crossfit_residual_variance_ratio": 0.1,
+    "maximum_absolute_candidate_predictor_pearson_r_exclusive": 0.8
+  },
+  "acceptance": {
+    "exact_9379_official_geoid_region_partition": true,
+    "defined_dispersion_values_finite_and_in_0_1": true,
+    "candidate_coverage_fraction": 0.9965881224011088,
+    "candidate_coverage_at_least_98_59_percent": true,
+    "crossfit_joint_defined_ids": 9347,
+    "crossfit_residual_variance_ratio": 0.05630732109802699,
+    "residual_variance_at_least_10_percent": false,
+    "pearson_r_candidate_dispersion_with_mx4_f": 0.9702608059818014,
+    "pearson_r_candidate_dispersion_with_s1_lagged_mx4_f": 0.9568959948174032,
+    "absolute_correlations_below_0_80": false,
+    "frozen_Mx4_S1_registry_unchanged": true,
+    "distinct_screen_pass": false
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "frozen_inputs": {
+      "Mx4": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx4.parquet",
+        "sha256": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+        "sha256_after": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+        "B_share_emission_sha256": "d799de206f60835058c026fecf699256ca2ff42a0959a93a501d26b315cb2ed6",
+        "F_predictor_emission_sha256": "13ca669c349b48e29003bdd71c40652da2659124e164880b62035d7a75e77f7c"
+      },
+      "S1": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/S1.parquet",
+        "sha256": "632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03",
+        "sha256_after": "632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03",
+        "lagged_F_emission_sha256": "a42f98c3227968863f126484258b12274b3bf7e75255afc3b67e99a6ddee1195"
+      }
+    },
+    "strata_inputs": {
+      "maricopa-az": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+        "sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd",
+        "columns_read": [
+          "GEOID",
+          "COUNTYFP",
+          "pop_total"
+        ],
+        "official_ids": 1593
+      },
+      "northern-ca": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+        "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+        "columns_read": [
+          "GEOID",
+          "COUNTYFP",
+          "pop_total"
+        ],
+        "official_ids": 591
+      },
+      "eastern-ok": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+        "sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54",
+        "columns_read": [
+          "GEOID",
+          "COUNTYFP",
+          "pop_total"
+        ],
+        "official_ids": 1192
+      },
+      "south-central-tx": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+        "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354",
+        "columns_read": [
+          "GEOID",
+          "COUNTYFP",
+          "pop_total"
+        ],
+        "official_ids": 6003
+      }
+    },
+    "registry_sha256_before": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "registry_sha256_after": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "script_sha256": "e56b3f92b87d4275c10443fe011887e4315e34f9744c9147ba6d7f49386bf268",
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/mx4-peer-dispersion/mx4-peer-dispersion.parquet",
+      "rows": 9379,
+      "sha256": "fcf3bca3c05c24b20a4bf993f619acea44bfdd160aaf7502039154fd6afe32b8",
+      "columns": [
+        "GEOID",
+        "region",
+        "COUNTYFP",
+        "pop_total",
+        "mx4_b_source_share",
+        "mx4_b_defined",
+        "peer_population_weighted_q25",
+        "peer_population_weighted_q75",
+        "peer_population_weighted_iqr",
+        "peer_defined",
+        "eligible_peer_count",
+        "eligible_peer_population",
+        "mx4_f",
+        "mx4_f_defined",
+        "s1_lagged_mx4_f",
+        "s1_lagged_mx4_f_defined",
+        "crossfit_joint_defined",
+        "fold",
+        "crossfit_prediction",
+        "crossfit_residual"
+      ],
+      "deterministic_bytes": true
+    }
+  },
+  "interpretation": "One or more coverage, residual-variance, or correlation gates failed; retire the dispersion candidate and leave frozen Mx4/S1 unchanged."
+}
