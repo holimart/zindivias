@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "audit": "Mx4 leave-one-tract-out population-weighted county context; bounded sensitivity screen, not promotion",
+  "method": {
+    "share": "registered Mx4 per-tract B covariate (overture_building_esri_source_share), read from the frozen Mx4 artifact",
+    "candidate": "Within each region-local COUNTYFP group, compute sum(pop_total * Mx4 tract share) / sum(pop_total) over usable tracts, excluding the focal tract from both numerator and denominator. A tract contributes only when its Mx4 share is defined and pop_total is finite and positive; unusable focal tracts contribute zero and are also excluded from peers when their share/population is unusable.",
+    "comparison": "absolute difference between peer-only population-weighted share and frozen Mx4 building-weighted county F value; frozen Mx4 remains untouched",
+    "undefined": "peer context undefined if remaining eligible population denominator is zero; retained as null in Parquet, never zero-filled",
+    "percentiles": "NumPy linear quantiles over peer-defined official tracts only",
+    "scope": "Only official GEOIDs, frozen Mx4 B/F values, provided COUNTYFP and pop_total were used; no building count weights were reread or recalculated."
+  },
+  "measure_before": {
+    "building_weighted_peer_coverage": 9347,
+    "official_ids": 9379,
+    "coverage_fraction": 0.9965881224011088,
+    "p95_absolute_change_from_frozen": 0.0014500169754790707,
+    "source_report": "reports/mx4-peer-only-context-sensitivity.json",
+    "source_report_sha256": "8d4e3477e17f2b01e6c35fcb4519a6d74ba4dae16a59a7ec81e20868be72a917",
+    "frozen_mx4_unchanged": true
+  },
+  "scope": {
+    "official_ids": 9379,
+    "exact_id_partition": true,
+    "county_groups": 297,
+    "peer_defined": 9347,
+    "peer_undefined": 32,
+    "peer_defined_coverage_fraction": 0.9965881224011088,
+    "mx4_frozen_artifact_modified": false,
+    "sample_score_values_read": false,
+    "labels_read": false,
+    "external_or_removed_reference_data_read": false,
+    "uploads": 0
+  },
+  "inputs": {
+    "mx4_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx4.parquet",
+      "rows": 18758,
+      "sha256": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+      "per_tract_share_defined": 9377,
+      "frozen_county_share_defined": 9379,
+      "expected_sha256": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af"
+    },
+    "harness_report": {
+      "path": "reports/ideas-harness.json",
+      "sha256": "1203d2acf10fa9682852abba3382d55f53c42b6fa7c03071c44cbe915d3f7a85"
+    },
+    "harness_config": {
+      "path": "config/bias60-harness-preregistered.json",
+      "sha256": "12a15e11cd0459299e407e5f1f7056fa16a6a8ddad5d7bfd826b20dbe476d558"
+    },
+    "strata": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "strata_table": {
+          "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+          "sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd",
+          "columns_read": [
+            "GEOID",
+            "COUNTYFP",
+            "pop_total"
+          ]
+        }
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "strata_table": {
+          "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+          "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+          "columns_read": [
+            "GEOID",
+            "COUNTYFP",
+            "pop_total"
+          ]
+        }
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "strata_table": {
+          "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+          "sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54",
+          "columns_read": [
+            "GEOID",
+            "COUNTYFP",
+            "pop_total"
+          ]
+        }
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "strata_table": {
+          "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+          "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354",
+          "columns_read": [
+            "GEOID",
+            "COUNTYFP",
+            "pop_total"
+          ]
+        }
+      }
+    },
+    "official_ids_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "Mx4_seed": {
+      "county_column": "COUNTYFP",
+      "tract_share_column": "overture_building_esri_source_share"
+    }
+  },
+  "absolute_change_from_frozen": {
+    "n": 9347,
+    "p50": 0.0,
+    "p95": 0.0451816243212348,
+    "max": 0.09934467378353529,
+    "mean": 0.005379966017466218
+  },
+  "regions": {
+    "maricopa-az": {
+      "official_ids": 1593,
+      "peer_defined": 1593,
+      "peer_undefined": 0,
+      "coverage_fraction": 1.0,
+      "absolute_change_from_frozen": {
+        "n": 1593,
+        "p50": 0.002459522239067735,
+        "p95": 0.0027775944003816276,
+        "max": 0.07431681992350686,
+        "mean": 0.0044375036178027506
+      }
+    },
+    "northern-ca": {
+      "official_ids": 591,
+      "peer_defined": 587,
+      "peer_undefined": 4,
+      "coverage_fraction": 0.9932318104906938,
+      "absolute_change_from_frozen": {
+        "n": 587,
+        "p50": 0.0,
+        "p95": 0.005305112049374387,
+        "max": 0.07183435002738237,
+        "mean": 0.002778306722964657
+      }
+    },
+    "eastern-ok": {
+      "official_ids": 1192,
+      "peer_defined": 1191,
+      "peer_undefined": 1,
+      "coverage_fraction": 0.9991610738255033,
+      "absolute_change_from_frozen": {
+        "n": 1191,
+        "p50": 0.0,
+        "p95": 0.07936756254659483,
+        "max": 0.09934467378353529,
+        "mean": 0.015368202395091506
+      }
+    },
+    "south-central-tx": {
+      "official_ids": 6003,
+      "peer_defined": 5976,
+      "peer_undefined": 27,
+      "coverage_fraction": 0.9955022488755623,
+      "absolute_change_from_frozen": {
+        "n": 5976,
+        "p50": 0.0,
+        "p95": 0.01327333115731126,
+        "max": 0.09517788575879552,
+        "mean": 0.003896118474424818
+      }
+    }
+  },
+  "acceptance": {
+    "peer_coverage_minimum": 0.9859,
+    "p95_change_minimum": 0.01,
+    "peer_coverage_pass": true,
+    "p95_change_pass": true,
+    "acceptance_pass": true,
+    "frozen_mx4_unchanged": true
+  },
+  "per_tract_artifact": {
+    "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/mx4-population-weighted-context/population-weighted-peer-mx4.parquet",
+    "rows": 9379,
+    "sha256": "fffe20f39010f96e75082bf708786517e6f490bbd7b19f60c3e617d64cf91763",
+    "deterministic_bytes": true
+  },
+  "provenance": {
+    "script_sha256": "e546d01073a2d3139db21c08b5cf9f94e696510c1b1c305d3d0650d88aaf7646",
+    "selected_inputs_only": [
+      "official GEOID",
+      "Mx4 registered tract Esri-only share",
+      "COUNTYFP",
+      "pop_total"
+    ],
+    "no_building_weights_used_for_candidate": true
+  },
+  "determinism": {
+    "calculation_group_order_fixed": true,
+    "serialized_bytes_repeatable": true
+  },
+  "interpretation": "Population-weighted peer context meets both sensitivity thresholds; this remains a label-free screen, not promotion. Keep frozen Mx4 unchanged pending separate review."
+}
