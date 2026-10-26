@@ -15,18 +15,21 @@
     "v2_model_public_rmse": null,
     "v2_model_predicted_public_rmse": 0.09135719597637867,
     "historical_p4_public_rmse": 0.091440198,
-    "predicted_margin_vs_p4": 0.0000830020236213247,
+    "predicted_margin_vs_p4": 8.30020236213247e-05,
     "pairwise_public_noise_guard": 0.0024377552985730185,
     "improvement_threshold_met": false,
     "lab_present": false,
-    "track_a_preregistration": "not_recorded"
+    "track_a_preregistration": "not_recorded",
+    "implemented_ideas_of_60": 25,
+    "track_a_scorer_status": "not_recorded",
+    "guarded_uploader": "/home/martin/hddProjects/competitionsall/scripts/zindi_submit.py"
   },
   "blockers": [
     "Only V2_model is registered in the frozen final-two protocol; there is no successful public score from which to choose candidate A or construct candidate B under that protocol.",
-    "The V2_model prediction does not clear the registered improvement noise guard; calibration upload would still need the required explicit upload authorization.",
-    "The frozen final-two record says no upload is queued and V2_model.upload_authorized is false.",
-    "The shared guarded uploader exists at competitionsall/scripts/zindi_submit.py, but the final-two record says no upload is queued and V2_model.upload_authorized is false; the uploader also requires a purpose field, which the V2_model candidate card lacks. No live upload was attempted.",
-    "External lab artifacts are absent and Track A scorer preregistration is not recorded; no Track B weights are available or used. The current eligible-candidate pool is not a final-two cohort from the 60-estimator scorer."
+    "The required Track A scorer is not preregistered, and only 25 of the 60 estimator ideas currently have harness outputs; the single V2_model candidate is not a two-candidate cohort from that scorer.",
+    "The frozen final-two record says no upload is queued and V2_model.upload_authorized is false. Its candidate card also lacks the purpose field required by the shared guarded uploader. No live upload was attempted.",
+    "The V2_model prediction does not clear the registered improvement noise guard. Although calibration is an allowed purpose, it cannot substitute for the missing scorer-derived candidate cohort and frozen upload authorization.",
+    "External lab artifacts are absent; no Track B weights are available or used."
   ],
   "actions": {
     "uploads": 0,
@@ -34,7 +37,8 @@
     "labels_read": false,
     "reference_layers_used": false,
     "candidate_registration_changed": false,
-    "final_two_choice_changed": false
+    "final_two_choice_changed": false,
+    "guarded_uploader_available": true
   },
   "evidence_paths": [
     "reports/final-two.json",
@@ -42,5 +46,5 @@
     "reports/lab-evaluation.json",
     "reports/lab-prerequisites.json"
   ],
-  "recommendation": "Keep this row blocked until the Track A scorer/final-two cohort and upload purpose are preregistered, and the frozen protocol's upload authorization is resolved. Do not bypass the uploader, protocol or upload authorization."
+  "recommendation": "Keep this row blocked until the Track A scorer and two-candidate cohort are preregistered and the frozen protocol upload authorization/purposes are resolved. Do not bypass the scorer, uploader, protocol or upload authorization."
 }
