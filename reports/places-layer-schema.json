@@ -1,0 +1,458 @@
+{
+  "access": "anonymous S3 Parquet footer/schema metadata only; no object data downloaded",
+  "code_commit": "dc26772142779a8f8a5c27f2bc29b89a530af1c1",
+  "environment": {
+    "pyarrow": "26.0.0",
+    "python": "3.12.3"
+  },
+  "forbidden_inputs_used": [],
+  "gates": {
+    "all_four_regions_open": true,
+    "canonical_overture_pois_paths": true,
+    "nonempty_arrow_schema": true
+  },
+  "regions": {
+    "eastern-ok": {
+      "path": "us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-pois.parquet",
+      "required_per_place_fields": [
+        "id",
+        "geometry",
+        "names",
+        "categories",
+        "sources"
+      ],
+      "row_groups": 6,
+      "rows": 207369,
+      "schema": [
+        {
+          "name": "id",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "categories",
+          "nullable": true,
+          "type": "struct<primary: string, alternate: list<element: string>>"
+        },
+        {
+          "name": "confidence",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "websites",
+          "nullable": true,
+          "type": "list<element: string>"
+        },
+        {
+          "name": "emails",
+          "nullable": true,
+          "type": "list<element: string>"
+        },
+        {
+          "name": "socials",
+          "nullable": true,
+          "type": "list<element: string>"
+        },
+        {
+          "name": "phones",
+          "nullable": true,
+          "type": "list<element: string>"
+        },
+        {
+          "name": "brand",
+          "nullable": true,
+          "type": "struct<wikidata: string, names: struct<primary: string, common: map<string, string ('common')>, rules: list<element: struct<variant: string, language: string, perspectives: struct<mode: string, countries: list<element: string>>, value: string, between: list<element: double>, side: string>>>>"
+        },
+        {
+          "name": "addresses",
+          "nullable": true,
+          "type": "list<element: struct<freeform: string, locality: string, postcode: string, region: string, country: string>>"
+        },
+        {
+          "name": "names",
+          "nullable": true,
+          "type": "struct<primary: string, common: map<string, string ('common')>, rules: list<element: struct<variant: string, language: string, perspectives: struct<mode: string, countries: list<element: string>>, value: string, between: list<element: double>, side: string>>>"
+        },
+        {
+          "name": "sources",
+          "nullable": true,
+          "type": "list<element: struct<property: string, dataset: string, license: string, record_id: string, update_time: string, confidence: double, between: list<element: double>, provider: string, resource: string, version: string>>"
+        },
+        {
+          "name": "operating_status",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "basic_category",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "taxonomy",
+          "nullable": true,
+          "type": "struct<primary: string, hierarchy: list<element: string>, alternates: list<element: string>>"
+        },
+        {
+          "name": "version",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "theme",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "type",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "bbox",
+          "nullable": true,
+          "type": "struct<xmin: double, ymin: double, xmax: double, ymax: double>"
+        },
+        {
+          "name": "geometry",
+          "nullable": true,
+          "type": "binary"
+        }
+      ],
+      "schema_checked": true
+    },
+    "maricopa-az": {
+      "path": "us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-pois.parquet",
+      "required_per_place_fields": [
+        "id",
+        "geometry",
+        "names",
+        "categories",
+        "sources"
+      ],
+      "row_groups": 9,
+      "rows": 300046,
+      "schema": [
+        {
+          "name": "id",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "categories",
+          "nullable": true,
+          "type": "struct<primary: string, alternate: list<element: string>>"
+        },
+        {
+          "name": "confidence",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "websites",
+          "nullable": true,
+          "type": "list<element: string>"
+        },
+        {
+          "name": "emails",
+          "nullable": true,
+          "type": "list<element: string>"
+        },
+        {
+          "name": "socials",
+          "nullable": true,
+          "type": "list<element: string>"
+        },
+        {
+          "name": "phones",
+          "nullable": true,
+          "type": "list<element: string>"
+        },
+        {
+          "name": "brand",
+          "nullable": true,
+          "type": "struct<wikidata: string, names: struct<primary: string, common: map<string, string ('common')>, rules: list<element: struct<variant: string, language: string, perspectives: struct<mode: string, countries: list<element: string>>, value: string, between: list<element: double>, side: string>>>>"
+        },
+        {
+          "name": "addresses",
+          "nullable": true,
+          "type": "list<element: struct<freeform: string, locality: string, postcode: string, region: string, country: string>>"
+        },
+        {
+          "name": "names",
+          "nullable": true,
+          "type": "struct<primary: string, common: map<string, string ('common')>, rules: list<element: struct<variant: string, language: string, perspectives: struct<mode: string, countries: list<element: string>>, value: string, between: list<element: double>, side: string>>>"
+        },
+        {
+          "name": "sources",
+          "nullable": true,
+          "type": "list<element: struct<property: string, dataset: string, license: string, record_id: string, update_time: string, confidence: double, between: list<element: double>, provider: string, resource: string, version: string>>"
+        },
+        {
+          "name": "operating_status",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "basic_category",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "taxonomy",
+          "nullable": true,
+          "type": "struct<primary: string, hierarchy: list<element: string>, alternates: list<element: string>>"
+        },
+        {
+          "name": "version",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "theme",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "type",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "bbox",
+          "nullable": true,
+          "type": "struct<xmin: double, ymin: double, xmax: double, ymax: double>"
+        },
+        {
+          "name": "geometry",
+          "nullable": true,
+          "type": "binary"
+        }
+      ],
+      "schema_checked": true
+    },
+    "northern-ca": {
+      "path": "us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-pois.parquet",
+      "required_per_place_fields": [
+        "id",
+        "geometry",
+        "names",
+        "categories",
+        "sources"
+      ],
+      "row_groups": 4,
+      "rows": 116897,
+      "schema": [
+        {
+          "name": "id",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "categories",
+          "nullable": true,
+          "type": "struct<primary: string, alternate: list<element: string>>"
+        },
+        {
+          "name": "confidence",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "websites",
+          "nullable": true,
+          "type": "list<element: string>"
+        },
+        {
+          "name": "emails",
+          "nullable": true,
+          "type": "list<element: string>"
+        },
+        {
+          "name": "socials",
+          "nullable": true,
+          "type": "list<element: string>"
+        },
+        {
+          "name": "phones",
+          "nullable": true,
+          "type": "list<element: string>"
+        },
+        {
+          "name": "brand",
+          "nullable": true,
+          "type": "struct<wikidata: string, names: struct<primary: string, common: map<string, string ('common')>, rules: list<element: struct<variant: string, language: string, perspectives: struct<mode: string, countries: list<element: string>>, value: string, between: list<element: double>, side: string>>>>"
+        },
+        {
+          "name": "addresses",
+          "nullable": true,
+          "type": "list<element: struct<freeform: string, locality: string, postcode: string, region: string, country: string>>"
+        },
+        {
+          "name": "names",
+          "nullable": true,
+          "type": "struct<primary: string, common: map<string, string ('common')>, rules: list<element: struct<variant: string, language: string, perspectives: struct<mode: string, countries: list<element: string>>, value: string, between: list<element: double>, side: string>>>"
+        },
+        {
+          "name": "sources",
+          "nullable": true,
+          "type": "list<element: struct<property: string, dataset: string, license: string, record_id: string, update_time: string, confidence: double, between: list<element: double>, provider: string, resource: string, version: string>>"
+        },
+        {
+          "name": "operating_status",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "basic_category",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "taxonomy",
+          "nullable": true,
+          "type": "struct<primary: string, hierarchy: list<element: string>, alternates: list<element: string>>"
+        },
+        {
+          "name": "version",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "theme",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "type",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "bbox",
+          "nullable": true,
+          "type": "struct<xmin: double, ymin: double, xmax: double, ymax: double>"
+        },
+        {
+          "name": "geometry",
+          "nullable": true,
+          "type": "binary"
+        }
+      ],
+      "schema_checked": true
+    },
+    "south-central-tx": {
+      "path": "us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-pois.parquet",
+      "required_per_place_fields": [
+        "id",
+        "geometry",
+        "names",
+        "categories",
+        "sources"
+      ],
+      "row_groups": 36,
+      "rows": 1300334,
+      "schema": [
+        {
+          "name": "id",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "categories",
+          "nullable": true,
+          "type": "struct<primary: string, alternate: list<element: string>>"
+        },
+        {
+          "name": "confidence",
+          "nullable": true,
+          "type": "double"
+        },
+        {
+          "name": "websites",
+          "nullable": true,
+          "type": "list<element: string>"
+        },
+        {
+          "name": "emails",
+          "nullable": true,
+          "type": "list<element: string>"
+        },
+        {
+          "name": "socials",
+          "nullable": true,
+          "type": "list<element: string>"
+        },
+        {
+          "name": "phones",
+          "nullable": true,
+          "type": "list<element: string>"
+        },
+        {
+          "name": "brand",
+          "nullable": true,
+          "type": "struct<wikidata: string, names: struct<primary: string, common: map<string, string ('common')>, rules: list<element: struct<variant: string, language: string, perspectives: struct<mode: string, countries: list<element: string>>, value: string, between: list<element: double>, side: string>>>>"
+        },
+        {
+          "name": "addresses",
+          "nullable": true,
+          "type": "list<element: struct<freeform: string, locality: string, postcode: string, region: string, country: string>>"
+        },
+        {
+          "name": "names",
+          "nullable": true,
+          "type": "struct<primary: string, common: map<string, string ('common')>, rules: list<element: struct<variant: string, language: string, perspectives: struct<mode: string, countries: list<element: string>>, value: string, between: list<element: double>, side: string>>>"
+        },
+        {
+          "name": "sources",
+          "nullable": true,
+          "type": "list<element: struct<property: string, dataset: string, license: string, record_id: string, update_time: string, confidence: double, between: list<element: double>, provider: string, resource: string, version: string>>"
+        },
+        {
+          "name": "operating_status",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "basic_category",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "taxonomy",
+          "nullable": true,
+          "type": "struct<primary: string, hierarchy: list<element: string>, alternates: list<element: string>>"
+        },
+        {
+          "name": "version",
+          "nullable": true,
+          "type": "int32"
+        },
+        {
+          "name": "theme",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "type",
+          "nullable": true,
+          "type": "string"
+        },
+        {
+          "name": "bbox",
+          "nullable": true,
+          "type": "struct<xmin: double, ymin: double, xmax: double, ymax: double>"
+        },
+        {
+          "name": "geometry",
+          "nullable": true,
+          "type": "binary"
+        }
+      ],
+      "schema_checked": true
+    }
+  },
+  "schema_version": 1,
+  "source": "provided public challenge package, reference/<region>/<region>-overture-pois.parquet"
+}
