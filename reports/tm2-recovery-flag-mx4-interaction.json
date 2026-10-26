@@ -1,0 +1,231 @@
+{
+  "schema_version": 1,
+  "screen": "Tm2/Tm3 binary material-recovery flag × Mx4 F; unregistered label-free interaction sensitivity",
+  "definition": "On the exact joint-defined Tm2/Tm3/Mx4 F support, interaction = recovery_flag * clip(Mx4_F,0,1). Recovery flag is 1 iff Tm2 gap >0 and Tm3 ACS housing growth >=0.10; otherwise 0. Undefined unless both Tm2 and Tm3 define the flag and Mx4 F is defined.",
+  "method": {
+    "source_flag": "Recompute and validate the completed sparse Tm2/Tm3 flag artifact; require exact 30 flagged GEOIDs and exact defined mask.",
+    "change_metric": "For the 30 flagged IDs, absolute change = |interaction - binary recovery flag|; report p95 and regional distributions. Zero-flag jointly-defined rows have zero interaction and no flagged-support change observation.",
+    "Mx4_handling": "Clip frozen Mx4 F to [0,1] before multiplication; record clipping count; do not impute nulls.",
+    "not_promoted": true
+  },
+  "measure_before": {
+    "validated_flagged_ids": 30,
+    "flagged_regions": 4,
+    "joint_Tm2_Tm3_defined_ids": 9362,
+    "flag_interaction_change_previously_measured": false,
+    "source_flag_report_sha256": "72102e0cec6497af698246782db5437b71af90570d7bf0dc52ff6cb31a572b98",
+    "source_flag_report": "reports/tm2-fire-recovery-flag.json"
+  },
+  "scope": {
+    "official_ids": 9379,
+    "exact_official_geoid_region_partition": true,
+    "Tm2_defined_ids": 9377,
+    "Tm3_defined_ids": 9362,
+    "Mx4_F_defined_ids": 9379,
+    "joint_defined_ids": 9362,
+    "joint_undefined_ids": 17,
+    "flagged_ids_on_joint_support": 30,
+    "coverage_fraction": 0.9981874400255891,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "Tm1_or_Tm4_inputs_read": false,
+    "removed_or_equivalent_reference_data_read": false,
+    "external_data_read": false,
+    "leaderboard_feedback_used": false,
+    "frozen_Tm2_Tm3_Mx4_modified": false,
+    "registry_integration": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "flagged_support_absolute_change_distribution": {
+      "n": 30,
+      "min": 0.9885444337480789,
+      "p50": 1.0,
+      "p95": 1.0,
+      "max": 1.0,
+      "mean": 0.9987683043140504
+    },
+    "joint_interaction_distribution": {
+      "n": 9362,
+      "min": 0.0,
+      "p50": 0.0,
+      "p95": 0.0,
+      "max": 0.011455566251921123
+    },
+    "Mx4_clipped_id_count": 0,
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "tm2_defined_ids": 1593,
+        "tm3_defined_ids": 1588,
+        "mx4_defined_ids": 1593,
+        "joint_defined_ids": 1588,
+        "flagged_ids": 8,
+        "undefined_ids": 5,
+        "flagged_geoid_list": [
+          "04003000101",
+          "04003001401",
+          "04003001402",
+          "04003002002",
+          "04007940400",
+          "04009961600",
+          "04013050603",
+          "04013980100"
+        ],
+        "flagged_support_absolute_change_distribution": {
+          "n": 8,
+          "p50": 1.0,
+          "p95": 1.0,
+          "max": 1.0
+        }
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "tm2_defined_ids": 591,
+        "tm3_defined_ids": 591,
+        "mx4_defined_ids": 591,
+        "joint_defined_ids": 591,
+        "flagged_ids": 7,
+        "undefined_ids": 0,
+        "flagged_geoid_list": [
+          "06007001800",
+          "06007001900",
+          "06007002000",
+          "06007002100",
+          "06007002200",
+          "06007002300",
+          "06033000501"
+        ],
+        "flagged_support_absolute_change_distribution": {
+          "n": 7,
+          "p50": 1.0,
+          "p95": 1.0,
+          "max": 1.0
+        }
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "tm2_defined_ids": 1192,
+        "tm3_defined_ids": 1189,
+        "mx4_defined_ids": 1192,
+        "joint_defined_ids": 1189,
+        "flagged_ids": 8,
+        "undefined_ids": 3,
+        "flagged_geoid_list": [
+          "40021977600",
+          "40103956600",
+          "40113940011",
+          "40147001000",
+          "40147001100",
+          "40147001200",
+          "40151954201",
+          "40153953100"
+        ],
+        "flagged_support_absolute_change_distribution": {
+          "n": 8,
+          "p50": 1.0,
+          "p95": 1.0,
+          "max": 1.0
+        }
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "tm2_defined_ids": 6001,
+        "tm3_defined_ids": 5994,
+        "mx4_defined_ids": 6003,
+        "joint_defined_ids": 5994,
+        "flagged_ids": 7,
+        "undefined_ids": 9,
+        "flagged_geoid_list": [
+          "48013960602",
+          "48099980000",
+          "48221160302",
+          "48251130100",
+          "48305950600",
+          "48367140713",
+          "48367140714"
+        ],
+        "flagged_support_absolute_change_distribution": {
+          "n": 7,
+          "p50": 1.0,
+          "p95": 1.0,
+          "max": 1.0
+        }
+      }
+    }
+  },
+  "thresholds": {
+    "minimum_flagged_support_p95_absolute_change": 0.01,
+    "interaction_bounds_inclusive": [
+      0.0,
+      1.0
+    ]
+  },
+  "acceptance": {
+    "exact_9379_id_alignment": true,
+    "all_30_source_flags_align_exactly": true,
+    "joint_Tm2_Tm3_Mx4_defined_mask_preserved": true,
+    "undefined_interactions_remain_null": true,
+    "interaction_finite_and_bounded_0_1": true,
+    "flagged_support_p95_absolute_change": 1.0,
+    "flagged_support_p95_change_at_least_0_01": true,
+    "frozen_Tm2_Tm3_Mx4_flag_artifact_registry_unchanged": true,
+    "distinct_interaction_screen_pass": true
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "7138951b53cecabf981295c57ae067a73785c7c94f2a0d4bad2614d5a61c3ab9",
+    "source_flag_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/tm2-fire-recovery-flag/tm2-fire-recovery-flag.parquet",
+      "sha256_before": "5a51033b3c8c6cec395f5f51c6f86bd6d60e3c95098b5586ae13ca946e09d133",
+      "sha256_after": "5a51033b3c8c6cec395f5f51c6f86bd6d60e3c95098b5586ae13ca946e09d133"
+    },
+    "frozen_inputs": {
+      "Tm2": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Tm2.parquet",
+        "sha256_before": "470c23b2902cbb652dfc884c22ba2a743a85538aa819ddd179b1ff2a3aea41bc",
+        "sha256_after": "470c23b2902cbb652dfc884c22ba2a743a85538aa819ddd179b1ff2a3aea41bc",
+        "gap_emission_sha256": "3d828d0f8c29ea062ceac19380c0d92b5b13e757e1f4d1e78ffafbf1587a1721"
+      },
+      "Tm3": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Tm3.parquet",
+        "sha256_before": "502ff5d6c66628c97db82142a9ea935cc7b2817ff4cb8a9852b5e94d9b0b2940",
+        "sha256_after": "502ff5d6c66628c97db82142a9ea935cc7b2817ff4cb8a9852b5e94d9b0b2940",
+        "acs_housing_growth_emission_sha256": "2151960c1824f76bbd03763babd0c267378879a5afb5d015d35dbc91cb4b1361"
+      },
+      "Mx4": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx4.parquet",
+        "sha256_before": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+        "sha256_after": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+        "F_emission_sha256": "13ca669c349b48e29003bdd71c40652da2659124e164880b62035d7a75e77f7c"
+      }
+    },
+    "registry_sha256_before": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "registry_sha256_after": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "candidate_manifest_sha256_before": "7fda4aff8e63d0c2854c261798abc073ab01c465d999d7c25732e152a9d4d396",
+    "candidate_manifest_sha256_after": "7fda4aff8e63d0c2854c261798abc073ab01c465d999d7c25732e152a9d4d396",
+    "script_sha256": "be276ba4f2e0736e625a3a6e7db8ede4c0688c6d160bb140835281c7df939544",
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/tm2-recovery-flag-mx4-interaction/recovery-flag-mx4-interaction.parquet",
+      "rows": 9379,
+      "sha256": "533db73f622b1b0a13428a32e208b6e2adb2bd76a8c3ee6be148b01554063675",
+      "columns": [
+        "GEOID",
+        "region",
+        "tm2_building_gap",
+        "tm2_defined",
+        "tm3_acs_housing_growth",
+        "tm3_defined",
+        "recovery_flag",
+        "recovery_flag_defined",
+        "mx4_f_source_share",
+        "mx4_defined",
+        "mx4_f_clipped",
+        "interaction",
+        "absolute_change_from_binary_flag",
+        "interaction_defined"
+      ],
+      "deterministic_bytes": true
+    }
+  },
+  "interpretation": "The flagged-support p95 change clears 0.01; retain only as an unregistered label-free sensitivity and leave frozen Tm2/Tm3/Mx4, registry, and candidates unchanged."
+}
