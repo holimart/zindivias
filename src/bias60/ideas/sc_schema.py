@@ -24,11 +24,17 @@ def normalize_names(value: Any) -> tuple[str, ...]:
     elif isinstance(value, dict):
         for key in ("primary", "common", "rules", "name", "value", "ref"):
             if key in value:
-                if key == "common" and isinstance(value[key], dict):
-                    for item in value[key].values():
+                common = value[key]
+                if key == "common" and isinstance(common, dict):
+                    for item in common.values():
+                        found.extend(normalize_names(item))
+                elif (key == "common" and isinstance(common, (list, tuple))
+                      and all(isinstance(pair, (list, tuple)) and len(pair) == 2 for pair in common)):
+                    # Arrow may materialize MapArray values as ordered (language, value) pairs.
+                    for _, item in common:
                         found.extend(normalize_names(item))
                 else:
-                    found.extend(normalize_names(value[key]))
+                    found.extend(normalize_names(common))
     unique = tuple(dict.fromkeys(x for x in found if x))
     return unique
 
@@ -258,9 +264,8 @@ def sc3(inputs) -> IdeaOutput:
 def _scan_pois(inputs: Any, seed: dict[str, Any]):
     import pyarrow.parquet as pq
     import shapely
-    path = inputs.layer_path("pois")
-    pf = pq.ParquetFile(inputs.filesystem.open_input_file(path))
     cols = seed["poi_columns"]
+    pf = inputs.open_places_parquet(cols)
     if not set(cols).issubset(pf.schema_arrow.names):
         raise ValueError(f"POI schema missing columns: {sorted(set(cols)-set(pf.schema_arrow.names))}")
     inputs.accessed["parquet_columns"].extend(f"{inputs.region}-overture-pois.parquet:{c}" for c in cols)

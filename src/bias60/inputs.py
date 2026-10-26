@@ -112,9 +112,80 @@ class ProvidedInputs:
         template = self.config["inputs"]["package_layer_path_template"]
         path = template.format(bucket=self.config["inputs"]["package_bucket"],
                                region=self.region, layer=layer)
+        if layer == "pois" and not path.endswith(f"/{self.region}-overture-pois.parquet"):
+            raise ValueError(f"registered places path is not the canonical overture-pois object: {path}")
         self._require_openable(path)
         self.accessed["layers"].append(layer)
         return path
+
+    @staticmethod
+    def validate_places_schema(schema: Any) -> None:
+        """Fail closed unless the provided Overture places object has its declared Arrow schema."""
+        import pyarrow as pa
+
+        fields = {field.name: field.type for field in schema}
+        required = {"id", "geometry", "names", "categories", "sources"}
+        missing = sorted(required - set(fields))
+        if missing:
+            raise ValueError(f"provided overture-pois layer lacks columns {missing}")
+        string_types = (pa.types.is_string, pa.types.is_large_string)
+        binary_types = (pa.types.is_binary, pa.types.is_large_binary)
+        if not any(check(fields["id"]) for check in string_types):
+            raise ValueError("provided overture-pois id must be string")
+        if not any(check(fields["geometry"]) for check in binary_types):
+            raise ValueError("provided overture-pois geometry must be binary WKB")
+        if not pa.types.is_struct(fields["names"]):
+            raise ValueError("provided overture-pois names must be a struct")
+        name_fields = {field.name: field.type for field in fields["names"]}
+        if "primary" not in name_fields or not any(check(name_fields["primary"]) for check in string_types):
+            raise ValueError("provided overture-pois names.primary must be string")
+        if "common" not in name_fields or not pa.types.is_map(name_fields["common"]):
+            raise ValueError("provided overture-pois names.common must be a map")
+        if "rules" not in name_fields or not (pa.types.is_list(name_fields["rules"])
+                                               or pa.types.is_large_list(name_fields["rules"])):
+            raise ValueError("provided overture-pois names.rules must be a list")
+        if not pa.types.is_struct(fields["categories"]):
+            raise ValueError("provided overture-pois categories must be a struct")
+        category_fields = {field.name: field.type for field in fields["categories"]}
+        if "primary" not in category_fields or not any(check(category_fields["primary"]) for check in string_types):
+            raise ValueError("provided overture-pois categories.primary must be string")
+        alternate = category_fields.get("alternate")
+        if alternate is None or not (pa.types.is_list(alternate) or pa.types.is_large_list(alternate)):
+            raise ValueError("provided overture-pois categories.alternate must be a list")
+        if not any(check(alternate.value_type) for check in string_types):
+            raise ValueError("provided overture-pois categories.alternate elements must be strings")
+        sources = fields["sources"]
+        if not (pa.types.is_list(sources) or pa.types.is_large_list(sources)) or not pa.types.is_struct(sources.value_type):
+            raise ValueError("provided overture-pois sources must be a list of structs")
+        source_fields = {field.name: field.type for field in sources.value_type}
+        if "dataset" not in source_fields or not any(check(source_fields["dataset"]) for check in string_types):
+            raise ValueError("provided overture-pois sources.dataset must be string")
+
+    def open_places_parquet(self, required_columns: list[str] | None = None) -> Any:
+        """Open the registered overture-pois Parquet and validate its stable per-place schema.
+
+        This is footer-only until a caller reads row groups. It uses the package's canonical
+        ``overture-pois`` object path and never falls back to the nonexistent ``overture-places``.
+        """
+        import pyarrow.parquet as pq
+
+        path = self.layer_path("pois")
+        parquet = pq.ParquetFile(self.filesystem.open_input_file(path))
+        self.validate_places_schema(parquet.schema_arrow)
+        missing = sorted(set(required_columns or ()) - set(parquet.schema_arrow.names))
+        if missing:
+            raise ValueError(f"provided overture-pois layer lacks requested columns {missing}")
+        return parquet
+
+    def iter_place_records(self):
+        """Yield per-place id/geometry/names/categories/sources records row group by row group."""
+        columns = ["id", "geometry", "names", "categories", "sources"]
+        parquet = self.open_places_parquet(columns)
+        for column in columns:
+            self.accessed["parquet_columns"].append(
+                f"{self.region}-overture-pois.parquet:{column}")
+        for row_group in range(parquet.metadata.num_row_groups):
+            yield from parquet.read_row_group(row_group, columns=columns).to_pylist()
 
     # ---------------------------------------------------------------- tabular caches
     def _read_parquet_aligned(self, path: Path, columns: list[str],
@@ -264,8 +335,7 @@ class ProvidedInputs:
         cache_dir = self.workspace / self.config["inputs"]["ideas_cache_dir"]
         cache_dir.mkdir(parents=True, exist_ok=True)
         cache_path = cache_dir / f"{self.region}-dst-poi-shape-{source_a}-{source_b}.npz"
-        path = self.layer_path("pois")
-        parquet_file = pq.ParquetFile(self.filesystem.open_input_file(path))
+        parquet_file = self.open_places_parquet(["categories", "sources", "geometry"])
         rows_total = int(parquet_file.metadata.num_rows)
         if cache_path.is_file():
             stored = np.load(cache_path, allow_pickle=False)

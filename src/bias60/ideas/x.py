@@ -236,8 +236,8 @@ def x3(inputs) -> IdeaOutput:
     transformer = Transformer.from_crs("EPSG:4326", "EPSG:5070", always_xy=True)
     tracts = shapely.transform(inputs.tract_geometries(), transformer.transform, interleaved=False)
     tract_tree = shapely.STRtree(tracts); n = len(inputs.geoids)
-    poi_path = inputs.layer_path("pois"); poi_cols = seed["poi_columns"]
-    poi_pf = pq.ParquetFile(inputs.filesystem.open_input_file(poi_path)); ems_points=[]; poi_tract_counts=np.zeros(n,dtype=np.int32)
+    poi_cols = seed["poi_columns"]
+    poi_pf = inputs.open_places_parquet(poi_cols); ems_points=[]; poi_tract_counts=np.zeros(n,dtype=np.int32)
     inputs.accessed["parquet_columns"].extend(f"{inputs.region}-overture-pois.parquet:{c}" for c in poi_cols)
     for rg in range(poi_pf.metadata.num_row_groups):
         tab=poi_pf.read_row_group(rg,columns=poi_cols); src=tab.column("sources").to_pylist()
@@ -314,8 +314,8 @@ def x5(inputs) -> IdeaOutput:
     tracts = shapely.transform(inputs.tract_geometries(), transformer.transform, interleaved=False)
     tract_tree = shapely.STRtree(tracts); n = len(inputs.geoids)
     ems_categories = set(seed["ems_categories"]); ems_points = []
-    poi_path = inputs.layer_path("pois"); poi_columns = seed["poi_columns"]
-    poi_pf = pq.ParquetFile(inputs.filesystem.open_input_file(poi_path))
+    poi_columns = seed["poi_columns"]
+    poi_pf = inputs.open_places_parquet(poi_columns)
     inputs.accessed["parquet_columns"].extend(f"{inputs.region}-overture-pois.parquet:{c}" for c in poi_columns)
     for rg in range(poi_pf.metadata.num_row_groups):
         tab = poi_pf.read_row_group(rg, columns=poi_columns); categories = tab.column("categories").to_pylist()
