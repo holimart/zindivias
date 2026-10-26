@@ -37,9 +37,108 @@
     }
   },
   "estimators": {
-    "gate": "a separate preregistered row must map each implemented idea to a raw-source lab analogue before estimators.parquet is written",
-    "reason": "all three implemented ideas name a provided-package input in the registry: Sc5 needs both the filtered and the unfiltered roads layer as the organiser shipped them, Mx4 needs buildings.sources, Tm1 needs strata.carbonplan_buildings plus the package building count. None of those exist for a lab region, and inventing a substitute mapping after the labels exist would be fitting the estimator to the answer.",
-    "status": "not_defined_for_this_build"
+    "analogue_config_path": "config/bias60-lab-estimator-analogues-preregistered.json",
+    "analogue_config_sha256": "0930eab517162405bfa6a228b4f4a869ad199a2f98638baec2e9880471a3ebbb",
+    "evaluated_ideas": [
+      "G1",
+      "Sc1"
+    ],
+    "gate": "builder writes staging/<group>/estimators.parquet only for ideas with predeclared faithful raw-source analogues; other implemented ideas are explicitly listed as not_evaluable_in_lab",
+    "not_evaluable_ideas": [
+      "Dst1",
+      "Dst2",
+      "Dst3",
+      "Dst4",
+      "Dst5",
+      "G2",
+      "G3",
+      "G4",
+      "G5",
+      "Mx4",
+      "P1",
+      "P2",
+      "P3",
+      "P4",
+      "Sc2",
+      "Sc3",
+      "Sc4",
+      "Sc5",
+      "Sca1",
+      "Tm1",
+      "X1",
+      "X3",
+      "X4",
+      "X5"
+    ],
+    "rule_exclusions": {
+      "X2": {
+        "reason": "Steward ruling 2026-10-26 identifies usfs_BuildingCount_sum as an equivalent copy of a removed reference count; the field/layer must not be read or computed.",
+        "status": "excluded_by_rules"
+      }
+    },
+    "staged_outputs": [
+      {
+        "contract_valid": true,
+        "group": "NV",
+        "ideas": [
+          "G1",
+          "Sc1"
+        ],
+        "rows": 1348,
+        "sha256": "35e8048361db9d7b16777382f61516c76f34ad6feb566fb356b0d89f336720a8"
+      },
+      {
+        "contract_valid": true,
+        "group": "NM",
+        "ideas": [
+          "G1",
+          "Sc1"
+        ],
+        "rows": 1220,
+        "sha256": "5790192a1bb9558898e52ec7c18207ea6bad419153a68b942f04b632f9625d70"
+      },
+      {
+        "contract_valid": true,
+        "group": "CO-UT",
+        "ideas": [
+          "G1",
+          "Sc1"
+        ],
+        "rows": 4326,
+        "sha256": "f3f161b71a77dd4cb4757df4d3f478f04f3eed21a9b993274bdcec667465339b"
+      },
+      {
+        "contract_valid": true,
+        "group": "LA",
+        "ideas": [
+          "G1",
+          "Sc1"
+        ],
+        "rows": 2776,
+        "sha256": "302824e51d7b579e511a96e8cf042c31b159cb45122a3dad6e3483f1d9d7808a"
+      },
+      {
+        "contract_valid": true,
+        "group": "AR-KS",
+        "ideas": [
+          "G1",
+          "Sc1"
+        ],
+        "rows": 3270,
+        "sha256": "9afce4263d41ac96fa605ed48a34bc0c8ad182451d51438c5a2762c1fd844de4"
+      },
+      {
+        "contract_valid": true,
+        "group": "TX-W",
+        "ideas": [
+          "G1",
+          "Sc1"
+        ],
+        "rows": 490,
+        "sha256": "14e0452b3c80ea9b5fccdcf4477c701e264072ed4ba7d68be13ad0b9ca3747e5"
+      }
+    ],
+    "status": "preregistered_analogues_configured"
   },
   "exclusion": {
     "buffer_km": 8.0,
@@ -61,7 +160,9 @@
     "components_held_are_documented": true,
     "county_rule_enabled_for_retrieval": true,
     "cumulative_retrieval_within_the_frozen_cap": true,
+    "estimator_analogue_config_hash_matches_pin": true,
     "every_group_above_the_tract_floor": true,
+    "every_implemented_idea_has_a_declared_lab_disposition": true,
     "every_url_matches_a_preregistered_pattern": true,
     "groups_are_the_preregistered_ones": true,
     "lab_root_outside_repo": true,
@@ -82,6 +183,7 @@
     "self_check_rejections_are_disclosed": true,
     "spec_hash_matches_pin": true,
     "staged_directories_are_manifested_or_refused": true,
+    "staged_estimator_parquets_match_exact_lab_eval_contract": true,
     "staging_not_promoted": true,
     "study_county_never_appears_in_a_url": true,
     "study_geoid_never_appears_in_a_url": true,
@@ -380,7 +482,7 @@
   },
   "preregistration": {
     "config_path": "config/lab-build-preregistered.json",
-    "config_sha256": "321996f2a8dd8c7fff8cfb689a57699c794bc88e009c289630cc306871936e2c",
+    "config_sha256": "bf6b89365e019063f44d0ea573718ff8a49a3dcbb01c297240076d455bfa1177",
     "lab_plan_config_sha256": "e7106107d63c5bd823c4b65fa3a32c5733cb02500ec5ee539cf99ddde01233cb",
     "negative_controls_declared": [
       "accepted_tract_inside_buffer",

@@ -18,9 +18,11 @@ import zipfile
 from pathlib import Path
 
 import pyarrow as pa
+import pyarrow.parquet as pq
 import shapefile
+from pyproj import Transformer
 from shapely import from_wkb
-from shapely.geometry import LineString
+from shapely.geometry import LineString, box
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
@@ -220,12 +222,79 @@ def build(*, tamper: str | None = None, tract_records: list[dict] | None = None,
     reference = builder.reference_road_lengths(group, tracts["tracts"], config, budget=budget,
                                               fetch=fetch)
     defineness = builder.write_labels(group, tracts["tracts"], observed, reference, config)
+    analogue=builder.load_analogue_config(config)
+    estimator_rows=[]
+    for entry in tracts["tracts"]:
+        for idea in analogue["evaluated_ideas"]:
+            item=analogue["ideas"][idea]
+            estimator_rows.append({"lab_tract_id":entry["lab_tract_id"],"lab_group":group["id"],
+                                   "idea":idea,"family":item["family"],"component":item["component"],
+                                   "channel":item["channel"],"value":0.25,"defined":True})
+    estimator_table=pa.Table.from_pylist(estimator_rows).select(lab_eval.ESTIMATOR_COLUMNS)
+    estimator_path=staging/"estimators.parquet";pq.write_table(estimator_table,estimator_path)
+    estimator_result={"path":str(estimator_path),"sha256":hashlib.sha256(estimator_path.read_bytes()).hexdigest(),
+                      "rows":estimator_table.num_rows,"ideas":analogue["evaluated_ideas"],
+                      "not_evaluable_ideas":analogue["not_evaluable_ideas"],
+                      "columns":list(estimator_table.column_names),
+                      "source_partitions":[{"path":"synthetic.parquet","sha256":"f"*64}]}
     manifest = builder.write_manifest(group, tracts, observed, reference, defineness, config,
-                                      lab_commit="0" * 40)
+                                      lab_commit="0" * 40,estimators=estimator_result)
     manifest["defineness"]["study_points"] = tracts["study"]["study_points"]
     return {"report": builder.build_report(config, manifests=[manifest], tamper=tamper),
             "tracts": tracts, "observed": observed, "reference": reference,
             "defineness": defineness, "manifest": manifest, "staging": staging}
+
+
+class EstimatorAnalogueTests(unittest.TestCase):
+    def test_preregistration_covers_every_implemented_idea_before_fit(self) -> None:
+        analogue=builder.load_analogue_config(CONFIG)
+        self.assertEqual(analogue["evaluated_ideas"],["G1","Sc1"])
+        self.assertEqual(len(analogue["ideas"]),26)
+        self.assertEqual(len(analogue["not_evaluable_ideas"]),24)
+        self.assertTrue(analogue["created_before_fit"])
+        self.assertEqual(analogue["rule_exclusions"]["X2"]["status"],"excluded_by_rules")
+        self.assertIn("must not be read",analogue["rule_exclusions"]["X2"]["reason"])
+
+    def test_raw_road_analogues_write_exact_lab_eval_schema_without_labels(self) -> None:
+        analogue=builder.load_analogue_config(CONFIG)
+        inverse=Transformer.from_crs("EPSG:5070","EPSG:4326",always_xy=True)
+        def geographic_line(x:float)->bytes:
+            coords=[inverse.transform(x,0),inverse.transform(x,1000)]
+            return LineString(coords).wkb
+        tracts=[{"lab_tract_id":"35001000100","lab_group":"NM","polygon":box(0,0,1000,1000)}]
+        source_rows=[
+            {"class":"primary","subtype":"road","names":{"primary":"US 1"},"geometry":geographic_line(10)},
+            {"class":"primary","subtype":"road","names":None,"geometry":geographic_line(500)}]
+        rows=builder._road_analogue_rows(tracts,source_rows,analogue,"NM")
+        self.assertEqual({row["idea"] for row in rows},{"G1","Sc1"})
+        values={row["idea"]:row["value"] for row in rows}
+        self.assertGreater(values["G1"],0.2)
+        self.assertLess(values["G1"],0.3)
+        self.assertAlmostEqual(values["Sc1"],0.5,places=5)
+        table=pa.Table.from_pylist(rows).select(lab_eval.ESTIMATOR_COLUMNS)
+        with tempfile.TemporaryDirectory() as directory:
+            pq.write_table(table,Path(directory)/"estimators.parquet")
+            loaded=lab_eval._table(Path(directory),"estimators.parquet",lab_eval.ESTIMATOR_COLUMNS)
+            self.assertEqual(list(loaded),lab_eval.ESTIMATOR_COLUMNS)
+            self.assertEqual(len(loaded["idea"]),2)
+
+
+class StagedEstimatorArtifactTests(unittest.TestCase):
+    def test_preregistered_estimator_artifacts_are_schema_valid_and_hash_tied(self) -> None:
+        staging=WORKSPACE/"lab"/"staging"
+        for group in ("NV","NM","CO-UT","LA","AR-KS","TX-W"):
+            with self.subTest(group=group):
+                directory=staging/group
+                artifact=directory/"estimators.parquet"
+                sidecar=json.loads((directory/"estimators.json").read_text(encoding="utf-8"))
+                table=lab_eval._table(directory,"estimators.parquet",lab_eval.ESTIMATOR_COLUMNS)
+                digest=hashlib.sha256(artifact.read_bytes()).hexdigest()
+                self.assertEqual(digest,sidecar["sha256"])
+                self.assertEqual(list(table),lab_eval.ESTIMATOR_COLUMNS)
+                self.assertEqual(set(table["idea"]),{"G1","Sc1"})
+                self.assertEqual(len(table["lab_tract_id"]),sidecar["rows"])
+                self.assertEqual(sidecar["analogue_config_sha256"],
+                                 CONFIG["estimators"]["analogue_config_sha256"])
 
 
 class GateTests(unittest.TestCase):

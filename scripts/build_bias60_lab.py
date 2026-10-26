@@ -37,6 +37,7 @@ from bias60 import lab_eval, lab_plan  # noqa: E402
 
 CONFIG_PATH = ROOT / "config" / "lab-build-preregistered.json"
 PREREQUISITE_CONFIG = ROOT / "config" / "lab-prerequisites-preregistered.json"
+IDEA_REGISTRY = ROOT / "config" / "ideas.json"
 USER_AGENT = "zindi-bias-bounty-lane/1.0 (external lab build; public data only)"
 DATA_SUFFIXES = (".zip", ".parquet", ".json", ".csv")
 
@@ -78,6 +79,32 @@ def workspace_root() -> Path:
 
 def lab_config_document() -> dict[str, Any]:
     return json.loads((ROOT / "config" / "bias60-lab-preregistered.json").read_text(encoding="utf-8"))
+
+
+def load_analogue_config(config: dict[str, Any]) -> dict[str, Any]:
+    path=ROOT / config["estimators"]["analogue_config_path"]
+    digest=hashlib.sha256(path.read_bytes()).hexdigest()
+    if digest!=config["estimators"]["analogue_config_sha256"]:
+        raise ValueError("lab estimator analogue preregistration hash mismatch")
+    document=json.loads(path.read_text(encoding="utf-8"))
+    registry=json.loads(IDEA_REGISTRY.read_text(encoding="utf-8"))
+    implemented={idea["id"] for idea in registry["ideas"] if idea["status"]=="implemented"}
+    if set(document["ideas"])!=implemented:
+        raise ValueError("analogue config must cover exactly the implemented idea registry")
+    evaluable=sorted(idea for idea,row in document["ideas"].items()
+                     if row["status"]=="evaluable_in_lab")
+    not_evaluable=sorted(idea for idea,row in document["ideas"].items()
+                         if row["status"]=="not_evaluable_in_lab" and row.get("reason"))
+    if evaluable!=sorted(document["evaluated_ideas"]) or not_evaluable!=sorted(document["not_evaluable_ideas"]):
+        raise ValueError("analogue config status lists do not match its idea entries")
+    if set(evaluable)&set(not_evaluable) or len(evaluable)+len(not_evaluable)!=len(implemented):
+        raise ValueError("every implemented idea must be either evaluable or explicitly not evaluable")
+    for idea in evaluable:
+        row=document["ideas"][idea]
+        if not row.get("input_mappings") or not row.get("channel"):
+            raise ValueError(f"evaluable idea {idea} lacks a source mapping or target channel")
+    document["__sha256__"]=digest
+    return document
 
 
 def lab_root_of(config: dict[str, Any]) -> Path:
@@ -565,6 +592,113 @@ def observed_road_lengths(group: dict[str, Any], tracts: list[dict[str, Any]],
 
 
 # --------------------------------------------------------------------------- reference side, TIGER roads
+def _road_analogue_rows(tracts: list[dict[str, Any]], line_records: list[dict[str, Any]],
+                        analogue: dict[str, Any], group_id: str) -> list[dict[str, Any]]:
+    """Compute only the preregistered raw-road G1/Sc1 analogues; no reference labels are read."""
+    import numpy as np
+    import shapely
+    from pyproj import Transformer
+    from shapely import STRtree, prepared
+
+    spec=analogue["ideas"]; road_ids=analogue["evaluated_ideas"]
+    road_spec=next(mapping["filter"] for idea in road_ids
+                   for mapping in spec[idea]["input_mappings"]
+                   if mapping["raw_source"]=="overture_package_release")
+    classes=set(road_spec["class_in"]); subtype=road_spec["subtype_equals"]
+    polygons=[entry["polygon"] for entry in tracts]
+    outer=[polygon.buffer(25.0) for polygon in polygons]
+    boundary=[outside.difference(polygon.buffer(-25.0))
+              for polygon,outside in zip(polygons,outer)]
+    tree=STRtree(outer); prepared_outer=[prepared.prep(polygon) for polygon in outer]
+    group_names=[group_id for _ in tracts]
+    ids=[entry["lab_tract_id"] for entry in tracts]
+    total_outer=np.zeros(len(tracts),dtype=np.float64)
+    boundary_length=np.zeros(len(tracts),dtype=np.float64)
+    total_inside=np.zeros(len(tracts),dtype=np.float64)
+    unnamed_inside=np.zeros(len(tracts),dtype=np.float64)
+    transformer=Transformer.from_crs("EPSG:4326","EPSG:5070",always_xy=True)
+    for record in line_records:
+        if str(record.get("class") or "").casefold() not in classes:
+            continue
+        if str(record.get("subtype") or "").casefold()!=subtype:
+            continue
+        wkb=record.get("geometry")
+        if not wkb:continue
+        line=shapely.from_wkb(wkb)
+        line=shapely.transform(line,transformer.transform,interleaved=False)
+        if line.is_empty:continue
+        named=_has_name(record.get("names"))
+        for position in tree.query(line).tolist():
+            if not prepared_outer[position].intersects(line):continue
+            in_outer=line if prepared_outer[position].contains(line) else line.intersection(outer[position])
+            if in_outer.is_empty:continue
+            outer_len=float(in_outer.length)
+            if outer_len<=0:continue
+            total_outer[position]+=outer_len
+            band_piece=in_outer.intersection(boundary[position])
+            boundary_length[position]+=float(band_piece.length)
+            inside_piece=line if polygons[position].covers(line) else line.intersection(polygons[position])
+            inside_len=float(inside_piece.length) if not inside_piece.is_empty else 0.0
+            total_inside[position]+=inside_len
+            if not named:unnamed_inside[position]+=inside_len
+    rows=[]
+    for idea in road_ids:
+        item=spec[idea];channel=item["channel"]
+        for i,geoid in enumerate(ids):
+            denominator=total_outer[i] if idea=="G1" else total_inside[i]
+            defined=bool(denominator>0.0)
+            if idea=="G1":
+                value=min(1.0,max(0.0,0.5*boundary_length[i]/denominator)) if defined else 0.0
+            elif idea=="Sc1":
+                value=min(1.0,max(0.0,unnamed_inside[i]/denominator)) if defined else 0.0
+            else:raise ValueError(f"no raw-road implementation for {idea}")
+            rows.append({"lab_tract_id":geoid,"lab_group":group_names[i],"idea":idea,
+                         "family":item["family"],"component":item["component"],
+                         "channel":channel,"value":float(value),"defined":defined})
+    return rows
+
+
+def write_estimators(group: dict[str, Any], tracts: list[dict[str, Any]], config: dict[str, Any],
+                     analogue: dict[str, Any]) -> dict[str, Any]:
+    """Write the exact lab_eval estimator schema from source-only, preregistered inputs."""
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+
+    staging=staging_dir(config,group["id"]);source_dir=staging/"sources"/"overture"
+    if not source_dir.is_dir():raise ValueError(f"missing raw Overture road cache for {group['id']}")
+    sources=[];source_paths=[]
+    required={"class","subtype","names","geometry"}
+    for path in sorted(source_dir.glob("*.parquet")):
+        sidecar=path.with_suffix(path.suffix+".provenance.json")
+        if not sidecar.is_file():raise ValueError(f"raw source {path.name} has no provenance sidecar")
+        provenance=json.loads(sidecar.read_text(encoding="utf-8"))
+        missing=sorted(required-set(provenance.get("columns",[])))
+        if missing:raise ValueError(f"raw source {path.name} lacks preregistered columns {missing}")
+        source_paths.append(path)
+        file_digest=lab_plan.sha256_file(path)
+        sources.append({"path":path.name,"sha256":file_digest,"url":provenance.get("url"),
+                        "version":provenance.get("version"),"retrieval_date_utc":provenance.get("retrieval_date_utc"),
+                        "columns":sorted(required)})
+    if not sources:raise ValueError(f"no raw Overture road partitions for {group['id']}")
+    def line_records():
+        for path in source_paths:
+            parquet=pq.ParquetFile(path)
+            for position in range(parquet.metadata.num_row_groups):
+                yield from parquet.read_row_group(position,columns=sorted(required)).to_pylist()
+    rows=_road_analogue_rows(tracts,line_records(),analogue,group["id"])
+    table=pa.Table.from_pylist(rows).select(lab_eval.ESTIMATOR_COLUMNS)
+    target=staging/"estimators.parquet";pq.write_table(table,target)
+    digest=hashlib.sha256(target.read_bytes()).hexdigest()
+    result={"path":str(target),"sha256":digest,"rows":table.num_rows,
+            "ideas":sorted({str(value) for value in table.column("idea").to_pylist()}),
+            "not_evaluable_ideas":analogue["not_evaluable_ideas"],
+            "columns":list(table.column_names),"analogue_config_sha256":analogue["__sha256__"],
+            "source_partitions":sources,
+            "note":"Only raw Overture transportation feature columns and external tract polygons were read; no labels or reference-road measurements were opened by this estimator writer."}
+    (staging/"estimators.json").write_bytes(canonical_bytes(result));record(target);record(staging/"estimators.json")
+    return result
+
+
 def reference_road_lengths(group: dict[str, Any], tracts: list[dict[str, Any]],
                            config: dict[str, Any], *, budget: Budget,
                            fetch: Callable[[str], bytes] | None = None) -> dict[str, Any]:
@@ -710,7 +844,8 @@ def write_labels(group: dict[str, Any], tracts: list[dict[str, Any]], observed: 
 
 def write_manifest(group: dict[str, Any], tracts_result: dict[str, Any], observed: dict[str, Any],
                    reference: dict[str, Any], defineness: dict[str, Any],
-                   config: dict[str, Any], *, lab_commit: str) -> dict[str, Any]:
+                   config: dict[str, Any], *, lab_commit: str,
+                   estimators: dict[str, Any] | None = None) -> dict[str, Any]:
     """Per-group provenance: every file that produced these numbers, with URL, version, date, hash."""
     staging = staging_dir(config, group["id"])
     staging.mkdir(parents=True, exist_ok=True)
@@ -745,6 +880,7 @@ def write_manifest(group: dict[str, Any], tracts_result: dict[str, Any], observe
                    "min_nearest_study_tract_km": tracts_result["min_nearest_study_tract_km"]},
         "tract_geoids": tracts_result["tract_geoids"],
         "defineness": defineness,
+        "outputs": {"estimators": estimators} if estimators is not None else {},
     }
     (staging / "manifest.json").write_bytes(canonical_bytes(manifest))
     record(staging / "manifest.json")
@@ -833,6 +969,36 @@ def _reads_lab_value(document: Any) -> bool:
                                               ("lab_tract_id", "per_tract_label", "weights"))
 
 
+def _validate_staged_estimators(manifests: list[dict[str, Any]],
+                                analogue: dict[str, Any]) -> tuple[bool,list[dict[str,Any]]]:
+    import math
+    import pyarrow.parquet as pq
+    outputs=[];ok=True;expected=set(analogue["evaluated_ideas"])
+    for manifest in manifests:
+        entry=manifest.get("outputs",{}).get("estimators")
+        if not entry:
+            ok=False;continue
+        path=Path(entry.get("path",""))
+        if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest()!=entry.get("sha256"):
+            ok=False;continue
+        try:
+            data=lab_eval._table(path.parent,path.name,lab_eval.ESTIMATOR_COLUMNS)
+        except Exception:
+            ok=False;continue
+        ideas=set(map(str,data["idea"]));pairs=list(zip(data["lab_tract_id"],data["idea"],data["channel"]))
+        values=[float(value) for value in data["value"]]
+        valid=(ideas==expected and len(pairs)==len(set(pairs))
+               and len(pairs)==manifest["counts"]["accepted"]*len(expected)
+               and all(math.isfinite(value) and 0.0<=value<=1.0 for value in values)
+               and all(data["defined"][i] or values[i]==0.0 for i in range(len(values)))
+               and all(Path(source["path"]).suffix==".parquet" and source.get("sha256")
+                       for source in entry.get("source_partitions",[])))
+        ok=ok and valid
+        outputs.append({"group":manifest["group"],"rows":len(pairs),"ideas":sorted(ideas),
+                        "sha256":entry["sha256"],"contract_valid":valid})
+    return bool(ok and manifests and len(outputs)==len(manifests)),outputs
+
+
 def build_report(config: dict[str, Any], *, manifests: list[dict[str, Any]],
                  tamper: str | None = None) -> dict[str, Any]:
     """The committed repo report: what was retrieved, what it measured, and what is still missing."""
@@ -840,6 +1006,8 @@ def build_report(config: dict[str, Any], *, manifests: list[dict[str, Any]],
     if tamper is not None and tamper not in declared and tamper != "groups_are_not_the_preregistered_ones":
         raise ValueError(f"{tamper!r} is not a declared negative control: {sorted(declared)}")
     document = lab_config_document()
+    analogue=load_analogue_config(config)
+    estimators_contract_ok,estimator_outputs=_validate_staged_estimators(manifests,analogue)
     lab_root = lab_root_of(config)
     official = set(lab_plan.official_scored_ids(workspace_root()))
     template = set(lab_plan.template_geoids(workspace_root()))
@@ -995,7 +1163,11 @@ def build_report(config: dict[str, Any], *, manifests: list[dict[str, Any]],
             },
         },
         "prohibitions": config["prohibitions"],
-        "estimators": config["estimators"],
+        "estimators": {**config["estimators"],"analogue_config_sha256":analogue["__sha256__"],
+                       "evaluated_ideas":analogue["evaluated_ideas"],
+                       "not_evaluable_ideas":analogue["not_evaluable_ideas"],
+                       "rule_exclusions":analogue.get("rule_exclusions",{}),
+                       "staged_outputs":estimator_outputs},
         "components_held_detail": {key: {field: value[field] for field in ("status", "reason")}
                                    for key, value in config["components_held"].items()},
         "access": {"opened_paths": sorted(set(OPENED)), "files_opened": len(set(OPENED))},
@@ -1005,6 +1177,11 @@ def build_report(config: dict[str, Any], *, manifests: list[dict[str, Any]],
     buffer_km = config["exclusion"]["buffer_km"]
     gates: dict[str, Any] = {
         "spec_hash_matches_pin": spec_hash == config["spec"]["sha256"],
+        "estimator_analogue_config_hash_matches_pin": analogue["__sha256__"]==config["estimators"]["analogue_config_sha256"],
+        "every_implemented_idea_has_a_declared_lab_disposition": (
+            len(analogue["ideas"])==len(json.loads(IDEA_REGISTRY.read_text(encoding="utf-8"))["summary"]["implemented"])
+            and len(analogue["evaluated_ideas"])+len(analogue["not_evaluable_ideas"])==len(analogue["ideas"])),
+        "staged_estimator_parquets_match_exact_lab_eval_contract": estimators_contract_ok,
         "prerequisite_report_pin_matches_disk": config["pins"]["prerequisite_report_sha256"]
         == hashlib.sha256((ROOT / config["pins"]["prerequisite_report"]).read_bytes()).hexdigest(),
         "lab_root_outside_repo": not _is_under(lab_root, ROOT),
@@ -1208,7 +1385,9 @@ def render_markdown(report: dict[str, Any]) -> str:
     lines += ["", "## Held back, and why", ""]
     for component, detail in config["components_held"].items():
         lines.append(f"- **{component}** ({detail['status']}): {detail['reason']}")
-    lines.append(f"- **estimators** ({report['estimators']['status']}): {report['estimators']['reason']}")
+    estimator_reason=report["estimators"].get("reason",report["estimators"].get("gate",""))
+    lines.append(f"- **estimators** ({report['estimators']['status']}): {estimator_reason}; "
+                 f"{len(report['estimators'].get('staged_outputs',[]))} groups have staged estimator artifacts")
     lines += ["", "## Safety rails", "",
               f"- exclusion: {report['exclusion']['study_geoids']} study GEOIDs and "
               f"{report['exclusion']['study_counties']} study counties excluded; nearest accepted tract "
@@ -1232,6 +1411,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--dry-run", action="store_true",
                         help="report from staged manifests without retrieving")
     parser.add_argument("--promote", action="store_true")
+    parser.add_argument("--estimators-only", action="store_true",
+                        help="write preregistered estimator artifacts from staged raw inputs; does not open labels")
     parser.add_argument("--tamper", default=None)
     arguments = parser.parse_args(argv)
 
@@ -1244,7 +1425,23 @@ def main(argv: list[str] | None = None) -> int:
             raise SystemExit(f"unknown lab group {group_id!r}; known: {sorted(known)}")
     lab_commit = os.environ.get("LAB_COMMIT") or _git_commit()
     budget = Budget(config)
+    analogue = load_analogue_config(config)
     manifests: list[dict[str, Any]] = []
+    if arguments.estimators_only:
+        for group_id in wanted:
+            group=known[group_id]
+            print(f"[{group_id}] reconstructing external tracts from raw tract source ...",flush=True)
+            tracts_result=build_tracts(group,config,budget=budget)
+            result=write_estimators(group,tracts_result["tracts"],config,analogue)
+            manifest_path=staging_dir(config,group_id)/"manifest.json"
+            if manifest_path.is_file():
+                stage_manifest=json.loads(manifest_path.read_text(encoding="utf-8"))
+                stage_manifest.setdefault("outputs",{})["estimators"]=result
+                manifest_path.write_bytes(canonical_bytes(stage_manifest))
+                record(manifest_path)
+            print(f"[{group_id}] wrote {result['rows']} estimator rows for {result['ideas']}; "
+                  f"sha256={result['sha256']}",flush=True)
+        return 0
     if arguments.dry_run or arguments.check_only:
         for group_id in wanted:
             path = staging_dir(config, group_id) / "manifest.json"
@@ -1265,8 +1462,9 @@ def main(argv: list[str] | None = None) -> int:
             reference = reference_road_lengths(group, tracts_result["tracts"], config, budget=budget)
             print(f"[{group_id}] labels ...", flush=True)
             defineness = write_labels(group, tracts_result["tracts"], observed, reference, config)
+            estimator_result=write_estimators(group,tracts_result["tracts"],config,analogue)
             manifests.append(write_manifest(group, tracts_result, observed, reference, defineness,
-                                            config, lab_commit=lab_commit))
+                                            config, lab_commit=lab_commit,estimators=estimator_result))
             print(f"[{group_id}] accepted {manifests[-1]['counts']['accepted']} tracts, road defined "
                   f"{defineness['components']['road']['defined']}, ratio "
                   f"{defineness['road_ratio']['ratio']}", flush=True)

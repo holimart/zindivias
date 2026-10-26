@@ -205,9 +205,12 @@
     }
   },
   "estimators": {
-    "status": "not_defined_for_this_build",
-    "reason": "all three implemented ideas name a provided-package input in the registry: Sc5 needs both the filtered and the unfiltered roads layer as the organiser shipped them, Mx4 needs buildings.sources, Tm1 needs strata.carbonplan_buildings plus the package building count. None of those exist for a lab region, and inventing a substitute mapping after the labels exist would be fitting the estimator to the answer.",
-    "gate": "a separate preregistered row must map each implemented idea to a raw-source lab analogue before estimators.parquet is written"
+    "status": "preregistered_analogues_configured",
+    "analogue_config_path": "config/bias60-lab-estimator-analogues-preregistered.json",
+    "analogue_config_sha256": "0930eab517162405bfa6a228b4f4a869ad199a2f98638baec2e9880471a3ebbb",
+    "evaluated_ideas": ["G1", "Sc1"],
+    "not_evaluable_ideas": 24,
+    "gate": "builder writes staging/<group>/estimators.parquet only for ideas with predeclared faithful raw-source analogues; other implemented ideas are explicitly listed as not_evaluable_in_lab"
   },
   "retrieval": {
     "allowed_hosts": [

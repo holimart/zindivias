@@ -1,0 +1,470 @@
+{
+  "schema_version": 1,
+  "preregistration_id": "bias60-lab-estimator-analogues-v1",
+  "created_before_fit": true,
+  "sequencing": "Frozen before any lab label distribution was read by an estimator fit. Mapping decisions use only the implemented-idea registry and raw source availability/schema; target labels are not estimator inputs.",
+  "lab_builder_config": "config/lab-build-preregistered.json",
+  "lab_evaluator_columns": [
+    "lab_tract_id",
+    "lab_group",
+    "idea",
+    "family",
+    "component",
+    "channel",
+    "value",
+    "defined"
+  ],
+  "raw_source_inventory": {
+    "staged_lab_raw_inputs": [
+      {
+        "source_id": "overture_package_release",
+        "version": "2026-09-23.1",
+        "theme": "transportation/type=segment",
+        "columns": [
+          "class",
+          "subtype",
+          "names",
+          "geometry",
+          "bbox"
+        ],
+        "scope": "only bbox-overlapping row groups for accepted external lab tracts; no reference target used"
+      },
+      {
+        "source_id": "tiger_tracts_2020",
+        "version": "TIGER2020",
+        "fields": [
+          "GEOID",
+          "geometry"
+        ],
+        "scope": "external lab tract polygons only"
+      },
+      {
+        "source_id": "tiger_county_roads_check",
+        "version": "TIGER2024",
+        "fields": [
+          "MTFCC",
+          "geometry"
+        ],
+        "scope": "reference labels only; never an estimator input"
+      }
+    ],
+    "measured_absent_from_current_stage": [
+      "Overture buildings/type=building (including sources.dataset and geometry)",
+      "Overture places/type=place (categories, names, taxonomy, sources)",
+      "Overture base/type=infrastructure",
+      "the challenge-provided roads-unfiltered layer and the organizer-filtered road layer as shipped",
+      "Overture transportation access_restrictions/oneway and routes columns",
+      "strata/ACS/Census attributes ALAND, population density, RUCA, CarbonPlan building counts, package building counts, hazard and tribal flags"
+    ],
+    "decision_basis": "Input registry and staged source manifests/file schemas only; no lab labels or label distributions were opened or used to choose these mappings."
+  },
+  "ideas": {
+    "G1": {
+      "status": "evaluable_in_lab",
+      "channel": "target:road",
+      "input_mappings": [
+        {
+          "package_input": "roads (named classes)",
+          "raw_source": "overture_package_release",
+          "fields": [
+            "class",
+            "subtype",
+            "names",
+            "geometry"
+          ],
+          "filter": {
+            "release": "2026-09-23.1",
+            "theme": "transportation/type=segment",
+            "subtype_equals": "road",
+            "class_in": [
+              "motorway",
+              "trunk",
+              "primary",
+              "secondary"
+            ],
+            "geometry": "WKB projected to EPSG:5070; clip only to the external lab tract polygon or its specified boundary buffer"
+          }
+        },
+        {
+          "package_input": "acs tract polygons",
+          "raw_source": "tiger_tracts_2020",
+          "fields": [
+            "GEOID",
+            "geometry"
+          ],
+          "filter": "external lab group tracts only; same group polygon used for clipping"
+        }
+      ],
+      "recipe": "For each lab tract, compute f_b = selected road-class length within the \u00b125m tract-boundary band divided by selected road-class length within the tract plus its 25m exterior buffer. Emit 0.5*f_b as the R gap covariate; undefined only when denominator is zero.",
+      "idea": "G1",
+      "family": "G",
+      "component": "R",
+      "registry_inputs": [
+        "`roads` (named classes)",
+        "`acs` tract polygons"
+      ]
+    },
+    "Sc1": {
+      "status": "evaluable_in_lab",
+      "channel": "target:road",
+      "input_mappings": [
+        {
+          "package_input": "roads names and class",
+          "raw_source": "overture_package_release",
+          "fields": [
+            "class",
+            "subtype",
+            "names",
+            "geometry"
+          ],
+          "filter": {
+            "release": "2026-09-23.1",
+            "theme": "transportation/type=segment",
+            "subtype_equals": "road",
+            "class_in": [
+              "motorway",
+              "trunk",
+              "primary",
+              "secondary"
+            ],
+            "geometry": "WKB projected to EPSG:5070; clip only to the external lab tract polygon or its specified boundary buffer",
+            "names_presence": "non-empty string anywhere in Overture names structure; unnamed iff absent/empty"
+          }
+        }
+      ],
+      "recipe": "For each lab tract, emit unnamed selected-class road length / total selected-class road length; undefined only when total length is zero.",
+      "idea": "Sc1",
+      "family": "Sc",
+      "component": "R",
+      "registry_inputs": [
+        "`roads` names and class"
+      ]
+    },
+    "G2": {
+      "idea": "G2",
+      "family": "G",
+      "component": "R",
+      "registry_inputs": [
+        "`roads` named classes: geometry",
+        "`access_restrictions`/heading (oneway)",
+        "`names`",
+        "`routes`"
+      ],
+      "status": "not_evaluable_in_lab",
+      "input_mappings": [],
+      "reason": "Requires access_restrictions/oneway, route or same-name heading pairs; these columns are absent from the staged Overture road schema."
+    },
+    "G3": {
+      "idea": "G3",
+      "family": "G",
+      "component": "B",
+      "registry_inputs": [
+        "`buildings` geometry and `sources` (dataset)"
+      ],
+      "status": "not_evaluable_in_lab",
+      "input_mappings": [],
+      "reason": "Requires building geometry/source provenance and a Microsoft-only area reference; no Overture building table is staged, and the prohibited reference building layer is not used as an estimator input."
+    },
+    "G4": {
+      "idea": "G4",
+      "family": "G",
+      "component": "B",
+      "registry_inputs": [
+        "`buildings` centroids",
+        "`acs` polygons"
+      ],
+      "status": "not_evaluable_in_lab",
+      "input_mappings": [],
+      "reason": "Requires a building-centroid grid plus park/school POIs and water infrastructure masks; those source themes are absent from staging."
+    },
+    "G5": {
+      "idea": "G5",
+      "family": "G",
+      "component": "Est",
+      "registry_inputs": [
+        "`pois` geometry and names"
+      ],
+      "status": "not_evaluable_in_lab",
+      "input_mappings": [],
+      "reason": "Requires place names/coordinates and building allocation; the Overture places/buildings themes are absent from staging."
+    },
+    "Tm1": {
+      "idea": "Tm1",
+      "family": "Tm",
+      "component": "B",
+      "registry_inputs": [
+        "`strata.carbonplan_buildings`",
+        "the package building count"
+      ],
+      "status": "not_evaluable_in_lab",
+      "input_mappings": [],
+      "reason": "Requires historical CarbonPlan building counts and the package building count; neither exists for external lab groups."
+    },
+    "X1": {
+      "idea": "X1",
+      "family": "X",
+      "component": "F",
+      "registry_inputs": [
+        "`buildings` (class",
+        "names)",
+        "`pois` categories"
+      ],
+      "status": "not_evaluable_in_lab",
+      "input_mappings": [],
+      "reason": "Requires building witnesses plus Overture place categories; both source themes are absent from staging."
+    },
+    "X3": {
+      "idea": "X3",
+      "family": "X",
+      "component": "Est",
+      "registry_inputs": [
+        "`buildings`",
+        "`pois`"
+      ],
+      "status": "not_evaluable_in_lab",
+      "input_mappings": [],
+      "reason": "Requires commercial place categories and building footprints; those source themes are absent from staging."
+    },
+    "X4": {
+      "idea": "X4",
+      "family": "X",
+      "component": "R",
+      "registry_inputs": [
+        "`buildings` centroids",
+        "`roads`"
+      ],
+      "status": "not_evaluable_in_lab",
+      "input_mappings": [],
+      "reason": "Requires building centroids and named road networks; building theme is absent, and staged road fields do not supply the required full named-road connectivity analogue."
+    },
+    "X5": {
+      "idea": "X5",
+      "family": "X",
+      "component": "R",
+      "registry_inputs": [
+        "`infrastructure` (class",
+        "subtype",
+        "names",
+        "`source_tags`)"
+      ],
+      "status": "not_evaluable_in_lab",
+      "input_mappings": [],
+      "reason": "Requires Overture infrastructure subtype/source tags and EMS place locations; both themes are absent from staging."
+    },
+    "Dst1": {
+      "idea": "Dst1",
+      "family": "Dst",
+      "component": "Est",
+      "registry_inputs": [
+        "`pois.categories.primary`"
+      ],
+      "status": "not_evaluable_in_lab",
+      "input_mappings": [],
+      "reason": "Requires place categories and reference facility/establishment counts; place theme and corresponding external raw source mapping are absent from this staged build."
+    },
+    "Dst2": {
+      "idea": "Dst2",
+      "family": "Dst",
+      "component": "Est",
+      "registry_inputs": [
+        "`pois.sources.dataset` (per-place multi-membership)"
+      ],
+      "status": "not_evaluable_in_lab",
+      "input_mappings": [],
+      "reason": "Requires places.sources.dataset multi-membership and categories; the places theme is absent from staging."
+    },
+    "Dst3": {
+      "idea": "Dst3",
+      "family": "Dst",
+      "component": "B",
+      "registry_inputs": [
+        "`buildings` areas"
+      ],
+      "status": "not_evaluable_in_lab",
+      "input_mappings": [],
+      "reason": "Requires Overture building areas; the buildings theme is absent from staging."
+    },
+    "Dst4": {
+      "idea": "Dst4",
+      "family": "Dst",
+      "component": "C",
+      "registry_inputs": [
+        "the outputs of the other ideas"
+      ],
+      "status": "not_evaluable_in_lab",
+      "input_mappings": [],
+      "reason": "Consumes outputs of other estimators; no complete upstream estimator matrix exists in this lab build, so computing it would be a post-hoc synthetic feature."
+    },
+    "Dst5": {
+      "idea": "Dst5",
+      "family": "Dst",
+      "component": "C",
+      "registry_inputs": [
+        "the rules text and our estimators"
+      ],
+      "status": "not_evaluable_in_lab",
+      "input_mappings": [],
+      "reason": "Consumes rules text and derived estimator definitions rather than an independently measurable raw public-source signal; no faithful raw-source tract analogue exists."
+    },
+    "Mx4": {
+      "idea": "Mx4",
+      "family": "Mx",
+      "component": "F",
+      "registry_inputs": [
+        "`buildings.sources` (Esri share at county level)"
+      ],
+      "status": "not_evaluable_in_lab",
+      "input_mappings": [],
+      "reason": "Requires buildings.sources provider-level Esri share; Overture buildings and its sources field are absent from staging."
+    },
+    "Sc2": {
+      "idea": "Sc2",
+      "family": "Sc",
+      "component": "F",
+      "registry_inputs": [
+        "`pois` names",
+        "categories",
+        "`basic_category`",
+        "`taxonomy`"
+      ],
+      "status": "not_evaluable_in_lab",
+      "input_mappings": [],
+      "reason": "Requires place names/categories/taxonomy; the places theme is absent from staging."
+    },
+    "Sc3": {
+      "idea": "Sc3",
+      "family": "Sc",
+      "component": "F",
+      "registry_inputs": [
+        "`pois` category fields"
+      ],
+      "status": "not_evaluable_in_lab",
+      "input_mappings": [],
+      "reason": "Requires alternate place taxonomy/category fields; the places theme is absent from staging."
+    },
+    "Sc4": {
+      "idea": "Sc4",
+      "family": "Sc",
+      "component": "R",
+      "registry_inputs": [
+        "`roads-unfiltered`"
+      ],
+      "status": "not_evaluable_in_lab",
+      "input_mappings": [],
+      "reason": "Requires roads-unfiltered with route/name and >2km geometry filters; only the four-class Overture road subset is staged, not the challenge unfiltered layer."
+    },
+    "Sc5": {
+      "idea": "Sc5",
+      "family": "Sc",
+      "component": "R",
+      "registry_inputs": [
+        "both road layers"
+      ],
+      "status": "not_evaluable_in_lab",
+      "input_mappings": [],
+      "reason": "Requires both organizer-filtered and unfiltered roads exactly as shipped; neither paired package layer exists for external lab tracts, and recreating the organizer filter would be speculative."
+    },
+    "Sca1": {
+      "idea": "Sca1",
+      "family": "Sca",
+      "component": "F",
+      "registry_inputs": [
+        "\u03bb from any expectation idea (P2",
+        "P3",
+        "X1); O"
+      ],
+      "status": "not_evaluable_in_lab",
+      "input_mappings": [],
+      "reason": "Requires \u03bb from expectation estimators and observed component inputs; its upstream facility/building estimators are not evaluable in this lab source snapshot."
+    },
+    "P1": {
+      "idea": "P1",
+      "family": "P",
+      "component": "Est",
+      "registry_inputs": [
+        "`buildings` (area",
+        "num_floors or height/3.5 m",
+        "class)",
+        "`pois`"
+      ],
+      "status": "not_evaluable_in_lab",
+      "input_mappings": [],
+      "reason": "Requires buildings with area/height/class plus place locations; building and places themes are absent from staging."
+    },
+    "P2": {
+      "idea": "P2",
+      "family": "P",
+      "component": "F",
+      "registry_inputs": [
+        "ALAND",
+        "pop density",
+        "RUCA"
+      ],
+      "status": "not_evaluable_in_lab",
+      "input_mappings": [],
+      "reason": "Requires ALAND, population density and RUCA source attributes; only tract geometry is staged, not ACS/RUCA feature tables."
+    },
+    "P3": {
+      "idea": "P3",
+      "family": "P",
+      "component": "F",
+      "registry_inputs": [
+        "`buildings` geometry and height",
+        "`roads`"
+      ],
+      "status": "not_evaluable_in_lab",
+      "input_mappings": [],
+      "reason": "Requires building height/geometry and road context; the building theme is absent from staging."
+    },
+    "P4": {
+      "idea": "P4",
+      "family": "P",
+      "component": "R",
+      "registry_inputs": [
+        "ALAND",
+        "RUCA",
+        "`roads`"
+      ],
+      "status": "not_evaluable_in_lab",
+      "input_mappings": [],
+      "reason": "Requires RUCA and ALAND alongside road measurements; RUCA/area feature attributes are not staged, so the road-only input is not a faithful complete analogue."
+    }
+  },
+  "evaluated_ideas": [
+    "G1",
+    "Sc1"
+  ],
+  "not_evaluable_ideas": [
+    "Dst1",
+    "Dst2",
+    "Dst3",
+    "Dst4",
+    "Dst5",
+    "G2",
+    "G3",
+    "G4",
+    "G5",
+    "Mx4",
+    "P1",
+    "P2",
+    "P3",
+    "P4",
+    "Sc2",
+    "Sc3",
+    "Sc4",
+    "Sc5",
+    "Sca1",
+    "Tm1",
+    "X1",
+    "X3",
+    "X4",
+    "X5"
+  ],
+  "policy": "No reference-layer measurement is ever used as an estimator input. TIGER 2024 roads are labels only; X2 is excluded. Only feature-side raw measurements enter estimators.parquet.",
+  "rule_exclusions": {
+    "X2": {
+      "status": "excluded_by_rules",
+      "reason": "Steward ruling 2026-10-26 identifies usfs_BuildingCount_sum as an equivalent copy of a removed reference count; the field/layer must not be read or computed."
+    }
+  }
+}
