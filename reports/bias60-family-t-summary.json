@@ -1,0 +1,5341 @@
+{
+  "family": "T",
+  "harness_gates": {
+    "all_implemented_ideas_are_registered": true,
+    "all_passed": true,
+    "deterministic_rerun": true,
+    "emission_contract_satisfied": true,
+    "every_idea_wrote_one_parquet": true,
+    "no_forbidden_source_accessed": true,
+    "no_label_or_leaderboard_value_used": true,
+    "no_undeclared_column_read": true,
+    "official_geoid_partition_exact": true,
+    "registry_holds_all_60_spec_ids": true,
+    "report_has_no_temporal_field": true
+  },
+  "orthogonality_gates": {
+    "all_passed": true,
+    "condition_number_finite": true,
+    "correlation_is_symmetric": true,
+    "coverage_threshold_enforced": true,
+    "degenerate_columns_declared": true,
+    "evaluated_columns_are_the_implemented_ideas": true,
+    "every_official_geoid_present": true,
+    "flagged_pairs_are_exactly_the_threshold_breaches": true,
+    "flagged_vif_are_exactly_the_threshold_breaches": true,
+    "label_free_no_target_column": true,
+    "merge_threshold_respected": true,
+    "no_duplicate_columns": true,
+    "numerically_null_columns_declared": true,
+    "report_has_no_temporal_field": true,
+    "report_is_strict_json": true,
+    "unit_diagonal_on_informative_columns": true
+  },
+  "outputs": {
+    "T1": {
+      "artifact": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/T1.parquet",
+      "channels": [
+        {
+          "channel": "covariate",
+          "component": "R",
+          "correlations_to_every_implemented_channel": [
+            {
+              "column": "D1|Est|covariate",
+              "pairwise_defined_rows": 9305,
+              "pearson_r": 0.4007626573218832
+            },
+            {
+              "column": "D2|F|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.02035566714116896
+            },
+            {
+              "column": "D3|B|covariate",
+              "pairwise_defined_rows": 9277,
+              "pearson_r": -0.12921370894702663
+            },
+            {
+              "column": "D4|Est|covariate",
+              "pairwise_defined_rows": 9277,
+              "pearson_r": -0.014593611831313996
+            },
+            {
+              "column": "D5|Est|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.1436403497655326
+            },
+            {
+              "column": "Dst1|Est|gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.058462386261205354
+            },
+            {
+              "column": "Dst2|Est|gap",
+              "pairwise_defined_rows": 0,
+              "pearson_r": null
+            },
+            {
+              "column": "Dst3|B|gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.04812591426058243
+            },
+            {
+              "column": "Dst4|C|gap",
+              "pairwise_defined_rows": 9284,
+              "pearson_r": -0.08512220167262716
+            },
+            {
+              "column": "Dst5|C|gap",
+              "pairwise_defined_rows": 9284,
+              "pearson_r": -0.12420624845581173
+            },
+            {
+              "column": "G1|R|covariate",
+              "pairwise_defined_rows": 9274,
+              "pearson_r": -0.43196226042245783
+            },
+            {
+              "column": "G1|R|gap",
+              "pairwise_defined_rows": 9274,
+              "pearson_r": -0.43196226042245783
+            },
+            {
+              "column": "G2|R|gap",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": -0.014505207474922918
+            },
+            {
+              "column": "G3|B|gap",
+              "pairwise_defined_rows": 8857,
+              "pearson_r": 0.026471362292682862
+            },
+            {
+              "column": "G4|B|covariate",
+              "pairwise_defined_rows": 5754,
+              "pearson_r": 0.06908014226734172
+            },
+            {
+              "column": "G5|Est|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.15774504210646853
+            },
+            {
+              "column": "G5|F|covariate",
+              "pairwise_defined_rows": 9114,
+              "pearson_r": -0.06233054813710087
+            },
+            {
+              "column": "M1|R|covariate:low_version_tertiary_share",
+              "pairwise_defined_rows": 8952,
+              "pearson_r": -0.05299794682304133
+            },
+            {
+              "column": "M1|R|covariate:named_mean_version",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": 0.11567110113629467
+            },
+            {
+              "column": "M1|R|covariate:tertiary_mean_version",
+              "pairwise_defined_rows": 8952,
+              "pearson_r": 0.037051085228571354
+            },
+            {
+              "column": "M2|Est|covariate:all_wikidata_link_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.015754275920491903
+            },
+            {
+              "column": "M2|F|covariate:facility_wikidata_link_share",
+              "pairwise_defined_rows": 7715,
+              "pearson_r": -0.019393719766076796
+            },
+            {
+              "column": "M3|Est|covariate:address_mismatch_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.31986796481936386
+            },
+            {
+              "column": "M3|F|covariate:facility_incoming_address_mismatch_share",
+              "pairwise_defined_rows": 7700,
+              "pearson_r": 0.03845507997229021
+            },
+            {
+              "column": "M4|Est|covariate:chain_brand_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.014476573125912353
+            },
+            {
+              "column": "M4|Est|covariate:chain_count_per_housing_unit",
+              "pairwise_defined_rows": 9277,
+              "pearson_r": -0.00037609366338126965
+            },
+            {
+              "column": "M5|B|covariate:multi_property_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "M5|R|covariate:multi_property_share",
+              "pairwise_defined_rows": 9344,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "Mx1|R|covariate:tomtom_named_length_share",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": -0.010336181257655197
+            },
+            {
+              "column": "Mx1|R|covariate:tomtom_tertiary_length_share",
+              "pairwise_defined_rows": 8952,
+              "pearson_r": 0.0010038129670046686
+            },
+            {
+              "column": "Mx2|Est|covariate:microsoft_only_place_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.19724860637865266
+            },
+            {
+              "column": "Mx2|F|covariate:facility_microsoft_only_place_share",
+              "pairwise_defined_rows": 7703,
+              "pearson_r": -0.06830897450893407
+            },
+            {
+              "column": "Mx3|Est|covariate:foursquare_only_place_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.07850363540287891
+            },
+            {
+              "column": "Mx4|B|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.009458666102592666
+            },
+            {
+              "column": "Mx4|F|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.020867335916059618
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_alltheplaces",
+              "pairwise_defined_rows": 474,
+              "pearson_r": 0.11398248016302602
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_foursquare",
+              "pairwise_defined_rows": 1956,
+              "pearson_r": -0.18867138395324357
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_meta",
+              "pairwise_defined_rows": 8037,
+              "pearson_r": -0.10614050910407938
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_microsoft",
+              "pairwise_defined_rows": 1619,
+              "pearson_r": 0.023795191597580673
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_other",
+              "pairwise_defined_rows": 2830,
+              "pearson_r": -0.05238072891138377
+            },
+            {
+              "column": "P1|Est|gap",
+              "pairwise_defined_rows": 6723,
+              "pearson_r": -0.04642406501564076
+            },
+            {
+              "column": "P2|F|gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.06615120439229817
+            },
+            {
+              "column": "P3|F|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.009973487102273961
+            },
+            {
+              "column": "P4|R|gap",
+              "pairwise_defined_rows": 638,
+              "pearson_r": 0.17716319461859142
+            },
+            {
+              "column": "S1|B|covariate:lag_d3_b_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.17570501719067624
+            },
+            {
+              "column": "S1|B|covariate:lag_dst3_b_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.07531870475247815
+            },
+            {
+              "column": "S1|B|covariate:lag_g3_b_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.005415412624915019
+            },
+            {
+              "column": "S1|B|covariate:lag_g4_b_covariate",
+              "pairwise_defined_rows": 8722,
+              "pearson_r": 0.07863872752524849
+            },
+            {
+              "column": "S1|B|covariate:lag_m5_b_covariate_multi_property_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "S1|B|covariate:lag_mx4_b_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.010997183083213022
+            },
+            {
+              "column": "S1|B|covariate:lag_sca3_b_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.008764214882119965
+            },
+            {
+              "column": "S1|B|covariate:lag_tm1_b_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.003252354919269899
+            },
+            {
+              "column": "S1|B|covariate:lag_tm1_b_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.0031245947604259497
+            },
+            {
+              "column": "S1|C|covariate:lag_dst4_c_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.046216868580915574
+            },
+            {
+              "column": "S1|C|covariate:lag_dst5_c_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.12337708179820957
+            },
+            {
+              "column": "S1|C|covariate:lag_sca2_c_covariate",
+              "pairwise_defined_rows": 8501,
+              "pearson_r": -0.027479019597879403
+            },
+            {
+              "column": "S1|C|covariate:lag_sca5_c_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.08908947396867944
+            },
+            {
+              "column": "S1|Est|covariate:lag_d1_est_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.4401331554736484
+            },
+            {
+              "column": "S1|Est|covariate:lag_d4_est_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.024310862095141262
+            },
+            {
+              "column": "S1|Est|covariate:lag_d5_est_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.14261892106773014
+            },
+            {
+              "column": "S1|Est|covariate:lag_dst1_est_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.09954476110794094
+            },
+            {
+              "column": "S1|Est|covariate:lag_dst2_est_gap",
+              "pairwise_defined_rows": 0,
+              "pearson_r": null
+            },
+            {
+              "column": "S1|Est|covariate:lag_g5_est_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.25085167663883384
+            },
+            {
+              "column": "S1|Est|covariate:lag_m2_est_covariate_all_wikidata_link_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.04280587588642669
+            },
+            {
+              "column": "S1|Est|covariate:lag_m3_est_covariate_address_mismatch_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.43027198223399543
+            },
+            {
+              "column": "S1|Est|covariate:lag_m4_est_covariate_chain_brand_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.04126693375971689
+            },
+            {
+              "column": "S1|Est|covariate:lag_m4_est_covariate_chain_count_per_housing_unit",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.02879004621102632
+            },
+            {
+              "column": "S1|Est|covariate:lag_mx2_est_covariate_microsoft_only_place_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.2826268334770666
+            },
+            {
+              "column": "S1|Est|covariate:lag_mx3_est_covariate_foursquare_only_place_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.14343384975408718
+            },
+            {
+              "column": "S1|Est|covariate:lag_p1_est_gap",
+              "pairwise_defined_rows": 9209,
+              "pearson_r": -0.05358267655128183
+            },
+            {
+              "column": "S1|Est|covariate:lag_sca4_est_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.23061557255817933
+            },
+            {
+              "column": "S1|Est|covariate:lag_x3_est_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.01251963128213555
+            },
+            {
+              "column": "S1|F|covariate:lag_d2_f_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.026891734004266893
+            },
+            {
+              "column": "S1|F|covariate:lag_g5_f_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.1890782861458364
+            },
+            {
+              "column": "S1|F|covariate:lag_m2_f_covariate_facility_wikidata_link_share",
+              "pairwise_defined_rows": 9333,
+              "pearson_r": -0.038569266362617316
+            },
+            {
+              "column": "S1|F|covariate:lag_m3_f_covariate_facility_incoming_address_mismatch_share",
+              "pairwise_defined_rows": 9333,
+              "pearson_r": 0.0963108632409308
+            },
+            {
+              "column": "S1|F|covariate:lag_mx2_f_covariate_facility_microsoft_only_place_share",
+              "pairwise_defined_rows": 9333,
+              "pearson_r": -0.12791135987735594
+            },
+            {
+              "column": "S1|F|covariate:lag_mx4_f_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.019358738715439625
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_alltheplaces",
+              "pairwise_defined_rows": 1829,
+              "pearson_r": 0.13085069240694525
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_foursquare",
+              "pairwise_defined_rows": 6924,
+              "pearson_r": -0.16942705867369062
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_meta",
+              "pairwise_defined_rows": 9330,
+              "pearson_r": -0.18054908182449217
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_microsoft",
+              "pairwise_defined_rows": 5904,
+              "pearson_r": 0.02886218657725806
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_other",
+              "pairwise_defined_rows": 7667,
+              "pearson_r": -0.0809386571001896
+            },
+            {
+              "column": "S1|F|covariate:lag_p2_f_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.025482771101924973
+            },
+            {
+              "column": "S1|F|covariate:lag_p3_f_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.027233011733958323
+            },
+            {
+              "column": "S1|F|covariate:lag_sc2_f_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.02526900240469503
+            },
+            {
+              "column": "S1|F|covariate:lag_sc3_f_covariate",
+              "pairwise_defined_rows": 9341,
+              "pearson_r": 0.2664832732092474
+            },
+            {
+              "column": "S1|F|covariate:lag_sc3_f_gap",
+              "pairwise_defined_rows": 9341,
+              "pearson_r": 0.13483677350532516
+            },
+            {
+              "column": "S1|F|covariate:lag_sca1_f_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.04896790128710228
+            },
+            {
+              "column": "S1|F|covariate:lag_x1_f_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.026866422603041076
+            },
+            {
+              "column": "S1|F|covariate:lag_x5_f_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.15667354887489343
+            },
+            {
+              "column": "S1|R|covariate:lag_g1_r_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.49774016669513405
+            },
+            {
+              "column": "S1|R|covariate:lag_g1_r_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.49774016669513405
+            },
+            {
+              "column": "S1|R|covariate:lag_g2_r_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.031106738947285866
+            },
+            {
+              "column": "S1|R|covariate:lag_m1_r_covariate_low_version_tertiary_share",
+              "pairwise_defined_rows": 9346,
+              "pearson_r": -0.08533724254979863
+            },
+            {
+              "column": "S1|R|covariate:lag_m1_r_covariate_named_mean_version",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.17664658787396098
+            },
+            {
+              "column": "S1|R|covariate:lag_m1_r_covariate_tertiary_mean_version",
+              "pairwise_defined_rows": 9346,
+              "pearson_r": 0.06403859516925509
+            },
+            {
+              "column": "S1|R|covariate:lag_m5_r_covariate_multi_property_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "S1|R|covariate:lag_mx1_r_covariate_tomtom_named_length_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.013495839569908468
+            },
+            {
+              "column": "S1|R|covariate:lag_mx1_r_covariate_tomtom_tertiary_length_share",
+              "pairwise_defined_rows": 9346,
+              "pearson_r": -0.009636012689443144
+            },
+            {
+              "column": "S1|R|covariate:lag_p4_r_gap",
+              "pairwise_defined_rows": 1256,
+              "pearson_r": 0.13933126277391797
+            },
+            {
+              "column": "S1|R|covariate:lag_sc1_r_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.40681035915199637
+            },
+            {
+              "column": "S1|R|covariate:lag_sc4_r_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.25702887306566197
+            },
+            {
+              "column": "S1|R|covariate:lag_sc5_r_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.01402139914450639
+            },
+            {
+              "column": "S1|R|covariate:lag_sc5_r_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.03398308564466163
+            },
+            {
+              "column": "S1|R|covariate:lag_sca3_r_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.022091362268924157
+            },
+            {
+              "column": "S1|R|covariate:lag_x4_r_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "S1|R|covariate:lag_x5_r_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.02295891278195722
+            },
+            {
+              "column": "S2|all|covariate:county_eb_buildings",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.41498789177924444
+            },
+            {
+              "column": "S2|all|covariate:county_eb_poi_all",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.017046240255227954
+            },
+            {
+              "column": "S3|F|covariate:boundary_leak_ems",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.027447536076806264
+            },
+            {
+              "column": "S3|F|covariate:boundary_leak_fire",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.05845313380152589
+            },
+            {
+              "column": "S3|F|covariate:boundary_leak_schools",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.052517625404175254
+            },
+            {
+              "column": "S4|B|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.04894496454575381
+            },
+            {
+              "column": "S4|Est|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.08487986096614822
+            },
+            {
+              "column": "S4|F|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.06642221486968398
+            },
+            {
+              "column": "S4|R|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9284,
+              "pearson_r": 0.008601102655431557
+            },
+            {
+              "column": "S5|C|covariate:local_geary_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.02155558298822315
+            },
+            {
+              "column": "Sc1|R|gap",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": 0.32680391222493577
+            },
+            {
+              "column": "Sc2|F|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.013392135200856269
+            },
+            {
+              "column": "Sc3|F|covariate",
+              "pairwise_defined_rows": 8548,
+              "pearson_r": 0.19155886404494027
+            },
+            {
+              "column": "Sc3|F|gap",
+              "pairwise_defined_rows": 8548,
+              "pearson_r": 0.10077409211379412
+            },
+            {
+              "column": "Sc4|R|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.16481522360587966
+            },
+            {
+              "column": "Sc5|R|covariate",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": -0.002625651091359054
+            },
+            {
+              "column": "Sc5|R|gap",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": 0.040643805287591886
+            },
+            {
+              "column": "Sca1|F|gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.07978464617494291
+            },
+            {
+              "column": "Sca2|C|covariate",
+              "pairwise_defined_rows": 3445,
+              "pearson_r": 0.0007345649805987739
+            },
+            {
+              "column": "Sca3|B|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.008238307706576253
+            },
+            {
+              "column": "Sca3|R|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.010468980707273794
+            },
+            {
+              "column": "Sca4|Est|covariate",
+              "pairwise_defined_rows": 8953,
+              "pearson_r": 0.09305709489067052
+            },
+            {
+              "column": "Sca5|C|covariate",
+              "pairwise_defined_rows": 9284,
+              "pearson_r": 0.019428437504173512
+            },
+            {
+              "column": "T1|R|gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.2973622248104604
+            },
+            {
+              "column": "T2|R|covariate:orphan_link_length_km",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.10110717620331905
+            },
+            {
+              "column": "T2|R|covariate:orphan_link_segments",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.024734994673060826
+            },
+            {
+              "column": "T3|R|covariate:grade_sep_per_km2",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.0854488397698163
+            },
+            {
+              "column": "T4|R|gap",
+              "pairwise_defined_rows": 9346,
+              "pearson_r": 0.2216965806618682
+            },
+            {
+              "column": "T5|C|covariate:buildings_over_150m_from_road",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.3725891863539896
+            },
+            {
+              "column": "Tm1|B|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.0012512491382371822
+            },
+            {
+              "column": "Tm1|B|gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.01003121404775807
+            },
+            {
+              "column": "X1|F|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.0010055867055681264
+            },
+            {
+              "column": "X3|Est|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.04427710353203666
+            },
+            {
+              "column": "X4|R|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "X5|F|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.11266478419837858
+            },
+            {
+              "column": "X5|R|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.01288829979984504
+            }
+          ],
+          "coverage": {
+            "defined": 9347,
+            "fraction": 0.9965881224011088,
+            "rows": 9379
+          },
+          "distribution": {
+            "mean": 5.62755028102032,
+            "min_q25_median_q75_q90_q95_max": [
+              0.0,
+              0.4761026345891404,
+              2.107968325344544,
+              6.107412540004482,
+              14.686723713688552,
+              23.107074758247116,
+              237.3875063182366
+            ],
+            "std": 10.813204661356066
+          },
+          "vif": {
+            "column": "T1|R|covariate",
+            "degenerate": false,
+            "distinct_values": 7999,
+            "vif": 1.6019535072579953
+          }
+        },
+        {
+          "channel": "gap",
+          "component": "R",
+          "correlations_to_every_implemented_channel": [
+            {
+              "column": "D1|Est|covariate",
+              "pairwise_defined_rows": 9305,
+              "pearson_r": -0.04411545184218356
+            },
+            {
+              "column": "D2|F|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.010935279862411527
+            },
+            {
+              "column": "D3|B|covariate",
+              "pairwise_defined_rows": 9277,
+              "pearson_r": -0.0462820003419013
+            },
+            {
+              "column": "D4|Est|covariate",
+              "pairwise_defined_rows": 9277,
+              "pearson_r": 0.00974460633704602
+            },
+            {
+              "column": "D5|Est|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.0947525717720448
+            },
+            {
+              "column": "Dst1|Est|gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.05415562426872809
+            },
+            {
+              "column": "Dst2|Est|gap",
+              "pairwise_defined_rows": 0,
+              "pearson_r": null
+            },
+            {
+              "column": "Dst3|B|gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.03415475061334799
+            },
+            {
+              "column": "Dst4|C|gap",
+              "pairwise_defined_rows": 9284,
+              "pearson_r": 0.023406556385173576
+            },
+            {
+              "column": "Dst5|C|gap",
+              "pairwise_defined_rows": 9284,
+              "pearson_r": -0.0481340584466932
+            },
+            {
+              "column": "G1|R|covariate",
+              "pairwise_defined_rows": 9274,
+              "pearson_r": 0.0812521397305971
+            },
+            {
+              "column": "G1|R|gap",
+              "pairwise_defined_rows": 9274,
+              "pearson_r": 0.0812521397305971
+            },
+            {
+              "column": "G2|R|gap",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": -0.016004554144459462
+            },
+            {
+              "column": "G3|B|gap",
+              "pairwise_defined_rows": 8857,
+              "pearson_r": -0.044646018407093056
+            },
+            {
+              "column": "G4|B|covariate",
+              "pairwise_defined_rows": 5754,
+              "pearson_r": 0.04311415684566889
+            },
+            {
+              "column": "G5|Est|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.11997712320578054
+            },
+            {
+              "column": "G5|F|covariate",
+              "pairwise_defined_rows": 9114,
+              "pearson_r": -0.045212005510019165
+            },
+            {
+              "column": "M1|R|covariate:low_version_tertiary_share",
+              "pairwise_defined_rows": 8952,
+              "pearson_r": -0.0220305907112228
+            },
+            {
+              "column": "M1|R|covariate:named_mean_version",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": 0.11549257916438874
+            },
+            {
+              "column": "M1|R|covariate:tertiary_mean_version",
+              "pairwise_defined_rows": 8952,
+              "pearson_r": 0.05857916847186415
+            },
+            {
+              "column": "M2|Est|covariate:all_wikidata_link_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.0931409292871821
+            },
+            {
+              "column": "M2|F|covariate:facility_wikidata_link_share",
+              "pairwise_defined_rows": 7715,
+              "pearson_r": -0.028223952455750993
+            },
+            {
+              "column": "M3|Est|covariate:address_mismatch_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.05346587094332237
+            },
+            {
+              "column": "M3|F|covariate:facility_incoming_address_mismatch_share",
+              "pairwise_defined_rows": 7700,
+              "pearson_r": -0.009060822780321451
+            },
+            {
+              "column": "M4|Est|covariate:chain_brand_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.09302553692808012
+            },
+            {
+              "column": "M4|Est|covariate:chain_count_per_housing_unit",
+              "pairwise_defined_rows": 9277,
+              "pearson_r": -0.017813249882757363
+            },
+            {
+              "column": "M5|B|covariate:multi_property_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "M5|R|covariate:multi_property_share",
+              "pairwise_defined_rows": 9344,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "Mx1|R|covariate:tomtom_named_length_share",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": -0.003736555519125234
+            },
+            {
+              "column": "Mx1|R|covariate:tomtom_tertiary_length_share",
+              "pairwise_defined_rows": 8952,
+              "pearson_r": 0.023845669818326753
+            },
+            {
+              "column": "Mx2|Est|covariate:microsoft_only_place_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.15422507766517174
+            },
+            {
+              "column": "Mx2|F|covariate:facility_microsoft_only_place_share",
+              "pairwise_defined_rows": 7703,
+              "pearson_r": -0.07723944068061929
+            },
+            {
+              "column": "Mx3|Est|covariate:foursquare_only_place_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.06503568646278096
+            },
+            {
+              "column": "Mx4|B|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.07727524663387607
+            },
+            {
+              "column": "Mx4|F|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.10352085462758714
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_alltheplaces",
+              "pairwise_defined_rows": 474,
+              "pearson_r": 0.20537557825337685
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_foursquare",
+              "pairwise_defined_rows": 1956,
+              "pearson_r": -0.032146764545760494
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_meta",
+              "pairwise_defined_rows": 8037,
+              "pearson_r": -0.03764602211953905
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_microsoft",
+              "pairwise_defined_rows": 1619,
+              "pearson_r": 0.025886107727829153
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_other",
+              "pairwise_defined_rows": 2830,
+              "pearson_r": -0.03588161729713037
+            },
+            {
+              "column": "P1|Est|gap",
+              "pairwise_defined_rows": 6723,
+              "pearson_r": -0.10223307911089734
+            },
+            {
+              "column": "P2|F|gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.04375804347520597
+            },
+            {
+              "column": "P3|F|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.0009768902601649996
+            },
+            {
+              "column": "P4|R|gap",
+              "pairwise_defined_rows": 638,
+              "pearson_r": -0.3221371528502672
+            },
+            {
+              "column": "S1|B|covariate:lag_d3_b_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.06544859086034986
+            },
+            {
+              "column": "S1|B|covariate:lag_dst3_b_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.07569268324395285
+            },
+            {
+              "column": "S1|B|covariate:lag_g3_b_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.021842834323182302
+            },
+            {
+              "column": "S1|B|covariate:lag_g4_b_covariate",
+              "pairwise_defined_rows": 8722,
+              "pearson_r": 0.07562049352288709
+            },
+            {
+              "column": "S1|B|covariate:lag_m5_b_covariate_multi_property_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "S1|B|covariate:lag_mx4_b_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.08551150914852682
+            },
+            {
+              "column": "S1|B|covariate:lag_sca3_b_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.031887650634374036
+            },
+            {
+              "column": "S1|B|covariate:lag_tm1_b_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.009422844343607422
+            },
+            {
+              "column": "S1|B|covariate:lag_tm1_b_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.0011072012213394617
+            },
+            {
+              "column": "S1|C|covariate:lag_dst4_c_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.03640677187819224
+            },
+            {
+              "column": "S1|C|covariate:lag_dst5_c_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.06736631155614914
+            },
+            {
+              "column": "S1|C|covariate:lag_sca2_c_covariate",
+              "pairwise_defined_rows": 8501,
+              "pearson_r": -0.09103251998070505
+            },
+            {
+              "column": "S1|C|covariate:lag_sca5_c_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.02025974904779666
+            },
+            {
+              "column": "S1|Est|covariate:lag_d1_est_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.003459469430779116
+            },
+            {
+              "column": "S1|Est|covariate:lag_d4_est_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.010541368365441754
+            },
+            {
+              "column": "S1|Est|covariate:lag_d5_est_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.09126942689328502
+            },
+            {
+              "column": "S1|Est|covariate:lag_dst1_est_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.0446046766002059
+            },
+            {
+              "column": "S1|Est|covariate:lag_dst2_est_gap",
+              "pairwise_defined_rows": 0,
+              "pearson_r": null
+            },
+            {
+              "column": "S1|Est|covariate:lag_g5_est_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.15250117731833676
+            },
+            {
+              "column": "S1|Est|covariate:lag_m2_est_covariate_all_wikidata_link_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.08928888658206625
+            },
+            {
+              "column": "S1|Est|covariate:lag_m3_est_covariate_address_mismatch_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.008842755073174958
+            },
+            {
+              "column": "S1|Est|covariate:lag_m4_est_covariate_chain_brand_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.08905969457402407
+            },
+            {
+              "column": "S1|Est|covariate:lag_m4_est_covariate_chain_count_per_housing_unit",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.01983084564699276
+            },
+            {
+              "column": "S1|Est|covariate:lag_mx2_est_covariate_microsoft_only_place_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.14901979959079284
+            },
+            {
+              "column": "S1|Est|covariate:lag_mx3_est_covariate_foursquare_only_place_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.12549519181645352
+            },
+            {
+              "column": "S1|Est|covariate:lag_p1_est_gap",
+              "pairwise_defined_rows": 9209,
+              "pearson_r": -0.06513148341123925
+            },
+            {
+              "column": "S1|Est|covariate:lag_sca4_est_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.023122043389898258
+            },
+            {
+              "column": "S1|Est|covariate:lag_x3_est_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.005998754461099213
+            },
+            {
+              "column": "S1|F|covariate:lag_d2_f_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.0016485634214940075
+            },
+            {
+              "column": "S1|F|covariate:lag_g5_f_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.0878012053254623
+            },
+            {
+              "column": "S1|F|covariate:lag_m2_f_covariate_facility_wikidata_link_share",
+              "pairwise_defined_rows": 9333,
+              "pearson_r": -0.05192524437960265
+            },
+            {
+              "column": "S1|F|covariate:lag_m3_f_covariate_facility_incoming_address_mismatch_share",
+              "pairwise_defined_rows": 9333,
+              "pearson_r": -0.002677429482808792
+            },
+            {
+              "column": "S1|F|covariate:lag_mx2_f_covariate_facility_microsoft_only_place_share",
+              "pairwise_defined_rows": 9333,
+              "pearson_r": -0.11444027972934302
+            },
+            {
+              "column": "S1|F|covariate:lag_mx4_f_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.10357290614338653
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_alltheplaces",
+              "pairwise_defined_rows": 1829,
+              "pearson_r": 0.20165360312439753
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_foursquare",
+              "pairwise_defined_rows": 6924,
+              "pearson_r": -0.017169456865088476
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_meta",
+              "pairwise_defined_rows": 9330,
+              "pearson_r": 0.0005851113021472471
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_microsoft",
+              "pairwise_defined_rows": 5904,
+              "pearson_r": 0.05315676939250258
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_other",
+              "pairwise_defined_rows": 7667,
+              "pearson_r": -0.021629829306249165
+            },
+            {
+              "column": "S1|F|covariate:lag_p2_f_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.00167221834819128
+            },
+            {
+              "column": "S1|F|covariate:lag_p3_f_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.013826833964295066
+            },
+            {
+              "column": "S1|F|covariate:lag_sc2_f_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.013077174937194663
+            },
+            {
+              "column": "S1|F|covariate:lag_sc3_f_covariate",
+              "pairwise_defined_rows": 9341,
+              "pearson_r": 0.04276312064716304
+            },
+            {
+              "column": "S1|F|covariate:lag_sc3_f_gap",
+              "pairwise_defined_rows": 9341,
+              "pearson_r": 0.026232918665875415
+            },
+            {
+              "column": "S1|F|covariate:lag_sca1_f_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.006817947718112446
+            },
+            {
+              "column": "S1|F|covariate:lag_x1_f_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.007506982347365413
+            },
+            {
+              "column": "S1|F|covariate:lag_x5_f_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.0014572788754200654
+            },
+            {
+              "column": "S1|R|covariate:lag_g1_r_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.10732849266934479
+            },
+            {
+              "column": "S1|R|covariate:lag_g1_r_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.10732849266934479
+            },
+            {
+              "column": "S1|R|covariate:lag_g2_r_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.025734075568733528
+            },
+            {
+              "column": "S1|R|covariate:lag_m1_r_covariate_low_version_tertiary_share",
+              "pairwise_defined_rows": 9346,
+              "pearson_r": -0.0352724681815948
+            },
+            {
+              "column": "S1|R|covariate:lag_m1_r_covariate_named_mean_version",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.1430078225119582
+            },
+            {
+              "column": "S1|R|covariate:lag_m1_r_covariate_tertiary_mean_version",
+              "pairwise_defined_rows": 9346,
+              "pearson_r": 0.0990338159753257
+            },
+            {
+              "column": "S1|R|covariate:lag_m5_r_covariate_multi_property_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "S1|R|covariate:lag_mx1_r_covariate_tomtom_named_length_share",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.0003988971477390163
+            },
+            {
+              "column": "S1|R|covariate:lag_mx1_r_covariate_tomtom_tertiary_length_share",
+              "pairwise_defined_rows": 9346,
+              "pearson_r": -0.011705894907000605
+            },
+            {
+              "column": "S1|R|covariate:lag_p4_r_gap",
+              "pairwise_defined_rows": 1256,
+              "pearson_r": -0.06107702289026258
+            },
+            {
+              "column": "S1|R|covariate:lag_sc1_r_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.05457030836609488
+            },
+            {
+              "column": "S1|R|covariate:lag_sc4_r_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.02301405406210063
+            },
+            {
+              "column": "S1|R|covariate:lag_sc5_r_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.0024105577657863647
+            },
+            {
+              "column": "S1|R|covariate:lag_sc5_r_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.04988289319506261
+            },
+            {
+              "column": "S1|R|covariate:lag_sca3_r_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.06831836732494195
+            },
+            {
+              "column": "S1|R|covariate:lag_x4_r_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "S1|R|covariate:lag_x5_r_covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.034113970820369335
+            },
+            {
+              "column": "S2|all|covariate:county_eb_buildings",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.01437293573174479
+            },
+            {
+              "column": "S2|all|covariate:county_eb_poi_all",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.05672196817110557
+            },
+            {
+              "column": "S3|F|covariate:boundary_leak_ems",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.005919076374734841
+            },
+            {
+              "column": "S3|F|covariate:boundary_leak_fire",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.0036194407496339207
+            },
+            {
+              "column": "S3|F|covariate:boundary_leak_schools",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.009943295681635
+            },
+            {
+              "column": "S4|B|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.03596413597975043
+            },
+            {
+              "column": "S4|Est|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.13001776734104004
+            },
+            {
+              "column": "S4|F|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.042400860165521324
+            },
+            {
+              "column": "S4|R|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9284,
+              "pearson_r": 0.1822025871629454
+            },
+            {
+              "column": "S5|C|covariate:local_geary_gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.02686581818985538
+            },
+            {
+              "column": "Sc1|R|gap",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": -0.032124236721234
+            },
+            {
+              "column": "Sc2|F|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.00653961467772627
+            },
+            {
+              "column": "Sc3|F|covariate",
+              "pairwise_defined_rows": 8548,
+              "pearson_r": 0.008796283266546622
+            },
+            {
+              "column": "Sc3|F|gap",
+              "pairwise_defined_rows": 8548,
+              "pearson_r": -0.004490612460011298
+            },
+            {
+              "column": "Sc4|R|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.04445425251205773
+            },
+            {
+              "column": "Sc5|R|covariate",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": -0.008066617319891077
+            },
+            {
+              "column": "Sc5|R|gap",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": -0.07596029306781707
+            },
+            {
+              "column": "Sca1|F|gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.04621559997200134
+            },
+            {
+              "column": "Sca2|C|covariate",
+              "pairwise_defined_rows": 3445,
+              "pearson_r": -0.15166764164271773
+            },
+            {
+              "column": "Sca3|B|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.0131110293135627
+            },
+            {
+              "column": "Sca3|R|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.042393340889982346
+            },
+            {
+              "column": "Sca4|Est|covariate",
+              "pairwise_defined_rows": 8953,
+              "pearson_r": 0.00034185551455896934
+            },
+            {
+              "column": "Sca5|C|covariate",
+              "pairwise_defined_rows": 9284,
+              "pearson_r": 0.01053054280249801
+            },
+            {
+              "column": "T1|R|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.2973622248104604
+            },
+            {
+              "column": "T2|R|covariate:orphan_link_length_km",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.005770739472787515
+            },
+            {
+              "column": "T2|R|covariate:orphan_link_segments",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.026929171432070895
+            },
+            {
+              "column": "T3|R|covariate:grade_sep_per_km2",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.02432122176099464
+            },
+            {
+              "column": "T4|R|gap",
+              "pairwise_defined_rows": 9346,
+              "pearson_r": 0.4094755755792045
+            },
+            {
+              "column": "T5|C|covariate:buildings_over_150m_from_road",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.07633578724422321
+            },
+            {
+              "column": "Tm1|B|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.002849290461913288
+            },
+            {
+              "column": "Tm1|B|gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.012373426877263206
+            },
+            {
+              "column": "X1|F|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.014838003874869068
+            },
+            {
+              "column": "X3|Est|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.013194467723768828
+            },
+            {
+              "column": "X4|R|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "X5|F|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.02611863753667415
+            },
+            {
+              "column": "X5|R|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.02136517645126692
+            }
+          ],
+          "coverage": {
+            "defined": 9347,
+            "fraction": 0.9965881224011088,
+            "rows": 9379
+          },
+          "distribution": {
+            "mean": 0.26003239758861807,
+            "min_q25_median_q75_q90_q95_max": [
+              0.0,
+              0.054447113699939875,
+              0.20107892343428124,
+              0.40382437115895226,
+              0.6219582231385382,
+              0.7365904199943526,
+              1.0
+            ],
+            "std": 0.242356742088971
+          },
+          "vif": {
+            "column": "T1|R|gap",
+            "degenerate": false,
+            "distinct_values": 7894,
+            "vif": 1.8362597054025291
+          }
+        }
+      ],
+      "limitations": "Joins exact case-folded names.primary/route identities; the frozen <30-degree deflection-angle stroke criterion is not implemented.",
+      "rows": 18758,
+      "sha256": "96faeb4ce17ffc4558ed40c1750f723fa653ef289af7a8567dcf2b3d6d1fd23c"
+    },
+    "T2": {
+      "artifact": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/T2.parquet",
+      "channels": [
+        {
+          "channel": "covariate:orphan_link_length_km",
+          "component": "R",
+          "correlations_to_every_implemented_channel": [
+            {
+              "column": "D1|Est|covariate",
+              "pairwise_defined_rows": 9330,
+              "pearson_r": 0.0477353471419316
+            },
+            {
+              "column": "D2|F|covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.07186023865527243
+            },
+            {
+              "column": "D3|B|covariate",
+              "pairwise_defined_rows": 9299,
+              "pearson_r": -0.017259686591859523
+            },
+            {
+              "column": "D4|Est|covariate",
+              "pairwise_defined_rows": 9299,
+              "pearson_r": -0.005198185050840404
+            },
+            {
+              "column": "D5|Est|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.02862142699829014
+            },
+            {
+              "column": "Dst1|Est|gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.07436571873249447
+            },
+            {
+              "column": "Dst2|Est|gap",
+              "pairwise_defined_rows": 0,
+              "pearson_r": null
+            },
+            {
+              "column": "Dst3|B|gap",
+              "pairwise_defined_rows": 9376,
+              "pearson_r": -0.004660067878677742
+            },
+            {
+              "column": "Dst4|C|gap",
+              "pairwise_defined_rows": 9296,
+              "pearson_r": -0.012083166878861573
+            },
+            {
+              "column": "Dst5|C|gap",
+              "pairwise_defined_rows": 9296,
+              "pearson_r": -0.00952802937887492
+            },
+            {
+              "column": "G1|R|covariate",
+              "pairwise_defined_rows": 9285,
+              "pearson_r": -0.09635870582982937
+            },
+            {
+              "column": "G1|R|gap",
+              "pairwise_defined_rows": 9285,
+              "pearson_r": -0.09635870582982937
+            },
+            {
+              "column": "G2|R|gap",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": -0.0053941878755127785
+            },
+            {
+              "column": "G3|B|gap",
+              "pairwise_defined_rows": 8878,
+              "pearson_r": 0.03939185095412636
+            },
+            {
+              "column": "G4|B|covariate",
+              "pairwise_defined_rows": 5763,
+              "pearson_r": 0.006297854793751593
+            },
+            {
+              "column": "G5|Est|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.0008841562567261253
+            },
+            {
+              "column": "G5|F|covariate",
+              "pairwise_defined_rows": 9138,
+              "pearson_r": 0.03967181844660943
+            },
+            {
+              "column": "M1|R|covariate:low_version_tertiary_share",
+              "pairwise_defined_rows": 8975,
+              "pearson_r": 0.0021111306549266035
+            },
+            {
+              "column": "M1|R|covariate:named_mean_version",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": -0.0077937609717106116
+            },
+            {
+              "column": "M1|R|covariate:tertiary_mean_version",
+              "pairwise_defined_rows": 8975,
+              "pearson_r": -0.02567739895176823
+            },
+            {
+              "column": "M2|Est|covariate:all_wikidata_link_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.015072418990711437
+            },
+            {
+              "column": "M2|F|covariate:facility_wikidata_link_share",
+              "pairwise_defined_rows": 7721,
+              "pearson_r": 0.012511335519982536
+            },
+            {
+              "column": "M3|Est|covariate:address_mismatch_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.0264517955056553
+            },
+            {
+              "column": "M3|F|covariate:facility_incoming_address_mismatch_share",
+              "pairwise_defined_rows": 7706,
+              "pearson_r": 0.0002094479371979734
+            },
+            {
+              "column": "M4|Est|covariate:chain_brand_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.01507708330395281
+            },
+            {
+              "column": "M4|Est|covariate:chain_count_per_housing_unit",
+              "pairwise_defined_rows": 9299,
+              "pearson_r": 0.021562505548503447
+            },
+            {
+              "column": "M5|B|covariate:multi_property_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "M5|R|covariate:multi_property_share",
+              "pairwise_defined_rows": 9374,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "Mx1|R|covariate:tomtom_named_length_share",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": -0.003225195523510279
+            },
+            {
+              "column": "Mx1|R|covariate:tomtom_tertiary_length_share",
+              "pairwise_defined_rows": 8975,
+              "pearson_r": 0.016218665482118737
+            },
+            {
+              "column": "Mx2|Est|covariate:microsoft_only_place_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.016940947623111612
+            },
+            {
+              "column": "Mx2|F|covariate:facility_microsoft_only_place_share",
+              "pairwise_defined_rows": 7709,
+              "pearson_r": -0.0005914650401526399
+            },
+            {
+              "column": "Mx3|Est|covariate:foursquare_only_place_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.003556793419634872
+            },
+            {
+              "column": "Mx4|B|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.005427280780504464
+            },
+            {
+              "column": "Mx4|F|covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.013277195326508562
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_alltheplaces",
+              "pairwise_defined_rows": 474,
+              "pearson_r": -0.005113043328238707
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_foursquare",
+              "pairwise_defined_rows": 1956,
+              "pearson_r": 0.030822248039019496
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_meta",
+              "pairwise_defined_rows": 8045,
+              "pearson_r": 0.015059821173072587
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_microsoft",
+              "pairwise_defined_rows": 1620,
+              "pearson_r": 0.044449635270487294
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_other",
+              "pairwise_defined_rows": 2831,
+              "pearson_r": 0.041433514188788115
+            },
+            {
+              "column": "P1|Est|gap",
+              "pairwise_defined_rows": 6733,
+              "pearson_r": 0.0926457471641366
+            },
+            {
+              "column": "P2|F|gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.013688024625855666
+            },
+            {
+              "column": "P3|F|covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.017275756959322708
+            },
+            {
+              "column": "P4|R|gap",
+              "pairwise_defined_rows": 639,
+              "pearson_r": 0.04533523102835257
+            },
+            {
+              "column": "S1|B|covariate:lag_d3_b_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.009063587495964637
+            },
+            {
+              "column": "S1|B|covariate:lag_dst3_b_gap",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.0025271209682034474
+            },
+            {
+              "column": "S1|B|covariate:lag_g3_b_gap",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.019626380592867178
+            },
+            {
+              "column": "S1|B|covariate:lag_g4_b_covariate",
+              "pairwise_defined_rows": 8749,
+              "pearson_r": -0.0033588895466448833
+            },
+            {
+              "column": "S1|B|covariate:lag_m5_b_covariate_multi_property_share",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "S1|B|covariate:lag_mx4_b_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.006047502667738893
+            },
+            {
+              "column": "S1|B|covariate:lag_sca3_b_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.0029136085540020745
+            },
+            {
+              "column": "S1|B|covariate:lag_tm1_b_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.008287254967814139
+            },
+            {
+              "column": "S1|B|covariate:lag_tm1_b_gap",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.024430718556234497
+            },
+            {
+              "column": "S1|C|covariate:lag_dst4_c_gap",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.0010281168475854753
+            },
+            {
+              "column": "S1|C|covariate:lag_dst5_c_gap",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.01520145451680534
+            },
+            {
+              "column": "S1|C|covariate:lag_sca2_c_covariate",
+              "pairwise_defined_rows": 8523,
+              "pearson_r": 0.043223895421362034
+            },
+            {
+              "column": "S1|C|covariate:lag_sca5_c_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.015763525075783873
+            },
+            {
+              "column": "S1|Est|covariate:lag_d1_est_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.04776638935782967
+            },
+            {
+              "column": "S1|Est|covariate:lag_d4_est_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.007777764756601779
+            },
+            {
+              "column": "S1|Est|covariate:lag_d5_est_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.014914025269901817
+            },
+            {
+              "column": "S1|Est|covariate:lag_dst1_est_gap",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.006032135220197755
+            },
+            {
+              "column": "S1|Est|covariate:lag_dst2_est_gap",
+              "pairwise_defined_rows": 0,
+              "pearson_r": null
+            },
+            {
+              "column": "S1|Est|covariate:lag_g5_est_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.014669850036496542
+            },
+            {
+              "column": "S1|Est|covariate:lag_m2_est_covariate_all_wikidata_link_share",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.039138292939958505
+            },
+            {
+              "column": "S1|Est|covariate:lag_m3_est_covariate_address_mismatch_share",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.025556526809688326
+            },
+            {
+              "column": "S1|Est|covariate:lag_m4_est_covariate_chain_brand_share",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.03991878701269334
+            },
+            {
+              "column": "S1|Est|covariate:lag_m4_est_covariate_chain_count_per_housing_unit",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.012443005456321198
+            },
+            {
+              "column": "S1|Est|covariate:lag_mx2_est_covariate_microsoft_only_place_share",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.010981166818749286
+            },
+            {
+              "column": "S1|Est|covariate:lag_mx3_est_covariate_foursquare_only_place_share",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.0025931092428782667
+            },
+            {
+              "column": "S1|Est|covariate:lag_p1_est_gap",
+              "pairwise_defined_rows": 9239,
+              "pearson_r": 0.043117494303109336
+            },
+            {
+              "column": "S1|Est|covariate:lag_sca4_est_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.016631173273950486
+            },
+            {
+              "column": "S1|Est|covariate:lag_x3_est_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.025041223056876685
+            },
+            {
+              "column": "S1|F|covariate:lag_d2_f_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.06214272904277557
+            },
+            {
+              "column": "S1|F|covariate:lag_g5_f_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.005172308462920963
+            },
+            {
+              "column": "S1|F|covariate:lag_m2_f_covariate_facility_wikidata_link_share",
+              "pairwise_defined_rows": 9365,
+              "pearson_r": 0.008299690017652307
+            },
+            {
+              "column": "S1|F|covariate:lag_m3_f_covariate_facility_incoming_address_mismatch_share",
+              "pairwise_defined_rows": 9365,
+              "pearson_r": 0.02357591571979577
+            },
+            {
+              "column": "S1|F|covariate:lag_mx2_f_covariate_facility_microsoft_only_place_share",
+              "pairwise_defined_rows": 9365,
+              "pearson_r": 0.01960086295357634
+            },
+            {
+              "column": "S1|F|covariate:lag_mx4_f_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.012871473137433252
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_alltheplaces",
+              "pairwise_defined_rows": 1830,
+              "pearson_r": -0.005646308617264966
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_foursquare",
+              "pairwise_defined_rows": 6941,
+              "pearson_r": -0.015105300666893045
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_meta",
+              "pairwise_defined_rows": 9362,
+              "pearson_r": -0.003825756437982334
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_microsoft",
+              "pairwise_defined_rows": 5915,
+              "pearson_r": -0.030322471242933493
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_other",
+              "pairwise_defined_rows": 7681,
+              "pearson_r": -0.004373476163352097
+            },
+            {
+              "column": "S1|F|covariate:lag_p2_f_gap",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.007485575029288923
+            },
+            {
+              "column": "S1|F|covariate:lag_p3_f_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.009868718630423344
+            },
+            {
+              "column": "S1|F|covariate:lag_sc2_f_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.0080059024144956
+            },
+            {
+              "column": "S1|F|covariate:lag_sc3_f_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.04728881872907009
+            },
+            {
+              "column": "S1|F|covariate:lag_sc3_f_gap",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.03415661931208124
+            },
+            {
+              "column": "S1|F|covariate:lag_sca1_f_gap",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.009901884164072028
+            },
+            {
+              "column": "S1|F|covariate:lag_x1_f_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.006918923729095454
+            },
+            {
+              "column": "S1|F|covariate:lag_x5_f_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.02138424909694401
+            },
+            {
+              "column": "S1|R|covariate:lag_g1_r_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.07522182097090213
+            },
+            {
+              "column": "S1|R|covariate:lag_g1_r_gap",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.07522182097090213
+            },
+            {
+              "column": "S1|R|covariate:lag_g2_r_gap",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.00286138388305666
+            },
+            {
+              "column": "S1|R|covariate:lag_m1_r_covariate_low_version_tertiary_share",
+              "pairwise_defined_rows": 9378,
+              "pearson_r": -0.01582862450179911
+            },
+            {
+              "column": "S1|R|covariate:lag_m1_r_covariate_named_mean_version",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.018921497417289584
+            },
+            {
+              "column": "S1|R|covariate:lag_m1_r_covariate_tertiary_mean_version",
+              "pairwise_defined_rows": 9378,
+              "pearson_r": -0.0035402386288785575
+            },
+            {
+              "column": "S1|R|covariate:lag_m5_r_covariate_multi_property_share",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "S1|R|covariate:lag_mx1_r_covariate_tomtom_named_length_share",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.00548080300925094
+            },
+            {
+              "column": "S1|R|covariate:lag_mx1_r_covariate_tomtom_tertiary_length_share",
+              "pairwise_defined_rows": 9378,
+              "pearson_r": 0.01119942764187242
+            },
+            {
+              "column": "S1|R|covariate:lag_p4_r_gap",
+              "pairwise_defined_rows": 1258,
+              "pearson_r": -0.015717045186084525
+            },
+            {
+              "column": "S1|R|covariate:lag_sc1_r_gap",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.06504616417014022
+            },
+            {
+              "column": "S1|R|covariate:lag_sc4_r_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.03019416485912018
+            },
+            {
+              "column": "S1|R|covariate:lag_sc5_r_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.009337575982890213
+            },
+            {
+              "column": "S1|R|covariate:lag_sc5_r_gap",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.03797382455783271
+            },
+            {
+              "column": "S1|R|covariate:lag_sca3_r_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.0011245281332854342
+            },
+            {
+              "column": "S1|R|covariate:lag_x4_r_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "S1|R|covariate:lag_x5_r_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.007592892712132849
+            },
+            {
+              "column": "S2|all|covariate:county_eb_buildings",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.07170632271402115
+            },
+            {
+              "column": "S2|all|covariate:county_eb_poi_all",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.07696852954336814
+            },
+            {
+              "column": "S3|F|covariate:boundary_leak_ems",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.011124461389378587
+            },
+            {
+              "column": "S3|F|covariate:boundary_leak_fire",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.020363216106726048
+            },
+            {
+              "column": "S3|F|covariate:boundary_leak_schools",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.004956675378628028
+            },
+            {
+              "column": "S4|B|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.0005620617447241082
+            },
+            {
+              "column": "S4|Est|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.007892855505453485
+            },
+            {
+              "column": "S4|F|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.007629906267502101
+            },
+            {
+              "column": "S4|R|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9296,
+              "pearson_r": 0.012293424151432066
+            },
+            {
+              "column": "S5|C|covariate:local_geary_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.0037763395135741312
+            },
+            {
+              "column": "Sc1|R|gap",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": 0.09559761911815441
+            },
+            {
+              "column": "Sc2|F|covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.00334147296648469
+            },
+            {
+              "column": "Sc3|F|covariate",
+              "pairwise_defined_rows": 8557,
+              "pearson_r": 0.04998040335296728
+            },
+            {
+              "column": "Sc3|F|gap",
+              "pairwise_defined_rows": 8557,
+              "pearson_r": 0.02432397828405946
+            },
+            {
+              "column": "Sc4|R|covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.03332225754064936
+            },
+            {
+              "column": "Sc5|R|covariate",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": 0.01635078243662277
+            },
+            {
+              "column": "Sc5|R|gap",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": 0.05319711862754513
+            },
+            {
+              "column": "Sca1|F|gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.017216606450501035
+            },
+            {
+              "column": "Sca2|C|covariate",
+              "pairwise_defined_rows": 3447,
+              "pearson_r": 0.0756448772372168
+            },
+            {
+              "column": "Sca3|B|covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.002923536563270758
+            },
+            {
+              "column": "Sca3|R|covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.004637196327170856
+            },
+            {
+              "column": "Sca4|Est|covariate",
+              "pairwise_defined_rows": 8972,
+              "pearson_r": 0.013063831237505947
+            },
+            {
+              "column": "Sca5|C|covariate",
+              "pairwise_defined_rows": 9296,
+              "pearson_r": 0.022938954944975522
+            },
+            {
+              "column": "T1|R|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.10110717620331905
+            },
+            {
+              "column": "T1|R|gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.005770739472787515
+            },
+            {
+              "column": "T2|R|covariate:orphan_link_segments",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.5932209285511969
+            },
+            {
+              "column": "T3|R|covariate:grade_sep_per_km2",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.021711994149896288
+            },
+            {
+              "column": "T4|R|gap",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.09273796921044947
+            },
+            {
+              "column": "T5|C|covariate:buildings_over_150m_from_road",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.045126369806178915
+            },
+            {
+              "column": "Tm1|B|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.020722578390948026
+            },
+            {
+              "column": "Tm1|B|gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.018829262064480382
+            },
+            {
+              "column": "X1|F|covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.0027027817292554165
+            },
+            {
+              "column": "X3|Est|covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.06332324978427561
+            },
+            {
+              "column": "X4|R|covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "X5|F|covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.052333050711256025
+            },
+            {
+              "column": "X5|R|covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.019092804204311635
+            }
+          ],
+          "coverage": {
+            "defined": 9379,
+            "fraction": 1.0,
+            "rows": 9379
+          },
+          "distribution": {
+            "mean": 0.025052640729662217,
+            "min_q25_median_q75_q90_q95_max": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.05879897069256781,
+              0.11601597531725036,
+              5.659357200742782
+            ],
+            "std": 0.13791955548071647
+          },
+          "vif": {
+            "column": "T2|R|covariate:orphan_link_length_km",
+            "degenerate": false,
+            "distinct_values": 2091,
+            "vif": 1.966884493842522
+          }
+        },
+        {
+          "channel": "covariate:orphan_link_segments",
+          "component": "R",
+          "correlations_to_every_implemented_channel": [
+            {
+              "column": "D1|Est|covariate",
+              "pairwise_defined_rows": 9330,
+              "pearson_r": -0.045913629556538875
+            },
+            {
+              "column": "D2|F|covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.003747895057364749
+            },
+            {
+              "column": "D3|B|covariate",
+              "pairwise_defined_rows": 9299,
+              "pearson_r": 0.04253158385416439
+            },
+            {
+              "column": "D4|Est|covariate",
+              "pairwise_defined_rows": 9299,
+              "pearson_r": -0.011469783889715271
+            },
+            {
+              "column": "D5|Est|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.11541842526949338
+            },
+            {
+              "column": "Dst1|Est|gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.1525516647885261
+            },
+            {
+              "column": "Dst2|Est|gap",
+              "pairwise_defined_rows": 0,
+              "pearson_r": null
+            },
+            {
+              "column": "Dst3|B|gap",
+              "pairwise_defined_rows": 9376,
+              "pearson_r": 0.010530252916896663
+            },
+            {
+              "column": "Dst4|C|gap",
+              "pairwise_defined_rows": 9296,
+              "pearson_r": -0.030369934037848236
+            },
+            {
+              "column": "Dst5|C|gap",
+              "pairwise_defined_rows": 9296,
+              "pearson_r": -0.011737155834423517
+            },
+            {
+              "column": "G1|R|covariate",
+              "pairwise_defined_rows": 9285,
+              "pearson_r": -0.032988396717167245
+            },
+            {
+              "column": "G1|R|gap",
+              "pairwise_defined_rows": 9285,
+              "pearson_r": -0.032988396717167245
+            },
+            {
+              "column": "G2|R|gap",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": -0.0059623011405165885
+            },
+            {
+              "column": "G3|B|gap",
+              "pairwise_defined_rows": 8878,
+              "pearson_r": 0.07274972709021275
+            },
+            {
+              "column": "G4|B|covariate",
+              "pairwise_defined_rows": 5763,
+              "pearson_r": -0.01398131128310049
+            },
+            {
+              "column": "G5|Est|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.09715248319073108
+            },
+            {
+              "column": "G5|F|covariate",
+              "pairwise_defined_rows": 9138,
+              "pearson_r": 0.12111987941964017
+            },
+            {
+              "column": "M1|R|covariate:low_version_tertiary_share",
+              "pairwise_defined_rows": 8975,
+              "pearson_r": 0.0575792846302931
+            },
+            {
+              "column": "M1|R|covariate:named_mean_version",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": -0.06694828606187607
+            },
+            {
+              "column": "M1|R|covariate:tertiary_mean_version",
+              "pairwise_defined_rows": 8975,
+              "pearson_r": -0.07758968839271907
+            },
+            {
+              "column": "M2|Est|covariate:all_wikidata_link_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.03131383114885092
+            },
+            {
+              "column": "M2|F|covariate:facility_wikidata_link_share",
+              "pairwise_defined_rows": 7721,
+              "pearson_r": 0.05408329312972106
+            },
+            {
+              "column": "M3|Est|covariate:address_mismatch_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.0291472034895184
+            },
+            {
+              "column": "M3|F|covariate:facility_incoming_address_mismatch_share",
+              "pairwise_defined_rows": 7706,
+              "pearson_r": -0.0058774472451093695
+            },
+            {
+              "column": "M4|Est|covariate:chain_brand_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.031015170605565894
+            },
+            {
+              "column": "M4|Est|covariate:chain_count_per_housing_unit",
+              "pairwise_defined_rows": 9299,
+              "pearson_r": 0.04706259372099473
+            },
+            {
+              "column": "M5|B|covariate:multi_property_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "M5|R|covariate:multi_property_share",
+              "pairwise_defined_rows": 9374,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "Mx1|R|covariate:tomtom_named_length_share",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": -0.002648271440661133
+            },
+            {
+              "column": "Mx1|R|covariate:tomtom_tertiary_length_share",
+              "pairwise_defined_rows": 8975,
+              "pearson_r": 0.03194330231969307
+            },
+            {
+              "column": "Mx2|Est|covariate:microsoft_only_place_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.08734612995448647
+            },
+            {
+              "column": "Mx2|F|covariate:facility_microsoft_only_place_share",
+              "pairwise_defined_rows": 7709,
+              "pearson_r": 0.04013972122731118
+            },
+            {
+              "column": "Mx3|Est|covariate:foursquare_only_place_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.014303709344644347
+            },
+            {
+              "column": "Mx4|B|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.011040391540828327
+            },
+            {
+              "column": "Mx4|F|covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.012157611778766194
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_alltheplaces",
+              "pairwise_defined_rows": 474,
+              "pearson_r": -0.1678271348507414
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_foursquare",
+              "pairwise_defined_rows": 1956,
+              "pearson_r": 0.047066909499693894
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_meta",
+              "pairwise_defined_rows": 8045,
+              "pearson_r": 0.06982773358171968
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_microsoft",
+              "pairwise_defined_rows": 1620,
+              "pearson_r": 0.05026084648590212
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_other",
+              "pairwise_defined_rows": 2831,
+              "pearson_r": 0.04263529617900249
+            },
+            {
+              "column": "P1|Est|gap",
+              "pairwise_defined_rows": 6733,
+              "pearson_r": 0.12032645221761354
+            },
+            {
+              "column": "P2|F|gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.03931326378894378
+            },
+            {
+              "column": "P3|F|covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.04413015706398431
+            },
+            {
+              "column": "P4|R|gap",
+              "pairwise_defined_rows": 639,
+              "pearson_r": 0.03563949623279065
+            },
+            {
+              "column": "S1|B|covariate:lag_d3_b_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.053757195633571724
+            },
+            {
+              "column": "S1|B|covariate:lag_dst3_b_gap",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.04550332017555099
+            },
+            {
+              "column": "S1|B|covariate:lag_g3_b_gap",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.04565658752660371
+            },
+            {
+              "column": "S1|B|covariate:lag_g4_b_covariate",
+              "pairwise_defined_rows": 8749,
+              "pearson_r": -0.03156438106247952
+            },
+            {
+              "column": "S1|B|covariate:lag_m5_b_covariate_multi_property_share",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "S1|B|covariate:lag_mx4_b_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.011372466067195938
+            },
+            {
+              "column": "S1|B|covariate:lag_sca3_b_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.018785466863996816
+            },
+            {
+              "column": "S1|B|covariate:lag_tm1_b_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.03703620382478777
+            },
+            {
+              "column": "S1|B|covariate:lag_tm1_b_gap",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.05591398950334259
+            },
+            {
+              "column": "S1|C|covariate:lag_dst4_c_gap",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.009111253529593591
+            },
+            {
+              "column": "S1|C|covariate:lag_dst5_c_gap",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.016038240952213883
+            },
+            {
+              "column": "S1|C|covariate:lag_sca2_c_covariate",
+              "pairwise_defined_rows": 8523,
+              "pearson_r": 0.07582607667571045
+            },
+            {
+              "column": "S1|C|covariate:lag_sca5_c_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.00010052344057581116
+            },
+            {
+              "column": "S1|Est|covariate:lag_d1_est_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.05644658562234618
+            },
+            {
+              "column": "S1|Est|covariate:lag_d4_est_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.006986246195686269
+            },
+            {
+              "column": "S1|Est|covariate:lag_d5_est_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.11476543110495518
+            },
+            {
+              "column": "S1|Est|covariate:lag_dst1_est_gap",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.06508111724258306
+            },
+            {
+              "column": "S1|Est|covariate:lag_dst2_est_gap",
+              "pairwise_defined_rows": 0,
+              "pearson_r": null
+            },
+            {
+              "column": "S1|Est|covariate:lag_g5_est_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.09142946874673989
+            },
+            {
+              "column": "S1|Est|covariate:lag_m2_est_covariate_all_wikidata_link_share",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.04517940117005795
+            },
+            {
+              "column": "S1|Est|covariate:lag_m3_est_covariate_address_mismatch_share",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.046904196604799546
+            },
+            {
+              "column": "S1|Est|covariate:lag_m4_est_covariate_chain_brand_share",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.04507289729293763
+            },
+            {
+              "column": "S1|Est|covariate:lag_m4_est_covariate_chain_count_per_housing_unit",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.043034692702777634
+            },
+            {
+              "column": "S1|Est|covariate:lag_mx2_est_covariate_microsoft_only_place_share",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.11718207744389121
+            },
+            {
+              "column": "S1|Est|covariate:lag_mx3_est_covariate_foursquare_only_place_share",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.04128174980205849
+            },
+            {
+              "column": "S1|Est|covariate:lag_p1_est_gap",
+              "pairwise_defined_rows": 9239,
+              "pearson_r": 0.08240247112238085
+            },
+            {
+              "column": "S1|Est|covariate:lag_sca4_est_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.03853579347322494
+            },
+            {
+              "column": "S1|Est|covariate:lag_x3_est_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.05058591404445117
+            },
+            {
+              "column": "S1|F|covariate:lag_d2_f_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.0010733262650370976
+            },
+            {
+              "column": "S1|F|covariate:lag_g5_f_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.08947323123968526
+            },
+            {
+              "column": "S1|F|covariate:lag_m2_f_covariate_facility_wikidata_link_share",
+              "pairwise_defined_rows": 9365,
+              "pearson_r": 0.021630699944474134
+            },
+            {
+              "column": "S1|F|covariate:lag_m3_f_covariate_facility_incoming_address_mismatch_share",
+              "pairwise_defined_rows": 9365,
+              "pearson_r": -0.00041774480774180487
+            },
+            {
+              "column": "S1|F|covariate:lag_mx2_f_covariate_facility_microsoft_only_place_share",
+              "pairwise_defined_rows": 9365,
+              "pearson_r": 0.0708773395086697
+            },
+            {
+              "column": "S1|F|covariate:lag_mx4_f_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.011890383261669926
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_alltheplaces",
+              "pairwise_defined_rows": 1830,
+              "pearson_r": -0.11905549758847678
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_foursquare",
+              "pairwise_defined_rows": 6941,
+              "pearson_r": 0.022554963525610795
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_meta",
+              "pairwise_defined_rows": 9362,
+              "pearson_r": 0.05771855322559556
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_microsoft",
+              "pairwise_defined_rows": 5915,
+              "pearson_r": -0.011686129048448715
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_other",
+              "pairwise_defined_rows": 7681,
+              "pearson_r": 0.017751937156405946
+            },
+            {
+              "column": "S1|F|covariate:lag_p2_f_gap",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.01760261819508966
+            },
+            {
+              "column": "S1|F|covariate:lag_p3_f_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.04495407993362711
+            },
+            {
+              "column": "S1|F|covariate:lag_sc2_f_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.0012177594316027762
+            },
+            {
+              "column": "S1|F|covariate:lag_sc3_f_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.0042998682040028885
+            },
+            {
+              "column": "S1|F|covariate:lag_sc3_f_gap",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.032401912578985295
+            },
+            {
+              "column": "S1|F|covariate:lag_sca1_f_gap",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.012944198290667836
+            },
+            {
+              "column": "S1|F|covariate:lag_x1_f_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.0036931711634923758
+            },
+            {
+              "column": "S1|F|covariate:lag_x5_f_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.005937010116298007
+            },
+            {
+              "column": "S1|R|covariate:lag_g1_r_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.019664899026989594
+            },
+            {
+              "column": "S1|R|covariate:lag_g1_r_gap",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.019664899026989594
+            },
+            {
+              "column": "S1|R|covariate:lag_g2_r_gap",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.009974748946552509
+            },
+            {
+              "column": "S1|R|covariate:lag_m1_r_covariate_low_version_tertiary_share",
+              "pairwise_defined_rows": 9378,
+              "pearson_r": 0.05819330624558025
+            },
+            {
+              "column": "S1|R|covariate:lag_m1_r_covariate_named_mean_version",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.06939988596239378
+            },
+            {
+              "column": "S1|R|covariate:lag_m1_r_covariate_tertiary_mean_version",
+              "pairwise_defined_rows": 9378,
+              "pearson_r": -0.06314685645399999
+            },
+            {
+              "column": "S1|R|covariate:lag_m5_r_covariate_multi_property_share",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "S1|R|covariate:lag_mx1_r_covariate_tomtom_named_length_share",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.006528474428440275
+            },
+            {
+              "column": "S1|R|covariate:lag_mx1_r_covariate_tomtom_tertiary_length_share",
+              "pairwise_defined_rows": 9378,
+              "pearson_r": 0.0049146883068539055
+            },
+            {
+              "column": "S1|R|covariate:lag_p4_r_gap",
+              "pairwise_defined_rows": 1258,
+              "pearson_r": -0.005260242548311453
+            },
+            {
+              "column": "S1|R|covariate:lag_sc1_r_gap",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.012758992777961845
+            },
+            {
+              "column": "S1|R|covariate:lag_sc4_r_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.009244845382000462
+            },
+            {
+              "column": "S1|R|covariate:lag_sc5_r_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.02262165055589251
+            },
+            {
+              "column": "S1|R|covariate:lag_sc5_r_gap",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.0584099497599011
+            },
+            {
+              "column": "S1|R|covariate:lag_sca3_r_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.002339679159988352
+            },
+            {
+              "column": "S1|R|covariate:lag_x4_r_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "S1|R|covariate:lag_x5_r_covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.053414598903010424
+            },
+            {
+              "column": "S2|all|covariate:county_eb_buildings",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.030354787928352556
+            },
+            {
+              "column": "S2|all|covariate:county_eb_poi_all",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.20905602401943543
+            },
+            {
+              "column": "S3|F|covariate:boundary_leak_ems",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.006493392829045251
+            },
+            {
+              "column": "S3|F|covariate:boundary_leak_fire",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.021063119564315697
+            },
+            {
+              "column": "S3|F|covariate:boundary_leak_schools",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.01817936414067174
+            },
+            {
+              "column": "S4|B|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.018901413149540625
+            },
+            {
+              "column": "S4|Est|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.001959091734473463
+            },
+            {
+              "column": "S4|F|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.03842094401980526
+            },
+            {
+              "column": "S4|R|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9296,
+              "pearson_r": 0.007131106745116982
+            },
+            {
+              "column": "S5|C|covariate:local_geary_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.014182314076406372
+            },
+            {
+              "column": "Sc1|R|gap",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": 0.026565957688126116
+            },
+            {
+              "column": "Sc2|F|covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.006545089513131536
+            },
+            {
+              "column": "Sc3|F|covariate",
+              "pairwise_defined_rows": 8557,
+              "pearson_r": 0.04513687935297405
+            },
+            {
+              "column": "Sc3|F|gap",
+              "pairwise_defined_rows": 8557,
+              "pearson_r": 0.04384031608565835
+            },
+            {
+              "column": "Sc4|R|covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.013008577011086223
+            },
+            {
+              "column": "Sc5|R|covariate",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": 0.02533569645549394
+            },
+            {
+              "column": "Sc5|R|gap",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": 0.06707473190877045
+            },
+            {
+              "column": "Sca1|F|gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.0403485144244032
+            },
+            {
+              "column": "Sca2|C|covariate",
+              "pairwise_defined_rows": 3447,
+              "pearson_r": 0.09638442725311183
+            },
+            {
+              "column": "Sca3|B|covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.020263794776522813
+            },
+            {
+              "column": "Sca3|R|covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": -0.00458202641862814
+            },
+            {
+              "column": "Sca4|Est|covariate",
+              "pairwise_defined_rows": 8972,
+              "pearson_r": -0.023133773021706373
+            },
+            {
+              "column": "Sca5|C|covariate",
+              "pairwise_defined_rows": 9296,
+              "pearson_r": 0.0206150831757048
+            },
+            {
+              "column": "T1|R|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.024734994673060826
+            },
+            {
+              "column": "T1|R|gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.026929171432070895
+            },
+            {
+              "column": "T2|R|covariate:orphan_link_length_km",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.5932209285511969
+            },
+            {
+              "column": "T3|R|covariate:grade_sep_per_km2",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.06688450913442139
+            },
+            {
+              "column": "T4|R|gap",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.11385358116802352
+            },
+            {
+              "column": "T5|C|covariate:buildings_over_150m_from_road",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.046369438732251717
+            },
+            {
+              "column": "Tm1|B|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.04176720382265643
+            },
+            {
+              "column": "Tm1|B|gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.046836547786452305
+            },
+            {
+              "column": "X1|F|covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.013564007712823607
+            },
+            {
+              "column": "X3|Est|covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.11619499520953896
+            },
+            {
+              "column": "X4|R|covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "X5|F|covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.07100607408637061
+            },
+            {
+              "column": "X5|R|covariate",
+              "pairwise_defined_rows": 9379,
+              "pearson_r": 0.10310899219546694
+            }
+          ],
+          "coverage": {
+            "defined": 9379,
+            "fraction": 1.0,
+            "rows": 9379
+          },
+          "distribution": {
+            "mean": 0.7033798912464015,
+            "min_q25_median_q75_q90_q95_max": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              2.0,
+              4.0,
+              80.0
+            ],
+            "std": 2.254677356430904
+          },
+          "vif": {
+            "column": "T2|R|covariate:orphan_link_segments",
+            "degenerate": false,
+            "distinct_values": 31,
+            "vif": 1.7587079120368991
+          }
+        }
+      ],
+      "limitations": "Identifies links whose connector neighbors are non-named only; emitted length is the in-tract link length, not adjacent carriageway length within 2 km.",
+      "rows": 18758,
+      "sha256": "6258a7f3a15ad7a240ad73d5f76e11e488e10130e29e6c2ade064ad236060570"
+    },
+    "T3": {
+      "artifact": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/T3.parquet",
+      "channels": [
+        {
+          "channel": "covariate:grade_sep_per_km2",
+          "component": "R",
+          "correlations_to_every_implemented_channel": [
+            {
+              "column": "D1|Est|covariate",
+              "pairwise_defined_rows": 9330,
+              "pearson_r": -0.13657923476302203
+            },
+            {
+              "column": "D2|F|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.021370001263336626
+            },
+            {
+              "column": "D3|B|covariate",
+              "pairwise_defined_rows": 9299,
+              "pearson_r": 0.18390349662431363
+            },
+            {
+              "column": "D4|Est|covariate",
+              "pairwise_defined_rows": 9299,
+              "pearson_r": -0.008430580598755087
+            },
+            {
+              "column": "D5|Est|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.07417726301689104
+            },
+            {
+              "column": "Dst1|Est|gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.08492333840288964
+            },
+            {
+              "column": "Dst2|Est|gap",
+              "pairwise_defined_rows": 0,
+              "pearson_r": null
+            },
+            {
+              "column": "Dst3|B|gap",
+              "pairwise_defined_rows": 9376,
+              "pearson_r": 0.08183530612276652
+            },
+            {
+              "column": "Dst4|C|gap",
+              "pairwise_defined_rows": 9296,
+              "pearson_r": 0.050040359619106724
+            },
+            {
+              "column": "Dst5|C|gap",
+              "pairwise_defined_rows": 9296,
+              "pearson_r": 0.04785421904893231
+            },
+            {
+              "column": "G1|R|covariate",
+              "pairwise_defined_rows": 9285,
+              "pearson_r": 0.052840446192612245
+            },
+            {
+              "column": "G1|R|gap",
+              "pairwise_defined_rows": 9285,
+              "pearson_r": 0.052840446192612245
+            },
+            {
+              "column": "G2|R|gap",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": -0.0039540654288356646
+            },
+            {
+              "column": "G3|B|gap",
+              "pairwise_defined_rows": 8878,
+              "pearson_r": 0.023057587420413677
+            },
+            {
+              "column": "G4|B|covariate",
+              "pairwise_defined_rows": 5763,
+              "pearson_r": -0.02669267471648327
+            },
+            {
+              "column": "G5|Est|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.10673818360723751
+            },
+            {
+              "column": "G5|F|covariate",
+              "pairwise_defined_rows": 9138,
+              "pearson_r": 0.06934609272603337
+            },
+            {
+              "column": "M1|R|covariate:low_version_tertiary_share",
+              "pairwise_defined_rows": 8975,
+              "pearson_r": 0.00402505098650934
+            },
+            {
+              "column": "M1|R|covariate:named_mean_version",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": -0.09500560018472308
+            },
+            {
+              "column": "M1|R|covariate:tertiary_mean_version",
+              "pairwise_defined_rows": 8975,
+              "pearson_r": -0.0987899778653853
+            },
+            {
+              "column": "M2|Est|covariate:all_wikidata_link_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.027759012291899587
+            },
+            {
+              "column": "M2|F|covariate:facility_wikidata_link_share",
+              "pairwise_defined_rows": 7721,
+              "pearson_r": 0.005099819800892737
+            },
+            {
+              "column": "M3|Est|covariate:address_mismatch_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.05926703684087315
+            },
+            {
+              "column": "M3|F|covariate:facility_incoming_address_mismatch_share",
+              "pairwise_defined_rows": 7706,
+              "pearson_r": -0.008009764994355342
+            },
+            {
+              "column": "M4|Est|covariate:chain_brand_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.028253883406129533
+            },
+            {
+              "column": "M4|Est|covariate:chain_count_per_housing_unit",
+              "pairwise_defined_rows": 9299,
+              "pearson_r": -0.0009940001374565202
+            },
+            {
+              "column": "M5|B|covariate:multi_property_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "M5|R|covariate:multi_property_share",
+              "pairwise_defined_rows": 9374,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "Mx1|R|covariate:tomtom_named_length_share",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": 0.014492478263240065
+            },
+            {
+              "column": "Mx1|R|covariate:tomtom_tertiary_length_share",
+              "pairwise_defined_rows": 8975,
+              "pearson_r": 0.009582839737210747
+            },
+            {
+              "column": "Mx2|Est|covariate:microsoft_only_place_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.030018232419567848
+            },
+            {
+              "column": "Mx2|F|covariate:facility_microsoft_only_place_share",
+              "pairwise_defined_rows": 7709,
+              "pearson_r": 0.030322313032824004
+            },
+            {
+              "column": "Mx3|Est|covariate:foursquare_only_place_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.06585604063773827
+            },
+            {
+              "column": "Mx4|B|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.00917470602633719
+            },
+            {
+              "column": "Mx4|F|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.004307829136077861
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_alltheplaces",
+              "pairwise_defined_rows": 474,
+              "pearson_r": 0.002552932548580712
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_foursquare",
+              "pairwise_defined_rows": 1956,
+              "pearson_r": 0.10973283232926137
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_meta",
+              "pairwise_defined_rows": 8045,
+              "pearson_r": 0.06635617544128855
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_microsoft",
+              "pairwise_defined_rows": 1620,
+              "pearson_r": 0.026807103079454334
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_other",
+              "pairwise_defined_rows": 2831,
+              "pearson_r": 0.03736893384369672
+            },
+            {
+              "column": "P1|Est|gap",
+              "pairwise_defined_rows": 6733,
+              "pearson_r": 0.018222635798846695
+            },
+            {
+              "column": "P2|F|gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.006287387265943302
+            },
+            {
+              "column": "P3|F|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.06143241270394736
+            },
+            {
+              "column": "P4|R|gap",
+              "pairwise_defined_rows": 639,
+              "pearson_r": -0.28981446168729075
+            },
+            {
+              "column": "S1|B|covariate:lag_d3_b_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.1877104912713732
+            },
+            {
+              "column": "S1|B|covariate:lag_dst3_b_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.11403172864880957
+            },
+            {
+              "column": "S1|B|covariate:lag_g3_b_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.01974393263139233
+            },
+            {
+              "column": "S1|B|covariate:lag_g4_b_covariate",
+              "pairwise_defined_rows": 8747,
+              "pearson_r": -0.014582513493129485
+            },
+            {
+              "column": "S1|B|covariate:lag_m5_b_covariate_multi_property_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "S1|B|covariate:lag_mx4_b_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.0077837273314457275
+            },
+            {
+              "column": "S1|B|covariate:lag_sca3_b_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.0018049579201473937
+            },
+            {
+              "column": "S1|B|covariate:lag_tm1_b_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.00366350249931414
+            },
+            {
+              "column": "S1|B|covariate:lag_tm1_b_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.07128541651924843
+            },
+            {
+              "column": "S1|C|covariate:lag_dst4_c_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.052547152221391426
+            },
+            {
+              "column": "S1|C|covariate:lag_dst5_c_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.034251236767089646
+            },
+            {
+              "column": "S1|C|covariate:lag_sca2_c_covariate",
+              "pairwise_defined_rows": 8521,
+              "pearson_r": -0.01664037840644479
+            },
+            {
+              "column": "S1|C|covariate:lag_sca5_c_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.009546289615439942
+            },
+            {
+              "column": "S1|Est|covariate:lag_d1_est_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.1567391293832865
+            },
+            {
+              "column": "S1|Est|covariate:lag_d4_est_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.0016402844147969172
+            },
+            {
+              "column": "S1|Est|covariate:lag_d5_est_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.08148617973393307
+            },
+            {
+              "column": "S1|Est|covariate:lag_dst1_est_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.13478494521287493
+            },
+            {
+              "column": "S1|Est|covariate:lag_dst2_est_gap",
+              "pairwise_defined_rows": 0,
+              "pearson_r": null
+            },
+            {
+              "column": "S1|Est|covariate:lag_g5_est_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.14127018780960982
+            },
+            {
+              "column": "S1|Est|covariate:lag_m2_est_covariate_all_wikidata_link_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.03792043564218584
+            },
+            {
+              "column": "S1|Est|covariate:lag_m3_est_covariate_address_mismatch_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.10324459381858987
+            },
+            {
+              "column": "S1|Est|covariate:lag_m4_est_covariate_chain_brand_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.03850171515285587
+            },
+            {
+              "column": "S1|Est|covariate:lag_m4_est_covariate_chain_count_per_housing_unit",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.016298455876451425
+            },
+            {
+              "column": "S1|Est|covariate:lag_mx2_est_covariate_microsoft_only_place_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.0439754183378551
+            },
+            {
+              "column": "S1|Est|covariate:lag_mx3_est_covariate_foursquare_only_place_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.12501843704423068
+            },
+            {
+              "column": "S1|Est|covariate:lag_p1_est_gap",
+              "pairwise_defined_rows": 9237,
+              "pearson_r": 0.009602431304261062
+            },
+            {
+              "column": "S1|Est|covariate:lag_sca4_est_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.08101976875330698
+            },
+            {
+              "column": "S1|Est|covariate:lag_x3_est_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.011422556767440204
+            },
+            {
+              "column": "S1|F|covariate:lag_d2_f_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.02602672805485456
+            },
+            {
+              "column": "S1|F|covariate:lag_g5_f_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.11959491292876424
+            },
+            {
+              "column": "S1|F|covariate:lag_m2_f_covariate_facility_wikidata_link_share",
+              "pairwise_defined_rows": 9363,
+              "pearson_r": 0.005037278151766198
+            },
+            {
+              "column": "S1|F|covariate:lag_m3_f_covariate_facility_incoming_address_mismatch_share",
+              "pairwise_defined_rows": 9363,
+              "pearson_r": -0.009771940333191976
+            },
+            {
+              "column": "S1|F|covariate:lag_mx2_f_covariate_facility_microsoft_only_place_share",
+              "pairwise_defined_rows": 9363,
+              "pearson_r": 0.06523401260108254
+            },
+            {
+              "column": "S1|F|covariate:lag_mx4_f_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.0043788782896910594
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_alltheplaces",
+              "pairwise_defined_rows": 1830,
+              "pearson_r": -0.001702260734781353
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_foursquare",
+              "pairwise_defined_rows": 6940,
+              "pearson_r": 0.0921052644489746
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_meta",
+              "pairwise_defined_rows": 9360,
+              "pearson_r": 0.1098764308380867
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_microsoft",
+              "pairwise_defined_rows": 5914,
+              "pearson_r": 0.021821355835192294
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_other",
+              "pairwise_defined_rows": 7681,
+              "pearson_r": 0.06577135684441696
+            },
+            {
+              "column": "S1|F|covariate:lag_p2_f_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.008235340230953958
+            },
+            {
+              "column": "S1|F|covariate:lag_p3_f_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.08781078854076388
+            },
+            {
+              "column": "S1|F|covariate:lag_sc2_f_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.008032540804115241
+            },
+            {
+              "column": "S1|F|covariate:lag_sc3_f_covariate",
+              "pairwise_defined_rows": 9371,
+              "pearson_r": -0.0441746647652425
+            },
+            {
+              "column": "S1|F|covariate:lag_sc3_f_gap",
+              "pairwise_defined_rows": 9371,
+              "pearson_r": -0.003759131094363206
+            },
+            {
+              "column": "S1|F|covariate:lag_sca1_f_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.01202304503732032
+            },
+            {
+              "column": "S1|F|covariate:lag_x1_f_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.004119257974619381
+            },
+            {
+              "column": "S1|F|covariate:lag_x5_f_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.04553152354421839
+            },
+            {
+              "column": "S1|R|covariate:lag_g1_r_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.08973197792130855
+            },
+            {
+              "column": "S1|R|covariate:lag_g1_r_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.08973197792130855
+            },
+            {
+              "column": "S1|R|covariate:lag_g2_r_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.008722023372382363
+            },
+            {
+              "column": "S1|R|covariate:lag_m1_r_covariate_low_version_tertiary_share",
+              "pairwise_defined_rows": 9376,
+              "pearson_r": 0.023945858048682853
+            },
+            {
+              "column": "S1|R|covariate:lag_m1_r_covariate_named_mean_version",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.11281982011142815
+            },
+            {
+              "column": "S1|R|covariate:lag_m1_r_covariate_tertiary_mean_version",
+              "pairwise_defined_rows": 9376,
+              "pearson_r": -0.07166823109531736
+            },
+            {
+              "column": "S1|R|covariate:lag_m5_r_covariate_multi_property_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "S1|R|covariate:lag_mx1_r_covariate_tomtom_named_length_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.0027769000368903585
+            },
+            {
+              "column": "S1|R|covariate:lag_mx1_r_covariate_tomtom_tertiary_length_share",
+              "pairwise_defined_rows": 9376,
+              "pearson_r": 0.003735241623884929
+            },
+            {
+              "column": "S1|R|covariate:lag_p4_r_gap",
+              "pairwise_defined_rows": 1257,
+              "pearson_r": -0.1512567553387965
+            },
+            {
+              "column": "S1|R|covariate:lag_sc1_r_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.07073866888278987
+            },
+            {
+              "column": "S1|R|covariate:lag_sc4_r_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.06806636274374146
+            },
+            {
+              "column": "S1|R|covariate:lag_sc5_r_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.01626481781945471
+            },
+            {
+              "column": "S1|R|covariate:lag_sc5_r_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.007617015530530025
+            },
+            {
+              "column": "S1|R|covariate:lag_sca3_r_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.009530338768400069
+            },
+            {
+              "column": "S1|R|covariate:lag_x4_r_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "S1|R|covariate:lag_x5_r_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.006689426512707466
+            },
+            {
+              "column": "S2|all|covariate:county_eb_buildings",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.18203565650638617
+            },
+            {
+              "column": "S2|all|covariate:county_eb_poi_all",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.13131921692908832
+            },
+            {
+              "column": "S3|F|covariate:boundary_leak_ems",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.0204492065869991
+            },
+            {
+              "column": "S3|F|covariate:boundary_leak_fire",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.01841471826575871
+            },
+            {
+              "column": "S3|F|covariate:boundary_leak_schools",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.024223361810544505
+            },
+            {
+              "column": "S4|B|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.08501795514951759
+            },
+            {
+              "column": "S4|Est|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.007671926528353625
+            },
+            {
+              "column": "S4|F|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.03594061862469278
+            },
+            {
+              "column": "S4|R|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9296,
+              "pearson_r": 0.014462999151422037
+            },
+            {
+              "column": "S5|C|covariate:local_geary_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.024156616093630148
+            },
+            {
+              "column": "Sc1|R|gap",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": -0.027095858674039373
+            },
+            {
+              "column": "Sc2|F|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.009351273253189797
+            },
+            {
+              "column": "Sc3|F|covariate",
+              "pairwise_defined_rows": 8557,
+              "pearson_r": -0.014067808411627776
+            },
+            {
+              "column": "Sc3|F|gap",
+              "pairwise_defined_rows": 8557,
+              "pearson_r": 0.01660440097099954
+            },
+            {
+              "column": "Sc4|R|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.03832107271018645
+            },
+            {
+              "column": "Sc5|R|covariate",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": -0.010089485458603904
+            },
+            {
+              "column": "Sc5|R|gap",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": -0.011379400975006258
+            },
+            {
+              "column": "Sca1|F|gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.006731655785410098
+            },
+            {
+              "column": "Sca2|C|covariate",
+              "pairwise_defined_rows": 3447,
+              "pearson_r": -0.022360428961223647
+            },
+            {
+              "column": "Sca3|B|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.0042199961917891516
+            },
+            {
+              "column": "Sca3|R|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.0038387906670411935
+            },
+            {
+              "column": "Sca4|Est|covariate",
+              "pairwise_defined_rows": 8972,
+              "pearson_r": -0.03720378141252486
+            },
+            {
+              "column": "Sca5|C|covariate",
+              "pairwise_defined_rows": 9296,
+              "pearson_r": 0.005393403992120884
+            },
+            {
+              "column": "T1|R|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.0854488397698163
+            },
+            {
+              "column": "T1|R|gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.02432122176099464
+            },
+            {
+              "column": "T2|R|covariate:orphan_link_length_km",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.021711994149896288
+            },
+            {
+              "column": "T2|R|covariate:orphan_link_segments",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.06688450913442139
+            },
+            {
+              "column": "T4|R|gap",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.05922555539192525
+            },
+            {
+              "column": "T5|C|covariate:buildings_over_150m_from_road",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.10928661912922584
+            },
+            {
+              "column": "Tm1|B|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.004558573353772606
+            },
+            {
+              "column": "Tm1|B|gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.07836207707521677
+            },
+            {
+              "column": "X1|F|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.0038378969042468275
+            },
+            {
+              "column": "X3|Est|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.015301292074127204
+            },
+            {
+              "column": "X4|R|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "X5|F|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.01418866024070675
+            },
+            {
+              "column": "X5|R|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.0035436077073706385
+            }
+          ],
+          "coverage": {
+            "defined": 9377,
+            "fraction": 0.9997867576500693,
+            "rows": 9379
+          },
+          "distribution": {
+            "mean": 0.1934588477012316,
+            "min_q25_median_q75_q90_q95_max": [
+              0.0,
+              0.0,
+              0.0,
+              0.16655402617876197,
+              0.5966014604270696,
+              0.9273523984794776,
+              13.988831317076444
+            ],
+            "std": 0.531319072293266
+          },
+          "vif": {
+            "column": "T3|R|covariate:grade_sep_per_km2",
+            "degenerate": false,
+            "distinct_values": 4512,
+            "vif": 4.54049326439703
+          }
+        }
+      ],
+      "limitations": "Uses provided road_flags/level_rules as grade-separation evidence; it does not enumerate geometric crossing pairs without shared connectors.",
+      "rows": 9379,
+      "sha256": "6816bc3734c980ec290a6f3843d6c73e3a421c6864ae7b528e888c449bdc4fa5"
+    },
+    "T4": {
+      "artifact": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/T4.parquet",
+      "channels": [
+        {
+          "channel": "gap",
+          "component": "R",
+          "correlations_to_every_implemented_channel": [
+            {
+              "column": "D1|Est|covariate",
+              "pairwise_defined_rows": 9327,
+              "pearson_r": 0.20099219266797355
+            },
+            {
+              "column": "D2|F|covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.07132866503693115
+            },
+            {
+              "column": "D3|B|covariate",
+              "pairwise_defined_rows": 9296,
+              "pearson_r": -0.09324076135970646
+            },
+            {
+              "column": "D4|Est|covariate",
+              "pairwise_defined_rows": 9296,
+              "pearson_r": -0.012952699405014716
+            },
+            {
+              "column": "D5|Est|covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.023295088735171665
+            },
+            {
+              "column": "Dst1|Est|gap",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.08249056641059689
+            },
+            {
+              "column": "Dst2|Est|gap",
+              "pairwise_defined_rows": 0,
+              "pearson_r": null
+            },
+            {
+              "column": "Dst3|B|gap",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.019664892910460495
+            },
+            {
+              "column": "Dst4|C|gap",
+              "pairwise_defined_rows": 9293,
+              "pearson_r": 0.03599945041977163
+            },
+            {
+              "column": "Dst5|C|gap",
+              "pairwise_defined_rows": 9293,
+              "pearson_r": 0.08435348922606954
+            },
+            {
+              "column": "G1|R|covariate",
+              "pairwise_defined_rows": 9282,
+              "pearson_r": -0.0770390345822556
+            },
+            {
+              "column": "G1|R|gap",
+              "pairwise_defined_rows": 9282,
+              "pearson_r": -0.0770390345822556
+            },
+            {
+              "column": "G2|R|gap",
+              "pairwise_defined_rows": 9246,
+              "pearson_r": -0.002736025590757315
+            },
+            {
+              "column": "G3|B|gap",
+              "pairwise_defined_rows": 8876,
+              "pearson_r": -0.014728059891074325
+            },
+            {
+              "column": "G4|B|covariate",
+              "pairwise_defined_rows": 5762,
+              "pearson_r": 0.02140170824923418
+            },
+            {
+              "column": "G5|Est|covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.10910073934885678
+            },
+            {
+              "column": "G5|F|covariate",
+              "pairwise_defined_rows": 9135,
+              "pearson_r": -0.075425229681053
+            },
+            {
+              "column": "M1|R|covariate:low_version_tertiary_share",
+              "pairwise_defined_rows": 8975,
+              "pearson_r": -0.0660105780695441
+            },
+            {
+              "column": "M1|R|covariate:named_mean_version",
+              "pairwise_defined_rows": 9246,
+              "pearson_r": 0.12503055454979387
+            },
+            {
+              "column": "M1|R|covariate:tertiary_mean_version",
+              "pairwise_defined_rows": 8975,
+              "pearson_r": 0.08826939517950776
+            },
+            {
+              "column": "M2|Est|covariate:all_wikidata_link_share",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.05727071473606823
+            },
+            {
+              "column": "M2|F|covariate:facility_wikidata_link_share",
+              "pairwise_defined_rows": 7720,
+              "pearson_r": -0.01200194338050811
+            },
+            {
+              "column": "M3|Est|covariate:address_mismatch_share",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.12535741492307464
+            },
+            {
+              "column": "M3|F|covariate:facility_incoming_address_mismatch_share",
+              "pairwise_defined_rows": 7705,
+              "pearson_r": 0.021006671324815214
+            },
+            {
+              "column": "M4|Est|covariate:chain_brand_share",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.057110880391828704
+            },
+            {
+              "column": "M4|Est|covariate:chain_count_per_housing_unit",
+              "pairwise_defined_rows": 9296,
+              "pearson_r": -0.02013598812316569
+            },
+            {
+              "column": "M5|B|covariate:multi_property_share",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "M5|R|covariate:multi_property_share",
+              "pairwise_defined_rows": 9370,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "Mx1|R|covariate:tomtom_named_length_share",
+              "pairwise_defined_rows": 9246,
+              "pearson_r": 0.014099500900206095
+            },
+            {
+              "column": "Mx1|R|covariate:tomtom_tertiary_length_share",
+              "pairwise_defined_rows": 8975,
+              "pearson_r": 0.005737483300937604
+            },
+            {
+              "column": "Mx2|Est|covariate:microsoft_only_place_share",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.08832634241135605
+            },
+            {
+              "column": "Mx2|F|covariate:facility_microsoft_only_place_share",
+              "pairwise_defined_rows": 7708,
+              "pearson_r": -0.06665116047847196
+            },
+            {
+              "column": "Mx3|Est|covariate:foursquare_only_place_share",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.06274067953073767
+            },
+            {
+              "column": "Mx4|B|covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.00752186027992361
+            },
+            {
+              "column": "Mx4|F|covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.04385206731265007
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_alltheplaces",
+              "pairwise_defined_rows": 474,
+              "pearson_r": 0.14708113780657814
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_foursquare",
+              "pairwise_defined_rows": 1956,
+              "pearson_r": -0.10195513579305114
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_meta",
+              "pairwise_defined_rows": 8044,
+              "pearson_r": -0.060302314191811715
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_microsoft",
+              "pairwise_defined_rows": 1620,
+              "pearson_r": 0.02201171157571152
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_other",
+              "pairwise_defined_rows": 2831,
+              "pearson_r": -0.008059936456571534
+            },
+            {
+              "column": "P1|Est|gap",
+              "pairwise_defined_rows": 6732,
+              "pearson_r": 0.050906865883784895
+            },
+            {
+              "column": "P2|F|gap",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.013890760441606339
+            },
+            {
+              "column": "P3|F|covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.022227790760672706
+            },
+            {
+              "column": "P4|R|gap",
+              "pairwise_defined_rows": 639,
+              "pearson_r": 0.0926298928911974
+            },
+            {
+              "column": "S1|B|covariate:lag_d3_b_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.11027840751608643
+            },
+            {
+              "column": "S1|B|covariate:lag_dst3_b_gap",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.055755837783074545
+            },
+            {
+              "column": "S1|B|covariate:lag_g3_b_gap",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.0028233061612672108
+            },
+            {
+              "column": "S1|B|covariate:lag_g4_b_covariate",
+              "pairwise_defined_rows": 8744,
+              "pearson_r": 0.011387363182267183
+            },
+            {
+              "column": "S1|B|covariate:lag_m5_b_covariate_multi_property_share",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "S1|B|covariate:lag_mx4_b_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.0110272406478476
+            },
+            {
+              "column": "S1|B|covariate:lag_sca3_b_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.0032995925563389142
+            },
+            {
+              "column": "S1|B|covariate:lag_tm1_b_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.03340974738976306
+            },
+            {
+              "column": "S1|B|covariate:lag_tm1_b_gap",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.031916619975174226
+            },
+            {
+              "column": "S1|C|covariate:lag_dst4_c_gap",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.05298279100526119
+            },
+            {
+              "column": "S1|C|covariate:lag_dst5_c_gap",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.12154423831862704
+            },
+            {
+              "column": "S1|C|covariate:lag_sca2_c_covariate",
+              "pairwise_defined_rows": 8518,
+              "pearson_r": -0.02241121677488068
+            },
+            {
+              "column": "S1|C|covariate:lag_sca5_c_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.05416142564024747
+            },
+            {
+              "column": "S1|Est|covariate:lag_d1_est_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.24038490835560145
+            },
+            {
+              "column": "S1|Est|covariate:lag_d4_est_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.008761343067375886
+            },
+            {
+              "column": "S1|Est|covariate:lag_d5_est_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.0375331161551024
+            },
+            {
+              "column": "S1|Est|covariate:lag_dst1_est_gap",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.09992006805327619
+            },
+            {
+              "column": "S1|Est|covariate:lag_dst2_est_gap",
+              "pairwise_defined_rows": 0,
+              "pearson_r": null
+            },
+            {
+              "column": "S1|Est|covariate:lag_g5_est_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.17434999377558288
+            },
+            {
+              "column": "S1|Est|covariate:lag_m2_est_covariate_all_wikidata_link_share",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.05036640758630454
+            },
+            {
+              "column": "S1|Est|covariate:lag_m3_est_covariate_address_mismatch_share",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.18989843498023246
+            },
+            {
+              "column": "S1|Est|covariate:lag_m4_est_covariate_chain_brand_share",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.05052853405424619
+            },
+            {
+              "column": "S1|Est|covariate:lag_m4_est_covariate_chain_count_per_housing_unit",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.02380081692079768
+            },
+            {
+              "column": "S1|Est|covariate:lag_mx2_est_covariate_microsoft_only_place_share",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.12257252254306825
+            },
+            {
+              "column": "S1|Est|covariate:lag_mx3_est_covariate_foursquare_only_place_share",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.12273470347418759
+            },
+            {
+              "column": "S1|Est|covariate:lag_p1_est_gap",
+              "pairwise_defined_rows": 9233,
+              "pearson_r": 0.03503476751017515
+            },
+            {
+              "column": "S1|Est|covariate:lag_sca4_est_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.13531181986848972
+            },
+            {
+              "column": "S1|Est|covariate:lag_x3_est_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.018138254918960612
+            },
+            {
+              "column": "S1|F|covariate:lag_d2_f_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.09040462512252931
+            },
+            {
+              "column": "S1|F|covariate:lag_g5_f_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.13309385028949966
+            },
+            {
+              "column": "S1|F|covariate:lag_m2_f_covariate_facility_wikidata_link_share",
+              "pairwise_defined_rows": 9359,
+              "pearson_r": -0.009930100336619375
+            },
+            {
+              "column": "S1|F|covariate:lag_m3_f_covariate_facility_incoming_address_mismatch_share",
+              "pairwise_defined_rows": 9359,
+              "pearson_r": 0.031189436779918978
+            },
+            {
+              "column": "S1|F|covariate:lag_mx2_f_covariate_facility_microsoft_only_place_share",
+              "pairwise_defined_rows": 9359,
+              "pearson_r": -0.09742082793383733
+            },
+            {
+              "column": "S1|F|covariate:lag_mx4_f_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.041121223549770054
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_alltheplaces",
+              "pairwise_defined_rows": 1830,
+              "pearson_r": 0.11157746673963509
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_foursquare",
+              "pairwise_defined_rows": 6939,
+              "pearson_r": -0.11335472859878636
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_meta",
+              "pairwise_defined_rows": 9356,
+              "pearson_r": -0.0917481965926552
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_microsoft",
+              "pairwise_defined_rows": 5913,
+              "pearson_r": -0.013279469343254448
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_other",
+              "pairwise_defined_rows": 7678,
+              "pearson_r": -0.03613772680933428
+            },
+            {
+              "column": "S1|F|covariate:lag_p2_f_gap",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.009827744978434963
+            },
+            {
+              "column": "S1|F|covariate:lag_p3_f_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.041739992978789324
+            },
+            {
+              "column": "S1|F|covariate:lag_sc2_f_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.012736198066995786
+            },
+            {
+              "column": "S1|F|covariate:lag_sc3_f_covariate",
+              "pairwise_defined_rows": 9367,
+              "pearson_r": 0.15874453713761127
+            },
+            {
+              "column": "S1|F|covariate:lag_sc3_f_gap",
+              "pairwise_defined_rows": 9367,
+              "pearson_r": 0.08356924239438249
+            },
+            {
+              "column": "S1|F|covariate:lag_sca1_f_gap",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.0232862634008267
+            },
+            {
+              "column": "S1|F|covariate:lag_x1_f_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.035953849895767755
+            },
+            {
+              "column": "S1|F|covariate:lag_x5_f_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.12922456189088594
+            },
+            {
+              "column": "S1|R|covariate:lag_g1_r_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.24039237256280319
+            },
+            {
+              "column": "S1|R|covariate:lag_g1_r_gap",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.24039237256280319
+            },
+            {
+              "column": "S1|R|covariate:lag_g2_r_gap",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.0025053698131001535
+            },
+            {
+              "column": "S1|R|covariate:lag_m1_r_covariate_low_version_tertiary_share",
+              "pairwise_defined_rows": 9372,
+              "pearson_r": -0.05425425248985413
+            },
+            {
+              "column": "S1|R|covariate:lag_m1_r_covariate_named_mean_version",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.16971521372634263
+            },
+            {
+              "column": "S1|R|covariate:lag_m1_r_covariate_tertiary_mean_version",
+              "pairwise_defined_rows": 9372,
+              "pearson_r": 0.08761355297134006
+            },
+            {
+              "column": "S1|R|covariate:lag_m5_r_covariate_multi_property_share",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "S1|R|covariate:lag_mx1_r_covariate_tomtom_named_length_share",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.010698680732630406
+            },
+            {
+              "column": "S1|R|covariate:lag_mx1_r_covariate_tomtom_tertiary_length_share",
+              "pairwise_defined_rows": 9372,
+              "pearson_r": -0.02293703773739783
+            },
+            {
+              "column": "S1|R|covariate:lag_p4_r_gap",
+              "pairwise_defined_rows": 1257,
+              "pearson_r": -0.05145164488914937
+            },
+            {
+              "column": "S1|R|covariate:lag_sc1_r_gap",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.21114368158898172
+            },
+            {
+              "column": "S1|R|covariate:lag_sc4_r_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.07194347111916151
+            },
+            {
+              "column": "S1|R|covariate:lag_sc5_r_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.005490854532126061
+            },
+            {
+              "column": "S1|R|covariate:lag_sc5_r_gap",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.0607990215702303
+            },
+            {
+              "column": "S1|R|covariate:lag_sca3_r_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.07009389667767295
+            },
+            {
+              "column": "S1|R|covariate:lag_x4_r_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "S1|R|covariate:lag_x5_r_covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.003136417199744951
+            },
+            {
+              "column": "S2|all|covariate:county_eb_buildings",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.21976760062765854
+            },
+            {
+              "column": "S2|all|covariate:county_eb_poi_all",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.08058680477359167
+            },
+            {
+              "column": "S3|F|covariate:boundary_leak_ems",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.027441899730201526
+            },
+            {
+              "column": "S3|F|covariate:boundary_leak_fire",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.02768137998040207
+            },
+            {
+              "column": "S3|F|covariate:boundary_leak_schools",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.025231930686851294
+            },
+            {
+              "column": "S4|B|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.021097922836358335
+            },
+            {
+              "column": "S4|Est|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.058430249446388784
+            },
+            {
+              "column": "S4|F|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.01681911743184934
+            },
+            {
+              "column": "S4|R|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9293,
+              "pearson_r": 0.23201429628691914
+            },
+            {
+              "column": "S5|C|covariate:local_geary_gap",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.07345068452785729
+            },
+            {
+              "column": "Sc1|R|gap",
+              "pairwise_defined_rows": 9246,
+              "pearson_r": 0.1725461536952035
+            },
+            {
+              "column": "Sc2|F|covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.013926561484246168
+            },
+            {
+              "column": "Sc3|F|covariate",
+              "pairwise_defined_rows": 8556,
+              "pearson_r": 0.061940757032666244
+            },
+            {
+              "column": "Sc3|F|gap",
+              "pairwise_defined_rows": 8556,
+              "pearson_r": 0.024431074346222624
+            },
+            {
+              "column": "Sc4|R|covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.0400322291328187
+            },
+            {
+              "column": "Sc5|R|covariate",
+              "pairwise_defined_rows": 9246,
+              "pearson_r": -0.009406488140241741
+            },
+            {
+              "column": "Sc5|R|gap",
+              "pairwise_defined_rows": 9246,
+              "pearson_r": -0.07672272738562491
+            },
+            {
+              "column": "Sca1|F|gap",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.020069291661396246
+            },
+            {
+              "column": "Sca2|C|covariate",
+              "pairwise_defined_rows": 3447,
+              "pearson_r": 0.0037318125068710214
+            },
+            {
+              "column": "Sca3|B|covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.009350025592072778
+            },
+            {
+              "column": "Sca3|R|covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.06014065813299395
+            },
+            {
+              "column": "Sca4|Est|covariate",
+              "pairwise_defined_rows": 8970,
+              "pearson_r": 0.06079330870969004
+            },
+            {
+              "column": "Sca5|C|covariate",
+              "pairwise_defined_rows": 9293,
+              "pearson_r": 0.08948186595588889
+            },
+            {
+              "column": "T1|R|covariate",
+              "pairwise_defined_rows": 9346,
+              "pearson_r": 0.2216965806618682
+            },
+            {
+              "column": "T1|R|gap",
+              "pairwise_defined_rows": 9346,
+              "pearson_r": 0.4094755755792045
+            },
+            {
+              "column": "T2|R|covariate:orphan_link_length_km",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.09273796921044947
+            },
+            {
+              "column": "T2|R|covariate:orphan_link_segments",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.11385358116802352
+            },
+            {
+              "column": "T3|R|covariate:grade_sep_per_km2",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.05922555539192525
+            },
+            {
+              "column": "T5|C|covariate:buildings_over_150m_from_road",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.14018071355382716
+            },
+            {
+              "column": "Tm1|B|covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.03333607939215421
+            },
+            {
+              "column": "Tm1|B|gap",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.032255676794916706
+            },
+            {
+              "column": "X1|F|covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.02835590977051142
+            },
+            {
+              "column": "X3|Est|covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.0013321488065293928
+            },
+            {
+              "column": "X4|R|covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "X5|F|covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.08681048655758852
+            },
+            {
+              "column": "X5|R|covariate",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": -0.006008594101875452
+            }
+          ],
+          "coverage": {
+            "defined": 9373,
+            "fraction": 0.9993602729502079,
+            "rows": 9379
+          },
+          "distribution": {
+            "mean": 0.4660445579244083,
+            "min_q25_median_q75_q90_q95_max": [
+              0.0,
+              0.28422232334383307,
+              0.4554207795995811,
+              0.6416783599273361,
+              0.8208360289904585,
+              0.9234465206166864,
+              1.0
+            ],
+            "std": 0.2546763692903612
+          },
+          "vif": {
+            "column": "T4|R|gap",
+            "degenerate": false,
+            "distinct_values": 8898,
+            "vif": 2.440482745500586
+          }
+        }
+      ],
+      "limitations": "Uses tract-local connector-degree product as a centrality proxy; this is not sampled shortest-path edge betweenness.",
+      "rows": 9379,
+      "sha256": "b88b6d970077d2d9f8cd272cd3ebe80588cf9bfbb60f9281425554522337ee06"
+    },
+    "T5": {
+      "artifact": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/T5.parquet",
+      "channels": [
+        {
+          "channel": "covariate:buildings_over_150m_from_road",
+          "component": "C",
+          "correlations_to_every_implemented_channel": [
+            {
+              "column": "D1|Est|covariate",
+              "pairwise_defined_rows": 9330,
+              "pearson_r": 0.5836934592259516
+            },
+            {
+              "column": "D2|F|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.08868905494539434
+            },
+            {
+              "column": "D3|B|covariate",
+              "pairwise_defined_rows": 9299,
+              "pearson_r": -0.1841759712329401
+            },
+            {
+              "column": "D4|Est|covariate",
+              "pairwise_defined_rows": 9299,
+              "pearson_r": 0.042352821214351834
+            },
+            {
+              "column": "D5|Est|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.16759641693895344
+            },
+            {
+              "column": "Dst1|Est|gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.04773736843944637
+            },
+            {
+              "column": "Dst2|Est|gap",
+              "pairwise_defined_rows": 0,
+              "pearson_r": null
+            },
+            {
+              "column": "Dst3|B|gap",
+              "pairwise_defined_rows": 9376,
+              "pearson_r": -0.036272705274065606
+            },
+            {
+              "column": "Dst4|C|gap",
+              "pairwise_defined_rows": 9296,
+              "pearson_r": -0.01759268139224812
+            },
+            {
+              "column": "Dst5|C|gap",
+              "pairwise_defined_rows": 9296,
+              "pearson_r": -0.031910734233376224
+            },
+            {
+              "column": "G1|R|covariate",
+              "pairwise_defined_rows": 9285,
+              "pearson_r": -0.4230282302356266
+            },
+            {
+              "column": "G1|R|gap",
+              "pairwise_defined_rows": 9285,
+              "pearson_r": -0.4230282302356266
+            },
+            {
+              "column": "G2|R|gap",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": -0.011590444047625941
+            },
+            {
+              "column": "G3|B|gap",
+              "pairwise_defined_rows": 8878,
+              "pearson_r": 0.00024025387733846526
+            },
+            {
+              "column": "G4|B|covariate",
+              "pairwise_defined_rows": 5763,
+              "pearson_r": 0.11059237830138303
+            },
+            {
+              "column": "G5|Est|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.15369271413458352
+            },
+            {
+              "column": "G5|F|covariate",
+              "pairwise_defined_rows": 9138,
+              "pearson_r": -0.1251306941443225
+            },
+            {
+              "column": "M1|R|covariate:low_version_tertiary_share",
+              "pairwise_defined_rows": 8975,
+              "pearson_r": -0.08300652627600567
+            },
+            {
+              "column": "M1|R|covariate:named_mean_version",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": 0.12754568765963348
+            },
+            {
+              "column": "M1|R|covariate:tertiary_mean_version",
+              "pairwise_defined_rows": 8975,
+              "pearson_r": 0.012962615372998792
+            },
+            {
+              "column": "M2|Est|covariate:all_wikidata_link_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.030908241929674608
+            },
+            {
+              "column": "M2|F|covariate:facility_wikidata_link_share",
+              "pairwise_defined_rows": 7721,
+              "pearson_r": -0.018702415486079874
+            },
+            {
+              "column": "M3|Est|covariate:address_mismatch_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.4162378737019887
+            },
+            {
+              "column": "M3|F|covariate:facility_incoming_address_mismatch_share",
+              "pairwise_defined_rows": 7706,
+              "pearson_r": 0.07662075990438746
+            },
+            {
+              "column": "M4|Est|covariate:chain_brand_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.030210420965888787
+            },
+            {
+              "column": "M4|Est|covariate:chain_count_per_housing_unit",
+              "pairwise_defined_rows": 9299,
+              "pearson_r": -0.015954823813404417
+            },
+            {
+              "column": "M5|B|covariate:multi_property_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "M5|R|covariate:multi_property_share",
+              "pairwise_defined_rows": 9374,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "Mx1|R|covariate:tomtom_named_length_share",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": -0.0035573617379207933
+            },
+            {
+              "column": "Mx1|R|covariate:tomtom_tertiary_length_share",
+              "pairwise_defined_rows": 8975,
+              "pearson_r": -0.010443238964577831
+            },
+            {
+              "column": "Mx2|Est|covariate:microsoft_only_place_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.2646811893824937
+            },
+            {
+              "column": "Mx2|F|covariate:facility_microsoft_only_place_share",
+              "pairwise_defined_rows": 7709,
+              "pearson_r": -0.07019871600193664
+            },
+            {
+              "column": "Mx3|Est|covariate:foursquare_only_place_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.07805916412233563
+            },
+            {
+              "column": "Mx4|B|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.052824673953531895
+            },
+            {
+              "column": "Mx4|F|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.07894078935511695
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_alltheplaces",
+              "pairwise_defined_rows": 474,
+              "pearson_r": 0.10801548219647986
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_foursquare",
+              "pairwise_defined_rows": 1956,
+              "pearson_r": -0.2062015205899674
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_meta",
+              "pairwise_defined_rows": 8045,
+              "pearson_r": -0.1150355815257247
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_microsoft",
+              "pairwise_defined_rows": 1620,
+              "pearson_r": 0.01383978627695772
+            },
+            {
+              "column": "Mx5|F|covariate:school_category_mismatch_share_other",
+              "pairwise_defined_rows": 2831,
+              "pearson_r": -0.07247995645264996
+            },
+            {
+              "column": "P1|Est|gap",
+              "pairwise_defined_rows": 6733,
+              "pearson_r": -0.017493762432943857
+            },
+            {
+              "column": "P2|F|gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.002315477033872657
+            },
+            {
+              "column": "P3|F|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.02781041702755703
+            },
+            {
+              "column": "P4|R|gap",
+              "pairwise_defined_rows": 639,
+              "pearson_r": 0.5570420635307081
+            },
+            {
+              "column": "S1|B|covariate:lag_d3_b_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.16073871818102525
+            },
+            {
+              "column": "S1|B|covariate:lag_dst3_b_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.0640563498268267
+            },
+            {
+              "column": "S1|B|covariate:lag_g3_b_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.00459787225388567
+            },
+            {
+              "column": "S1|B|covariate:lag_g4_b_covariate",
+              "pairwise_defined_rows": 8747,
+              "pearson_r": 0.10434172736965998
+            },
+            {
+              "column": "S1|B|covariate:lag_m5_b_covariate_multi_property_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "S1|B|covariate:lag_mx4_b_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.05825240425367646
+            },
+            {
+              "column": "S1|B|covariate:lag_sca3_b_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.011295694021521576
+            },
+            {
+              "column": "S1|B|covariate:lag_tm1_b_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.016005950372806155
+            },
+            {
+              "column": "S1|B|covariate:lag_tm1_b_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.015798260502481624
+            },
+            {
+              "column": "S1|C|covariate:lag_dst4_c_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.04241947163059006
+            },
+            {
+              "column": "S1|C|covariate:lag_dst5_c_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.060970022675360676
+            },
+            {
+              "column": "S1|C|covariate:lag_sca2_c_covariate",
+              "pairwise_defined_rows": 8521,
+              "pearson_r": -0.06576472089626491
+            },
+            {
+              "column": "S1|C|covariate:lag_sca5_c_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.13716773011986916
+            },
+            {
+              "column": "S1|Est|covariate:lag_d1_est_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.6183100679224869
+            },
+            {
+              "column": "S1|Est|covariate:lag_d4_est_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.017906450931541376
+            },
+            {
+              "column": "S1|Est|covariate:lag_d5_est_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.19791739457141103
+            },
+            {
+              "column": "S1|Est|covariate:lag_dst1_est_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.08575332722104938
+            },
+            {
+              "column": "S1|Est|covariate:lag_dst2_est_gap",
+              "pairwise_defined_rows": 0,
+              "pearson_r": null
+            },
+            {
+              "column": "S1|Est|covariate:lag_g5_est_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.24561577818492933
+            },
+            {
+              "column": "S1|Est|covariate:lag_m2_est_covariate_all_wikidata_link_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.0393908888191931
+            },
+            {
+              "column": "S1|Est|covariate:lag_m3_est_covariate_address_mismatch_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.4801371329680167
+            },
+            {
+              "column": "S1|Est|covariate:lag_m4_est_covariate_chain_brand_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.03790886101890771
+            },
+            {
+              "column": "S1|Est|covariate:lag_m4_est_covariate_chain_count_per_housing_unit",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.03813896659241243
+            },
+            {
+              "column": "S1|Est|covariate:lag_mx2_est_covariate_microsoft_only_place_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.34624940932160225
+            },
+            {
+              "column": "S1|Est|covariate:lag_mx3_est_covariate_foursquare_only_place_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.12833806193989805
+            },
+            {
+              "column": "S1|Est|covariate:lag_p1_est_gap",
+              "pairwise_defined_rows": 9237,
+              "pearson_r": -0.06018357007631932
+            },
+            {
+              "column": "S1|Est|covariate:lag_sca4_est_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.3197835331655514
+            },
+            {
+              "column": "S1|Est|covariate:lag_x3_est_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.0275122689360295
+            },
+            {
+              "column": "S1|F|covariate:lag_d2_f_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.08463103526458987
+            },
+            {
+              "column": "S1|F|covariate:lag_g5_f_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.19007893369193649
+            },
+            {
+              "column": "S1|F|covariate:lag_m2_f_covariate_facility_wikidata_link_share",
+              "pairwise_defined_rows": 9363,
+              "pearson_r": -0.03891621359761946
+            },
+            {
+              "column": "S1|F|covariate:lag_m3_f_covariate_facility_incoming_address_mismatch_share",
+              "pairwise_defined_rows": 9363,
+              "pearson_r": 0.107070948069185
+            },
+            {
+              "column": "S1|F|covariate:lag_mx2_f_covariate_facility_microsoft_only_place_share",
+              "pairwise_defined_rows": 9363,
+              "pearson_r": -0.12311872819554906
+            },
+            {
+              "column": "S1|F|covariate:lag_mx4_f_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.07829387540157216
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_alltheplaces",
+              "pairwise_defined_rows": 1830,
+              "pearson_r": 0.11877008435131549
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_foursquare",
+              "pairwise_defined_rows": 6940,
+              "pearson_r": -0.19781812830265957
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_meta",
+              "pairwise_defined_rows": 9360,
+              "pearson_r": -0.2142224691626555
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_microsoft",
+              "pairwise_defined_rows": 5914,
+              "pearson_r": 0.0015001704243650432
+            },
+            {
+              "column": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_other",
+              "pairwise_defined_rows": 7681,
+              "pearson_r": -0.059052958612142485
+            },
+            {
+              "column": "S1|F|covariate:lag_p2_f_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.04165702753377638
+            },
+            {
+              "column": "S1|F|covariate:lag_p3_f_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.04801138268093519
+            },
+            {
+              "column": "S1|F|covariate:lag_sc2_f_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.025506704211118995
+            },
+            {
+              "column": "S1|F|covariate:lag_sc3_f_covariate",
+              "pairwise_defined_rows": 9371,
+              "pearson_r": 0.2775061035736084
+            },
+            {
+              "column": "S1|F|covariate:lag_sc3_f_gap",
+              "pairwise_defined_rows": 9371,
+              "pearson_r": 0.1489004244097582
+            },
+            {
+              "column": "S1|F|covariate:lag_sca1_f_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.06741423718176277
+            },
+            {
+              "column": "S1|F|covariate:lag_x1_f_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.055629079650780455
+            },
+            {
+              "column": "S1|F|covariate:lag_x5_f_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.1842214442730532
+            },
+            {
+              "column": "S1|R|covariate:lag_g1_r_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.49887079115227445
+            },
+            {
+              "column": "S1|R|covariate:lag_g1_r_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.49887079115227445
+            },
+            {
+              "column": "S1|R|covariate:lag_g2_r_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.024860072769743353
+            },
+            {
+              "column": "S1|R|covariate:lag_m1_r_covariate_low_version_tertiary_share",
+              "pairwise_defined_rows": 9376,
+              "pearson_r": -0.14347769854258507
+            },
+            {
+              "column": "S1|R|covariate:lag_m1_r_covariate_named_mean_version",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.1609238751398219
+            },
+            {
+              "column": "S1|R|covariate:lag_m1_r_covariate_tertiary_mean_version",
+              "pairwise_defined_rows": 9376,
+              "pearson_r": 0.012496427781569291
+            },
+            {
+              "column": "S1|R|covariate:lag_m5_r_covariate_multi_property_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "S1|R|covariate:lag_mx1_r_covariate_tomtom_named_length_share",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.015550325935456567
+            },
+            {
+              "column": "S1|R|covariate:lag_mx1_r_covariate_tomtom_tertiary_length_share",
+              "pairwise_defined_rows": 9376,
+              "pearson_r": -0.021520382247705375
+            },
+            {
+              "column": "S1|R|covariate:lag_p4_r_gap",
+              "pairwise_defined_rows": 1257,
+              "pearson_r": 0.2696811054489779
+            },
+            {
+              "column": "S1|R|covariate:lag_sc1_r_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.4216424097224412
+            },
+            {
+              "column": "S1|R|covariate:lag_sc4_r_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.3091407407069905
+            },
+            {
+              "column": "S1|R|covariate:lag_sc5_r_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.0197054423165041
+            },
+            {
+              "column": "S1|R|covariate:lag_sc5_r_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.025647320611896986
+            },
+            {
+              "column": "S1|R|covariate:lag_sca3_r_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.01906746525371368
+            },
+            {
+              "column": "S1|R|covariate:lag_x4_r_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "S1|R|covariate:lag_x5_r_covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.01790103584919603
+            },
+            {
+              "column": "S2|all|covariate:county_eb_buildings",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.3587101748486353
+            },
+            {
+              "column": "S2|all|covariate:county_eb_poi_all",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.10578197543470405
+            },
+            {
+              "column": "S3|F|covariate:boundary_leak_ems",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.03282991390501551
+            },
+            {
+              "column": "S3|F|covariate:boundary_leak_fire",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.06581861213668296
+            },
+            {
+              "column": "S3|F|covariate:boundary_leak_schools",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.029886027116196083
+            },
+            {
+              "column": "S4|B|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.037126129372214926
+            },
+            {
+              "column": "S4|Est|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.0004043706257024066
+            },
+            {
+              "column": "S4|F|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.14029059063421717
+            },
+            {
+              "column": "S4|R|covariate:peer_gap_delta",
+              "pairwise_defined_rows": 9296,
+              "pearson_r": 0.05061751328857406
+            },
+            {
+              "column": "S5|C|covariate:local_geary_gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.0047047004476597695
+            },
+            {
+              "column": "Sc1|R|gap",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": 0.3697757649044234
+            },
+            {
+              "column": "Sc2|F|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.01102403471316798
+            },
+            {
+              "column": "Sc3|F|covariate",
+              "pairwise_defined_rows": 8557,
+              "pearson_r": 0.1559781092462067
+            },
+            {
+              "column": "Sc3|F|gap",
+              "pairwise_defined_rows": 8557,
+              "pearson_r": 0.07888860952219137
+            },
+            {
+              "column": "Sc4|R|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.24649743113020287
+            },
+            {
+              "column": "Sc5|R|covariate",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": -0.004490617920048081
+            },
+            {
+              "column": "Sc5|R|gap",
+              "pairwise_defined_rows": 9247,
+              "pearson_r": 0.024049856902493203
+            },
+            {
+              "column": "Sca1|F|gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.009597715188746102
+            },
+            {
+              "column": "Sca2|C|covariate",
+              "pairwise_defined_rows": 3447,
+              "pearson_r": 0.06812047588066897
+            },
+            {
+              "column": "Sca3|B|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.002470880603171509
+            },
+            {
+              "column": "Sca3|R|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 3.603014890648523e-05
+            },
+            {
+              "column": "Sca4|Est|covariate",
+              "pairwise_defined_rows": 8972,
+              "pearson_r": 0.1669761133612466
+            },
+            {
+              "column": "Sca5|C|covariate",
+              "pairwise_defined_rows": 9296,
+              "pearson_r": 0.11791539521632259
+            },
+            {
+              "column": "T1|R|covariate",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": 0.3725891863539896
+            },
+            {
+              "column": "T1|R|gap",
+              "pairwise_defined_rows": 9347,
+              "pearson_r": -0.07633578724422321
+            },
+            {
+              "column": "T2|R|covariate:orphan_link_length_km",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.045126369806178915
+            },
+            {
+              "column": "T2|R|covariate:orphan_link_segments",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.046369438732251717
+            },
+            {
+              "column": "T3|R|covariate:grade_sep_per_km2",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.10928661912922584
+            },
+            {
+              "column": "T4|R|gap",
+              "pairwise_defined_rows": 9373,
+              "pearson_r": 0.14018071355382716
+            },
+            {
+              "column": "Tm1|B|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.039196803200001504
+            },
+            {
+              "column": "Tm1|B|gap",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.0014540551838676972
+            },
+            {
+              "column": "X1|F|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.04162418633621179
+            },
+            {
+              "column": "X3|Est|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.0058878408239420275
+            },
+            {
+              "column": "X4|R|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.0
+            },
+            {
+              "column": "X5|F|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": 0.10520481929780293
+            },
+            {
+              "column": "X5|R|covariate",
+              "pairwise_defined_rows": 9377,
+              "pearson_r": -0.009607875543474219
+            }
+          ],
+          "coverage": {
+            "defined": 9377,
+            "fraction": 0.9997867576500693,
+            "rows": 9379
+          },
+          "distribution": {
+            "mean": 0.01166737839982847,
+            "min_q25_median_q75_q90_q95_max": [
+              0.0,
+              0.0,
+              0.0,
+              0.0025284450063211006,
+              0.03214367571137141,
+              0.0798013371537724,
+              0.52
+            ],
+            "std": 0.03514555883173994
+          },
+          "vif": {
+            "column": "T5|C|covariate:buildings_over_150m_from_road",
+            "degenerate": false,
+            "distinct_values": 3216,
+            "vif": 1.8356862345691378
+          }
+        }
+      ],
+      "limitations": "Building-centroid distance to any provided roads-unfiltered geometry; centroids are assigned strictly within the provided tract polygons.",
+      "rows": 9379,
+      "sha256": "feb7af5722fabacf90ed8915c2842ba5c5edddad8bad5d75028277f88af80140"
+    }
+  },
+  "redundancy_flags": {
+    "handling": "all channels retained; flags disclosed for downstream merge handling; no silent drops",
+    "high_correlation_pairs_involving_T": [],
+    "threshold_abs_r": 0.8,
+    "vif_flags_involving_T": [],
+    "vif_threshold": 10.0
+  },
+  "schema_version": 1,
+  "scope": {
+    "correlation": "pairwise-complete Pearson r over the official tract set",
+    "label_free": true,
+    "official_geoids": 9379,
+    "vif_source": "reports/ideas-orthogonality.json; VIF on its preregistered complete-case matrix"
+  },
+  "title": "Topology and network structure"
+}

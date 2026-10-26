@@ -154,6 +154,10 @@
       "eastern-ok-overture-pois.parquet:sources,names,geometry",
       "eastern-ok-overture-pois.parquet:taxonomy",
       "eastern-ok-overture-roads-unfiltered.parquet:class",
+      "eastern-ok-overture-roads-unfiltered.parquet:subclass",
+      "eastern-ok-overture-roads-unfiltered.parquet:connectors",
+      "eastern-ok-overture-roads-unfiltered.parquet:road_flags",
+      "eastern-ok-overture-roads-unfiltered.parquet:level_rules",
       "eastern-ok-overture-roads-unfiltered.parquet:class,names,routes,geometry",
       "eastern-ok-overture-roads-unfiltered.parquet:geometry",
       "eastern-ok-overture-roads-unfiltered.parquet:names",
@@ -224,6 +228,10 @@
       "maricopa-az-overture-pois.parquet:sources,names,geometry",
       "maricopa-az-overture-pois.parquet:taxonomy",
       "maricopa-az-overture-roads-unfiltered.parquet:class",
+      "maricopa-az-overture-roads-unfiltered.parquet:subclass",
+      "maricopa-az-overture-roads-unfiltered.parquet:connectors",
+      "maricopa-az-overture-roads-unfiltered.parquet:road_flags",
+      "maricopa-az-overture-roads-unfiltered.parquet:level_rules",
       "maricopa-az-overture-roads-unfiltered.parquet:class,names,routes,geometry",
       "maricopa-az-overture-roads-unfiltered.parquet:geometry",
       "maricopa-az-overture-roads-unfiltered.parquet:names",
@@ -294,6 +302,10 @@
       "northern-ca-overture-pois.parquet:sources,names,geometry",
       "northern-ca-overture-pois.parquet:taxonomy",
       "northern-ca-overture-roads-unfiltered.parquet:class",
+      "northern-ca-overture-roads-unfiltered.parquet:subclass",
+      "northern-ca-overture-roads-unfiltered.parquet:connectors",
+      "northern-ca-overture-roads-unfiltered.parquet:road_flags",
+      "northern-ca-overture-roads-unfiltered.parquet:level_rules",
       "northern-ca-overture-roads-unfiltered.parquet:class,names,routes,geometry",
       "northern-ca-overture-roads-unfiltered.parquet:geometry",
       "northern-ca-overture-roads-unfiltered.parquet:names",
@@ -364,6 +376,10 @@
       "south-central-tx-overture-pois.parquet:sources,names,geometry",
       "south-central-tx-overture-pois.parquet:taxonomy",
       "south-central-tx-overture-roads-unfiltered.parquet:class",
+      "south-central-tx-overture-roads-unfiltered.parquet:subclass",
+      "south-central-tx-overture-roads-unfiltered.parquet:connectors",
+      "south-central-tx-overture-roads-unfiltered.parquet:road_flags",
+      "south-central-tx-overture-roads-unfiltered.parquet:level_rules",
       "south-central-tx-overture-roads-unfiltered.parquet:class,names,routes,geometry",
       "south-central-tx-overture-roads-unfiltered.parquet:geometry",
       "south-central-tx-overture-roads-unfiltered.parquet:names",
@@ -1426,6 +1442,29 @@
       "outside_named_share_threshold": 0.7,
       "identity_precedence": ["names.primary", "routes.network/ref"],
       "note": "T1 uses exact normalized name/route identities as a conservative continuous-stroke proxy; the preregistered <30-degree deflection test is not implemented and is disclosed in per-tract diagnostics."
+    },
+    "T2": {
+      "unfiltered_layer": "roads-unfiltered",
+      "named_classes": ["motorway", "trunk", "primary", "secondary"],
+      "attached_length_limit_m": 2000.0
+    },
+    "T3": {
+      "unfiltered_layer": "roads-unfiltered",
+      "named_classes": ["motorway", "trunk", "primary", "secondary"],
+      "eligible_classes": ["tertiary", "unclassified"],
+      "grade_separation_flags": ["bridge", "is_bridge", "tunnel", "is_tunnel"],
+      "area_column": "ALAND"
+    },
+    "T4": {
+      "unfiltered_layer": "roads-unfiltered",
+      "named_classes": ["motorway", "trunk", "primary", "secondary"],
+      "eligible_classes": ["primary", "secondary", "tertiary", "unclassified"],
+      "top_fraction": 0.1
+    },
+    "T5": {
+      "road_layer": "roads-unfiltered",
+      "building_layer": "buildings",
+      "distance_m": 150.0
     }
   },
   "spec_amendments": {

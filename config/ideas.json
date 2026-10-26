@@ -158,7 +158,7 @@
       "failure_mode": "service ramps to malls or ports mis-tagged as links.",
       "family": "T",
       "id": "T2",
-      "implementation": null,
+      "implementation": "bias60.ideas.t::t2",
       "inputs": [
         "`roads-unfiltered`: class",
         "subclass",
@@ -170,7 +170,7 @@
       "recipe": "count link segments whose connectors join only non-named-class segments, and the length of those attached segments within 2 km.",
       "recipe_scope": "per tract",
       "signal": "`motorway_link`/`trunk_link`/`primary_link` segments, or ramps (subclass link), imply a limited-access road. If the ramp's attached carriageway is not a named class, TIGER S1100/S1200 probably still contains it.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Orphan ramps"
     },
     {
@@ -182,7 +182,7 @@
       "failure_mode": "rail overpasses, which can be excluded using `rail`.",
       "family": "T",
       "id": "T3",
-      "implementation": null,
+      "implementation": "bias60.ideas.t::t3",
       "inputs": [
         "`roads-unfiltered` geometry",
         "connectors",
@@ -195,7 +195,7 @@
       "recipe": "count crossings without a shared connector involving at least one tertiary or higher segment that is not a named class. Emit that count normalised by tract area.",
       "recipe_scope": "per tract",
       "signal": "two segments that cross geometrically without sharing a connector, or that carry `level_rules`≠0, `is_bridge` or `is_tunnel` flags, form an overpass. Overpasses on non-named-class roads point to freeway-like infrastructure that TIGER classes as S1100/S1200.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Non-planar crossings (grade separation)"
     },
     {
@@ -207,7 +207,7 @@
       "failure_mode": "urban grids, where betweenness is diffuse.",
       "family": "T",
       "id": "T4",
-      "implementation": null,
+      "implementation": "bias60.ideas.t::t4",
       "inputs": [
         "`roads-unfiltered` (primary through tertiary plus unclassified)",
         "`tracts` population centroids"
@@ -218,7 +218,7 @@
       "recipe": "run sampled edge betweenness on each county plus a buffer. ĝ = (length in the top betweenness decile that is not a named class) / (top-decile length).",
       "recipe_scope": "per tract",
       "signal": "TIGER secondary roads are the arteries that carry inter-place traffic. Edge betweenness between population centroids on a coarse graph finds them whatever the class tag says.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Through-traffic betweenness without a named class"
     },
     {
@@ -230,7 +230,7 @@
       "failure_mode": "ranch and farm compounds on long private drives that are genuinely unmapped in TIGER too.",
       "family": "T",
       "id": "T5",
-      "implementation": null,
+      "implementation": "bias60.ideas.t::t5",
       "inputs": [
         "`buildings` centroids",
         "`roads-unfiltered`"
@@ -241,7 +241,7 @@
       "recipe": "fraction of buildings with no road within 150 m.",
       "recipe_scope": "per tract",
       "signal": "the share of buildings more than 150 m from any road segment measures local mapping effort and rurality of ML-only areas. Low road attachment marks areas OSM mappers never touched. These also have weak POI coverage and unusual road classing.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Building-to-street attachment"
     },
     {
@@ -1459,7 +1459,7 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 10,
+    "declared_count": 6,
     "families_total": 12,
     "ideas_per_family": [
       5
@@ -1472,6 +1472,10 @@
       "G4",
       "G5",
       "T1",
+      "T2",
+      "T3",
+      "T4",
+      "T5",
       "M1",
       "M2",
       "M3",
@@ -1524,7 +1528,7 @@
       "F",
       "R"
     ],
-    "implemented_count": 50
+    "implemented_count": 54
   },
   "vocabulary": {
     "components": [
