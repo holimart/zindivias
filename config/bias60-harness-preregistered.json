@@ -274,7 +274,23 @@
       "south-central-tx-overture-pois.parquet:categories",
       "south-central-tx-overture-pois.parquet:basic_category",
       "south-central-tx-overture-pois.parquet:taxonomy",
-      "south-central-tx-overture-pois.parquet:geometry"
+      "south-central-tx-overture-pois.parquet:geometry",
+      "maricopa-az-overture-buildings.parquet:sources",
+      "maricopa-az-overture-buildings.parquet:class",
+      "maricopa-az-overture-buildings.parquet:names",
+      "maricopa-az-overture-buildings.parquet:geometry",
+      "northern-ca-overture-buildings.parquet:sources",
+      "northern-ca-overture-buildings.parquet:class",
+      "northern-ca-overture-buildings.parquet:names",
+      "northern-ca-overture-buildings.parquet:geometry",
+      "eastern-ok-overture-buildings.parquet:sources",
+      "eastern-ok-overture-buildings.parquet:class",
+      "eastern-ok-overture-buildings.parquet:names",
+      "eastern-ok-overture-buildings.parquet:geometry",
+      "south-central-tx-overture-buildings.parquet:sources",
+      "south-central-tx-overture-buildings.parquet:class",
+      "south-central-tx-overture-buildings.parquet:names",
+      "south-central-tx-overture-buildings.parquet:geometry"
     ]
   },
   "orthogonality": {
@@ -775,6 +791,96 @@
           "school"
         ]
       }
+    },
+    "X1": {
+      "component": "F",
+      "kind": "covariate",
+      "building_layer": "buildings",
+      "building_columns": [
+        "sources",
+        "class",
+        "names",
+        "geometry"
+      ],
+      "poi_layer": "pois",
+      "poi_columns": [
+        "sources",
+        "categories",
+        "geometry"
+      ],
+      "poi_category_sets": {
+        "fire": [
+          "fire_department",
+          "fire_protection_service"
+        ],
+        "ems": [
+          "ambulance_and_ems_services"
+        ],
+        "schools": [
+          "charter_school",
+          "elementary_school",
+          "high_school",
+          "middle_school",
+          "montessori_school",
+          "preschool",
+          "private_school",
+          "public_school",
+          "religious_school",
+          "school"
+        ]
+      },
+      "building_witnesses": {
+        "fire": {
+          "classes": [
+            "fire_station",
+            "fire_department"
+          ],
+          "name_patterns": [
+            "\\bfire station\\b",
+            "\\bfire department\\b",
+            "\\bfirehouse\\b"
+          ],
+          "false_positive_patterns": [
+            "firehouse subs",
+            "fire station grill"
+          ]
+        },
+        "ems": {
+          "classes": [
+            "ambulance_station",
+            "ems_station"
+          ],
+          "name_patterns": [
+            "\\bambulance station\\b",
+            "\\bems station\\b",
+            "\\bambulance service\\b"
+          ],
+          "false_positive_patterns": [
+            "emergency room",
+            "urgent care"
+          ]
+        },
+        "schools": {
+          "classes": [
+            "school",
+            "education"
+          ],
+          "name_patterns": [
+            "\\belementary school\\b",
+            "\\bmiddle school\\b",
+            "\\bhigh school\\b",
+            "\\bpublic school\\b",
+            "\\bcharter school\\b",
+            "\\bschool\\b"
+          ],
+          "false_positive_patterns": [
+            "school of rock",
+            "driving school"
+          ]
+        }
+      },
+      "probability_mapping": "P(any facility type defined)=1-product_k exp(-n_k), where n_k is the count of provided non-Microsoft building-class/name witnesses for types with zero provided Overture place count; unit-rate Poisson soft proxy, not calibrated",
+      "note": "Cross-theme facility witnesses; exclusive OSM/Esri buildings and non-Microsoft Overture POI points only. Emits the preregistered soft facility-definedness proxy for later Sca5 use."
     },
     "Sc4": {
       "component": "R",

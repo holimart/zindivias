@@ -729,7 +729,7 @@
       "failure_mode": "building class labels are sparse outside OSM-mapped towns, and former schools remain labelled.",
       "family": "X",
       "id": "X1",
-      "implementation": null,
+      "implementation": "bias60.ideas.x::x1",
       "inputs": [
         "`buildings` (class",
         "names)",
@@ -741,7 +741,7 @@
       "recipe": "w_k = 1[building witness] × 1[O_k = 0]. Facility estimate = mean over defined k.",
       "recipe_scope": "per tract and type k",
       "signal": "Overture buildings with `class` ∈ {school, fire_station, …} or names matching /fire station|school|elementary|ISD|EMS|ambulance/ show the facility exists. If the tract has no Overture *place* of that type, the USGS reference probably has one, so the per-type gap is about 1.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Building-class facility witnesses"
     },
     {
@@ -1459,7 +1459,7 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 38,
+    "declared_count": 37,
     "families_total": 12,
     "ideas_per_family": [
       5
@@ -1472,6 +1472,7 @@
       "G4",
       "G5",
       "Tm1",
+      "X1",
       "Dst1",
       "Dst2",
       "Dst3",
@@ -1496,7 +1497,7 @@
       "F",
       "R"
     ],
-    "implemented_count": 22
+    "implemented_count": 23
   },
   "vocabulary": {
     "components": [
