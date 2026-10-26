@@ -81,6 +81,7 @@ class ProvidedInputs:
         self._features: dict[str, np.ndarray] | None = None
         self._tracts: Any | None = None
         self._metric_tree: Any | None = None
+        self.idea_output_dir = self.workspace / "ideas"
 
     # ---------------------------------------------------------------- discovery
     def _require_openable(self, path: str) -> None:
@@ -169,6 +170,43 @@ class ProvidedInputs:
                 if column not in self._features:
                     self._features.update(self._read_parquet_aligned(path, [column], kind="feature"))
         return {column: self._features[column] for column in columns}
+
+    # ----------------------------------------------------------- idea artifacts
+    def idea_emissions(self, idea_ids: list[str]) -> dict[str, dict[tuple[str, str], tuple[np.ndarray, np.ndarray]]]:
+        """Read previously emitted, hash-recorded per-tract artifacts without labels or scores."""
+        import pyarrow.parquet as pq
+
+        outputs = {}
+        for idea_id in idea_ids:
+            path = self.idea_output_dir / f"{idea_id}.parquet"
+            self._require_openable(str(path))
+            if not path.is_file():
+                raise FileNotFoundError(f"missing prerequisite idea artifact: {path}")
+            table = pq.read_table(path, columns=["GEOID", "region", "idea", "component", "channel",
+                                                  "value", "defined"])
+            groups: dict[tuple[str, str], list[int]] = {}
+            for row, (region, idea, component, channel) in enumerate(zip(
+                    table["region"].to_pylist(), table["idea"].to_pylist(),
+                    table["component"].to_pylist(), table["channel"].to_pylist())):
+                if region != self.region or idea != idea_id:
+                    continue
+                groups.setdefault((component, channel), []).append(row)
+            ids = table["GEOID"].to_pylist()
+            expected = list(self.geoids)
+            emissions = {}
+            for key, row_ids in groups.items():
+                actual = [ids[index] for index in row_ids]
+                if actual != expected:
+                    raise ValueError(f"{idea_id}:{key[0]}/{key[1]} does not match the official GEOID order")
+                values = table["value"].take(row_ids).to_numpy(zero_copy_only=False).astype(np.float64)
+                defined = table["defined"].take(row_ids).to_numpy(zero_copy_only=False).astype(np.bool_)
+                emissions[key] = (values, defined)
+            if not emissions:
+                raise ValueError(f"{idea_id} has no emissions for {self.region}")
+            outputs[idea_id] = emissions
+            digest = sha256(path)
+            self.accessed.setdefault("idea_artifacts", []).append(f"{idea_id}:{digest}")
+        return outputs
 
     # ---------------------------------------------------------------- geometry
     def tract_geometries(self) -> Any:

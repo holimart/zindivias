@@ -185,16 +185,18 @@ def write_parquet(path: Path, table: pa.Table) -> None:
 
 
 def run_idea(idea_id: str, *, config: dict[str, Any], family: str, workspace: Path,
-             regions: list[str], geoids_by_region: dict[str, list[str]],
+             regions: list[str], geoids_by_region: dict[str, list[str]], ideas_dir: Path | None = None,
              inputs_factory: Callable[..., ProvidedInputs] = ProvidedInputs) -> dict[str, Any]:
     """Run one idea over the study regions and validate every emission."""
     function = IMPLEMENTATIONS[idea_id]
     tables: list[pa.Table] = []
     diagnostics: dict[str, Any] = {}
     accessed: dict[str, list[str]] = {"parquet_columns": [], "csv_columns": [], "layers": [],
-                                      "caches": []}
+                                      "caches": [], "idea_artifacts": []}
     for region in regions:
         inputs = inputs_factory(config, workspace, region, geoids_by_region[region])
+        inputs.idea_output_dir = Path(ideas_dir) if ideas_dir else Path(workspace) / "ideas"
+        inputs.accessed.setdefault("idea_artifacts", [])
         output = function(inputs)
         if not isinstance(output, IdeaOutput):
             raise TypeError(f"{idea_id} did not return an IdeaOutput")
@@ -254,6 +256,7 @@ def build_report(*, config: dict[str, Any], registry_document: dict[str, Any],
     """Run every implemented idea, write the parquets and return the report plus payload bytes."""
     implemented = [idea["id"] for idea in registry_document["ideas"]
                    if idea["status"] == "implemented"]
+    config = {**config, "__registry__": registry_document}
     if only_ids is not None:
         unknown = only_ids - set(implemented)
         if unknown:
@@ -264,22 +267,23 @@ def build_report(*, config: dict[str, Any], registry_document: dict[str, Any],
     per_idea: dict[str, Any] = {}
     partition_problems: list[str] = []
     declared_columns = set(config["acceptance"]["declared_input_columns"])
-    # Dst4 and Dst5 consume all preceding registered estimator artifacts; run them after the base
-    # per-idea writers while preserving registry order in the public implemented list.
-    post_estimators = {"Dst4", "Dst5"}
+    # Sca2 needs P2; Sca5 consumes all component gaps plus the P3/X1 probability inputs. Dst4/Dst5
+    # consume component gaps after those producers. Keep the public registry order in the report.
+    post_estimators = {"Sca2", "Sca5", "Dst4", "Dst5"}
     run_order = ([idea_id for idea_id in implemented if idea_id not in post_estimators]
-                  + [idea_id for idea_id in implemented if idea_id in post_estimators])
+                  + [idea_id for idea_id in ("Sca2", "Sca5", "Dst4", "Dst5")
+                     if idea_id in implemented])
     for idea_id in run_order:
         if tamper == "drop_idea" and idea_id == implemented[0]:
             # Keep the dependency artifact available to later post-estimators while omitting this
             # idea from the report, so the tamper test reaches the intended registry gate.
             dropped = run_idea(idea_id, config=config, family=families[idea_id], workspace=workspace,
-                               regions=regions, geoids_by_region=geoids_by_region,
+                               regions=regions, geoids_by_region=geoids_by_region, ideas_dir=ideas_dir,
                                inputs_factory=inputs_factory)
             write_parquet(ideas_dir / f"{idea_id}.parquet", dropped["table"])
             continue
         result = run_idea(idea_id, config=config, family=families[idea_id], workspace=workspace,
-                          regions=regions, geoids_by_region=geoids_by_region,
+                          regions=regions, geoids_by_region=geoids_by_region, ideas_dir=ideas_dir,
                           inputs_factory=inputs_factory)
         table = result["table"]
         if tamper == "gap_out_of_bounds":

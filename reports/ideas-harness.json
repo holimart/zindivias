@@ -1,7 +1,7 @@
 {
-  "code_commit_at_run": "b43fab14c7bb68c3919579d541352bcd54349db8",
+  "code_commit_at_run": "1eb856d603a3c3ba055b928bde107ce83fb66423",
   "environment": {
-    "git_commit": "b43fab14c7bb68c3919579d541352bcd54349db8",
+    "git_commit": "1eb856d603a3c3ba055b928bde107ce83fb66423",
     "versions": {
       "numpy": "2.5.4",
       "pyarrow": "26.0.0",
@@ -4777,6 +4777,1906 @@
       "sha256": "858eadae31c242954fbbd47ffb0151276018d987a994f57b24e84c19a8e6c294",
       "undeclared_columns_read": []
     },
+    "Sca2": {
+      "accessed_inputs": {
+        "caches": [
+          "eastern-ok-overture-tract-summary.parquet",
+          "eastern-ok-strata-tract-table.parquet",
+          "maricopa-az-overture-tract-summary.parquet",
+          "maricopa-az-strata-tract-table.parquet",
+          "northern-ca-overture-tract-summary.parquet",
+          "northern-ca-strata-tract-table.parquet",
+          "south-central-tx-overture-tract-summary.parquet",
+          "south-central-tx-strata-tract-table.parquet"
+        ],
+        "csv_columns": [],
+        "idea_artifacts": [
+          "P2:887ac98d8c2699ef83c48850b7696baea08b5bffbec044d9d9dc825d74e801c6"
+        ],
+        "layers": [
+          "census-acs-housing"
+        ],
+        "parquet_columns": [
+          "eastern-ok-census-acs-housing:GEOID,geometry",
+          "eastern-ok-overture-tract-summary.parquet:GEOID",
+          "eastern-ok-overture-tract-summary.parquet:overture_poi_fire",
+          "eastern-ok-strata-tract-table.parquet:ALAND",
+          "eastern-ok-strata-tract-table.parquet:COUNTYFP",
+          "eastern-ok-strata-tract-table.parquet:GEOID",
+          "eastern-ok-strata-tract-table.parquet:STATEFP",
+          "eastern-ok-strata-tract-table.parquet:pop_total",
+          "eastern-ok-strata-tract-table.parquet:ruca_primary",
+          "maricopa-az-census-acs-housing:GEOID,geometry",
+          "maricopa-az-overture-tract-summary.parquet:GEOID",
+          "maricopa-az-overture-tract-summary.parquet:overture_poi_fire",
+          "maricopa-az-strata-tract-table.parquet:ALAND",
+          "maricopa-az-strata-tract-table.parquet:COUNTYFP",
+          "maricopa-az-strata-tract-table.parquet:GEOID",
+          "maricopa-az-strata-tract-table.parquet:STATEFP",
+          "maricopa-az-strata-tract-table.parquet:pop_total",
+          "maricopa-az-strata-tract-table.parquet:ruca_primary",
+          "northern-ca-census-acs-housing:GEOID,geometry",
+          "northern-ca-overture-tract-summary.parquet:GEOID",
+          "northern-ca-overture-tract-summary.parquet:overture_poi_fire",
+          "northern-ca-strata-tract-table.parquet:ALAND",
+          "northern-ca-strata-tract-table.parquet:COUNTYFP",
+          "northern-ca-strata-tract-table.parquet:GEOID",
+          "northern-ca-strata-tract-table.parquet:STATEFP",
+          "northern-ca-strata-tract-table.parquet:pop_total",
+          "northern-ca-strata-tract-table.parquet:ruca_primary",
+          "south-central-tx-census-acs-housing:GEOID,geometry",
+          "south-central-tx-overture-tract-summary.parquet:GEOID",
+          "south-central-tx-overture-tract-summary.parquet:overture_poi_fire",
+          "south-central-tx-strata-tract-table.parquet:ALAND",
+          "south-central-tx-strata-tract-table.parquet:COUNTYFP",
+          "south-central-tx-strata-tract-table.parquet:GEOID",
+          "south-central-tx-strata-tract-table.parquet:STATEFP",
+          "south-central-tx-strata-tract-table.parquet:pop_total",
+          "south-central-tx-strata-tract-table.parquet:ruca_primary"
+        ]
+      },
+      "bytes": 54908,
+      "diagnostics": {
+        "eastern-ok": {
+          "adjacency": "Queen contiguity: polygons that touch at an edge or vertex; self excluded",
+          "count_conservation": {
+            "county_expected_sum_once": 4622.0952675080025,
+            "county_observed_sum_once": 866.0,
+            "tract_expected_sum": 4622.095267508,
+            "tract_observed_sum": 866.0
+          },
+          "county_scope": "only official scored GEOIDs in the same state+county",
+          "defined": 542,
+          "first_ring_neighbor_count": {
+            "count": 1192,
+            "max": 14.0,
+            "mean": 6.290268456375839,
+            "min": 1.0,
+            "p50": 6.0,
+            "p90": 9.0
+          },
+          "gap_inputs": {
+            "artifact_validated_against_raw_O_E": true,
+            "expected": {
+              "count": 1192,
+              "max": 108.8710647,
+              "mean": 3.87759670092953,
+              "min": 0.0048033,
+              "p50": 0.49328756000000007,
+              "p90": 8.947957288000023
+            },
+            "idea": "P2",
+            "observed": {
+              "count": 1192,
+              "max": 7.0,
+              "mean": 0.7265100671140939,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 2.0
+            }
+          },
+          "no_pseudocount": true,
+          "rows": 1192,
+          "scale_order": [
+            "tract",
+            "tract_plus_first_ring",
+            "county"
+          ],
+          "slope_distribution": {
+            "count": 542,
+            "max": 1.1025753349749954,
+            "mean": -0.334033186376241,
+            "min": -1.7999408476770247,
+            "p50": -0.3274943680190262,
+            "p90": 0.22849842530948572
+          },
+          "undefined_reasons": {
+            "nonpositive_O_or_invalid_E_area_or_degenerate_scale": 650
+          }
+        },
+        "maricopa-az": {
+          "adjacency": "Queen contiguity: polygons that touch at an edge or vertex; self excluded",
+          "count_conservation": {
+            "county_expected_sum_once": 7582.891093008001,
+            "county_observed_sum_once": 716.0,
+            "tract_expected_sum": 7582.891093008,
+            "tract_observed_sum": 716.0
+          },
+          "county_scope": "only official scored GEOIDs in the same state+county",
+          "defined": 487,
+          "first_ring_neighbor_count": {
+            "count": 1593,
+            "max": 24.0,
+            "mean": 6.617702448210923,
+            "min": 1.0,
+            "p50": 6.0,
+            "p90": 9.0
+          },
+          "gap_inputs": {
+            "artifact_validated_against_raw_O_E": true,
+            "expected": {
+              "count": 1593,
+              "max": 691.7353693,
+              "mean": 4.760132512873823,
+              "min": 0.011136132,
+              "p50": 0.26243500000000003,
+              "p90": 3.927434937599999
+            },
+            "idea": "P2",
+            "observed": {
+              "count": 1593,
+              "max": 11.0,
+              "mean": 0.4494664155681105,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 1.0
+            }
+          },
+          "no_pseudocount": true,
+          "rows": 1593,
+          "scale_order": [
+            "tract",
+            "tract_plus_first_ring",
+            "county"
+          ],
+          "slope_distribution": {
+            "count": 487,
+            "max": 1.5505475423294326,
+            "mean": -0.3018724821371362,
+            "min": -1.6234806637521733,
+            "p50": -0.31915217232550247,
+            "p90": -0.06429105273523095
+          },
+          "undefined_reasons": {
+            "nonpositive_O_or_invalid_E_area_or_degenerate_scale": 1106
+          }
+        },
+        "northern-ca": {
+          "adjacency": "Queen contiguity: polygons that touch at an edge or vertex; self excluded",
+          "count_conservation": {
+            "county_expected_sum_once": 2434.520266704,
+            "county_observed_sum_once": 491.0,
+            "tract_expected_sum": 2434.520266704,
+            "tract_observed_sum": 491.0
+          },
+          "county_scope": "only official scored GEOIDs in the same state+county",
+          "defined": 271,
+          "first_ring_neighbor_count": {
+            "count": 591,
+            "max": 17.0,
+            "mean": 6.067681895093062,
+            "min": 1.0,
+            "p50": 6.0,
+            "p90": 8.0
+          },
+          "gap_inputs": {
+            "artifact_validated_against_raw_O_E": true,
+            "expected": {
+              "count": 591,
+              "max": 191.9266091,
+              "mean": 4.119323632324873,
+              "min": 0.011248207999999999,
+              "p50": 0.349215,
+              "p90": 7.557650300000001
+            },
+            "idea": "P2",
+            "observed": {
+              "count": 591,
+              "max": 6.0,
+              "mean": 0.8307952622673435,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 2.0
+            }
+          },
+          "no_pseudocount": true,
+          "rows": 591,
+          "scale_order": [
+            "tract",
+            "tract_plus_first_ring",
+            "county"
+          ],
+          "slope_distribution": {
+            "count": 271,
+            "max": 1.3448192758544635,
+            "mean": -0.30460269769621895,
+            "min": -2.440209546977304,
+            "p50": -0.34390719961172717,
+            "p90": 0.1683458314523012
+          },
+          "undefined_reasons": {
+            "nonpositive_O_or_invalid_E_area_or_degenerate_scale": 320
+          }
+        },
+        "south-central-tx": {
+          "adjacency": "Queen contiguity: polygons that touch at an edge or vertex; self excluded",
+          "count_conservation": {
+            "county_expected_sum_once": 16479.87874444,
+            "county_observed_sum_once": 3169.0,
+            "tract_expected_sum": 16479.87874444,
+            "tract_observed_sum": 3169.0
+          },
+          "county_scope": "only official scored GEOIDs in the same state+county",
+          "defined": 2147,
+          "first_ring_neighbor_count": {
+            "count": 6003,
+            "max": 28.0,
+            "mean": 6.384474429451941,
+            "min": 1.0,
+            "p50": 6.0,
+            "p90": 9.0
+          },
+          "gap_inputs": {
+            "artifact_validated_against_raw_O_E": true,
+            "expected": {
+              "count": 6001,
+              "max": 565.9908667,
+              "mean": 2.74618875928012,
+              "min": 0.000963488,
+              "p50": 0.3296439,
+              "p90": 5.2103025
+            },
+            "idea": "P2",
+            "observed": {
+              "count": 6001,
+              "max": 7.0,
+              "mean": 0.5280786535577404,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 2.0
+            }
+          },
+          "no_pseudocount": true,
+          "rows": 6003,
+          "scale_order": [
+            "tract",
+            "tract_plus_first_ring",
+            "county"
+          ],
+          "slope_distribution": {
+            "count": 2147,
+            "max": 1.3193313044644073,
+            "mean": -0.2853211251441481,
+            "min": -2.534555823828094,
+            "p50": -0.2550676150611926,
+            "p90": 0.09362974706279312
+          },
+          "undefined_reasons": {
+            "nonpositive_O_or_invalid_E_area_or_degenerate_scale": 3856
+          }
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate",
+          "component": "C",
+          "defined_rows": 3447,
+          "rows": 9379,
+          "value_max": 1.5505475423294326,
+          "value_min": -2.534555823828094
+        }
+      ],
+      "emissions_per_region": 1,
+      "family": "Sca",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/Sca2.parquet",
+      "rows": 9379,
+      "sha256": "76095bdd1699342886386958dc3515c8a7a7e372820e3fa6157b8404c930efd5",
+      "undeclared_columns_read": []
+    },
+    "Sca3": {
+      "accessed_inputs": {
+        "caches": [
+          "eastern-ok-sca3-assignment-v1.npz",
+          "maricopa-az-sca3-assignment-v1.npz",
+          "northern-ca-sca3-assignment-v1.npz",
+          "south-central-tx-sca3-assignment-v1.npz"
+        ],
+        "csv_columns": [],
+        "idea_artifacts": [],
+        "layers": [
+          "buildings",
+          "census-acs-housing",
+          "pois",
+          "roads"
+        ],
+        "parquet_columns": [
+          "eastern-ok-census-acs-housing:GEOID,geometry",
+          "eastern-ok-overture-buildings.parquet:geometry",
+          "eastern-ok-overture-buildings.parquet:sources",
+          "eastern-ok-overture-pois.parquet:geometry",
+          "eastern-ok-overture-pois.parquet:sources",
+          "eastern-ok-overture-roads.parquet:class",
+          "eastern-ok-overture-roads.parquet:geometry",
+          "maricopa-az-census-acs-housing:GEOID,geometry",
+          "maricopa-az-overture-buildings.parquet:geometry",
+          "maricopa-az-overture-buildings.parquet:sources",
+          "maricopa-az-overture-pois.parquet:geometry",
+          "maricopa-az-overture-pois.parquet:sources",
+          "maricopa-az-overture-roads.parquet:class",
+          "maricopa-az-overture-roads.parquet:geometry",
+          "northern-ca-census-acs-housing:GEOID,geometry",
+          "northern-ca-overture-buildings.parquet:geometry",
+          "northern-ca-overture-buildings.parquet:sources",
+          "northern-ca-overture-pois.parquet:geometry",
+          "northern-ca-overture-pois.parquet:sources",
+          "northern-ca-overture-roads.parquet:class",
+          "northern-ca-overture-roads.parquet:geometry",
+          "south-central-tx-census-acs-housing:GEOID,geometry",
+          "south-central-tx-overture-buildings.parquet:geometry",
+          "south-central-tx-overture-buildings.parquet:sources",
+          "south-central-tx-overture-pois.parquet:geometry",
+          "south-central-tx-overture-pois.parquet:sources",
+          "south-central-tx-overture-roads.parquet:class",
+          "south-central-tx-overture-roads.parquet:geometry"
+        ]
+      },
+      "bytes": 99084,
+      "diagnostics": {
+        "eastern-ok": {
+          "building_sensitivity": {
+            "count": 1192,
+            "max": 0.15151515151515152,
+            "mean": 0.00041992099824199206,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "building_variants": {
+            "centroid_count": {
+              "count": 1192,
+              "max": 3294.0,
+              "mean": 123.76090604026845,
+              "min": 0.0,
+              "p50": 51.0,
+              "p90": 320.0
+            },
+            "intersects_count": {
+              "count": 1192,
+              "max": 3294.0,
+              "mean": 123.77852348993288,
+              "min": 0.0,
+              "p50": 51.0,
+              "p90": 320.0
+            },
+            "largest_overlap_count": {
+              "count": 1192,
+              "max": 3294.0,
+              "mean": 123.76090604026845,
+              "min": 0.0,
+              "p50": 51.0,
+              "p90": 320.0
+            }
+          },
+          "count_conservation": {
+            "building_intersecting_features": 147523,
+            "building_largest_overlap_total": 147523,
+            "largest_overlap_building_conserved": true,
+            "largest_overlap_poi_conserved": true,
+            "poi_intersecting_features": 175522,
+            "poi_largest_overlap_total": 175522,
+            "road_clipped_km": 27944.02776408843,
+            "road_largest_overlap_km": 27673.19932807872
+          },
+          "defined": 1192,
+          "denominator_floors": {
+            "building_features": 1.0,
+            "road_length_km": 0.001
+          },
+          "no_labels_or_reference_layers": true,
+          "poi_variants": {
+            "centroid_count": {
+              "count": 1192,
+              "max": 1649.0,
+              "mean": 147.25,
+              "min": 5.0,
+              "p50": 111.0,
+              "p90": 288.0
+            },
+            "intersects_count": {
+              "count": 1192,
+              "max": 1649.0,
+              "mean": 147.25,
+              "min": 5.0,
+              "p50": 111.0,
+              "p90": 288.0
+            },
+            "largest_overlap_count": {
+              "count": 1192,
+              "max": 1649.0,
+              "mean": 147.25,
+              "min": 5.0,
+              "p50": 111.0,
+              "p90": 288.0
+            }
+          },
+          "readers": {
+            "buildings": {
+              "assignment": [
+                "centroid",
+                "intersects",
+                "largest_overlap"
+              ],
+              "count_conservation": "largest-overlap assigns each intersecting feature exactly once",
+              "features_intersecting_official_tracts": 147523,
+              "intersects_policy": "line length is clipped to tract; point/polygon features count in each intersecting tract",
+              "largest_overlap_tie_break": "lexicographically smallest official GEOID",
+              "layer": "buildings",
+              "null_geometry_rows": 0,
+              "region": "eastern-ok",
+              "rows_scanned": 2551694,
+              "rows_total": 2551694,
+              "rule_clean_valid_geometries": 147523
+            },
+            "pois": {
+              "assignment": [
+                "centroid",
+                "intersects",
+                "largest_overlap"
+              ],
+              "count_conservation": "largest-overlap assigns each intersecting feature exactly once",
+              "features_intersecting_official_tracts": 175522,
+              "intersects_policy": "line length is clipped to tract; point/polygon features count in each intersecting tract",
+              "largest_overlap_tie_break": "lexicographically smallest official GEOID",
+              "layer": "pois",
+              "null_geometry_rows": 0,
+              "region": "eastern-ok",
+              "rows_scanned": 207369,
+              "rows_total": 207369,
+              "rule_clean_valid_geometries": 175522
+            },
+            "roads": {
+              "assignment": [
+                "centroid",
+                "intersects",
+                "largest_overlap"
+              ],
+              "count_conservation": "largest-overlap assigns each intersecting feature exactly once",
+              "features_intersecting_official_tracts": 59436,
+              "intersects_policy": "line length is clipped to tract; point/polygon features count in each intersecting tract",
+              "largest_overlap_tie_break": "lexicographically smallest official GEOID",
+              "layer": "roads",
+              "null_geometry_rows": 0,
+              "region": "eastern-ok",
+              "rows_scanned": 520550,
+              "rows_total": 520550,
+              "rule_clean_valid_geometries": 59436
+            }
+          },
+          "road_sensitivity": {
+            "count": 1192,
+            "max": 1436.865862353282,
+            "mean": 3.232589975712122,
+            "min": 0.0,
+            "p50": 0.04837245941268831,
+            "p90": 0.28258959484542856
+          },
+          "road_variants_km": {
+            "centroid_full_length": {
+              "count": 1192,
+              "max": 257.39448487637,
+              "mean": 23.209320224158883,
+              "min": 0.0,
+              "p50": 8.650855043876613,
+              "p90": 66.57068184301838
+            },
+            "intersects_clipped_length": {
+              "count": 1192,
+              "max": 253.29612921134037,
+              "mean": 23.442976312154723,
+              "min": 0.0,
+              "p50": 8.908656962442876,
+              "p90": 68.00681022947671
+            },
+            "largest_overlap_full_length": {
+              "count": 1192,
+              "max": 256.6136564300986,
+              "mean": 23.21577124838819,
+              "min": 0.0,
+              "p50": 8.527496385111625,
+              "p90": 66.92047603338958
+            }
+          },
+          "rows": 1192,
+          "rule_clean_buildings": "exclusive provided OSM/Esri memberships; mixed/Microsoft rows excluded",
+          "rule_clean_pois": "provided Overture POIs with Microsoft memberships excluded"
+        },
+        "maricopa-az": {
+          "building_sensitivity": {
+            "count": 1593,
+            "max": 0.25,
+            "mean": 0.0007153605770755428,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "building_variants": {
+            "centroid_count": {
+              "count": 1593,
+              "max": 5437.0,
+              "mean": 218.34463276836158,
+              "min": 0.0,
+              "p50": 32.0,
+              "p90": 678.3999999999999
+            },
+            "intersects_count": {
+              "count": 1593,
+              "max": 5437.0,
+              "mean": 218.43942247332077,
+              "min": 0.0,
+              "p50": 32.0,
+              "p90": 678.3999999999999
+            },
+            "largest_overlap_count": {
+              "count": 1593,
+              "max": 5437.0,
+              "mean": 218.34463276836158,
+              "min": 0.0,
+              "p50": 32.0,
+              "p90": 678.3999999999999
+            }
+          },
+          "count_conservation": {
+            "building_intersecting_features": 347823,
+            "building_largest_overlap_total": 347823,
+            "largest_overlap_building_conserved": true,
+            "largest_overlap_poi_conserved": true,
+            "poi_intersecting_features": 245300,
+            "poi_largest_overlap_total": 245300,
+            "road_clipped_km": 22113.71284793831,
+            "road_largest_overlap_km": 22083.2540347323
+          },
+          "defined": 1593,
+          "denominator_floors": {
+            "building_features": 1.0,
+            "road_length_km": 0.001
+          },
+          "no_labels_or_reference_layers": true,
+          "poi_variants": {
+            "centroid_count": {
+              "count": 1593,
+              "max": 4047.0,
+              "mean": 153.98556183301946,
+              "min": 1.0,
+              "p50": 98.0,
+              "p90": 333.5999999999999
+            },
+            "intersects_count": {
+              "count": 1593,
+              "max": 4047.0,
+              "mean": 153.9868173258004,
+              "min": 1.0,
+              "p50": 98.0,
+              "p90": 333.5999999999999
+            },
+            "largest_overlap_count": {
+              "count": 1593,
+              "max": 4047.0,
+              "mean": 153.9861895794099,
+              "min": 1.0,
+              "p50": 98.0,
+              "p90": 333.5999999999999
+            }
+          },
+          "readers": {
+            "buildings": {
+              "assignment": [
+                "centroid",
+                "intersects",
+                "largest_overlap"
+              ],
+              "count_conservation": "largest-overlap assigns each intersecting feature exactly once",
+              "features_intersecting_official_tracts": 347823,
+              "intersects_policy": "line length is clipped to tract; point/polygon features count in each intersecting tract",
+              "largest_overlap_tie_break": "lexicographically smallest official GEOID",
+              "layer": "buildings",
+              "null_geometry_rows": 0,
+              "region": "maricopa-az",
+              "rows_scanned": 2908224,
+              "rows_total": 2908224,
+              "rule_clean_valid_geometries": 347823
+            },
+            "pois": {
+              "assignment": [
+                "centroid",
+                "intersects",
+                "largest_overlap"
+              ],
+              "count_conservation": "largest-overlap assigns each intersecting feature exactly once",
+              "features_intersecting_official_tracts": 245300,
+              "intersects_policy": "line length is clipped to tract; point/polygon features count in each intersecting tract",
+              "largest_overlap_tie_break": "lexicographically smallest official GEOID",
+              "layer": "pois",
+              "null_geometry_rows": 0,
+              "region": "maricopa-az",
+              "rows_scanned": 300046,
+              "rows_total": 300046,
+              "rule_clean_valid_geometries": 245300
+            },
+            "roads": {
+              "assignment": [
+                "centroid",
+                "intersects",
+                "largest_overlap"
+              ],
+              "count_conservation": "largest-overlap assigns each intersecting feature exactly once",
+              "features_intersecting_official_tracts": 57516,
+              "intersects_policy": "line length is clipped to tract; point/polygon features count in each intersecting tract",
+              "largest_overlap_tie_break": "lexicographically smallest official GEOID",
+              "layer": "roads",
+              "null_geometry_rows": 0,
+              "region": "maricopa-az",
+              "rows_scanned": 494492,
+              "rows_total": 494492,
+              "rule_clean_valid_geometries": 57516
+            }
+          },
+          "road_sensitivity": {
+            "count": 1593,
+            "max": 2193.9634291169154,
+            "mean": 3.3307251345081164,
+            "min": 0.0,
+            "p50": 0.044602795888006724,
+            "p90": 0.29326270165256846
+          },
+          "road_variants_km": {
+            "centroid_full_length": {
+              "count": 1593,
+              "max": 458.4716172089568,
+              "mean": 13.81175992968326,
+              "min": 0.0,
+              "p50": 5.5555811491455325,
+              "p90": 29.287122219312597
+            },
+            "intersects_clipped_length": {
+              "count": 1593,
+              "max": 464.2973935276709,
+              "mean": 13.88180341992361,
+              "min": 0.0,
+              "p50": 5.52902905050868,
+              "p90": 28.644300859793244
+            },
+            "largest_overlap_full_length": {
+              "count": 1593,
+              "max": 466.17347233556785,
+              "mean": 13.862683009875894,
+              "min": 0.0,
+              "p50": 5.422212726645456,
+              "p90": 28.235526281483317
+            }
+          },
+          "rows": 1593,
+          "rule_clean_buildings": "exclusive provided OSM/Esri memberships; mixed/Microsoft rows excluded",
+          "rule_clean_pois": "provided Overture POIs with Microsoft memberships excluded"
+        },
+        "northern-ca": {
+          "building_sensitivity": {
+            "count": 591,
+            "max": 0.034482758620689655,
+            "mean": 0.0004647415397603766,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "building_variants": {
+            "centroid_count": {
+              "count": 591,
+              "max": 4060.0,
+              "mean": 179.01015228426397,
+              "min": 0.0,
+              "p50": 89.0,
+              "p90": 400.0
+            },
+            "intersects_count": {
+              "count": 591,
+              "max": 4060.0,
+              "mean": 179.09983079526228,
+              "min": 0.0,
+              "p50": 89.0,
+              "p90": 400.0
+            },
+            "largest_overlap_count": {
+              "count": 591,
+              "max": 4060.0,
+              "mean": 179.01015228426397,
+              "min": 0.0,
+              "p50": 89.0,
+              "p90": 400.0
+            }
+          },
+          "count_conservation": {
+            "building_intersecting_features": 105795,
+            "building_largest_overlap_total": 105795,
+            "largest_overlap_building_conserved": true,
+            "largest_overlap_poi_conserved": true,
+            "poi_intersecting_features": 98470,
+            "poi_largest_overlap_total": 98470,
+            "road_clipped_km": 12203.647742818603,
+            "road_largest_overlap_km": 11744.579026540729
+          },
+          "defined": 591,
+          "denominator_floors": {
+            "building_features": 1.0,
+            "road_length_km": 0.001
+          },
+          "no_labels_or_reference_layers": true,
+          "poi_variants": {
+            "centroid_count": {
+              "count": 591,
+              "max": 1603.0,
+              "mean": 166.61252115059222,
+              "min": 2.0,
+              "p50": 112.0,
+              "p90": 353.0
+            },
+            "intersects_count": {
+              "count": 591,
+              "max": 1603.0,
+              "mean": 166.61928934010152,
+              "min": 2.0,
+              "p50": 112.0,
+              "p90": 353.0
+            },
+            "largest_overlap_count": {
+              "count": 591,
+              "max": 1603.0,
+              "mean": 166.61590524534688,
+              "min": 2.0,
+              "p50": 112.0,
+              "p90": 353.0
+            }
+          },
+          "readers": {
+            "buildings": {
+              "assignment": [
+                "centroid",
+                "intersects",
+                "largest_overlap"
+              ],
+              "count_conservation": "largest-overlap assigns each intersecting feature exactly once",
+              "features_intersecting_official_tracts": 105795,
+              "intersects_policy": "line length is clipped to tract; point/polygon features count in each intersecting tract",
+              "largest_overlap_tie_break": "lexicographically smallest official GEOID",
+              "layer": "buildings",
+              "null_geometry_rows": 0,
+              "region": "northern-ca",
+              "rows_scanned": 1164724,
+              "rows_total": 1164724,
+              "rule_clean_valid_geometries": 105795
+            },
+            "pois": {
+              "assignment": [
+                "centroid",
+                "intersects",
+                "largest_overlap"
+              ],
+              "count_conservation": "largest-overlap assigns each intersecting feature exactly once",
+              "features_intersecting_official_tracts": 98470,
+              "intersects_policy": "line length is clipped to tract; point/polygon features count in each intersecting tract",
+              "largest_overlap_tie_break": "lexicographically smallest official GEOID",
+              "layer": "pois",
+              "null_geometry_rows": 0,
+              "region": "northern-ca",
+              "rows_scanned": 116897,
+              "rows_total": 116897,
+              "rule_clean_valid_geometries": 98470
+            },
+            "roads": {
+              "assignment": [
+                "centroid",
+                "intersects",
+                "largest_overlap"
+              ],
+              "count_conservation": "largest-overlap assigns each intersecting feature exactly once",
+              "features_intersecting_official_tracts": 26050,
+              "intersects_policy": "line length is clipped to tract; point/polygon features count in each intersecting tract",
+              "largest_overlap_tie_break": "lexicographically smallest official GEOID",
+              "layer": "roads",
+              "null_geometry_rows": 0,
+              "region": "northern-ca",
+              "rows_scanned": 191836,
+              "rows_total": 191836,
+              "rule_clean_valid_geometries": 26050
+            }
+          },
+          "road_sensitivity": {
+            "count": 591,
+            "max": 127.31225397547527,
+            "mean": 0.4666014800415673,
+            "min": 0.0,
+            "p50": 0.07041351114745246,
+            "p90": 0.3767333169233429
+          },
+          "road_variants_km": {
+            "centroid_full_length": {
+              "count": 591,
+              "max": 262.8205729088192,
+              "mean": 19.66650312298026,
+              "min": 0.0,
+              "p50": 7.490429174428719,
+              "p90": 46.47596485468519
+            },
+            "intersects_clipped_length": {
+              "count": 591,
+              "max": 268.4226203335922,
+              "mean": 20.649150157053473,
+              "min": 0.0,
+              "p50": 7.654126717127474,
+              "p90": 49.27403402068628
+            },
+            "largest_overlap_full_length": {
+              "count": 591,
+              "max": 275.96678404630944,
+              "mean": 19.872384139662824,
+              "min": 0.0,
+              "p50": 7.476992433502033,
+              "p90": 45.73379218314217
+            }
+          },
+          "rows": 591,
+          "rule_clean_buildings": "exclusive provided OSM/Esri memberships; mixed/Microsoft rows excluded",
+          "rule_clean_pois": "provided Overture POIs with Microsoft memberships excluded"
+        },
+        "south-central-tx": {
+          "building_sensitivity": {
+            "count": 6003,
+            "max": 0.6666666666666666,
+            "mean": 0.0012472043135718163,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "building_variants": {
+            "centroid_count": {
+              "count": 6003,
+              "max": 5331.0,
+              "mean": 321.9192070631351,
+              "min": 0.0,
+              "p50": 75.0,
+              "p90": 1024.8000000000002
+            },
+            "intersects_count": {
+              "count": 6003,
+              "max": 5331.0,
+              "mean": 322.08029318673994,
+              "min": 0.0,
+              "p50": 75.0,
+              "p90": 1026.6000000000004
+            },
+            "largest_overlap_count": {
+              "count": 6003,
+              "max": 5331.0,
+              "mean": 321.9192070631351,
+              "min": 0.0,
+              "p50": 75.0,
+              "p90": 1024.8000000000002
+            }
+          },
+          "count_conservation": {
+            "building_intersecting_features": 1932481,
+            "building_largest_overlap_total": 1932481,
+            "largest_overlap_building_conserved": true,
+            "largest_overlap_poi_conserved": true,
+            "poi_intersecting_features": 1088696,
+            "poi_largest_overlap_total": 1088696,
+            "road_clipped_km": 118176.3816858997,
+            "road_largest_overlap_km": 115737.05127527643
+          },
+          "defined": 6003,
+          "denominator_floors": {
+            "building_features": 1.0,
+            "road_length_km": 0.001
+          },
+          "no_labels_or_reference_layers": true,
+          "poi_variants": {
+            "centroid_count": {
+              "count": 6003,
+              "max": 3427.0,
+              "mean": 181.35482258870564,
+              "min": 0.0,
+              "p50": 128.0,
+              "p90": 369.8000000000002
+            },
+            "intersects_count": {
+              "count": 6003,
+              "max": 3427.0,
+              "mean": 181.36331834082958,
+              "min": 0.0,
+              "p50": 128.0,
+              "p90": 369.8000000000002
+            },
+            "largest_overlap_count": {
+              "count": 6003,
+              "max": 3427.0,
+              "mean": 181.35865400633017,
+              "min": 0.0,
+              "p50": 128.0,
+              "p90": 369.8000000000002
+            }
+          },
+          "readers": {
+            "buildings": {
+              "assignment": [
+                "centroid",
+                "intersects",
+                "largest_overlap"
+              ],
+              "count_conservation": "largest-overlap assigns each intersecting feature exactly once",
+              "features_intersecting_official_tracts": 1932481,
+              "intersects_policy": "line length is clipped to tract; point/polygon features count in each intersecting tract",
+              "largest_overlap_tie_break": "lexicographically smallest official GEOID",
+              "layer": "buildings",
+              "null_geometry_rows": 0,
+              "region": "south-central-tx",
+              "rows_scanned": 11463801,
+              "rows_total": 11463801,
+              "rule_clean_valid_geometries": 1932481
+            },
+            "pois": {
+              "assignment": [
+                "centroid",
+                "intersects",
+                "largest_overlap"
+              ],
+              "count_conservation": "largest-overlap assigns each intersecting feature exactly once",
+              "features_intersecting_official_tracts": 1088696,
+              "intersects_policy": "line length is clipped to tract; point/polygon features count in each intersecting tract",
+              "largest_overlap_tie_break": "lexicographically smallest official GEOID",
+              "layer": "pois",
+              "null_geometry_rows": 0,
+              "region": "south-central-tx",
+              "rows_scanned": 1300334,
+              "rows_total": 1300334,
+              "rule_clean_valid_geometries": 1088699
+            },
+            "roads": {
+              "assignment": [
+                "centroid",
+                "intersects",
+                "largest_overlap"
+              ],
+              "count_conservation": "largest-overlap assigns each intersecting feature exactly once",
+              "features_intersecting_official_tracts": 353790,
+              "intersects_policy": "line length is clipped to tract; point/polygon features count in each intersecting tract",
+              "largest_overlap_tie_break": "lexicographically smallest official GEOID",
+              "layer": "roads",
+              "null_geometry_rows": 0,
+              "region": "south-central-tx",
+              "rows_scanned": 1937009,
+              "rows_total": 1937009,
+              "rule_clean_valid_geometries": 353790
+            }
+          },
+          "road_sensitivity": {
+            "count": 6003,
+            "max": 489.56440866725166,
+            "mean": 0.5133511406707761,
+            "min": 0.0,
+            "p50": 0.05865361904400375,
+            "p90": 0.26794980805216934
+          },
+          "road_variants_km": {
+            "centroid_full_length": {
+              "count": 6003,
+              "max": 500.9410630646754,
+              "mean": 19.256330272151413,
+              "min": 0.0,
+              "p50": 8.262784267826824,
+              "p90": 44.533003065471604
+            },
+            "intersects_clipped_length": {
+              "count": 6003,
+              "max": 482.53438441465477,
+              "mean": 19.686220504064586,
+              "min": 0.0,
+              "p50": 8.368623626033777,
+              "p90": 45.57034671607641
+            },
+            "largest_overlap_full_length": {
+              "count": 6003,
+              "max": 507.3758031263764,
+              "mean": 19.27986861157362,
+              "min": 0.0,
+              "p50": 8.150434184019858,
+              "p90": 44.457196583517366
+            }
+          },
+          "rows": 6003,
+          "rule_clean_buildings": "exclusive provided OSM/Esri memberships; mixed/Microsoft rows excluded",
+          "rule_clean_pois": "provided Overture POIs with Microsoft memberships excluded"
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate",
+          "component": "B",
+          "defined_rows": 9379,
+          "rows": 9379,
+          "value_max": 0.6666666666666666,
+          "value_min": 0.0
+        },
+        {
+          "channel": "covariate",
+          "component": "R",
+          "defined_rows": 9379,
+          "rows": 9379,
+          "value_max": 2193.9634291169154,
+          "value_min": 0.0
+        }
+      ],
+      "emissions_per_region": 2,
+      "family": "Sca",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/Sca3.parquet",
+      "rows": 18758,
+      "sha256": "25bbb9d2c6dc08daebef712c1219f0f953172342f127db05c657beb553eb8426",
+      "undeclared_columns_read": []
+    },
+    "Sca4": {
+      "accessed_inputs": {
+        "caches": [],
+        "csv_columns": [],
+        "idea_artifacts": [],
+        "layers": [
+          "buildings",
+          "census-acs-housing",
+          "pois"
+        ],
+        "parquet_columns": [
+          "eastern-ok-census-acs-housing:GEOID,geometry",
+          "eastern-ok-overture-buildings.parquet:geometry",
+          "eastern-ok-overture-buildings.parquet:sources",
+          "eastern-ok-overture-pois.parquet:geometry",
+          "eastern-ok-overture-pois.parquet:sources",
+          "maricopa-az-census-acs-housing:GEOID,geometry",
+          "maricopa-az-overture-buildings.parquet:geometry",
+          "maricopa-az-overture-buildings.parquet:sources",
+          "maricopa-az-overture-pois.parquet:geometry",
+          "maricopa-az-overture-pois.parquet:sources",
+          "northern-ca-census-acs-housing:GEOID,geometry",
+          "northern-ca-overture-buildings.parquet:geometry",
+          "northern-ca-overture-buildings.parquet:sources",
+          "northern-ca-overture-pois.parquet:geometry",
+          "northern-ca-overture-pois.parquet:sources",
+          "south-central-tx-census-acs-housing:GEOID,geometry",
+          "south-central-tx-overture-buildings.parquet:geometry",
+          "south-central-tx-overture-buildings.parquet:sources",
+          "south-central-tx-overture-pois.parquet:geometry",
+          "south-central-tx-overture-pois.parquet:sources"
+        ]
+      },
+      "bytes": 93929,
+      "diagnostics": {
+        "eastern-ok": {
+          "buildings_clark_evans_R": {
+            "count": 1168,
+            "max": 2.9364918495163206,
+            "mean": 0.4314481951629755,
+            "min": 0.0069565831629782035,
+            "p50": 0.39421926432512644,
+            "p90": 0.749358925713188
+          },
+          "buildings_n": {
+            "count": 1192,
+            "max": 3294.0,
+            "mean": 123.76090604026845,
+            "min": 0.0,
+            "p50": 51.0,
+            "p90": 320.0
+          },
+          "clark_evans_formula": "R = 2 * mean(nearest-neighbour distance) * sqrt(n / tract_area_m2)",
+          "defined": 1168,
+          "no_reference_or_label_inputs": true,
+          "places_clark_evans_R": {
+            "count": 1168,
+            "max": 1.2566741697668113,
+            "mean": 0.5552488642131452,
+            "min": 0.16640229663521622,
+            "p50": 0.5418799492797555,
+            "p90": 0.7660257611844433
+          },
+          "places_n": {
+            "count": 1192,
+            "max": 1649.0,
+            "mean": 147.25,
+            "min": 5.0,
+            "p50": 111.0,
+            "p90": 288.0
+          },
+          "places_to_buildings_R_ratio": {
+            "count": 1168,
+            "max": 65.3025992224645,
+            "mean": 2.4163309807973388,
+            "min": 0.23708711803388716,
+            "p50": 1.3731475825399082,
+            "p90": 4.1168740012287115
+          },
+          "readers": {
+            "buildings": {
+              "assigned_to_official_tracts": 147523,
+              "nonpoint_poi_geometries": 0,
+              "null_geometry_rows": 0,
+              "rows_scanned": 2551694,
+              "rows_total": 2551694,
+              "rule_clean_nonnull_geometries": 147523,
+              "source_rule": "exclusive provided OSM/Esri buildings",
+              "unassigned_or_boundary": 0
+            },
+            "pois": {
+              "assigned_to_official_tracts": 175522,
+              "nonpoint_poi_geometries": 0,
+              "null_geometry_rows": 0,
+              "rows_scanned": 207369,
+              "rows_total": 207369,
+              "rule_clean_nonnull_geometries": 175522,
+              "source_rule": "provided POIs excluding Microsoft memberships",
+              "unassigned_or_boundary": 0
+            }
+          },
+          "rows": 1192,
+          "small_n_policy": "undefined if either point pattern has fewer than 2 points in a tract",
+          "tract_area": "provided ACS polygon projected to EPSG:5070",
+          "undefined_reasons": {
+            "places_or_buildings_n_below_2_or_invalid_area": 24
+          }
+        },
+        "maricopa-az": {
+          "buildings_clark_evans_R": {
+            "count": 1525,
+            "max": 3.8320414681640753,
+            "mean": 0.728429130652281,
+            "min": 0.01850708986395504,
+            "p50": 0.6537218694294825,
+            "p90": 1.3775181451966168
+          },
+          "buildings_n": {
+            "count": 1593,
+            "max": 5437.0,
+            "mean": 218.34463276836158,
+            "min": 0.0,
+            "p50": 32.0,
+            "p90": 678.3999999999999
+          },
+          "clark_evans_formula": "R = 2 * mean(nearest-neighbour distance) * sqrt(n / tract_area_m2)",
+          "defined": 1525,
+          "no_reference_or_label_inputs": true,
+          "places_clark_evans_R": {
+            "count": 1525,
+            "max": 1.6044651567011825,
+            "mean": 0.562095027655832,
+            "min": 0.034770952606204615,
+            "p50": 0.5376472093565192,
+            "p90": 0.7939476828809294
+          },
+          "places_n": {
+            "count": 1593,
+            "max": 4047.0,
+            "mean": 153.98556183301946,
+            "min": 1.0,
+            "p50": 98.0,
+            "p90": 333.5999999999999
+          },
+          "places_to_buildings_R_ratio": {
+            "count": 1525,
+            "max": 41.72072760000488,
+            "mean": 1.4241313123914545,
+            "min": 0.03234509669407404,
+            "p50": 0.8309439079353852,
+            "p90": 2.677502290289483
+          },
+          "readers": {
+            "buildings": {
+              "assigned_to_official_tracts": 347823,
+              "nonpoint_poi_geometries": 0,
+              "null_geometry_rows": 0,
+              "rows_scanned": 2908224,
+              "rows_total": 2908224,
+              "rule_clean_nonnull_geometries": 347823,
+              "source_rule": "exclusive provided OSM/Esri buildings",
+              "unassigned_or_boundary": 0
+            },
+            "pois": {
+              "assigned_to_official_tracts": 245299,
+              "nonpoint_poi_geometries": 0,
+              "null_geometry_rows": 0,
+              "rows_scanned": 300046,
+              "rows_total": 300046,
+              "rule_clean_nonnull_geometries": 245300,
+              "source_rule": "provided POIs excluding Microsoft memberships",
+              "unassigned_or_boundary": 1
+            }
+          },
+          "rows": 1593,
+          "small_n_policy": "undefined if either point pattern has fewer than 2 points in a tract",
+          "tract_area": "provided ACS polygon projected to EPSG:5070",
+          "undefined_reasons": {
+            "places_or_buildings_n_below_2_or_invalid_area": 68
+          }
+        },
+        "northern-ca": {
+          "buildings_clark_evans_R": {
+            "count": 579,
+            "max": 5.444442770782695,
+            "mean": 0.5370545339425759,
+            "min": 0.015343648270219824,
+            "p50": 0.5116177500088867,
+            "p90": 0.8278730487446857
+          },
+          "buildings_n": {
+            "count": 591,
+            "max": 4060.0,
+            "mean": 179.01015228426397,
+            "min": 0.0,
+            "p50": 89.0,
+            "p90": 400.0
+          },
+          "clark_evans_formula": "R = 2 * mean(nearest-neighbour distance) * sqrt(n / tract_area_m2)",
+          "defined": 579,
+          "no_reference_or_label_inputs": true,
+          "places_clark_evans_R": {
+            "count": 579,
+            "max": 1.8582808226447536,
+            "mean": 0.5685852724099975,
+            "min": 0.1232939365034795,
+            "p50": 0.5300041934012181,
+            "p90": 0.8003986998083223
+          },
+          "places_n": {
+            "count": 591,
+            "max": 1603.0,
+            "mean": 166.61252115059222,
+            "min": 2.0,
+            "p50": 112.0,
+            "p90": 353.0
+          },
+          "places_to_buildings_R_ratio": {
+            "count": 579,
+            "max": 37.64232679165625,
+            "mean": 1.4999690715752099,
+            "min": 0.10954174288762555,
+            "p50": 1.0750020418116926,
+            "p90": 2.760966237410461
+          },
+          "readers": {
+            "buildings": {
+              "assigned_to_official_tracts": 105795,
+              "nonpoint_poi_geometries": 0,
+              "null_geometry_rows": 0,
+              "rows_scanned": 1164724,
+              "rows_total": 1164724,
+              "rule_clean_nonnull_geometries": 105795,
+              "source_rule": "exclusive provided OSM/Esri buildings",
+              "unassigned_or_boundary": 0
+            },
+            "pois": {
+              "assigned_to_official_tracts": 98468,
+              "nonpoint_poi_geometries": 0,
+              "null_geometry_rows": 0,
+              "rows_scanned": 116897,
+              "rows_total": 116897,
+              "rule_clean_nonnull_geometries": 98470,
+              "source_rule": "provided POIs excluding Microsoft memberships",
+              "unassigned_or_boundary": 2
+            }
+          },
+          "rows": 591,
+          "small_n_policy": "undefined if either point pattern has fewer than 2 points in a tract",
+          "tract_area": "provided ACS polygon projected to EPSG:5070",
+          "undefined_reasons": {
+            "places_or_buildings_n_below_2_or_invalid_area": 12
+          }
+        },
+        "south-central-tx": {
+          "buildings_clark_evans_R": {
+            "count": 5700,
+            "max": 4.705741827722178,
+            "mean": 0.6019074233565982,
+            "min": 0.001333974257181934,
+            "p50": 0.5738367262179476,
+            "p90": 0.964046723641181
+          },
+          "buildings_n": {
+            "count": 6003,
+            "max": 5331.0,
+            "mean": 321.9192070631351,
+            "min": 0.0,
+            "p50": 75.0,
+            "p90": 1024.8000000000002
+          },
+          "clark_evans_formula": "R = 2 * mean(nearest-neighbour distance) * sqrt(n / tract_area_m2)",
+          "defined": 5700,
+          "no_reference_or_label_inputs": true,
+          "places_clark_evans_R": {
+            "count": 5700,
+            "max": 2.9903568642746166,
+            "mean": 0.5562147766337675,
+            "min": 0.12566616952467669,
+            "p50": 0.5373196074691144,
+            "p90": 0.7443828902018647
+          },
+          "places_n": {
+            "count": 6003,
+            "max": 3427.0,
+            "mean": 181.35482258870564,
+            "min": 0.0,
+            "p50": 128.0,
+            "p90": 369.8000000000002
+          },
+          "places_to_buildings_R_ratio": {
+            "count": 5700,
+            "max": 424.629347084368,
+            "mean": 1.7200683529239087,
+            "min": 0.1067827991473163,
+            "p50": 0.9549120547841703,
+            "p90": 2.7347489524045194
+          },
+          "readers": {
+            "buildings": {
+              "assigned_to_official_tracts": 1932481,
+              "nonpoint_poi_geometries": 0,
+              "null_geometry_rows": 0,
+              "rows_scanned": 11463801,
+              "rows_total": 11463801,
+              "rule_clean_nonnull_geometries": 1932481,
+              "source_rule": "exclusive provided OSM/Esri buildings",
+              "unassigned_or_boundary": 0
+            },
+            "pois": {
+              "assigned_to_official_tracts": 1088673,
+              "nonpoint_poi_geometries": 0,
+              "null_geometry_rows": 0,
+              "rows_scanned": 1300334,
+              "rows_total": 1300334,
+              "rule_clean_nonnull_geometries": 1088699,
+              "source_rule": "provided POIs excluding Microsoft memberships",
+              "unassigned_or_boundary": 26
+            }
+          },
+          "rows": 6003,
+          "small_n_policy": "undefined if either point pattern has fewer than 2 points in a tract",
+          "tract_area": "provided ACS polygon projected to EPSG:5070",
+          "undefined_reasons": {
+            "places_or_buildings_n_below_2_or_invalid_area": 303
+          }
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate",
+          "component": "Est",
+          "defined_rows": 8972,
+          "rows": 9379,
+          "value_max": 424.629347084368,
+          "value_min": 0.03234509669407404
+        }
+      ],
+      "emissions_per_region": 1,
+      "family": "Sca",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/Sca4.parquet",
+      "rows": 9379,
+      "sha256": "6b9e8fc49b0af80dbb0c1a076520355e24aa43c65a5b12b90dfd073c3c259a16",
+      "undeclared_columns_read": []
+    },
+    "Sca5": {
+      "accessed_inputs": {
+        "caches": [
+          "eastern-ok-overture-tract-summary.parquet",
+          "eastern-ok-sca3-assignment-v1.npz",
+          "eastern-ok-strata-tract-table.parquet",
+          "maricopa-az-overture-tract-summary.parquet",
+          "maricopa-az-sca3-assignment-v1.npz",
+          "maricopa-az-strata-tract-table.parquet",
+          "northern-ca-overture-tract-summary.parquet",
+          "northern-ca-sca3-assignment-v1.npz",
+          "northern-ca-strata-tract-table.parquet",
+          "south-central-tx-overture-tract-summary.parquet",
+          "south-central-tx-sca3-assignment-v1.npz",
+          "south-central-tx-strata-tract-table.parquet"
+        ],
+        "csv_columns": [],
+        "idea_artifacts": [
+          "Dst1:cac4c507372353f5493b09b1ce6ec7c293500d185a1778fc73a68d25e5bc4281",
+          "Dst2:fc01b4f1782b1830500f232fbc31d9b65f77f23a69985fcbdcc54d5a29fdda6b",
+          "Dst3:bee2e5a578847aaace78ec1642a39e6068eea4fd8df6c03fca1f9a9f2ca234f8",
+          "G1:6d870a5a32700934a79d4a4ebf1fd9e65d563a16478fff9dc788e13252621b9f",
+          "G2:c2b03ab287ffe2033706eb3a6d51035ae5109e93c7b8c5be616b3d5e2517d5eb",
+          "G3:95041b75f9d7758dff3065fe31906b2ae69d7cfd4147b843c9d859633e093953",
+          "G4:65e380272552b0f8362acdbd73a9a7dcbc5eb544eaff38d744788d299e02317e",
+          "G5:3df5cf68ea2bc952380d86bfecb3703dc1db2b15555c2943ceafbfaa11f34e0a",
+          "Mx4:8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+          "P1:5bda0f80ba8397abecb31731caa09dec6500248d1ab072fcfb9f95f1199a7d3e",
+          "P2:887ac98d8c2699ef83c48850b7696baea08b5bffbec044d9d9dc825d74e801c6",
+          "P3:2e9a063759f697d0b2419152c3c0907e68e41dd04b8d901a16425f3207776fa1",
+          "P4:12b54003b38e3be1fbbcc149a385dc80a38c605a0a33b27eab811d382ff5f29c",
+          "Sc1:8a73aa7cee295120db8a8f38e30fb4faca63588f49336a2f0f13fc825881a780",
+          "Sc2:f9f91c2802826e004e4674972c5230e6fe8db4d20c0b4da4d7dc2f8d0b03571e",
+          "Sc3:d212396db58a0ee82d5bcdbf83cea1c87b9d41124636a25edda29b75a41ea6f9",
+          "Sc4:9aa62ada6e97d28d20f8e3b5d25b6d697ce0d40beea4e9fc4af9b136f36d5884",
+          "Sc5:c8603a948b060344f23d2250da22b02a95254401c4a67d64d74a55d4cf4ee720",
+          "Sca1:858eadae31c242954fbbd47ffb0151276018d987a994f57b24e84c19a8e6c294",
+          "Sca2:76095bdd1699342886386958dc3515c8a7a7e372820e3fa6157b8404c930efd5",
+          "Sca3:25bbb9d2c6dc08daebef712c1219f0f953172342f127db05c657beb553eb8426",
+          "Sca4:6b9e8fc49b0af80dbb0c1a076520355e24aa43c65a5b12b90dfd073c3c259a16",
+          "Tm1:df93396b8bb481dea6da43dd90b997eeeb47c5bf249a3fa6eac0dca6c8713885",
+          "X1:3352248e0e2ea195691ec2f6cdddc50de45be8a73115055a869592f4d7a0f262",
+          "X3:a9875575506caa832f4bad35b5bd52a7401c543e0481feec46c86e9f6c8e47fa",
+          "X4:6f0c03139dfa07ad16d62c44c0cec23561ab36b76f6bee92799187a96fabb278",
+          "X5:c5b864512c1f191f9db866190e3b7c3b2208c702b2ba7c125b1d41c851a718f0"
+        ],
+        "layers": [],
+        "parquet_columns": [
+          "eastern-ok-overture-tract-summary.parquet:GEOID",
+          "eastern-ok-overture-tract-summary.parquet:overture_named_road_km_5070",
+          "eastern-ok-strata-tract-table.parquet:ALAND",
+          "eastern-ok-strata-tract-table.parquet:COUNTYFP",
+          "eastern-ok-strata-tract-table.parquet:GEOID",
+          "eastern-ok-strata-tract-table.parquet:STATEFP",
+          "eastern-ok-strata-tract-table.parquet:pop_total",
+          "eastern-ok-strata-tract-table.parquet:ruca_primary",
+          "maricopa-az-overture-tract-summary.parquet:GEOID",
+          "maricopa-az-overture-tract-summary.parquet:overture_named_road_km_5070",
+          "maricopa-az-strata-tract-table.parquet:ALAND",
+          "maricopa-az-strata-tract-table.parquet:COUNTYFP",
+          "maricopa-az-strata-tract-table.parquet:GEOID",
+          "maricopa-az-strata-tract-table.parquet:STATEFP",
+          "maricopa-az-strata-tract-table.parquet:pop_total",
+          "maricopa-az-strata-tract-table.parquet:ruca_primary",
+          "northern-ca-overture-tract-summary.parquet:GEOID",
+          "northern-ca-overture-tract-summary.parquet:overture_named_road_km_5070",
+          "northern-ca-strata-tract-table.parquet:ALAND",
+          "northern-ca-strata-tract-table.parquet:COUNTYFP",
+          "northern-ca-strata-tract-table.parquet:GEOID",
+          "northern-ca-strata-tract-table.parquet:STATEFP",
+          "northern-ca-strata-tract-table.parquet:pop_total",
+          "northern-ca-strata-tract-table.parquet:ruca_primary",
+          "south-central-tx-overture-tract-summary.parquet:GEOID",
+          "south-central-tx-overture-tract-summary.parquet:overture_named_road_km_5070",
+          "south-central-tx-strata-tract-table.parquet:ALAND",
+          "south-central-tx-strata-tract-table.parquet:COUNTYFP",
+          "south-central-tx-strata-tract-table.parquet:GEOID",
+          "south-central-tx-strata-tract-table.parquet:STATEFP",
+          "south-central-tx-strata-tract-table.parquet:pop_total",
+          "south-central-tx-strata-tract-table.parquet:ruca_primary"
+        ]
+      },
+      "bytes": 94526,
+      "diagnostics": {
+        "eastern-ok": {
+          "component_definedness_probability": {
+            "B": {
+              "count": 1192,
+              "max": 0.999999999999995,
+              "mean": 0.46430338735463456,
+              "min": 0.0,
+              "p50": 0.39950442118773405,
+              "p90": 0.9592377960216338
+            },
+            "POI": {
+              "count": 1192,
+              "max": 0.6853300642828136,
+              "mean": 0.41162419082445617,
+              "min": 0.05080071619310706,
+              "p50": 0.4234807884711067,
+              "p90": 0.5553787129996056
+            },
+            "R": {
+              "count": 1192,
+              "max": 0.5,
+              "mean": 0.4637892688529663,
+              "min": 0.0,
+              "p50": 0.4999353304666052,
+              "p90": 0.5
+            }
+          },
+          "component_gap_distribution": {
+            "B": {
+              "count": 1192,
+              "max": 0.6090831886861775,
+              "mean": 0.14790160025851218,
+              "min": 0.0,
+              "p50": 0.149350657933509,
+              "p90": 0.2595289109959133
+            },
+            "POI": {
+              "count": 1192,
+              "max": 0.9244849132332509,
+              "mean": 0.49089324671534434,
+              "min": 0.09925657056762438,
+              "p50": 0.5042114278183722,
+              "p90": 0.7040153606270804
+            },
+            "R": {
+              "count": 1175,
+              "max": 1.0,
+              "mean": 0.15479093725412685,
+              "min": 0.0013342617474662744,
+              "p50": 0.12500000000000008,
+              "p90": 0.2869884618817973
+            }
+          },
+          "component_gap_sources": {
+            "B": 3,
+            "Est": 3,
+            "F": 3,
+            "R": 5
+          },
+          "component_order": [
+            "R",
+            "B",
+            "POI"
+          ],
+          "composite_formula": "sum_{nonempty d in {0,1}^3} P(d)*mean(g_c for d_c=1) / P(any d_c=1)",
+          "defined": 1175,
+          "gap_composite": "R and B use the mean of their defined gap-channel idea outputs; POI averages available F and Est gap-channel means",
+          "no_hard_definedness_flags": true,
+          "no_labels_or_reference_layers": true,
+          "pattern_probability_mass": {
+            "all_eight_patterns_enumerated": true,
+            "max": 1.0000000000000002,
+            "min": 0.9999999999999998
+          },
+          "probability_inputs": {
+            "P3_soft_count_used": true,
+            "P4_anchor_density_km_per_km2": 0.3792312307334151,
+            "P4_expected_road_rows": 218,
+            "X1_probability_used": true,
+            "assumption": "fixed convex probability mixtures; component events are not asserted independent, and probabilities are uncalibrated proxies, never hard flags",
+            "building": "scaled Poisson nonempty proxy from Sca3 exclusive OSM/Esri centroid-assigned footprint count",
+            "establishments": "scaled Poisson nonempty proxy from Sca3 non-Microsoft provided-place count; mean with facility proxy",
+            "facility": "fixed arithmetic mean of P2 Poisson nonempty probability, scaled P3 school-witness probability, and registered X1 soft probability",
+            "fixed_scales": {
+              "X4_witness_count": 10.0,
+              "building_witness_count": 100.0,
+              "place_witness_count": 100.0,
+              "road_exposure_km": 1.0,
+              "school_witness_count": 5.0
+            },
+            "road": "mean of scaled P4/observed named-road-km proxy and scaled X4 witness proxy"
+          },
+          "rows": 1192,
+          "undefined_reasons": {
+            "missing_component_gap_estimate_or_zero_probability_mass": 17
+          }
+        },
+        "maricopa-az": {
+          "component_definedness_probability": {
+            "B": {
+              "count": 1593,
+              "max": 1.0,
+              "mean": 0.4452163212287971,
+              "min": 0.0,
+              "p50": 0.27385096292630906,
+              "p90": 0.9988681791458792
+            },
+            "POI": {
+              "count": 1593,
+              "max": 0.7195446785965003,
+              "mean": 0.3703880817310075,
+              "min": 0.01673107312180733,
+              "p50": 0.38622530570982233,
+              "p90": 0.5387411893336012
+            },
+            "R": {
+              "count": 1593,
+              "max": 0.5,
+              "mean": 0.4581260803811566,
+              "min": 0.0,
+              "p50": 0.4980150791328805,
+              "p90": 0.4999999999998185
+            }
+          },
+          "component_gap_distribution": {
+            "B": {
+              "count": 1593,
+              "max": 0.5176864468194542,
+              "mean": 0.14916389252579523,
+              "min": 0.0,
+              "p50": 0.1472069130466249,
+              "p90": 0.3091149369564768
+            },
+            "POI": {
+              "count": 1593,
+              "max": 0.9079979658161432,
+              "mean": 0.5346292627807759,
+              "min": 0.08828622142021396,
+              "p50": 0.5591574906893126,
+              "p90": 0.7373194962760452
+            },
+            "R": {
+              "count": 1570,
+              "max": 0.5,
+              "mean": 0.11966980377675906,
+              "min": 0.0002611673183080813,
+              "p50": 0.125,
+              "p90": 0.15069160750664062
+            }
+          },
+          "component_gap_sources": {
+            "B": 3,
+            "Est": 3,
+            "F": 3,
+            "R": 5
+          },
+          "component_order": [
+            "R",
+            "B",
+            "POI"
+          ],
+          "composite_formula": "sum_{nonempty d in {0,1}^3} P(d)*mean(g_c for d_c=1) / P(any d_c=1)",
+          "defined": 1570,
+          "gap_composite": "R and B use the mean of their defined gap-channel idea outputs; POI averages available F and Est gap-channel means",
+          "no_hard_definedness_flags": true,
+          "no_labels_or_reference_layers": true,
+          "pattern_probability_mass": {
+            "all_eight_patterns_enumerated": true,
+            "max": 1.0000000000000002,
+            "min": 0.9999999999999997
+          },
+          "probability_inputs": {
+            "P3_soft_count_used": true,
+            "P4_anchor_density_km_per_km2": null,
+            "P4_expected_road_rows": 0,
+            "X1_probability_used": true,
+            "assumption": "fixed convex probability mixtures; component events are not asserted independent, and probabilities are uncalibrated proxies, never hard flags",
+            "building": "scaled Poisson nonempty proxy from Sca3 exclusive OSM/Esri centroid-assigned footprint count",
+            "establishments": "scaled Poisson nonempty proxy from Sca3 non-Microsoft provided-place count; mean with facility proxy",
+            "facility": "fixed arithmetic mean of P2 Poisson nonempty probability, scaled P3 school-witness probability, and registered X1 soft probability",
+            "fixed_scales": {
+              "X4_witness_count": 10.0,
+              "building_witness_count": 100.0,
+              "place_witness_count": 100.0,
+              "road_exposure_km": 1.0,
+              "school_witness_count": 5.0
+            },
+            "road": "mean of scaled P4/observed named-road-km proxy and scaled X4 witness proxy"
+          },
+          "rows": 1593,
+          "undefined_reasons": {
+            "missing_component_gap_estimate_or_zero_probability_mass": 23
+          }
+        },
+        "northern-ca": {
+          "component_definedness_probability": {
+            "B": {
+              "count": 591,
+              "max": 1.0,
+              "mean": 0.5672530686774506,
+              "min": 0.0,
+              "p50": 0.5893442472476546,
+              "p90": 0.9816843611112658
+            },
+            "POI": {
+              "count": 591,
+              "max": 0.7169811127435248,
+              "mean": 0.39633599240045386,
+              "min": 0.030448828345154083,
+              "p50": 0.4166488993329239,
+              "p90": 0.5632197254785845
+            },
+            "R": {
+              "count": 591,
+              "max": 0.5,
+              "mean": 0.4716195744082386,
+              "min": 0.0,
+              "p50": 0.49976295816127086,
+              "p90": 0.5
+            }
+          },
+          "component_gap_distribution": {
+            "B": {
+              "count": 591,
+              "max": 0.30939257323979685,
+              "mean": 0.14466214580317302,
+              "min": 0.0,
+              "p50": 0.14239327664865267,
+              "p90": 0.2422546753927828
+            },
+            "POI": {
+              "count": 591,
+              "max": 0.8513223070453442,
+              "mean": 0.46387688167600705,
+              "min": 0.09152318833122897,
+              "p50": 0.4825874194340408,
+              "p90": 0.700500610677642
+            },
+            "R": {
+              "count": 586,
+              "max": 0.5,
+              "mean": 0.12651113282176246,
+              "min": 0.0005500197378163245,
+              "p50": 0.125,
+              "p90": 0.19291781998002072
+            }
+          },
+          "component_gap_sources": {
+            "B": 3,
+            "Est": 3,
+            "F": 3,
+            "R": 5
+          },
+          "component_order": [
+            "R",
+            "B",
+            "POI"
+          ],
+          "composite_formula": "sum_{nonempty d in {0,1}^3} P(d)*mean(g_c for d_c=1) / P(any d_c=1)",
+          "defined": 586,
+          "gap_composite": "R and B use the mean of their defined gap-channel idea outputs; POI averages available F and Est gap-channel means",
+          "no_hard_definedness_flags": true,
+          "no_labels_or_reference_layers": true,
+          "pattern_probability_mass": {
+            "all_eight_patterns_enumerated": true,
+            "max": 1.0000000000000004,
+            "min": 0.9999999999999998
+          },
+          "probability_inputs": {
+            "P3_soft_count_used": true,
+            "P4_anchor_density_km_per_km2": null,
+            "P4_expected_road_rows": 0,
+            "X1_probability_used": true,
+            "assumption": "fixed convex probability mixtures; component events are not asserted independent, and probabilities are uncalibrated proxies, never hard flags",
+            "building": "scaled Poisson nonempty proxy from Sca3 exclusive OSM/Esri centroid-assigned footprint count",
+            "establishments": "scaled Poisson nonempty proxy from Sca3 non-Microsoft provided-place count; mean with facility proxy",
+            "facility": "fixed arithmetic mean of P2 Poisson nonempty probability, scaled P3 school-witness probability, and registered X1 soft probability",
+            "fixed_scales": {
+              "X4_witness_count": 10.0,
+              "building_witness_count": 100.0,
+              "place_witness_count": 100.0,
+              "road_exposure_km": 1.0,
+              "school_witness_count": 5.0
+            },
+            "road": "mean of scaled P4/observed named-road-km proxy and scaled X4 witness proxy"
+          },
+          "rows": 591,
+          "undefined_reasons": {
+            "missing_component_gap_estimate_or_zero_probability_mass": 5
+          }
+        },
+        "south-central-tx": {
+          "component_definedness_probability": {
+            "B": {
+              "count": 6003,
+              "max": 1.0,
+              "mean": 0.5337918383745002,
+              "min": 0.0,
+              "p50": 0.5276334472589853,
+              "p90": 0.9999645714293913
+            },
+            "POI": {
+              "count": 6003,
+              "max": 0.734872327454476,
+              "mean": 0.41122473495792006,
+              "min": 0.0,
+              "p50": 0.43454961664430686,
+              "p90": 0.567974498951752
+            },
+            "R": {
+              "count": 6003,
+              "max": 0.5,
+              "mean": 0.4739642513123522,
+              "min": 0.0,
+              "p50": 0.4998812168754602,
+              "p90": 0.5
+            }
+          },
+          "component_gap_distribution": {
+            "B": {
+              "count": 6001,
+              "max": 0.6502859471887453,
+              "mean": 0.12879805545672782,
+              "min": 0.0,
+              "p50": 0.11884628119522843,
+              "p90": 0.2519021011432963
+            },
+            "POI": {
+              "count": 6001,
+              "max": 0.9029174506388066,
+              "mean": 0.5038993997350766,
+              "min": 0.07990455168412777,
+              "p50": 0.5214874115080642,
+              "p90": 0.7180128192890385
+            },
+            "R": {
+              "count": 5965,
+              "max": 1.0,
+              "mean": 0.13644056730142592,
+              "min": 0.002050742026638192,
+              "p50": 0.12614589078160574,
+              "p90": 0.20575816272419387
+            }
+          },
+          "component_gap_sources": {
+            "B": 3,
+            "Est": 3,
+            "F": 3,
+            "R": 5
+          },
+          "component_order": [
+            "R",
+            "B",
+            "POI"
+          ],
+          "composite_formula": "sum_{nonempty d in {0,1}^3} P(d)*mean(g_c for d_c=1) / P(any d_c=1)",
+          "defined": 5965,
+          "gap_composite": "R and B use the mean of their defined gap-channel idea outputs; POI averages available F and Est gap-channel means",
+          "no_hard_definedness_flags": true,
+          "no_labels_or_reference_layers": true,
+          "pattern_probability_mass": {
+            "all_eight_patterns_enumerated": true,
+            "max": 1.0000000000000004,
+            "min": 0.9999999999999998
+          },
+          "probability_inputs": {
+            "P3_soft_count_used": true,
+            "P4_anchor_density_km_per_km2": 0.6624593407044459,
+            "P4_expected_road_rows": 421,
+            "X1_probability_used": true,
+            "assumption": "fixed convex probability mixtures; component events are not asserted independent, and probabilities are uncalibrated proxies, never hard flags",
+            "building": "scaled Poisson nonempty proxy from Sca3 exclusive OSM/Esri centroid-assigned footprint count",
+            "establishments": "scaled Poisson nonempty proxy from Sca3 non-Microsoft provided-place count; mean with facility proxy",
+            "facility": "fixed arithmetic mean of P2 Poisson nonempty probability, scaled P3 school-witness probability, and registered X1 soft probability",
+            "fixed_scales": {
+              "X4_witness_count": 10.0,
+              "building_witness_count": 100.0,
+              "place_witness_count": 100.0,
+              "road_exposure_km": 1.0,
+              "school_witness_count": 5.0
+            },
+            "road": "mean of scaled P4/observed named-road-km proxy and scaled X4 witness proxy"
+          },
+          "rows": 6003,
+          "undefined_reasons": {
+            "missing_component_gap_estimate_or_zero_probability_mass": 38
+          }
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate",
+          "component": "C",
+          "defined_rows": 9296,
+          "rows": 9379,
+          "value_max": 0.9662736737093404,
+          "value_min": 0.03949069410731478
+        }
+      ],
+      "emissions_per_region": 1,
+      "family": "Sca",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/Sca5.parquet",
+      "rows": 9379,
+      "sha256": "7a60d0df7eb48dd1e8dbfa19fd3e4a214d9a7d72589688ef5554389350f58ad1",
+      "undeclared_columns_read": []
+    },
     "Tm1": {
       "accessed_inputs": {
         "caches": [
@@ -5940,7 +7840,7 @@
   },
   "preregistration": {
     "path": "config/bias60-harness-preregistered.json",
-    "sha256": "7b94086bda27a31cd1c7079086ae43f82b33f12edd6a72602b6a857e51a08273",
+    "sha256": "0d9fe95d476170bb1480744564b3a4a8789fe65727b20e9be3ab399bc4f10e11",
     "spec": {
       "family_count": 12,
       "idea_count": 60,
@@ -5980,7 +7880,7 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 34,
+    "declared_count": 30,
     "families_total": 12,
     "ideas_per_family": [
       5
@@ -6009,6 +7909,10 @@
       "Sc4",
       "Sc5",
       "Sca1",
+      "Sca2",
+      "Sca3",
+      "Sca4",
+      "Sca5",
       "P1",
       "P2",
       "P3",
@@ -6021,7 +7925,7 @@
       "F",
       "R"
     ],
-    "implemented_count": 26
+    "implemented_count": 30
   },
   "scope": {
     "geoids_by_region": {
@@ -6049,7 +7953,7 @@
       "F",
       "R"
     ],
-    "ideas_implemented": 26,
+    "ideas_implemented": 30,
     "parquet_files": {
       "ideas/Dst1.parquet": "cac4c507372353f5493b09b1ce6ec7c293500d185a1778fc73a68d25e5bc4281",
       "ideas/Dst2.parquet": "fc01b4f1782b1830500f232fbc31d9b65f77f23a69985fcbdcc54d5a29fdda6b",
@@ -6072,13 +7976,17 @@
       "ideas/Sc4.parquet": "9aa62ada6e97d28d20f8e3b5d25b6d697ce0d40beea4e9fc4af9b136f36d5884",
       "ideas/Sc5.parquet": "c8603a948b060344f23d2250da22b02a95254401c4a67d64d74a55d4cf4ee720",
       "ideas/Sca1.parquet": "858eadae31c242954fbbd47ffb0151276018d987a994f57b24e84c19a8e6c294",
+      "ideas/Sca2.parquet": "76095bdd1699342886386958dc3515c8a7a7e372820e3fa6157b8404c930efd5",
+      "ideas/Sca3.parquet": "25bbb9d2c6dc08daebef712c1219f0f953172342f127db05c657beb553eb8426",
+      "ideas/Sca4.parquet": "6b9e8fc49b0af80dbb0c1a076520355e24aa43c65a5b12b90dfd073c3c259a16",
+      "ideas/Sca5.parquet": "7a60d0df7eb48dd1e8dbfa19fd3e4a214d9a7d72589688ef5554389350f58ad1",
       "ideas/Tm1.parquet": "df93396b8bb481dea6da43dd90b997eeeb47c5bf249a3fa6eac0dca6c8713885",
       "ideas/X1.parquet": "3352248e0e2ea195691ec2f6cdddc50de45be8a73115055a869592f4d7a0f262",
       "ideas/X3.parquet": "a9875575506caa832f4bad35b5bd52a7401c543e0481feec46c86e9f6c8e47fa",
       "ideas/X4.parquet": "6f0c03139dfa07ad16d62c44c0cec23561ab36b76f6bee92799187a96fabb278",
       "ideas/X5.parquet": "c5b864512c1f191f9db866190e3b7c3b2208c702b2ba7c125b1d41c851a718f0"
     },
-    "report_sha256": "b5398615f560cb4280c91671ec6dbb15c1aa03034a86c9efdc4827a647d88e85"
+    "report_sha256": "bc961a0d8f5c1f3c2f497a2b5034284f5345553247adbe2c3895dd8e28dc20d0"
   },
   "tamper_case": null
 }
