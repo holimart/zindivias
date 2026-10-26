@@ -1,0 +1,90 @@
+{
+  "evidence": {
+    "Sc1_parquet_sha256": "8a73aa7cee295120db8a8f38e30fb4faca63588f49336a2f0f13fc825881a780",
+    "Sc1_rows": 9379,
+    "Sc4_parquet_sha256": "9aa62ada6e97d28d20f8e3b5d25b6d697ce0d40beea4e9fc4af9b136f36d5884",
+    "Sc4_rows": 9379,
+    "Sc5_filter_null_preserved": true,
+    "Sc5_idea_sha256": "c8603a948b060344f23d2250da22b02a95254401c4a67d64d74a55d4cf4ee720",
+    "Sc5_report": "reports/ideas-harness.json",
+    "Sc5_report_sha256": "dec7c6bcd0b405216a36ff1f14b6b1338b6a7189d2efe8e17fef5afc69af535d",
+    "harness_code_commit": "d802f931296ec3e3c08a76f2758e72aaac6c8519",
+    "prohibited_inputs_used": [],
+    "screen_gates": {
+      "all_implemented_ideas_are_registered": true,
+      "all_passed": true,
+      "deterministic_rerun": true,
+      "emission_contract_satisfied": true,
+      "every_idea_wrote_one_parquet": true,
+      "no_forbidden_source_accessed": true,
+      "no_label_or_leaderboard_value_used": true,
+      "no_undeclared_column_read": true,
+      "official_geoid_partition_exact": true,
+      "registry_holds_all_60_spec_ids": true,
+      "report_has_no_temporal_field": true
+    },
+    "screen_report": "reports/numerator-definition-screen.json",
+    "screen_report_sha256": "93f6e70f362a625b901c9380c41e5ce16b048fa798fa79e42570228cee5c3b40",
+    "uploads": 0
+  },
+  "regions": {
+    "eastern-ok": {
+      "sc1_below_0_01": false,
+      "sc1_named_km": 13006.679315677138,
+      "sc1_unnamed_km": 14937.348448411292,
+      "sc1_unnamed_share_of_named_class_length": 0.5345452908405586,
+      "sc4_below_0_01": true,
+      "sc4_share_of_expanded_named_plus_unknown_numerator": 0.0021467062968303706,
+      "sc4_unfiltered_named_class_km_denominator": 27944.02776408843,
+      "sc4_unknown_km_relative_to_named_class_km": 0.0021513245588072882,
+      "sc4_unknown_route_or_long_km": 60.11667320087615
+    },
+    "maricopa-az": {
+      "sc1_below_0_01": false,
+      "sc1_named_km": 19686.09665950951,
+      "sc1_unnamed_km": 2427.616188428803,
+      "sc1_unnamed_share_of_named_class_length": 0.10977876963140239,
+      "sc4_below_0_01": true,
+      "sc4_share_of_expanded_named_plus_unknown_numerator": 0.008812505300753084,
+      "sc4_unfiltered_named_class_km_denominator": 22113.71284793831,
+      "sc4_unknown_km_relative_to_named_class_km": 0.00889085601652696,
+      "sc4_unknown_route_or_long_km": 196.60983692184186
+    },
+    "northern-ca": {
+      "sc1_below_0_01": false,
+      "sc1_named_km": 8581.742079020776,
+      "sc1_unnamed_km": 3621.9056637978283,
+      "sc1_unnamed_share_of_named_class_length": 0.29678877497338335,
+      "sc4_below_0_01": true,
+      "sc4_share_of_expanded_named_plus_unknown_numerator": 0.0031783585789344555,
+      "sc4_unfiltered_named_class_km_denominator": 12203.647742818604,
+      "sc4_unknown_km_relative_to_named_class_km": 0.003188492752227368,
+      "sc4_unknown_route_or_long_km": 38.911242378713
+    },
+    "south-central-tx": {
+      "sc1_below_0_01": false,
+      "sc1_named_km": 79669.72874381654,
+      "sc1_unnamed_km": 38506.65294208316,
+      "sc1_unnamed_share_of_named_class_length": 0.3258405139229069,
+      "sc4_below_0_01": true,
+      "sc4_share_of_expanded_named_plus_unknown_numerator": 0.005901795341814557,
+      "sc4_unfiltered_named_class_km_denominator": 118176.38168589972,
+      "sc4_unknown_km_relative_to_named_class_km": 0.0059368333170301355,
+      "sc4_unknown_route_or_long_km": 701.5934800789194
+    }
+  },
+  "schema_version": 1,
+  "screen": "bias60-numerator-definition-screen",
+  "share_definitions": {
+    "Sc1": "region-total unnamed named-class km / (unnamed + named named-class km), using Sc1 diagnostics",
+    "Sc4": "Sc4 unknown-class route/name-bearing or >2 km candidate km / Sc5 unfiltered named-class km; expanded-numerator share is also reported"
+  },
+  "summary": {
+    "Sc1_below_0_01_in_every_region": false,
+    "Sc4_below_0_01_in_every_region": true,
+    "joint_measured_null_condition_met": false,
+    "reason": "joint condition is not met; Sc1 has a material unnamed named-class share, so no measured-null edits were made",
+    "registry_measured_null_update_applied": false
+  },
+  "threshold": 0.01
+}

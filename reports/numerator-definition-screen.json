@@ -1,0 +1,394 @@
+{
+  "code_commit_at_run": "d802f931296ec3e3c08a76f2758e72aaac6c8519",
+  "environment": {
+    "git_commit": "d802f931296ec3e3c08a76f2758e72aaac6c8519",
+    "versions": {
+      "numpy": "2.5.4",
+      "pyarrow": "26.0.0",
+      "pyproj": "3.8.0",
+      "python": "3.12.3",
+      "shapely": "2.2.0"
+    }
+  },
+  "gates": {
+    "all_implemented_ideas_are_registered": true,
+    "all_passed": true,
+    "deterministic_rerun": true,
+    "emission_contract_satisfied": true,
+    "every_idea_wrote_one_parquet": true,
+    "no_forbidden_source_accessed": true,
+    "no_label_or_leaderboard_value_used": true,
+    "no_undeclared_column_read": true,
+    "official_geoid_partition_exact": true,
+    "registry_holds_all_60_spec_ids": true,
+    "report_has_no_temporal_field": true
+  },
+  "partition_problems": [],
+  "per_idea": {
+    "Sc1": {
+      "accessed_inputs": {
+        "caches": [],
+        "csv_columns": [],
+        "idea_artifacts": [],
+        "layers": [
+          "census-acs-housing",
+          "roads"
+        ],
+        "parquet_columns": [
+          "eastern-ok-census-acs-housing:GEOID,geometry",
+          "eastern-ok-overture-roads.parquet:class",
+          "eastern-ok-overture-roads.parquet:geometry",
+          "eastern-ok-overture-roads.parquet:names",
+          "maricopa-az-census-acs-housing:GEOID,geometry",
+          "maricopa-az-overture-roads.parquet:class",
+          "maricopa-az-overture-roads.parquet:geometry",
+          "maricopa-az-overture-roads.parquet:names",
+          "northern-ca-census-acs-housing:GEOID,geometry",
+          "northern-ca-overture-roads.parquet:class",
+          "northern-ca-overture-roads.parquet:geometry",
+          "northern-ca-overture-roads.parquet:names",
+          "south-central-tx-census-acs-housing:GEOID,geometry",
+          "south-central-tx-overture-roads.parquet:class",
+          "south-central-tx-overture-roads.parquet:geometry",
+          "south-central-tx-overture-roads.parquet:names"
+        ]
+      },
+      "bytes": 86427,
+      "diagnostics": {
+        "eastern-ok": {
+          "defined": 1164,
+          "named_km": 13006.679315677138,
+          "namedness_rule": "any nonempty normalized primary/common/rule name value",
+          "reader": {
+            "crs": "EPSG:5070",
+            "layer": "roads",
+            "microsoft_road_memberships_used": false,
+            "nonempty_name_values": 34767,
+            "region": "eastern-ok",
+            "route_or_name_candidates": 0,
+            "rows_scanned": 520550,
+            "rows_selected": 59436,
+            "rows_total": 520550
+          },
+          "rows": 1192,
+          "unnamed_km": 14937.348448411292
+        },
+        "maricopa-az": {
+          "defined": 1560,
+          "named_km": 19686.09665950951,
+          "namedness_rule": "any nonempty normalized primary/common/rule name value",
+          "reader": {
+            "crs": "EPSG:5070",
+            "layer": "roads",
+            "microsoft_road_memberships_used": false,
+            "nonempty_name_values": 49518,
+            "region": "maricopa-az",
+            "route_or_name_candidates": 0,
+            "rows_scanned": 494492,
+            "rows_selected": 57516,
+            "rows_total": 494492
+          },
+          "rows": 1593,
+          "unnamed_km": 2427.616188428803
+        },
+        "northern-ca": {
+          "defined": 584,
+          "named_km": 8581.742079020776,
+          "namedness_rule": "any nonempty normalized primary/common/rule name value",
+          "reader": {
+            "crs": "EPSG:5070",
+            "layer": "roads",
+            "microsoft_road_memberships_used": false,
+            "nonempty_name_values": 19734,
+            "region": "northern-ca",
+            "route_or_name_candidates": 0,
+            "rows_scanned": 191836,
+            "rows_selected": 26050,
+            "rows_total": 191836
+          },
+          "rows": 591,
+          "unnamed_km": 3621.9056637978283
+        },
+        "south-central-tx": {
+          "defined": 5939,
+          "named_km": 79669.72874381654,
+          "namedness_rule": "any nonempty normalized primary/common/rule name value",
+          "reader": {
+            "crs": "EPSG:5070",
+            "layer": "roads",
+            "microsoft_road_memberships_used": false,
+            "nonempty_name_values": 266247,
+            "region": "south-central-tx",
+            "route_or_name_candidates": 0,
+            "rows_scanned": 1937009,
+            "rows_selected": 353790,
+            "rows_total": 1937009
+          },
+          "rows": 6003,
+          "unnamed_km": 38506.65294208316
+        }
+      },
+      "emissions": [
+        {
+          "channel": "gap",
+          "component": "R",
+          "defined_rows": 9247,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 0.0
+        }
+      ],
+      "emissions_per_region": 1,
+      "family": "Sc",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/Sc1.parquet",
+      "rows": 9379,
+      "sha256": "8a73aa7cee295120db8a8f38e30fb4faca63588f49336a2f0f13fc825881a780",
+      "undeclared_columns_read": []
+    },
+    "Sc4": {
+      "accessed_inputs": {
+        "caches": [],
+        "csv_columns": [],
+        "idea_artifacts": [],
+        "layers": [
+          "census-acs-housing",
+          "roads-unfiltered"
+        ],
+        "parquet_columns": [
+          "eastern-ok-census-acs-housing:GEOID,geometry",
+          "eastern-ok-overture-roads-unfiltered.parquet:class",
+          "eastern-ok-overture-roads-unfiltered.parquet:geometry",
+          "eastern-ok-overture-roads-unfiltered.parquet:names",
+          "eastern-ok-overture-roads-unfiltered.parquet:routes",
+          "maricopa-az-census-acs-housing:GEOID,geometry",
+          "maricopa-az-overture-roads-unfiltered.parquet:class",
+          "maricopa-az-overture-roads-unfiltered.parquet:geometry",
+          "maricopa-az-overture-roads-unfiltered.parquet:names",
+          "maricopa-az-overture-roads-unfiltered.parquet:routes",
+          "northern-ca-census-acs-housing:GEOID,geometry",
+          "northern-ca-overture-roads-unfiltered.parquet:class",
+          "northern-ca-overture-roads-unfiltered.parquet:geometry",
+          "northern-ca-overture-roads-unfiltered.parquet:names",
+          "northern-ca-overture-roads-unfiltered.parquet:routes",
+          "south-central-tx-census-acs-housing:GEOID,geometry",
+          "south-central-tx-overture-roads-unfiltered.parquet:class",
+          "south-central-tx-overture-roads-unfiltered.parquet:geometry",
+          "south-central-tx-overture-roads-unfiltered.parquet:names",
+          "south-central-tx-overture-roads-unfiltered.parquet:routes"
+        ]
+      },
+      "bytes": 28268,
+      "diagnostics": {
+        "eastern-ok": {
+          "candidate_km": 60.11667320087615,
+          "defined": 1192,
+          "reader": {
+            "crs": "EPSG:5070",
+            "layer": "roads-unfiltered",
+            "microsoft_road_memberships_used": false,
+            "nonempty_name_values": 9,
+            "region": "eastern-ok",
+            "route_or_name_candidates": 0,
+            "rows_scanned": 1037555,
+            "rows_selected": 13688,
+            "rows_total": 1037555
+          },
+          "route_name_or_length_rule": "class unknown/road and (nonempty parsed route ref/name or whole projected segment length > 2000m)",
+          "rows": 1192
+        },
+        "maricopa-az": {
+          "candidate_km": 196.60983692184186,
+          "defined": 1593,
+          "reader": {
+            "crs": "EPSG:5070",
+            "layer": "roads-unfiltered",
+            "microsoft_road_memberships_used": false,
+            "nonempty_name_values": 200,
+            "region": "maricopa-az",
+            "route_or_name_candidates": 0,
+            "rows_scanned": 1170165,
+            "rows_selected": 19547,
+            "rows_total": 1170165
+          },
+          "route_name_or_length_rule": "class unknown/road and (nonempty parsed route ref/name or whole projected segment length > 2000m)",
+          "rows": 1593
+        },
+        "northern-ca": {
+          "candidate_km": 38.911242378713,
+          "defined": 591,
+          "reader": {
+            "crs": "EPSG:5070",
+            "layer": "roads-unfiltered",
+            "microsoft_road_memberships_used": false,
+            "nonempty_name_values": 28,
+            "region": "northern-ca",
+            "route_or_name_candidates": 1,
+            "rows_scanned": 479596,
+            "rows_selected": 8375,
+            "rows_total": 479596
+          },
+          "route_name_or_length_rule": "class unknown/road and (nonempty parsed route ref/name or whole projected segment length > 2000m)",
+          "rows": 591
+        },
+        "south-central-tx": {
+          "candidate_km": 701.5934800789194,
+          "defined": 6003,
+          "reader": {
+            "crs": "EPSG:5070",
+            "layer": "roads-unfiltered",
+            "microsoft_road_memberships_used": false,
+            "nonempty_name_values": 469,
+            "region": "south-central-tx",
+            "route_or_name_candidates": 5,
+            "rows_scanned": 4122701,
+            "rows_selected": 92429,
+            "rows_total": 4122701
+          },
+          "route_name_or_length_rule": "class unknown/road and (nonempty parsed route ref/name or whole projected segment length > 2000m)",
+          "rows": 6003
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate",
+          "component": "R",
+          "defined_rows": 9379,
+          "rows": 9379,
+          "value_max": 28.54737004514797,
+          "value_min": 0.0
+        }
+      ],
+      "emissions_per_region": 1,
+      "family": "Sc",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/Sc4.parquet",
+      "rows": 9379,
+      "sha256": "9aa62ada6e97d28d20f8e3b5d25b6d697ce0d40beea4e9fc4af9b136f36d5884",
+      "undeclared_columns_read": []
+    }
+  },
+  "preregistration": {
+    "path": "config/bias60-harness-preregistered.json",
+    "sha256": "c4ea87c57286b0f4954f2abce3589cd16ef60e5854c8303a3660cef88246a2b0",
+    "spec": {
+      "family_count": 12,
+      "idea_count": 60,
+      "path": "/home/martin/hddProjects/competitionsall/docs/research/bias-60-ideas-2026-10.md",
+      "sha256": "f150649b34caebefb91b8eda75517e43f5cc278699ec9dba7b23fea717f16862"
+    }
+  },
+  "registry_summary": {
+    "by_component": {
+      "B": 12,
+      "C": 6,
+      "Est": 13,
+      "F": 12,
+      "R": 15,
+      "all": 2
+    },
+    "by_cost": {
+      "cheap": 38,
+      "heavy": 8,
+      "medium": 14
+    },
+    "by_family": {
+      "D": 5,
+      "Dst": 5,
+      "G": 5,
+      "M": 5,
+      "Mx": 5,
+      "P": 5,
+      "S": 5,
+      "Sc": 5,
+      "Sca": 5,
+      "T": 5,
+      "Tm": 5,
+      "X": 5
+    },
+    "by_kind": {
+      "covariate": 47,
+      "gap": 13
+    },
+    "declared_count": 30,
+    "families_total": 12,
+    "ideas_per_family": [
+      5
+    ],
+    "ideas_total": 60,
+    "implemented": [
+      "G1",
+      "G2",
+      "G3",
+      "G4",
+      "G5",
+      "Tm1",
+      "X1",
+      "X3",
+      "X4",
+      "X5",
+      "Dst1",
+      "Dst2",
+      "Dst3",
+      "Dst4",
+      "Dst5",
+      "Mx4",
+      "Sc1",
+      "Sc2",
+      "Sc3",
+      "Sc4",
+      "Sc5",
+      "Sca1",
+      "Sca2",
+      "Sca3",
+      "Sca4",
+      "Sca5",
+      "P1",
+      "P2",
+      "P3",
+      "P4"
+    ],
+    "implemented_components": [
+      "B",
+      "C",
+      "Est",
+      "F",
+      "R"
+    ],
+    "implemented_count": 30
+  },
+  "scope": {
+    "geoids_by_region": {
+      "eastern-ok": 1192,
+      "maricopa-az": 1593,
+      "northern-ca": 591,
+      "south-central-tx": 6003
+    },
+    "official_ids_via_delegated_reader": true,
+    "official_scored_rows": 9379,
+    "regions": [
+      "maricopa-az",
+      "northern-ca",
+      "eastern-ok",
+      "south-central-tx"
+    ],
+    "study_only_no_lab_geoids": true
+  },
+  "summary": {
+    "all_passed": true,
+    "components_covered": [
+      "R"
+    ],
+    "ideas_implemented": 2,
+    "parquet_files": {
+      "ideas/Sc1.parquet": "8a73aa7cee295120db8a8f38e30fb4faca63588f49336a2f0f13fc825881a780",
+      "ideas/Sc4.parquet": "9aa62ada6e97d28d20f8e3b5d25b6d697ce0d40beea4e9fc4af9b136f36d5884"
+    },
+    "report_sha256": "64928ef9bb44cf3223f6392dcbc6d0ca96798f513b07517070b431ed1ace4737"
+  },
+  "tamper_case": null
+}
