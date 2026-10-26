@@ -1,0 +1,115 @@
+{
+  "accounting": {
+    "absolute_ratio_delta": 0.038730577684854106,
+    "excluded_tract": {
+      "GEOID": "35023970000",
+      "L_named_km": 464.29739352767086,
+      "L_route_km": 461.75830446530716,
+      "share_of_with_tract_L_named": 0.020995904067324357,
+      "share_of_with_tract_L_route": 0.0402700132742098
+    },
+    "official_sample_rows": 1593,
+    "official_sample_unique_geoids": 1593,
+    "ratio_delta_without_minus_with": 0.038730577684854106,
+    "tracts_without_excluded_tract": 1592,
+    "with_tract": {
+      "L_named_km": 22113.71284793831,
+      "L_route_km": 11466.55456309551,
+      "sum_L_named_over_sum_L_route": 1.928540323621719,
+      "tracts": 1593
+    },
+    "without_tract": {
+      "L_named_km": 21649.41545441064,
+      "L_route_km": 11004.796258630202,
+      "sum_L_named_over_sum_L_route": 1.967270901306573,
+      "tracts": 1592
+    }
+  },
+  "analysis": "Maricopa cross-state tract contribution to aggregate route-reference diagnostic",
+  "data_use": {
+    "candidate_or_submission_csv_written_or_modified": false,
+    "challenge_provided_features_and_geometry_only": true,
+    "labels_or_sample_score_values_used": false,
+    "leaderboard_values_used": false,
+    "removed_reference_layers_or_equivalents_read": false,
+    "uploads": 0
+  },
+  "interpretation": {
+    "absolute_ratio_delta": 0.038730577684854106,
+    "finding": "Removing the NM tract raises the aggregate ratio by about 0.039 (about 2.0% of the with-tract ratio); this is a modest descriptive influence, not a claim of statistical or target significance. No materiality cutoff was preregistered.",
+    "relative_change_from_with_tract_ratio": 0.020082845668541523
+  },
+  "method": {
+    "L_named": "overture_named_road_km_5070 (km), derived from challenge-provided Overture named road features and provided tract geometry",
+    "L_route": "overture_route_km (km), derived from challenge-provided Overture route features and provided tract geometry",
+    "official_sample_read": "GEOID column only; all sample score fields ignored",
+    "per_tract_output_written": false,
+    "ratio": "sum(L_named) / sum(L_route)"
+  },
+  "protected_artifact_hashes": {
+    "reports/candidates.json": {
+      "sha256_after": "5374d6811fc1c6ea28ef680e3d29038c981d16265d4731df6dadd286a0bf34e1",
+      "sha256_before": "5374d6811fc1c6ea28ef680e3d29038c981d16265d4731df6dadd286a0bf34e1",
+      "unchanged": true
+    },
+    "reports/candidates/C0_all_zero.csv": {
+      "sha256_after": "0edf8140123e2135489e5728fd71bce6f1e28a97f447ca411ba45fdbc02bc214",
+      "sha256_before": "0edf8140123e2135489e5728fd71bce6f1e28a97f447ca411ba45fdbc02bc214",
+      "unchanged": true
+    },
+    "reports/candidates/P4_c1_shrink_alpha.csv": {
+      "sha256_after": "8b329802d882ea4bdff2bfd8c465c160d6ffd9269cfbe28dce8be9e702b07d37",
+      "sha256_before": "8b329802d882ea4bdff2bfd8c465c160d6ffd9269cfbe28dce8be9e702b07d37",
+      "unchanged": true
+    },
+    "reports/transport-route-ref-audit.json": {
+      "sha256_after": "bf904336963f553cc7442c5996a4d8d504fe30aad5c4f1a2e44da8fa773b1927",
+      "sha256_before": "bf904336963f553cc7442c5996a4d8d504fe30aad5c4f1a2e44da8fa773b1927",
+      "unchanged": true
+    },
+    "workspace/defined-flags-inputs/maricopa-az-sample-submission.csv": {
+      "sha256_after": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+      "sha256_before": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+      "unchanged": true
+    },
+    "workspace/gap-estimator/features/maricopa-az-overture-tract-summary.parquet": {
+      "sha256_after": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22",
+      "sha256_before": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22",
+      "unchanged": true
+    }
+  },
+  "schema_version": 1,
+  "scope": "aggregate-only diagnostic; not a candidate score, model promotion, or target estimate",
+  "source_hashes": {
+    "frozen_route_audit": {
+      "path": "reports/transport-route-ref-audit.json",
+      "sha256": "bf904336963f553cc7442c5996a4d8d504fe30aad5c4f1a2e44da8fa773b1927"
+    },
+    "official_sample_csv": {
+      "path": "workspace/defined-flags-inputs/maricopa-az-sample-submission.csv",
+      "semantic_fields_read": [
+        "GEOID"
+      ],
+      "sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31"
+    },
+    "route_feature_cache": {
+      "columns_read": [
+        "GEOID",
+        "overture_named_road_km_5070",
+        "overture_route_km"
+      ],
+      "path": "workspace/gap-estimator/features/maricopa-az-overture-tract-summary.parquet",
+      "sha256": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22"
+    }
+  },
+  "verification": {
+    "excluded_GEOID_present_exactly_once": true,
+    "frozen_L_named_km": 22113.71284793831,
+    "frozen_L_route_km": 11466.55456309551,
+    "frozen_ratio": 1.928540323621719,
+    "ratio_reconstructed_within_1e_12": true,
+    "reconstructed_L_named_absolute_error_km": 0.0,
+    "reconstructed_L_route_absolute_error_km": 0.0,
+    "totals_reconstructed_within_1e_8_km": true
+  }
+}
