@@ -179,7 +179,8 @@ def _stub_g_implementations():
     originals = {idea: IMPLEMENTATIONS[idea] for idea in [*(f"G{i}" for i in range(1, 6)), "P1", "P3",
                                                             "Sc1", "Sc2", "Sc3", "Sc4", "Sca2", "Sca3",
                                                             "Sca4", "Sca5", "X1", "X3", "X4", "X5",
-                                                            "M1", "M2", "M3", "M4", "M5"]}
+                                                            "M1", "M2", "M3", "M4", "M5",
+                                                            "Mx1", "Mx2", "Mx3", "Mx4", "Mx5"]}
     def stub(idea_id, specification):
         def execute(inputs):
             from bias60.contracts import Emission, IdeaOutput
@@ -203,7 +204,18 @@ def _stub_g_implementations():
              "X5": [("R", "covariate"), ("F", "covariate")],
              "M1": [("R", "covariate")], "M2": [("Est", "covariate"), ("F", "covariate")],
              "M3": [("Est", "covariate"), ("F", "covariate")],
-             "M4": [("Est", "covariate")], "M5": [("B", "covariate"), ("R", "covariate")]}
+             "M4": [("Est", "covariate")], "M5": [("B", "covariate"), ("R", "covariate")],
+             "Mx1": [("R", "covariate:tomtom_named_length_share"),
+                     ("R", "covariate:tomtom_tertiary_length_share")],
+             "Mx2": [("Est", "covariate:microsoft_only_place_share"),
+                     ("F", "covariate:facility_microsoft_only_place_share")],
+             "Mx3": [("Est", "covariate:foursquare_only_place_share")],
+             "Mx4": [("F", "covariate"), ("B", "covariate")],
+             "Mx5": [("F", "covariate:school_category_mismatch_share_meta"),
+                     ("F", "covariate:school_category_mismatch_share_microsoft"),
+                     ("F", "covariate:school_category_mismatch_share_foursquare"),
+                     ("F", "covariate:school_category_mismatch_share_alltheplaces"),
+                     ("F", "covariate:school_category_mismatch_share_other")]}
     IMPLEMENTATIONS.update({idea: stub(idea, specs[idea]) for idea in specs})
     return originals
 

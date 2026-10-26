@@ -421,6 +421,26 @@
       "covariate_maximum": 25.0,
       "note": "spec Tm1: delta = O_now/O_cp - 1; gap proxy max(0,-delta) is exactly clip(1-O/E,0,1) with E the provided earlier-release count"
     },
+    "Mx1": {
+      "components": ["R"],
+      "kind": "covariate",
+      "named_classes": ["motorway", "trunk", "primary", "secondary"],
+      "tertiary_class": "tertiary",
+      "tomtom_source": "TomTom",
+      "note": "spec Mx1: TomTom share of clipped named-class and tertiary road length; one geometry counted once per class"
+    },
+    "Mx2": {
+      "components": ["F", "Est"],
+      "kind": "covariate",
+      "microsoft_source": "Microsoft",
+      "note": "spec Mx2: Microsoft-only means the deduplicated provider set is exactly Microsoft after excluding aggregate Overture and Overture Signals metadata; emit all-place and facility-name shares"
+    },
+    "Mx3": {
+      "components": ["Est"],
+      "kind": "covariate",
+      "foursquare_source": "Foursquare",
+      "note": "spec Mx3: strict Foursquare-only provider count after excluding aggregate Overture and Overture Signals metadata, divided by all assigned places"
+    },
     "Mx4": {
       "components": [
         "F",
@@ -431,6 +451,14 @@
       "tract_share_column": "overture_building_esri_source_share",
       "weight_column": "overture_buildings",
       "note": "spec Mx4: county Esri share (reference-side) on F, tract's own Esri-only share on B; county aggregation is a building-count-weighted mean, declared not fitted"
+    },
+    "Mx5": {
+      "components": ["F"],
+      "kind": "covariate",
+      "school_categories": ["charter_school", "elementary_school", "high_school", "middle_school", "montessori_school", "preschool", "private_school", "public_school", "religious_school", "school"],
+      "education_name_regex": "\\b(school|academy|education|elementary|middle school|high school|kindergarten|preschool|college|university)\\b",
+      "source_buckets": ["meta", "microsoft", "foursquare", "alltheplaces", "other"],
+      "note": "spec Mx5: per-source share of education-name places whose primary category is outside the registered school category set; multimember source places count in each known provider bucket"
     },
     "Sc5": {
       "component": "R",

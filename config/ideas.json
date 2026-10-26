@@ -958,7 +958,7 @@
       "failure_mode": "TomTom may be absent in the US, which makes the idea a null.",
       "family": "Mx",
       "id": "Mx1",
-      "implementation": null,
+      "implementation": "bias60.ideas.mx::mx1",
       "inputs": [
         "`roads.sources.dataset`"
       ],
@@ -968,7 +968,7 @@
       "recipe": "TomTom share of named-class length and of tertiary length.",
       "recipe_scope": "per tract",
       "signal": "TomTom segments (since 2024-09) bring TomTom's functional-road-class semantics, which differ from OSM highway tags. The share of named-class length from TomTom shifts the O/TIGER ratio.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Road provider mixture (TomTom vs OSM)"
     },
     {
@@ -981,7 +981,7 @@
       "failure_mode": "conflation may merge most Microsoft records with Meta.",
       "family": "Mx",
       "id": "Mx2",
-      "implementation": null,
+      "implementation": "bias60.ideas.mx::mx2",
       "inputs": [
         "`pois.sources.dataset`",
         "categories"
@@ -992,7 +992,7 @@
       "recipe": "share of Microsoft-only places, and the share among places with facility-like names.",
       "recipe_scope": "per tract",
       "signal": "Microsoft-sourced places have high category and brand incompleteness [V: UK study]. Facilities from this feed may lack the category that would match fire, EMS or school.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Microsoft-places share (attribute-poor feed)"
     },
     {
@@ -1004,7 +1004,7 @@
       "failure_mode": "Foursquare coverage is urban-biased.",
       "family": "Mx",
       "id": "Mx3",
-      "implementation": null,
+      "implementation": "bias60.ideas.mx::mx3",
       "inputs": [
         "`pois.sources.dataset`"
       ],
@@ -1014,7 +1014,7 @@
       "recipe": "Foursquare-only count / N.",
       "recipe_scope": "per tract",
       "signal": "Foursquare places were added only where *not previously in Overture*. A high Foursquare-added share means Meta and Microsoft were incomplete there. Even after the rescue, residual incompleteness is likely, because a capture with one extra list still undercounts.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Foursquare rescue volume"
     },
     {
@@ -1049,7 +1049,7 @@
       "failure_mode": "the organiser's exact filter is unknown; see Sc3.",
       "family": "Mx",
       "id": "Mx5",
-      "implementation": null,
+      "implementation": "bias60.ideas.mx::mx5",
       "inputs": [
         "`pois` categories × sources"
       ],
@@ -1059,7 +1059,7 @@
       "recipe": "share of education-like names whose primary category is outside the school set, split by source.",
       "recipe_scope": "per tract",
       "signal": "sources label education differently (Meta \"school\", \"elementary_school\"; Microsoft \"education\"; AllThePlaces chains rarely). Where the dominant source uses generic or alternate categories, the organiser's category filter (unknown, probably primary only) misses schools.",
-      "status": "declared",
+      "status": "implemented",
       "title": "Source-specific school vocabularies"
     },
     {
@@ -1459,7 +1459,7 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 20,
+    "declared_count": 16,
     "families_total": 12,
     "ideas_per_family": [
       5
@@ -1491,7 +1491,11 @@
       "Dst3",
       "Dst4",
       "Dst5",
+      "Mx1",
+      "Mx2",
+      "Mx3",
       "Mx4",
+      "Mx5",
       "Sc1",
       "Sc2",
       "Sc3",
@@ -1514,7 +1518,7 @@
       "F",
       "R"
     ],
-    "implemented_count": 40
+    "implemented_count": 44
   },
   "vocabulary": {
     "components": [
