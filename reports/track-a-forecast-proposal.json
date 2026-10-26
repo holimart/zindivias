@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "proposal_id": "track-a-c0-null-prior-v1",
+  "status": "proposed_not_approved",
+  "purpose_if_approved": "calibration",
+  "candidate_ids_in_scope": ["A1_physical_equal", "A2_spectral", "A3_dawid_skene"],
+  "predicted_public_rmse_if_approved": 0.107246299,
+  "forecast_method": "No-change/null prior: because no permitted target labels or local holdout distinguishes these new Track A variants, carry forward the documented historical public RMSE of the all-zero C0 baseline as the prior expected public RMSE for each candidate. The value is not fit to candidate outputs or a claim of candidate accuracy. Freeze this value and its basis before any candidate is scored.",
+  "prior_source": {
+    "path": "docs/final-two-protocol.md",
+    "fact": "Historical C0 public RMSE 0.107246299",
+    "use": "Prior only; not a model parameter, candidate-selection score, or newly accessed leaderboard value."
+  },
+  "candidate_forecasts": [
+    {"candidate_id": "A1_physical_equal", "predicted_public_rmse": 0.107246299},
+    {"candidate_id": "A2_spectral", "predicted_public_rmse": 0.107246299},
+    {"candidate_id": "A3_dawid_skene", "predicted_public_rmse": 0.107246299}
+  ],
+  "limitations": [
+    "This null prior makes no candidate-specific performance claim and cannot establish an improvement over P4.",
+    "The forecast is not a measured local held-out score and therefore does not meet the general calibration-purpose local-holdout gate by itself.",
+    "Adoption requires explicit operator approval of both the forecast prior and any exception to the local-heldout requirement. Without that approval, do not register or upload candidates on this basis."
+  ],
+  "safety": {
+    "labels_read": false,
+    "leaderboard_probed": false,
+    "removed_reference_layers_or_equivalents_used": false,
+    "candidate_artifacts_modified": false,
+    "candidate_cards_registered": false,
+    "uploads_made": 0
+  },
+  "unblock_request": "Approve or reject this explicit null-prior forecast for calibration, and state whether its use is permitted despite the no-label local-heldout limitation."
+}
