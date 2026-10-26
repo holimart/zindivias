@@ -1282,13 +1282,14 @@
       ],
       "infrastructure_columns": [
         "bbox",
-        "wikidata"
+        "wikidata",
+        "names"
       ],
       "facility_name_regex": "fixed regex in src/bias60/ideas/m.py",
       "place_link_field": "brand.wikidata",
       "infrastructure_link_field": "wikidata",
       "assignment": "bbox center to one official ACS tract",
-      "note": "Facility-like places are identified only by a fixed name regex; no counts or labels from reference sources."
+      "note": "Facility-name-regex places and facility-name-regex infrastructure features contribute to the F linked-share; all places contribute to the Est share."
     },
     "M3": {
       "component": "Est",
@@ -1306,7 +1307,8 @@
       "facility_name_regex": "fixed regex in src/bias60/ideas/m.py",
       "neighbors": "official ACS tract polygons sharing an edge",
       "mismatch": "address key differs from local dominant key and is absent from first-order-neighbor keys",
-      "note": "Missing addresses are excluded from the denominator; no postal or target reference data used."
+      "note": "Missing addresses are excluded from the denominator; incoming facilities are separated; no postal or target reference data used.",
+      "incoming_mismatch": "facility-name-regex address key differs from local dominant, occurs at most once locally, and is absent from first-order-neighbor keys"
     },
     "M4": {
       "component": "Est",

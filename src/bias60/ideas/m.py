@@ -201,7 +201,8 @@ def m2(inputs) -> IdeaOutput:
     facility_poi = np.zeros(n, dtype=np.int64)
     facility_linked_poi = np.zeros(n, dtype=np.int64)
     infrastructure = np.zeros(n, dtype=np.int64)
-    linked_infrastructure = np.zeros(n, dtype=np.int64)
+    facility_infrastructure = np.zeros(n, dtype=np.int64)
+    linked_facility_infrastructure = np.zeros(n, dtype=np.int64)
     scanned_poi = scanned_infrastructure = outside = 0
     for batch in _iter_batches(inputs, "pois", ["bbox", "brand", "names"]):
         bboxes = batch.column("bbox").to_pylist(); brands = batch.column("brand").to_pylist()
@@ -216,33 +217,38 @@ def m2(inputs) -> IdeaOutput:
             if _facility_name(names[i]):
                 facility_poi[tract] += 1
                 facility_linked_poi[tract] += int(linked)
-    for batch in _iter_batches(inputs, "infrastructure", ["bbox", "wikidata"]):
+    for batch in _iter_batches(inputs, "infrastructure", ["bbox", "wikidata", "names"]):
         bboxes = batch.column("bbox").to_pylist(); wikidata = batch.column("wikidata").to_pylist()
+        names = batch.column("names").to_pylist()
         assigned = _bbox_assignments(bboxes, tree, len(bboxes)); scanned_infrastructure += len(bboxes)
         for i, tract in enumerate(assigned.tolist()):
             if tract < 0:
                 outside += 1; continue
-            infrastructure[tract] += 1
-            linked_infrastructure[tract] += int(bool(str(wikidata[i] or "").strip()))
+            if _facility_name(names[i]):
+                facility_infrastructure[tract] += 1
+                linked_facility_infrastructure[tract] += int(bool(str(wikidata[i] or "").strip()))
+            else:
+                infrastructure[tract] += 1
     all_defined = total_poi > 0
-    facility_denominator = facility_poi + infrastructure
+    facility_denominator = facility_poi + facility_infrastructure
     facility_defined = facility_denominator > 0
     all_share = _blank(n); facility_share = _blank(n)
     all_share[all_defined] = linked_poi[all_defined] / total_poi[all_defined]
-    facility_share[facility_defined] = ((facility_linked_poi + linked_infrastructure)[facility_defined]
+    facility_share[facility_defined] = ((facility_linked_poi + linked_facility_infrastructure)[facility_defined]
                                         / facility_denominator[facility_defined])
     return IdeaOutput("M2", inputs.region, list(inputs.geoids), [
         _covariate("Est", "all_wikidata_link_share", all_share, all_defined,
                    "share of assigned Overture places with a nonempty brand.wikidata link"),
         _covariate("F", "facility_wikidata_link_share", facility_share, facility_defined,
-                   "combined linked share for facility-name places and provided infrastructure records"),
+                   "linked share among facility-name-regex places and infrastructure features"),
     ], {
         "rows_scanned_pois": scanned_poi, "rows_scanned_infrastructure": scanned_infrastructure,
-        "assigned_pois": int(total_poi.sum()), "assigned_infrastructure": int(infrastructure.sum()),
+        "assigned_pois": int(total_poi.sum()), "assigned_infrastructure": int(infrastructure.sum() + facility_infrastructure.sum()),
+        "facility_name_infrastructure": int(facility_infrastructure.sum()),
         "outside_or_unassigned_rows": outside, "poi_defined_tracts": int(all_defined.sum()),
         "facility_defined_tracts": int(facility_defined.sum()),
         "facility_regex": FACILITY_NAME.pattern,
-        "facility_link_share_denominator": "facility-name-regex places plus all provided infrastructure records; numerator is brand.wikidata places plus infrastructure.wikidata",
+        "facility_link_share_denominator": "facility-name-regex places plus facility-name-regex infrastructure features; numerator is linked facilities in those groups",
         "no_target_or_reference_data_read": True,
     })
 
@@ -300,7 +306,7 @@ def m3(inputs) -> IdeaOutput:
     dominant = [None if not counts else sorted(counts.items(), key=lambda item: (-item[1], item[0]))[0][0]
                 for counts in local_counts]
     total = np.zeros(n, dtype=np.int64); mismatched = np.zeros(n, dtype=np.int64)
-    facility_total = np.zeros(n, dtype=np.int64); facility_mismatched = np.zeros(n, dtype=np.int64)
+    facility_total = np.zeros(n, dtype=np.int64); facility_incoming = np.zeros(n, dtype=np.int64)
     neighbor_foreign = np.zeros(n, dtype=np.int64)
     for tract, key, facility in records:
         if key is None:
@@ -311,16 +317,18 @@ def m3(inputs) -> IdeaOutput:
         neighbor_foreign[tract] += int(key in neighbor_keys[tract])
         if facility:
             facility_total[tract] += 1
-            facility_mismatched[tract] += int(foreign)
+            incoming = (key != dominant[tract] and local_counts[tract][key] <= 1
+                        and key not in neighbor_keys[tract])
+            facility_incoming[tract] += int(incoming)
     defined = total > 0; facility_defined = facility_total > 0
     all_share = _blank(n); facility_share = _blank(n)
     all_share[defined] = mismatched[defined] / total[defined]
-    facility_share[facility_defined] = facility_mismatched[facility_defined] / facility_total[facility_defined]
+    facility_share[facility_defined] = facility_incoming[facility_defined] / facility_total[facility_defined]
     return IdeaOutput("M3", inputs.region, list(inputs.geoids), [
         _covariate("Est", "address_mismatch_share", all_share, defined,
                    "share of address-bearing places whose postcode/locality differs from the local dominant key and is not observed in adjacent tracts"),
-        _covariate("F", "facility_address_mismatch_share", facility_share, facility_defined,
-                   "same mismatch share restricted to facility-name-regex places"),
+        _covariate("F", "facility_incoming_address_mismatch_share", facility_share, facility_defined,
+                   "facility-name-regex places with a non-dominant address key appearing once locally and absent from adjacent tracts / facility address records"),
     ], {
         "rows_scanned": scanned, "assigned_address_records": int(total.sum()),
         "outside_or_unassigned_rows": outside, "tracts_with_address_coverage": int(defined.sum()),

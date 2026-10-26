@@ -91,11 +91,14 @@ def test_m2_link_shares_use_place_brand_and_infrastructure_wikidata():
             {"bbox": bbox(-0.5), "brand": {"wikidata": "Q1"}, "names": {"primary": "City Fire Station"}},
             {"bbox": bbox(-0.4), "brand": {"wikidata": None}, "names": {"primary": "Market"}},
         ],
-        "infrastructure": [{"bbox": bbox(-0.3), "wikidata": "Q2"}],
+        "infrastructure": [
+            {"bbox": bbox(-0.3), "wikidata": "Q2", "names": {"primary": "Fire Department"}},
+            {"bbox": bbox(-0.2), "wikidata": None, "names": {"primary": "School"}},
+        ],
     }
     out = IMPLEMENTATIONS["M2"](FakeInputs(layers))
     assert np.isclose(emission(out, "Est", "covariate:all_wikidata_link_share").values[0], 0.5)
-    assert np.isclose(emission(out, "F", "covariate:facility_wikidata_link_share").values[0], 1.0)
+    assert np.isclose(emission(out, "F", "covariate:facility_wikidata_link_share").values[0], 2.0 / 3.0)
     assert emission(out, "Est", "covariate:all_wikidata_link_share").defined.tolist() == [True, False]
 
 
@@ -113,7 +116,7 @@ def test_m3_excludes_neighbor_postcodes_from_mismatch_and_reports_facility_subse
     ]
     out = IMPLEMENTATIONS["M3"](FakeInputs({"pois": rows}))
     all_places = emission(out, "Est", "covariate:address_mismatch_share")
-    facility = emission(out, "F", "covariate:facility_address_mismatch_share")
+    facility = emission(out, "F", "covariate:facility_incoming_address_mismatch_share")
     assert np.isclose(all_places.values[0], 0.25)  # only 33333 is foreign to local + adjacent codes
     assert np.isclose(facility.values[0], 0.5)
     assert out.diagnostics["neighbor_foreign_records_diagnostic"] >= 1
