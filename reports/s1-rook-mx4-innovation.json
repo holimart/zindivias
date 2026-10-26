@@ -1,0 +1,458 @@
+{
+  "schema_version": 1,
+  "audit": "S1 rook-neighbor Mx4 F leave-one-out empirical-decile innovation; label-free unregistered sensitivity",
+  "method": {
+    "rook_adjacency": "Provided ACS tract polygons only; STRtree candidate pairs must touch and have positive shared-boundary length. Corner-only queen contacts are excluded; adjacency is symmetric and self-excluding.",
+    "rook_lag": "For each tract, mean of defined current Mx4 F among its rook neighbors; the focal tract is not included. Null if no defined rook neighbor.",
+    "innovation": "Within each named region, bin current Mx4 F at empirical linear-decile thresholds (ties share bins); subtract the mean rook lag of other pairwise-defined tracts in the same current-Mx4 decile, excluding the focal tract. Singleton bins remain null.",
+    "NMI": "Within-region arithmetic normalized mutual information 2*MI/(H(Mx4 F)+H(innovation)), using the same deterministic feature encoder as the prior S1 nonlinear screen.",
+    "variance_ratio": "Population variance of pooled rook innovations divided by population variance of rook lag values on the innovation-defined support.",
+    "input_scope": "Only provided census-acs-housing GEOID/geometry columns and frozen Mx4 F plus Queen S1 lagged-Mx4 F emissions were read. No other S1 channels.",
+    "unregistered": true
+  },
+  "scope": {
+    "official_ids": 9379,
+    "exact_official_geoid_region_partition": true,
+    "rook_innovation_defined_ids": 9379,
+    "rook_innovation_undefined_ids": 0,
+    "coverage_fraction": 1.0,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_reference_data_read": false,
+    "external_layers_read": false,
+    "leaderboard_feedback_used": false,
+    "frozen_Queen_S1_or_Mx4_modified": false,
+    "registry_changed_or_feature_registered": false,
+    "uploads": 0
+  },
+  "measure_before": {
+    "queen_maximum_within_region_NMI": 0.7486023400935238,
+    "queen_coverage_fraction": 1.0,
+    "queen_pooled_remaining_variance_ratio": 0.1764466342822903,
+    "queen_source_report_sha256": "6637a97a89c3cd2fdb3dd9f8392e1678fa8171826a5c817c596a3a8ece0f131b",
+    "queen_recomputed_maximum_region_NMI": 0.7486023400935238,
+    "queen_recomputed_pooled_remaining_variance_ratio": 0.1764466342822903
+  },
+  "measure_after": {
+    "rook_maximum_within_region_NMI": 0.7417147567330962,
+    "region_with_maximum_NMI": "maricopa-az",
+    "pooled_rook_innovation_variance": 0.0024728818740789435,
+    "pooled_rook_lag_variance_on_innovation_support": 0.014173862395930978,
+    "pooled_rook_remaining_variance_ratio": 0.17446774950974947,
+    "rook_lag_distribution_on_innovation_support": {
+      "n": 9379,
+      "min": 0.0,
+      "p05": 0.0,
+      "p50": 0.0,
+      "p95": 0.28039582838161387,
+      "max": 0.6143039330945796,
+      "mean": 0.04198416639932978,
+      "variance": 0.014173862395930978
+    },
+    "rook_innovation_distribution": {
+      "n": 9379,
+      "min": -0.23262067833384337,
+      "p05": -0.034970495303094165,
+      "p50": -0.0005570117072503782,
+      "p95": 0.025708895571356406,
+      "max": 0.48812879313148894,
+      "mean": -1.2310821469348148e-18,
+      "variance": 0.0024728818740789435
+    },
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "Mx4_F_defined_ids": 1593,
+        "Queen_S1_lag_defined_ids": 1593,
+        "rook_neighbors_min": 1,
+        "rook_neighbors_p50": 5.0,
+        "rook_neighbors_max": 23,
+        "rook_lag_defined_ids": 1593,
+        "rook_innovation_defined_ids": 1593,
+        "rook_innovation_undefined_ids": 0,
+        "rook_innovation_coverage_fraction": 1.0,
+        "rook_peer_count_min": 94,
+        "rook_peer_count_max": 1080,
+        "rook_lag_distribution_on_innovation_support": {
+          "n": 1593,
+          "min": 0.0,
+          "p05": 0.0,
+          "p50": 0.011455566251921123,
+          "p95": 0.12017136144973037,
+          "max": 0.5324098239371093,
+          "mean": 0.03195029834164703,
+          "variance": 0.01101734135661545
+        },
+        "rook_innovation_distribution": {
+          "n": 1593,
+          "min": -0.037894298910195495,
+          "p05": -0.033307829607111525,
+          "p50": -0.033307829607111525,
+          "p95": 0.11584440955283869,
+          "max": 0.48812879313148894,
+          "mean": 0.0,
+          "variance": 0.010692806058931685
+        },
+        "rook_remaining_variance_ratio": 0.9705432293346438,
+        "rook_innovation_NMI_vs_current_Mx4_F": {
+          "status": "measured",
+          "joint_defined": 1593,
+          "nmi": 0.7417147567330962,
+          "current_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 3,
+            "defined": 1593
+          },
+          "innovation_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 4,
+            "defined": 1593
+          }
+        },
+        "queen_innovation_defined_ids": 1593,
+        "queen_innovation_NMI_vs_current_Mx4_F": {
+          "status": "measured",
+          "joint_defined": 1593,
+          "nmi": 0.7486023400935238,
+          "current_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 3,
+            "defined": 1593
+          },
+          "innovation_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 4,
+            "defined": 1593
+          }
+        },
+        "queen_remaining_variance_ratio": 0.9713240560612557
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "Mx4_F_defined_ids": 591,
+        "Queen_S1_lag_defined_ids": 591,
+        "rook_neighbors_min": 1,
+        "rook_neighbors_p50": 5.0,
+        "rook_neighbors_max": 17,
+        "rook_lag_defined_ids": 591,
+        "rook_innovation_defined_ids": 591,
+        "rook_innovation_undefined_ids": 0,
+        "rook_innovation_coverage_fraction": 1.0,
+        "rook_peer_count_min": 78,
+        "rook_peer_count_max": 511,
+        "rook_lag_distribution_on_innovation_support": {
+          "n": 591,
+          "min": 0.0,
+          "p05": 0.0,
+          "p50": 0.0,
+          "p95": 0.11891999882762007,
+          "max": 0.3412486922879533,
+          "mean": 0.0264300093646782,
+          "variance": 0.005074107048943253
+        },
+        "rook_innovation_distribution": {
+          "n": 591,
+          "min": -0.12907252570756006,
+          "p05": -0.06423975300545229,
+          "p50": -0.0034401141938374008,
+          "p95": 0.0764210249926141,
+          "max": 0.1679026860163385,
+          "mean": -1.8315862081379487e-18,
+          "variance": 0.0016841183432312066
+        },
+        "rook_remaining_variance_ratio": 0.33190437785145777,
+        "rook_innovation_NMI_vs_current_Mx4_F": {
+          "status": "measured",
+          "joint_defined": 591,
+          "nmi": 0.6338293374619174,
+          "current_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 2,
+            "defined": 591
+          },
+          "innovation_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 3,
+            "defined": 591
+          }
+        },
+        "queen_innovation_defined_ids": 591,
+        "queen_innovation_NMI_vs_current_Mx4_F": {
+          "status": "measured",
+          "joint_defined": 591,
+          "nmi": 0.6338293374619174,
+          "current_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 2,
+            "defined": 591
+          },
+          "innovation_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 3,
+            "defined": 591
+          }
+        },
+        "queen_remaining_variance_ratio": 0.3433458545786462
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "Mx4_F_defined_ids": 1192,
+        "Queen_S1_lag_defined_ids": 1192,
+        "rook_neighbors_min": 1,
+        "rook_neighbors_p50": 5.0,
+        "rook_neighbors_max": 12,
+        "rook_lag_defined_ids": 1192,
+        "rook_innovation_defined_ids": 1192,
+        "rook_innovation_undefined_ids": 0,
+        "rook_innovation_coverage_fraction": 1.0,
+        "rook_peer_count_min": 107,
+        "rook_peer_count_max": 817,
+        "rook_lag_distribution_on_innovation_support": {
+          "n": 1192,
+          "min": 0.0,
+          "p05": 0.0,
+          "p50": 0.0,
+          "p95": 0.6143039330945795,
+          "max": 0.6143039330945796,
+          "mean": 0.16661134023021873,
+          "variance": 0.06371570289141526
+        },
+        "rook_innovation_distribution": {
+          "n": 1192,
+          "min": -0.23262067833384337,
+          "p05": -0.036118435417047845,
+          "p50": -0.004272798241367576,
+          "p95": 0.046953983827807834,
+          "max": 0.3032551193053681,
+          "mean": 1.0431625734733015e-17,
+          "variance": 0.0014229618182757294
+        },
+        "rook_remaining_variance_ratio": 0.022332984707094116,
+        "rook_innovation_NMI_vs_current_Mx4_F": {
+          "status": "measured",
+          "joint_defined": 1192,
+          "nmi": 0.68609867655297,
+          "current_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 3,
+            "defined": 1192
+          },
+          "innovation_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 3,
+            "defined": 1192
+          }
+        },
+        "queen_innovation_defined_ids": 1192,
+        "queen_innovation_NMI_vs_current_Mx4_F": {
+          "status": "measured",
+          "joint_defined": 1192,
+          "nmi": 0.7085241161587786,
+          "current_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 3,
+            "defined": 1192
+          },
+          "innovation_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 3,
+            "defined": 1192
+          }
+        },
+        "queen_remaining_variance_ratio": 0.024867456776590465
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "Mx4_F_defined_ids": 6003,
+        "Queen_S1_lag_defined_ids": 6003,
+        "rook_neighbors_min": 1,
+        "rook_neighbors_p50": 5.0,
+        "rook_neighbors_max": 26,
+        "rook_lag_defined_ids": 6003,
+        "rook_innovation_defined_ids": 6003,
+        "rook_innovation_undefined_ids": 0,
+        "rook_innovation_coverage_fraction": 1.0,
+        "rook_peer_count_min": 513,
+        "rook_peer_count_max": 3600,
+        "rook_lag_distribution_on_innovation_support": {
+          "n": 6003,
+          "min": 0.0,
+          "p05": 0.0,
+          "p50": 0.0,
+          "p95": 0.10477726666777439,
+          "max": 0.28039582838161387,
+          "mean": 0.021431254091641642,
+          "variance": 0.002512891717217748
+        },
+        "rook_innovation_distribution": {
+          "n": 6003,
+          "min": -0.10651555640012901,
+          "p05": -0.034970495303094165,
+          "p50": -0.0005570117072503782,
+          "p95": 0.01944442098950095,
+          "max": 0.15494639063939858,
+          "mean": -2.4042810794814317e-18,
+          "variance": 0.0005777169110234759
+        },
+        "rook_remaining_variance_ratio": 0.22990123572181576,
+        "rook_innovation_NMI_vs_current_Mx4_F": {
+          "status": "measured",
+          "joint_defined": 6003,
+          "nmi": 0.7367499224639329,
+          "current_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 5,
+            "defined": 6003
+          },
+          "innovation_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 6,
+            "defined": 6003
+          }
+        },
+        "queen_innovation_defined_ids": 6003,
+        "queen_innovation_NMI_vs_current_Mx4_F": {
+          "status": "measured",
+          "joint_defined": 6003,
+          "nmi": 0.7298232062503702,
+          "current_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 5,
+            "defined": 6003
+          },
+          "innovation_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 6,
+            "defined": 6003
+          }
+        },
+        "queen_remaining_variance_ratio": 0.2356042730983315
+      }
+    },
+    "geometry": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "rook_undirected_edges": 4133,
+        "isolated_tracts": 0,
+        "geometry_sha256": "e265354c31cb9968cba7ecc175c17635529dfe364c7636f2edebde74e97afbc1",
+        "provided_layer": "census-acs-housing",
+        "columns_read": [
+          "maricopa-az-census-acs-housing:GEOID,geometry"
+        ]
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "rook_undirected_edges": 1574,
+        "isolated_tracts": 0,
+        "geometry_sha256": "8903a14553ff7c70cdbeeaa72fb028b4f1eae85dda91d20d12a97af5076c3ddb",
+        "provided_layer": "census-acs-housing",
+        "columns_read": [
+          "northern-ca-census-acs-housing:GEOID,geometry"
+        ]
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "rook_undirected_edges": 3146,
+        "isolated_tracts": 0,
+        "geometry_sha256": "15ee42fee6037b3575604375cdee7932285690f101f1be0c953298794d910cdb",
+        "provided_layer": "census-acs-housing",
+        "columns_read": [
+          "eastern-ok-census-acs-housing:GEOID,geometry"
+        ]
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "rook_undirected_edges": 16147,
+        "isolated_tracts": 0,
+        "geometry_sha256": "4af398cb0fd2b8551ec17e2e568401ef3f79c28e4e79513718bf745e7428959e",
+        "provided_layer": "census-acs-housing",
+        "columns_read": [
+          "south-central-tx-census-acs-housing:GEOID,geometry"
+        ]
+      }
+    }
+  },
+  "acceptance_thresholds": {
+    "minimum_coverage_inclusive": 0.9859,
+    "minimum_remaining_variance_ratio_inclusive": 0.1,
+    "maximum_region_NMI_exclusive": 0.8,
+    "empirical_deciles": 10
+  },
+  "acceptance": {
+    "exact_9379_official_geoid_region_partition": true,
+    "rook_innovation_coverage_at_least_98_59_percent": true,
+    "pooled_rook_residual_variance_ratio_at_least_10_percent": true,
+    "maximum_region_rook_innovation_NMI_below_0_80": true,
+    "rook_graph_is_symmetric_and_self_excluding": true,
+    "provided_ACS_polygons_only": true,
+    "frozen_Queen_S1_Mx4_and_registry_unchanged": true,
+    "acceptance_pass": true
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "geometry_source": "Provided challenge package ACS housing tract layer, anonymous public Source Cooperative object path from frozen harness config",
+    "geometry_layer_columns": {
+      "maricopa-az": [
+        "maricopa-az-census-acs-housing:GEOID,geometry"
+      ],
+      "northern-ca": [
+        "northern-ca-census-acs-housing:GEOID,geometry"
+      ],
+      "eastern-ok": [
+        "eastern-ok-census-acs-housing:GEOID,geometry"
+      ],
+      "south-central-tx": [
+        "south-central-tx-census-acs-housing:GEOID,geometry"
+      ]
+    },
+    "geometry_wkb_sha256_by_region": {
+      "maricopa-az": "e265354c31cb9968cba7ecc175c17635529dfe364c7636f2edebde74e97afbc1",
+      "northern-ca": "8903a14553ff7c70cdbeeaa72fb028b4f1eae85dda91d20d12a97af5076c3ddb",
+      "eastern-ok": "15ee42fee6037b3575604375cdee7932285690f101f1be0c953298794d910cdb",
+      "south-central-tx": "4af398cb0fd2b8551ec17e2e568401ef3f79c28e4e79513718bf745e7428959e"
+    },
+    "frozen_input_artifacts": {
+      "Mx4": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx4.parquet",
+        "sha256": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+        "selected_emission_sha256": "13ca669c349b48e29003bdd71c40652da2659124e164880b62035d7a75e77f7c",
+        "sha256_after": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af"
+      },
+      "S1": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/S1.parquet",
+        "sha256": "632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03",
+        "selected_emission_sha256": "a42f98c3227968863f126484258b12274b3bf7e75255afc3b67e99a6ddee1195",
+        "sha256_after": "632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03"
+      }
+    },
+    "registry_sha256_before": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "registry_sha256_after": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "harness_report_sha256": "1203d2acf10fa9682852abba3382d55f53c42b6fa7c03071c44cbe915d3f7a85",
+    "preregistered_harness_config_sha256": "12a15e11cd0459299e407e5f1f7056fa16a6a8ddad5d7bfd826b20dbe476d558",
+    "script_sha256": "a84e2d1c5b571c6789a7c88da6796c2f9b0dbc3e907e0affb8fcc1ba8d6c3c4e"
+  },
+  "output_artifact": {
+    "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/s1-rook-mx4-innovation/s1-rook-mx4-innovation.parquet",
+    "rows": 9379,
+    "sha256": "b9b74f547515ee272f89dcee8b38197e2010565fa69e472218b8bc72038d8260",
+    "columns": [
+      "GEOID",
+      "region",
+      "Mx4_F",
+      "Mx4_F_defined",
+      "Queen_S1_lagged_Mx4_F",
+      "Queen_S1_lagged_Mx4_F_defined",
+      "rook_neighbor_count",
+      "rook_defined_neighbor_count",
+      "rook_lagged_Mx4_F",
+      "rook_lagged_Mx4_F_defined",
+      "current_Mx4_empirical_decile",
+      "peer_bin_mean_rook_Mx4_F",
+      "peer_count",
+      "rook_innovation",
+      "rook_innovation_defined"
+    ],
+    "deterministic_bytes": true
+  },
+  "interpretation": "The rook-neighbor innovation meets the registered distinctness gates; retain only as an unregistered sensitivity and do not modify or integrate frozen Queen S1 or Mx4."
+}
