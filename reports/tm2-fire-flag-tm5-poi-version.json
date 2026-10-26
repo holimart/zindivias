@@ -1,0 +1,206 @@
+{
+  "schema_version": 1,
+  "screen": "Validated Tm2×Tm3 binary recovery flag × normalized Tm5 POI p90-version; unregistered label-free interaction screen",
+  "definition": "v=clip(log1p(Tm5_POI_p90_version)/log1p(13),0,1); interaction=recovery_flag*v on exact joint-defined support. Flagged-only change is |interaction−recovery_flag|, evaluated only where flag=1 and Tm5 is defined.",
+  "method": {
+    "source_flag": "Use the completed frozen 9,362-defined Tm2×Tm3 recovery-flag artifact; validate its exact binary mask and all 30 GEOIDs against the source report, without recomputing or changing the flag.",
+    "Tm5_version": "Use only frozen Tm5 Est covariate:tm5_poi_p90_version, normalized by log1p(13) and clipped to [0,1].",
+    "mask": "Interaction is defined exactly on recovery_flag_defined AND Tm5_p90_version_defined; all other values remain null. Flagged-only metric is restricted to flag=1 on that joint support.",
+    "unregistered": true
+  },
+  "measure_before": {
+    "validated_recovery_flagged_ids": 30,
+    "recovery_flagged_regions": 4,
+    "tm5_p90_version_defined_ids": 9377,
+    "tm5_p90_version_interaction_coverage_fraction": 0.9997867576500693,
+    "tm5_p90_version_mx4_p95_absolute_change": 0.9415887339401863,
+    "no_recovery_flag_x_poi_version_interaction_previously_measured": true,
+    "recovery_flag_report_sha256": "72102e0cec6497af698246782db5437b71af90570d7bf0dc52ff6cb31a572b98",
+    "tm5_version_screen_report_sha256": "b3bda1e4e76fef1447d0df9415d07676637559f0b21c1ca8761ab5178297814b"
+  },
+  "scope": {
+    "official_ids": 9379,
+    "exact_official_id_alignment": true,
+    "recovery_flag_defined_ids": 9362,
+    "recovery_flag_positive_ids": 30,
+    "recovery_flag_undefined_ids": 17,
+    "tm5_p90_version_defined_ids": 9377,
+    "joint_defined_ids": 9362,
+    "joint_undefined_ids": 17,
+    "coverage_fraction": 0.9981874400255891,
+    "flagged_joint_ids": 30,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "Tm1_or_Tm4_inputs_or_artifacts_read": false,
+    "removed_or_equivalent_reference_data_read": false,
+    "external_data_read": false,
+    "leaderboard_feedback_used": false,
+    "registry_integration": false,
+    "frozen_Tm5_or_recovery_flag_modified": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "normalized_version_distribution_on_joint_support": {
+      "n": 9362,
+      "min": 0.2626495350371935,
+      "p50": 0.9086181061280519,
+      "p90": 0.9415887339401863,
+      "p95": 0.9415887339401863,
+      "max": 1.0,
+      "mean": 0.9135735094580046
+    },
+    "interaction_distribution_on_joint_support": {
+      "n": 9362,
+      "min": 0.0,
+      "p50": 0.0,
+      "p90": 0.0,
+      "p95": 0.0,
+      "max": 0.9415887339401863,
+      "mean": 0.002918322989820451
+    },
+    "flagged_only_absolute_change_from_binary_flag": {
+      "n": 30,
+      "min": 0.05841126605981373,
+      "p50": 0.09138189387194806,
+      "p90": 0.09138189387194806,
+      "p95": 0.09138189387194806,
+      "max": 0.1274971304508441,
+      "mean": 0.08928867231003118
+    },
+    "flagged_only_p95_absolute_change_from_flag": 0.09138189387194806,
+    "version_clip_count": 0,
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "recovery_flag_defined_ids": 1588,
+        "recovery_flag_positive_ids": 8,
+        "tm5_p90_version_defined_ids": 1593,
+        "joint_defined_ids": 1588,
+        "joint_coverage_fraction": 0.9968612680477087,
+        "flagged_joint_ids": 8,
+        "flagged_only_absolute_change_from_flag": {
+          "n": 8,
+          "min": 0.05841126605981373,
+          "p50": 0.09138189387194806,
+          "p90": 0.09138189387194806,
+          "p95": 0.09138189387194806,
+          "max": 0.09138189387194806,
+          "mean": 0.08313923691891448
+        }
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "recovery_flag_defined_ids": 591,
+        "recovery_flag_positive_ids": 7,
+        "tm5_p90_version_defined_ids": 591,
+        "joint_defined_ids": 591,
+        "joint_coverage_fraction": 1.0,
+        "flagged_joint_ids": 7,
+        "flagged_only_absolute_change_from_flag": {
+          "n": 7,
+          "min": 0.09138189387194806,
+          "p50": 0.09138189387194806,
+          "p90": 0.09138189387194806,
+          "p95": 0.09138189387194806,
+          "max": 0.09138189387194806,
+          "mean": 0.09138189387194806
+        }
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "recovery_flag_defined_ids": 1189,
+        "recovery_flag_positive_ids": 8,
+        "tm5_p90_version_defined_ids": 1192,
+        "joint_defined_ids": 1189,
+        "joint_coverage_fraction": 0.99748322147651,
+        "flagged_joint_ids": 8,
+        "flagged_only_absolute_change_from_flag": {
+          "n": 8,
+          "min": 0.09138189387194806,
+          "p50": 0.09138189387194806,
+          "p90": 0.10221646484561686,
+          "p95": 0.11485679764823047,
+          "max": 0.1274971304508441,
+          "mean": 0.09589629844431007
+        }
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "recovery_flag_defined_ids": 5994,
+        "recovery_flag_positive_ids": 7,
+        "tm5_p90_version_defined_ids": 6001,
+        "joint_defined_ids": 5994,
+        "joint_coverage_fraction": 0.9985007496251874,
+        "flagged_joint_ids": 7,
+        "flagged_only_absolute_change_from_flag": {
+          "n": 7,
+          "min": 0.05841126605981373,
+          "p50": 0.09138189387194806,
+          "p90": 0.09138189387194806,
+          "p95": 0.09138189387194806,
+          "max": 0.09138189387194806,
+          "mean": 0.0866718041845003
+        }
+      }
+    }
+  },
+  "thresholds": {
+    "minimum_joint_coverage_inclusive": 0.9859,
+    "interaction_bounds_inclusive": [
+      0.0,
+      1.0
+    ],
+    "minimum_flagged_only_p95_absolute_change_inclusive": 0.01
+  },
+  "acceptance": {
+    "exact_9379_official_id_alignment": true,
+    "exact_binary_flag_and_joint_source_mask_alignment": true,
+    "validated_30_flags_align_with_source_geoid_list": true,
+    "joint_coverage_fraction": 0.9981874400255891,
+    "coverage_at_least_98_59_percent": true,
+    "interaction_finite_and_bounded_0_1": true,
+    "flagged_joint_ids": 30,
+    "flagged_only_p95_absolute_change_from_flag": 0.09138189387194806,
+    "flagged_only_p95_change_at_least_0_01": true,
+    "frozen_Tm5_flag_artifact_and_registry_unchanged": true,
+    "screen_pass": true
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "7138951b53cecabf981295c57ae067a73785c7c94f2a0d4bad2614d5a61c3ab9",
+    "source_flag_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/tm2-fire-recovery-flag/tm2-fire-recovery-flag.parquet",
+      "sha256_before": "5a51033b3c8c6cec395f5f51c6f86bd6d60e3c95098b5586ae13ca946e09d133",
+      "sha256_after": "5a51033b3c8c6cec395f5f51c6f86bd6d60e3c95098b5586ae13ca946e09d133"
+    },
+    "Tm5_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Tm5.parquet",
+      "sha256_before": "ae363dff82f4ee47546485f45cd71250150a402479718795b0247585efdfe45e",
+      "sha256_after": "ae363dff82f4ee47546485f45cd71250150a402479718795b0247585efdfe45e",
+      "p90_version_emission_sha256": "fb120409c05b33cefe486745ec9f44e6e76760041e7f69b7a757800975f47d8c"
+    },
+    "recovery_flag_report_sha256": "72102e0cec6497af698246782db5437b71af90570d7bf0dc52ff6cb31a572b98",
+    "tm5_version_report_sha256": "b3bda1e4e76fef1447d0df9415d07676637559f0b21c1ca8761ab5178297814b",
+    "registry_sha256_before": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "registry_sha256_after": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "script_sha256": "aa2823b2f75040f49d19615bb32099a016cf7c35223d437381f7ac0a62ce8be0",
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/tm2-fire-flag-tm5-poi-version/flag-version-interaction.parquet",
+      "rows": 9379,
+      "sha256": "2db8989a57c4ca6e1295e84d1bb5dad4eea8d42b0fb6d67d66401948ad50fd09",
+      "columns": [
+        "GEOID",
+        "region",
+        "recovery_flag",
+        "recovery_flag_defined",
+        "tm5_poi_p90_version",
+        "tm5_poi_p90_version_defined",
+        "tm5_poi_p90_version_normalized",
+        "recovery_flag_x_normalized_version",
+        "interaction_change_from_binary_flag",
+        "interaction_defined"
+      ],
+      "deterministic_bytes": true
+    }
+  },
+  "interpretation": "The preregistered flagged-only interaction screen passes the requested coverage, mask, bounds and effect gates; retain as an unregistered sensitivity, with no promotion or estimator change."
+}
