@@ -902,6 +902,54 @@
       "probability_mapping": "P(any facility type defined)=1-product_k exp(-n_k), where n_k is the count of provided non-Microsoft building-class/name witnesses for types with zero provided Overture place count; unit-rate Poisson soft proxy, not calibrated",
       "note": "Cross-theme facility witnesses; exclusive OSM/Esri buildings and non-Microsoft Overture POI points only. Emits the preregistered soft facility-definedness proxy for later Sca5 use."
     },
+    "X3": {
+      "component": "Est",
+      "kind": "covariate",
+      "building_layer": "buildings",
+      "building_columns": [
+        "sources",
+        "class",
+        "geometry"
+      ],
+      "poi_layer": "pois",
+      "poi_columns": [
+        "sources",
+        "categories",
+        "geometry"
+      ],
+      "commercial_building_classes": [
+        "commercial",
+        "retail",
+        "industrial",
+        "office",
+        "warehouse"
+      ],
+      "commercial_poi_categories": [
+        "retail",
+        "shop",
+        "office",
+        "shopping_mall",
+        "department_store",
+        "supermarket",
+        "warehouse",
+        "industrial",
+        "manufacturing",
+        "factory",
+        "bank",
+        "restaurant",
+        "bar",
+        "cafe",
+        "fast_food",
+        "hotel",
+        "automotive_dealership",
+        "car_repair",
+        "pharmacy",
+        "grocery_store"
+      ],
+      "large_building_area_m2": 1000.0,
+      "poi_distance_m": 30.0,
+      "note": "Commercial/retail/industrial/office footprints lacking a provided commercial Overture POI within 30m; local occupied-building POI-per-area rate projects expected missing establishments. Large footprints qualify only in tracts with commercial Overture POIs."
+    },
     "X5": {
       "components": [
         "R",

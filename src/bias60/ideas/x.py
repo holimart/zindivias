@@ -110,6 +110,84 @@ def _read_x1(inputs, seed):
     return witnesses, counts, {"buildings": building_meta, "pois": poi_meta}
 
 
+def _x3_commercial_class(value: Any, seed: dict[str, Any]) -> bool:
+    cls = str(value or "").casefold().replace("-", "_").replace(" ", "_")
+    return cls in set(seed["commercial_building_classes"])
+
+
+def x3_expected_missing(empty_area: np.ndarray, occupied_area: np.ndarray,
+                        occupied_places: np.ndarray) -> np.ndarray:
+    empty = np.asarray(empty_area, dtype=np.float64); occupied = np.asarray(occupied_area, dtype=np.float64)
+    places = np.asarray(occupied_places, dtype=np.float64)
+    if empty.shape != occupied.shape or empty.shape != places.shape or np.any(empty < 0) or np.any(occupied < 0) or np.any(places < 0):
+        raise ValueError("X3 areas and occupied-place counts must be aligned nonnegative arrays")
+    return empty * np.divide(places, occupied, out=np.zeros_like(empty), where=occupied > 0)
+
+
+@implements("X3")
+def x3(inputs) -> IdeaOutput:
+    import pyarrow.parquet as pq
+    import shapely
+    from pyproj import Transformer
+    seed = inputs.config["seeds"]["X3"]
+    transformer = Transformer.from_crs("EPSG:4326", "EPSG:5070", always_xy=True)
+    tracts = shapely.transform(inputs.tract_geometries(), transformer.transform, interleaved=False)
+    tract_tree = shapely.STRtree(tracts); n = len(inputs.geoids)
+    poi_path = inputs.layer_path("pois"); poi_cols = seed["poi_columns"]
+    poi_pf = pq.ParquetFile(inputs.filesystem.open_input_file(poi_path)); ems_points=[]; poi_tract_counts=np.zeros(n,dtype=np.int32)
+    inputs.accessed["parquet_columns"].extend(f"{inputs.region}-overture-pois.parquet:{c}" for c in poi_cols)
+    for rg in range(poi_pf.metadata.num_row_groups):
+        tab=poi_pf.read_row_group(rg,columns=poi_cols); src=tab.column("sources").to_pylist()
+        cats=tab.column("categories").to_pylist(); wkbs=tab.column("geometry").to_pylist()
+        keep=[i for i,w in enumerate(wkbs) if w is not None and _rule_clean_poi(src[i]) and cats[i]
+              and cats[i].get("primary") in set(seed["commercial_poi_categories"])]
+        if keep:
+            points=shapely.from_wkb([wkbs[i] for i in keep]); points=shapely.transform(points,transformer.transform,interleaved=False)
+            left,right=tract_tree.query(points,predicate="within")
+            np.add.at(poi_tract_counts,right,1);ems_points.extend(list(points))
+    poi_tree=shapely.STRtree(ems_points) if ems_points else None
+    mixed=poi_tract_counts>0
+    total_area=np.zeros(n);empty_area=np.zeros(n);occupied_area=np.zeros(n);occupied_places=np.zeros(n)
+    building_path=inputs.layer_path("buildings"); bcols=seed["building_columns"]
+    bpf=pq.ParquetFile(inputs.filesystem.open_input_file(building_path))
+    missing=sorted(set(bcols)-set(bpf.schema_arrow.names))
+    if missing:raise ValueError(f"buildings lack X3 columns {missing}")
+    inputs.accessed["parquet_columns"].extend(f"{inputs.region}-overture-buildings.parquet:{c}" for c in bcols)
+    scanned=candidates=occupied=0;assignments=0
+    for rg in range(bpf.metadata.num_row_groups):
+        tab=bpf.read_row_group(rg,columns=bcols);src=tab.column("sources").to_pylist();classes=tab.column("class").to_pylist()
+        wkbs=tab.column("geometry").to_pylist();scanned+=len(wkbs)
+        keep=[i for i,w in enumerate(wkbs) if w is not None and _rule_clean_building(src[i])]
+        if not keep:continue
+        geoms=shapely.from_wkb([wkbs[i] for i in keep]);geoms=shapely.transform(geoms,transformer.transform,interleaved=False)
+        areas=np.asarray(shapely.area(geoms),dtype=np.float64);centers=shapely.centroid(geoms)
+        left,right=tract_tree.query(centers,predicate="within");assignments+=len(left)
+        if not len(left):continue
+        near_building=np.zeros(len(keep),dtype=bool);near_count=np.zeros(len(keep),dtype=np.int32)
+        if poi_tree is not None:
+            pairs=poi_tree.query(centers,predicate="dwithin",distance=float(seed["poi_distance_m"]))
+            if pairs.size:
+                near_building[pairs[0]]=True;np.add.at(near_count,pairs[0],1)
+        for local,tract_id in zip(left.tolist(),right.tolist()):
+            original=keep[local];tract_id=int(tract_id)
+            is_commercial=_x3_commercial_class(classes[original],seed)
+            is_candidate=is_commercial or (areas[local]>=float(seed["large_building_area_m2"]) and mixed[tract_id])
+            if not is_candidate:continue
+            candidates+=1;total_area[tract_id]+=areas[local]
+            if near_building[local]:
+                occupied+=1;occupied_area[tract_id]+=areas[local];occupied_places[tract_id]+=max(1,int(near_count[local]))
+            else:empty_area[tract_id]+=areas[local]
+    share=np.divide(empty_area,total_area,out=np.zeros_like(empty_area),where=total_area>0)
+    expected=x3_expected_missing(empty_area,occupied_area,occupied_places);defined=np.ones(n,dtype=np.bool_)
+    return IdeaOutput("X3",inputs.region,list(inputs.geoids),
+        [Emission("Est","covariate",expected,defined)],
+        {"rows":n,"defined":n,"empty_commercial_area_share":quantiles(share),"expected_missing_establishments":quantiles(expected),
+         "commercial_candidates":candidates,"occupied_commercial_buildings":occupied,"buildings_scanned":scanned,
+         "assigned_building_centroids":assignments,"provided_commercial_pois":int(poi_tract_counts.sum()),
+         "poi_distance_m":float(seed["poi_distance_m"]),"large_building_area_m2":float(seed["large_building_area_m2"]),
+         "commercial_classes":sorted(seed["commercial_building_classes"]),"microsoft_membership_used":False})
+
+
 def _x5_semantics(feature_class: Any, subtype: Any, names: Any, source_tags: Any) -> tuple[bool, bool]:
     """Return (highway-number bridge/toll, emergency/helipad) semantic witnesses."""
     tag_text = " ".join(_strings(source_tags))

@@ -10,7 +10,8 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from bias60.ideas.x import (_facility_type, _x5_semantics, soft_facility_definedness)  # noqa: E402
+from bias60.ideas.x import (_facility_type, _x3_commercial_class, _x5_semantics,
+                            soft_facility_definedness, x3_expected_missing)  # noqa: E402
 
 
 class X1ProbabilityTests(unittest.TestCase):
@@ -26,6 +27,15 @@ class X1ProbabilityTests(unittest.TestCase):
         with self.assertRaises(ValueError): soft_facility_definedness(np.array([[1., -1., 0.]]))
         with self.assertRaises(ValueError): soft_facility_definedness(np.ones((2, 2)))
         with self.assertRaises(ValueError): soft_facility_definedness(np.array([[np.nan, 0., 0.]]))
+
+    def test_x3_class_and_expected_missing_rate(self) -> None:
+        seed = {"commercial_building_classes": ["commercial", "retail", "industrial", "office"]}
+        self.assertTrue(_x3_commercial_class("Retail", seed))
+        self.assertFalse(_x3_commercial_class("residential", seed))
+        np.testing.assert_allclose(x3_expected_missing(np.array([100.0, 20.0]),
+                                                       np.array([50.0, 0.0]),
+                                                       np.array([2.0, 0.0])),
+                                   np.array([4.0, 0.0]))
 
     def test_infrastructure_witness_rules(self) -> None:
         self.assertEqual(_x5_semantics("bridge", None, None, {"ref": "US 101"}), (True, False))
