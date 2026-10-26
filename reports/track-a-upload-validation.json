@@ -1,0 +1,90 @@
+{
+  "candidates": [
+    {
+      "artifact": "reports/candidates/A1_physical_equal.csv",
+      "candidate_id": "A1_physical_equal",
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "finite_bounded_score_fields": true,
+      "no_duplicate_or_missing_ids": true,
+      "official_ids": 9379,
+      "rows": 9794,
+      "sha256": "6af088b83ff3481d420e11b14d903fc510c2b4be2cea285c762ca12d500862de",
+      "template_order_exact": true
+    },
+    {
+      "artifact": "reports/candidates/A2_spectral.csv",
+      "candidate_id": "A2_spectral",
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "finite_bounded_score_fields": true,
+      "no_duplicate_or_missing_ids": true,
+      "official_ids": 9379,
+      "rows": 9794,
+      "sha256": "f88573996566a1975726845a49f42fb2cd3781d5f0e83d55944fc65647692997",
+      "template_order_exact": true
+    },
+    {
+      "artifact": "reports/candidates/A3_dawid_skene.csv",
+      "candidate_id": "A3_dawid_skene",
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "finite_bounded_score_fields": true,
+      "no_duplicate_or_missing_ids": true,
+      "official_ids": 9379,
+      "rows": 9794,
+      "sha256": "6d588f2f7a45a58b128860a049ac19995b21902f7f98d3b2ab39d1d9fbb073b3",
+      "template_order_exact": true
+    },
+    {
+      "artifact": "reports/candidates/V2_model.csv",
+      "candidate_id": "V2_model",
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "finite_bounded_score_fields": true,
+      "no_duplicate_or_missing_ids": true,
+      "official_ids": 9379,
+      "rows": 9794,
+      "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12",
+      "template_order_exact": true
+    }
+  ],
+  "profile": {
+    "command": "python3 scripts/validate_track_a_upload_candidates.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/track-a-upload-validation.json",
+    "max_rss_kib": 28920,
+    "platform": "Linux-7.0.0-31-generic-x86_64-with-glibc2.39",
+    "python": "3.12.3",
+    "system_cpu_seconds": 0.014833999999999996,
+    "user_cpu_seconds": 0.27858199999999994,
+    "wall_seconds": 0.301048400811851
+  },
+  "sample_inputs": "Only GEOID was read from the four authoritative regional sample CSVs; no score columns/placeholders were accessed.",
+  "schema_version": 1,
+  "scope": {
+    "official_ids": 9379,
+    "template_ids": 9794,
+    "template_only_rows": 415
+  },
+  "status": "all_gates_passed",
+  "template_input": "Only GEOID was read from SampleSubmission.csv; no score columns were accessed."
+}
