@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""Measure whether the external lab can be built at all, before the build spends its bandwidth.
+"""Measure lab prerequisites and reconcile county-rule variants with the builder's retrieval policy.
 
 Two public measurements decide that. First, does every source registered in
 ``config/bias60-lab-preregistered.json`` answer an anonymous request today (HEAD only: a status and a
 length, never a byte of content, never a credential)? Second, once the frozen spec 4.1 exclusion runs
 on *real* census geography - every official GEOID, every platform-template GEOID and an 8 km neighbour
 buffer around every study tract - does each planned lab group still hold enough candidate tracts to be
-a cross-validation fold?
+a cross-validation fold under both county-rule settings, and does ``ready`` match the build's shared
+county-exclusion setting?
 
 Only public Census tract geography is downloaded here. Nothing in this script fetches a removed
 reference layer (TIGER PRISECRROADS or ROADS, Microsoft or Google building footprints, USGS structures,
@@ -22,6 +23,7 @@ import os
 import sys
 import urllib.error
 import urllib.request
+from dataclasses import replace
 from pathlib import Path
 from typing import Any, Callable
 
@@ -177,6 +179,50 @@ def read_tract_records(zip_path: Path, config: dict[str, Any]) -> list[dict[str,
     return out
 
 
+def read_candidate_tract_records(zip_path: Path, config: dict[str, Any]) -> list[dict[str, Any]]:
+    """Use the build's projected polygon representative point for each candidate tract."""
+    import shapefile
+    import shapely as _shapely
+    from pyproj import Transformer
+    from shapely.geometry import shape
+
+    record(zip_path)
+    reader = shapefile.Reader(str(zip_path))
+    names = [str(entry[0]).upper() for entry in reader.fields[1:]]
+    fields = {name: index for index, name in enumerate(names)}
+    geoid_name = next((name for name in ("GEOID", "GEOID20", "TRACTA_GEO") if name in fields), None)
+    if geoid_name is None:
+        raise ValueError(f"{zip_path.name} has no GEOID field; has {sorted(fields)}")
+    county_name = next((name for name in ("COUNTYFP", "COUNTYFP20") if name in fields), None)
+    state_name = next((name for name in ("STATEFP", "STATEFP20") if name in fields), None)
+    transformer = Transformer.from_crs("EPSG:4326", config["geometry_source"]["projection"],
+                                       always_xy=True)
+
+    def project(geometry):
+        import numpy as _numpy
+
+        def map_coordinates(coordinates):
+            x_values, y_values = transformer.transform(coordinates[:, 0], coordinates[:, 1])
+            return _numpy.column_stack((x_values, y_values))
+        return _shapely.transform(geometry, map_coordinates)
+
+    out: list[dict[str, Any]] = []
+    for shape_record in reader.iterShapeRecords():
+        values = shape_record.record
+        geoid = str(values[fields[geoid_name]] or "").strip()
+        if len(geoid) not in (11, 13, 14) or not geoid.isdigit():
+            continue
+        county = (str(values[fields[county_name]] or "").strip().zfill(3)
+                  if county_name else geoid[2:5])
+        if state_name:
+            county = str(values[fields[state_name]] or "").strip().zfill(2) + county
+        polygon = project(shape(shape_record.shape.__geo_interface__))
+        point = polygon.representative_point()
+        out.append({"geoid": geoid, "county_fips": county,
+                    "centroid": (float(point.x), float(point.y))})
+    return out
+
+
 def project_points(records: list[dict[str, Any]], crs: str) -> list[tuple[float, float]]:
     from pyproj import Transformer
 
@@ -290,25 +336,32 @@ def probe(config: dict[str, Any], lab_config: dict[str, Any], workspace: Path, c
           get: Callable[..., dict[str, Any]] = http_get,
           records_for_state: Callable[[str], list[dict[str, Any]]] | None = None,
           tamper: str | None = None) -> dict[str, Any]:
-    """Fetch what is public, run the frozen exclusion on it, and describe what survived."""
+    """Fetch public tract geometry and compare both county rules against the build policy."""
     geometry = config["geometry_source"]
     workspace, cache = Path(workspace), Path(cache)
     downloads: list[dict[str, Any]] = []
-    state_cache: dict[str, list[dict[str, Any]]] = {}
+    state_files: dict[str, dict[str, Any]] = {}
+    study_cache: dict[str, list[dict[str, Any]]] = {}
+    candidate_cache: dict[str, list[dict[str, Any]]] = {}
 
-    def fetch_state(state: str) -> list[dict[str, Any]]:
-        if state in state_cache:
-            return state_cache[state]
-        # the download is always recorded, even when a test supplies the records, so the allowlist
-        # and no-reference-layer gates are exercised on the same code path the real run uses
-        url = geometry["url_pattern"].replace("<ss>", state)
-        record_file = get(url, cache, user_agent=geometry["user_agent"])
-        downloads.append(record_file)
+    def fetch_state(state: str, *, candidate: bool = False) -> list[dict[str, Any]]:
+        cache_for_role = candidate_cache if candidate else study_cache
+        if state in cache_for_role:
+            return cache_for_role[state]
+        if state not in state_files:
+            # the download is always recorded, even when a test supplies the records, so the
+            # allowlist and no-reference-layer gates use the real path
+            url = geometry["url_pattern"].replace("<ss>", state)
+            state_files[state] = get(url, cache, user_agent=geometry["user_agent"])
+            downloads.append(state_files[state])
+        record_file = state_files[state]
         if records_for_state is not None:
-            state_cache[state] = records_for_state(state)
+            cache_for_role[state] = [dict(entry) for entry in records_for_state(state)]
+        elif candidate:
+            cache_for_role[state] = read_candidate_tract_records(Path(record_file["path"]), config)
         else:
-            state_cache[state] = read_tract_records(Path(record_file["path"]), config)
-        return state_cache[state]
+            cache_for_role[state] = read_tract_records(Path(record_file["path"]), config)
+        return cache_for_role[state]
 
     base_policy = lab_plan.policy_from_config(lab_config, workspace, study_points=[])
     excluded_set = set(base_policy.excluded_geoids)
@@ -336,35 +389,64 @@ def probe(config: dict[str, Any], lab_config: dict[str, Any], workspace: Path, c
             county_exclusion_enabled=policy.county_exclusion_enabled)
 
     planned = {entry["id"]: entry for entry in lab_config["groups"]}
+    active_cv_groups = set(lab_config.get("cv_fold_amendment", {}).get("active_group_ids", []))
     groups: list[dict[str, Any]] = []
     for group_id in config["probe_groups"]:
         plan = planned[group_id]
         candidates: list[dict[str, Any]] = []
         for state in plan["states"]:
             state_fips = str(lab_config["state_fips_by_postal"].get(state, "")).zfill(2)
-            for entry in fetch_state(state_fips):
+            for entry in fetch_state(state_fips, candidate=True):
                 if plan.get("county_includes") and entry["county_fips"] not in plan["county_includes"]:
                     continue
                 candidates.append(entry)
-        centroids = project_points(candidates, geometry["projection"])
+        centroids = ([entry["centroid"] for entry in candidates]
+                     if candidates and all("centroid" in entry for entry in candidates)
+                     else project_points(candidates, geometry["projection"]))
         for entry, centroid in zip(candidates, centroids):
             entry["centroid"] = centroid
-        buckets = policy.partition(candidates)
-        accepted_index = {geoid for geoid in buckets["accepted"]}
-        accepted = [entry for entry in candidates if entry["geoid"] in accepted_index]
+        policy_off = replace(policy, county_exclusion_enabled=False)
+        policy_on = replace(policy, county_exclusion_enabled=True)
+        buckets_off = policy_off.partition(candidates)
+        buckets_on = policy_on.partition(candidates)
+        accepted_off = buckets_off["accepted"]
+        accepted_on = buckets_on["accepted"]
+        build_county_rule = lab_plan.BUILD_COUNTY_RULE_ENABLED_FOR_RETRIEVAL
+        accepted_build = accepted_on if build_county_rule else accepted_off
+        accepted_build_set = set(accepted_build)
+        accepted = [entry for entry in candidates if entry["geoid"] in accepted_build_set]
         distances = sorted(nearest_km([entry["centroid"] for entry in accepted], study_points))
+        floor = config["acceptance"]["minimum_accepted_tracts_per_group"]
+        active = group_id in active_cv_groups
         groups.append({
             "id": group_id, "label": plan.get("label"), "states": sorted(plan["states"]),
             "counties_declared": len(plan.get("county_includes") or []),
+            "reference_retrieval_shape": ("county_filtered" if plan.get(
+                "retrieval_must_be_county_filtered") else "state_level"),
+            "active_cv_candidate": active,
             "planned_approx_tracts": int(plan["approx_tracts"]),
             "candidates_found": len(candidates), "accepted": len(accepted),
+            "accepted_county_rule_off": len(accepted_off),
+            "accepted_county_rule_on": len(accepted_on),
+            "rejected_by_reason_county_rule_off": {reason: len(members) for reason, members in
+                                                    sorted(buckets_off.items())
+                                                    if reason != "accepted"},
+            "rejected_by_reason_county_rule_on": {reason: len(members) for reason, members in
+                                                   sorted(buckets_on.items())
+                                                   if reason != "accepted"},
             "accepted_geoids": sorted(entry["geoid"] for entry in accepted),
             "rejected_by_reason": {reason: len(members) for reason, members in
-                                   sorted(buckets.items()) if reason != "accepted"},
+                                   sorted((buckets_on if build_county_rule else buckets_off).items())
+                                   if reason != "accepted"},
             "accepted_min_distance_km": round(distances[0], 3) if distances else None,
             "accepted_median_distance_km": (round(distances[len(distances) // 2], 3)
                                             if distances else None),
-            "ready": len(accepted) >= config["acceptance"]["minimum_accepted_tracts_per_group"],
+            "tract_floor_passes_county_rule_off": len(accepted_off) >= floor,
+            "tract_floor_passes_county_rule_on": len(accepted_on) >= floor,
+            "ready_for_county_filtered_retrieval": active and len(accepted_off) >= floor,
+            "ready_for_state_level_retrieval": active and len(accepted_on) >= floor,
+            "build_county_rule_enabled_for_retrieval": build_county_rule,
+            "ready": active and len(accepted_build) >= floor,
         })
 
     sources = probe_sources(config, lab_config, head=head, cache=cache, reprobe=reprobe)
@@ -375,6 +457,10 @@ def probe(config: dict[str, Any], lab_config: dict[str, Any], workspace: Path, c
         sources[0]["credentials_used"] = True
     if tamper == "registered_source_skipped":
         sources = sources[1:]
+    if tamper == "build_policy_conflict":
+        target = next((group for group in groups if group["id"] == "AZ-R"), None)
+        if target is not None:
+            target["ready"] = True
     if tamper == "download_off_allowlist":
         downloads.append({"url": "https://example.invalid/some-table.zip", "path": "off-allowlist",
                           "bytes": 1, "sha256": "0" * 64})
@@ -396,6 +482,7 @@ def probe(config: dict[str, Any], lab_config: dict[str, Any], workspace: Path, c
             "spec_sha256_pin": config["spec"]["sha256"],
             "operator_decision_reference": config["operator_decision_reference"],
             "cv_fold_amendment": lab_config.get("cv_fold_amendment"),
+            "county_rule_comparison": config["acceptance"]["county_rule_comparison"],
             "source_replacements": config.get("source_replacements", []),
             "prohibitions": config["prohibitions"], "tamper_applied": tamper,
             "negative_controls_declared": [case["id"] for case in config["negative_controls"]],
@@ -424,6 +511,12 @@ def probe(config: dict[str, Any], lab_config: dict[str, Any], workspace: Path, c
                             "excluded_geoids_in_policy": len(base_policy.excluded_geoids)},
         "candidate_probe": {"groups": groups, "groups_probed": len(groups),
                             "groups_planned": len(config["probe_groups"]),
+                            "build_policy": {
+                                "county_rule_enabled_for_retrieval":
+                                    lab_plan.BUILD_COUNTY_RULE_ENABLED_FOR_RETRIEVAL,
+                                "shared_policy_constant":
+                                    "bias60.lab_plan.BUILD_COUNTY_RULE_ENABLED_FOR_RETRIEVAL",
+                            },
                             "minimum_accepted_tracts_per_group":
                                 config["acceptance"]["minimum_accepted_tracts_per_group"]},
         "exclusion_policy": policy.summary(),
@@ -479,9 +572,10 @@ def evaluate_gates(report: dict[str, Any], config: dict[str, Any],
     cached_paths = [entry["path"] for entry in report["downloads"]["files"]]
     buffer_km = float(lab_config["exclusion_policy"]["centroid_buffer_km"])
     floor = config["acceptance"]["minimum_accepted_tracts_per_group"]
-    shorted = [group["id"] for group in groups if not group["ready"]]
-    undisclosed_shorts = sorted(set(shorted) - {entry["id"] for entry in
-                                                findings["group_shortfalls"]})
+    active_shortfalls = [group["id"] for group in groups
+                         if group["active_cv_candidate"] and group["accepted"] < floor]
+    undisclosed_shorts = sorted(set(active_shortfalls) - {entry["id"] for entry in
+                                                          findings["group_shortfalls"]})
     unanswered = [entry["id"] for entry in report["sources"]["probed"]
                   if entry.get("status") != 200]
     hidden = sorted(set(unanswered) - {entry["id"] for entry in findings["sources_not_answered"]}
@@ -519,19 +613,44 @@ def evaluate_gates(report: dict[str, Any], config: dict[str, Any],
         "no_accepted_tract_within_buffer": bool(groups) and all(
             group["accepted_min_distance_km"] is None
             or group["accepted_min_distance_km"] > buffer_km for group in groups),
-        "every_planned_group_measured": len(groups) >= config["acceptance"][
-            "minimum_groups_probed"] and all(group["candidates_found"] >= 0 for group in groups),
+        "every_planned_group_measured": len(groups) == len(config["probe_groups"])
+        and {group["id"] for group in groups} == set(config["probe_groups"])
+        and len(groups) >= config["acceptance"]["minimum_groups_probed"],
         "active_cv_groups_match_amendment": (
-            sorted(config["probe_groups"])
-            == sorted(lab_config.get("cv_fold_amendment", {}).get("active_group_ids", []))
-            and len(groups) >= config["acceptance"]["minimum_groups_probed"]
-            and not (set(config["probe_groups"])
+            set(lab_config.get("cv_fold_amendment", {}).get("active_group_ids", []))
+            <= set(config["probe_groups"])
+            and {entry["id"] for entry in
+                 lab_config.get("cv_fold_amendment", {}).get("excluded_from_cv", [])}
+            <= set(config["probe_groups"])
+            and not (set(lab_config.get("cv_fold_amendment", {}).get("active_group_ids", []))
                      & {entry["id"] for entry in
                         lab_config.get("cv_fold_amendment", {}).get("excluded_from_cv", [])})),
-        "shortfalls_disclosed": not undisclosed_shorts and (
-            findings["lab_plan_needs_amendment"] is bool(shorted or findings["sources_not_answered"])
-            or findings["lab_plan_needs_amendment"] is True) and all(
-            entry["accepted"] < floor for entry in findings["group_shortfalls"]),
+        "agrees_with_the_build_policy": (
+            all(group["build_county_rule_enabled_for_retrieval"]
+                is lab_plan.BUILD_COUNTY_RULE_ENABLED_FOR_RETRIEVAL
+                and 0 <= group["accepted_county_rule_on"]
+                <= group["accepted_county_rule_off"] <= group["candidates_found"]
+                and group["accepted"] == group[
+                    "accepted_county_rule_on" if lab_plan.BUILD_COUNTY_RULE_ENABLED_FOR_RETRIEVAL
+                    else "accepted_county_rule_off"]
+                and group["tract_floor_passes_county_rule_off"] == (
+                    group["accepted_county_rule_off"] >= floor)
+                and group["tract_floor_passes_county_rule_on"] == (
+                    group["accepted_county_rule_on"] >= floor)
+                and group["ready_for_county_filtered_retrieval"] == (
+                    group["active_cv_candidate"]
+                    and group["tract_floor_passes_county_rule_off"])
+                and group["ready_for_state_level_retrieval"] == (
+                    group["active_cv_candidate"]
+                    and group["tract_floor_passes_county_rule_on"])
+                and group["ready"] == (
+                    group["active_cv_candidate"]
+                    and group["accepted"] >= floor)
+                for group in groups)),
+        "shortfalls_disclosed": not undisclosed_shorts
+        and findings["lab_plan_needs_amendment"] is bool(
+            active_shortfalls or findings["sources_not_answered"])
+        and all(entry["accepted"] < floor for entry in findings["group_shortfalls"]),
         "source_availability_disclosed": not hidden,
         "negative_controls_declared": bool(report["preregistration"]["negative_controls_declared"]),
         "no_lab_artifact_written": not any(Path(entry["path"]).name in lab_eval.ARTIFACTS
@@ -583,6 +702,7 @@ def build_report(config: dict[str, Any], *, workspace: Path,
     probed_groups = report["candidate_probe"]["groups"]
     if tamper == "group_without_survivors_reported_as_ready" and probed_groups:
         probed_groups[0]["accepted"] = floor - 1
+        probed_groups[0]["accepted_county_rule_on"] = floor - 1
         probed_groups[0]["ready"] = False
     if tamper == "source_unavailability_hidden" and report["sources"]["probed"]:
         report["sources"]["probed"][0]["status"] = 503
@@ -593,10 +713,12 @@ def build_report(config: dict[str, Any], *, workspace: Path,
         "minimum_accepted_tracts_per_group": floor,
         "group_shortfalls": [{"id": group["id"], "planned_approx_tracts":
                               group["planned_approx_tracts"], "accepted": group["accepted"],
-                              "floor": floor,
-                              "consequence": ("this group cannot be a leave-one-group-out fold as "
-                                              "frozen; the plan must widen its county list or the "
-                                              "group must be merged or dropped")}
+                              "floor": floor, "active_cv_candidate": group["active_cv_candidate"],
+                              "consequence": ("already excluded from the active CV plan by the "
+                                              "preregistered amendment; diagnostic only"
+                                              if not group["active_cv_candidate"] else
+                                              "this active group cannot be a leave-one-group-out fold "
+                                              "as frozen; amend its county list or drop it")}
                              for group in probed_groups if group["accepted"] < floor],
         "sources_not_answered": [{"id": entry["id"], "status": entry.get("status"),
                                   "meaning": entry.get("meaning", entry.get("error")),
@@ -614,25 +736,29 @@ def build_report(config: dict[str, Any], *, workspace: Path,
                                "ratio": (round(group["accepted"] / group["planned_approx_tracts"], 3)
                                          if group["planned_approx_tracts"] else None)}
                               for group in probed_groups
-                              if group["planned_approx_tracts"]
+                              if group["active_cv_candidate"]
+                              and group["planned_approx_tracts"]
                               and group["accepted"] < 0.5 * group["planned_approx_tracts"]],
     }
-    report["findings"]["lab_plan_needs_amendment"] = bool(report["findings"]["group_shortfalls"]
+    active_shortfalls = [entry for entry in report["findings"]["group_shortfalls"]
+                         if entry["active_cv_candidate"]]
+    report["findings"]["lab_plan_needs_amendment"] = bool(active_shortfalls
                                                           or report["findings"]["sources_not_answered"])
     if tamper == "group_without_survivors_reported_as_ready":
         report["findings"]["group_shortfalls"] = []
     if tamper == "source_unavailability_hidden":
         report["findings"]["sources_not_answered"] = []
     report["findings"]["verdict"] = (
-        "the frozen lab plan is not yet buildable as written: "
-        + ", ".join(sorted({entry["id"] for entry in report["findings"]["group_shortfalls"]})
-                    or "no group shortfall")
-        + " cannot be a fold and "
+        "the active amended CV plan is not buildable under the build exclusion: "
+        + ", ".join(sorted({entry["id"] for entry in active_shortfalls})
+                    or "no active group shortfall")
+        + " is below the fold floor and "
         + ", ".join(sorted(entry["id"] for entry in report["findings"]["sources_not_answered"])
-                    or "every source")
+                    or "every registered source")
         + " did not answer an anonymous request at its registered pattern"
         if report["findings"]["lab_plan_needs_amendment"] else
-        "the frozen lab plan is buildable as written on the groups probed")
+        "the active amended CV groups clear the build exclusion and source prerequisites; excluded "
+        "diagnostic groups remain reported separately")
     report["gates"] = evaluate_gates(report, config, lab_document, frozenset(base_excluded))
     report["gates"]["all_passed"] = all(value is True for value in report["gates"].values())
     groups = report["candidate_probe"]["groups"]
@@ -692,8 +818,11 @@ def render_markdown(report: dict[str, Any]) -> str:
              f"{report['study_geography']['projection']}",
              f"- Planned lab groups: {summary['groups_planned']}; probed: {summary['groups_probed']}; "
              f"with enough surviving tracts: {summary['groups_ready']}",
-             f"- Candidate tracts inspected: {summary['candidates_found']}; accepted by the frozen "
-             f"exclusion: {summary['candidates_accepted']}", "", "## Source availability", "",
+             f"- Candidate tracts inspected: {summary['candidates_found']}; accepted by the exact build "
+             f"county-rule policy: {summary['candidates_accepted']}", "",
+             f"- Build county rule enabled: "
+             f"{report['candidate_probe']['build_policy']['county_rule_enabled_for_retrieval']}",
+             "", "## Source availability", "",
              "| source | probe | status | meaning | bytes advertised | registered replacement |",
              "| --- | --- | --- | --- | --- | --- |"]
     for entry in report["sources"]["probed"]:
@@ -703,29 +832,32 @@ def render_markdown(report: dict[str, Any]) -> str:
                        str(entry.get("alternate_that_answers")))
         lines.append(f"| `{entry['id']}` | {entry.get('probe')} | {entry.get('status')} | {note} | "
                      f"{entry.get('content_length_bytes')} | {replacement} |")
-    lines += ["", "## Candidate tracts after the frozen exclusion", "",
-              "| group | states | counties | planned | candidates | accepted | rejected | "
-              "min km to a study tract | ready |",
-              "| --- | --- | --- | --- | --- | --- | --- | --- | --- |"]
+    lines += ["", "## Candidate tracts under both county-rule settings", "",
+              "`ready` uses the shared build setting and is false for groups excluded from active CV.", "",
+              "| group | active CV | retrieval shape | candidates | county rule off | county rule on | "
+              "accepted for build | min km to study | ready |",
+              "| --- | --- | --- | ---: | ---: | ---: | ---: | ---: | --- |"]
     reasons: dict[str, int] = {}
     for group in report["candidate_probe"]["groups"]:
         rejected = sum(group["rejected_by_reason"].values())
         for reason, count in group["rejected_by_reason"].items():
             reasons[reason] = reasons.get(reason, 0) + count
-        lines.append(f"| `{group['id']}` | {', '.join(group['states'])} | "
-                     f"{group['counties_declared']} | {group['planned_approx_tracts']} | "
-                     f"{group['candidates_found']} | {group['accepted']} | {rejected} | "
-                     f"{group['accepted_min_distance_km']} | "
+        lines.append(f"| `{group['id']}` | {'yes' if group['active_cv_candidate'] else 'no'} | "
+                     f"{group['reference_retrieval_shape']} | {group['candidates_found']} | "
+                     f"{group['accepted_county_rule_off']} | {group['accepted_county_rule_on']} | "
+                     f"{group['accepted']} | {group['accepted_min_distance_km']} | "
                      f"{'yes' if group['ready'] else 'no'} |")
     findings = report["findings"]
     lines += ["", "## Findings the build has to know", "",
               f"- Lab plan needs amendment: **{findings['lab_plan_needs_amendment']}**",
               f"- Verdict: {findings['verdict']}", ""]
     if findings["group_shortfalls"]:
-        lines += ["| group | planned | accepted | floor | consequence |", "| --- | --- | --- | --- | --- |"]
+        lines += ["| group | active CV | planned | build-policy accepted | floor | consequence |",
+                  "| --- | --- | --- | --- | --- | --- |"]
         for entry in findings["group_shortfalls"]:
-            lines.append(f"| `{entry['id']}` | {entry['planned_approx_tracts']} | "
-                         f"{entry['accepted']} | {entry['floor']} | {entry['consequence']} |")
+            lines.append(f"| `{entry['id']}` | {'yes' if entry['active_cv_candidate'] else 'no'} | "
+                         f"{entry['planned_approx_tracts']} | {entry['accepted']} | "
+                         f"{entry['floor']} | {entry['consequence']} |")
         lines.append("")
     if findings["groups_below_plan"]:
         lines += ["Groups far below their planned tract count (plan numbers to correct):", ""]

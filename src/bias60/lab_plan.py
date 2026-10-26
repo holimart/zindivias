@@ -41,6 +41,11 @@ REGION_LABELS = {"maricopa-az": "Maricopa AZ", "northern-ca": "Northern CA",
                  "eastern-ok": "Eastern OK", "south-central-tx": "South-Central TX"}
 STRATA_COLUMNS = ["GEOID", "STATEFP", "COUNTYFP"]
 
+# The build is intentionally stricter than the frozen candidate-selection plan: removed reference
+# layers are retrieved only for counties that contain no study package. Keep the probe and builder
+# bound to this one switch so readiness cannot drift from the retrieval safety rail.
+BUILD_COUNTY_RULE_ENABLED_FOR_RETRIEVAL = True
+
 
 # --------------------------------------------------------------------------- spec parsing
 def sha256_file(path: Path) -> str:

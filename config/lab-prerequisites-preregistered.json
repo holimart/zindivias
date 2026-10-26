@@ -41,13 +41,15 @@
     "53"
   ],
   "probe_groups": [
-    "NV",
-    "CO-UT",
-    "NM",
-    "LA",
-    "AR-KS",
     "TX-W",
-    "CA-F"
+    "AZ-R",
+    "OK-R",
+    "NM",
+    "CA-F",
+    "NV",
+    "AR-KS",
+    "CO-UT",
+    "LA"
   ],
   "cache_dir_name": "lab-prerequisites",
   "source_probe": {
@@ -71,6 +73,12 @@
   "acceptance": {
     "minimum_groups_probed": 5,
     "minimum_accepted_tracts_per_group": 30,
+    "county_rule_comparison": {
+      "off_count": "GEOID/template exclusion plus neighbour buffer, with whole-study-county exclusion disabled; diagnostic for county-filtered retrieval",
+      "on_count": "same policy with whole-study-county exclusion enabled; this is the current builder policy for retrieval",
+      "ready": "active CV candidate AND accepted under the shared BUILD_COUNTY_RULE_ENABLED_FOR_RETRIEVAL setting AND count >= minimum_accepted_tracts_per_group",
+      "counterfactual_readiness": "report county-rule-off floor result for county-filtered retrieval and county-rule-on floor result for state-level retrieval; do not substitute either for ready unless the builder policy changes"
+    },
     "note": "the floor is a finding, not a gate: a group below 30 accepted tracts cannot be a leave-one-group-out fold, and the report must say so loudly. 30 is what a per-group RMSE and whole-group bootstrap resampling need at a minimum; the planned counts are far larger, so a shortfall means the plan's county list is wrong, not that the floor is"
   },
   "prohibitions": {
@@ -145,6 +153,11 @@
       "mutation": "drop a group that fell below the fold floor from the disclosed shortfalls"
     },
     {
+      "id": "build_policy_conflict",
+      "expect_gate": "agrees_with_the_build_policy",
+      "mutation": "mark a group ready when the shared build county-rule policy rejects it below the fold floor"
+    },
+    {
       "id": "temporal_field_added",
       "expect_gate": "report_has_no_temporal_field",
       "mutation": "record a retrieval timestamp in the report"
@@ -203,6 +216,14 @@
       "reason": "the prior real-geography probe measured AZ-R at exactly the absolute 30-tract floor (30/170 planned) and OK-R at 13/130 because 1,192 candidates collide with official/template IDs. Both are removed from the active CV candidate set before retrieval; the seven remaining measured groups each exceed the floor.",
       "evidence_report": "reports/lab-prerequisites.json",
       "evidence_report_sha256_before_amendment": "cdde80d09bfdb4595787570238df5a36848277985f7d6e5cb5ae6887625b8825"
+    },
+    {
+      "field": "probe_groups",
+      "supersedes": ["NV", "CO-UT", "NM", "LA", "AR-KS", "TX-W", "CA-F"],
+      "added": ["TX-W", "AZ-R", "OK-R", "NM", "CA-F", "NV", "AR-KS", "CO-UT", "LA"],
+      "purpose": "measure all nine spec groups under both county-rule settings; AZ-R and OK-R remain excluded from CV and are diagnostic only",
+      "ready_policy": "ready means active for CV and accepted under the exact shared build county-exclusion setting; report both counterfactual county-rule-off and -on counts",
+      "authorized_by": "steward 2026-10-26 turn 42b15bb3-5f9f-45a1-8935-676efc88dd2b"
     }
   ],
   "source_replacements": [

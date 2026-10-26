@@ -1,7 +1,7 @@
 # Measure the preconditions of the external lab before the lab build spends its bandwidth: are the registered sources reachable, and do the planned lab groups still have tracts after the study exclusion runs on real census geography?
 
 - Plan: `lab-prerequisites` (backlog item `bias60-lab-evaluation`)
-- Preregistered configuration: `/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/config/lab-prerequisites-preregistered.json` (SHA-256 `76fbc11014b67b85…`)
+- Preregistered configuration: `/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/config/lab-prerequisites-preregistered.json` (SHA-256 `861ff3d45cddedcd…`)
 - Lab plan consumed: `/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/config/bias60-lab-preregistered.json`
 - Spec: `/home/martin/hddProjects/competitionsall/docs/research/bias-60-ideas-2026-10.md` (SHA-256 `f150649b34caebef…`, matches its pin: True)
 - Verdict: **PASS**
@@ -21,8 +21,10 @@
 - Registered sources: 10; answering 200 anonymously: 10; not probeable as registered: 0
 - Public census geography downloaded: 134365215 bytes across 12 files
 - Study interior points established: 9793 from 9793 matched study tracts in EPSG:5070
-- Planned lab groups: 7; probed: 7; with enough surviving tracts: 7
-- Candidate tracts inspected: 9800; accepted by the frozen exclusion: 9483
+- Planned lab groups: 9; probed: 9; with enough surviving tracts: 7
+- Candidate tracts inspected: 11099; accepted by the exact build county-rule policy: 9195
+
+- Build county rule enabled: True
 
 ## Source availability
 
@@ -39,34 +41,44 @@
 | `acs5_tract_housing_units` | attempted | 200 | reachable | 8531 | replaces `hud_usps_crosswalk ZIP-to-tract BUS_RATIO endpoint`: HUD endpoints returned HTTP 202 to anonymous HEAD; this reachable public ACS endpoint supports the already registered county-total x tract housing-unit-share variant without using BUS_RATIO |
 | `hospital_check` | attempted | 200 | reachable | 410 | replaces `unaddressable USGS Health/Medical structures or HIFLD source-family placeholder`: the previous source family had no URL and could not be probed; this exact public catalogue endpoint answers 200 without fetching dataset content |
 
-## Candidate tracts after the frozen exclusion
+## Candidate tracts under both county-rule settings
 
-| group | states | counties | planned | candidates | accepted | rejected | min km to a study tract | ready |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `NV` | NV | 2 | 700 | 674 | 674 | 0 | 33.707 | yes |
-| `CO-UT` | CO, UT | 0 | 2100 | 2163 | 2163 | 0 | 162.964 | yes |
-| `NM` | NM | 0 | 610 | 612 | 611 | 1 | 37.097 | yes |
-| `LA` | LA | 0 | 1300 | 1388 | 1388 | 0 | 66.36 | yes |
-| `AR-KS` | AR, KS | 0 | 1500 | 1652 | 1636 | 16 | 8.276 | yes |
-| `TX-W` | TX | 8 | 890 | 282 | 274 | 8 | 9.105 | yes |
-| `CA-F` | CA | 16 | 2500 | 3029 | 2737 | 292 | 8.026 | yes |
+`ready` uses the shared build setting and is false for groups excluded from active CV.
+
+| group | active CV | retrieval shape | candidates | county rule off | county rule on | accepted for build | min km to study | ready |
+| --- | --- | --- | ---: | ---: | ---: | ---: | ---: | --- |
+| `TX-W` | yes | county_filtered | 282 | 274 | 245 | 245 | 9.301 | yes |
+| `AZ-R` | no | county_filtered | 94 | 30 | 0 | 0 | None | no |
+| `OK-R` | no | county_filtered | 1205 | 13 | 12 | 12 | 28.306 | no |
+| `NM` | yes | county_filtered | 612 | 611 | 610 | 610 | 34.971 | yes |
+| `CA-F` | yes | county_filtered | 3029 | 2735 | 2468 | 2468 | 26.623 | yes |
+| `NV` | yes | state_level | 674 | 674 | 674 | 674 | 32.637 | yes |
+| `AR-KS` | yes | state_level | 1652 | 1635 | 1635 | 1635 | 8.293 | yes |
+| `CO-UT` | yes | state_level | 2163 | 2163 | 2163 | 2163 | 155.338 | yes |
+| `LA` | yes | state_level | 1388 | 1388 | 1388 | 1388 | 67.598 | yes |
 
 ## Findings the build has to know
 
 - Lab plan needs amendment: **False**
-- Verdict: the frozen lab plan is buildable as written on the groups probed
+- Verdict: the active amended CV groups clear the build exclusion and source prerequisites; excluded diagnostic groups remain reported separately
+
+| group | active CV | planned | build-policy accepted | floor | consequence |
+| --- | --- | --- | --- | --- | --- |
+| `AZ-R` | no | 170 | 0 | 30 | already excluded from the active CV plan by the preregistered amendment; diagnostic only |
+| `OK-R` | no | 130 | 12 | 30 | already excluded from the active CV plan by the preregistered amendment; diagnostic only |
 
 Groups far below their planned tract count (plan numbers to correct):
 
-- `TX-W`: planned 890, accepted 274 (ratio 0.308)
+- `TX-W`: planned 890, accepted 245 (ratio 0.275)
 
 - Excluded study GEOIDs with no interior point in the census file: 1
 
 
 ## Rejections by reason
 
-- `official_scored_or_template_geoid`: 213
-- `within_neighbour_buffer_of_study_tract`: 104
+- `official_scored_or_template_geoid`: 1464
+- `study_county`: 423
+- `within_neighbour_buffer_of_study_tract`: 17
 
 ## Exclusion policy as executed
 
@@ -83,6 +95,7 @@ Groups far below their planned tract count (plan numbers to correct):
 ## Gates
 
 - `active_cv_groups_match_amendment`: True
+- `agrees_with_the_build_policy`: True
 - `all_passed`: True
 - `all_registered_sources_probed`: True
 - `cache_outside_lab_root`: True

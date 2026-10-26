@@ -365,7 +365,8 @@ def build_tracts(group: dict[str, Any], config: dict[str, Any], *, budget: Budge
                                       study_states=base_policy.study_states,
                                       buffer_km=config["exclusion"]["buffer_km"],
                                       study_points=points, crs=crs,
-                                      county_exclusion_enabled=True)
+                                      county_exclusion_enabled=(
+                                          lab_plan.BUILD_COUNTY_RULE_ENABLED_FOR_RETRIEVAL))
     transformer = Transformer.from_crs("EPSG:4326", crs, always_xy=True)
 
     tracts: list[dict[str, Any]] = []
@@ -1151,7 +1152,7 @@ def build_report(config: dict[str, Any], *, manifests: list[dict[str, Any]],
             "min_nearest_study_tract_km": min((entry["min_nearest_study_tract_km"]
                                                for entry in measured), default=None),
             "county_rule": {
-                "enabled_for_this_build": True,
+                "enabled_for_this_build": lab_plan.BUILD_COUNTY_RULE_ENABLED_FOR_RETRIEVAL,
                 "default_in_the_frozen_plan": False,
                 "reason": "a state-level download of a removed reference layer necessarily covers the "
                           "study tracts inside it, so the build may only retrieve for a county that no "

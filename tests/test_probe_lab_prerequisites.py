@@ -182,32 +182,48 @@ class ContractTests(unittest.TestCase):
     def test_the_amended_probe_passes_with_seven_ready_cv_groups_and_live_sources(self) -> None:
         self.assertTrue(self.report["gates"]["all_passed"], self.report["gates"])
         self.assertFalse(self.report["findings"]["lab_plan_needs_amendment"])
-        self.assertEqual(self.report["findings"]["group_shortfalls"], [])
+        self.assertEqual({entry["id"] for entry in self.report["findings"]["group_shortfalls"]},
+                         {"AZ-R", "OK-R"})
+        self.assertFalse(any(entry["active_cv_candidate"] for entry in
+                             self.report["findings"]["group_shortfalls"]))
         self.assertEqual(self.report["findings"]["sources_not_answered"], [])
         self.assertEqual(self.report["findings"]["sources_not_probeable"], [])
         self.assertEqual(self.report["summary"]["groups_ready"], 7)
-        self.assertEqual(self.report["summary"]["groups_probed"], 7)
-        self.assertEqual(self.report["summary"]["groups_planned"], 7)
+        self.assertEqual(self.report["summary"]["groups_probed"], 9)
+        self.assertEqual(self.report["summary"]["groups_planned"], 9)
         self.assertTrue(self.report["gates"]["active_cv_groups_match_amendment"])
+        self.assertTrue(self.report["gates"]["agrees_with_the_build_policy"])
 
-    def test_the_amended_cv_groups_clear_the_floor_and_exclude_fragile_groups(self) -> None:
-        expected = {"NV", "CO-UT", "NM", "LA", "AR-KS", "TX-W", "CA-F"}
-        self.assertEqual(set(self.groups), expected)
-        self.assertEqual({group for group, entry in self.groups.items() if entry["ready"]}, expected)
-        self.assertNotIn("AZ-R", self.groups)
-        self.assertNotIn("OK-R", self.groups)
+    def test_both_county_rule_policies_are_reported_and_build_readiness_is_conservative(self) -> None:
+        active = {"NV", "CO-UT", "NM", "LA", "AR-KS", "TX-W", "CA-F"}
+        self.assertEqual(set(self.groups), active | {"AZ-R", "OK-R"})
+        self.assertEqual({group for group, entry in self.groups.items() if entry["ready"]}, active)
+        self.assertTrue(all(entry["accepted_county_rule_on"] <= entry["accepted_county_rule_off"]
+                            for entry in self.groups.values()))
+        self.assertEqual(self.groups["AZ-R"]["accepted_county_rule_off"], 30)
+        self.assertEqual(self.groups["AZ-R"]["accepted_county_rule_on"], 0)
+        self.assertTrue(self.groups["AZ-R"]["tract_floor_passes_county_rule_off"])
+        self.assertFalse(self.groups["AZ-R"]["ready_for_county_filtered_retrieval"])
+        self.assertFalse(self.groups["AZ-R"]["ready"])
+        self.assertFalse(self.groups["OK-R"]["ready"])
+        self.assertEqual(self.report["candidate_probe"]["build_policy"]
+                         ["county_rule_enabled_for_retrieval"], True)
         amendment = self.report["preregistration"]["cv_fold_amendment"]
         self.assertEqual(amendment["active_group_ids"],
                          ["NV", "CO-UT", "NM", "LA", "AR-KS", "TX-W", "CA-F"])
         self.assertEqual({entry["id"] for entry in amendment["excluded_from_cv"]},
                          {"AZ-R", "OK-R"})
+        for group_id in active:
+            self.assertTrue(self.groups[group_id]["active_cv_candidate"])
+        self.assertFalse(self.groups["AZ-R"]["active_cv_candidate"])
+        self.assertFalse(self.groups["OK-R"]["active_cv_candidate"])
         self.assertEqual(self.groups["NV"]["accepted"], 40)
         self.assertEqual(self.groups["CO-UT"]["accepted"], 50)
         self.assertEqual(self.groups["NM"]["accepted"], 40)
-        for group_id in expected:
+        for group_id in active:
             with self.subTest(group=group_id):
                 self.assertGreaterEqual(self.groups[group_id]["accepted"], 30)
-        for group_id in expected:
+        for group_id in active:
             with self.subTest(group=group_id):
                 distance = self.groups[group_id]["accepted_min_distance_km"]
                 self.assertTrue(distance is None or distance > 8.0,
@@ -290,6 +306,7 @@ class NegativeControlTests(unittest.TestCase):
             "official_geoid_accepted": "no_official_geoid_accepted",
             "study_points_dropped": "study_points_measured_from_public_geography",
             "group_without_survivors_reported_as_ready": "shortfalls_disclosed",
+            "build_policy_conflict": "agrees_with_the_build_policy",
             "temporal_field_added": "report_has_no_temporal_field",
             "source_unavailability_hidden": "source_availability_disclosed",
         })
@@ -340,6 +357,11 @@ class GeographyTests(unittest.TestCase):
             CONFIG_PATH.read_text(encoding="utf-8")))
         self.assertEqual([entry["geoid"] for entry in records], ["32003000100"])
         self.assertEqual(records[0]["county_fips"], "32003")
+        candidates = probe_module.read_candidate_tract_records(
+            zip_path, json.loads(CONFIG_PATH.read_text(encoding="utf-8")))
+        self.assertEqual([entry["geoid"] for entry in candidates],
+                         ["32003000100", "32003000200"])
+        self.assertTrue(all(len(entry["centroid"]) == 2 for entry in candidates))
 
     def test_a_shapefile_without_the_required_fields_raises(self) -> None:
         import shapefile
@@ -427,7 +449,7 @@ class CommittedArtifactTests(unittest.TestCase):
     def test_the_committed_report_matches_a_fresh_run_and_says_what_was_measured(self) -> None:
         document = json.loads(REPORT_PATH.read_text(encoding="utf-8"))
         self.assertTrue(document["gates"]["all_passed"])
-        self.assertEqual(document["summary"]["groups_probed"], 7)
+        self.assertEqual(document["summary"]["groups_probed"], 9)
         self.assertEqual(document["summary"]["groups_ready"], 7)
         self.assertEqual(document["summary"]["sources_not_answered"], 0)
         self.assertEqual(document["summary"]["sources_not_probeable"], 0)

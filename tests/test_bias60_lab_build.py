@@ -558,6 +558,21 @@ class CommittedArtifactTests(unittest.TestCase):
         self.assertEqual(completed.returncode, 0, completed.stdout + completed.stderr)
         self.assertIn("unchanged", completed.stdout)
 
+    def test_probe_build_policy_counts_match_staging_and_build_refusals(self) -> None:
+        prerequisite = json.loads((ROOT / "reports/lab-prerequisites.json").read_text())
+        probe_groups = {entry["id"]: entry for entry in
+                        prerequisite["candidate_probe"]["groups"]}
+        build_report = json.loads(REPORT_PATH.read_text(encoding="utf-8"))
+        self.assertTrue(lab_plan.BUILD_COUNTY_RULE_ENABLED_FOR_RETRIEVAL)
+        self.assertTrue(prerequisite["gates"]["agrees_with_the_build_policy"])
+        for measured in build_report["measurement"]["groups"]:
+            self.assertEqual(measured["accepted"],
+                             probe_groups[measured["group"]]["accepted_county_rule_on"])
+        for refused in build_report["groups_refused"]:
+            self.assertEqual(refused["measured"]["accepted"],
+                             probe_groups[refused["id"]]["accepted_county_rule_on"])
+            self.assertFalse(probe_groups[refused["id"]]["ready"], refused["id"])
+
     def test_the_committed_report_passes_its_own_gates(self) -> None:
         report = json.loads(REPORT_PATH.read_text(encoding="utf-8"))
         self.assertTrue(report["gates"]["all_passed"],

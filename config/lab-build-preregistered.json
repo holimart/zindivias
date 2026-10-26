@@ -19,8 +19,8 @@
     "lab_plan_config_sha256": "e7106107d63c5bd823c4b65fa3a32c5733cb02500ec5ee539cf99ddde01233cb",
     "prerequisite_report": "reports/lab-prerequisites.json",
     "lab_commit_source": "git rev-parse HEAD",
-    "prerequisite_report_sha256": "a2afb485cffa556ed248500111143d343dd3219db1e51b2951f544dcff6f2fc1",
-    "lab_plan_module_sha256": "e106db411a7289a3e76d750d99935756a99530b15b75e257e1bdcceac7377249"
+    "prerequisite_report_sha256": "53f5c1f382191fc500c085861f7fc4f0de802faa85e6b6d71b3a56c3c445e8bc",
+    "lab_plan_module_sha256": "ced26be151b1069888936aa3b28901b33b4ecad9bb4005fef82ab790fc0b98e6"
   },
   "operator_decision": {
     "decided": "2026-10-25T09:35Z",
@@ -353,6 +353,30 @@
       "supersedes": "cdde80d09bfdb4595787570238df5a36848277985f7d6e5cb5ae6887625b8825",
       "now": "a2afb485cffa556ed248500111143d343dd3219db1e51b2951f544dcff6f2fc1",
       "reason": "the lab-plan amendment retires AZ-R (30 of 170 candidates) and OK-R (13 of 130), replaces non-answering source endpoints, and the re-probe confirms all seven active CV groups clear the 30-tract floor and all ten source HEAD endpoints answer 200. Existing staging is unchanged; this pin makes subsequent build checks consume the amended readiness report."
+    },
+    {
+      "field": "pins.prerequisite_report_sha256",
+      "supersedes": "a2afb485cffa556ed248500111143d343dd3219db1e51b2951f544dcff6f2fc1",
+      "now": "6fa88ab78d7c05490099a4a2af3c3ef097ac73ab0de17b99eb08002dcebba8c9",
+      "reason": "the probe now measures all nine groups under county-rule-off and county-rule-on variants, and its ready flag follows the same county-exclusion switch used by the builder. It confirms the refused AZ-R is not ready under the build rule while retaining its 30-tract off-policy diagnostic."
+    },
+    {
+      "field": "pins.lab_plan_module_sha256",
+      "supersedes": "e106db411a7289a3e76d750d99935756a99530b15b75e257e1bdcceac7377249",
+      "now": "ced26be151b1069888936aa3b28901b33b4ecad9bb4005fef82ab790fc0b98e6",
+      "reason": "the builder and prerequisite probe now read one shared county-rule constant, preventing their exclusion verdicts from drifting while keeping the build's county rule enabled."
+    },
+    {
+      "field": "pins.prerequisite_report_sha256",
+      "supersedes": "6fa88ab78d7c05490099a4a2af3c3ef097ac73ab0de17b99eb08002dcebba8c9",
+      "now": "ed6a267c8372eb1733c405ff5f999ae3879e11f3b79dcbeedd1a84fd57182cb0",
+      "reason": "candidate exclusion now uses the builder's projected polygon representative point, eliminating a one-tract boundary disagreement in AR-KS; build and probe accepted counts now match for every staged group, and the refused AZ-R is explicitly not-ready."
+    },
+    {
+      "field": "pins.prerequisite_report_sha256",
+      "supersedes": "ed6a267c8372eb1733c405ff5f999ae3879e11f3b79dcbeedd1a84fd57182cb0",
+      "now": "53f5c1f382191fc500c085861f7fc4f0de802faa85e6b6d71b3a56c3c445e8bc",
+      "reason": "the final probe report limits planned-count shortfall flags to active CV groups while retaining the excluded AZ-R and OK-R policy diagnostics; all nine groups still have both county-rule counts and the shared build-policy verdict."
     }
   ],
   "amendments": [
