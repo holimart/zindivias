@@ -1,7 +1,7 @@
 {
-  "code_commit_at_run": "0c9ef151d7dcf70ec6f1806fb57e78b0c0eb653d",
+  "code_commit_at_run": "b43fab14c7bb68c3919579d541352bcd54349db8",
   "environment": {
-    "git_commit": "0c9ef151d7dcf70ec6f1806fb57e78b0c0eb653d",
+    "git_commit": "b43fab14c7bb68c3919579d541352bcd54349db8",
     "versions": {
       "numpy": "2.5.4",
       "pyarrow": "26.0.0",
@@ -5555,6 +5555,193 @@
       "sha256": "a9875575506caa832f4bad35b5bd52a7401c543e0481feec46c86e9f6c8e47fa",
       "undeclared_columns_read": []
     },
+    "X4": {
+      "accessed_inputs": {
+        "caches": [],
+        "csv_columns": [],
+        "layers": [
+          "buildings",
+          "census-acs-housing",
+          "roads"
+        ],
+        "parquet_columns": [
+          "eastern-ok-census-acs-housing:GEOID,geometry",
+          "eastern-ok-overture-buildings.parquet:geometry",
+          "eastern-ok-overture-buildings.parquet:sources",
+          "eastern-ok-overture-roads.parquet:class",
+          "eastern-ok-overture-roads.parquet:geometry",
+          "eastern-ok-overture-roads.parquet:names",
+          "eastern-ok-overture-roads.parquet:routes",
+          "maricopa-az-census-acs-housing:GEOID,geometry",
+          "maricopa-az-overture-buildings.parquet:geometry",
+          "maricopa-az-overture-buildings.parquet:sources",
+          "maricopa-az-overture-roads.parquet:class",
+          "maricopa-az-overture-roads.parquet:geometry",
+          "maricopa-az-overture-roads.parquet:names",
+          "maricopa-az-overture-roads.parquet:routes",
+          "northern-ca-census-acs-housing:GEOID,geometry",
+          "northern-ca-overture-buildings.parquet:geometry",
+          "northern-ca-overture-buildings.parquet:sources",
+          "northern-ca-overture-roads.parquet:class",
+          "northern-ca-overture-roads.parquet:geometry",
+          "northern-ca-overture-roads.parquet:names",
+          "northern-ca-overture-roads.parquet:routes",
+          "south-central-tx-census-acs-housing:GEOID,geometry",
+          "south-central-tx-overture-buildings.parquet:geometry",
+          "south-central-tx-overture-buildings.parquet:sources",
+          "south-central-tx-overture-roads.parquet:class",
+          "south-central-tx-overture-roads.parquet:geometry",
+          "south-central-tx-overture-roads.parquet:names",
+          "south-central-tx-overture-roads.parquet:routes"
+        ]
+      },
+      "bytes": 24295,
+      "diagnostics": {
+        "eastern-ok": {
+          "best_nearest_named_road_gap_m": {
+            "count": 1192,
+            "max": 0.0,
+            "mean": 0.0,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "building_centroids_assigned": 147523,
+          "building_rows_scanned": 2551694,
+          "cluster_count_distribution": {
+            "count": 1192,
+            "max": 0.0,
+            "mean": 0.0,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "cluster_rule": "weighted 50m grid approximation to DBSCAN eps=150m,min_samples=300; centroid distance to nearest named-class road >3000.0m",
+          "clusters_over_threshold": 0,
+          "clusters_screened": 1,
+          "connecting_length_note": "nearest named-network gap recorded as a lower-bound connector-length proxy; no road network path is inferred",
+          "defined": 1192,
+          "microsoft_membership_used": false,
+          "named_class_road_rows": 88662,
+          "named_road_segment_count": 88662,
+          "occupied_grid_cells": 100459,
+          "road_rows_scanned": 520550,
+          "rows": 1192
+        },
+        "maricopa-az": {
+          "best_nearest_named_road_gap_m": {
+            "count": 1593,
+            "max": 0.0,
+            "mean": 0.0,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "building_centroids_assigned": 347823,
+          "building_rows_scanned": 2908224,
+          "cluster_count_distribution": {
+            "count": 1593,
+            "max": 0.0,
+            "mean": 0.0,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "cluster_rule": "weighted 50m grid approximation to DBSCAN eps=150m,min_samples=300; centroid distance to nearest named-class road >3000.0m",
+          "clusters_over_threshold": 0,
+          "clusters_screened": 12,
+          "connecting_length_note": "nearest named-network gap recorded as a lower-bound connector-length proxy; no road network path is inferred",
+          "defined": 1593,
+          "microsoft_membership_used": false,
+          "named_class_road_rows": 95117,
+          "named_road_segment_count": 95117,
+          "occupied_grid_cells": 208052,
+          "road_rows_scanned": 494492,
+          "rows": 1593
+        },
+        "northern-ca": {
+          "best_nearest_named_road_gap_m": {
+            "count": 591,
+            "max": 0.0,
+            "mean": 0.0,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "building_centroids_assigned": 105795,
+          "building_rows_scanned": 1164724,
+          "cluster_count_distribution": {
+            "count": 591,
+            "max": 0.0,
+            "mean": 0.0,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "cluster_rule": "weighted 50m grid approximation to DBSCAN eps=150m,min_samples=300; centroid distance to nearest named-class road >3000m",
+          "clusters_over_threshold": 0,
+          "clusters_screened": 0,
+          "connecting_length_note": "nearest named-network gap recorded as a lower-bound connector-length proxy; no road network path is inferred",
+          "defined": 591,
+          "microsoft_membership_used": false,
+          "named_class_road_rows": 42182,
+          "named_road_segment_count": 42182,
+          "occupied_grid_cells": 70457,
+          "road_rows_scanned": 191836,
+          "rows": 591
+        },
+        "south-central-tx": {
+          "best_nearest_named_road_gap_m": {
+            "count": 6003,
+            "max": 0.0,
+            "mean": 0.0,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "building_centroids_assigned": 1932481,
+          "building_rows_scanned": 11463801,
+          "cluster_count_distribution": {
+            "count": 6003,
+            "max": 0.0,
+            "mean": 0.0,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "cluster_rule": "weighted 50m grid approximation to DBSCAN eps=150m,min_samples=300; centroid distance to nearest named-class road >3000.0m",
+          "clusters_over_threshold": 0,
+          "clusters_screened": 6,
+          "connecting_length_note": "nearest named-network gap recorded as a lower-bound connector-length proxy; no road network path is inferred",
+          "defined": 6003,
+          "microsoft_membership_used": false,
+          "named_class_road_rows": 484910,
+          "named_road_segment_count": 484910,
+          "occupied_grid_cells": 1125507,
+          "road_rows_scanned": 1937009,
+          "rows": 6003
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate",
+          "component": "R",
+          "defined_rows": 9379,
+          "rows": 9379,
+          "value_max": 0.0,
+          "value_min": 0.0
+        }
+      ],
+      "emissions_per_region": 1,
+      "family": "X",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/X4.parquet",
+      "rows": 9379,
+      "sha256": "6f0c03139dfa07ad16d62c44c0cec23561ab36b76f6bee92799187a96fabb278",
+      "undeclared_columns_read": []
+    },
     "X5": {
       "accessed_inputs": {
         "caches": [],
@@ -5753,7 +5940,7 @@
   },
   "preregistration": {
     "path": "config/bias60-harness-preregistered.json",
-    "sha256": "d07077da98076d5a5552c95c37512c9add89866c4b02c218d8e0415e57cd1144",
+    "sha256": "7b94086bda27a31cd1c7079086ae43f82b33f12edd6a72602b6a857e51a08273",
     "spec": {
       "family_count": 12,
       "idea_count": 60,
@@ -5793,7 +5980,7 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 35,
+    "declared_count": 34,
     "families_total": 12,
     "ideas_per_family": [
       5
@@ -5808,6 +5995,7 @@
       "Tm1",
       "X1",
       "X3",
+      "X4",
       "X5",
       "Dst1",
       "Dst2",
@@ -5833,7 +6021,7 @@
       "F",
       "R"
     ],
-    "implemented_count": 25
+    "implemented_count": 26
   },
   "scope": {
     "geoids_by_region": {
@@ -5861,7 +6049,7 @@
       "F",
       "R"
     ],
-    "ideas_implemented": 25,
+    "ideas_implemented": 26,
     "parquet_files": {
       "ideas/Dst1.parquet": "cac4c507372353f5493b09b1ce6ec7c293500d185a1778fc73a68d25e5bc4281",
       "ideas/Dst2.parquet": "fc01b4f1782b1830500f232fbc31d9b65f77f23a69985fcbdcc54d5a29fdda6b",
@@ -5887,9 +6075,10 @@
       "ideas/Tm1.parquet": "df93396b8bb481dea6da43dd90b997eeeb47c5bf249a3fa6eac0dca6c8713885",
       "ideas/X1.parquet": "3352248e0e2ea195691ec2f6cdddc50de45be8a73115055a869592f4d7a0f262",
       "ideas/X3.parquet": "a9875575506caa832f4bad35b5bd52a7401c543e0481feec46c86e9f6c8e47fa",
+      "ideas/X4.parquet": "6f0c03139dfa07ad16d62c44c0cec23561ab36b76f6bee92799187a96fabb278",
       "ideas/X5.parquet": "c5b864512c1f191f9db866190e3b7c3b2208c702b2ba7c125b1d41c851a718f0"
     },
-    "report_sha256": "50d6452f1dc29798f6a926fdde2611ae361d17f91703709cafe4cf0b97d71749"
+    "report_sha256": "b5398615f560cb4280c91671ec6dbb15c1aa03034a86c9efdc4827a647d88e85"
   },
   "tamper_case": null
 }

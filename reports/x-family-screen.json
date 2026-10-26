@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "family": "X",
-  "status": "in_progress",
+  "status": "complete_with_rule_exclusion",
   "scope": {
     "official_scored_geoids": 9379,
     "regions": [
@@ -27,9 +27,10 @@
       "limitations": "Uncalibrated soft probability proxy; not a hard defined flag. The witness categories are sparse."
     },
     "X2": {
-      "status": "held_pending_ruling",
+      "status": "uncomputable_rule_excluded",
       "artifact": null,
-      "reason": "The USFS/USA Structures-derived usfs_BuildingCount_sum is an external reference-equivalent signal under the binding competition rule. It was not read or used. Keep the idea out of Track A pending governance clearance."
+      "registry_status": "declared_not_implemented",
+      "reason": "Steward ruling 2026-10-26 04:20Z: RULES.md lines 16 and 53 identify usfs_BuildingCount_sum (USA Structures) as an equivalent copy of the removed reference building count. This idea cannot be computed under the provided-data-only rule. The layer/value was not read, joined, approximated or used; X2 is excluded from Track A."
     },
     "X3": {
       "status": "computed",
@@ -42,7 +43,15 @@
       "measurement": "Est covariate: expected missing establishments from empty commercial footprint area times occupied commercial POI-per-area rate; commercial Overture POI within 30m marks occupied. Large >1,000 m2 buildings qualify only in tracts with commercial POIs. Label-free proxy; no Microsoft membership used."
     },
     "X4": {
-      "status": "pending_implementation"
+      "status": "computed",
+      "rows": 9379,
+      "defined_rows": 9379,
+      "artifact": "workspace:ideas/X4.parquet",
+      "sha256": "6f0c03139dfa07ad16d62c44c0cec23561ab36b76f6bee92799187a96fabb278",
+      "harness_report": "workspace:ideas/x4-harness.json",
+      "harness_report_sha256": "d1f1db5567f63a4a57b735d015e8344ca4b93cb63b24de0fb2b8a1017775f80e",
+      "measurement": "R covariate from weighted 50m-grid approximation to eps=150m/min_samples=300 DBSCAN over provided non-Microsoft building centroids; qualifying settlement-cluster count requires >3km from named-class Overture road. Screened 19 clusters across regions; none exceeded 3km, so output is exactly zero for every GEOID.",
+      "limitation": "The registered signal was measured, but the grid approximation and no qualifying clusters make this study-region column constant. Orthogonality correctly marks X4|R|covariate degenerate (correlation undefined; VIF infinite), not silently dropped."
     },
     "X5": {
       "status": "computed",
@@ -62,15 +71,19 @@
   },
   "orthogonality": {
     "report": "reports/ideas-orthogonality.json",
-    "sha256": "4c1804e62fb70fb11322bfd904b2fba79151ea2ca90a7d7cef3b120fdedb5681",
+    "sha256": "ee54a6b7961973f4155c4fba29928019bf8bbe0cb8bde26f48d7b19b09af9430",
     "x1_included": true,
-    "full_family_screen_complete": false,
+    "full_family_screen_complete": true,
     "x5_included": true,
-    "columns_evaluated": 32,
-    "columns_included": 30,
+    "columns_evaluated": 33,
+    "columns_included": 31,
     "pairs_flagged": 3,
     "vif_flags": 12,
-    "x3_included": true
+    "x3_included": true,
+    "x4_included": true,
+    "degenerate_columns": [
+      "X4|R|covariate"
+    ]
   },
   "validation": {
     "tests": "pytest tests/test_bias60_family_x.py tests/test_bias60_harness.py -q -k 'not CommittedArtifactTests'",
@@ -84,7 +97,10 @@
     "full_test_suite": "COMPETITION_WORKSPACE=$COMPETITION_WORKSPACE uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with pyproj==3.8.0 --with pyshp --with pytest python -m pytest -q",
     "full_test_result": "640 passed, 319 subtests passed in 586.87s",
     "x3_harness": "python scripts/run_bias60_ideas.py --only X3 --out $COMPETITION_WORKSPACE/ideas/x3-harness.json",
-    "x3_harness_result": "PASS; Est output on all 9,379 official GEOIDs; all regions defined"
+    "x3_harness_result": "PASS; Est output on all 9,379 official GEOIDs; all regions defined",
+    "x4_harness": "python scripts/run_bias60_ideas.py --only X4 --out $COMPETITION_WORKSPACE/ideas/x4-harness.json",
+    "x4_harness_result": "PASS; R covariate emitted for all 9,379 GEOIDs; 19 candidate clusters screened, 0 beyond 3km; constant-zero output explicitly reported as degenerate by orthogonality",
+    "targeted_tests": "46 passed, 3 deselected, 7 subtests passed"
   },
-  "code_commit": "0c9ef151d7dcf70ec6f1806fb57e78b0c0eb653d"
+  "code_commit": "629c2b7f58ef1c39ea6e7b1eae7b0edb0ab172df"
 }
