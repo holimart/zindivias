@@ -10,7 +10,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from bias60.ideas.x import _facility_type, soft_facility_definedness  # noqa: E402
+from bias60.ideas.x import (_facility_type, _x5_semantics, soft_facility_definedness)  # noqa: E402
 
 
 class X1ProbabilityTests(unittest.TestCase):
@@ -26,6 +26,12 @@ class X1ProbabilityTests(unittest.TestCase):
         with self.assertRaises(ValueError): soft_facility_definedness(np.array([[1., -1., 0.]]))
         with self.assertRaises(ValueError): soft_facility_definedness(np.ones((2, 2)))
         with self.assertRaises(ValueError): soft_facility_definedness(np.array([[np.nan, 0., 0.]]))
+
+    def test_infrastructure_witness_rules(self) -> None:
+        self.assertEqual(_x5_semantics("bridge", None, None, {"ref": "US 101"}), (True, False))
+        self.assertEqual(_x5_semantics("toll_feature", None, None, {}), (True, False))
+        self.assertEqual(_x5_semantics("helipad", None, None, {}), (False, True))
+        self.assertEqual(_x5_semantics("emergency_room", None, None, {}), (False, False))
 
     def test_facility_name_witness_guards_false_positives(self) -> None:
         seed = {"building_witnesses": {

@@ -110,6 +110,83 @@ def _read_x1(inputs, seed):
     return witnesses, counts, {"buildings": building_meta, "pois": poi_meta}
 
 
+def _x5_semantics(feature_class: Any, subtype: Any, names: Any, source_tags: Any) -> tuple[bool, bool]:
+    """Return (highway-number bridge/toll, emergency/helipad) semantic witnesses."""
+    tag_text = " ".join(_strings(source_tags))
+    if isinstance(source_tags, dict): tag_text += " " + " ".join(str(key) for key in source_tags)
+    text = " ".join(_strings([feature_class, subtype, names])) + " " + tag_text
+    text = text.casefold()
+    highway_ref = bool(re.search(r"\b(?:i[- ]?\d+|us[- ]?\d+|u\.s\. ?\d+|(?:state )?(?:route|highway) ?\d+|sr[- ]?\d+|hwy ?\d+)\b", text))
+    road = ("toll" in text) or (highway_ref and "bridge" in text)
+    emergency = any(token in text for token in ("helipad", "heliport", "ambulance", "ems", "fire station", "emergency"))
+    if "emergency room" in text or "emergency_room" in text or "urgent care" in text: emergency = False
+    return road, emergency
+
+
+@implements("X5")
+def x5(inputs) -> IdeaOutput:
+    import pyarrow.parquet as pq
+    import shapely
+    from pyproj import Transformer
+    seed = inputs.config["seeds"]["X5"]
+    transformer = Transformer.from_crs("EPSG:4326", "EPSG:5070", always_xy=True)
+    tracts = shapely.transform(inputs.tract_geometries(), transformer.transform, interleaved=False)
+    tract_tree = shapely.STRtree(tracts); n = len(inputs.geoids)
+    ems_categories = set(seed["ems_categories"]); ems_points = []
+    poi_path = inputs.layer_path("pois"); poi_columns = seed["poi_columns"]
+    poi_pf = pq.ParquetFile(inputs.filesystem.open_input_file(poi_path))
+    inputs.accessed["parquet_columns"].extend(f"{inputs.region}-overture-pois.parquet:{c}" for c in poi_columns)
+    for rg in range(poi_pf.metadata.num_row_groups):
+        tab = poi_pf.read_row_group(rg, columns=poi_columns); categories = tab.column("categories").to_pylist()
+        sources = tab.column("sources").to_pylist(); wkbs = tab.column("geometry").to_pylist()
+        keep = [i for i, w in enumerate(wkbs) if w is not None and _rule_clean_poi(sources[i])
+                and categories[i] and categories[i].get("primary") in ems_categories]
+        if keep:
+            points = shapely.from_wkb([wkbs[i] for i in keep])
+            points = shapely.transform(points, transformer.transform, interleaved=False)
+            ems_points.extend(list(points))
+    ems_tree = shapely.STRtree(ems_points) if ems_points else None
+    infra_path = inputs.layer_path("infrastructure"); columns = seed["infrastructure_columns"]
+    pf = pq.ParquetFile(inputs.filesystem.open_input_file(infra_path))
+    missing = sorted(set(columns) - set(pf.schema_arrow.names))
+    if missing: raise ValueError(f"infrastructure lacks declared X5 columns {missing}")
+    inputs.accessed["parquet_columns"].extend(f"{inputs.region}-overture-infrastructure.parquet:{c}" for c in columns)
+    road_counts = np.zeros(n, dtype=np.float64); ems_counts = np.zeros(n, dtype=np.float64)
+    scanned = assigned = 0; road_features = emergency_features = 0
+    for rg in range(pf.metadata.num_row_groups):
+        tab = pf.read_row_group(rg, columns=columns); wkbs = tab.column("geometry").to_pylist(); scanned += len(wkbs)
+        classes = tab.column("class").to_pylist(); subtypes = tab.column("subtype").to_pylist()
+        names = tab.column("names").to_pylist(); tags = tab.column("source_tags").to_pylist()
+        keep = [i for i, w in enumerate(wkbs) if w is not None]
+        if not keep: continue
+        geoms = shapely.from_wkb([wkbs[i] for i in keep]); geoms = shapely.transform(geoms, transformer.transform, interleaved=False)
+        centers = shapely.centroid(geoms); left, right = tract_tree.query(centers, predicate="within")
+        assigned += len(left); candidates=[]
+        for local, tract_id in zip(left.tolist(), right.tolist()):
+            row = keep[local]; is_road, is_ems = _x5_semantics(classes[row], subtypes[row], names[row], tags[row])
+            if is_road: road_counts[int(tract_id)] += 1.; road_features += 1
+            if is_ems: candidates.append((local, int(tract_id))); emergency_features += 1
+        if candidates:
+            points = centers[np.asarray([i for i, _ in candidates], dtype=np.int64)]
+            near = np.zeros(len(candidates), dtype=bool)
+            if ems_tree is not None:
+                pairs, distances = ems_tree.query_nearest(points, max_distance=float(seed["ems_distance_m"]),
+                                                           return_distance=True, all_matches=False)
+                near[np.unique(pairs[0])] = True
+            for j, (_, tract_id) in enumerate(candidates):
+                if not near[j]: ems_counts[tract_id] += 1.
+    values_f = -np.expm1(-ems_counts); defined = np.ones(n, dtype=np.bool_)
+    return IdeaOutput("X5", inputs.region, list(inputs.geoids),
+        [Emission("R", "covariate", road_counts, defined), Emission("F", "covariate", values_f, defined)],
+        {"rows": n, "defined": n, "road_witness_count": quantiles(road_counts),
+         "emergency_without_near_ems_probability": quantiles(values_f), "infrastructure_rows_total": int(pf.metadata.num_rows),
+         "infrastructure_rows_scanned": scanned, "infrastructure_rows_assigned": assigned,
+         "road_semantic_witnesses": road_features, "emergency_features_checked": emergency_features,
+         "provided_ems_places": len(ems_points), "ems_distance_m": float(seed["ems_distance_m"]),
+         "semantic_rule": "highway-number bridges/toll features as R witnesses; emergency/helipad infrastructure without a provided Overture EMS place within 500m as soft F witness",
+         "microsoft_poi_memberships_used": False})
+
+
 @implements("X1")
 def x1(inputs) -> IdeaOutput:
     seed = inputs.config["seeds"]["X1"]

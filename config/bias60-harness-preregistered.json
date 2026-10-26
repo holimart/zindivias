@@ -290,7 +290,27 @@
       "south-central-tx-overture-buildings.parquet:sources",
       "south-central-tx-overture-buildings.parquet:class",
       "south-central-tx-overture-buildings.parquet:names",
-      "south-central-tx-overture-buildings.parquet:geometry"
+      "south-central-tx-overture-buildings.parquet:geometry",
+      "maricopa-az-overture-infrastructure.parquet:class",
+      "maricopa-az-overture-infrastructure.parquet:subtype",
+      "maricopa-az-overture-infrastructure.parquet:names",
+      "maricopa-az-overture-infrastructure.parquet:source_tags",
+      "maricopa-az-overture-infrastructure.parquet:geometry",
+      "northern-ca-overture-infrastructure.parquet:class",
+      "northern-ca-overture-infrastructure.parquet:subtype",
+      "northern-ca-overture-infrastructure.parquet:names",
+      "northern-ca-overture-infrastructure.parquet:source_tags",
+      "northern-ca-overture-infrastructure.parquet:geometry",
+      "eastern-ok-overture-infrastructure.parquet:class",
+      "eastern-ok-overture-infrastructure.parquet:subtype",
+      "eastern-ok-overture-infrastructure.parquet:names",
+      "eastern-ok-overture-infrastructure.parquet:source_tags",
+      "eastern-ok-overture-infrastructure.parquet:geometry",
+      "south-central-tx-overture-infrastructure.parquet:class",
+      "south-central-tx-overture-infrastructure.parquet:subtype",
+      "south-central-tx-overture-infrastructure.parquet:names",
+      "south-central-tx-overture-infrastructure.parquet:source_tags",
+      "south-central-tx-overture-infrastructure.parquet:geometry"
     ]
   },
   "orthogonality": {
@@ -881,6 +901,32 @@
       },
       "probability_mapping": "P(any facility type defined)=1-product_k exp(-n_k), where n_k is the count of provided non-Microsoft building-class/name witnesses for types with zero provided Overture place count; unit-rate Poisson soft proxy, not calibrated",
       "note": "Cross-theme facility witnesses; exclusive OSM/Esri buildings and non-Microsoft Overture POI points only. Emits the preregistered soft facility-definedness proxy for later Sca5 use."
+    },
+    "X5": {
+      "components": [
+        "R",
+        "F"
+      ],
+      "kind": "covariate",
+      "infrastructure_layer": "infrastructure",
+      "infrastructure_columns": [
+        "class",
+        "subtype",
+        "names",
+        "source_tags",
+        "geometry"
+      ],
+      "poi_layer": "pois",
+      "poi_columns": [
+        "sources",
+        "categories",
+        "geometry"
+      ],
+      "ems_categories": [
+        "ambulance_and_ems_services"
+      ],
+      "ems_distance_m": 500.0,
+      "note": "Provided infrastructure highway-number bridge/toll and emergency/helipad witnesses. Emits an R witness count and soft F probability when no non-Microsoft EMS POI is within 500m. No reference/label inputs."
     },
     "Sc4": {
       "component": "R",
