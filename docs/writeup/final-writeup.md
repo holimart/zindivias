@@ -2,7 +2,7 @@
 
 - Competition: `bias-bounty-mapping-equity-challenge` (Zindi)
 - Lane: `comp-zindi-bias-bounty`
-- Writeup revision: git `44d0060cd0fe17f9076ad17491f2e768e2c9115e` (tree clean: False)
+- Writeup revision: Family M evidence narrative refreshed; source/report lineage and hashes are recorded below.
 - Zindi username or team name: **PENDING_OPERATOR_CONFIRMATION**
 - Operator confirmation of that identity recorded: NO — pending operator
 - Form submission status: **NOT SUBMITTED — staged for operator submission**
@@ -378,6 +378,22 @@ V2 replaces v0's proxy rates with separately audited, fixed, challenge-feature-d
 - **Candidate stability envelope:** `config/candidate-stability-envelope-preregistered.json` freezes six complete feature-derived score variants: C2 mechanistic baseline; cross-theme support; density context; a 5 km facility-catchment replacement over the v0 transport/building/CBP components; building morphology β=0.02; and primary source-prior β=0.02. The facility-catchment and two building variants are recomposed with the existing defined-component mean; cross-theme and density use their frozen full-score candidates. No target, public score, or fitted weights are used. The envelope is an analysis-only diagnostic; its equal-weight mean is not promoted or submitted, and the screen does not satisfy or bypass any scored-integration gate. It uses only the 9,379 official IDs; 415 template-only rows in C2/density files are ignored without parsing their candidate values. All six candidates align and are finite/in `[0,1]`. Spread median/p95/max is `0.11514/0.27016/0.51499`; `75.99%` of rows exceed `0.05`, so the preregistered `p95 ≤ 0.10` criterion correctly flags operator review. Region p95 spread is `0.20209` Eastern OK, `0.22034` Maricopa, `0.20836` Northern CA, and `0.33936` South-Central TX. Two no-defined-component edge rows in each building variant carry forward the existing C2 score; this deterministic fallback is disclosed. Candidate distributions, input hashes, feature-availability rates, and region × provided urbanity summaries are in `reports/candidate-stability-envelope.json`; the long-form member table and per-tract envelope CSV hashes are in its manifest. Two full builds were byte-identical. This is model-specification spread only: no local RMSE or empirical accuracy claim is available.
 - **Establishments:** the explicit analysis-only sensitivity formula is `clip(1−overture_poi_all/(k_pop*pop_total),0,1)` for positive population, with `k_pop=0.024` used only as a task-specified sensitivity anchor. For zero population, positive places yield a defined clipped zero; zero places are undefined. The anchor has **no approval for scored use**, uses no CBP source, and is not a model coefficient; see `docs/decisions/establishments-half.md` and `reports/establishments-sensitivity.json`.
 - **Combined score:** future assembly must average only model-defined terms and pass the exact-ID/schema/range/hash invariants. The component audits alone do not authorize v2 assembly or upload. There is no local labeled holdout; deterministic checks establish code/contract correctness only.
+
+### Family M metadata and provenance estimator review
+
+Family M is a descriptive screen of metadata, provider provenance, and name signals from the challenge-provided Overture layers, with permitted housing-unit context where specified. It is not a fitted coverage model or evidence about organiser scores. The committed summary records each output's defined-only distribution and coverage, the family pairwise rank correlations, VIF flags, and the matching per-tract Parquet SHA-256. Source metadata, tags, and names do not establish feature accuracy or service completeness.
+
+| Idea | Provided-data quantity | Interpretation safeguard |
+|---|---|---|
+| `M1` | Road version summaries and the low-version share among tertiary roads | Version fields describe recorded metadata, not update recency or completeness. |
+| `M2` | Wikidata-link shares across all places and among facility-like names | Link presence is not validation of a place or facility. |
+| `M3` | Address-mismatch shares across places and among facilities | Address disagreement is a provenance signal, not proof of a wrong location. |
+| `M4` | Chain-brand share and chain count per provided housing-unit field | Brand coverage and the density ratio are separate descriptive channels. |
+| `M5` | Multi-property shares for buildings and roads | Both emitted channels are constant-zero on this study scope and are explicitly marked degenerate. |
+
+The orthogonality screen shows that the all-place Wikidata-link share from `M2` and the chain-brand share from `M4` are nearly identical in rank order, so treat them as disclosed redundancy, not independent evidence. Facility variants from `M2` and `M3` also carry elevated VIF flags; they remain visible rather than being silently removed. This is not a promotion or a claim that any estimator recovers the hidden quantity.
+
+Source and report lineage: implementation `src/bias60/ideas/m.py`, SHA-256 `05e69ae644a746f51e015b8780dfc58733766c8d3eae52f0b1fb9087cd6a71de` (source commit `4a921228beb4951f7d87cf59311ec15f28fc06ec`); Family M summary `reports/bias60-family-m-summary.json`, SHA-256 `ee9150150a184447189899dfdcec51254b6ae08d64c0c2c191633b1510d5d378` (report commit `a20f091905b1d08f10c9d8c38b90c2e0480c053e`). The summary binds Family-M-era harness and orthogonality snapshots by SHA-256 `c1c0f444b6d49dc5dc232f2055f8671d201a2728853ae141eaa09d2779768032` and `c85586f18d2d091082fa66142bc18152880f06d4515165d86713157c37c37417`. It reads the official GEOID partition, generated idea Parquets, and their harness/orthogonality reports.
 
 ### Edge cases, bias discovery, and interpretation
 

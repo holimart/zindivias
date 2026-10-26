@@ -1077,9 +1077,15 @@ def render_markdown(report: dict[str, Any]) -> str:
     lines.append(f"- **{summary['numeric_tokens_covered']} of "
                  f"{summary['numeric_tokens_total']} numeric tokens ({token_percent}) "
                  f"are present in the evidence named by the claim that states them.**")
+    reproduce_summary = (
+        "all recorded reproduce-command products hash-verify."
+        if acceptance["all_reproduce_products_hash_verified"] else
+        "a historical reproduce-command product hash no longer matches its current file; "
+        "details are recorded in the audit JSON's tier_b_reproduce entries."
+    )
     lines.append(f"- {summary['distinct_verify_commands']} per-claim verify commands and "
-                 f"{summary['distinct_reproduce_commands']} reproduce commands; every listed "
-                 f"command's recorded exit code is 0 and every reproduce product hash-verifies.")
+                 f"{summary['distinct_reproduce_commands']} reproduce commands; recorded "
+                 f"command exit codes are 0; {reproduce_summary}")
     lines.append(f"- Accuracy language outside the allowed classes: "
                  f"{'none' if acceptance['no_unsupported_accuracy_claim'] else 'PRESENT'}. "
                  f"Prohibited reference/label/leaderboard sources used as scored-model evidence: "
