@@ -1,0 +1,378 @@
+{
+  "family": "T",
+  "version": "exact-recipe-reconciliation-progress-v1",
+  "scope": "provided-data schema preflight; no v2 estimator execution yet",
+  "official_scored_rows": 9379,
+  "regions": {
+    "maricopa-az": {
+      "input_assessment": {
+        "T1": {
+          "required_columns": {
+            "roads-unfiltered": [
+              "class",
+              "connectors",
+              "geometry",
+              "names",
+              "routes"
+            ]
+          },
+          "missing_columns": {},
+          "required_fields_present": true
+        },
+        "T2": {
+          "required_columns": {
+            "roads-unfiltered": [
+              "class",
+              "connectors",
+              "geometry",
+              "subclass"
+            ]
+          },
+          "missing_columns": {},
+          "required_fields_present": true
+        },
+        "T3": {
+          "required_columns": {
+            "roads-unfiltered": [
+              "class",
+              "connectors",
+              "geometry",
+              "level_rules",
+              "rail_flags",
+              "road_flags"
+            ],
+            "infrastructure": [
+              "class",
+              "geometry",
+              "subtype"
+            ]
+          },
+          "missing_columns": {},
+          "required_fields_present": true
+        },
+        "T4": {
+          "required_columns": {
+            "roads-unfiltered": [
+              "class",
+              "connectors",
+              "geometry"
+            ],
+            "tracts": [
+              "GEOID",
+              "geometry"
+            ],
+            "strata": [
+              "GEOID",
+              "pop_total"
+            ]
+          },
+          "missing_columns": {},
+          "required_fields_present": true,
+          "centroid_geometry_note": "The supplied ACS tract table exposes polygon geometry and the provided strata table exposes pop_total; no population-centroid coordinate/point column is present. A tract polygon centroid is derivable, but is not a population centroid without an additional population surface, which this preflight does not access. Exact T4 therefore needs an explicitly frozen interpretation of 'population centroid' using only supplied fields, or must remain non-exact."
+        }
+      },
+      "row_payload_read": false
+    },
+    "northern-ca": {
+      "input_assessment": {
+        "T1": {
+          "required_columns": {
+            "roads-unfiltered": [
+              "class",
+              "connectors",
+              "geometry",
+              "names",
+              "routes"
+            ]
+          },
+          "missing_columns": {},
+          "required_fields_present": true
+        },
+        "T2": {
+          "required_columns": {
+            "roads-unfiltered": [
+              "class",
+              "connectors",
+              "geometry",
+              "subclass"
+            ]
+          },
+          "missing_columns": {},
+          "required_fields_present": true
+        },
+        "T3": {
+          "required_columns": {
+            "roads-unfiltered": [
+              "class",
+              "connectors",
+              "geometry",
+              "level_rules",
+              "rail_flags",
+              "road_flags"
+            ],
+            "infrastructure": [
+              "class",
+              "geometry",
+              "subtype"
+            ]
+          },
+          "missing_columns": {},
+          "required_fields_present": true
+        },
+        "T4": {
+          "required_columns": {
+            "roads-unfiltered": [
+              "class",
+              "connectors",
+              "geometry"
+            ],
+            "tracts": [
+              "GEOID",
+              "geometry"
+            ],
+            "strata": [
+              "GEOID",
+              "pop_total"
+            ]
+          },
+          "missing_columns": {},
+          "required_fields_present": true,
+          "centroid_geometry_note": "The supplied ACS tract table exposes polygon geometry and the provided strata table exposes pop_total; no population-centroid coordinate/point column is present. A tract polygon centroid is derivable, but is not a population centroid without an additional population surface, which this preflight does not access. Exact T4 therefore needs an explicitly frozen interpretation of 'population centroid' using only supplied fields, or must remain non-exact."
+        }
+      },
+      "row_payload_read": false
+    },
+    "eastern-ok": {
+      "input_assessment": {
+        "T1": {
+          "required_columns": {
+            "roads-unfiltered": [
+              "class",
+              "connectors",
+              "geometry",
+              "names",
+              "routes"
+            ]
+          },
+          "missing_columns": {},
+          "required_fields_present": true
+        },
+        "T2": {
+          "required_columns": {
+            "roads-unfiltered": [
+              "class",
+              "connectors",
+              "geometry",
+              "subclass"
+            ]
+          },
+          "missing_columns": {},
+          "required_fields_present": true
+        },
+        "T3": {
+          "required_columns": {
+            "roads-unfiltered": [
+              "class",
+              "connectors",
+              "geometry",
+              "level_rules",
+              "rail_flags",
+              "road_flags"
+            ],
+            "infrastructure": [
+              "class",
+              "geometry",
+              "subtype"
+            ]
+          },
+          "missing_columns": {},
+          "required_fields_present": true
+        },
+        "T4": {
+          "required_columns": {
+            "roads-unfiltered": [
+              "class",
+              "connectors",
+              "geometry"
+            ],
+            "tracts": [
+              "GEOID",
+              "geometry"
+            ],
+            "strata": [
+              "GEOID",
+              "pop_total"
+            ]
+          },
+          "missing_columns": {},
+          "required_fields_present": true,
+          "centroid_geometry_note": "The supplied ACS tract table exposes polygon geometry and the provided strata table exposes pop_total; no population-centroid coordinate/point column is present. A tract polygon centroid is derivable, but is not a population centroid without an additional population surface, which this preflight does not access. Exact T4 therefore needs an explicitly frozen interpretation of 'population centroid' using only supplied fields, or must remain non-exact."
+        }
+      },
+      "row_payload_read": false
+    },
+    "south-central-tx": {
+      "input_assessment": {
+        "T1": {
+          "required_columns": {
+            "roads-unfiltered": [
+              "class",
+              "connectors",
+              "geometry",
+              "names",
+              "routes"
+            ]
+          },
+          "missing_columns": {},
+          "required_fields_present": true
+        },
+        "T2": {
+          "required_columns": {
+            "roads-unfiltered": [
+              "class",
+              "connectors",
+              "geometry",
+              "subclass"
+            ]
+          },
+          "missing_columns": {},
+          "required_fields_present": true
+        },
+        "T3": {
+          "required_columns": {
+            "roads-unfiltered": [
+              "class",
+              "connectors",
+              "geometry",
+              "level_rules",
+              "rail_flags",
+              "road_flags"
+            ],
+            "infrastructure": [
+              "class",
+              "geometry",
+              "subtype"
+            ]
+          },
+          "missing_columns": {},
+          "required_fields_present": true
+        },
+        "T4": {
+          "required_columns": {
+            "roads-unfiltered": [
+              "class",
+              "connectors",
+              "geometry"
+            ],
+            "tracts": [
+              "GEOID",
+              "geometry"
+            ],
+            "strata": [
+              "GEOID",
+              "pop_total"
+            ]
+          },
+          "missing_columns": {},
+          "required_fields_present": true,
+          "centroid_geometry_note": "The supplied ACS tract table exposes polygon geometry and the provided strata table exposes pop_total; no population-centroid coordinate/point column is present. A tract polygon centroid is derivable, but is not a population centroid without an additional population surface, which this preflight does not access. Exact T4 therefore needs an explicitly frozen interpretation of 'population centroid' using only supplied fields, or must remain non-exact."
+        }
+      },
+      "row_payload_read": false
+    }
+  },
+  "v1_artifacts_preserved": {
+    "T1": {
+      "path": "ideas/T1.parquet",
+      "sha256": "96faeb4ce17ffc4558ed40c1750f723fa653ef289af7a8567dcf2b3d6d1fd23c",
+      "official_rows": 9379,
+      "geoid_partition_exact": true,
+      "emissions": [
+        {
+          "component": "R",
+          "channel": "covariate",
+          "rows": 9379,
+          "defined_rows": 9347
+        },
+        {
+          "component": "R",
+          "channel": "gap",
+          "rows": 9379,
+          "defined_rows": 9347
+        }
+      ],
+      "exact_recipe_conformance": false
+    },
+    "T2": {
+      "path": "ideas/T2.parquet",
+      "sha256": "6258a7f3a15ad7a240ad73d5f76e11e488e10130e29e6c2ade064ad236060570",
+      "official_rows": 9379,
+      "geoid_partition_exact": true,
+      "emissions": [
+        {
+          "component": "R",
+          "channel": "covariate:orphan_link_length_km",
+          "rows": 9379,
+          "defined_rows": 9379
+        },
+        {
+          "component": "R",
+          "channel": "covariate:orphan_link_segments",
+          "rows": 9379,
+          "defined_rows": 9379
+        }
+      ],
+      "exact_recipe_conformance": false
+    },
+    "T3": {
+      "path": "ideas/T3.parquet",
+      "sha256": "6816bc3734c980ec290a6f3843d6c73e3a421c6864ae7b528e888c449bdc4fa5",
+      "official_rows": 9379,
+      "geoid_partition_exact": true,
+      "emissions": [
+        {
+          "component": "R",
+          "channel": "covariate:grade_sep_per_km2",
+          "rows": 9379,
+          "defined_rows": 9377
+        }
+      ],
+      "exact_recipe_conformance": false
+    },
+    "T4": {
+      "path": "ideas/T4.parquet",
+      "sha256": "b88b6d970077d2d9f8cd272cd3ebe80588cf9bfbb60f9281425554522337ee06",
+      "official_rows": 9379,
+      "geoid_partition_exact": true,
+      "emissions": [
+        {
+          "component": "R",
+          "channel": "gap",
+          "rows": 9379,
+          "defined_rows": 9373
+        }
+      ],
+      "exact_recipe_conformance": false
+    }
+  },
+  "measure_before": {
+    "exact_recipes": 0,
+    "v1_preserved": true,
+    "known_gaps": {
+      "T1": "v1 has no <30-degree stroke-link rule",
+      "T2": "v1 emits link-segment in-tract length rather than attached carriageway length within 2 km",
+      "T3": "v1 does not enumerate geometric crossings without shared connectors",
+      "T4": "v1 uses connector degree-product rather than sampled edge betweenness"
+    }
+  },
+  "measure_after": {
+    "exact_recipes": 0,
+    "v2_artifacts_emitted": [],
+    "coverage_and_orthogonality_refreshed": false
+  },
+  "prohibitions": {
+    "row_payload_read": false,
+    "labels_or_reference_layers_used": false,
+    "leaderboard_or_upload_used": false
+  }
+}
