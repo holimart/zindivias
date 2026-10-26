@@ -1,7 +1,7 @@
 {
-  "code_commit_at_run": "4fff5e12f8672c09b759705163f79a7b5fd6c28f",
+  "code_commit_at_run": "807a06f839ea67a84a1ccf39a4d23859c102cd6b",
   "environment": {
-    "git_commit": "4fff5e12f8672c09b759705163f79a7b5fd6c28f",
+    "git_commit": "807a06f839ea67a84a1ccf39a4d23859c102cd6b",
     "versions": {
       "numpy": "2.5.4",
       "pyarrow": "26.0.0",
@@ -4956,11 +4956,406 @@
       "rows": 18758,
       "sha256": "df93396b8bb481dea6da43dd90b997eeeb47c5bf249a3fa6eac0dca6c8713885",
       "undeclared_columns_read": []
+    },
+    "X1": {
+      "accessed_inputs": {
+        "caches": [],
+        "csv_columns": [],
+        "layers": [
+          "buildings",
+          "census-acs-housing",
+          "pois"
+        ],
+        "parquet_columns": [
+          "eastern-ok-census-acs-housing:GEOID,geometry",
+          "eastern-ok-overture-buildings.parquet:class",
+          "eastern-ok-overture-buildings.parquet:geometry",
+          "eastern-ok-overture-buildings.parquet:names",
+          "eastern-ok-overture-buildings.parquet:sources",
+          "eastern-ok-overture-pois.parquet:categories",
+          "eastern-ok-overture-pois.parquet:geometry",
+          "eastern-ok-overture-pois.parquet:sources",
+          "maricopa-az-census-acs-housing:GEOID,geometry",
+          "maricopa-az-overture-buildings.parquet:class",
+          "maricopa-az-overture-buildings.parquet:geometry",
+          "maricopa-az-overture-buildings.parquet:names",
+          "maricopa-az-overture-buildings.parquet:sources",
+          "maricopa-az-overture-pois.parquet:categories",
+          "maricopa-az-overture-pois.parquet:geometry",
+          "maricopa-az-overture-pois.parquet:sources",
+          "northern-ca-census-acs-housing:GEOID,geometry",
+          "northern-ca-overture-buildings.parquet:class",
+          "northern-ca-overture-buildings.parquet:geometry",
+          "northern-ca-overture-buildings.parquet:names",
+          "northern-ca-overture-buildings.parquet:sources",
+          "northern-ca-overture-pois.parquet:categories",
+          "northern-ca-overture-pois.parquet:geometry",
+          "northern-ca-overture-pois.parquet:sources",
+          "south-central-tx-census-acs-housing:GEOID,geometry",
+          "south-central-tx-overture-buildings.parquet:class",
+          "south-central-tx-overture-buildings.parquet:geometry",
+          "south-central-tx-overture-buildings.parquet:names",
+          "south-central-tx-overture-buildings.parquet:sources",
+          "south-central-tx-overture-pois.parquet:categories",
+          "south-central-tx-overture-pois.parquet:geometry",
+          "south-central-tx-overture-pois.parquet:sources"
+        ]
+      },
+      "bytes": 24639,
+      "diagnostics": {
+        "eastern-ok": {
+          "defined": 1192,
+          "facility_witness_counts": {
+            "ems": {
+              "count": 1192,
+              "max": 1.0,
+              "mean": 0.0008389261744966443,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 0.0
+            },
+            "fire": {
+              "count": 1192,
+              "max": 1.0,
+              "mean": 0.0050335570469798654,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 0.0
+            },
+            "schools": {
+              "count": 1192,
+              "max": 1.0,
+              "mean": 0.0008389261744966443,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 0.0
+            }
+          },
+          "overture_place_counts": {
+            "ems": {
+              "count": 1192,
+              "max": 2.0,
+              "mean": 0.09563758389261745,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 0.0
+            },
+            "fire": {
+              "count": 1192,
+              "max": 7.0,
+              "mean": 0.6426174496644296,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 2.0
+            },
+            "schools": {
+              "count": 1192,
+              "max": 14.0,
+              "mean": 2.873322147651007,
+              "min": 0.0,
+              "p50": 2.0,
+              "p90": 6.0
+            }
+          },
+          "probability_distribution": {
+            "count": 1192,
+            "max": 0.6321205588285577,
+            "mean": 0.004242419857909783,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "probability_mapping": "per type p_k=1-exp(-n_k) under a unit-rate Poisson witness model; P(any type)=1-product(1-p_k); uncalibrated soft proxy, not a hard defined flag",
+          "readers": {
+            "buildings": {
+              "assigned_centroids": 147523,
+              "rows_excluded_or_null": 2404171,
+              "rows_scanned": 2551694,
+              "rows_total": 2551694,
+              "source_filter": "exclusive provided OSM/Esri memberships; Microsoft and mixed rows excluded"
+            },
+            "pois": {
+              "assigned_points": 175522,
+              "assignment": "provided point geometries strictly within one ACS tract",
+              "microsoft_membership_used": false,
+              "rows_excluded_or_null": 31847,
+              "rows_scanned": 207369,
+              "rows_total": 207369
+            }
+          },
+          "rows": 1192
+        },
+        "maricopa-az": {
+          "defined": 1593,
+          "facility_witness_counts": {
+            "ems": {
+              "count": 1593,
+              "max": 1.0,
+              "mean": 0.0006277463904582549,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 0.0
+            },
+            "fire": {
+              "count": 1593,
+              "max": 1.0,
+              "mean": 0.003766478342749529,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 0.0
+            },
+            "schools": {
+              "count": 1593,
+              "max": 1.0,
+              "mean": 0.0006277463904582549,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 0.0
+            }
+          },
+          "overture_place_counts": {
+            "ems": {
+              "count": 1593,
+              "max": 2.0,
+              "mean": 0.04205900816070308,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 0.0
+            },
+            "fire": {
+              "count": 1593,
+              "max": 8.0,
+              "mean": 0.3691148775894539,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 1.0
+            },
+            "schools": {
+              "count": 1593,
+              "max": 17.0,
+              "mean": 2.6541117388575017,
+              "min": 0.0,
+              "p50": 2.0,
+              "p90": 6.0
+            }
+          },
+          "probability_distribution": {
+            "count": 1593,
+            "max": 0.6321205588285577,
+            "mean": 0.0031744911931126563,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "probability_mapping": "per type p_k=1-exp(-n_k) under a unit-rate Poisson witness model; P(any type)=1-product(1-p_k); uncalibrated soft proxy, not a hard defined flag",
+          "readers": {
+            "buildings": {
+              "assigned_centroids": 347823,
+              "rows_excluded_or_null": 2560401,
+              "rows_scanned": 2908224,
+              "rows_total": 2908224,
+              "source_filter": "exclusive provided OSM/Esri memberships; Microsoft and mixed rows excluded"
+            },
+            "pois": {
+              "assigned_points": 245299,
+              "assignment": "provided point geometries strictly within one ACS tract",
+              "microsoft_membership_used": false,
+              "rows_excluded_or_null": 54746,
+              "rows_scanned": 300046,
+              "rows_total": 300046
+            }
+          },
+          "rows": 1593
+        },
+        "northern-ca": {
+          "defined": 591,
+          "facility_witness_counts": {
+            "ems": {
+              "count": 591,
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 0.0
+            },
+            "fire": {
+              "count": 591,
+              "max": 1.0,
+              "mean": 0.01015228426395939,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 0.0
+            },
+            "schools": {
+              "count": 591,
+              "max": 0.0,
+              "mean": 0.0,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 0.0
+            }
+          },
+          "overture_place_counts": {
+            "ems": {
+              "count": 591,
+              "max": 3.0,
+              "mean": 0.06260575296108291,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 0.0
+            },
+            "fire": {
+              "count": 591,
+              "max": 5.0,
+              "mean": 0.688663282571912,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 2.0
+            },
+            "schools": {
+              "count": 591,
+              "max": 17.0,
+              "mean": 3.6142131979695433,
+              "min": 0.0,
+              "p50": 3.0,
+              "p90": 8.0
+            }
+          },
+          "probability_distribution": {
+            "count": 591,
+            "max": 0.6321205588285577,
+            "mean": 0.006417467602320382,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "probability_mapping": "per type p_k=1-exp(-n_k) under a unit-rate Poisson witness model; P(any type)=1-product(1-p_k); uncalibrated soft proxy, not a hard defined flag",
+          "readers": {
+            "buildings": {
+              "assigned_centroids": 105795,
+              "rows_excluded_or_null": 1058929,
+              "rows_scanned": 1164724,
+              "rows_total": 1164724,
+              "source_filter": "exclusive provided OSM/Esri memberships; Microsoft and mixed rows excluded"
+            },
+            "pois": {
+              "assigned_points": 98468,
+              "assignment": "provided point geometries strictly within one ACS tract",
+              "microsoft_membership_used": false,
+              "rows_excluded_or_null": 18427,
+              "rows_scanned": 116897,
+              "rows_total": 116897
+            }
+          },
+          "rows": 591
+        },
+        "south-central-tx": {
+          "defined": 6003,
+          "facility_witness_counts": {
+            "ems": {
+              "count": 6003,
+              "max": 1.0,
+              "mean": 0.0011660836248542396,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 0.0
+            },
+            "fire": {
+              "count": 6003,
+              "max": 3.0,
+              "mean": 0.00682991837414626,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 0.0
+            },
+            "schools": {
+              "count": 6003,
+              "max": 3.0,
+              "mean": 0.002332167249708479,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 0.0
+            }
+          },
+          "overture_place_counts": {
+            "ems": {
+              "count": 6003,
+              "max": 5.0,
+              "mean": 0.08862235548892221,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 0.0
+            },
+            "fire": {
+              "count": 6003,
+              "max": 6.0,
+              "mean": 0.4536065300682992,
+              "min": 0.0,
+              "p50": 0.0,
+              "p90": 1.0
+            },
+            "schools": {
+              "count": 6003,
+              "max": 25.0,
+              "mean": 3.0756288522405466,
+              "min": 0.0,
+              "p50": 2.0,
+              "p90": 7.0
+            }
+          },
+          "probability_distribution": {
+            "count": 6003,
+            "max": 0.950212931632136,
+            "mean": 0.00578955902202816,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "probability_mapping": "per type p_k=1-exp(-n_k) under a unit-rate Poisson witness model; P(any type)=1-product(1-p_k); uncalibrated soft proxy, not a hard defined flag",
+          "readers": {
+            "buildings": {
+              "assigned_centroids": 1932481,
+              "rows_excluded_or_null": 9531320,
+              "rows_scanned": 11463801,
+              "rows_total": 11463801,
+              "source_filter": "exclusive provided OSM/Esri memberships; Microsoft and mixed rows excluded"
+            },
+            "pois": {
+              "assigned_points": 1088673,
+              "assignment": "provided point geometries strictly within one ACS tract",
+              "microsoft_membership_used": false,
+              "rows_excluded_or_null": 211635,
+              "rows_scanned": 1300334,
+              "rows_total": 1300334
+            }
+          },
+          "rows": 6003
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate",
+          "component": "F",
+          "defined_rows": 9379,
+          "rows": 9379,
+          "value_max": 0.950212931632136,
+          "value_min": 0.0
+        }
+      ],
+      "emissions_per_region": 1,
+      "family": "X",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/X1.parquet",
+      "rows": 9379,
+      "sha256": "3352248e0e2ea195691ec2f6cdddc50de45be8a73115055a869592f4d7a0f262",
+      "undeclared_columns_read": []
     }
   },
   "preregistration": {
     "path": "config/bias60-harness-preregistered.json",
-    "sha256": "9a9ae35d918ce186041dae73e8b73c461871f6f5bf28bb905bb9282657f37f3e",
+    "sha256": "a602fee6dec4efd46fff4dc45645c1c2249ddc5315a3a751e8727921cb492548",
     "spec": {
       "family_count": 12,
       "idea_count": 60,
@@ -5000,7 +5395,7 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 38,
+    "declared_count": 37,
     "families_total": 12,
     "ideas_per_family": [
       5
@@ -5013,6 +5408,7 @@
       "G4",
       "G5",
       "Tm1",
+      "X1",
       "Dst1",
       "Dst2",
       "Dst3",
@@ -5037,7 +5433,7 @@
       "F",
       "R"
     ],
-    "implemented_count": 22
+    "implemented_count": 23
   },
   "scope": {
     "geoids_by_region": {
@@ -5065,7 +5461,7 @@
       "F",
       "R"
     ],
-    "ideas_implemented": 22,
+    "ideas_implemented": 23,
     "parquet_files": {
       "ideas/Dst1.parquet": "cac4c507372353f5493b09b1ce6ec7c293500d185a1778fc73a68d25e5bc4281",
       "ideas/Dst2.parquet": "fc01b4f1782b1830500f232fbc31d9b65f77f23a69985fcbdcc54d5a29fdda6b",
@@ -5088,9 +5484,10 @@
       "ideas/Sc4.parquet": "9aa62ada6e97d28d20f8e3b5d25b6d697ce0d40beea4e9fc4af9b136f36d5884",
       "ideas/Sc5.parquet": "c8603a948b060344f23d2250da22b02a95254401c4a67d64d74a55d4cf4ee720",
       "ideas/Sca1.parquet": "858eadae31c242954fbbd47ffb0151276018d987a994f57b24e84c19a8e6c294",
-      "ideas/Tm1.parquet": "df93396b8bb481dea6da43dd90b997eeeb47c5bf249a3fa6eac0dca6c8713885"
+      "ideas/Tm1.parquet": "df93396b8bb481dea6da43dd90b997eeeb47c5bf249a3fa6eac0dca6c8713885",
+      "ideas/X1.parquet": "3352248e0e2ea195691ec2f6cdddc50de45be8a73115055a869592f4d7a0f262"
     },
-    "report_sha256": "8dda439825f7176e0fe2bfdb163a0ca5133a2746bfa87224f1c540b55770a94b"
+    "report_sha256": "f5c592efe34e24cbfc19cc1cf4c4ec0e5433b384a41bb3d8d4ce8f2c7a61dcde"
   },
   "tamper_case": null
 }
