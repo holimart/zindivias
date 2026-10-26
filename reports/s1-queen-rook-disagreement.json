@@ -1,0 +1,574 @@
+{
+  "schema_version": 1,
+  "audit": "Absolute Queen/Rook S1 Mx4 innovation disagreement; unregistered label-free feature-combination screen",
+  "method": {
+    "candidate": "For each official GEOID with both completed innovation diagnostics defined, absolute difference |Queen innovation − Rook innovation|. No recomputation of either source diagnostic; null unless both are defined.",
+    "NMI": "Within-region arithmetic normalized mutual information against frozen Mx4 F, using the same deterministic encoders as the completed S1 nonlinear screen.",
+    "crossfit": "Five region-local deterministic SHA-256 folds. For each fold fit OLS with intercept, frozen Mx4 F, Queen innovation, and Rook innovation on other folds; predict held-out absolute disagreement. No feature selection, tuning, labels, or imputation.",
+    "residual_variance_ratio": "Pooled population variance (ddof=0) of held-out disagreement residuals divided by disagreement variance on the same candidate/Mx4-complete support; regional values are descriptive.",
+    "boundedness": "Source innovations are differences between shares in [0,1], hence each is in [-1,1] and absolute disagreement is in [0,2]."
+  },
+  "measure_before": {
+    "queen_maximum_region_NMI": 0.7486023400935238,
+    "queen_residual_variance_ratio": 0.1764466342822903,
+    "rook_maximum_region_NMI": 0.7417147567330962,
+    "rook_residual_variance_ratio": 0.17446774950974947,
+    "no_disagreement_feature_previously_measured": true
+  },
+  "scope": {
+    "official_ids": 9379,
+    "exact_official_geoid_region_partition": true,
+    "queen_defined_ids": 9379,
+    "rook_defined_ids": 9379,
+    "disagreement_defined_ids": 9379,
+    "disagreement_undefined_ids": 0,
+    "coverage_fraction": 1.0,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_reference_data_read": false,
+    "external_inputs_read": false,
+    "leaderboard_feedback_used": false,
+    "frozen_Mx4_S1_modified": false,
+    "registry_integration": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "disagreement_distribution": {
+      "n": 9379,
+      "min": 2.154078182827531e-05,
+      "p05": 5.9103233931582784e-05,
+      "p50": 0.00021835074416250155,
+      "p95": 0.0007818148036692341,
+      "max": 0.09697582866448329,
+      "mean": 0.00075629929856957,
+      "variance": 1.5544549733081612e-05
+    },
+    "pooled_disagreement_variance": 1.5544549733081612e-05,
+    "pooled_crossfit_residual_variance": 1.842283204202187e-05,
+    "pooled_crossfit_residual_variance_ratio": 1.1851634404575098,
+    "maximum_within_region_NMI": 0.8162118656676006,
+    "region_with_maximum_NMI": "south-central-tx",
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "queen_innovation_defined_ids": 1593,
+        "rook_innovation_defined_ids": 1593,
+        "disagreement_defined_ids": 1593,
+        "crossfit_joint_defined_ids": 1593,
+        "coverage_fraction": 1.0,
+        "disagreement_distribution": {
+          "n": 1593,
+          "min": 2.154078182827531e-05,
+          "p05": 3.417949877664028e-05,
+          "p50": 0.00021835074416250155,
+          "p95": 0.0004391979381259117,
+          "max": 0.07957100139137657,
+          "mean": 0.0005313399808775123,
+          "variance": 1.4855333409945261e-05
+        },
+        "maximum_within_region_NMI_vs_Mx4_F": {
+          "status": "measured",
+          "joint_defined": 1593,
+          "nmi": 0.7507886308258581,
+          "current_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 3,
+            "defined": 1593
+          },
+          "innovation_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 3,
+            "defined": 1593
+          }
+        },
+        "crossfit_residual_variance_ratio": 1.001544211096375,
+        "pearson_r_disagreement_vs_Mx4_F": 0.15756159481861923,
+        "folds": [
+          {
+            "fold": 0,
+            "train_rows": 1285,
+            "heldout_rows": 308,
+            "design_rank": 4,
+            "design_columns": 4,
+            "coefficients_intercept_mx4_queen_rook": [
+              0.0006344335689975924,
+              -0.003489957478892864,
+              -0.08940984717036199,
+              0.09863358809872382
+            ],
+            "heldout_residual_variance": 1.4202168194107539e-05,
+            "minimum_singular_value": 0.09101146223895996
+          },
+          {
+            "fold": 1,
+            "train_rows": 1266,
+            "heldout_rows": 327,
+            "design_rank": 4,
+            "design_columns": 4,
+            "coefficients_intercept_mx4_queen_rook": [
+              0.0012443849571918473,
+              -0.025206472504993145,
+              -0.2629791183757656,
+              0.292476308041767
+            ],
+            "heldout_residual_variance": 4.603125408370194e-05,
+            "minimum_singular_value": 0.06209138625617238
+          },
+          {
+            "fold": 2,
+            "train_rows": 1263,
+            "heldout_rows": 330,
+            "design_rank": 4,
+            "design_columns": 4,
+            "coefficients_intercept_mx4_queen_rook": [
+              0.0007174198492906848,
+              -0.0063813470495089515,
+              -0.2722396300607558,
+              0.28425581445883746
+            ],
+            "heldout_residual_variance": 1.1235934729704454e-05,
+            "minimum_singular_value": 0.09488903293506058
+          },
+          {
+            "fold": 3,
+            "train_rows": 1281,
+            "heldout_rows": 312,
+            "design_rank": 4,
+            "design_columns": 4,
+            "coefficients_intercept_mx4_queen_rook": [
+              0.0010309963015933644,
+              -0.014012758798564052,
+              -0.20828100969909993,
+              0.22994623649039356
+            ],
+            "heldout_residual_variance": 7.645992893666396e-07,
+            "minimum_singular_value": 0.09983888320639646
+          },
+          {
+            "fold": 4,
+            "train_rows": 1277,
+            "heldout_rows": 316,
+            "design_rank": 4,
+            "design_columns": 4,
+            "coefficients_intercept_mx4_queen_rook": [
+              0.0010456911510990693,
+              -0.014369240954731579,
+              -0.20961789385430896,
+              0.2314067169832205
+            ],
+            "heldout_residual_variance": 6.813830369053463e-07,
+            "minimum_singular_value": 0.10045346949809864
+          }
+        ]
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "queen_innovation_defined_ids": 591,
+        "rook_innovation_defined_ids": 591,
+        "disagreement_defined_ids": 591,
+        "crossfit_joint_defined_ids": 591,
+        "coverage_fraction": 1.0,
+        "disagreement_distribution": {
+          "n": 591,
+          "min": 0.00029973843461285343,
+          "p05": 0.0002997384346128608,
+          "p50": 0.0002997384346128608,
+          "p95": 0.001720149372550689,
+          "max": 0.06075677905610284,
+          "mean": 0.001220296898866431,
+          "variance": 2.5629397320625234e-05
+        },
+        "maximum_within_region_NMI_vs_Mx4_F": {
+          "status": "measured",
+          "joint_defined": 591,
+          "nmi": 0.7028109067326294,
+          "current_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 2,
+            "defined": 591
+          },
+          "innovation_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 3,
+            "defined": 591
+          }
+        },
+        "crossfit_residual_variance_ratio": 2.053887465080995,
+        "pearson_r_disagreement_vs_Mx4_F": 0.20701740106381875,
+        "folds": [
+          {
+            "fold": 0,
+            "train_rows": 478,
+            "heldout_rows": 113,
+            "design_rank": 4,
+            "design_columns": 4,
+            "coefficients_intercept_mx4_queen_rook": [
+              0.0009935967326270604,
+              0.012579143776742569,
+              0.22203413072356346,
+              -0.19872360539166795
+            ],
+            "heldout_residual_variance": 7.075665113681656e-06,
+            "minimum_singular_value": 0.08598873654359669
+          },
+          {
+            "fold": 1,
+            "train_rows": 469,
+            "heldout_rows": 122,
+            "design_rank": 4,
+            "design_columns": 4,
+            "coefficients_intercept_mx4_queen_rook": [
+              0.001086107267236801,
+              0.0011085470901030271,
+              0.5370130856446037,
+              -0.5145228133022324
+            ],
+            "heldout_residual_variance": 7.507338245261843e-05,
+            "minimum_singular_value": 0.07367876278080333
+          },
+          {
+            "fold": 2,
+            "train_rows": 470,
+            "heldout_rows": 121,
+            "design_rank": 4,
+            "design_columns": 4,
+            "coefficients_intercept_mx4_queen_rook": [
+              0.0010567057090952652,
+              0.009880002896088348,
+              0.16304630534226394,
+              -0.13780868302022173
+            ],
+            "heldout_residual_variance": 4.224615126908911e-06,
+            "minimum_singular_value": 0.08624696194485415
+          },
+          {
+            "fold": 3,
+            "train_rows": 470,
+            "heldout_rows": 121,
+            "design_rank": 4,
+            "design_columns": 4,
+            "coefficients_intercept_mx4_queen_rook": [
+              0.0009524451821699334,
+              0.010115661498828503,
+              0.29569938828347797,
+              -0.27766249879131794
+            ],
+            "heldout_residual_variance": 1.6833644721015222e-05,
+            "minimum_singular_value": 0.08288652703200705
+          },
+          {
+            "fold": 4,
+            "train_rows": 477,
+            "heldout_rows": 114,
+            "design_rank": 4,
+            "design_columns": 4,
+            "coefficients_intercept_mx4_queen_rook": [
+              0.0004981067323061158,
+              0.012699149360115063,
+              -0.542940276880006,
+              0.5442337727884262
+            ],
+            "heldout_residual_variance": 0.00015878497205461248,
+            "minimum_singular_value": 0.060968136258148585
+          }
+        ]
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "queen_innovation_defined_ids": 1192,
+        "rook_innovation_defined_ids": 1192,
+        "disagreement_defined_ids": 1192,
+        "crossfit_joint_defined_ids": 1192,
+        "coverage_fraction": 1.0,
+        "disagreement_distribution": {
+          "n": 1192,
+          "min": 0.0001067472089618278,
+          "p05": 0.00027468962544713316,
+          "p50": 0.00038452319500655637,
+          "p95": 0.005779512224462479,
+          "max": 0.09697582866448329,
+          "mean": 0.0019060306998149301,
+          "variance": 5.851519920019406e-05
+        },
+        "maximum_within_region_NMI_vs_Mx4_F": {
+          "status": "measured",
+          "joint_defined": 1192,
+          "nmi": 0.742354781180787,
+          "current_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 3,
+            "defined": 1192
+          },
+          "innovation_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 4,
+            "defined": 1192
+          }
+        },
+        "crossfit_residual_variance_ratio": 1.1681670818143022,
+        "pearson_r_disagreement_vs_Mx4_F": 0.19776803371337145,
+        "folds": [
+          {
+            "fold": 0,
+            "train_rows": 951,
+            "heldout_rows": 241,
+            "design_rank": 4,
+            "design_columns": 4,
+            "coefficients_intercept_mx4_queen_rook": [
+              0.0009837049331996345,
+              0.0062777469631959204,
+              -0.07823898788413311,
+              0.05969575137141818
+            ],
+            "heldout_residual_variance": 2.3368310024350156e-05,
+            "minimum_singular_value": 0.1755411122935607
+          },
+          {
+            "fold": 1,
+            "train_rows": 956,
+            "heldout_rows": 236,
+            "design_rank": 4,
+            "design_columns": 4,
+            "coefficients_intercept_mx4_queen_rook": [
+              0.0007117917802952664,
+              0.006692677726726273,
+              -0.31348025777891375,
+              0.2914245191361826
+            ],
+            "heldout_residual_variance": 0.00010440756781120132,
+            "minimum_singular_value": 0.16837619936574494
+          },
+          {
+            "fold": 2,
+            "train_rows": 943,
+            "heldout_rows": 249,
+            "design_rank": 4,
+            "design_columns": 4,
+            "coefficients_intercept_mx4_queen_rook": [
+              0.0008148847744188746,
+              0.005921023158463665,
+              -0.03553442438729171,
+              0.020077153922680214
+            ],
+            "heldout_residual_variance": 6.237929410782027e-05,
+            "minimum_singular_value": 0.16043244135228144
+          },
+          {
+            "fold": 3,
+            "train_rows": 949,
+            "heldout_rows": 243,
+            "design_rank": 4,
+            "design_columns": 4,
+            "coefficients_intercept_mx4_queen_rook": [
+              0.001073495916376379,
+              0.005691116734329107,
+              -0.049742806505346154,
+              0.05309713890553196
+            ],
+            "heldout_residual_variance": 3.752453170453207e-05,
+            "minimum_singular_value": 0.17000858571340635
+          },
+          {
+            "fold": 4,
+            "train_rows": 969,
+            "heldout_rows": 223,
+            "design_rank": 4,
+            "design_columns": 4,
+            "coefficients_intercept_mx4_queen_rook": [
+              0.0009578696996672935,
+              0.004588691969661702,
+              0.08729643037876138,
+              -0.07671221973252926
+            ],
+            "heldout_residual_variance": 0.00011700415021400548,
+            "minimum_singular_value": 0.15298205967050552
+          }
+        ]
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "queen_innovation_defined_ids": 6003,
+        "rook_innovation_defined_ids": 6003,
+        "disagreement_defined_ids": 6003,
+        "crossfit_joint_defined_ids": 6003,
+        "coverage_fraction": 1.0,
+        "disagreement_distribution": {
+          "n": 6003,
+          "min": 2.7414296832565274e-05,
+          "p05": 5.9103233931582784e-05,
+          "p50": 5.9103233931582784e-05,
+          "p95": 0.000709040693384802,
+          "max": 0.06346420587511883,
+          "mean": 0.0005420160703542667,
+          "variance": 5.858989541574272e-06
+        },
+        "maximum_within_region_NMI_vs_Mx4_F": {
+          "status": "measured",
+          "joint_defined": 6003,
+          "nmi": 0.8162118656676006,
+          "current_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 5,
+            "defined": 6003
+          },
+          "innovation_encoding": {
+            "encoding": "empirical_decile_bins",
+            "categories_or_bins": 6,
+            "defined": 6003
+          }
+        },
+        "crossfit_residual_variance_ratio": 1.0361963029806343,
+        "pearson_r_disagreement_vs_Mx4_F": 0.2131479736657847,
+        "folds": [
+          {
+            "fold": 0,
+            "train_rows": 4834,
+            "heldout_rows": 1169,
+            "design_rank": 4,
+            "design_columns": 4,
+            "coefficients_intercept_mx4_queen_rook": [
+              0.0003659764678214703,
+              0.007910093761324285,
+              0.23939238349378678,
+              -0.23579185207285924
+            ],
+            "heldout_residual_variance": 8.898744059470006e-06,
+            "minimum_singular_value": 0.11706177419736875
+          },
+          {
+            "fold": 1,
+            "train_rows": 4845,
+            "heldout_rows": 1158,
+            "design_rank": 4,
+            "design_columns": 4,
+            "coefficients_intercept_mx4_queen_rook": [
+              0.0003411729523036406,
+              0.008759602976984837,
+              -0.004790288864296142,
+              0.01266201558826935
+            ],
+            "heldout_residual_variance": 6.877836386836576e-06,
+            "minimum_singular_value": 0.11844352669865175
+          },
+          {
+            "fold": 2,
+            "train_rows": 4792,
+            "heldout_rows": 1211,
+            "design_rank": 4,
+            "design_columns": 4,
+            "coefficients_intercept_mx4_queen_rook": [
+              0.0003668750132661446,
+              0.009474092568198792,
+              0.05215408309671062,
+              -0.04449046723157561
+            ],
+            "heldout_residual_variance": 2.545579584270505e-06,
+            "minimum_singular_value": 0.12810095171842972
+          },
+          {
+            "fold": 3,
+            "train_rows": 4749,
+            "heldout_rows": 1254,
+            "design_rank": 4,
+            "design_columns": 4,
+            "coefficients_intercept_mx4_queen_rook": [
+              0.0003412373243599463,
+              0.00815240358982782,
+              0.12214764491696019,
+              -0.11908388066667103
+            ],
+            "heldout_residual_variance": 7.052524059271232e-06,
+            "minimum_singular_value": 0.11587078554076219
+          },
+          {
+            "fold": 4,
+            "train_rows": 4792,
+            "heldout_rows": 1211,
+            "design_rank": 4,
+            "design_columns": 4,
+            "coefficients_intercept_mx4_queen_rook": [
+              0.0003345123236276569,
+              0.010206024166416878,
+              -0.014575242761626991,
+              0.0193887840054882
+            ],
+            "heldout_residual_variance": 5.035434823564656e-06,
+            "minimum_singular_value": 0.12277298940524896
+          }
+        ]
+      }
+    }
+  },
+  "thresholds": {
+    "minimum_coverage": 0.9859,
+    "maximum_region_NMI_exclusive": 0.8,
+    "minimum_crossfit_residual_variance_ratio": 0.1,
+    "disagreement_bounds_inclusive": [
+      0.0,
+      2.0
+    ]
+  },
+  "acceptance": {
+    "exact_9379_official_geoid_region_partition": true,
+    "queen_rook_alignment_and_null_semantics_preserved": true,
+    "disagreement_finite_and_bounded_0_2": true,
+    "coverage_fraction": 1.0,
+    "coverage_at_least_98_59_percent": true,
+    "maximum_region_NMI_below_0_80": false,
+    "crossfit_residual_variance_ratio": 1.1851634404575098,
+    "residual_variance_at_least_10_percent": true,
+    "frozen_Mx4_S1_registry_and_source_diagnostics_unchanged": true,
+    "distinct_disagreement_screen_pass": false
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "queen_source_report_sha256": "6637a97a89c3cd2fdb3dd9f8392e1678fa8171826a5c817c596a3a8ece0f131b",
+    "rook_source_report_sha256": "4ca37e89d1a2ae94b37d8b7d58d058d1d377d9c4a3f766d186ba11f33b7b21e4",
+    "queen_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/s1-mx4-lagged-innovation/s1-mx4-lagged-innovation.parquet",
+      "sha256_before": "ed97287937b26d01dc40bf8255c8136a43749cacf24518a98d8e29e73611fa76",
+      "sha256_after": "ed97287937b26d01dc40bf8255c8136a43749cacf24518a98d8e29e73611fa76"
+    },
+    "rook_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/s1-rook-mx4-innovation/s1-rook-mx4-innovation.parquet",
+      "sha256_before": "b9b74f547515ee272f89dcee8b38197e2010565fa69e472218b8bc72038d8260",
+      "sha256_after": "b9b74f547515ee272f89dcee8b38197e2010565fa69e472218b8bc72038d8260"
+    },
+    "frozen_Mx4": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx4.parquet",
+      "sha256_before": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+      "sha256_after": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af"
+    },
+    "frozen_S1": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/S1.parquet",
+      "sha256_before": "632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03",
+      "sha256_after": "632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03"
+    },
+    "registry_sha256_before": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "registry_sha256_after": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "script_sha256": "184103a9fcfabaf06e081410f51345c13468a80c1f5cdf291fab3f4742b887e8",
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/s1-queen-rook-disagreement/queen-rook-disagreement.parquet",
+      "rows": 9379,
+      "sha256": "5f809347a0f2e7f50602447e33c1c6462e03416154eeae0aa7cf9b4a6cfbe585",
+      "columns": [
+        "GEOID",
+        "region",
+        "Mx4_F",
+        "Mx4_F_defined",
+        "Queen_innovation",
+        "Queen_innovation_defined",
+        "Rook_innovation",
+        "Rook_innovation_defined",
+        "absolute_Queen_Rook_disagreement",
+        "disagreement_defined",
+        "crossfit_joint_defined",
+        "fold",
+        "crossfit_prediction",
+        "crossfit_residual"
+      ],
+      "deterministic_bytes": true
+    }
+  },
+  "interpretation": "One or more registered disagreement gates failed; retain the Queen and Rook diagnostics separately and leave all frozen inputs unchanged."
+}
