@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "row": "bias60-final-candidates",
+  "status": "blocked",
+  "assessment": {
+    "final_two_protocol": "reports/final-two.json",
+    "protocol_status": "protocol_frozen_waiting_for_eligible_candidates",
+    "registered_final_two_count": 1,
+    "registered_candidate_ids": [
+      "V2_model"
+    ],
+    "selected_final_two": null,
+    "no_upload_queued": true,
+    "upload_authorized": false,
+    "v2_model_public_rmse": null,
+    "v2_model_predicted_public_rmse": 0.09135719597637867,
+    "historical_p4_public_rmse": 0.091440198,
+    "predicted_margin_vs_p4": 0.0000830020236213247,
+    "pairwise_public_noise_guard": 0.0024377552985730185,
+    "improvement_threshold_met": false,
+    "lab_present": false,
+    "track_a_preregistration": "not_recorded"
+  },
+  "blockers": [
+    "Only V2_model is registered in the frozen final-two protocol; there is no successful public score from which to choose candidate A or construct candidate B under that protocol.",
+    "The V2_model prediction does not clear the registered improvement noise guard; calibration upload would still need the required explicit upload authorization.",
+    "The frozen final-two record says no upload is queued and V2_model.upload_authorized is false.",
+    "No scripts/zindi_submit.py uploader exists in the competition repo or orchestrator scripts tree, so the requested guarded upload path is unavailable.",
+    "External lab artifacts are absent and Track A scorer preregistration is not recorded; no Track B weights are available or used."
+  ],
+  "actions": {
+    "uploads": 0,
+    "leaderboard_accessed": false,
+    "labels_read": false,
+    "reference_layers_used": false,
+    "candidate_registration_changed": false,
+    "final_two_choice_changed": false
+  },
+  "evidence_paths": [
+    "reports/final-two.json",
+    "reports/candidates.json",
+    "reports/lab-evaluation.json",
+    "reports/lab-prerequisites.json"
+  ],
+  "recommendation": "Keep this row blocked until an authorized guarded upload mechanism exists and two eligible candidate artifacts can be scored under the frozen protocol. Do not bypass the uploader, protocol or upload authorization."
+}
