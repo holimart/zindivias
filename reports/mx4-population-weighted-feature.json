@@ -1,0 +1,451 @@
+{
+  "schema_version": 1,
+  "audit": "Mx4p population-weighted peer county Esri share: provided-data-only unregistered sensitivity screen",
+  "scope": {
+    "official_ids": 9379,
+    "exact_9379_id_partition": true,
+    "defined": 9347,
+    "undefined": 32,
+    "coverage_fraction": 0.9965881224011088,
+    "bounds": [
+      0.0,
+      1.0
+    ],
+    "features_integrated_or_promoted": false,
+    "frozen_Mx4_modified": false,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "forbidden_reference_data_read": false,
+    "leaderboard_feedback_used": false,
+    "uploads": 0
+  },
+  "method": {
+    "source_calculation": "Reuses the audited leave-one-tract-out population-weighted peer COUNTYFP context; focal tract is excluded from numerator and denominator.",
+    "weight": "provided pop_total, using only positive finite population and defined registered Mx4 tract Esri-only share",
+    "component": "F",
+    "channel": "covariate:population_weighted_peer_county_share",
+    "undefined": "No peer population denominator; stored with standard zero placeholder and defined=false, never treated as a defined feature.",
+    "linear_redundancy": "Pairwise-complete Pearson r against every registered existing F covariate; constant/insufficient overlaps have r=null and are explicitly reported."
+  },
+  "coverage_threshold": 0.9859,
+  "regions": {
+    "maricopa-az": {
+      "official_ids": 1593,
+      "defined": 1593,
+      "undefined": 0,
+      "coverage_fraction": 1.0,
+      "distribution": {
+        "n": 1593,
+        "min": 0.0,
+        "p50": 0.00899192425973573,
+        "p95": 0.009001630337820015,
+        "max": 0.4839111442712881,
+        "mean": 0.027281768830051862
+      }
+    },
+    "northern-ca": {
+      "official_ids": 591,
+      "defined": 587,
+      "undefined": 4,
+      "coverage_fraction": 0.9932318104906938,
+      "distribution": {
+        "n": 587,
+        "min": 0.0,
+        "p50": 0.0,
+        "p95": 0.11726501190291931,
+        "max": 0.3004236410196388,
+        "mean": 0.023430960814772285
+      }
+    },
+    "eastern-ok": {
+      "official_ids": 1192,
+      "defined": 1191,
+      "undefined": 1,
+      "coverage_fraction": 0.9991610738255033,
+      "distribution": {
+        "n": 1191,
+        "min": 0.0,
+        "p50": 0.0,
+        "p95": 0.5703130298167971,
+        "max": 0.5738013620437744,
+        "mean": 0.15217877664448737
+      }
+    },
+    "south-central-tx": {
+      "official_ids": 6003,
+      "defined": 5976,
+      "undefined": 27,
+      "coverage_fraction": 0.9955022488755623,
+      "distribution": {
+        "n": 5976,
+        "min": 0.0,
+        "p50": 0.0,
+        "p95": 0.0919967537194733,
+        "max": 0.22847067825571946,
+        "mean": 0.018719830721662428
+      }
+    }
+  },
+  "pearson_vs_existing_F_covariates": [
+    {
+      "feature": "D2|F|covariate",
+      "joint_defined": 9347,
+      "pearson_r": -0.01829681358844053,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "G5|F|covariate",
+      "joint_defined": 9106,
+      "pearson_r": -0.015565032794732432,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "M2|F|covariate:facility_wikidata_link_share",
+      "joint_defined": 7690,
+      "pearson_r": -0.00153621867611425,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "M3|F|covariate:facility_incoming_address_mismatch_share",
+      "joint_defined": 7675,
+      "pearson_r": -0.010295012637247832,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "Mx2|F|covariate:facility_microsoft_only_place_share",
+      "joint_defined": 7678,
+      "pearson_r": 0.016798010474207755,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "Mx4|F|covariate",
+      "joint_defined": 9347,
+      "pearson_r": 0.995530440444159,
+      "absolute_r_below_0_8": false
+    },
+    {
+      "feature": "Mx5|F|covariate:school_category_mismatch_share_alltheplaces",
+      "joint_defined": 473,
+      "pearson_r": 0.07216649922094544,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "Mx5|F|covariate:school_category_mismatch_share_foursquare",
+      "joint_defined": 1946,
+      "pearson_r": 0.02890893151681452,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "Mx5|F|covariate:school_category_mismatch_share_meta",
+      "joint_defined": 8014,
+      "pearson_r": 0.026868998672505664,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "Mx5|F|covariate:school_category_mismatch_share_microsoft",
+      "joint_defined": 1620,
+      "pearson_r": -0.006887152929262038,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "Mx5|F|covariate:school_category_mismatch_share_other",
+      "joint_defined": 2830,
+      "pearson_r": 0.014923662037801138,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "P2|F|gap",
+      "joint_defined": 9345,
+      "pearson_r": 0.01905578179088008,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "P3|F|covariate",
+      "joint_defined": 9347,
+      "pearson_r": 0.04179869791668407,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "S1|F|covariate:lag_d2_f_covariate",
+      "joint_defined": 9347,
+      "pearson_r": -0.03115797084615204,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "S1|F|covariate:lag_g5_f_covariate",
+      "joint_defined": 9347,
+      "pearson_r": -0.022238766234807774,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "S1|F|covariate:lag_m2_f_covariate_facility_wikidata_link_share",
+      "joint_defined": 9333,
+      "pearson_r": 0.004313211632867915,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "S1|F|covariate:lag_m3_f_covariate_facility_incoming_address_mismatch_share",
+      "joint_defined": 9333,
+      "pearson_r": -0.023363045776841458,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "S1|F|covariate:lag_mx2_f_covariate_facility_microsoft_only_place_share",
+      "joint_defined": 9333,
+      "pearson_r": 0.03446081028556327,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "S1|F|covariate:lag_mx4_f_covariate",
+      "joint_defined": 9347,
+      "pearson_r": 0.9814946285861856,
+      "absolute_r_below_0_8": false
+    },
+    {
+      "feature": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_alltheplaces",
+      "joint_defined": 1829,
+      "pearson_r": 0.10319516450065658,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_foursquare",
+      "joint_defined": 6917,
+      "pearson_r": 0.05193786552098735,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_meta",
+      "joint_defined": 9330,
+      "pearson_r": 0.05661244164366763,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_microsoft",
+      "joint_defined": 5908,
+      "pearson_r": -0.0032679004468723935,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_other",
+      "joint_defined": 7669,
+      "pearson_r": 0.009815746438666142,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "S1|F|covariate:lag_p2_f_gap",
+      "joint_defined": 9347,
+      "pearson_r": 0.022966610132382298,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "S1|F|covariate:lag_p3_f_covariate",
+      "joint_defined": 9347,
+      "pearson_r": 0.09087616580108582,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "S1|F|covariate:lag_sc2_f_covariate",
+      "joint_defined": 9347,
+      "pearson_r": -0.01556689286508269,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "S1|F|covariate:lag_sc3_f_covariate",
+      "joint_defined": 9341,
+      "pearson_r": -0.018131344280644144,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "S1|F|covariate:lag_sc3_f_gap",
+      "joint_defined": 9341,
+      "pearson_r": 0.019487274450282026,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "S1|F|covariate:lag_sca1_f_gap",
+      "joint_defined": 9347,
+      "pearson_r": 0.025593246558365364,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "S1|F|covariate:lag_x1_f_covariate",
+      "joint_defined": 9347,
+      "pearson_r": -0.030569277060571727,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "S1|F|covariate:lag_x5_f_covariate",
+      "joint_defined": 9347,
+      "pearson_r": -0.038657748245443796,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "S3|F|covariate:boundary_leak_ems",
+      "joint_defined": 9347,
+      "pearson_r": -0.00341954011013913,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "S3|F|covariate:boundary_leak_fire",
+      "joint_defined": 9347,
+      "pearson_r": 0.016765945762614448,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "S3|F|covariate:boundary_leak_schools",
+      "joint_defined": 9347,
+      "pearson_r": -0.0021349757325095637,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "S4|F|covariate:peer_gap_delta",
+      "joint_defined": 9345,
+      "pearson_r": -0.0034938486865609335,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "Sc2|F|covariate",
+      "joint_defined": 9347,
+      "pearson_r": -0.0036534938818528636,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "Sc3|F|covariate",
+      "joint_defined": 8525,
+      "pearson_r": -0.011283022185929975,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "Sc3|F|gap",
+      "joint_defined": 8525,
+      "pearson_r": 0.006904919459991016,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "Sca1|F|gap",
+      "joint_defined": 9345,
+      "pearson_r": 0.019810105538877163,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "Tm2|F|covariate:postfire_burn_share",
+      "joint_defined": 9345,
+      "pearson_r": -0.020358179264369572,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "Tm5|F|covariate:tm5_buildings_mean_version",
+      "joint_defined": 9345,
+      "pearson_r": -0.144231891218811,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "Tm5|F|covariate:tm5_buildings_p90_version",
+      "joint_defined": 9345,
+      "pearson_r": -0.16793693614512892,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "Tm5|F|covariate:tm5_buildings_version0_share",
+      "joint_defined": 9345,
+      "pearson_r": null,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "X1|F|covariate",
+      "joint_defined": 9347,
+      "pearson_r": -0.012622749408176216,
+      "absolute_r_below_0_8": true
+    },
+    {
+      "feature": "X5|F|covariate",
+      "joint_defined": 9347,
+      "pearson_r": -0.021821954517301397,
+      "absolute_r_below_0_8": true
+    }
+  ],
+  "maximum_absolute_defined_pearson_r": 0.995530440444159,
+  "acceptance": {
+    "exact_id_partition": true,
+    "coverage_at_least_98_59_percent": true,
+    "values_finite_and_in_0_1": true,
+    "absolute_pearson_below_0_8_against_each_existing_F_covariate": false,
+    "all_registered_F_covariates_evaluated": true,
+    "refreshed_core_orthogonality_report_passed": true,
+    "candidate_remains_unregistered_after_redundancy_failure": true,
+    "acceptance_pass": false
+  },
+  "inputs": {
+    "artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx4p.parquet",
+      "sha256": "b55eb5b0e0ad07e53c55e205d1497427af47b88e779f83a3e45bcbee7f3ac5bd",
+      "rows": 9379
+    },
+    "source_sensitivity_report_sha256": "aa9dfc7f0e534ff78eaa9df6a8d7d6d3ce38ac26967fc7d5384c525ecb455a6f",
+    "registered_core_artifact_hashes": {
+      "D1": "cd389595f543483747281f6342a43ec183e858a08a559ad7f557d654024ebae3",
+      "D2": "68dc61099c9c9adcf2c028400671934874b2499208150bd521da4608340e5395",
+      "D3": "5a254127dd2adcd0f36e080a21b54fe9d9def46aeb93c068b8bf80c03359b36c",
+      "D4": "0fe71ba583e333f15dd0509e2ca4a229eafff3cfb1eaddf860198f464313bec9",
+      "D5": "57952de4bed5c2309426b7a850354a0ee743dc06a244b0738211eafc5b6d3f2e",
+      "Dst1": "cac4c507372353f5493b09b1ce6ec7c293500d185a1778fc73a68d25e5bc4281",
+      "Dst2": "fc01b4f1782b1830500f232fbc31d9b65f77f23a69985fcbdcc54d5a29fdda6b",
+      "Dst3": "bee2e5a578847aaace78ec1642a39e6068eea4fd8df6c03fca1f9a9f2ca234f8",
+      "Dst4": "9bccac9c8045501642899f45ab8eb960b92e675825b99a041a6a602b90d9d108",
+      "Dst5": "efca7188e3c3eca4c83b4937b8f353ef6588fc4cfc255be3cec51f991e98b5a9",
+      "G1": "6d870a5a32700934a79d4a4ebf1fd9e65d563a16478fff9dc788e13252621b9f",
+      "G2": "c2b03ab287ffe2033706eb3a6d51035ae5109e93c7b8c5be616b3d5e2517d5eb",
+      "G3": "95041b75f9d7758dff3065fe31906b2ae69d7cfd4147b843c9d859633e093953",
+      "G4": "65e380272552b0f8362acdbd73a9a7dcbc5eb544eaff38d744788d299e02317e",
+      "G5": "3df5cf68ea2bc952380d86bfecb3703dc1db2b15555c2943ceafbfaa11f34e0a",
+      "M1": "ddc48fc70558cb920659484b870819a9c4be43f3488e7fe3f59eed148b6e9f37",
+      "M2": "88aa794ff46b30824781d933cac2f6f4fb1898654c8c7726990e1ed70e605702",
+      "M3": "f560064aa9271e6f00f31f16c67242e30d9001c2ca427882bc873f97e0ab5538",
+      "M4": "ad2bffe71bc4f3ee5aa1bd8a1967e8825b97afcf67d3392b135b9a1b2d266678",
+      "M5": "5788ad26199e00cd371cc581e6a0d38dd9314fed9f618980539b750abd305545",
+      "Mx1": "ed5336a90e9364b8373ba15d334468b60ed42a68620f2408f13f0fb34bcf2f66",
+      "Mx2": "86990bc1a1f6a54ff2d2579dfd689b6ee67e31113aa9c336cec59ca914e58821",
+      "Mx3": "2feacc8c08c6b7e88067cfaf97b5c8623a9319899eb1959ba7e8f6deaddeb87b",
+      "Mx4": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+      "Mx5": "2201d3a99d9c539fe94c72f0b2b800f7696f1bd7aaf0dac2327fb20802be01b8",
+      "P1": "5bda0f80ba8397abecb31731caa09dec6500248d1ab072fcfb9f95f1199a7d3e",
+      "P2": "887ac98d8c2699ef83c48850b7696baea08b5bffbec044d9d9dc825d74e801c6",
+      "P3": "2e9a063759f697d0b2419152c3c0907e68e41dd04b8d901a16425f3207776fa1",
+      "P4": "12b54003b38e3be1fbbcc149a385dc80a38c605a0a33b27eab811d382ff5f29c",
+      "S1": "632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03",
+      "S2": "5b5e45edd6cd0f0a14cdfb124d587136f0f059a1c80a0aa6131a6abac958980a",
+      "S3": "ce01545f0e10cbffee64b50f5088608d6c67cb096f8769bca869af5fff5533d7",
+      "S4": "5841cac5114f2c7571bd41f90914c076b2eb92e1fe7bd1c33d6fe95b47a2a71c",
+      "S5": "81d9153819dadf76a9d8666f6887300d412f8d5fc6acf15c1a8dfc924840725c",
+      "Sc1": "8a73aa7cee295120db8a8f38e30fb4faca63588f49336a2f0f13fc825881a780",
+      "Sc2": "f9f91c2802826e004e4674972c5230e6fe8db4d20c0b4da4d7dc2f8d0b03571e",
+      "Sc3": "d212396db58a0ee82d5bcdbf83cea1c87b9d41124636a25edda29b75a41ea6f9",
+      "Sc4": "9aa62ada6e97d28d20f8e3b5d25b6d697ce0d40beea4e9fc4af9b136f36d5884",
+      "Sc5": "c8603a948b060344f23d2250da22b02a95254401c4a67d64d74a55d4cf4ee720",
+      "Sca1": "858eadae31c242954fbbd47ffb0151276018d987a994f57b24e84c19a8e6c294",
+      "Sca2": "76095bdd1699342886386958dc3515c8a7a7e372820e3fa6157b8404c930efd5",
+      "Sca3": "25bbb9d2c6dc08daebef712c1219f0f953172342f127db05c657beb553eb8426",
+      "Sca4": "6b9e8fc49b0af80dbb0c1a076520355e24aa43c65a5b12b90dfd073c3c259a16",
+      "Sca5": "7a60d0df7eb48dd1e8dbfa19fd3e4a214d9a7d72589688ef5554389350f58ad1",
+      "T1": "96faeb4ce17ffc4558ed40c1750f723fa653ef289af7a8567dcf2b3d6d1fd23c",
+      "T2": "6258a7f3a15ad7a240ad73d5f76e11e488e10130e29e6c2ade064ad236060570",
+      "T3": "6816bc3734c980ec290a6f3843d6c73e3a421c6864ae7b528e888c449bdc4fa5",
+      "T4": "b88b6d970077d2d9f8cd272cd3ebe80588cf9bfbb60f9281425554522337ee06",
+      "T5": "feb7af5722fabacf90ed8915c2842ba5c5edddad8bad5d75028277f88af80140",
+      "Tm1": "df93396b8bb481dea6da43dd90b997eeeb47c5bf249a3fa6eac0dca6c8713885",
+      "Tm2": "470c23b2902cbb652dfc884c22ba2a743a85538aa819ddd179b1ff2a3aea41bc",
+      "Tm3": "502ff5d6c66628c97db82142a9ea935cc7b2817ff4cb8a9852b5e94d9b0b2940",
+      "Tm5": "ae363dff82f4ee47546485f45cd71250150a402479718795b0247585efdfe45e",
+      "X1": "3352248e0e2ea195691ec2f6cdddc50de45be8a73115055a869592f4d7a0f262",
+      "X3": "a9875575506caa832f4bad35b5bd52a7401c543e0481feec46c86e9f6c8e47fa",
+      "X4": "6f0c03139dfa07ad16d62c44c0cec23561ab36b76f6bee92799187a96fabb278",
+      "X5": "c5b864512c1f191f9db866190e3b7c3b2208c702b2ba7c125b1d41c851a718f0"
+    },
+    "registry_sha256": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "harness_sha256": "1203d2acf10fa9682852abba3382d55f53c42b6fa7c03071c44cbe915d3f7a85",
+    "refreshed_orthogonality_report": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/ideas-orthogonality.json",
+    "refreshed_orthogonality_sha256": "07f34f9296a0c7e453eb5ae215d671beac556cf8731b9f1037eb2874ac5fe3e4",
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6"
+  },
+  "interpretation": "Mx4p coverage and value bounds pass, but at least one Pearson threshold fails. Keep this artifact as an unregistered sensitivity only; do not integrate or promote it, and preserve frozen Mx4 unchanged."
+}
