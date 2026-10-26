@@ -1,7 +1,7 @@
 {
-  "code_commit_at_run": "1eb856d603a3c3ba055b928bde107ce83fb66423",
+  "code_commit_at_run": "9e563c4e766a100b765c10e36489b36c60c7701d",
   "environment": {
-    "git_commit": "1eb856d603a3c3ba055b928bde107ce83fb66423",
+    "git_commit": "9e563c4e766a100b765c10e36489b36c60c7701d",
     "versions": {
       "numpy": "2.5.4",
       "pyarrow": "26.0.0",
@@ -23,8 +23,857 @@
     "registry_holds_all_60_spec_ids": true,
     "report_has_no_temporal_field": true
   },
+  "incremental_refresh": {
+    "note": "Untouched emissions were retained only after their existing workspace parquet SHA-256 matched the prior passing harness report.",
+    "preserved_parquet_hashes_verified": true,
+    "preserved_prior_idea_ids": [
+      "Dst1",
+      "Dst2",
+      "Dst3",
+      "Dst4",
+      "Dst5",
+      "G1",
+      "G2",
+      "G3",
+      "G4",
+      "G5",
+      "Mx4",
+      "P1",
+      "P2",
+      "P3",
+      "P4",
+      "Sc1",
+      "Sc2",
+      "Sc3",
+      "Sc4",
+      "Sc5",
+      "Sca1",
+      "Sca2",
+      "Sca3",
+      "Sca4",
+      "Sca5",
+      "Tm1",
+      "X1",
+      "X3",
+      "X4",
+      "X5"
+    ],
+    "prior_report_sha256": "dec7c6bcd0b405216a36ff1f14b6b1338b6a7189d2efe8e17fef5afc69af535d",
+    "selected_idea_ids_rebuilt": [
+      "D1",
+      "D2",
+      "D3",
+      "D4",
+      "D5"
+    ]
+  },
   "partition_problems": [],
   "per_idea": {
+    "D1": {
+      "accessed_inputs": {
+        "caches": [
+          "eastern-ok-strata-tract-table.parquet",
+          "maricopa-az-strata-tract-table.parquet",
+          "northern-ca-strata-tract-table.parquet",
+          "south-central-tx-strata-tract-table.parquet"
+        ],
+        "csv_columns": [],
+        "idea_artifacts": [],
+        "layers": [],
+        "parquet_columns": [
+          "eastern-ok-strata-tract-table.parquet:GEOID",
+          "eastern-ok-strata-tract-table.parquet:pct_urban",
+          "eastern-ok-strata-tract-table.parquet:ruca_covered",
+          "eastern-ok-strata-tract-table.parquet:ruca_primary",
+          "eastern-ok-strata-tract-table.parquet:svi_covered",
+          "eastern-ok-strata-tract-table.parquet:svi_minority",
+          "maricopa-az-strata-tract-table.parquet:GEOID",
+          "maricopa-az-strata-tract-table.parquet:pct_urban",
+          "maricopa-az-strata-tract-table.parquet:ruca_covered",
+          "maricopa-az-strata-tract-table.parquet:ruca_primary",
+          "maricopa-az-strata-tract-table.parquet:svi_covered",
+          "maricopa-az-strata-tract-table.parquet:svi_minority",
+          "northern-ca-strata-tract-table.parquet:GEOID",
+          "northern-ca-strata-tract-table.parquet:pct_urban",
+          "northern-ca-strata-tract-table.parquet:ruca_covered",
+          "northern-ca-strata-tract-table.parquet:ruca_primary",
+          "northern-ca-strata-tract-table.parquet:svi_covered",
+          "northern-ca-strata-tract-table.parquet:svi_minority",
+          "south-central-tx-strata-tract-table.parquet:GEOID",
+          "south-central-tx-strata-tract-table.parquet:pct_urban",
+          "south-central-tx-strata-tract-table.parquet:ruca_covered",
+          "south-central-tx-strata-tract-table.parquet:ruca_primary",
+          "south-central-tx-strata-tract-table.parquet:svi_covered",
+          "south-central-tx-strata-tract-table.parquet:svi_minority"
+        ]
+      },
+      "bytes": 50855,
+      "diagnostics": {
+        "eastern-ok": {
+          "covariate_distribution": {
+            "count": 1189,
+            "max": 3.585370975208302,
+            "mean": -4.7807753457365864e-17,
+            "min": -0.6966259375010225,
+            "p50": -0.638037817171616,
+            "p90": 1.7142391396471923
+          },
+          "coverage_share": 0.99748322147651,
+          "defined": 1189,
+          "no_fitted_parameter": true,
+          "recipe": "within-region z-score of 0.5*(svi_minority*(1-pct_urban) + that signal*1[ruca_primary>=4])",
+          "rows": 1192,
+          "ruca_ge_4_rows": 429,
+          "undefined": 3,
+          "zscore_group_sizes": {
+            "0": 1189
+          }
+        },
+        "maricopa-az": {
+          "covariate_distribution": {
+            "count": 1575,
+            "max": 6.023909264011527,
+            "mean": 0.0,
+            "min": -0.30588398902090436,
+            "p50": -0.30588398902090436,
+            "p90": 0.38156970207435237
+          },
+          "coverage_share": 0.9887005649717514,
+          "defined": 1575,
+          "no_fitted_parameter": true,
+          "recipe": "within-region z-score of 0.5*(svi_minority*(1-pct_urban) + that signal*1[ruca_primary>=4])",
+          "rows": 1593,
+          "ruca_ge_4_rows": 169,
+          "undefined": 18,
+          "zscore_group_sizes": {
+            "0": 1575
+          }
+        },
+        "northern-ca": {
+          "covariate_distribution": {
+            "count": 591,
+            "max": 5.5115874573349055,
+            "mean": 6.0113598626066e-17,
+            "min": -0.5327000956957247,
+            "p50": -0.5327000956957247,
+            "p90": 1.4454303762052088
+          },
+          "coverage_share": 1.0,
+          "defined": 591,
+          "no_fitted_parameter": true,
+          "recipe": "within-region z-score of 0.5*(svi_minority*(1-pct_urban) + that signal*1[ruca_primary>=4])",
+          "rows": 591,
+          "ruca_ge_4_rows": 156,
+          "undefined": 0,
+          "zscore_group_sizes": {
+            "0": 591
+          }
+        },
+        "south-central-tx": {
+          "covariate_distribution": {
+            "count": 5975,
+            "max": 6.238946865266385,
+            "mean": -3.8054171622298255e-17,
+            "min": -0.43053915399503034,
+            "p50": -0.43053915399503034,
+            "p90": 1.2860796104562198
+          },
+          "coverage_share": 0.9953356655005831,
+          "defined": 5975,
+          "no_fitted_parameter": true,
+          "recipe": "within-region z-score of 0.5*(svi_minority*(1-pct_urban) + that signal*1[ruca_primary>=4])",
+          "rows": 6003,
+          "ruca_ge_4_rows": 791,
+          "undefined": 28,
+          "zscore_group_sizes": {
+            "0": 5975
+          }
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate",
+          "component": "Est",
+          "defined_rows": 9330,
+          "rows": 9379,
+          "value_max": 6.238946865266385,
+          "value_min": -0.6966259375010225
+        }
+      ],
+      "emissions_per_region": 1,
+      "family": "D",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/D1.parquet",
+      "rows": 9379,
+      "sha256": "cd389595f543483747281f6342a43ec183e858a08a559ad7f557d654024ebae3",
+      "undeclared_columns_read": []
+    },
+    "D2": {
+      "accessed_inputs": {
+        "caches": [
+          "eastern-ok-overture-tract-summary.parquet",
+          "eastern-ok-strata-tract-table.parquet",
+          "maricopa-az-overture-tract-summary.parquet",
+          "maricopa-az-strata-tract-table.parquet",
+          "northern-ca-overture-tract-summary.parquet",
+          "northern-ca-strata-tract-table.parquet",
+          "south-central-tx-overture-tract-summary.parquet",
+          "south-central-tx-strata-tract-table.parquet"
+        ],
+        "csv_columns": [],
+        "idea_artifacts": [],
+        "layers": [],
+        "parquet_columns": [
+          "eastern-ok-overture-tract-summary.parquet:GEOID",
+          "eastern-ok-overture-tract-summary.parquet:overture_poi_ems",
+          "eastern-ok-overture-tract-summary.parquet:overture_poi_fire",
+          "eastern-ok-strata-tract-table.parquet:GEOID",
+          "eastern-ok-strata-tract-table.parquet:tribal_legal",
+          "eastern-ok-strata-tract-table.parquet:tribal_legal_pct",
+          "maricopa-az-overture-tract-summary.parquet:GEOID",
+          "maricopa-az-overture-tract-summary.parquet:overture_poi_ems",
+          "maricopa-az-overture-tract-summary.parquet:overture_poi_fire",
+          "maricopa-az-strata-tract-table.parquet:GEOID",
+          "maricopa-az-strata-tract-table.parquet:tribal_legal",
+          "maricopa-az-strata-tract-table.parquet:tribal_legal_pct",
+          "northern-ca-overture-tract-summary.parquet:GEOID",
+          "northern-ca-overture-tract-summary.parquet:overture_poi_ems",
+          "northern-ca-overture-tract-summary.parquet:overture_poi_fire",
+          "northern-ca-strata-tract-table.parquet:GEOID",
+          "northern-ca-strata-tract-table.parquet:tribal_legal",
+          "northern-ca-strata-tract-table.parquet:tribal_legal_pct",
+          "south-central-tx-overture-tract-summary.parquet:GEOID",
+          "south-central-tx-overture-tract-summary.parquet:overture_poi_ems",
+          "south-central-tx-overture-tract-summary.parquet:overture_poi_fire",
+          "south-central-tx-strata-tract-table.parquet:GEOID",
+          "south-central-tx-strata-tract-table.parquet:tribal_legal",
+          "south-central-tx-strata-tract-table.parquet:tribal_legal_pct"
+        ]
+      },
+      "bytes": 24789,
+      "diagnostics": {
+        "eastern-ok": {
+          "covariate_distribution": {
+            "count": 1192,
+            "max": 1.0,
+            "mean": 0.007969798657718111,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "coverage_share": 1.0,
+          "defined": 1192,
+          "legal_flag_rows": 13,
+          "legal_land_rows": 13,
+          "no_fitted_parameter": true,
+          "no_reference_facility_counts": true,
+          "recipe": "tribal_legal_pct*(0.5 + 0.5*1[overture_poi_fire==0 or overture_poi_ems==0])",
+          "rows": 1192,
+          "substitution_note": "Used the merged challenge-provided tribal_legal and tribal_legal_pct columns; aiannh_kind/in_tribal_tract are absent from the harness strata cache and no external boundary layer was opened.",
+          "unavailable_spec_fields": [
+            "aiannh_kind",
+            "in_tribal_tract"
+          ],
+          "undefined": 0,
+          "zero_fire_or_ems_rows": 914
+        },
+        "maricopa-az": {
+          "covariate_distribution": {
+            "count": 1593,
+            "max": 1.0,
+            "mean": 0.014894231825930384,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "coverage_share": 1.0,
+          "defined": 1593,
+          "legal_flag_rows": 37,
+          "legal_land_rows": 37,
+          "no_fitted_parameter": true,
+          "no_reference_facility_counts": true,
+          "recipe": "tribal_legal_pct*(0.5 + 0.5*1[overture_poi_fire==0 or overture_poi_ems==0])",
+          "rows": 1593,
+          "substitution_note": "Used the merged challenge-provided tribal_legal and tribal_legal_pct columns; aiannh_kind/in_tribal_tract are absent from the harness strata cache and no external boundary layer was opened.",
+          "unavailable_spec_fields": [
+            "aiannh_kind",
+            "in_tribal_tract"
+          ],
+          "undefined": 0,
+          "zero_fire_or_ems_rows": 1400
+        },
+        "northern-ca": {
+          "covariate_distribution": {
+            "count": 591,
+            "max": 0.9999999999999993,
+            "mean": 0.002221876247746239,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "coverage_share": 1.0,
+          "defined": 591,
+          "legal_flag_rows": 13,
+          "legal_land_rows": 13,
+          "no_fitted_parameter": true,
+          "no_reference_facility_counts": true,
+          "recipe": "tribal_legal_pct*(0.5 + 0.5*1[overture_poi_fire==0 or overture_poi_ems==0])",
+          "rows": 591,
+          "substitution_note": "Used the merged challenge-provided tribal_legal and tribal_legal_pct columns; aiannh_kind/in_tribal_tract are absent from the harness strata cache and no external boundary layer was opened.",
+          "unavailable_spec_fields": [
+            "aiannh_kind",
+            "in_tribal_tract"
+          ],
+          "undefined": 0,
+          "zero_fire_or_ems_rows": 465
+        },
+        "south-central-tx": {
+          "covariate_distribution": {
+            "count": 6003,
+            "max": 0.02746218420680744,
+            "mean": 4.5747433294698385e-06,
+            "min": 0.0,
+            "p50": 0.0,
+            "p90": 0.0
+          },
+          "coverage_share": 1.0,
+          "defined": 6003,
+          "legal_flag_rows": 1,
+          "legal_land_rows": 1,
+          "no_fitted_parameter": true,
+          "no_reference_facility_counts": true,
+          "recipe": "tribal_legal_pct*(0.5 + 0.5*1[overture_poi_fire==0 or overture_poi_ems==0])",
+          "rows": 6003,
+          "substitution_note": "Used the merged challenge-provided tribal_legal and tribal_legal_pct columns; aiannh_kind/in_tribal_tract are absent from the harness strata cache and no external boundary layer was opened.",
+          "unavailable_spec_fields": [
+            "aiannh_kind",
+            "in_tribal_tract"
+          ],
+          "undefined": 0,
+          "zero_fire_or_ems_rows": 4877
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate",
+          "component": "F",
+          "defined_rows": 9379,
+          "rows": 9379,
+          "value_max": 1.0,
+          "value_min": 0.0
+        }
+      ],
+      "emissions_per_region": 1,
+      "family": "D",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/D2.parquet",
+      "rows": 9379,
+      "sha256": "68dc61099c9c9adcf2c028400671934874b2499208150bd521da4608340e5395",
+      "undeclared_columns_read": []
+    },
+    "D3": {
+      "accessed_inputs": {
+        "caches": [
+          "eastern-ok-overture-tract-summary.parquet",
+          "eastern-ok-strata-tract-table.parquet",
+          "maricopa-az-overture-tract-summary.parquet",
+          "maricopa-az-strata-tract-table.parquet",
+          "northern-ca-overture-tract-summary.parquet",
+          "northern-ca-strata-tract-table.parquet",
+          "south-central-tx-overture-tract-summary.parquet",
+          "south-central-tx-strata-tract-table.parquet"
+        ],
+        "csv_columns": [],
+        "idea_artifacts": [],
+        "layers": [
+          "census-acs-housing"
+        ],
+        "parquet_columns": [
+          "eastern-ok-census-acs-housing.parquet:GEOID,housing_units",
+          "eastern-ok-overture-tract-summary.parquet:GEOID",
+          "eastern-ok-overture-tract-summary.parquet:overture_buildings",
+          "eastern-ok-strata-tract-table.parquet:GEOID",
+          "eastern-ok-strata-tract-table.parquet:ruca_primary",
+          "maricopa-az-census-acs-housing.parquet:GEOID,housing_units",
+          "maricopa-az-overture-tract-summary.parquet:GEOID",
+          "maricopa-az-overture-tract-summary.parquet:overture_buildings",
+          "maricopa-az-strata-tract-table.parquet:GEOID",
+          "maricopa-az-strata-tract-table.parquet:ruca_primary",
+          "northern-ca-census-acs-housing.parquet:GEOID,housing_units",
+          "northern-ca-overture-tract-summary.parquet:GEOID",
+          "northern-ca-overture-tract-summary.parquet:overture_buildings",
+          "northern-ca-strata-tract-table.parquet:GEOID",
+          "northern-ca-strata-tract-table.parquet:ruca_primary",
+          "south-central-tx-census-acs-housing.parquet:GEOID,housing_units",
+          "south-central-tx-overture-tract-summary.parquet:GEOID",
+          "south-central-tx-overture-tract-summary.parquet:overture_buildings",
+          "south-central-tx-strata-tract-table.parquet:GEOID",
+          "south-central-tx-strata-tract-table.parquet:ruca_primary"
+        ]
+      },
+      "bytes": 96160,
+      "diagnostics": {
+        "eastern-ok": {
+          "covariate_distribution": {
+            "count": 1182,
+            "max": 5.208184975077551,
+            "mean": 0.0,
+            "min": -6.97689401319328,
+            "p50": -0.08163081467127317,
+            "p90": 1.1960657184734576
+          },
+          "coverage_share": 0.9916107382550335,
+          "defined": 1182,
+          "housing_units_role": "demographic covariate only; never a denominator floor or replacement for a removed structure reference",
+          "no_fitted_parameter": true,
+          "recipe": "within-region x RUCA z-score of ln(provided ACS housing_units / provided Overture building count)",
+          "rows": 1192,
+          "undefined": 10,
+          "undefined_reasons": {
+            "housing_units_not_positive_or_missing": 10,
+            "overture_buildings_not_positive_or_missing": 0,
+            "ruca_outside_1_to_10_or_missing": 0
+          },
+          "zscore_group_sizes": {
+            "1.0": 600,
+            "10.0": 145,
+            "2.0": 139,
+            "3.0": 14,
+            "4.0": 124,
+            "5.0": 68,
+            "6.0": 19,
+            "7.0": 43,
+            "8.0": 24,
+            "9.0": 6
+          }
+        },
+        "maricopa-az": {
+          "covariate_distribution": {
+            "count": 1566,
+            "max": 6.082324548809858,
+            "mean": 1.814923973844445e-17,
+            "min": -10.029522480896283,
+            "p50": -0.108682975426317,
+            "p90": 1.094065795277733
+          },
+          "coverage_share": 0.9830508474576272,
+          "defined": 1566,
+          "housing_units_role": "demographic covariate only; never a denominator floor or replacement for a removed structure reference",
+          "no_fitted_parameter": true,
+          "recipe": "within-region x RUCA z-score of ln(provided ACS housing_units / provided Overture building count)",
+          "rows": 1593,
+          "undefined": 27,
+          "undefined_reasons": {
+            "housing_units_not_positive_or_missing": 27,
+            "overture_buildings_not_positive_or_missing": 0,
+            "ruca_outside_1_to_10_or_missing": 0
+          },
+          "zscore_group_sizes": {
+            "1.0": 1197,
+            "10.0": 68,
+            "2.0": 192,
+            "3.0": 10,
+            "4.0": 54,
+            "5.0": 16,
+            "6.0": 1,
+            "7.0": 24,
+            "8.0": 3,
+            "9.0": 1
+          }
+        },
+        "northern-ca": {
+          "covariate_distribution": {
+            "count": 591,
+            "max": 5.562697484963781,
+            "mean": 7.21363183512792e-17,
+            "min": -4.651445414435829,
+            "p50": -0.13931459199628618,
+            "p90": 1.165951239550616
+          },
+          "coverage_share": 1.0,
+          "defined": 591,
+          "housing_units_role": "demographic covariate only; never a denominator floor or replacement for a removed structure reference",
+          "no_fitted_parameter": true,
+          "recipe": "within-region x RUCA z-score of ln(provided ACS housing_units / provided Overture building count)",
+          "rows": 591,
+          "undefined": 0,
+          "undefined_reasons": {
+            "housing_units_not_positive_or_missing": 0,
+            "overture_buildings_not_positive_or_missing": 0,
+            "ruca_outside_1_to_10_or_missing": 0
+          },
+          "zscore_group_sizes": {
+            "1.0": 374,
+            "10.0": 64,
+            "2.0": 57,
+            "3.0": 4,
+            "4.0": 38,
+            "5.0": 16,
+            "6.0": 3,
+            "7.0": 23,
+            "8.0": 10,
+            "9.0": 2
+          }
+        },
+        "south-central-tx": {
+          "covariate_distribution": {
+            "count": 5960,
+            "max": 5.1069852601458745,
+            "mean": -4.291868873718726e-17,
+            "min": -8.586830537983067,
+            "p50": -0.23034343553963754,
+            "p90": 1.3043309982347893
+          },
+          "coverage_share": 0.9928369148758954,
+          "defined": 5960,
+          "housing_units_role": "demographic covariate only; never a denominator floor or replacement for a removed structure reference",
+          "no_fitted_parameter": true,
+          "recipe": "within-region x RUCA z-score of ln(provided ACS housing_units / provided Overture building count)",
+          "rows": 6003,
+          "undefined": 43,
+          "undefined_reasons": {
+            "housing_units_not_positive_or_missing": 43,
+            "overture_buildings_not_positive_or_missing": 2,
+            "ruca_outside_1_to_10_or_missing": 2
+          },
+          "zscore_group_sizes": {
+            "1.0": 4564,
+            "10.0": 305,
+            "2.0": 549,
+            "3.0": 62,
+            "4.0": 251,
+            "5.0": 100,
+            "6.0": 23,
+            "7.0": 73,
+            "8.0": 21,
+            "9.0": 12
+          }
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate",
+          "component": "B",
+          "defined_rows": 9299,
+          "rows": 9379,
+          "value_max": 6.082324548809858,
+          "value_min": -10.029522480896283
+        }
+      ],
+      "emissions_per_region": 1,
+      "family": "D",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/D3.parquet",
+      "rows": 9379,
+      "sha256": "5a254127dd2adcd0f36e080a21b54fe9d9def46aeb93c068b8bf80c03359b36c",
+      "undeclared_columns_read": []
+    },
+    "D4": {
+      "accessed_inputs": {
+        "caches": [
+          "eastern-ok-strata-tract-table.parquet",
+          "maricopa-az-strata-tract-table.parquet",
+          "northern-ca-strata-tract-table.parquet",
+          "south-central-tx-strata-tract-table.parquet"
+        ],
+        "csv_columns": [],
+        "idea_artifacts": [],
+        "layers": [
+          "census-acs-housing"
+        ],
+        "parquet_columns": [
+          "eastern-ok-census-acs-housing.parquet:GEOID,housing_units",
+          "eastern-ok-strata-tract-table.parquet:GEOID",
+          "eastern-ok-strata-tract-table.parquet:pop_total",
+          "maricopa-az-census-acs-housing.parquet:GEOID,housing_units",
+          "maricopa-az-strata-tract-table.parquet:GEOID",
+          "maricopa-az-strata-tract-table.parquet:pop_total",
+          "northern-ca-census-acs-housing.parquet:GEOID,housing_units",
+          "northern-ca-strata-tract-table.parquet:GEOID",
+          "northern-ca-strata-tract-table.parquet:pop_total",
+          "south-central-tx-census-acs-housing.parquet:GEOID,housing_units",
+          "south-central-tx-strata-tract-table.parquet:GEOID",
+          "south-central-tx-strata-tract-table.parquet:pop_total"
+        ]
+      },
+      "bytes": 95978,
+      "diagnostics": {
+        "eastern-ok": {
+          "covariate_distribution": {
+            "count": 1182,
+            "max": 28.20573116997566,
+            "mean": -9.0170397939099e-18,
+            "min": -0.29747706917934413,
+            "p50": -0.04247686751551814,
+            "p90": 0.03664131579294413
+          },
+          "coverage_share": 0.9916107382550335,
+          "defined": 1182,
+          "housing_units_role": "demographic covariate only; not a target denominator or gap estimate",
+          "no_fitted_parameter": true,
+          "recipe": "within-region z-score of provided pop_total / provided ACS housing_units",
+          "rows": 1192,
+          "undefined": 10,
+          "undefined_reasons": {
+            "housing_units_not_positive_or_missing": 10,
+            "population_missing_or_negative": 0
+          },
+          "zscore_group_sizes": {
+            "0": 1182
+          }
+        },
+        "maricopa-az": {
+          "covariate_distribution": {
+            "count": 1566,
+            "max": 34.20196994101797,
+            "mean": -3.1761169542277785e-17,
+            "min": -0.5172083593924467,
+            "p50": -0.051352714121989565,
+            "p90": 0.1383131882630111
+          },
+          "coverage_share": 0.9830508474576272,
+          "defined": 1566,
+          "housing_units_role": "demographic covariate only; not a target denominator or gap estimate",
+          "no_fitted_parameter": true,
+          "recipe": "within-region z-score of provided pop_total / provided ACS housing_units",
+          "rows": 1593,
+          "undefined": 27,
+          "undefined_reasons": {
+            "housing_units_not_positive_or_missing": 27,
+            "population_missing_or_negative": 0
+          },
+          "zscore_group_sizes": {
+            "0": 1566
+          }
+        },
+        "northern-ca": {
+          "covariate_distribution": {
+            "count": 591,
+            "max": 24.002390404803183,
+            "mean": -1.20227197252132e-17,
+            "min": -0.4352627857573181,
+            "p50": -0.04717005763833063,
+            "p90": 0.08443860377628895
+          },
+          "coverage_share": 1.0,
+          "defined": 591,
+          "housing_units_role": "demographic covariate only; not a target denominator or gap estimate",
+          "no_fitted_parameter": true,
+          "recipe": "within-region z-score of provided pop_total / provided ACS housing_units",
+          "rows": 591,
+          "undefined": 0,
+          "undefined_reasons": {
+            "housing_units_not_positive_or_missing": 0,
+            "population_missing_or_negative": 0
+          },
+          "zscore_group_sizes": {
+            "0": 591
+          }
+        },
+        "south-central-tx": {
+          "covariate_distribution": {
+            "count": 5960,
+            "max": 70.49056938674448,
+            "mean": 2.1310321143811728e-17,
+            "min": -0.3296537783766307,
+            "p50": -0.026555310560406213,
+            "p90": 0.07071185321308228
+          },
+          "coverage_share": 0.9928369148758954,
+          "defined": 5960,
+          "housing_units_role": "demographic covariate only; not a target denominator or gap estimate",
+          "no_fitted_parameter": true,
+          "recipe": "within-region z-score of provided pop_total / provided ACS housing_units",
+          "rows": 6003,
+          "undefined": 43,
+          "undefined_reasons": {
+            "housing_units_not_positive_or_missing": 43,
+            "population_missing_or_negative": 0
+          },
+          "zscore_group_sizes": {
+            "0": 5960
+          }
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate",
+          "component": "Est",
+          "defined_rows": 9299,
+          "rows": 9379,
+          "value_max": 70.49056938674448,
+          "value_min": -0.5172083593924467
+        }
+      ],
+      "emissions_per_region": 1,
+      "family": "D",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/D4.parquet",
+      "rows": 9379,
+      "sha256": "0fe71ba583e333f15dd0509e2ca4a229eafff3cfb1eaddf860198f464313bec9",
+      "undeclared_columns_read": []
+    },
+    "D5": {
+      "accessed_inputs": {
+        "caches": [
+          "eastern-ok-strata-tract-table.parquet",
+          "maricopa-az-strata-tract-table.parquet",
+          "northern-ca-strata-tract-table.parquet",
+          "south-central-tx-strata-tract-table.parquet"
+        ],
+        "csv_columns": [],
+        "idea_artifacts": [],
+        "layers": [],
+        "parquet_columns": [
+          "eastern-ok-strata-tract-table.parquet:GEOID",
+          "eastern-ok-strata-tract-table.parquet:cvi_baseline_infrastructure",
+          "eastern-ok-strata-tract-table.parquet:cvi_baseline_socioeconomic",
+          "eastern-ok-strata-tract-table.parquet:cvi_covered",
+          "eastern-ok-strata-tract-table.parquet:cvi_xwalk_coverage",
+          "maricopa-az-strata-tract-table.parquet:GEOID",
+          "maricopa-az-strata-tract-table.parquet:cvi_baseline_infrastructure",
+          "maricopa-az-strata-tract-table.parquet:cvi_baseline_socioeconomic",
+          "maricopa-az-strata-tract-table.parquet:cvi_covered",
+          "maricopa-az-strata-tract-table.parquet:cvi_xwalk_coverage",
+          "northern-ca-strata-tract-table.parquet:GEOID",
+          "northern-ca-strata-tract-table.parquet:cvi_baseline_infrastructure",
+          "northern-ca-strata-tract-table.parquet:cvi_baseline_socioeconomic",
+          "northern-ca-strata-tract-table.parquet:cvi_covered",
+          "northern-ca-strata-tract-table.parquet:cvi_xwalk_coverage",
+          "south-central-tx-strata-tract-table.parquet:GEOID",
+          "south-central-tx-strata-tract-table.parquet:cvi_baseline_infrastructure",
+          "south-central-tx-strata-tract-table.parquet:cvi_baseline_socioeconomic",
+          "south-central-tx-strata-tract-table.parquet:cvi_covered",
+          "south-central-tx-strata-tract-table.parquet:cvi_xwalk_coverage"
+        ]
+      },
+      "bytes": 85577,
+      "diagnostics": {
+        "eastern-ok": {
+          "covariate_distribution": {
+            "count": 1192,
+            "max": 2.0736334200759066,
+            "mean": 9.537486386041613e-17,
+            "min": -2.3789210888863237,
+            "p50": 0.10276126452763232,
+            "p90": 1.1354907450704128
+          },
+          "coverage_share": 1.0,
+          "defined": 1192,
+          "infrastructure_zscore_group_sizes": {
+            "0": 1192
+          },
+          "minimum_cvi_xwalk_coverage": 0.9,
+          "no_fitted_parameter": true,
+          "recipe": "average of within-region z-scores of CVI baseline infrastructure and socioeconomic domains",
+          "rows": 1192,
+          "socioeconomic_zscore_group_sizes": {
+            "0": 1192
+          },
+          "undefined": 0,
+          "xwalk_coverage_min_observed": 1.0
+        },
+        "maricopa-az": {
+          "covariate_distribution": {
+            "count": 1593,
+            "max": 2.324059444194874,
+            "mean": 5.017957173447035e-17,
+            "min": -2.310622417071233,
+            "p50": -0.07379522403502284,
+            "p90": 1.264479622143073
+          },
+          "coverage_share": 1.0,
+          "defined": 1593,
+          "infrastructure_zscore_group_sizes": {
+            "0": 1593
+          },
+          "minimum_cvi_xwalk_coverage": 0.9,
+          "no_fitted_parameter": true,
+          "recipe": "average of within-region z-scores of CVI baseline infrastructure and socioeconomic domains",
+          "rows": 1593,
+          "socioeconomic_zscore_group_sizes": {
+            "0": 1593
+          },
+          "undefined": 0,
+          "xwalk_coverage_min_observed": 1.0
+        },
+        "northern-ca": {
+          "covariate_distribution": {
+            "count": 591,
+            "max": 2.2779033651152214,
+            "mean": 3.1259071285554325e-16,
+            "min": -2.498658057513618,
+            "p50": 0.06839612200586728,
+            "p90": 1.1717257754369392
+          },
+          "coverage_share": 1.0,
+          "defined": 591,
+          "infrastructure_zscore_group_sizes": {
+            "0": 591
+          },
+          "minimum_cvi_xwalk_coverage": 0.9,
+          "no_fitted_parameter": true,
+          "recipe": "average of within-region z-scores of CVI baseline infrastructure and socioeconomic domains",
+          "rows": 591,
+          "socioeconomic_zscore_group_sizes": {
+            "0": 591
+          },
+          "undefined": 0,
+          "xwalk_coverage_min_observed": 1.0
+        },
+        "south-central-tx": {
+          "covariate_distribution": {
+            "count": 6001,
+            "max": 2.1805714379643115,
+            "mean": 2.0365497508871392e-16,
+            "min": -2.629692136502781,
+            "p50": 0.07222568471945931,
+            "p90": 1.198207946854659
+          },
+          "coverage_share": 0.9996668332500417,
+          "defined": 6001,
+          "infrastructure_zscore_group_sizes": {
+            "0": 6001
+          },
+          "minimum_cvi_xwalk_coverage": 0.9,
+          "no_fitted_parameter": true,
+          "recipe": "average of within-region z-scores of CVI baseline infrastructure and socioeconomic domains",
+          "rows": 6003,
+          "socioeconomic_zscore_group_sizes": {
+            "0": 6001
+          },
+          "undefined": 2,
+          "xwalk_coverage_min_observed": 1.0
+        }
+      },
+      "emissions": [
+        {
+          "channel": "covariate",
+          "component": "Est",
+          "defined_rows": 9377,
+          "rows": 9379,
+          "value_max": 2.324059444194874,
+          "value_min": -2.629692136502781
+        }
+      ],
+      "emissions_per_region": 1,
+      "family": "D",
+      "forbidden_source_hits": [],
+      "geoid_partition_exact": true,
+      "official_rows": 9379,
+      "path": "ideas/D5.parquet",
+      "rows": 9379,
+      "sha256": "57952de4bed5c2309426b7a850354a0ee743dc06a244b0738211eafc5b6d3f2e",
+      "undeclared_columns_read": []
+    },
     "Dst1": {
       "accessed_inputs": {
         "caches": [
@@ -7840,7 +8689,7 @@
   },
   "preregistration": {
     "path": "config/bias60-harness-preregistered.json",
-    "sha256": "0d9fe95d476170bb1480744564b3a4a8789fe65727b20e9be3ab399bc4f10e11",
+    "sha256": "10f79b4162c9862b846ed8c15af5789df76369d6ffb004f6d016147f2b7ae795",
     "spec": {
       "family_count": 12,
       "idea_count": 60,
@@ -7880,7 +8729,7 @@
       "covariate": 47,
       "gap": 13
     },
-    "declared_count": 30,
+    "declared_count": 25,
     "families_total": 12,
     "ideas_per_family": [
       5
@@ -7893,6 +8742,11 @@
       "G4",
       "G5",
       "Tm1",
+      "D1",
+      "D2",
+      "D3",
+      "D4",
+      "D5",
       "X1",
       "X3",
       "X4",
@@ -7925,7 +8779,7 @@
       "F",
       "R"
     ],
-    "implemented_count": 30
+    "implemented_count": 35
   },
   "scope": {
     "geoids_by_region": {
@@ -7953,8 +8807,13 @@
       "F",
       "R"
     ],
-    "ideas_implemented": 30,
+    "ideas_implemented": 35,
     "parquet_files": {
+      "ideas/D1.parquet": "cd389595f543483747281f6342a43ec183e858a08a559ad7f557d654024ebae3",
+      "ideas/D2.parquet": "68dc61099c9c9adcf2c028400671934874b2499208150bd521da4608340e5395",
+      "ideas/D3.parquet": "5a254127dd2adcd0f36e080a21b54fe9d9def46aeb93c068b8bf80c03359b36c",
+      "ideas/D4.parquet": "0fe71ba583e333f15dd0509e2ca4a229eafff3cfb1eaddf860198f464313bec9",
+      "ideas/D5.parquet": "57952de4bed5c2309426b7a850354a0ee743dc06a244b0738211eafc5b6d3f2e",
       "ideas/Dst1.parquet": "cac4c507372353f5493b09b1ce6ec7c293500d185a1778fc73a68d25e5bc4281",
       "ideas/Dst2.parquet": "fc01b4f1782b1830500f232fbc31d9b65f77f23a69985fcbdcc54d5a29fdda6b",
       "ideas/Dst3.parquet": "bee2e5a578847aaace78ec1642a39e6068eea4fd8df6c03fca1f9a9f2ca234f8",
@@ -7986,7 +8845,7 @@
       "ideas/X4.parquet": "6f0c03139dfa07ad16d62c44c0cec23561ab36b76f6bee92799187a96fabb278",
       "ideas/X5.parquet": "c5b864512c1f191f9db866190e3b7c3b2208c702b2ba7c125b1d41c851a718f0"
     },
-    "report_sha256": "bc961a0d8f5c1f3c2f497a2b5034284f5345553247adbe2c3895dd8e28dc20d0"
+    "report_sha256": "e5bf6c3722ee386e407f604405ac394637bb7cee89b9fd161a235e7a08ebcdfd"
   },
   "tamper_case": null
 }
