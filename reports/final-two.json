@@ -96,16 +96,6 @@
     "remaining_total_account_capacity_verified": false,
     "queued_uploads": [
       {
-        "candidate_id": "A1_physical_equal",
-        "scheduled_utc": "2026-10-26",
-        "purpose": "calibration"
-      },
-      {
-        "candidate_id": "A2_spectral",
-        "scheduled_utc": "2026-10-26",
-        "purpose": "calibration"
-      },
-      {
         "candidate_id": "A3_dawid_skene",
         "scheduled_utc": "2026-10-27",
         "purpose": "calibration"
@@ -119,6 +109,22 @@
         "candidate_id": "B_from_A",
         "scheduled_utc": "2026-10-28",
         "purpose": "calibration; build only after A selection"
+      }
+    ],
+    "completed_uploads": [
+      {
+        "candidate_id": "A1_physical_equal",
+        "submission_id": "iQw8C6Q9",
+        "public_rmse": 0.126543547,
+        "submitted_utc": "2026-10-26T14:21:03.275Z",
+        "purpose": "calibration"
+      },
+      {
+        "candidate_id": "A2_spectral",
+        "submission_id": "W83LEghZ",
+        "public_rmse": 0.146089513,
+        "submitted_utc": "2026-10-26T14:21:49.291Z",
+        "purpose": "calibration"
       }
     ]
   },
@@ -443,10 +449,13 @@
         "scored_target_claim": false
       },
       "upload_authorized": true,
-      "upload_performed": false,
-      "submission_id": null,
-      "public_rmse": null,
-      "eligibility": "frozen model candidate; authorized for calibration evaluation; not yet uploaded/scored/selected"
+      "upload_performed": true,
+      "submission_id": "iQw8C6Q9",
+      "public_rmse": 0.126543547,
+      "eligibility": "frozen model candidate; authorized for calibration evaluation; not yet uploaded/scored/selected",
+      "score_source": "zindi_api_status",
+      "upload_status": "successful",
+      "submitted_utc": "2026-10-26T14:21:03.275Z"
     },
     {
       "candidate_id": "A2_spectral",
@@ -550,10 +559,13 @@
         "scored_target_claim": false
       },
       "upload_authorized": true,
-      "upload_performed": false,
-      "submission_id": null,
-      "public_rmse": null,
-      "eligibility": "frozen model candidate; authorized for calibration evaluation; not yet uploaded/scored/selected"
+      "upload_performed": true,
+      "submission_id": "W83LEghZ",
+      "public_rmse": 0.146089513,
+      "eligibility": "frozen model candidate; authorized for calibration evaluation; not yet uploaded/scored/selected",
+      "score_source": "zindi_api_status",
+      "upload_status": "successful",
+      "submitted_utc": "2026-10-26T14:21:49.291Z"
     },
     {
       "candidate_id": "A3_dawid_skene",
@@ -797,5 +809,17 @@
     "methodology-form submission confirmation"
   ],
   "operator_acknowledgement": "Steward 2026-10-26 14:15Z explicitly authorized calibration-purpose model evaluations and the C0-prior forecasts for A1/A2/A3; V2 retains its existing forecast. Local label holdout is unavailable by competition design; candidate artifact invariants/reproducibility are the local gate.",
-  "registration_note": "Four frozen model cards are registered and authorized for calibration evaluation under the 2026-10-26 steward directive. The C0 value for A1/A2/A3 is a no-change forecast prior, not a local held-out score or accuracy claim. Only two uploads per UTC day; scheduled order is A1/A2 (Oct 26), A3/V2 (Oct 27), B after A selection (Oct 28). The final A/B slots remain null until successful scores and the protocol rule determine them."
+  "registration_note": "Four frozen model cards are registered and authorized for calibration evaluation under the 2026-10-26 steward directive. The C0 value for A1/A2/A3 is a no-change forecast prior, not a local held-out score or accuracy claim. Only two uploads per UTC day; scheduled order is A1/A2 (Oct 26), A3/V2 (Oct 27), B after A selection (Oct 28). The final A/B slots remain null until successful scores and the protocol rule determine them.",
+  "interim_public_ranking": {
+    "scored_subset": [
+      "A1_physical_equal",
+      "A2_spectral"
+    ],
+    "lower_rmse_candidate": "A1_physical_equal",
+    "difference_a2_minus_a1": 0.019545965999999998,
+    "pairwise_public_noise_guard": 0.0036341384922481015,
+    "difference_exceeds_guard": true,
+    "final_two_selected": false,
+    "no_candidate_parameters_changed": true
+  }
 }
