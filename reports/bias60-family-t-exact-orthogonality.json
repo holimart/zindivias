@@ -1,28 +1,65 @@
 {
   "family": "T",
-  "purpose": "partial v2 pairwise orthogonality refresh; descriptive, not integration authorization",
+  "purpose": "partial exact-recipe v2 pairwise orthogonality refresh; descriptive, not integration authorization",
+  "scope": {
+    "official_rows": 9379,
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "exact_pair_and_channel_alignment": true
+  },
   "input_artifacts": {
-    "T1-v2": "508a885905e6ba269c72aa421ca848bc26363b60fb2f0030c7bd520bfd1288cc",
-    "T2-v2": "8e778af0333b99c1ca58b2b058077ed1a855ea62b90717ecc368b798ec443cc3"
+    "T1-v2": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/T1-v2.parquet",
+      "sha256": "508a885905e6ba269c72aa421ca848bc26363b60fb2f0030c7bd520bfd1288cc"
+    },
+    "T2-v2": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/T2-v2.parquet",
+      "sha256": "8e778af0333b99c1ca58b2b058077ed1a855ea62b90717ecc368b798ec443cc3"
+    },
+    "T3-v2": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/T3-v2.parquet",
+      "sha256": "24a5aea010dc48235431ff9cc35b7743ee4a88f929174a2e44204e70cf9e7c58"
+    }
   },
   "coverage": {
     "T1-v2_gap": 2057,
-    "T2-v2_orphan_link_segments": 9379,
-    "T2-v2_attached_carriageway_length_km": 9379
+    "T2-v2_covariate:orphan_link_segments": 9379,
+    "T2-v2_covariate:attached_carriageway_length_km": 9379,
+    "T3-v2_covariate:grade_sep_per_km2": 9377
   },
   "pairwise": [
     {
-      "T1_channel": "gap",
-      "T2_channel": "covariate:orphan_link_segments",
+      "left": "T1-v2/gap",
+      "right": "T2-v2/covariate:orphan_link_segments",
       "joint_defined_rows": 2057,
       "pearson_r": 0.027301788163217624
     },
     {
-      "T1_channel": "gap",
-      "T2_channel": "covariate:attached_carriageway_length_km",
+      "left": "T1-v2/gap",
+      "right": "T2-v2/covariate:attached_carriageway_length_km",
       "joint_defined_rows": 2057,
       "pearson_r": 0.004280890412423177
+    },
+    {
+      "left": "T1-v2/gap",
+      "right": "T3-v2/covariate:grade_sep_per_km2",
+      "joint_defined_rows": 2057,
+      "pearson_r": -0.05199443413216084
+    },
+    {
+      "left": "T2-v2/covariate:orphan_link_segments",
+      "right": "T3-v2/covariate:grade_sep_per_km2",
+      "joint_defined_rows": 9377,
+      "pearson_r": 0.07436559958107984
+    },
+    {
+      "left": "T2-v2/covariate:attached_carriageway_length_km",
+      "right": "T3-v2/covariate:grade_sep_per_km2",
+      "joint_defined_rows": 9377,
+      "pearson_r": 0.045943702867889354
     }
   ],
-  "limitations": "T3-v2/T4-v2 absent; this does not replace the full-family orthogonality refresh. No labels or reference layers read."
+  "unavailable_recipe": {
+    "T4-v2": "No permitted population-centroid point/coordinate input; not emitted or compared."
+  },
+  "limitations": "Pearson correlations are descriptive on pairwise complete defined rows. T4-v2 is specifically unavailable; these results do not authorize estimator integration."
 }

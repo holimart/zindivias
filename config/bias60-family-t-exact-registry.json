@@ -53,13 +53,27 @@
       "id": "T3-v2",
       "base_id": "T3",
       "version": 2,
-      "status": "pending"
+      "family": "T",
+      "status": "implemented_exact_recipe",
+      "path": "ideas/T3-v2.parquet",
+      "sha256": "24a5aea010dc48235431ff9cc35b7743ee4a88f929174a2e44204e70cf9e7c58",
+      "official_rows": 9379,
+      "defined_rows": 9377,
+      "defined_rows_by_region": {
+        "maricopa-az": 1593,
+        "northern-ca": 591,
+        "eastern-ok": 1192,
+        "south-central-tx": 6001
+      },
+      "recipe": "count proper geometric crossing points without shared connector IDs, with at least one tertiary/unclassified non-named road and no rail-flagged road; divide by provided ALAND km²"
     },
     {
       "id": "T4-v2",
       "base_id": "T4",
       "version": 2,
-      "status": "pending"
+      "status": "blocked_missing_population_centroids",
+      "exact_recipe_conformance": false,
+      "reason": "No provided population-centroid point/coordinate field exists. The supplied pop_total is tract-level only; polygon centroids are not population centroids, and constructing them requires an unprovided population surface."
     }
   ]
 }

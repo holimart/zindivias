@@ -1,7 +1,7 @@
 {
   "family": "T",
-  "version": "exact-recipe-reconciliation-progress-v6",
-  "scope": "T1-v2 and T2-v2 official artifacts emitted; T3/T4 remain pending. Partial T1/T2 orthogonality refresh recorded; full-family refresh pending.",
+  "version": "exact-recipe-reconciliation-progress-v7",
+  "scope": "T1-v2, T2-v2, and T3-v2 official artifacts emitted; T4-v2 remains non-exact because permitted population-centroid coordinates are unavailable. Orthogonality refresh through T3 recorded; T4 excluded.",
   "official_scored_rows": 9379,
   "regions": {
     "maricopa-az": {
@@ -366,7 +366,7 @@
     }
   },
   "measure_after": {
-    "exact_recipes": 2,
+    "exact_recipes": 3,
     "exact_recipes_total": 4,
     "v2_artifacts_emitted": [
       {
@@ -415,15 +415,36 @@
           }
         },
         "recipe": "orphan links have only non-named neighbors at both endpoint connectors; attached non-named carriageway length clipped to 2 km link buffer"
+      },
+      {
+        "id": "T3-v2",
+        "base_id": "T3",
+        "version": 2,
+        "family": "T",
+        "status": "implemented_exact_recipe",
+        "path": "ideas/T3-v2.parquet",
+        "sha256": "24a5aea010dc48235431ff9cc35b7743ee4a88f929174a2e44204e70cf9e7c58",
+        "official_rows": 9379,
+        "defined_rows": 9377,
+        "defined_rows_by_region": {
+          "maricopa-az": 1593,
+          "northern-ca": 591,
+          "eastern-ok": 1192,
+          "south-central-tx": 6001
+        },
+        "recipe": "count proper geometric crossing points without shared connector IDs, with at least one tertiary/unclassified non-named road and no rail-flagged road; divide by provided ALAND km²"
       }
     ],
-    "coverage_and_orthogonality_refreshed": false
+    "coverage_and_orthogonality_refreshed": true,
+    "orthogonality_refresh_limitation": "The exact-recipe T4 feature cannot be emitted without a permitted population-centroid layer; pairwise comparisons among T1-v2/T2-v2/T3-v2 are reported separately.",
+    "orthogonality_refresh_scope": "emitted exact recipes T1-v2/T2-v2/T3-v2 only; T4-v2 excluded because the required permitted population-centroid geometry is unavailable",
+    "orthogonality_report_sha256": "e8fb60f660cb8696aea76adfd5a24c8ec612e0d2115494adbc623407ddd2e765"
   },
   "implementation_progress": {
     "T1": "Implemented and built T1-v2 using the strict <30-degree identity-connected stroke rule; defined coverage is reported by region.",
     "T2": "Implemented and built T2-v2 from provided roads-unfiltered layer; both emissions are defined for 9,379/9,379 official GEOIDs, with regional diagnostics and verified shards.",
-    "T3": "No v2 implementation yet.",
-    "T4": "No v2 implementation yet; supplied centroid interpretation remains unresolved."
+    "T3": "Implemented and built T3-v2 using actual proper geometric crossings with no shared connector, at least one eligible nonnamed road, rail exclusion, and land-area density; v1 remains unchanged.",
+    "T4": "Exact recipe blocked: provided strata contain only tract-level pop_total and tract polygon geometry, not population-centroid points/coordinates. A polygon centroid is not a population centroid; no external population surface was accessed or approximated."
   },
   "prohibitions": {
     "provided_row_payload_read": true,
@@ -515,7 +536,305 @@
     "test_command": "uv run --python 3.12.3 --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with pyproj==3.8.0 --with pytest python -m pytest tests/test_family_t_exact.py -q",
     "test_output": "16 passed in 0.48s; build shards and merged T2 artifact verified; T1-T4 v1 SHA-256 values all match pre-build records; py_compile and git diff --check passed.",
     "artifact_checks": "T2-v2: 18,758 rows, 9,379 unique official GEOIDs, two fully-defined emissions (9,379 each), SHA-256 8e778af0333b99c1ca58b2b058077ed1a855ea62b90717ecc368b798ec443cc3; all four v1 artifact hashes re-verified unchanged.",
-    "orthogonality_refresh": "Partial T1/T2 pairwise report only; full T1-T4 refresh pending T3/T4."
+    "orthogonality_refresh": "Updated exact-v2 pairwise Pearson report for all emitted recipes T1-v2/T2-v2/T3-v2; T4-v2 is specifically blocked by missing permitted population-centroid geometry and is not imputed or compared.",
+    "T3_v2_test_command": "uv run --python 3.12.3 --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with pyproj==3.8.0 --with pytest python -m pytest tests/test_t3_exact.py tests/test_family_t_exact.py tests/test_family_t_exact_orthogonality.py tests/test_bias60_family_t.py -q",
+    "T3_v2_test_output": "21 passed (latest validation run; runtime varies by host)",
+    "T3_v2_build_commands": [
+      "scripts/build_family_t3_exact_v2.py --region maricopa-az",
+      "scripts/build_family_t3_exact_v2.py --region northern-ca",
+      "scripts/build_family_t3_exact_v2.py --region eastern-ok",
+      "scripts/build_family_t3_exact_v2.py --region south-central-tx",
+      "scripts/build_family_t3_exact_v2.py --merge-shards",
+      "scripts/refresh_family_t_exact_orthogonality.py"
+    ],
+    "T3_v2_artifact_sha256": "24a5aea010dc48235431ff9cc35b7743ee4a88f929174a2e44204e70cf9e7c58",
+    "T3_v1_preservation_check": "All T1-T4 v1 artifact hashes matched the pre-build registry/report records.",
+    "T3_v2_coverage_by_region": {
+      "maricopa-az": {
+        "official_rows": 1593,
+        "defined_rows": 1593,
+        "undefined_rows": 0,
+        "defined_fraction": 1.0,
+        "diagnostics": {
+          "rows_read": 1170165,
+          "locally_relevant_road_rows_read": 1170165,
+          "eligible_classes": [
+            "tertiary",
+            "unclassified"
+          ],
+          "named_classes": [
+            "motorway",
+            "primary",
+            "secondary",
+            "trunk"
+          ],
+          "land_area_column": "ALAND",
+          "road_columns_read": [
+            "class",
+            "connectors",
+            "road_flags",
+            "rail_flags",
+            "level_rules",
+            "geometry"
+          ],
+          "infrastructure_rows_read": 9482,
+          "bridge_infrastructure_features": 0,
+          "crossing_points_intersecting_bridge_infrastructure": 0,
+          "crossing_rule": "proper geometric line crossings; no common connector ID; at least one eligible nonnamed class; rail-flagged segments excluded",
+          "grade_metadata_used_as_corroboration_not_a_filter": true,
+          "no_target_or_reference_data_read": true,
+          "locally_relevant_road_segments": 1170165,
+          "eligible_nonnamed_segments": 67900,
+          "geometric_crossing_pairs_involving_eligible_segment": 17111,
+          "rail_excluded_crossing_pairs": 0,
+          "crossing_pairs_without_shared_connector": 999,
+          "counted_geometric_crossing_points": 1019,
+          "grade_metadata_marked_crossing_points": 961,
+          "official_tract_crossing_assignments": 1019,
+          "official_tract_metadata_marked_crossing_assignments": 961
+        },
+        "input_access": {
+          "parquet_columns": [
+            "maricopa-az-census-acs-housing:GEOID,geometry",
+            "maricopa-az-overture-roads-unfiltered.parquet:class",
+            "maricopa-az-overture-roads-unfiltered.parquet:connectors",
+            "maricopa-az-overture-roads-unfiltered.parquet:road_flags",
+            "maricopa-az-overture-roads-unfiltered.parquet:rail_flags",
+            "maricopa-az-overture-roads-unfiltered.parquet:level_rules",
+            "maricopa-az-overture-roads-unfiltered.parquet:geometry",
+            "maricopa-az-overture-infrastructure.parquet:class",
+            "maricopa-az-overture-infrastructure.parquet:subtype",
+            "maricopa-az-overture-infrastructure.parquet:geometry",
+            "maricopa-az-strata-tract-table.parquet:GEOID",
+            "maricopa-az-strata-tract-table.parquet:ALAND"
+          ],
+          "csv_columns": [],
+          "layers": [
+            "census-acs-housing",
+            "roads-unfiltered",
+            "infrastructure"
+          ],
+          "caches": [
+            "maricopa-az-strata-tract-table.parquet"
+          ]
+        }
+      },
+      "northern-ca": {
+        "official_rows": 591,
+        "defined_rows": 591,
+        "undefined_rows": 0,
+        "defined_fraction": 1.0,
+        "diagnostics": {
+          "rows_read": 479596,
+          "locally_relevant_road_rows_read": 479596,
+          "eligible_classes": [
+            "tertiary",
+            "unclassified"
+          ],
+          "named_classes": [
+            "motorway",
+            "primary",
+            "secondary",
+            "trunk"
+          ],
+          "land_area_column": "ALAND",
+          "road_columns_read": [
+            "class",
+            "connectors",
+            "road_flags",
+            "rail_flags",
+            "level_rules",
+            "geometry"
+          ],
+          "infrastructure_rows_read": 3318,
+          "bridge_infrastructure_features": 0,
+          "crossing_points_intersecting_bridge_infrastructure": 0,
+          "crossing_rule": "proper geometric line crossings; no common connector ID; at least one eligible nonnamed class; rail-flagged segments excluded",
+          "grade_metadata_used_as_corroboration_not_a_filter": true,
+          "no_target_or_reference_data_read": true,
+          "locally_relevant_road_segments": 479596,
+          "eligible_nonnamed_segments": 30506,
+          "geometric_crossing_pairs_involving_eligible_segment": 5158,
+          "rail_excluded_crossing_pairs": 0,
+          "crossing_pairs_without_shared_connector": 550,
+          "counted_geometric_crossing_points": 554,
+          "grade_metadata_marked_crossing_points": 550,
+          "official_tract_crossing_assignments": 554,
+          "official_tract_metadata_marked_crossing_assignments": 550
+        },
+        "input_access": {
+          "parquet_columns": [
+            "northern-ca-census-acs-housing:GEOID,geometry",
+            "northern-ca-overture-roads-unfiltered.parquet:class",
+            "northern-ca-overture-roads-unfiltered.parquet:connectors",
+            "northern-ca-overture-roads-unfiltered.parquet:road_flags",
+            "northern-ca-overture-roads-unfiltered.parquet:rail_flags",
+            "northern-ca-overture-roads-unfiltered.parquet:level_rules",
+            "northern-ca-overture-roads-unfiltered.parquet:geometry",
+            "northern-ca-overture-infrastructure.parquet:class",
+            "northern-ca-overture-infrastructure.parquet:subtype",
+            "northern-ca-overture-infrastructure.parquet:geometry",
+            "northern-ca-strata-tract-table.parquet:GEOID",
+            "northern-ca-strata-tract-table.parquet:ALAND"
+          ],
+          "csv_columns": [],
+          "layers": [
+            "census-acs-housing",
+            "roads-unfiltered",
+            "infrastructure"
+          ],
+          "caches": [
+            "northern-ca-strata-tract-table.parquet"
+          ]
+        }
+      },
+      "eastern-ok": {
+        "official_rows": 1192,
+        "defined_rows": 1192,
+        "undefined_rows": 0,
+        "defined_fraction": 1.0,
+        "diagnostics": {
+          "rows_read": 1037555,
+          "locally_relevant_road_rows_read": 1037554,
+          "eligible_classes": [
+            "tertiary",
+            "unclassified"
+          ],
+          "named_classes": [
+            "motorway",
+            "primary",
+            "secondary",
+            "trunk"
+          ],
+          "land_area_column": "ALAND",
+          "road_columns_read": [
+            "class",
+            "connectors",
+            "road_flags",
+            "rail_flags",
+            "level_rules",
+            "geometry"
+          ],
+          "infrastructure_rows_read": 2726,
+          "bridge_infrastructure_features": 0,
+          "crossing_points_intersecting_bridge_infrastructure": 0,
+          "crossing_rule": "proper geometric line crossings; no common connector ID; at least one eligible nonnamed class; rail-flagged segments excluded",
+          "grade_metadata_used_as_corroboration_not_a_filter": true,
+          "no_target_or_reference_data_read": true,
+          "locally_relevant_road_segments": 1037554,
+          "eligible_nonnamed_segments": 84579,
+          "geometric_crossing_pairs_involving_eligible_segment": 7946,
+          "rail_excluded_crossing_pairs": 0,
+          "crossing_pairs_without_shared_connector": 1215,
+          "counted_geometric_crossing_points": 1218,
+          "grade_metadata_marked_crossing_points": 1196,
+          "official_tract_crossing_assignments": 1218,
+          "official_tract_metadata_marked_crossing_assignments": 1196
+        },
+        "input_access": {
+          "parquet_columns": [
+            "eastern-ok-census-acs-housing:GEOID,geometry",
+            "eastern-ok-overture-roads-unfiltered.parquet:class",
+            "eastern-ok-overture-roads-unfiltered.parquet:connectors",
+            "eastern-ok-overture-roads-unfiltered.parquet:road_flags",
+            "eastern-ok-overture-roads-unfiltered.parquet:rail_flags",
+            "eastern-ok-overture-roads-unfiltered.parquet:level_rules",
+            "eastern-ok-overture-roads-unfiltered.parquet:geometry",
+            "eastern-ok-overture-infrastructure.parquet:class",
+            "eastern-ok-overture-infrastructure.parquet:subtype",
+            "eastern-ok-overture-infrastructure.parquet:geometry",
+            "eastern-ok-strata-tract-table.parquet:GEOID",
+            "eastern-ok-strata-tract-table.parquet:ALAND"
+          ],
+          "csv_columns": [],
+          "layers": [
+            "census-acs-housing",
+            "roads-unfiltered",
+            "infrastructure"
+          ],
+          "caches": [
+            "eastern-ok-strata-tract-table.parquet"
+          ]
+        }
+      },
+      "south-central-tx": {
+        "official_rows": 6003,
+        "defined_rows": 6001,
+        "undefined_rows": 2,
+        "defined_fraction": 0.9996668332500417,
+        "diagnostics": {
+          "rows_read": 4122701,
+          "locally_relevant_road_rows_read": 4122699,
+          "eligible_classes": [
+            "tertiary",
+            "unclassified"
+          ],
+          "named_classes": [
+            "motorway",
+            "primary",
+            "secondary",
+            "trunk"
+          ],
+          "land_area_column": "ALAND",
+          "road_columns_read": [
+            "class",
+            "connectors",
+            "road_flags",
+            "rail_flags",
+            "level_rules",
+            "geometry"
+          ],
+          "infrastructure_rows_read": 13622,
+          "bridge_infrastructure_features": 0,
+          "crossing_points_intersecting_bridge_infrastructure": 0,
+          "crossing_rule": "proper geometric line crossings; no common connector ID; at least one eligible nonnamed class; rail-flagged segments excluded",
+          "grade_metadata_used_as_corroboration_not_a_filter": true,
+          "no_target_or_reference_data_read": true,
+          "locally_relevant_road_segments": 4122699,
+          "eligible_nonnamed_segments": 247573,
+          "geometric_crossing_pairs_involving_eligible_segment": 51595,
+          "rail_excluded_crossing_pairs": 0,
+          "crossing_pairs_without_shared_connector": 6636,
+          "counted_geometric_crossing_points": 6658,
+          "grade_metadata_marked_crossing_points": 6495,
+          "official_tract_crossing_assignments": 6658,
+          "official_tract_metadata_marked_crossing_assignments": 6495
+        },
+        "input_access": {
+          "parquet_columns": [
+            "south-central-tx-census-acs-housing:GEOID,geometry",
+            "south-central-tx-overture-roads-unfiltered.parquet:class",
+            "south-central-tx-overture-roads-unfiltered.parquet:connectors",
+            "south-central-tx-overture-roads-unfiltered.parquet:road_flags",
+            "south-central-tx-overture-roads-unfiltered.parquet:rail_flags",
+            "south-central-tx-overture-roads-unfiltered.parquet:level_rules",
+            "south-central-tx-overture-roads-unfiltered.parquet:geometry",
+            "south-central-tx-overture-infrastructure.parquet:class",
+            "south-central-tx-overture-infrastructure.parquet:subtype",
+            "south-central-tx-overture-infrastructure.parquet:geometry",
+            "south-central-tx-strata-tract-table.parquet:GEOID",
+            "south-central-tx-strata-tract-table.parquet:ALAND"
+          ],
+          "csv_columns": [],
+          "layers": [
+            "census-acs-housing",
+            "roads-unfiltered",
+            "infrastructure"
+          ],
+          "caches": [
+            "south-central-tx-strata-tract-table.parquet"
+          ]
+        }
+      }
+    },
+    "T3_v2_artifact": {
+      "path": "ideas/T3-v2.parquet",
+      "sha256": "24a5aea010dc48235431ff9cc35b7743ee4a88f929174a2e44204e70cf9e7c58",
+      "rows": 9379,
+      "defined_rows": 9377
+    },
+    "T4_v2": "not emitted; specific permitted-input impossibility documented; no exactness claim",
+    "v1_artifacts_overwritten": false
   },
   "T2_v2_artifact": {
     "id": "T2-v2",
@@ -643,5 +962,313 @@
     "pearson_r_T1gap_T2orphan_link_segments": 0.027301788163217624,
     "pearson_r_T1gap_T2attached_length": 0.004280890412423177,
     "limitation": "T3/T4 absent; not the full-family gate and does not authorize integration."
+  },
+  "T3_v2_artifact": {
+    "id": "T3-v2",
+    "base_id": "T3",
+    "version": 2,
+    "family": "T",
+    "status": "implemented_exact_recipe",
+    "path": "ideas/T3-v2.parquet",
+    "sha256": "24a5aea010dc48235431ff9cc35b7743ee4a88f929174a2e44204e70cf9e7c58",
+    "official_rows": 9379,
+    "defined_rows": 9377,
+    "defined_rows_by_region": {
+      "maricopa-az": 1593,
+      "northern-ca": 591,
+      "eastern-ok": 1192,
+      "south-central-tx": 6001
+    },
+    "recipe": "count proper geometric crossing points without shared connector IDs, with at least one tertiary/unclassified non-named road and no rail-flagged road; divide by provided ALAND km²"
+  },
+  "T3_v2_coverage_by_region": {
+    "maricopa-az": {
+      "official_rows": 1593,
+      "defined_rows": 1593,
+      "undefined_rows": 0,
+      "defined_fraction": 1.0,
+      "diagnostics": {
+        "rows_read": 1170165,
+        "locally_relevant_road_rows_read": 1170165,
+        "eligible_classes": [
+          "tertiary",
+          "unclassified"
+        ],
+        "named_classes": [
+          "motorway",
+          "primary",
+          "secondary",
+          "trunk"
+        ],
+        "land_area_column": "ALAND",
+        "road_columns_read": [
+          "class",
+          "connectors",
+          "road_flags",
+          "rail_flags",
+          "level_rules",
+          "geometry"
+        ],
+        "infrastructure_rows_read": 9482,
+        "bridge_infrastructure_features": 0,
+        "crossing_points_intersecting_bridge_infrastructure": 0,
+        "crossing_rule": "proper geometric line crossings; no common connector ID; at least one eligible nonnamed class; rail-flagged segments excluded",
+        "grade_metadata_used_as_corroboration_not_a_filter": true,
+        "no_target_or_reference_data_read": true,
+        "locally_relevant_road_segments": 1170165,
+        "eligible_nonnamed_segments": 67900,
+        "geometric_crossing_pairs_involving_eligible_segment": 17111,
+        "rail_excluded_crossing_pairs": 0,
+        "crossing_pairs_without_shared_connector": 999,
+        "counted_geometric_crossing_points": 1019,
+        "grade_metadata_marked_crossing_points": 961,
+        "official_tract_crossing_assignments": 1019,
+        "official_tract_metadata_marked_crossing_assignments": 961
+      },
+      "input_access": {
+        "parquet_columns": [
+          "maricopa-az-census-acs-housing:GEOID,geometry",
+          "maricopa-az-overture-roads-unfiltered.parquet:class",
+          "maricopa-az-overture-roads-unfiltered.parquet:connectors",
+          "maricopa-az-overture-roads-unfiltered.parquet:road_flags",
+          "maricopa-az-overture-roads-unfiltered.parquet:rail_flags",
+          "maricopa-az-overture-roads-unfiltered.parquet:level_rules",
+          "maricopa-az-overture-roads-unfiltered.parquet:geometry",
+          "maricopa-az-overture-infrastructure.parquet:class",
+          "maricopa-az-overture-infrastructure.parquet:subtype",
+          "maricopa-az-overture-infrastructure.parquet:geometry",
+          "maricopa-az-strata-tract-table.parquet:GEOID",
+          "maricopa-az-strata-tract-table.parquet:ALAND"
+        ],
+        "csv_columns": [],
+        "layers": [
+          "census-acs-housing",
+          "roads-unfiltered",
+          "infrastructure"
+        ],
+        "caches": [
+          "maricopa-az-strata-tract-table.parquet"
+        ]
+      }
+    },
+    "northern-ca": {
+      "official_rows": 591,
+      "defined_rows": 591,
+      "undefined_rows": 0,
+      "defined_fraction": 1.0,
+      "diagnostics": {
+        "rows_read": 479596,
+        "locally_relevant_road_rows_read": 479596,
+        "eligible_classes": [
+          "tertiary",
+          "unclassified"
+        ],
+        "named_classes": [
+          "motorway",
+          "primary",
+          "secondary",
+          "trunk"
+        ],
+        "land_area_column": "ALAND",
+        "road_columns_read": [
+          "class",
+          "connectors",
+          "road_flags",
+          "rail_flags",
+          "level_rules",
+          "geometry"
+        ],
+        "infrastructure_rows_read": 3318,
+        "bridge_infrastructure_features": 0,
+        "crossing_points_intersecting_bridge_infrastructure": 0,
+        "crossing_rule": "proper geometric line crossings; no common connector ID; at least one eligible nonnamed class; rail-flagged segments excluded",
+        "grade_metadata_used_as_corroboration_not_a_filter": true,
+        "no_target_or_reference_data_read": true,
+        "locally_relevant_road_segments": 479596,
+        "eligible_nonnamed_segments": 30506,
+        "geometric_crossing_pairs_involving_eligible_segment": 5158,
+        "rail_excluded_crossing_pairs": 0,
+        "crossing_pairs_without_shared_connector": 550,
+        "counted_geometric_crossing_points": 554,
+        "grade_metadata_marked_crossing_points": 550,
+        "official_tract_crossing_assignments": 554,
+        "official_tract_metadata_marked_crossing_assignments": 550
+      },
+      "input_access": {
+        "parquet_columns": [
+          "northern-ca-census-acs-housing:GEOID,geometry",
+          "northern-ca-overture-roads-unfiltered.parquet:class",
+          "northern-ca-overture-roads-unfiltered.parquet:connectors",
+          "northern-ca-overture-roads-unfiltered.parquet:road_flags",
+          "northern-ca-overture-roads-unfiltered.parquet:rail_flags",
+          "northern-ca-overture-roads-unfiltered.parquet:level_rules",
+          "northern-ca-overture-roads-unfiltered.parquet:geometry",
+          "northern-ca-overture-infrastructure.parquet:class",
+          "northern-ca-overture-infrastructure.parquet:subtype",
+          "northern-ca-overture-infrastructure.parquet:geometry",
+          "northern-ca-strata-tract-table.parquet:GEOID",
+          "northern-ca-strata-tract-table.parquet:ALAND"
+        ],
+        "csv_columns": [],
+        "layers": [
+          "census-acs-housing",
+          "roads-unfiltered",
+          "infrastructure"
+        ],
+        "caches": [
+          "northern-ca-strata-tract-table.parquet"
+        ]
+      }
+    },
+    "eastern-ok": {
+      "official_rows": 1192,
+      "defined_rows": 1192,
+      "undefined_rows": 0,
+      "defined_fraction": 1.0,
+      "diagnostics": {
+        "rows_read": 1037555,
+        "locally_relevant_road_rows_read": 1037554,
+        "eligible_classes": [
+          "tertiary",
+          "unclassified"
+        ],
+        "named_classes": [
+          "motorway",
+          "primary",
+          "secondary",
+          "trunk"
+        ],
+        "land_area_column": "ALAND",
+        "road_columns_read": [
+          "class",
+          "connectors",
+          "road_flags",
+          "rail_flags",
+          "level_rules",
+          "geometry"
+        ],
+        "infrastructure_rows_read": 2726,
+        "bridge_infrastructure_features": 0,
+        "crossing_points_intersecting_bridge_infrastructure": 0,
+        "crossing_rule": "proper geometric line crossings; no common connector ID; at least one eligible nonnamed class; rail-flagged segments excluded",
+        "grade_metadata_used_as_corroboration_not_a_filter": true,
+        "no_target_or_reference_data_read": true,
+        "locally_relevant_road_segments": 1037554,
+        "eligible_nonnamed_segments": 84579,
+        "geometric_crossing_pairs_involving_eligible_segment": 7946,
+        "rail_excluded_crossing_pairs": 0,
+        "crossing_pairs_without_shared_connector": 1215,
+        "counted_geometric_crossing_points": 1218,
+        "grade_metadata_marked_crossing_points": 1196,
+        "official_tract_crossing_assignments": 1218,
+        "official_tract_metadata_marked_crossing_assignments": 1196
+      },
+      "input_access": {
+        "parquet_columns": [
+          "eastern-ok-census-acs-housing:GEOID,geometry",
+          "eastern-ok-overture-roads-unfiltered.parquet:class",
+          "eastern-ok-overture-roads-unfiltered.parquet:connectors",
+          "eastern-ok-overture-roads-unfiltered.parquet:road_flags",
+          "eastern-ok-overture-roads-unfiltered.parquet:rail_flags",
+          "eastern-ok-overture-roads-unfiltered.parquet:level_rules",
+          "eastern-ok-overture-roads-unfiltered.parquet:geometry",
+          "eastern-ok-overture-infrastructure.parquet:class",
+          "eastern-ok-overture-infrastructure.parquet:subtype",
+          "eastern-ok-overture-infrastructure.parquet:geometry",
+          "eastern-ok-strata-tract-table.parquet:GEOID",
+          "eastern-ok-strata-tract-table.parquet:ALAND"
+        ],
+        "csv_columns": [],
+        "layers": [
+          "census-acs-housing",
+          "roads-unfiltered",
+          "infrastructure"
+        ],
+        "caches": [
+          "eastern-ok-strata-tract-table.parquet"
+        ]
+      }
+    },
+    "south-central-tx": {
+      "official_rows": 6003,
+      "defined_rows": 6001,
+      "undefined_rows": 2,
+      "defined_fraction": 0.9996668332500417,
+      "diagnostics": {
+        "rows_read": 4122701,
+        "locally_relevant_road_rows_read": 4122699,
+        "eligible_classes": [
+          "tertiary",
+          "unclassified"
+        ],
+        "named_classes": [
+          "motorway",
+          "primary",
+          "secondary",
+          "trunk"
+        ],
+        "land_area_column": "ALAND",
+        "road_columns_read": [
+          "class",
+          "connectors",
+          "road_flags",
+          "rail_flags",
+          "level_rules",
+          "geometry"
+        ],
+        "infrastructure_rows_read": 13622,
+        "bridge_infrastructure_features": 0,
+        "crossing_points_intersecting_bridge_infrastructure": 0,
+        "crossing_rule": "proper geometric line crossings; no common connector ID; at least one eligible nonnamed class; rail-flagged segments excluded",
+        "grade_metadata_used_as_corroboration_not_a_filter": true,
+        "no_target_or_reference_data_read": true,
+        "locally_relevant_road_segments": 4122699,
+        "eligible_nonnamed_segments": 247573,
+        "geometric_crossing_pairs_involving_eligible_segment": 51595,
+        "rail_excluded_crossing_pairs": 0,
+        "crossing_pairs_without_shared_connector": 6636,
+        "counted_geometric_crossing_points": 6658,
+        "grade_metadata_marked_crossing_points": 6495,
+        "official_tract_crossing_assignments": 6658,
+        "official_tract_metadata_marked_crossing_assignments": 6495
+      },
+      "input_access": {
+        "parquet_columns": [
+          "south-central-tx-census-acs-housing:GEOID,geometry",
+          "south-central-tx-overture-roads-unfiltered.parquet:class",
+          "south-central-tx-overture-roads-unfiltered.parquet:connectors",
+          "south-central-tx-overture-roads-unfiltered.parquet:road_flags",
+          "south-central-tx-overture-roads-unfiltered.parquet:rail_flags",
+          "south-central-tx-overture-roads-unfiltered.parquet:level_rules",
+          "south-central-tx-overture-roads-unfiltered.parquet:geometry",
+          "south-central-tx-overture-infrastructure.parquet:class",
+          "south-central-tx-overture-infrastructure.parquet:subtype",
+          "south-central-tx-overture-infrastructure.parquet:geometry",
+          "south-central-tx-strata-tract-table.parquet:GEOID",
+          "south-central-tx-strata-tract-table.parquet:ALAND"
+        ],
+        "csv_columns": [],
+        "layers": [
+          "census-acs-housing",
+          "roads-unfiltered",
+          "infrastructure"
+        ],
+        "caches": [
+          "south-central-tx-strata-tract-table.parquet"
+        ]
+      }
+    }
+  },
+  "T4_exact_recipe_blocker": {
+    "status": "blocked_missing_permitted_input",
+    "required": "population centroid point/coordinates for sampled edge betweenness",
+    "provided": [
+      "tract polygon geometry",
+      "tract-level pop_total"
+    ],
+    "why_insufficient": "Neither input identifies the spatial population centroid within each tract; creating one requires a population surface not in the permitted provided fields.",
+    "v1_preserved": true,
+    "T4_v2_emitted": false,
+    "exactness_claimed": false
   }
 }
