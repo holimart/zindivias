@@ -1,0 +1,294 @@
+{
+  "schema_version": 1,
+  "screen": "Single training-fold q90 hinge in log1p POI effective count against frozen S1 residual; unregistered",
+  "measure_before": {
+    "linear_effective_count_delta_r2": -0.0001459278333052408,
+    "linear_effective_count_ci_95": [
+      -0.0007680383497278556,
+      0.0004112583198289686
+    ],
+    "linear_effective_count_positive_regions": 2,
+    "effective_count_prior_report_sha256": "6c88b676e6ea40827012a9797d85b808110c703ee195f4208defc3fcc504e162",
+    "effective_count_residual_variance_ratio": 0.18096672540982753,
+    "effective_count_defined_ids": 9327
+  },
+  "method": {
+    "outcome": "Frozen cross-fitted orthogonalized S1 disagreement residual; residual artifact and GEOID folds verified, never refit.",
+    "baseline": "Region-intercept OLS with training-standardized log1p unique POI count, frozen Mx4 F and S1 lag, identical to the linear effective-count screen's baseline.",
+    "augmentation": "Add exactly one hinge max(0, log1p(effective count) - q90_training). The single pooled q90 threshold is recomputed from each fold's paired training rows using linear quantile interpolation; no grid or post-hoc threshold tuning.",
+    "preprocessing": "Baseline feature means/SDs and the q90 threshold are fit only on training-fold support. The hinge uses the raw log1p-count scale; no held-out values affect threshold or fit.",
+    "validation": "Exact frozen five deterministic GEOID folds within region; paired held-out predictions on the common complete-case support.",
+    "metric": "Held-out delta-R2=(baseline SSE-hinge SSE)/shared held-out residual SST; report pooled, per-region and per-fold values.",
+    "uncertainty": "Paired percentile 95% interval from whole-county cluster bootstrap with replacement, resampling all supported tracts within sampled counties.",
+    "county_definition": "First five digits of each official 11-digit tract GEOID; used only as bootstrap cluster IDs.",
+    "support": "Frozen residual, effective count, unique-place count, Mx4 F and S1 lag all defined; no imputation or exclusions after results.",
+    "unregistered": true,
+    "interpretation_limit": "Provided-feature descriptive screen only; not hidden-target accuracy, causal evidence, or integration evidence."
+  },
+  "scope": {
+    "official_ids": 9379,
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "paired_support_ids": 9327,
+    "paired_support_undefined_ids": 52,
+    "frozen_residual_defined_ids": 9379,
+    "effective_count_defined_ids": 9327,
+    "paired_mask_sha256": "da10f86ae1f1c0942f5553a149d1b58e6bd990e0fecbe590d326ec4c42049bdd",
+    "residual_mask_sha256": "593459efd58441427b7c76d010f31880b0709ad2fe46b90bd254145da4ce27d6",
+    "effective_count_mask_sha256": "da10f86ae1f1c0942f5553a149d1b58e6bd990e0fecbe590d326ec4c42049bdd",
+    "fold_assignment_sha256": "c8b4f9875dbd127a1627458cba0d824bd743d5e5047b38ef243eb6608c3f5ce5",
+    "fold_support": {
+      "0": 1821,
+      "1": 1831,
+      "2": 1895,
+      "3": 1924,
+      "4": 1856
+    },
+    "county_cluster_count": 298,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_references_read": false,
+    "external_data_used": [],
+    "changed_folds": false,
+    "posthoc_threshold_tuning": false,
+    "leaderboard_feedback_used": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "pooled": {
+      "baseline_r2": -0.011315114182193664,
+      "hinge_model_r2": -0.01120231551985662,
+      "delta_r2": 0.0001127986623371132,
+      "baseline_sse": 0.1509798228161409,
+      "hinge_model_sse": 0.15096298303809869,
+      "heldout_sst": 0.1492905828251481
+    },
+    "paired_county_block_bootstrap": {
+      "replicates": 2000,
+      "seed": 20261031,
+      "cluster_count": 298,
+      "resampling": "paired whole-county cluster bootstrap with replacement; repeated sampled counties repeat all their supported tracts",
+      "ci_95_percentile": [
+        -0.00018113099160419778,
+        0.00039966138087455146
+      ],
+      "degenerate_replicates": 0
+    },
+    "paired_pooled_delta_r2_ci_95": [
+      -0.00018113099160419778,
+      0.00039966138087455146
+    ],
+    "regional": {
+      "maricopa-az": {
+        "n": 1574,
+        "baseline_r2": -0.007916667229182606,
+        "hinge_model_r2": -0.007601360601066531,
+        "delta_r2": 0.0003153066281162158,
+        "baseline_sse": 0.025041854656439877,
+        "hinge_model_sse": 0.025034020811628872,
+        "heldout_sst": 0.02484516376267622
+      },
+      "northern-ca": {
+        "n": 586,
+        "baseline_r2": 0.005717158695531688,
+        "hinge_model_r2": 0.005722753969931382,
+        "delta_r2": 5.5952743997214404e-06,
+        "baseline_sse": 0.016611894212821523,
+        "hinge_model_sse": 0.016611800730260466,
+        "heldout_sst": 0.01670741314516424
+      },
+      "eastern-ok": {
+        "n": 1189,
+        "baseline_r2": -0.021788713617143074,
+        "hinge_model_r2": -0.02165139872523758,
+        "delta_r2": 0.00013731489190532017,
+        "baseline_sse": 0.07491549994790903,
+        "hinge_model_sse": 0.07490543229533048,
+        "heldout_sst": 0.0733179951486324
+      },
+      "south-central-tx": {
+        "n": 5978,
+        "baseline_r2": 0.00013324223500965626,
+        "hinge_model_r2": 9.967557649537273e-05,
+        "delta_r2": -3.356665851429628e-05,
+        "baseline_sse": 0.03441057399897048,
+        "hinge_model_sse": 0.03441172920087887,
+        "heldout_sst": 0.03441515955174737
+      }
+    },
+    "folds": [
+      {
+        "fold": 0,
+        "n": 1821,
+        "baseline_r2": -0.009545136707497237,
+        "hinge_model_r2": -0.00929466426786707,
+        "delta_r2": 0.00025047243963004896,
+        "baseline_sse": 0.02043908896789519,
+        "hinge_model_sse": 0.020434017943043045,
+        "heldout_sst": 0.020245839660576914
+      },
+      {
+        "fold": 1,
+        "n": 1831,
+        "baseline_r2": -0.003958833355862668,
+        "hinge_model_r2": -0.003941825009157851,
+        "delta_r2": 1.7008346704983317e-05,
+        "baseline_sse": 0.04722103782628494,
+        "hinge_model_sse": 0.047220237841508236,
+        "heldout_sst": 0.04703483475357499
+      },
+      {
+        "fold": 2,
+        "n": 1895,
+        "baseline_r2": -0.025409305813959282,
+        "hinge_model_r2": -0.024969074308736294,
+        "delta_r2": 0.0004402315052229011,
+        "baseline_sse": 0.023554904452556747,
+        "hinge_model_sse": 0.02354479179707007,
+        "heldout_sst": 0.022971221656564848
+      },
+      {
+        "fold": 3,
+        "n": 1924,
+        "baseline_r2": -0.029957717997850963,
+        "hinge_model_r2": -0.03025568322985439,
+        "delta_r2": -0.0002979652320034362,
+        "baseline_sse": 0.020063636845677232,
+        "hinge_model_sse": 0.020069441225898953,
+        "heldout_sst": 0.019480058739381276
+      },
+      {
+        "fold": 4,
+        "n": 1856,
+        "baseline_r2": -0.006158400730351676,
+        "hinge_model_r2": -0.005989601833167768,
+        "delta_r2": 0.00016879889718391942,
+        "baseline_sse": 0.03970115472372681,
+        "hinge_model_sse": 0.03969449423057839,
+        "heldout_sst": 0.039458155589525944
+      }
+    ],
+    "positive_regions": 3,
+    "training_fold_q90_thresholds": {
+      "0": {
+        "training_q90_threshold": 4.929488602345203,
+        "training_n": 7506,
+        "heldout_n": 1821,
+        "training_log_effective_count_min": 1.6851830563774661,
+        "training_log_effective_count_max": 5.708601678873065,
+        "heldout_above_training_q90_n": 215
+      },
+      "1": {
+        "training_q90_threshold": 4.933143295534852,
+        "training_n": 7496,
+        "heldout_n": 1831,
+        "training_log_effective_count_min": 1.7104861963725755,
+        "training_log_effective_count_max": 5.708601678873065,
+        "heldout_above_training_q90_n": 201
+      },
+      "2": {
+        "training_q90_threshold": 4.942156410341536,
+        "training_n": 7432,
+        "heldout_n": 1895,
+        "training_log_effective_count_min": 1.6851830563774661,
+        "training_log_effective_count_max": 5.708601678873065,
+        "heldout_above_training_q90_n": 175
+      },
+      "3": {
+        "training_q90_threshold": 4.941595778701357,
+        "training_n": 7403,
+        "heldout_n": 1924,
+        "training_log_effective_count_min": 1.6851830563774661,
+        "training_log_effective_count_max": 5.708601678873065,
+        "heldout_above_training_q90_n": 181
+      },
+      "4": {
+        "training_q90_threshold": 4.944678716118481,
+        "training_n": 7471,
+        "heldout_n": 1856,
+        "training_log_effective_count_min": 1.6851830563774661,
+        "training_log_effective_count_max": 5.679249398822835,
+        "heldout_above_training_q90_n": 159
+      }
+    }
+  },
+  "thresholds": {
+    "pooled_delta_r2_minimum_inclusive": 0.005,
+    "county_block_ci_lower_strictly_above": 0.0,
+    "minimum_positive_regions": 3,
+    "hinge_quantile_fixed": 0.9
+  },
+  "acceptance": {
+    "pooled_delta_r2_at_least_0_005": false,
+    "county_block_ci_lower_above_zero": false,
+    "positive_delta_in_at_least_3_of_4_regions": true,
+    "upper_tail_screen_gate_pass": false
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "frozen_s1_residual_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/s1-disagreement-orthogonalized/orthogonalized-disagreement.parquet",
+      "sha256": "437b8995e9aa97cc3cf0337cf4338c34e21ade2edaa6dc258700956695feab1e",
+      "rows": 9379,
+      "columns_read": [
+        "GEOID",
+        "region",
+        "fold",
+        "crossfit_residual",
+        "crossfit_joint_defined"
+      ],
+      "exact_official_pair_alignment": true
+    },
+    "poi_effective_count_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/poi-category-effective-count/effective-count-crossfit-residuals.parquet",
+      "sha256": "74c35567243ad8ea3c00cf5117ef641e49148b63f89f7f07616ac9dcf33b8d6e",
+      "rows": 9379,
+      "columns_read": [
+        "GEOID",
+        "region",
+        "unique_assigned_place_count",
+        "effective_primary_category_count",
+        "effective_count_defined",
+        "Mx4_F",
+        "Mx4_F_defined",
+        "S1_lagged_Mx4_F",
+        "S1_lagged_Mx4_F_defined"
+      ],
+      "exact_official_pair_alignment": true
+    },
+    "effective_count_source_report": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/poi-category-effective-count.json",
+      "sha256": "9188213ee5b7fe479bc6fd519eb5388db42f06edcea8083881f42117574a95d0"
+    },
+    "linear_screen_report": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/poi-effective-count-s1-residual.json",
+      "sha256": "6c88b676e6ea40827012a9797d85b808110c703ee195f4208defc3fcc504e162"
+    },
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/poi-effective-count-upper-tail/paired-oof-predictions.parquet",
+      "sha256": "b6b10d1476e0e9819c23d85d5c1903edea77844979dd3a9590809ebad4c72894",
+      "rows": 9379,
+      "columns": [
+        "GEOID",
+        "region",
+        "county_fips",
+        "fold",
+        "frozen_s1_residual",
+        "s1_residual_defined",
+        "effective_count_defined",
+        "effective_primary_category_count",
+        "log1p_effective_primary_category_count",
+        "unique_assigned_place_count",
+        "log1p_unique_place_count",
+        "Mx4_F",
+        "S1_lagged_Mx4_F",
+        "q90_hinge_defined",
+        "training_fold_q90_hinge",
+        "baseline_oof_prediction",
+        "hinge_oof_prediction"
+      ],
+      "deterministic_serialization": true
+    },
+    "script_sha256": "fb9f89363cb4140ac3d63a08d1031d1fb38c5b027e3a6a26588bc661d53cfe6b"
+  },
+  "interpretation": "The q90 effective-count hinge failed one or more preregistered gates; keep the feature descriptive-only and do not integrate the hinge."
+}
