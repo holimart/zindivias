@@ -1,0 +1,621 @@
+{
+  "schema_version": 1,
+  "screen": "Fixed-alpha urban/rural effective-count slope-deviation screen against frozen S1 residual; unregistered",
+  "measure_before": {
+    "global_interaction_delta_r2": -4.445094831231696e-05,
+    "global_interaction_ci_95": [
+      -0.0007381626918859328,
+      0.0005451580728211689
+    ],
+    "global_interaction_positive_folds": 3,
+    "effective_count_residual_variance_ratio": 0.18096672540982753,
+    "prior_interaction_report_sha256": "af5461fcab85eb7d5d7c06cdc23b5e05397123b623580fbd0164beefa30163d9"
+  },
+  "method": {
+    "outcome": "Frozen cross-fitted orthogonalized S1 disagreement residual; no refitting.",
+    "baseline": "Same region-intercept, log1p unique-place count, Mx4 F, S1 lag, within-region training-standardized log1p effective count main effect, and provided pct_urban main effect as the prior urbanity-interaction screen.",
+    "strata": "Fixed urban if pct_urban >= 0.5, rural if pct_urban < 0.5; no tuning.",
+    "augmented_model": "One common effective-count slope plus urban/rural deviations constrained to sum to zero. With sign +1 for urban and -1 for rural, add one standardized effective-count × sign contrast; resulting slopes are common + gamma (urban) and common - gamma (rural).",
+    "penalty": "Fixed alpha=100 on sum of squared urban/rural deviations only, equivalent to a 2*alpha penalty on gamma; common slope and baseline terms unpenalized.",
+    "scaling": "Baseline continuous predictors training-standardized per fold; effective-count log1p standardized separately within each official region using training rows only. pct_urban main effect stays on its provided [0,1] scale.",
+    "validation": "Exact frozen five GEOID folds; nested models fit on other four folds and evaluated on paired held-out support.",
+    "uncertainty": "Paired whole-county bootstrap CI with replacement over pooled OOF support.",
+    "metric": "Held-out incremental delta-R2=(baseline SSE-stratified model SSE)/shared residual SST; pooled, stratum, and regional estimates reported.",
+    "support": "Exact official-ID intersection of frozen residual, effective count, pct_urban, unique-place count, Mx4 F and S1 lag.",
+    "unregistered": true,
+    "interpretation_limit": "Label-free provided-feature association screen only; not target accuracy, causality, or estimator-promotion evidence."
+  },
+  "scope": {
+    "official_ids": 9379,
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "paired_support_ids": 9308,
+    "urban_defined_ids": 9353,
+    "paired_urban_n": 7609,
+    "paired_rural_n": 1699,
+    "urbanity_mask_sha256": "0feebca7e2e79d89ae736804cc1b81349fff9036da0cdad7aa4fd2e1c9e8d726",
+    "stratum_assignment_sha256": "71408c358b863b63d7bea1fb98ed193eece9f8cec706663c5e4355587081bf4a",
+    "residual_mask_sha256": "593459efd58441427b7c76d010f31880b0709ad2fe46b90bd254145da4ce27d6",
+    "effective_count_mask_sha256": "da10f86ae1f1c0942f5553a149d1b58e6bd990e0fecbe590d326ec4c42049bdd",
+    "paired_mask_sha256": "0c126a6e080af7456c69d2e0afe60fd0bbb4dc971e501683cb84ae9ba1d53de4",
+    "fold_assignment_sha256": "c8b4f9875dbd127a1627458cba0d824bd743d5e5047b38ef243eb6608c3f5ce5",
+    "fold_support": {
+      "0": 1813,
+      "1": 1829,
+      "2": 1891,
+      "3": 1921,
+      "4": 1854
+    },
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_references_read": false,
+    "external_data_used": [],
+    "changed_folds": false,
+    "posthoc_thresholding": false,
+    "leaderboard_feedback_used": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "pooled": {
+      "baseline_r2": -0.006038075499936957,
+      "stratified_model_r2": -0.006298828060993689,
+      "delta_r2": -0.00026075256105676734,
+      "baseline_sse": 0.1501748132354493,
+      "stratified_model_sse": 0.15021373667991028,
+      "heldout_sst": 0.14927348864089657
+    },
+    "county_block_bootstrap": {
+      "replicates": 2000,
+      "seed": 20261101,
+      "cluster_count": 298,
+      "resampling": "paired whole-county bootstrap with replacement over exact pooled OOF support",
+      "ci_95_percentile": [
+        -0.001308860890758147,
+        0.0003606169387281669
+      ],
+      "degenerate_replicates": 0
+    },
+    "paired_pooled_delta_r2_ci_95": [
+      -0.001308860890758147,
+      0.0003606169387281669
+    ],
+    "strata": {
+      "urban": {
+        "n": 7609,
+        "baseline_r2": -0.0019533504170019533,
+        "stratified_model_r2": -0.0019628792207415646,
+        "delta_r2": -9.528803739534669e-06,
+        "baseline_sse": 0.08147222987594556,
+        "stratified_model_sse": 0.08147300469534048,
+        "heldout_sst": 0.08131339631933733
+      },
+      "rural": {
+        "n": 1699,
+        "baseline_r2": -0.02158078838819355,
+        "stratified_model_r2": -0.02214804365815848,
+        "delta_r2": -0.000567255269964865,
+        "baseline_sse": 0.06870258335950376,
+        "stratified_model_sse": 0.06874073198456979,
+        "heldout_sst": 0.06725124839896388
+      }
+    },
+    "regional": {
+      "maricopa-az": {
+        "n": 1567,
+        "baseline_r2": -0.00903602396130454,
+        "stratified_model_r2": -0.008834082458422765,
+        "delta_r2": 0.00020194150288188609,
+        "baseline_sse": 0.02506941095075789,
+        "stratified_model_sse": 0.025064393731943555,
+        "heldout_sst": 0.024844911733021807
+      },
+      "northern-ca": {
+        "n": 586,
+        "baseline_r2": -0.0029223072809370088,
+        "stratified_model_r2": -0.003256836254582174,
+        "delta_r2": -0.00033452897364519486,
+        "baseline_sse": 0.016756237340243976,
+        "stratified_model_sse": 0.016761826454015694,
+        "heldout_sst": 0.01670741314516424
+      },
+      "eastern-ok": {
+        "n": 1188,
+        "baseline_r2": -0.011198313655528036,
+        "stratified_model_r2": -0.01167533975065993,
+        "delta_r2": -0.00047702609513193767,
+        "baseline_sse": 0.07412520606644843,
+        "stratified_model_sse": 0.07416017414058702,
+        "heldout_sst": 0.07330432128440012
+      },
+      "south-central-tx": {
+        "n": 5967,
+        "baseline_r2": 0.005459852492615935,
+        "stratified_model_r2": 0.0053615294990497775,
+        "delta_r2": -9.832299356607449e-05,
+        "baseline_sse": 0.03422395887799902,
+        "stratified_model_sse": 0.03422734235336399,
+        "heldout_sst": 0.0344118424618398
+      }
+    },
+    "positive_regions": 1,
+    "folds": [
+      {
+        "fold": 0,
+        "train_n": 7495,
+        "heldout_n": 1813,
+        "training_urban_n": 6113,
+        "training_rural_n": 1382,
+        "heldout_urban_n": 1496,
+        "heldout_rural_n": 317,
+        "baseline_r2": -0.014942198845325994,
+        "stratified_model_r2": -0.01493335149540398,
+        "delta_r2": 8.847349922193963e-06,
+        "baseline_sse": 0.020534171921465554,
+        "stratified_model_sse": 0.020533992923090515,
+        "heldout_sst": 0.020231863395597068,
+        "stratum_training_scalers": {
+          "eastern-ok": {
+            "training_mean": 4.204816080874053,
+            "training_sd": 0.5494615058188964,
+            "applied_scale": 0.5494615058188964,
+            "training_n": 949,
+            "heldout_n": 239
+          },
+          "maricopa-az": {
+            "training_mean": 4.143378980227566,
+            "training_sd": 0.6340575096423481,
+            "applied_scale": 0.6340575096423481,
+            "training_n": 1267,
+            "heldout_n": 300
+          },
+          "northern-ca": {
+            "training_mean": 4.15883928334501,
+            "training_sd": 0.6425582669653754,
+            "applied_scale": 0.6425582669653754,
+            "training_n": 475,
+            "heldout_n": 111
+          },
+          "south-central-tx": {
+            "training_mean": 4.25954171048982,
+            "training_sd": 0.5855432150263135,
+            "applied_scale": 0.5855432150263135,
+            "training_n": 4804,
+            "heldout_n": 1163
+          }
+        },
+        "shared_effective_count_slope": 8.798932172045267e-05,
+        "urban_deviation": -8.129812406949476e-05,
+        "urban_slope": 6.691197650957918e-06,
+        "rural_slope": 0.00016928744578994744,
+        "ridge_deviation_coefficient": -8.129812406949476e-05,
+        "unpenalized_deviation_coefficient": -8.622462677713573e-05,
+        "ridge_to_unpenalized_deviation_abs_ratio": 0.942864319721853,
+        "penalty": 100.0,
+        "training_only_base_scaler": {
+          "mean": [
+            4.95928488953531,
+            0.04193672698364016,
+            0.04207880840187693
+          ],
+          "sd": [
+            0.8644899134019615,
+            0.12174325250885466,
+            0.11889477851695258
+          ],
+          "applied_scale": [
+            0.8644899134019615,
+            0.12174325250885466,
+            0.11889477851695258
+          ]
+        }
+      },
+      {
+        "fold": 1,
+        "train_n": 7479,
+        "heldout_n": 1829,
+        "training_urban_n": 6116,
+        "training_rural_n": 1363,
+        "heldout_urban_n": 1493,
+        "heldout_rural_n": 336,
+        "baseline_r2": 0.0020416404315788395,
+        "stratified_model_r2": 0.001208532583574895,
+        "delta_r2": -0.000833107848003977,
+        "baseline_sse": 0.04693729540132398,
+        "stratified_model_sse": 0.04697647922977533,
+        "heldout_sst": 0.04703332053014974,
+        "stratum_training_scalers": {
+          "eastern-ok": {
+            "training_mean": 4.197542438966586,
+            "training_sd": 0.5595444596180552,
+            "applied_scale": 0.5595444596180552,
+            "training_n": 952,
+            "heldout_n": 236
+          },
+          "maricopa-az": {
+            "training_mean": 4.130541171698331,
+            "training_sd": 0.6425188325331271,
+            "applied_scale": 0.6425188325331271,
+            "training_n": 1245,
+            "heldout_n": 322
+          },
+          "northern-ca": {
+            "training_mean": 4.133497976314238,
+            "training_sd": 0.6392536267844721,
+            "applied_scale": 0.6392536267844721,
+            "training_n": 466,
+            "heldout_n": 120
+          },
+          "south-central-tx": {
+            "training_mean": 4.257891856851718,
+            "training_sd": 0.5871374914253372,
+            "applied_scale": 0.5871374914253372,
+            "training_n": 4816,
+            "heldout_n": 1151
+          }
+        },
+        "shared_effective_count_slope": 0.00015666698724519227,
+        "urban_deviation": -0.00012091446387322812,
+        "urban_slope": 3.5752523371964154e-05,
+        "rural_slope": 0.0002775814511184204,
+        "ridge_deviation_coefficient": -0.00012091446387322812,
+        "unpenalized_deviation_coefficient": -0.00012834541225131328,
+        "ridge_to_unpenalized_deviation_abs_ratio": 0.9421019555920346,
+        "penalty": 100.0,
+        "training_only_base_scaler": {
+          "mean": [
+            4.952152789227915,
+            0.04295277210915467,
+            0.04277826483999489
+          ],
+          "sd": [
+            0.8708356749937655,
+            0.12390332008869749,
+            0.12063456871178793
+          ],
+          "applied_scale": [
+            0.8708356749937655,
+            0.12390332008869749,
+            0.12063456871178793
+          ]
+        }
+      },
+      {
+        "fold": 2,
+        "train_n": 7417,
+        "heldout_n": 1891,
+        "training_urban_n": 6078,
+        "training_rural_n": 1339,
+        "heldout_urban_n": 1531,
+        "heldout_rural_n": 360,
+        "baseline_r2": -0.01303497180800628,
+        "stratified_model_r2": -0.01352287921351003,
+        "delta_r2": -0.0004879074055035421,
+        "baseline_sse": 0.023270481714610342,
+        "stratified_model_sse": 0.023281689462293455,
+        "heldout_sst": 0.022971054664656373,
+        "stratum_training_scalers": {
+          "eastern-ok": {
+            "training_mean": 4.200913638507951,
+            "training_sd": 0.5601979294121773,
+            "applied_scale": 0.5601979294121773,
+            "training_n": 940,
+            "heldout_n": 248
+          },
+          "maricopa-az": {
+            "training_mean": 4.14234941029577,
+            "training_sd": 0.6521536879613823,
+            "applied_scale": 0.6521536879613823,
+            "training_n": 1245,
+            "heldout_n": 322
+          },
+          "northern-ca": {
+            "training_mean": 4.163306924421339,
+            "training_sd": 0.6212759176140045,
+            "applied_scale": 0.6212759176140045,
+            "training_n": 466,
+            "heldout_n": 120
+          },
+          "south-central-tx": {
+            "training_mean": 4.265056379638622,
+            "training_sd": 0.585841818658736,
+            "applied_scale": 0.585841818658736,
+            "training_n": 4766,
+            "heldout_n": 1201
+          }
+        },
+        "shared_effective_count_slope": 0.00016001938052547472,
+        "urban_deviation": -9.773789036131938e-05,
+        "urban_slope": 6.228149016415534e-05,
+        "rural_slope": 0.0002577572708867941,
+        "ridge_deviation_coefficient": -9.773789036131938e-05,
+        "unpenalized_deviation_coefficient": -0.00010376204683219947,
+        "ridge_to_unpenalized_deviation_abs_ratio": 0.9419425825261316,
+        "penalty": 100.0,
+        "training_only_base_scaler": {
+          "mean": [
+            4.9591805409243355,
+            0.04174001888975221,
+            0.04158709692811317
+          ],
+          "sd": [
+            0.8673445441661154,
+            0.12131939445533621,
+            0.11789378215490993
+          ],
+          "applied_scale": [
+            0.8673445441661154,
+            0.12131939445533621,
+            0.11789378215490993
+          ]
+        }
+      },
+      {
+        "fold": 3,
+        "train_n": 7387,
+        "heldout_n": 1921,
+        "training_urban_n": 6047,
+        "training_rural_n": 1340,
+        "heldout_urban_n": 1562,
+        "heldout_rural_n": 359,
+        "baseline_r2": -0.027361696525939783,
+        "stratified_model_r2": -0.026890723300697417,
+        "delta_r2": 0.00047097322524225146,
+        "baseline_sse": 0.020012802422210957,
+        "stratified_model_sse": 0.020003627957039832,
+        "heldout_sst": 0.019479801991727903,
+        "stratum_training_scalers": {
+          "eastern-ok": {
+            "training_mean": 4.1932060665980595,
+            "training_sd": 0.5525346909436276,
+            "applied_scale": 0.5525346909436276,
+            "training_n": 946,
+            "heldout_n": 242
+          },
+          "maricopa-az": {
+            "training_mean": 4.129795461900094,
+            "training_sd": 0.6657091639927041,
+            "applied_scale": 0.6657091639927041,
+            "training_n": 1257,
+            "heldout_n": 310
+          },
+          "northern-ca": {
+            "training_mean": 4.1440168407736175,
+            "training_sd": 0.6315169108774172,
+            "applied_scale": 0.6315169108774172,
+            "training_n": 465,
+            "heldout_n": 121
+          },
+          "south-central-tx": {
+            "training_mean": 4.259309417365023,
+            "training_sd": 0.58847081505078,
+            "applied_scale": 0.58847081505078,
+            "training_n": 4719,
+            "heldout_n": 1248
+          }
+        },
+        "shared_effective_count_slope": -3.622809665936134e-05,
+        "urban_deviation": -6.459963071532134e-05,
+        "urban_slope": -0.00010082772737468268,
+        "rural_slope": 2.837153405596e-05,
+        "ridge_deviation_coefficient": -6.459963071532134e-05,
+        "unpenalized_deviation_coefficient": -6.872249279928978e-05,
+        "ridge_to_unpenalized_deviation_abs_ratio": 0.9400070935143516,
+        "penalty": 100.0,
+        "training_only_base_scaler": {
+          "mean": [
+            4.948712804674897,
+            0.0414366539198942,
+            0.04149626693997071
+          ],
+          "sd": [
+            0.8755887386604139,
+            0.12051250576665502,
+            0.11743851913464003
+          ],
+          "applied_scale": [
+            0.8755887386604139,
+            0.12051250576665502,
+            0.11743851913464003
+          ]
+        }
+      },
+      {
+        "fold": 4,
+        "train_n": 7454,
+        "heldout_n": 1854,
+        "training_urban_n": 6082,
+        "training_rural_n": 1372,
+        "heldout_urban_n": 1527,
+        "heldout_rural_n": 327,
+        "baseline_r2": 0.0009588108311548993,
+        "stratified_model_r2": 0.0010124038613398278,
+        "delta_r2": 5.3593030184941264e-05,
+        "baseline_sse": 0.039420061775838476,
+        "stratified_model_sse": 0.03941794710771113,
+        "heldout_sst": 0.03945789443239482,
+        "stratum_training_scalers": {
+          "eastern-ok": {
+            "training_mean": 4.1875349488990095,
+            "training_sd": 0.5570581056574758,
+            "applied_scale": 0.5570581056574758,
+            "training_n": 965,
+            "heldout_n": 223
+          },
+          "maricopa-az": {
+            "training_mean": 4.132055982003844,
+            "training_sd": 0.651957975020595,
+            "applied_scale": 0.651957975020595,
+            "training_n": 1254,
+            "heldout_n": 313
+          },
+          "northern-ca": {
+            "training_mean": 4.168104566426538,
+            "training_sd": 0.626718697975241,
+            "applied_scale": 0.626718697975241,
+            "training_n": 472,
+            "heldout_n": 114
+          },
+          "south-central-tx": {
+            "training_mean": 4.267575375813136,
+            "training_sd": 0.5867370018781773,
+            "applied_scale": 0.5867370018781773,
+            "training_n": 4763,
+            "heldout_n": 1204
+          }
+        },
+        "shared_effective_count_slope": 0.00011090245019505887,
+        "urban_deviation": -3.1253623876732936e-06,
+        "urban_slope": 0.00010777708780738558,
+        "rural_slope": 0.00011402781258273216,
+        "ridge_deviation_coefficient": -3.1253623876732936e-06,
+        "unpenalized_deviation_coefficient": -3.31201416027492e-06,
+        "ridge_to_unpenalized_deviation_abs_ratio": 0.9436440294125635,
+        "penalty": 100.0,
+        "training_only_base_scaler": {
+          "mean": [
+            4.9610305944443205,
+            0.04272272083485429,
+            0.04252438371869978
+          ],
+          "sd": [
+            0.8715065087696985,
+            0.12335171756931299,
+            0.12026200250022184
+          ],
+          "applied_scale": [
+            0.8715065087696985,
+            0.12335171756931299,
+            0.12026200250022184
+          ]
+        }
+      }
+    ]
+  },
+  "thresholds": {
+    "pooled_delta_r2_minimum_inclusive": 0.005,
+    "bootstrap_ci_lower_strictly_above": 0.0,
+    "minimum_support_per_stratum": 500,
+    "minimum_positive_regions": 3,
+    "fixed_alpha": 100.0,
+    "fixed_pct_urban_cut": 0.5
+  },
+  "acceptance": {
+    "pooled_delta_r2_at_least_0_005": false,
+    "county_bootstrap_ci_lower_above_zero": false,
+    "both_strata_have_at_least_500": true,
+    "positive_delta_in_at_least_3_of_4_regions": false,
+    "stratified_slope_screen_pass": false
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "frozen_residual_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/s1-disagreement-orthogonalized/orthogonalized-disagreement.parquet",
+      "sha256": "437b8995e9aa97cc3cf0337cf4338c34e21ade2edaa6dc258700956695feab1e",
+      "rows": 9379,
+      "columns_read": [
+        "GEOID",
+        "region",
+        "fold",
+        "crossfit_residual",
+        "crossfit_joint_defined"
+      ],
+      "exact_official_pair_alignment": true
+    },
+    "effective_count_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/poi-category-effective-count/effective-count-crossfit-residuals.parquet",
+      "sha256": "74c35567243ad8ea3c00cf5117ef641e49148b63f89f7f07616ac9dcf33b8d6e",
+      "rows": 9379,
+      "columns_read": [
+        "GEOID",
+        "region",
+        "unique_assigned_place_count",
+        "effective_primary_category_count",
+        "effective_count_defined",
+        "Mx4_F",
+        "Mx4_F_defined",
+        "S1_lagged_Mx4_F",
+        "S1_lagged_Mx4_F_defined"
+      ],
+      "exact_official_pair_alignment": true
+    },
+    "pct_urban_by_region": {
+      "maricopa-az": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+        "sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 1593,
+        "pct_urban_defined_ids": 1582
+      },
+      "northern-ca": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+        "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 591,
+        "pct_urban_defined_ids": 591
+      },
+      "eastern-ok": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+        "sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 1192,
+        "pct_urban_defined_ids": 1191
+      },
+      "south-central-tx": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+        "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 6003,
+        "pct_urban_defined_ids": 5989
+      }
+    },
+    "effective_count_report": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/poi-category-effective-count.json",
+      "sha256": "9188213ee5b7fe479bc6fd519eb5388db42f06edcea8083881f42117574a95d0"
+    },
+    "prior_interaction_report": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/poi-effective-count-urbanity.json",
+      "sha256": "af5461fcab85eb7d5d7c06cdc23b5e05397123b623580fbd0164beefa30163d9"
+    },
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/poi-effective-count-urbanity-stratified/paired-oof-predictions.parquet",
+      "sha256": "be566b59492be81e360ac1e42ea3e7120cc2a7fbf4e03a4186be72363e99ccaf",
+      "rows": 9379,
+      "columns": [
+        "GEOID",
+        "region",
+        "county_fips",
+        "fold",
+        "pct_urban",
+        "urban_stratum",
+        "urbanity_defined",
+        "effective_primary_category_count",
+        "log1p_effective_primary_category_count",
+        "unique_assigned_place_count",
+        "log1p_unique_place_count",
+        "frozen_s1_residual",
+        "s1_residual_defined",
+        "Mx4_F",
+        "S1_lagged_Mx4_F",
+        "paired_screen_defined",
+        "within_region_training_z_effective_count",
+        "urban_rural_deviation_term",
+        "baseline_oof_prediction",
+        "stratified_slope_oof_prediction"
+      ],
+      "deterministic_serialization": true
+    },
+    "script_sha256": "4cf23089bd98634cd565e88d0f068737d9de2a6d772f2ae0a903a1d771637b74"
+  },
+  "interpretation": "Fixed-alpha urban/rural effective-count slope deviations failed one or more preregistered gates; retire the stratified interaction and keep the feature descriptive-only."
+}
