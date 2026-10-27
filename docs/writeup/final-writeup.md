@@ -14,7 +14,7 @@ Scored scope: 9379 official tracts across four regions (2814 public / 6565 priva
 
 Current model candidate presented in this writeup: `V2_model` at `reports/candidates/V2_model.csv` (SHA-256 `3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12`), 9794 rows. Not uploaded: the frozen final-two protocol queues zero uploads and requires operator authorization.
 
-Every quantitative statement in this writeup is covered by the claim-to-evidence audit summarised in the reproducibility appendix; nothing here is an accuracy claim beyond the platform scorecard values quoted verbatim from our submission log.
+The pre-existing quantitative statements are covered by the claim-to-evidence audit summarised in the reproducibility appendix. The T1 diagnostic addendum below has its own report-path evidence table and reproduction commands. Nothing here is an accuracy claim beyond the platform scorecard values quoted verbatim from our submission log.
 
 > The saved official page text in the workspace RULES.md preserves the sentence but not the hyperlink target, so the operator must supply the form URL; this build never guesses one.
 
@@ -283,6 +283,63 @@ MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig \
 ```
 
 A repeated cache-based run produced byte-identical JSON and PNG. The report records source-object URIs, object/selected-column byte sizes, local input/cache hashes, and per-region source counts. No external-source retrieval or licence record applies because no additional public data was used.
+
+### T1 named-stroke class-drop diagnostic and implementation limit
+
+**Status: diagnostic only; not a gap-accuracy result or a promoted estimator.** T1 computes a provided-road class-drop fraction for identities that have named-class length. In the frozen implementation, identities use case-folded `names.primary`, falling back to route network/reference; class-drop length is counted only when the identity's named length lies mostly outside the tract. The verified implementation does **not** apply geometric-angle stroke merging: continuity is exact identity only, a conservative proxy that can miss class changes on otherwise continuous roads. It uses the supplied unfiltered Overture road layer and does not use labels or removed reference layers. These limitations prevent interpreting a T1 association with the frozen S1 disagreement residual as evidence of hidden-score accuracy.
+
+| Check | Evidence/result | Direct report source (JSON pointer) | Reproduction |
+|---|---|---|---|
+| Implementation limit | Stroke-angle rule is not applied; exact identity continuity only. Synthetic geometry/clipping is stubbed in the hand-check, so that check verifies aggregation, not road I/O or geographic clipping. | `reports/t1-outside-share-threshold.json` `/provenance/feature_cache_metadata/0.7/maricopa-az/diagnostics/stroke_angle_rule`; `reports/t1-class-drop-handcheck.json` `/scope/frozen_T1_function_exercised` | [A], [C] |
+| Synthetic aggregation hand-check | All 12/12 hand-calculated graph fixtures matched, including defined masks; maximum absolute fraction error was 0.0. This is a code/aggregation check, not a data or accuracy test. | `reports/t1-class-drop-handcheck.json` `/results/fixtures`, `/results/maximum_absolute_fraction_error`, `/results/all_defined_masks_match`, `/results/acceptance_pass` | [A] |
+| Fixed-threshold T1 named-stroke residual screen | On 9,347 paired T1/S1-supported tracts, pooled county-held-out ΔR² was −0.0070216 (county-bootstrap 95% CI [−0.0180717, −0.0022856]); region ΔR² was negative in all four regions: Maricopa −0.0144431, Northern California −0.0130530, Eastern Oklahoma −0.0045437, and South-Central Texas −0.0040128. | `reports/t1-stroke-residual-screen.json` `/measure_after/pooled`, `/measure_after/county_block_bootstrap/pooled_delta_r2_ci_95`, `/measure_after/regional`, `/provenance/T1_artifact`; registered threshold 0.7 is recorded in `reports/t1-outside-share-threshold.json` `/measure_before/registered_threshold` | [B] |
+| Nested threshold sensitivity | The inner counties selected threshold 0.9. On the fixed outer support (n=1,155), pooled ΔR² was −0.0023880 (county-bootstrap 95% CI [−0.0154058, +0.0031650]); Northern California's outer ΔR² was −0.2697082 (n=73). All three preregistered promotion gates failed. | `reports/t1-outside-share-threshold.json` `/preregistration/specification/thresholds`, `/inner_selection/selected_threshold`, `/outer_evaluation/paired_outer_county_delta_r2/pooled`, `/outer_evaluation/county_bootstrap_95/pooled_delta_r2_ci_95`, `/outer_evaluation/paired_outer_county_delta_r2/regional/northern-ca`, `/acceptance` | [C] |
+
+The fixed-threshold and nested screens use a one-term correction to the frozen S1 estimator-disagreement residual, with county holdouts; S1 residuals are not organiser targets. The nested screen selects the threshold only on inner counties and evaluates it on fixed outer counties. Its poor Northern California result is retained rather than tuned away. T1 remains diagnostic-only: no candidate score was changed, no submission was made, and no claim is made that T1 improves coverage-gap accuracy.
+
+#### Reproduction commands
+
+[A] Synthetic aggregation hand-check:
+
+```sh
+/home/martin/hddProjects/langywrap/uv run --quiet \
+  --with numpy==2.5.4 --with shapely==2.2.0 \
+  python scripts/audit_t1_class_drop_handcheck.py \
+  --out reports/t1-class-drop-handcheck.json
+```
+
+[B] Fixed-threshold county-held-out screen:
+
+```sh
+/home/martin/hddProjects/langywrap/uv run --quiet \
+  --with-requirements requirements.txt \
+  python scripts/screen_t1-stroke-residual.py \
+  --workspace "$COMPETITION_WORKSPACE" \
+  --out reports/t1-stroke-residual-screen.json \
+  --manifest reports/t1-stroke-residual-county-folds.csv
+```
+
+[C] Rebuild the nested screen by running one feature-build invocation for each of the three registered thresholds (`0.5`, `0.7`, `0.9`) in each official region (`maricopa-az`, `northern-ca`, `eastern-ok`, `south-central-tx`); execute these 12 calls separately so each remains a bounded run. Example invocation:
+
+```sh
+/home/martin/hddProjects/langywrap/uv run --quiet \
+  --with-requirements requirements.txt \
+  python scripts/screen_t1_outside_share_threshold.py \
+  --workspace "$COMPETITION_WORKSPACE" --build-feature \
+  --threshold 0.5 --region maricopa-az
+```
+
+After all 12 feature caches exist, reproduce nested selection and outer evaluation:
+
+```sh
+/home/martin/hddProjects/langywrap/uv run --quiet \
+  --with-requirements requirements.txt \
+  python scripts/screen_t1_outside_share_threshold.py \
+  --workspace "$COMPETITION_WORKSPACE" \
+  --out reports/t1-outside-share-threshold.json
+```
+
+Every new numeric T1 statement in this addendum has a direct report pointer in the evidence table and a corresponding command above. No removed reference data, sample score placeholders, labels, leaderboard feedback, or candidate outputs were used.
 
 ## Methodology (Best Documentation entry)
 
