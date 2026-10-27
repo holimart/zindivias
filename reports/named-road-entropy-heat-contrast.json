@@ -1,0 +1,210 @@
+{
+  "screen": "Provided named-road class-share entropy by provided summer-heat quartile; descriptive and unregistered",
+  "measure_before": {
+    "entropy_defined_ids": 9247,
+    "official_ids": 9379,
+    "entropy_coverage_fraction": 0.985926004904574,
+    "crossfit_residual_variance_ratio": 0.6607401765971582,
+    "heat_stratified_contrast_measured": false,
+    "source_report": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/named-road-class-entropy.json"
+  },
+  "pre_registration": {
+    "heat_column": "epht_heat_days_summer",
+    "coverage_column": "epht_covered",
+    "heat_group": "within-region q75 among finite heat-covered official tracts; ties included in upper group",
+    "entropy": "reuse class_mix_entropy from accepted named-road entropy artifact; no road source recomputation",
+    "contrast": "within-region tract-mean entropy, upper heat quartile minus remaining heat-covered tracts; equal-region mean across four regions",
+    "bootstrap_replicates": 2000,
+    "bootstrap_base_seed": 20261028,
+    "support_gate": "at least three regions with >=30 entropy-defined observations in each group",
+    "effect_gate": "absolute equal-region mean difference >=0.05 and 95% bootstrap interval excludes zero",
+    "unregistered": true
+  },
+  "scope": {
+    "official_rows": 9379,
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "entropy_undefined_ids": 132,
+    "heat_missing_ids": 2,
+    "joint_defined_ids": 9247,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "TIGER_or_equivalent_reference_read": false,
+    "external_data_used": [],
+    "leaderboard_feedback_used": false,
+    "estimator_or_registry_changed": false,
+    "uploads": 0
+  },
+  "provenance": {
+    "entropy_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/named-road-class-entropy/class-entropy-crossfit.parquet",
+      "sha256": "41610caca547f76604a8430f7cc0dfcdf628ea3f431632c5e5da11809da92f38",
+      "columns_read": [
+        "GEOID",
+        "region",
+        "class_mix_entropy",
+        "entropy_defined"
+      ],
+      "rows": 9379,
+      "defined_ids": 9247,
+      "null_ids": 132
+    },
+    "heat_strata_by_region": {
+      "maricopa-az": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+        "sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd",
+        "columns_read": [
+          "GEOID",
+          "epht_heat_days_summer",
+          "epht_covered"
+        ],
+        "provided_table_rows": 1593,
+        "official_ids_joined": 1593,
+        "official_heat_covered_finite": 1593,
+        "official_heat_missing": 0,
+        "provided_nonofficial_rows_ignored": 0,
+        "covered_but_null_values": 0,
+        "uncovered_but_finite_values_ignored": 0
+      },
+      "northern-ca": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+        "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+        "columns_read": [
+          "GEOID",
+          "epht_heat_days_summer",
+          "epht_covered"
+        ],
+        "provided_table_rows": 591,
+        "official_ids_joined": 591,
+        "official_heat_covered_finite": 591,
+        "official_heat_missing": 0,
+        "provided_nonofficial_rows_ignored": 0,
+        "covered_but_null_values": 0,
+        "uncovered_but_finite_values_ignored": 0
+      },
+      "eastern-ok": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+        "sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54",
+        "columns_read": [
+          "GEOID",
+          "epht_heat_days_summer",
+          "epht_covered"
+        ],
+        "provided_table_rows": 1192,
+        "official_ids_joined": 1192,
+        "official_heat_covered_finite": 1192,
+        "official_heat_missing": 0,
+        "provided_nonofficial_rows_ignored": 0,
+        "covered_but_null_values": 0,
+        "uncovered_but_finite_values_ignored": 0
+      },
+      "south-central-tx": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+        "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354",
+        "columns_read": [
+          "GEOID",
+          "epht_heat_days_summer",
+          "epht_covered"
+        ],
+        "provided_table_rows": 6010,
+        "official_ids_joined": 6003,
+        "official_heat_covered_finite": 6001,
+        "official_heat_missing": 2,
+        "provided_nonofficial_rows_ignored": 7,
+        "covered_but_null_values": 0,
+        "uncovered_but_finite_values_ignored": 0
+      }
+    },
+    "named_road_entropy_baseline_report": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/named-road-class-entropy.json",
+      "sha256": "120e06a143fd64d1f2f0fc843aa81b2f30ba40cbcfdd43ed2a235ec2ad373b25",
+      "official_ids": 9379,
+      "entropy_defined_ids": 9247,
+      "entropy_coverage_fraction": 0.985926004904574,
+      "crossfit_residual_variance_ratio": 0.6607401765971582,
+      "heat_stratified_contrast_measured_before": false
+    }
+  },
+  "measure_after": {
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "heat_covered_finite_ids": 1593,
+        "heat_q75_threshold": 15.333333333333334,
+        "quartile_rule": "np.quantile(q=.75); values >= q75 assigned to upper group (ties included)",
+        "heat_upper_group_heat_covered_ids": 492,
+        "heat_remaining_group_heat_covered_ids": 1101,
+        "entropy_defined_upper_group_n": 487,
+        "entropy_defined_remaining_group_n": 1073,
+        "entropy_mean_upper_heat_quartile": 0.337244563481379,
+        "entropy_mean_remaining_heat_covered": 0.3573339856667228,
+        "upper_minus_remaining_mean_difference": -0.02008942218534382,
+        "both_groups_meet_n_30": true,
+        "bootstrap_seed": 2330205323
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "heat_covered_finite_ids": 591,
+        "heat_q75_threshold": 11.555555555555555,
+        "quartile_rule": "np.quantile(q=.75); values >= q75 assigned to upper group (ties included)",
+        "heat_upper_group_heat_covered_ids": 178,
+        "heat_remaining_group_heat_covered_ids": 413,
+        "entropy_defined_upper_group_n": 175,
+        "entropy_defined_remaining_group_n": 409,
+        "entropy_mean_upper_heat_quartile": 0.3643828603625655,
+        "entropy_mean_remaining_heat_covered": 0.38037063605472077,
+        "upper_minus_remaining_mean_difference": -0.01598777569215526,
+        "both_groups_meet_n_30": true,
+        "bootstrap_seed": 1169166612
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "heat_covered_finite_ids": 1192,
+        "heat_q75_threshold": 11.777777777777779,
+        "quartile_rule": "np.quantile(q=.75); values >= q75 assigned to upper group (ties included)",
+        "heat_upper_group_heat_covered_ids": 309,
+        "heat_remaining_group_heat_covered_ids": 883,
+        "entropy_defined_upper_group_n": 301,
+        "entropy_defined_remaining_group_n": 863,
+        "entropy_mean_upper_heat_quartile": 0.41581453332787494,
+        "entropy_mean_remaining_heat_covered": 0.37656561672715283,
+        "upper_minus_remaining_mean_difference": 0.039248916600722106,
+        "both_groups_meet_n_30": true,
+        "bootstrap_seed": 4200354858
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "heat_covered_finite_ids": 6001,
+        "heat_q75_threshold": 16.555555555555557,
+        "quartile_rule": "np.quantile(q=.75); values >= q75 assigned to upper group (ties included)",
+        "heat_upper_group_heat_covered_ids": 1517,
+        "heat_remaining_group_heat_covered_ids": 4484,
+        "entropy_defined_upper_group_n": 1503,
+        "entropy_defined_remaining_group_n": 4436,
+        "entropy_mean_upper_heat_quartile": 0.37170649388285265,
+        "entropy_mean_remaining_heat_covered": 0.4220459760718971,
+        "upper_minus_remaining_mean_difference": -0.05033948218904444,
+        "both_groups_meet_n_30": true,
+        "bootstrap_seed": 2811218889
+      }
+    },
+    "joint_heat_entropy_defined_ids": 9247,
+    "entropy_defined_ids": 9247,
+    "heat_covered_finite_ids": 9377,
+    "equal_region_mean_difference_upper_minus_remaining": -0.011791940866455353,
+    "equal_region_bootstrap_95_ci": [
+      -0.028599064603005524,
+      0.004768227456805289
+    ],
+    "equal_region_bootstrap_ci_excludes_zero": false,
+    "equal_region_bootstrap_replicates": 2000,
+    "bootstrap_method": "Within each region, independently resample tracts with replacement within the upper heat quartile and remaining heat-covered group; average regional mean differences with equal region weight for each replicate; percentile 95% interval.",
+    "regions_with_at_least_30_entropy_defined_tracts_in_each_group": 4,
+    "regions_with_nonempty_entropy_defined_groups": 4,
+    "support_gate_pass": true,
+    "effect_size_gate_pass_abs_difference_at_least_0_05": false,
+    "bootstrap_ci_gate_pass": false,
+    "descriptive_screen_gate_pass": false,
+    "interpretation": "No disparity claim: at least one preregistered support, effect-size, or CI gate failed."
+  },
+  "implementation_sha256": "91a4159602b32671655c22e219fddef95c695587b7f206f0b847dea4fe4ccee2"
+}
