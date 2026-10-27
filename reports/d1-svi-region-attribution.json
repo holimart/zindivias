@@ -1,0 +1,648 @@
+{
+  "schema_version": 1,
+  "audit": "Region-by-SVI-quartile localization of the prior D1 rural-language residual screen; descriptive safety audit",
+  "measure_before": {
+    "source_audit": "d1-rural-language-context-residual-audit",
+    "D1_complete_support": 9330,
+    "pooled_county_heldout_delta_r2": 0.0008019065285473953,
+    "pooled_county_block_ci_95": [
+      -0.0053789886697650354,
+      0.004234866317931995
+    ],
+    "pooled_svi_q3_heldout_delta_r2": -0.015889420963861447,
+    "pooled_svi_q3_support": 2336,
+    "svi_q3_previously_worsened_more_than_0_005": true,
+    "source_audit_sha256": "45f77be58464389b277f81bcac06b7e47140a78de00a531a38d282e6c2a2c9af"
+  },
+  "method": {
+    "outcome": "Frozen cross-fitted S1 Queen/Rook disagreement residual, unchanged; no target labels or refit.",
+    "provided_inputs": "Only provided svi_minority, pct_urban and GEOID from each official region's strata table, plus frozen residual and official GEOIDs. County blocks are the first five GEOID digits.",
+    "quartiles": "Within-region empirical quartiles of finite provided svi_minority across official tracts, matching the prior D1 audit's quantile boundaries and right-sided tie assignment. Analysis cells additionally require finite provided pct_urban and frozen S1 residual.",
+    "contrast": "For each region and SVI quartile, compare the cell's frozen-residual mean with the remaining complete-support tracts in that region; divide the difference by the pooled within-group sample SD (Cohen standardized mean difference). Positive means higher residual in the quartile cell.",
+    "uncertainty": "2,000 paired county-block bootstrap replicates; resample counties with replacement separately within each region and retain every supported tract residual in each sampled block. Percentile intervals for all 16 signed cell SMDs and the maximum absolute SMD statistic.",
+    "acceptance": "A descriptive localization is considered supported only if all 16 region×quartile cells have at least 30 complete-support tracts and finite 95% county-block intervals. This support gate is not a signal or promotion gate.",
+    "unregistered": true,
+    "no_refit_or_term_promotion": true,
+    "interpretation_limit": "Label-free descriptive residual contrasts; neither target accuracy nor causal evidence."
+  },
+  "scope": {
+    "official_ids": 9379,
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "frozen_residual_defined_ids": 9379,
+    "finite_svi_ids": 9331,
+    "complete_d1_svi_urbanity_residual_ids": 9330,
+    "analysis_mask_sha256": "e555c0f76cf0988ec403cca38f6f497fb011de9cf2f044c254c7c0a4d84dad66",
+    "values_masks_and_quartiles_sha256": "3c480fee818b6327223cdae971417735a0542d23a707016cf58d61ec4a7f19fa",
+    "regional_svi_quartile_cutpoints": {
+      "maricopa-az": [
+        0.4049,
+        0.5768,
+        0.740575
+      ],
+      "northern-ca": [
+        0.3778,
+        0.5092,
+        0.6617
+      ],
+      "eastern-ok": [
+        0.395,
+        0.5036,
+        0.6204
+      ],
+      "south-central-tx": [
+        0.5427,
+        0.7262,
+        0.8739
+      ]
+    },
+    "region_quartile_supports": {
+      "maricopa-az": {
+        "q1": 392,
+        "q2": 394,
+        "q3": 395,
+        "q4": 394
+      },
+      "northern-ca": {
+        "q1": 147,
+        "q2": 147,
+        "q3": 149,
+        "q4": 148
+      },
+      "eastern-ok": {
+        "q1": 293,
+        "q2": 299,
+        "q3": 297,
+        "q4": 300
+      },
+      "south-central-tx": {
+        "q1": 1493,
+        "q2": 1492,
+        "q3": 1495,
+        "q4": 1495
+      }
+    },
+    "region_counts": {
+      "maricopa-az": {
+        "complete_support": 1575,
+        "counties": 16
+      },
+      "northern-ca": {
+        "complete_support": 591,
+        "counties": 24
+      },
+      "eastern-ok": {
+        "complete_support": 1189,
+        "counties": 73
+      },
+      "south-central-tx": {
+        "complete_support": 5975,
+        "counties": 185
+      }
+    },
+    "forbidden_inputs_read": [],
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "target_reconstruction": false,
+    "external_demographics_used": false,
+    "removed_or_equivalent_references_read": false,
+    "leaderboard_feedback_used": false,
+    "uploads": 0,
+    "estimator_changed": false
+  },
+  "measure_after": {
+    "region_by_svi_quartile_residual_contrasts": {
+      "maricopa-az": {
+        "q1": {
+          "cell_n": 392,
+          "complement_n": 1183,
+          "cell_mean": 0.00013509105498179434,
+          "complement_mean": -4.874291809814432e-05,
+          "mean_difference": 0.00018383397307993867,
+          "pooled_within_group_sd": 0.003973908723357208,
+          "standardized_mean_difference": 0.04626024045278861,
+          "county_count": 13,
+          "region_county_count": 16,
+          "supported": true,
+          "contrast": "quartile cell minus remaining complete-support tracts in the same region, divided by pooled within-group sample SD",
+          "county_block_bootstrap_ci_95": [
+            -0.13757253787100834,
+            0.365003473502442
+          ],
+          "bootstrap_finite_replicates": 2000,
+          "finite_ci": true
+        },
+        "q2": {
+          "cell_n": 394,
+          "complement_n": 1181,
+          "cell_mean": 0.0001283939187198016,
+          "complement_mean": -4.6819968275057735e-05,
+          "mean_difference": 0.00017521388699485933,
+          "pooled_within_group_sd": 0.003973979154058245,
+          "standardized_mean_difference": 0.04409028839920565,
+          "county_count": 12,
+          "region_county_count": 16,
+          "supported": true,
+          "contrast": "quartile cell minus remaining complete-support tracts in the same region, divided by pooled within-group sample SD",
+          "county_block_bootstrap_ci_95": [
+            -0.10721083154282211,
+            0.2478968694096756
+          ],
+          "bootstrap_finite_replicates": 2000,
+          "finite_ci": true
+        },
+        "q3": {
+          "cell_n": 395,
+          "complement_n": 1180,
+          "cell_mean": -0.00015680970369582207,
+          "complement_mean": 4.850224949373594e-05,
+          "mean_difference": -0.000205311953189558,
+          "pooled_within_group_sd": 0.0039737068146153106,
+          "standardized_mean_difference": -0.05166761484124087,
+          "county_count": 14,
+          "region_county_count": 16,
+          "supported": true,
+          "contrast": "quartile cell minus remaining complete-support tracts in the same region, divided by pooled within-group sample SD",
+          "county_block_bootstrap_ci_95": [
+            -0.1959833509434171,
+            0.11134993170516531
+          ],
+          "bootstrap_finite_replicates": 2000,
+          "finite_ci": true
+        },
+        "q4": {
+          "cell_n": 394,
+          "complement_n": 1181,
+          "cell_mean": -0.00011753868813669251,
+          "complement_mean": 3.5226981006448395e-05,
+          "mean_difference": -0.0001527656691431409,
+          "pooled_within_group_sd": 0.003974153134485876,
+          "standardized_mean_difference": -0.03843980439946075,
+          "county_count": 11,
+          "region_county_count": 16,
+          "supported": true,
+          "contrast": "quartile cell minus remaining complete-support tracts in the same region, divided by pooled within-group sample SD",
+          "county_block_bootstrap_ci_95": [
+            -0.15861373703979878,
+            0.11606039117499807
+          ],
+          "bootstrap_finite_replicates": 2000,
+          "finite_ci": true
+        }
+      },
+      "northern-ca": {
+        "q1": {
+          "cell_n": 147,
+          "complement_n": 444,
+          "cell_mean": -0.0002646764522786468,
+          "complement_mean": 0.00017154211286226495,
+          "mean_difference": -0.00043621856514091176,
+          "pooled_within_group_sd": 0.00533238687828339,
+          "standardized_mean_difference": -0.08180549819396073,
+          "county_count": 18,
+          "region_county_count": 24,
+          "supported": true,
+          "contrast": "quartile cell minus remaining complete-support tracts in the same region, divided by pooled within-group sample SD",
+          "county_block_bootstrap_ci_95": [
+            -0.17878257644092393,
+            0.2565759943992214
+          ],
+          "bootstrap_finite_replicates": 2000,
+          "finite_ci": true
+        },
+        "q2": {
+          "cell_n": 147,
+          "complement_n": 444,
+          "cell_mean": -0.000442591866474607,
+          "complement_mean": 0.00023044654053525185,
+          "mean_difference": -0.0006730384070098589,
+          "pooled_within_group_sd": 0.005327766427668655,
+          "standardized_mean_difference": -0.1263265603226472,
+          "county_count": 20,
+          "region_county_count": 24,
+          "supported": true,
+          "contrast": "quartile cell minus remaining complete-support tracts in the same region, divided by pooled within-group sample SD",
+          "county_block_bootstrap_ci_95": [
+            -0.21154994717539238,
+            -0.01132110126271522
+          ],
+          "bootstrap_finite_replicates": 2000,
+          "finite_ci": true
+        },
+        "q3": {
+          "cell_n": 149,
+          "complement_n": 442,
+          "cell_mean": -0.0002114721675166644,
+          "complement_mean": 0.00015558057146123892,
+          "mean_difference": -0.0003670527389779033,
+          "pooled_within_group_sd": 0.005333342167471733,
+          "standardized_mean_difference": -0.06882227456107591,
+          "county_count": 15,
+          "region_county_count": 24,
+          "supported": true,
+          "contrast": "quartile cell minus remaining complete-support tracts in the same region, divided by pooled within-group sample SD",
+          "county_block_bootstrap_ci_95": [
+            -0.20094813295192818,
+            0.12369480687182773
+          ],
+          "bootstrap_finite_replicates": 2000,
+          "finite_ci": true
+        },
+        "q4": {
+          "cell_n": 148,
+          "complement_n": 443,
+          "cell_mean": 0.001167128752990513,
+          "complement_mean": -0.0003058189521821926,
+          "mean_difference": 0.0014729477051727054,
+          "pooled_within_group_sd": 0.005297300406811733,
+          "standardized_mean_difference": 0.27805629132881726,
+          "county_count": 13,
+          "region_county_count": 24,
+          "supported": true,
+          "contrast": "quartile cell minus remaining complete-support tracts in the same region, divided by pooled within-group sample SD",
+          "county_block_bootstrap_ci_95": [
+            -0.14561351024931535,
+            0.3836759418040695
+          ],
+          "bootstrap_finite_replicates": 2000,
+          "finite_ci": true
+        }
+      },
+      "eastern-ok": {
+        "q1": {
+          "cell_n": 293,
+          "complement_n": 896,
+          "cell_mean": 0.002023774034833314,
+          "complement_mean": -0.0006209619645160866,
+          "mean_difference": 0.0026447359993494006,
+          "pooled_within_group_sd": 0.00773313217387509,
+          "standardized_mean_difference": 0.34200062017356125,
+          "county_count": 49,
+          "region_county_count": 73,
+          "supported": true,
+          "contrast": "quartile cell minus remaining complete-support tracts in the same region, divided by pooled within-group sample SD",
+          "county_block_bootstrap_ci_95": [
+            0.14789209665959885,
+            0.46185764335765506
+          ],
+          "bootstrap_finite_replicates": 2000,
+          "finite_ci": true
+        },
+        "q2": {
+          "cell_n": 299,
+          "complement_n": 890,
+          "cell_mean": -0.0003166722581594948,
+          "complement_mean": 0.000147493120437569,
+          "mean_difference": -0.0004641653785970638,
+          "pooled_within_group_sd": 0.00781420508638515,
+          "standardized_mean_difference": -0.05940020430303124,
+          "county_count": 60,
+          "region_county_count": 73,
+          "supported": true,
+          "contrast": "quartile cell minus remaining complete-support tracts in the same region, divided by pooled within-group sample SD",
+          "county_block_bootstrap_ci_95": [
+            -0.14765250940888391,
+            0.04818573898738698
+          ],
+          "bootstrap_finite_replicates": 2000,
+          "finite_ci": true
+        },
+        "q3": {
+          "cell_n": 297,
+          "complement_n": 892,
+          "cell_mean": -0.0008463276366332398,
+          "complement_mean": 0.00032280625569486505,
+          "mean_difference": -0.0011691338923281048,
+          "pooled_within_group_sd": 0.007800374838461672,
+          "standardized_mean_difference": -0.1498817578052021,
+          "county_count": 53,
+          "region_county_count": 73,
+          "supported": true,
+          "contrast": "quartile cell minus remaining complete-support tracts in the same region, divided by pooled within-group sample SD",
+          "county_block_bootstrap_ci_95": [
+            -0.1999010382133504,
+            -0.08994949492041024
+          ],
+          "bootstrap_finite_replicates": 2000,
+          "finite_ci": true
+        },
+        "q4": {
+          "cell_n": 300,
+          "complement_n": 889,
+          "cell_mean": -0.0007011253564555082,
+          "complement_mean": 0.0002777519448103486,
+          "mean_difference": -0.0009788773012658568,
+          "pooled_within_group_sd": 0.007805213266768959,
+          "standardized_mean_difference": -0.12541326774932215,
+          "county_count": 35,
+          "region_county_count": 73,
+          "supported": true,
+          "contrast": "quartile cell minus remaining complete-support tracts in the same region, divided by pooled within-group sample SD",
+          "county_block_bootstrap_ci_95": [
+            -0.17575685840486044,
+            0.006848017718478201
+          ],
+          "bootstrap_finite_replicates": 2000,
+          "finite_ci": true
+        }
+      },
+      "south-central-tx": {
+        "q1": {
+          "cell_n": 1493,
+          "complement_n": 4482,
+          "cell_mean": 0.00023374389231338883,
+          "complement_mean": -7.257597456813002e-05,
+          "mean_difference": 0.0003063198668815188,
+          "pooled_within_group_sd": 0.0023946087256779863,
+          "standardized_mean_difference": 0.12792063421333705,
+          "county_count": 145,
+          "region_county_count": 185,
+          "supported": true,
+          "contrast": "quartile cell minus remaining complete-support tracts in the same region, divided by pooled within-group sample SD",
+          "county_block_bootstrap_ci_95": [
+            0.041676119851546435,
+            0.25431602188998004
+          ],
+          "bootstrap_finite_replicates": 2000,
+          "finite_ci": true
+        },
+        "q2": {
+          "cell_n": 1492,
+          "complement_n": 4483,
+          "cell_mean": 7.571819664403827e-05,
+          "complement_mean": -1.9914663435952343e-05,
+          "mean_difference": 9.563286007999062e-05,
+          "pooled_within_group_sd": 0.002397922096243643,
+          "standardized_mean_difference": 0.039881554213041355,
+          "county_count": 126,
+          "region_county_count": 185,
+          "supported": true,
+          "contrast": "quartile cell minus remaining complete-support tracts in the same region, divided by pooled within-group sample SD",
+          "county_block_bootstrap_ci_95": [
+            -0.017258483267918276,
+            0.08344954828422457
+          ],
+          "bootstrap_finite_replicates": 2000,
+          "finite_ci": true
+        },
+        "q3": {
+          "cell_n": 1495,
+          "complement_n": 4480,
+          "cell_mean": -5.9966014403777936e-05,
+          "complement_mean": 2.529984480874525e-05,
+          "mean_difference": -8.526585921252318e-05,
+          "pooled_within_group_sd": 0.0023979950020043077,
+          "standardized_mean_difference": -0.03555714634152937,
+          "county_count": 92,
+          "region_county_count": 185,
+          "supported": true,
+          "contrast": "quartile cell minus remaining complete-support tracts in the same region, divided by pooled within-group sample SD",
+          "county_block_bootstrap_ci_95": [
+            -0.13326547311746606,
+            0.04953281136160077
+          ],
+          "bootstrap_finite_replicates": 2000,
+          "finite_ci": true
+        },
+        "q4": {
+          "cell_n": 1495,
+          "complement_n": 4480,
+          "cell_mean": -0.00023318252566797046,
+          "complement_mean": 8.310312256320235e-05,
+          "mean_difference": -0.0003162856482311728,
+          "pooled_within_group_sd": 0.0023943622978056323,
+          "standardized_mean_difference": -0.1320959858585478,
+          "county_count": 52,
+          "region_county_count": 185,
+          "supported": true,
+          "contrast": "quartile cell minus remaining complete-support tracts in the same region, divided by pooled within-group sample SD",
+          "county_block_bootstrap_ci_95": [
+            -0.19277884477382695,
+            -0.0835794509266716
+          ],
+          "bootstrap_finite_replicates": 2000,
+          "finite_ci": true
+        }
+      }
+    },
+    "max_absolute_standardized_mean_difference": {
+      "value": 0.34200062017356125,
+      "region": "eastern-ok",
+      "quartile": "q1",
+      "county_block_bootstrap_ci_95": [
+        0.21638975278424413,
+        0.47798573164764
+      ],
+      "finite_replicates": 2000
+    },
+    "county_block_bootstrap": {
+      "replicates": 2000,
+      "seed": 20261106,
+      "resampling": "Paired county-block bootstrap; sample each region's observed counties with replacement, retaining all complete-support tract residuals in each sampled county.",
+      "interval": "Percentile 2.5th and 97.5th percentiles; cell statistic is signed SMD, maximum statistic is max absolute SMD over all 16 cells.",
+      "cell_smd_ci_95": {
+        "maricopa-az:q1": {
+          "ci_95": [
+            -0.13757253787100834,
+            0.365003473502442
+          ],
+          "finite_replicates": 2000
+        },
+        "maricopa-az:q2": {
+          "ci_95": [
+            -0.10721083154282211,
+            0.2478968694096756
+          ],
+          "finite_replicates": 2000
+        },
+        "maricopa-az:q3": {
+          "ci_95": [
+            -0.1959833509434171,
+            0.11134993170516531
+          ],
+          "finite_replicates": 2000
+        },
+        "maricopa-az:q4": {
+          "ci_95": [
+            -0.15861373703979878,
+            0.11606039117499807
+          ],
+          "finite_replicates": 2000
+        },
+        "northern-ca:q1": {
+          "ci_95": [
+            -0.17878257644092393,
+            0.2565759943992214
+          ],
+          "finite_replicates": 2000
+        },
+        "northern-ca:q2": {
+          "ci_95": [
+            -0.21154994717539238,
+            -0.01132110126271522
+          ],
+          "finite_replicates": 2000
+        },
+        "northern-ca:q3": {
+          "ci_95": [
+            -0.20094813295192818,
+            0.12369480687182773
+          ],
+          "finite_replicates": 2000
+        },
+        "northern-ca:q4": {
+          "ci_95": [
+            -0.14561351024931535,
+            0.3836759418040695
+          ],
+          "finite_replicates": 2000
+        },
+        "eastern-ok:q1": {
+          "ci_95": [
+            0.14789209665959885,
+            0.46185764335765506
+          ],
+          "finite_replicates": 2000
+        },
+        "eastern-ok:q2": {
+          "ci_95": [
+            -0.14765250940888391,
+            0.04818573898738698
+          ],
+          "finite_replicates": 2000
+        },
+        "eastern-ok:q3": {
+          "ci_95": [
+            -0.1999010382133504,
+            -0.08994949492041024
+          ],
+          "finite_replicates": 2000
+        },
+        "eastern-ok:q4": {
+          "ci_95": [
+            -0.17575685840486044,
+            0.006848017718478201
+          ],
+          "finite_replicates": 2000
+        },
+        "south-central-tx:q1": {
+          "ci_95": [
+            0.041676119851546435,
+            0.25431602188998004
+          ],
+          "finite_replicates": 2000
+        },
+        "south-central-tx:q2": {
+          "ci_95": [
+            -0.017258483267918276,
+            0.08344954828422457
+          ],
+          "finite_replicates": 2000
+        },
+        "south-central-tx:q3": {
+          "ci_95": [
+            -0.13326547311746606,
+            0.04953281136160077
+          ],
+          "finite_replicates": 2000
+        },
+        "south-central-tx:q4": {
+          "ci_95": [
+            -0.19277884477382695,
+            -0.0835794509266716
+          ],
+          "finite_replicates": 2000
+        }
+      },
+      "max_absolute_smd_ci_95": [
+        0.21638975278424413,
+        0.47798573164764
+      ],
+      "max_absolute_smd_finite_replicates": 2000,
+      "invalid_replicates": 0
+    },
+    "all_16_cells_supported_and_finite_ci": true
+  },
+  "thresholds": {
+    "minimum_cell_tracts_inclusive": 30,
+    "county_bootstrap_replicates": 2000,
+    "bootstrap_seed": 20261106,
+    "quartile_cell_comparison": "within-region quartile vs remaining D1-complete-support tracts"
+  },
+  "acceptance": {
+    "all_16_region_quartile_cells_at_least_30": true,
+    "all_16_cells_have_finite_county_block_ci": true,
+    "diagnostic_supported": true,
+    "interpretation": "supported descriptive localization"
+  },
+  "provenance": {
+    "frozen_S1_residual_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/s1-disagreement-orthogonalized/orthogonalized-disagreement.parquet",
+      "sha256": "437b8995e9aa97cc3cf0337cf4338c34e21ade2edaa6dc258700956695feab1e"
+    },
+    "frozen_S1_residual_report": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/s1-disagreement-orthogonalized.json",
+      "sha256": "b8bc5344339a1f4eb316484aea733c02d8fa37f1a7828583f13d01ffa58aa8fd"
+    },
+    "prior_D1_audit": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/d1-rural-language-context-residual-audit.json",
+      "sha256": "45f77be58464389b277f81bcac06b7e47140a78de00a531a38d282e6c2a2c9af"
+    },
+    "prior_D1_script": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/scripts/audit_d1_rural_language_context_residual.py",
+      "sha256": "8beed877659d251c9be3a89adca81a255a1db17937561fd9ca120b8d3912e934"
+    },
+    "provided_strata_by_region": {
+      "maricopa-az": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+        "sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd",
+        "columns_read": [
+          "GEOID",
+          "svi_minority",
+          "pct_urban"
+        ],
+        "official_ids": 1593,
+        "svi_finite_ids": 1576,
+        "urban_finite_ids": 1582
+      },
+      "northern-ca": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+        "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+        "columns_read": [
+          "GEOID",
+          "svi_minority",
+          "pct_urban"
+        ],
+        "official_ids": 591,
+        "svi_finite_ids": 591,
+        "urban_finite_ids": 591
+      },
+      "eastern-ok": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+        "sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54",
+        "columns_read": [
+          "GEOID",
+          "svi_minority",
+          "pct_urban"
+        ],
+        "official_ids": 1192,
+        "svi_finite_ids": 1189,
+        "urban_finite_ids": 1191
+      },
+      "south-central-tx": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+        "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354",
+        "columns_read": [
+          "GEOID",
+          "svi_minority",
+          "pct_urban"
+        ],
+        "official_ids": 6003,
+        "svi_finite_ids": 5975,
+        "urban_finite_ids": 5989
+      }
+    },
+    "analysis_input_values_masks_quartiles_sha256": "3c480fee818b6327223cdae971417735a0542d23a707016cf58d61ec4a7f19fa",
+    "analysis_script_sha256": "17544efc37182d8261a0bf2211aa3815b87d290b027abe493ab32308f93e46cd"
+  },
+  "interpretation": "All region×quartile cells have adequate observed support and finite bootstrap intervals; the localization is descriptive only. See the reported max absolute SMD and intervals before interpreting whether the earlier pooled SVI-Q3 regression is geographically concentrated."
+}
