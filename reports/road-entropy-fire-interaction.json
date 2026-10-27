@@ -1,0 +1,498 @@
+{
+  "schema_version": 1,
+  "screen": "Single named-road entropy × provided post-2018 MTBS burned-area interaction against frozen S1 disagreement residual; unregistered",
+  "measure_before": {
+    "heat_hinge_pooled_delta_r2": 0.0005831039368884199,
+    "heat_hinge_pooled_bootstrap_95_ci": [
+      -0.0008986732365378346,
+      0.002156720503739079
+    ],
+    "heat_hinge_positive_regions": 2,
+    "heat_hinge_report_sha256": "1ffa0e60deaa55e37e1e35616c714f473de0ae354e5e5a4649b8b4370a2dceb6",
+    "fire_interaction_screen_measured": false
+  },
+  "method": {
+    "outcome": "Frozen cross-fitted S1 Queen/Rook disagreement residual; no residual refit.",
+    "baseline": "OLS with intercept, three official-region indicators, and global slopes for log total named-road km, provided pct_urban, frozen Mx4 F, and frozen S1 lagged Mx4 F.",
+    "augmentation": "Add exactly one global interaction term: standardized road-class entropy × standardized Tm2 postfire burned-land share. No standalone entropy/fire terms, nonlinear terms, threshold search, or alternatives are added.",
+    "fire_definition": "Use only provided strata fields mtbs_covered, mtbs_wildfire_burned_pct_land, and mtbs_wildfire_last_year, reproducing registered Tm2|F|covariate:postfire_burn_share with the frozen 2018 cutoff. Validate raw-field values/mask against the frozen registered Tm2 covariate artifact.",
+    "scaling": "Within each fixed five-fold fit, scale every continuous baseline predictor and each interaction ingredient using training-fold mean and population SD; standardize the product using training-fold product mean/SD. Apply only those train-fitted transforms to held-out tracts.",
+    "folds": "Reuse the exact five within-region GEOID folds stored in the frozen named-road entropy artifact. Each fold holds out all rows with its fixed ID; no reallocation.",
+    "support": "Paired baseline and augmented predictions use identical official tracts with finite frozen residual, registered entropy, provided postfire covariate, and all baseline covariates. No imputation.",
+    "metric": "Pooled and region-specific held-out ΔR²=(baseline SSE - augmented SSE)/held-out residual SST; 2,000 paired tract bootstrap replicates stratified within official region.",
+    "nonfire_region_gate": "Treat Maricopa, Eastern Oklahoma, and South-Central Texas as the predeclared non-wildfire-corridor regions; none may have ΔR² < -0.005.",
+    "unregistered": true,
+    "interpretation_limit": "Label-free association screen; not target accuracy, causal evidence, or estimator-promotion evidence."
+  },
+  "scope": {
+    "official_ids": 9379,
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "entropy_defined_ids": 9247,
+    "fire_defined_ids": 9377,
+    "fire_positive_ids": 381,
+    "baseline_complete_ids": 9228,
+    "joint_complete_case_ids": 9228,
+    "joint_null_ids": 151,
+    "complete_case_mask_sha256": "14e92015152d9ec79e5f0e20ff42f46ac0908ce47cc9a51d32c1d19dbe7a5b51",
+    "entropy_mask_sha256": "68afdf19c4b82663683a7e7489730b762b883628991a34000d28e00089ad8485",
+    "fire_mask_sha256": "3f2c3b32c223690813bd0a9d510e9f89a747096ea73933adad1bfaf24f020578",
+    "fixed_fold_assignment_sha256": "0440dca03162fa5e87c96834a32a1b803e15418bb0979d8c7cf5a94355a3cb9a",
+    "fixed_fold_support": {
+      "0": 1811,
+      "1": 1853,
+      "2": 1829,
+      "3": 1883,
+      "4": 1852
+    },
+    "region_fire_coverage": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "registered_fire_defined_ids": 1593,
+        "fire_share_positive_ids": 97,
+        "joint_screen_support": 1553,
+        "joint_fire_positive_ids": 94,
+        "fold_support": {
+          "0": 306,
+          "1": 306,
+          "2": 321,
+          "3": 317,
+          "4": 303
+        }
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "registered_fire_defined_ids": 591,
+        "fire_share_positive_ids": 93,
+        "joint_screen_support": 584,
+        "joint_fire_positive_ids": 92,
+        "fold_support": {
+          "0": 117,
+          "1": 129,
+          "2": 130,
+          "3": 94,
+          "4": 114
+        }
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "registered_fire_defined_ids": 1192,
+        "fire_share_positive_ids": 89,
+        "joint_screen_support": 1163,
+        "joint_fire_positive_ids": 88,
+        "fold_support": {
+          "0": 226,
+          "1": 235,
+          "2": 233,
+          "3": 251,
+          "4": 218
+        }
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "registered_fire_defined_ids": 6001,
+        "fire_share_positive_ids": 102,
+        "joint_screen_support": 5928,
+        "joint_fire_positive_ids": 102,
+        "fold_support": {
+          "0": 1162,
+          "1": 1183,
+          "2": 1145,
+          "3": 1221,
+          "4": 1217
+        }
+      }
+    },
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "target_reconstruction": false,
+    "removed_or_equivalent_references_read": false,
+    "external_data_used": [],
+    "leaderboard_feedback_used": false,
+    "uploads": 0,
+    "estimator_or_registry_changed": false
+  },
+  "measure_after": {
+    "pooled": {
+      "n": 9228,
+      "baseline_sse": 0.14984357059249345,
+      "augmented_sse": 0.14988232999529133,
+      "heldout_sst": 0.14687943705897688,
+      "baseline_r2": -0.020180725041357483,
+      "augmented_r2": -0.020444610875712144,
+      "delta_r2": -0.00026388583435484265
+    },
+    "pooled_and_regional_tract_bootstrap": {
+      "replicates": 2000,
+      "seed": 20261104,
+      "resampling": "paired tract bootstrap within each region; pooled interval stratified by region and preserves each observed region support size",
+      "pooled_delta_r2_ci_95": [
+        -0.0005405883410793183,
+        1.735467878778394e-05
+      ],
+      "regional_delta_r2_ci_95": {
+        "maricopa-az": [
+          -0.002022919182500293,
+          0.00037689253915865293
+        ],
+        "northern-ca": [
+          -0.005250915317342717,
+          0.0003766630335007187
+        ],
+        "eastern-ok": [
+          -0.0002565861629882462,
+          0.0002355812028097231
+        ],
+        "south-central-tx": [
+          -0.00019543305584775165,
+          0.00016439661334293837
+        ]
+      },
+      "degenerate_replicates": 0
+    },
+    "regional": {
+      "maricopa-az": {
+        "n": 1553,
+        "baseline_sse": 0.024969298331227907,
+        "augmented_sse": 0.024980361112060694,
+        "heldout_sst": 0.024788752715522618,
+        "baseline_r2": -0.007283368299213944,
+        "augmented_r2": -0.007729650569231472,
+        "delta_r2": -0.0004462822700175242
+      },
+      "northern-ca": {
+        "n": 584,
+        "baseline_sse": 0.017709140732910564,
+        "augmented_sse": 0.017734024300418545,
+        "heldout_sst": 0.016744791307964236,
+        "baseline_r2": -0.05759100888212676,
+        "augmented_r2": -0.05907705711350397,
+        "delta_r2": -0.0014860482313772518
+      },
+      "eastern-ok": {
+        "n": 1163,
+        "baseline_sse": 0.07224355750231115,
+        "augmented_sse": 0.07224590398733699,
+        "heldout_sst": 0.07096130502979814,
+        "baseline_r2": -0.018069741980852427,
+        "augmented_r2": -0.018102809087282346,
+        "delta_r2": -3.306710643010146e-05
+      },
+      "south-central-tx": {
+        "n": 5928,
+        "baseline_sse": 0.034921574026043824,
+        "augmented_sse": 0.03492204059547509,
+        "heldout_sst": 0.0343818828970416,
+        "baseline_r2": -0.015696962572362638,
+        "augmented_r2": -0.015710532784112274,
+        "delta_r2": -1.3570211749623353e-05
+      }
+    },
+    "fold_fit_details": [
+      {
+        "fold": 0,
+        "training_n": 7417,
+        "heldout_n": 1811,
+        "baseline_design_columns": 8,
+        "augmented_design_columns": 9,
+        "baseline_design_rank": 8,
+        "augmented_design_rank": 9,
+        "interaction_coefficient": 1.722800497811787e-05,
+        "training_entropy_mean": 0.3944126210769353,
+        "training_entropy_sd": 0.2652830198199866,
+        "training_burn_share_mean": 0.010217800911660158,
+        "training_burn_share_sd": 0.07484544045885774,
+        "training_product_mean": -0.009068159726949365,
+        "training_product_sd": 1.1104693869440856,
+        "training_only_baseline_scalers": {
+          "log_total_named_road_km": {
+            "training_mean": 2.1400467772732203,
+            "training_sd": 1.2807750082881177
+          },
+          "pct_urban": {
+            "training_mean": 0.8066296938634828,
+            "training_sd": 0.3634634211207425
+          },
+          "Mx4_F": {
+            "training_mean": 0.04125917929790818,
+            "training_sd": 0.11979825645333829
+          },
+          "S1_lagged_Mx4_F": {
+            "training_mean": 0.04131291749333771,
+            "training_sd": 0.11668873459062938
+          }
+        },
+        "baseline_min_singular_value": 10.852883500154054,
+        "augmented_min_singular_value": 10.852870634745722
+      },
+      {
+        "fold": 1,
+        "training_n": 7375,
+        "heldout_n": 1853,
+        "baseline_design_columns": 8,
+        "augmented_design_columns": 9,
+        "baseline_design_rank": 8,
+        "augmented_design_rank": 9,
+        "interaction_coefficient": -3.368206757010238e-05,
+        "training_entropy_mean": 0.394527570741186,
+        "training_entropy_sd": 0.2657645154721509,
+        "training_burn_share_mean": 0.009254235105928111,
+        "training_burn_share_sd": 0.07255465404560475,
+        "training_product_mean": -0.0012067242826973544,
+        "training_product_sd": 1.1629833776077037,
+        "training_only_baseline_scalers": {
+          "log_total_named_road_km": {
+            "training_mean": 2.125290325698177,
+            "training_sd": 1.2844702329903412
+          },
+          "pct_urban": {
+            "training_mean": 0.8111186456953102,
+            "training_sd": 0.3593082170464533
+          },
+          "Mx4_F": {
+            "training_mean": 0.04205678764144871,
+            "training_sd": 0.12147351487507163
+          },
+          "S1_lagged_Mx4_F": {
+            "training_mean": 0.04201151107443395,
+            "training_sd": 0.11854656857905249
+          }
+        },
+        "baseline_min_singular_value": 9.84365285875885,
+        "augmented_min_singular_value": 9.835566161940399
+      },
+      {
+        "fold": 2,
+        "training_n": 7399,
+        "heldout_n": 1829,
+        "baseline_design_columns": 8,
+        "augmented_design_columns": 9,
+        "baseline_design_rank": 8,
+        "augmented_design_rank": 9,
+        "interaction_coefficient": -3.637143421973992e-05,
+        "training_entropy_mean": 0.3946520171063521,
+        "training_entropy_sd": 0.26565584822709676,
+        "training_burn_share_mean": 0.009906677525333757,
+        "training_burn_share_sd": 0.07385941143171337,
+        "training_product_mean": -0.006903654284779872,
+        "training_product_sd": 1.143464568779502,
+        "training_only_baseline_scalers": {
+          "log_total_named_road_km": {
+            "training_mean": 2.1424180105480017,
+            "training_sd": 1.303610159720469
+          },
+          "pct_urban": {
+            "training_mean": 0.8063903520723326,
+            "training_sd": 0.3643263232947908
+          },
+          "Mx4_F": {
+            "training_mean": 0.040791989492718214,
+            "training_sd": 0.11948921319003393
+          },
+          "S1_lagged_Mx4_F": {
+            "training_mean": 0.04054286922585579,
+            "training_sd": 0.11605474099153704
+          }
+        },
+        "baseline_min_singular_value": 10.907601264635632,
+        "augmented_min_singular_value": 10.899388709607022
+      },
+      {
+        "fold": 3,
+        "training_n": 7345,
+        "heldout_n": 1883,
+        "baseline_design_columns": 8,
+        "augmented_design_columns": 9,
+        "baseline_design_rank": 8,
+        "augmented_design_rank": 9,
+        "interaction_coefficient": -3.525467703799234e-05,
+        "training_entropy_mean": 0.39258963358877913,
+        "training_entropy_sd": 0.2655482721523849,
+        "training_burn_share_mean": 0.01005097170700644,
+        "training_burn_share_sd": 0.07511627112699024,
+        "training_product_mean": -0.01006060269161844,
+        "training_product_sd": 1.154450544902765,
+        "training_only_baseline_scalers": {
+          "log_total_named_road_km": {
+            "training_mean": 2.1457908694148085,
+            "training_sd": 1.2865878778174837
+          },
+          "pct_urban": {
+            "training_mean": 0.8059591826848129,
+            "training_sd": 0.3644985013192406
+          },
+          "Mx4_F": {
+            "training_mean": 0.04130908518175948,
+            "training_sd": 0.12105430199846395
+          },
+          "S1_lagged_Mx4_F": {
+            "training_mean": 0.04133905966095768,
+            "training_sd": 0.11816820136948003
+          }
+        },
+        "baseline_min_singular_value": 10.654096427712725,
+        "augmented_min_singular_value": 10.647900593487565
+      },
+      {
+        "fold": 4,
+        "training_n": 7376,
+        "heldout_n": 1852,
+        "baseline_design_columns": 8,
+        "augmented_design_columns": 9,
+        "baseline_design_rank": 8,
+        "augmented_design_rank": 9,
+        "interaction_coefficient": -4.933124818496201e-05,
+        "training_entropy_mean": 0.3970746649330982,
+        "training_entropy_sd": 0.265532070259726,
+        "training_burn_share_mean": 0.009253868064767598,
+        "training_burn_share_sd": 0.06897068023981487,
+        "training_product_mean": 0.0018954774541451815,
+        "training_product_sd": 1.1360028149074803,
+        "training_only_baseline_scalers": {
+          "log_total_named_road_km": {
+            "training_mean": 2.145718618875647,
+            "training_sd": 1.2831766179524482
+          },
+          "pct_urban": {
+            "training_mean": 0.8063616107699483,
+            "training_sd": 0.3636373083919083
+          },
+          "Mx4_F": {
+            "training_mean": 0.04187863817351044,
+            "training_sd": 0.12158217191534337
+          },
+          "S1_lagged_Mx4_F": {
+            "training_mean": 0.0418856997246709,
+            "training_sd": 0.11872947799834713
+          }
+        },
+        "baseline_min_singular_value": 10.517083627249129,
+        "augmented_min_singular_value": 10.509473910390485
+      }
+    ],
+    "nonfire_region_delta_r2": {
+      "maricopa-az": -0.0004462822700175242,
+      "eastern-ok": -3.306710643010146e-05,
+      "south-central-tx": -1.3570211749623353e-05
+    },
+    "worst_nonfire_region_delta_r2": -0.0004462822700175242,
+    "interaction_values_and_mask_sha256": "7543b9c272c29ed3b3471378d2fc2a24e1d364d583e38c0317323bba4154dd61"
+  },
+  "thresholds": {
+    "pooled_delta_r2_minimum_inclusive": 0.005,
+    "pooled_bootstrap_ci_lower_strictly_above": 0.0,
+    "nonfire_region_delta_r2_minimum_inclusive": -0.005,
+    "bootstrap_replicates": 2000
+  },
+  "acceptance": {
+    "pooled_delta_r2_at_least_0_005": false,
+    "pooled_tract_bootstrap_ci_lower_above_zero": false,
+    "no_nonfire_region_decline_below_minus_0_005": true,
+    "screen_pass": false
+  },
+  "provenance": {
+    "official_scored_pairs_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "entropy_feature": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/named-road-class-entropy/class-entropy-crossfit.parquet",
+      "sha256": "41610caca547f76604a8430f7cc0dfcdf628ea3f431632c5e5da11809da92f38",
+      "report_sha256": "120e06a143fd64d1f2f0fc843aa81b2f30ba40cbcfdd43ed2a235ec2ad373b25",
+      "rows": 9379,
+      "entropy_defined": 9247,
+      "columns_read": [
+        "GEOID",
+        "region",
+        "class_mix_entropy",
+        "entropy_defined",
+        "total_named_road_km",
+        "pct_urban",
+        "Mx4_F",
+        "Mx4_F_defined",
+        "S1_lagged_Mx4_F",
+        "S1_lagged_Mx4_F_defined",
+        "fold"
+      ]
+    },
+    "frozen_S1_residual": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/s1-disagreement-orthogonalized/orthogonalized-disagreement.parquet",
+      "sha256": "437b8995e9aa97cc3cf0337cf4338c34e21ade2edaa6dc258700956695feab1e",
+      "report_sha256": "b8bc5344339a1f4eb316484aea733c02d8fa37f1a7828583f13d01ffa58aa8fd",
+      "report_output_sha256": "437b8995e9aa97cc3cf0337cf4338c34e21ade2edaa6dc258700956695feab1e"
+    },
+    "Tm2_provided_fire_covariate": {
+      "registered_Tm2_artifact": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Tm2.parquet",
+        "sha256": "470c23b2902cbb652dfc884c22ba2a743a85538aa819ddd179b1ff2a3aea41bc",
+        "defined_ids": 9377
+      },
+      "Tm_family_report": {
+        "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/bias60-family-tm-summary.json",
+        "sha256": "71546cda0eae449c3648a36fa37cd04860815dadffffb9cd6261c2a77364e4b8"
+      },
+      "strata_fire_by_region": {
+        "maricopa-az": {
+          "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+          "sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd",
+          "columns_read": [
+            "GEOID",
+            "mtbs_covered",
+            "mtbs_wildfire_burned_pct_land",
+            "mtbs_wildfire_last_year"
+          ],
+          "fire_field_rows": 1593,
+          "post2018_burn_positive": 97
+        },
+        "northern-ca": {
+          "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+          "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+          "columns_read": [
+            "GEOID",
+            "mtbs_covered",
+            "mtbs_wildfire_burned_pct_land",
+            "mtbs_wildfire_last_year"
+          ],
+          "fire_field_rows": 591,
+          "post2018_burn_positive": 93
+        },
+        "eastern-ok": {
+          "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+          "sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54",
+          "columns_read": [
+            "GEOID",
+            "mtbs_covered",
+            "mtbs_wildfire_burned_pct_land",
+            "mtbs_wildfire_last_year"
+          ],
+          "fire_field_rows": 1192,
+          "post2018_burn_positive": 89
+        },
+        "south-central-tx": {
+          "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+          "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354",
+          "columns_read": [
+            "GEOID",
+            "mtbs_covered",
+            "mtbs_wildfire_burned_pct_land",
+            "mtbs_wildfire_last_year"
+          ],
+          "fire_field_rows": 6003,
+          "post2018_burn_positive": 102
+        }
+      },
+      "definition": "Tm2|F|covariate:postfire_burn_share: clip(mtbs_wildfire_burned_pct_land/100,0,1) when mtbs_covered, burn share finite, and last year >=2018; defined no-event rows receive zero under the frozen Tm2 definition."
+    },
+    "frozen_baseline_emissions": {
+      "Mx4": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx4.parquet",
+        "sha256": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af"
+      },
+      "S1_lag": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/S1.parquet",
+        "sha256": "632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03"
+      }
+    },
+    "entropy_values_fire_values_baseline_values_mask_sha256": "dbd933b3574e2d06a886c1af7bf842c882fe666e5949317c2f787c01ba5a191c",
+    "analysis_script_sha256": "2f5eb6b8462ff474289ede259a30de205dedf53fe4cae7b6be958b4f784c8587",
+    "bootstrap_seed": 20261104,
+    "bootstrap_replicates": 2000
+  },
+  "interpretation": "The preregistered fire interaction failed one or more held-out gates; retain the frozen estimator and keep this screen diagnostic-only."
+}
