@@ -1,0 +1,412 @@
+{
+  "audit": "Synthetic hand-check of the frozen T1 class-drop aggregation; no competition labels or features.",
+  "method": {
+    "expected_values": "fixture-by-fixture hand-calculated class-drop length / (named + eligible class-drop length); undefined tracts represented by emission zero with defined=false",
+    "identity_rule": "frozen _identity: stripped/casefolded names.primary; fallback casefolded route network/ref",
+    "named_classes": [
+      "motorway",
+      "trunk",
+      "primary",
+      "secondary"
+    ],
+    "outside_named_share_threshold": 0.7,
+    "test_domains": [
+      "branching",
+      "exact and below-threshold outside shares",
+      "equal named/drop lengths",
+      "mixed named classes",
+      "multiple identities",
+      "isolated roads",
+      "route fallback",
+      "empty graph"
+    ]
+  },
+  "provenance": {
+    "analysis_script_sha256": "84cab2c4ba751f4eb8fdd40078e1b2c60f1da9be1d46d7bec6f947cd63cbcf3f",
+    "fixture_spec_sha256": "f3e823136d1262128e4c254387d5eee4aa4e34a941bdfaa092a8d139c367de7d",
+    "frozen_T1_source_sha256": "40ff5d36e4787f3d77ba586259d992753d9e21bc6e05e691d40ce6587f0598c2",
+    "test_file_sha256": "a4230d64b963066748602c88feb33000104e8d17ac8661aaad0b982c75629c5a"
+  },
+  "results": {
+    "acceptance_pass": true,
+    "acceptance_tolerance": 1e-12,
+    "all_defined_masks_match": true,
+    "fixtures": [
+      {
+        "absolute_errors": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "actual_defined_mask": [
+          true,
+          true,
+          true
+        ],
+        "actual_gap_fractions": [
+          0.16666666666666666,
+          0.0,
+          0.0
+        ],
+        "expected_defined_mask": [
+          true,
+          true,
+          true
+        ],
+        "expected_gap_fractions": [
+          0.16666666666666666,
+          0,
+          0
+        ],
+        "features": [
+          "branching",
+          "identity_casefold"
+        ],
+        "fixture_id": "G01_branching_identity",
+        "maximum_absolute_error": 0.0,
+        "tract_count": 3
+      },
+      {
+        "absolute_errors": [
+          0.0,
+          0.0
+        ],
+        "actual_defined_mask": [
+          true,
+          true
+        ],
+        "actual_gap_fractions": [
+          0.16666666666666666,
+          0.0
+        ],
+        "expected_defined_mask": [
+          true,
+          true
+        ],
+        "expected_gap_fractions": [
+          0.16666666666666666,
+          0
+        ],
+        "features": [
+          "outside_share_exactly_0.7"
+        ],
+        "fixture_id": "G02_exact_threshold",
+        "maximum_absolute_error": 0.0,
+        "tract_count": 2
+      },
+      {
+        "absolute_errors": [
+          0.0,
+          0.0
+        ],
+        "actual_defined_mask": [
+          true,
+          true
+        ],
+        "actual_gap_fractions": [
+          0.0,
+          0.0
+        ],
+        "expected_defined_mask": [
+          true,
+          true
+        ],
+        "expected_gap_fractions": [
+          0,
+          0
+        ],
+        "features": [
+          "outside_share_below_0.7"
+        ],
+        "fixture_id": "G03_below_threshold",
+        "maximum_absolute_error": 0.0,
+        "tract_count": 2
+      },
+      {
+        "absolute_errors": [
+          0.0,
+          0.0
+        ],
+        "actual_defined_mask": [
+          true,
+          true
+        ],
+        "actual_gap_fractions": [
+          0.5,
+          0.0
+        ],
+        "expected_defined_mask": [
+          true,
+          true
+        ],
+        "expected_gap_fractions": [
+          0.5,
+          0
+        ],
+        "features": [
+          "equal_named_and_drop_lengths"
+        ],
+        "fixture_id": "G04_equal_named_and_drop",
+        "maximum_absolute_error": 0.0,
+        "tract_count": 2
+      },
+      {
+        "absolute_errors": [
+          0.0,
+          0.0
+        ],
+        "actual_defined_mask": [
+          true,
+          true
+        ],
+        "actual_gap_fractions": [
+          0.3333333333333333,
+          0.0
+        ],
+        "expected_defined_mask": [
+          true,
+          true
+        ],
+        "expected_gap_fractions": [
+          0.3333333333333333,
+          0
+        ],
+        "features": [
+          "mixed_named_classes",
+          "secondary_is_named"
+        ],
+        "fixture_id": "G05_mixed_named_classes",
+        "maximum_absolute_error": 0.0,
+        "tract_count": 2
+      },
+      {
+        "absolute_errors": [
+          0.0,
+          0.0
+        ],
+        "actual_defined_mask": [
+          true,
+          true
+        ],
+        "actual_gap_fractions": [
+          0.3333333333333333,
+          0.0
+        ],
+        "expected_defined_mask": [
+          true,
+          true
+        ],
+        "expected_gap_fractions": [
+          0.3333333333333333,
+          0
+        ],
+        "features": [
+          "multiple_strokes_per_tract"
+        ],
+        "fixture_id": "G06_two_identities_shared_tracts",
+        "maximum_absolute_error": 0.0,
+        "tract_count": 2
+      },
+      {
+        "absolute_errors": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "actual_defined_mask": [
+          true,
+          true,
+          true
+        ],
+        "actual_gap_fractions": [
+          0.2857142857142857,
+          0.375,
+          0.0
+        ],
+        "expected_defined_mask": [
+          true,
+          true,
+          true
+        ],
+        "expected_gap_fractions": [
+          0.2857142857142857,
+          0.375,
+          0
+        ],
+        "features": [
+          "branching",
+          "three_tract_stroke"
+        ],
+        "fixture_id": "G07_three_tract_branch",
+        "maximum_absolute_error": 0.0,
+        "tract_count": 3
+      },
+      {
+        "absolute_errors": [
+          0.0,
+          0.0
+        ],
+        "actual_defined_mask": [
+          true,
+          true
+        ],
+        "actual_gap_fractions": [
+          0.3333333333333333,
+          0.0
+        ],
+        "expected_defined_mask": [
+          true,
+          true
+        ],
+        "expected_gap_fractions": [
+          0.3333333333333333,
+          0
+        ],
+        "features": [
+          "primary_name_identity_precedes_route"
+        ],
+        "fixture_id": "G08_primary_name_beats_route",
+        "maximum_absolute_error": 0.0,
+        "tract_count": 2
+      },
+      {
+        "absolute_errors": [
+          0.0,
+          0.0
+        ],
+        "actual_defined_mask": [
+          true,
+          true
+        ],
+        "actual_gap_fractions": [
+          0.3333333333333333,
+          0.0
+        ],
+        "expected_defined_mask": [
+          true,
+          true
+        ],
+        "expected_gap_fractions": [
+          0.3333333333333333,
+          0
+        ],
+        "features": [
+          "route_identity_fallback_casefold"
+        ],
+        "fixture_id": "G09_route_fallback_identity",
+        "maximum_absolute_error": 0.0,
+        "tract_count": 2
+      },
+      {
+        "absolute_errors": [
+          0.0,
+          0.0
+        ],
+        "actual_defined_mask": [
+          false,
+          true
+        ],
+        "actual_gap_fractions": [
+          0.0,
+          0.0
+        ],
+        "expected_defined_mask": [
+          false,
+          true
+        ],
+        "expected_gap_fractions": [
+          0,
+          0
+        ],
+        "features": [
+          "isolated_non_named_identity"
+        ],
+        "fixture_id": "G10_isolated_non_named_road",
+        "maximum_absolute_error": 0.0,
+        "tract_count": 2
+      },
+      {
+        "absolute_errors": [
+          0.0,
+          0.0
+        ],
+        "actual_defined_mask": [
+          true,
+          true
+        ],
+        "actual_gap_fractions": [
+          0.0,
+          1.0
+        ],
+        "expected_defined_mask": [
+          true,
+          true
+        ],
+        "expected_gap_fractions": [
+          0,
+          1
+        ],
+        "features": [
+          "stroke_class_drop_in_other_tract"
+        ],
+        "fixture_id": "G11_drop_in_tract_without_named_length",
+        "maximum_absolute_error": 0.0,
+        "tract_count": 2
+      },
+      {
+        "absolute_errors": [
+          0.0,
+          0.0
+        ],
+        "actual_defined_mask": [
+          false,
+          false
+        ],
+        "actual_gap_fractions": [
+          0.0,
+          0.0
+        ],
+        "expected_defined_mask": [
+          false,
+          false
+        ],
+        "expected_gap_fractions": [
+          0,
+          0
+        ],
+        "features": [
+          "no_road_segments"
+        ],
+        "fixture_id": "G12_empty_graph",
+        "maximum_absolute_error": 0.0,
+        "tract_count": 2
+      }
+    ],
+    "maximum_absolute_fraction_error": 0.0
+  },
+  "schema_version": 1,
+  "scope": {
+    "candidate_artifacts_or_outputs_changed": false,
+    "external_features_read": false,
+    "frozen_T1_function_exercised": "bias60.ideas.t.t1 aggregation; road I/O and geometric clipping stubbed with hand-specified tract lengths",
+    "graph_ids": [
+      "G01_branching_identity",
+      "G02_exact_threshold",
+      "G03_below_threshold",
+      "G04_equal_named_and_drop",
+      "G05_mixed_named_classes",
+      "G06_two_identities_shared_tracts",
+      "G07_three_tract_branch",
+      "G08_primary_name_beats_route",
+      "G09_route_fallback_identity",
+      "G10_isolated_non_named_road",
+      "G11_drop_in_tract_without_named_length",
+      "G12_empty_graph"
+    ],
+    "labels_or_targets_read": false,
+    "leaderboard_feedback_used": false,
+    "removed_references_read": false,
+    "synthetic_road_graphs": 12,
+    "uploads": 0
+  }
+}
