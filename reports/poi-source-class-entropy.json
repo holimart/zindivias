@@ -1,0 +1,844 @@
+{
+  "schema_version": 1,
+  "screen": "Normalized entropy of the five provided mutually exclusive POI source-class shares; five-fold cross-fit distinctness diagnostic; unregistered",
+  "measure_before": {
+    "source_provenance_report": "Five disjoint per-tract POI provenance classes and shares are documented; no tract entropy or residual distinctness result was in the report.",
+    "source_provenance_report_sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565",
+    "tract_entropy_or_crossfit_distinctness_previously_measured": false
+  },
+  "definition": "For each tract with a defined five-class partition, H/log(5) = -sum(p_c log p_c)/log(5), with 0 log 0 terms set to zero. Shares are taken directly from the existing discovery-only provided source-provenance feature cache; no categories are reclassified or filtered. Null source-share rows remain null.",
+  "method": {
+    "source_classes": [
+      "meta_not_microsoft",
+      "microsoft_not_meta",
+      "meta_and_microsoft",
+      "other_without_meta_microsoft",
+      "no_upstream"
+    ],
+    "source_share_columns": [
+      "overture_poi_meta_not_microsoft_source_share",
+      "overture_poi_microsoft_not_meta_source_share",
+      "overture_poi_meta_and_microsoft_source_share",
+      "overture_poi_other_without_meta_microsoft_source_share",
+      "overture_poi_no_upstream_source_share"
+    ],
+    "cross_fit": "Five deterministic GEOID folds within each region. Region-specific OLS with intercept, log1p provided Overture POI count, frozen Mx4 F, and frozen S1 lagged Mx4 F is trained on four folds and predicts the held-out fold. No labels, tuning, or imputation.",
+    "variance_ratio": "Pooled population variance (ddof=0) of held-out entropy residual divided by entropy variance on the same complete-case support.",
+    "correlations": "Pooled Pearson correlations of held-out residual with each adjustment predictor; regional diagnostics are descriptive.",
+    "nulls": "Preserve source cache null masks; entropy undefined unless all five shares and positive POI count are defined; joint cross-fit additionally requires both frozen emissions.",
+    "interpretation_limit": "Source-class mix describes recorded upstream provenance only and does not prove data correctness, quality, completeness, or local mapping activity.",
+    "unregistered": true
+  },
+  "scope": {
+    "official_ids": 9379,
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "entropy_defined_ids": 9377,
+    "entropy_undefined_ids": 2,
+    "coverage_fraction": 0.9997867576500693,
+    "joint_crossfit_ids": 9377,
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "entropy_defined_ids": 1593,
+        "joint_crossfit_ids": 1593,
+        "coverage_fraction": 1.0,
+        "entropy_distribution": {
+          "n": 1593,
+          "min": -0.0,
+          "p05": 0.3908477772588113,
+          "p50": 0.5975253864890135,
+          "p95": 0.6562016496024947,
+          "max": 0.6797123228588711,
+          "mean": 0.5680334012801372,
+          "sd": 0.0959643527850082,
+          "variance": 0.009209157005445511
+        },
+        "crossfit_residual_distribution": {
+          "n": 1593,
+          "min": -0.496477613955869,
+          "p05": -0.1647204125594235,
+          "p50": 0.015620346047744538,
+          "p95": 0.1017689089040934,
+          "max": 0.20795169184892587,
+          "mean": -0.00020570167788065246,
+          "sd": 0.08679042127480108,
+          "variance": 0.007532577225057444
+        },
+        "residual_variance_ratio": 0.8179442722719702,
+        "residual_pearson_correlations": {
+          "log1p_poi_count": 0.0005024575654281179,
+          "Mx4_F": -0.00584559118514639,
+          "S1_lagged_Mx4_F": -0.0034325402401276317
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "train_n": 1275,
+            "heldout_n": 318,
+            "coefficient_order": [
+              "region_intercept",
+              "log1p_poi_count",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              0.37740739783375316,
+              0.040479756400910005,
+              0.13896182548127137,
+              -0.21807569508867233
+            ],
+            "design_rank": 4,
+            "design_columns": 4,
+            "minimum_singular_value": 0.7272741081951647
+          },
+          {
+            "fold": 1,
+            "train_n": 1252,
+            "heldout_n": 341,
+            "coefficient_order": [
+              "region_intercept",
+              "log1p_poi_count",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              0.3852856456887271,
+              0.03869257722333911,
+              0.07562278883293409,
+              -0.14053521346137576
+            ],
+            "design_rank": 4,
+            "design_columns": 4,
+            "minimum_singular_value": 0.6849957337494689
+          },
+          {
+            "fold": 2,
+            "train_n": 1273,
+            "heldout_n": 320,
+            "coefficient_order": [
+              "region_intercept",
+              "log1p_poi_count",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              0.3659454897200085,
+              0.042716551661147274,
+              0.07622394746341593,
+              -0.1299153961480285
+            ],
+            "design_rank": 4,
+            "design_columns": 4,
+            "minimum_singular_value": 0.6791082436028287
+          },
+          {
+            "fold": 3,
+            "train_n": 1286,
+            "heldout_n": 307,
+            "coefficient_order": [
+              "region_intercept",
+              "log1p_poi_count",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              0.3620507278975051,
+              0.04343781837347169,
+              0.2993589676070444,
+              -0.35947370180398736
+            ],
+            "design_rank": 4,
+            "design_columns": 4,
+            "minimum_singular_value": 0.6129045765287758
+          },
+          {
+            "fold": 4,
+            "train_n": 1286,
+            "heldout_n": 307,
+            "coefficient_order": [
+              "region_intercept",
+              "log1p_poi_count",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              0.35268745019066283,
+              0.045182662215762746,
+              0.16263835765520054,
+              -0.2211536188470798
+            ],
+            "design_rank": 4,
+            "design_columns": 4,
+            "minimum_singular_value": 0.6415594123378534
+          }
+        ]
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "entropy_defined_ids": 591,
+        "joint_crossfit_ids": 591,
+        "coverage_fraction": 1.0,
+        "entropy_distribution": {
+          "n": 591,
+          "min": 0.1559269869429618,
+          "p05": 0.3329395425600209,
+          "p50": 0.558252028103367,
+          "p95": 0.6437695378399207,
+          "max": 0.671710862827759,
+          "mean": 0.5339897787265788,
+          "sd": 0.09570018272237676,
+          "variance": 0.0091585249730963
+        },
+        "crossfit_residual_distribution": {
+          "n": 591,
+          "min": -0.34627707291127674,
+          "p05": -0.188300402663727,
+          "p50": 0.019835851551233685,
+          "p95": 0.11405753176306943,
+          "max": 0.19356606646940688,
+          "mean": -0.00022664367303476437,
+          "sd": 0.09084799596588897,
+          "variance": 0.008253358371018177
+        },
+        "residual_variance_ratio": 0.9011667703328754,
+        "residual_pearson_correlations": {
+          "log1p_poi_count": 0.0032937475178418055,
+          "Mx4_F": -0.0006705033935289832,
+          "S1_lagged_Mx4_F": 0.0019395463008699129
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "train_n": 469,
+            "heldout_n": 122,
+            "coefficient_order": [
+              "region_intercept",
+              "log1p_poi_count",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              0.3648348009244209,
+              0.034363960222934094,
+              -0.18351558100022988,
+              0.2813591004048204
+            ],
+            "design_rank": 4,
+            "design_columns": 4,
+            "minimum_singular_value": 0.4583258538995084
+          },
+          {
+            "fold": 1,
+            "train_n": 474,
+            "heldout_n": 117,
+            "coefficient_order": [
+              "region_intercept",
+              "log1p_poi_count",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              0.35490117037415075,
+              0.036175504601751195,
+              -0.022260069223349867,
+              0.09518302188169907
+            ],
+            "design_rank": 4,
+            "design_columns": 4,
+            "minimum_singular_value": 0.3998619127786554
+          },
+          {
+            "fold": 2,
+            "train_n": 477,
+            "heldout_n": 114,
+            "coefficient_order": [
+              "region_intercept",
+              "log1p_poi_count",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              0.37740901656587367,
+              0.03198722027485941,
+              -0.10136075106057138,
+              0.16770996062591081
+            ],
+            "design_rank": 4,
+            "design_columns": 4,
+            "minimum_singular_value": 0.4620603209572502
+          },
+          {
+            "fold": 3,
+            "train_n": 468,
+            "heldout_n": 123,
+            "coefficient_order": [
+              "region_intercept",
+              "log1p_poi_count",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              0.36125224876971723,
+              0.03456787657344204,
+              -0.11179443323204306,
+              0.15623153527536277
+            ],
+            "design_rank": 4,
+            "design_columns": 4,
+            "minimum_singular_value": 0.3990047379577143
+          },
+          {
+            "fold": 4,
+            "train_n": 476,
+            "heldout_n": 115,
+            "coefficient_order": [
+              "region_intercept",
+              "log1p_poi_count",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              0.38413667715266114,
+              0.030748084616520878,
+              -0.14824787889678537,
+              0.2531776631648609
+            ],
+            "design_rank": 4,
+            "design_columns": 4,
+            "minimum_singular_value": 0.4342595026736779
+          }
+        ]
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "entropy_defined_ids": 1192,
+        "joint_crossfit_ids": 1192,
+        "coverage_fraction": 1.0,
+        "entropy_distribution": {
+          "n": 1192,
+          "min": -0.0,
+          "p05": 0.31603194622831,
+          "p50": 0.5215830336089926,
+          "p95": 0.637958451579362,
+          "max": 0.6811697472975065,
+          "mean": 0.5061327065853208,
+          "sd": 0.10039206028582949,
+          "variance": 0.010078565768433622
+        },
+        "crossfit_residual_distribution": {
+          "n": 1192,
+          "min": -0.37267926175552546,
+          "p05": -0.1453988931161371,
+          "p50": 0.002664474496677449,
+          "p95": 0.12684859940454696,
+          "max": 0.2982820347510569,
+          "mean": -0.00016947074190954765,
+          "sd": 0.0854209526009655,
+          "variance": 0.007296739143256393
+        },
+        "residual_variance_ratio": 0.7239858637535516,
+        "residual_pearson_correlations": {
+          "log1p_poi_count": -0.0008231350918664431,
+          "Mx4_F": -0.0021185452693869887,
+          "S1_lagged_Mx4_F": -0.0008506280229796554
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "train_n": 975,
+            "heldout_n": 217,
+            "coefficient_order": [
+              "region_intercept",
+              "log1p_poi_count",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              0.23852310332602453,
+              0.05005014513727056,
+              0.03488655585125345,
+              0.10601867178793807
+            ],
+            "design_rank": 4,
+            "design_columns": 4,
+            "minimum_singular_value": 0.8465555146180593
+          },
+          {
+            "fold": 1,
+            "train_n": 959,
+            "heldout_n": 233,
+            "coefficient_order": [
+              "region_intercept",
+              "log1p_poi_count",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              0.2509113260090325,
+              0.047752468047326926,
+              0.17353759228123156,
+              -0.03399276291032368
+            ],
+            "design_rank": 4,
+            "design_columns": 4,
+            "minimum_singular_value": 0.7406195472686069
+          },
+          {
+            "fold": 2,
+            "train_n": 939,
+            "heldout_n": 253,
+            "coefficient_order": [
+              "region_intercept",
+              "log1p_poi_count",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              0.2356217075211548,
+              0.05128975518698596,
+              0.05817709610575083,
+              0.08232810367430964
+            ],
+            "design_rank": 4,
+            "design_columns": 4,
+            "minimum_singular_value": 0.8092873197371485
+          },
+          {
+            "fold": 3,
+            "train_n": 945,
+            "heldout_n": 247,
+            "coefficient_order": [
+              "region_intercept",
+              "log1p_poi_count",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              0.23670902456774792,
+              0.050655675953372815,
+              0.08291660892162421,
+              0.05019682375999925
+            ],
+            "design_rank": 4,
+            "design_columns": 4,
+            "minimum_singular_value": 0.8569418376125091
+          },
+          {
+            "fold": 4,
+            "train_n": 950,
+            "heldout_n": 242,
+            "coefficient_order": [
+              "region_intercept",
+              "log1p_poi_count",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              0.2228529275317148,
+              0.05288212218050242,
+              0.09609686053343827,
+              0.04466534661385153
+            ],
+            "design_rank": 4,
+            "design_columns": 4,
+            "minimum_singular_value": 0.7521276988954466
+          }
+        ]
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "entropy_defined_ids": 6001,
+        "joint_crossfit_ids": 6001,
+        "coverage_fraction": 0.9996668332500417,
+        "entropy_distribution": {
+          "n": 6001,
+          "min": -0.0,
+          "p05": 0.3510632171593084,
+          "p50": 0.5485315940146623,
+          "p95": 0.645275746789231,
+          "max": 0.6821536219348023,
+          "mean": 0.5305065978670135,
+          "sd": 0.09471559095386567,
+          "variance": 0.00897104316974
+        },
+        "crossfit_residual_distribution": {
+          "n": 6001,
+          "min": -0.5382355650348412,
+          "p05": -0.1620928330259218,
+          "p50": 0.013426348985589476,
+          "p95": 0.11694523152008074,
+          "max": 0.2526649362843064,
+          "mean": -7.873679880820117e-05,
+          "sd": 0.08791084081944028,
+          "variance": 0.007728315933580967
+        },
+        "residual_variance_ratio": 0.8614734972683172,
+        "residual_pearson_correlations": {
+          "log1p_poi_count": -0.0006924360817192482,
+          "Mx4_F": -0.0002928855250014941,
+          "S1_lagged_Mx4_F": -0.00017029330423182513
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "train_n": 4844,
+            "heldout_n": 1157,
+            "coefficient_order": [
+              "region_intercept",
+              "log1p_poi_count",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              0.34336907541360107,
+              0.03576996019515614,
+              -0.17902104256791782,
+              0.5093552247737045
+            ],
+            "design_rank": 4,
+            "design_columns": 4,
+            "minimum_singular_value": 0.5512015570993426
+          },
+          {
+            "fold": 1,
+            "train_n": 4779,
+            "heldout_n": 1222,
+            "coefficient_order": [
+              "region_intercept",
+              "log1p_poi_count",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              0.35195542622093906,
+              0.0344592547042676,
+              -0.11011755524735652,
+              0.42186920129438227
+            ],
+            "design_rank": 4,
+            "design_columns": 4,
+            "minimum_singular_value": 0.5839871174393508
+          },
+          {
+            "fold": 2,
+            "train_n": 4817,
+            "heldout_n": 1184,
+            "coefficient_order": [
+              "region_intercept",
+              "log1p_poi_count",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              0.34656734392159594,
+              0.03576985348553502,
+              -0.061801361325734425,
+              0.3619012444111484
+            ],
+            "design_rank": 4,
+            "design_columns": 4,
+            "minimum_singular_value": 0.5927872170318815
+          },
+          {
+            "fold": 3,
+            "train_n": 4734,
+            "heldout_n": 1267,
+            "coefficient_order": [
+              "region_intercept",
+              "log1p_poi_count",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              0.3412621353399875,
+              0.03673803710080943,
+              0.05610589618445576,
+              0.24545500321014618
+            ],
+            "design_rank": 4,
+            "design_columns": 4,
+            "minimum_singular_value": 0.5502184882967989
+          },
+          {
+            "fold": 4,
+            "train_n": 4830,
+            "heldout_n": 1171,
+            "coefficient_order": [
+              "region_intercept",
+              "log1p_poi_count",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              0.3393003719391271,
+              0.03666412491989589,
+              -0.07784856537656304,
+              0.38737624754485694
+            ],
+            "design_rank": 4,
+            "design_columns": 4,
+            "minimum_singular_value": 0.5692531836544074
+          }
+        ]
+      }
+    },
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_reference_layers_read": false,
+    "external_data_read": false,
+    "leaderboard_feedback_used": false,
+    "registry_integration": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "entropy_distribution": {
+      "n": 9377,
+      "min": -0.0,
+      "p05": 0.34784137409033783,
+      "p50": 0.555446946161986,
+      "p95": 0.6484292853355047,
+      "max": 0.6821536219348023,
+      "mean": 0.5340029271106235,
+      "sd": 0.09730056518495155,
+      "variance": 0.009467399985311004
+    },
+    "class_share_sums_distribution": {
+      "n": 9377,
+      "min": 0.9999999999999999,
+      "p05": 0.9999999999999999,
+      "p50": 1.0,
+      "p95": 1.0,
+      "max": 1.0000000000000002,
+      "mean": 1.0,
+      "sd": 3.12726539804054e-17,
+      "variance": 9.779788869781659e-34
+    },
+    "residual_variance_ratio": 0.8104966782110836,
+    "residual_pearson_correlations": {
+      "log1p_poi_count": -0.00015038884847231137,
+      "Mx4_F": -0.0016426952605589043,
+      "S1_lagged_Mx4_F": -0.0008057494272779023
+    },
+    "crossfit_residual_distribution": {
+      "n": 9377,
+      "min": -0.5382355650348412,
+      "p05": -0.16176447908495414,
+      "p50": 0.013488415243742558,
+      "p95": 0.1159783417157455,
+      "max": 0.2982820347510569,
+      "mean": -0.00012116218808058102,
+      "sd": 0.08759735292456176,
+      "variance": 0.00767329623939023
+    }
+  },
+  "thresholds": {
+    "minimum_coverage_inclusive": 0.9859,
+    "minimum_residual_variance_ratio_inclusive": 0.1,
+    "maximum_absolute_residual_predictor_correlation_exclusive": 0.8,
+    "entropy_bounds_inclusive": [
+      0.0,
+      1.0
+    ]
+  },
+  "acceptance": {
+    "exact_official_9379_id_alignment": true,
+    "exact_entropy_null_mask_alignment": true,
+    "entropy_defined_ids": 9377,
+    "coverage_fraction": 0.9997867576500693,
+    "coverage_at_least_98_59_percent": true,
+    "entropy_finite_and_bounded_0_1": true,
+    "crossfit_residual_variance_ratio": 0.8104966782110836,
+    "residual_variance_at_least_10_percent": true,
+    "residual_pearson_correlations": {
+      "log1p_poi_count": -0.00015038884847231137,
+      "Mx4_F": -0.0016426952605589043,
+      "S1_lagged_Mx4_F": -0.0008057494272779023
+    },
+    "absolute_correlation_below_0_80_with_each_predictor": true,
+    "frozen_predictors_and_registry_unchanged": true,
+    "distinct_screen_pass": true
+  },
+  "provenance": {
+    "cache_inputs": {
+      "maricopa-az": {
+        "feature_cache_path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/maricopa-az-overture-tract-summary.parquet",
+        "feature_cache_sha256": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22",
+        "sidecar_path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/maricopa-az-overture-tract-summary.json",
+        "sidecar_sha256": "af54e889434594b89e78ca24d9cefb600ded5f02fb5cc58e23460c00bcbef52a",
+        "source_report_cache_sha256": "e3bad28882ef49ff3ed911c37524e1dc35e2ee28c38d8075539776d3a499fd58",
+        "route_extension_base_cache_sha256": "e3bad28882ef49ff3ed911c37524e1dc35e2ee28c38d8075539776d3a499fd58",
+        "columns_read": [
+          "GEOID",
+          "overture_poi_all",
+          "overture_poi_meta_not_microsoft_source_share",
+          "overture_poi_microsoft_not_meta_source_share",
+          "overture_poi_meta_and_microsoft_source_share",
+          "overture_poi_other_without_meta_microsoft_source_share",
+          "overture_poi_no_upstream_source_share"
+        ],
+        "rows": 1593,
+        "official_geoid_exact_set": true,
+        "class_share_weighted_totals": [
+          164553.0,
+          54746.0,
+          0.0,
+          80747.0,
+          0.0
+        ],
+        "class_counts_from_source_sidecar": [
+          164553.0,
+          54746.0,
+          0.0,
+          80747.0,
+          0.0
+        ],
+        "source_classes_reconciled": true
+      },
+      "northern-ca": {
+        "feature_cache_path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/northern-ca-overture-tract-summary.parquet",
+        "feature_cache_sha256": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c",
+        "sidecar_path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/northern-ca-overture-tract-summary.json",
+        "sidecar_sha256": "b1717425393c6c6e7491b2858df31f414b8337f78ecc0a20443ccb683e2d0ca3",
+        "source_report_cache_sha256": "3f3e22ee3b18ca931a3bd4d1bc0dc22a38ad5998eb803d0fd739b24680792785",
+        "route_extension_base_cache_sha256": "3f3e22ee3b18ca931a3bd4d1bc0dc22a38ad5998eb803d0fd739b24680792785",
+        "columns_read": [
+          "GEOID",
+          "overture_poi_all",
+          "overture_poi_meta_not_microsoft_source_share",
+          "overture_poi_microsoft_not_meta_source_share",
+          "overture_poi_meta_and_microsoft_source_share",
+          "overture_poi_other_without_meta_microsoft_source_share",
+          "overture_poi_no_upstream_source_share"
+        ],
+        "rows": 591,
+        "official_geoid_exact_set": true,
+        "class_share_weighted_totals": [
+          69601.0,
+          18427.0,
+          0.0,
+          28869.0,
+          0.0
+        ],
+        "class_counts_from_source_sidecar": [
+          69601.0,
+          18427.0,
+          0.0,
+          28869.0,
+          0.0
+        ],
+        "source_classes_reconciled": true
+      },
+      "eastern-ok": {
+        "feature_cache_path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/eastern-ok-overture-tract-summary.parquet",
+        "feature_cache_sha256": "e5a06316c316f61bf25b80b48e89c1e7f0b1461a0b8cec5831aae24e0cf83fa6",
+        "sidecar_path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/eastern-ok-overture-tract-summary.json",
+        "sidecar_sha256": "490c0140a75a74ff987c46bca1ff4f806f6faad74fb8b6f81708e143eb877be6",
+        "source_report_cache_sha256": "ea0a37ff31f584c0939f5e935fe25c2c3d2086c7fb65d86f115dfbf2b3c196bb",
+        "route_extension_base_cache_sha256": "ea0a37ff31f584c0939f5e935fe25c2c3d2086c7fb65d86f115dfbf2b3c196bb",
+        "columns_read": [
+          "GEOID",
+          "overture_poi_all",
+          "overture_poi_meta_not_microsoft_source_share",
+          "overture_poi_microsoft_not_meta_source_share",
+          "overture_poi_meta_and_microsoft_source_share",
+          "overture_poi_other_without_meta_microsoft_source_share",
+          "overture_poi_no_upstream_source_share"
+        ],
+        "rows": 1192,
+        "official_geoid_exact_set": true,
+        "class_share_weighted_totals": [
+          132819.0,
+          31847.0,
+          0.0,
+          42703.0,
+          0.0
+        ],
+        "class_counts_from_source_sidecar": [
+          132819.0,
+          31847.0,
+          0.0,
+          42703.0,
+          0.0
+        ],
+        "source_classes_reconciled": true
+      },
+      "south-central-tx": {
+        "feature_cache_path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/south-central-tx-overture-tract-summary.parquet",
+        "feature_cache_sha256": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746",
+        "sidecar_path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/south-central-tx-overture-tract-summary.json",
+        "sidecar_sha256": "0c9efc3a0c85d624288695919814811a328ac6e6f3eb1f717c790858be51f2c0",
+        "source_report_cache_sha256": "c25eedbbe904255fc8331268ff503a72ed76d39662c4637defec156e5d1482a3",
+        "route_extension_base_cache_sha256": "c25eedbbe904255fc8331268ff503a72ed76d39662c4637defec156e5d1482a3",
+        "columns_read": [
+          "GEOID",
+          "overture_poi_all",
+          "overture_poi_meta_not_microsoft_source_share",
+          "overture_poi_microsoft_not_meta_source_share",
+          "overture_poi_meta_and_microsoft_source_share",
+          "overture_poi_other_without_meta_microsoft_source_share",
+          "overture_poi_no_upstream_source_share"
+        ],
+        "rows": 6003,
+        "official_geoid_exact_set": true,
+        "class_share_weighted_totals": [
+          794977.0,
+          211635.0,
+          0.0,
+          293719.0,
+          0.0
+        ],
+        "class_counts_from_source_sidecar": [
+          794977.0,
+          211635.0,
+          0.0,
+          293719.0,
+          0.0
+        ],
+        "source_classes_reconciled": true
+      }
+    },
+    "source_provenance_report_sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565",
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "Mx4": {
+      "sha256": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx4.parquet"
+    },
+    "S1": {
+      "sha256": "632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03",
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/S1.parquet"
+    },
+    "registry_sha256_before_after": {
+      "before": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+      "after": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6"
+    },
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/poi-source-class-entropy/source-class-entropy-crossfit.parquet",
+      "sha256": "f5220df3aed4b66023f40df1e9fac0988e8d89b1f35ef1a6311b5fbc4d2b50ff",
+      "rows": 9379,
+      "columns": [
+        "GEOID",
+        "region",
+        "meta_not_microsoft_share",
+        "microsoft_not_meta_share",
+        "meta_and_microsoft_share",
+        "other_without_meta_microsoft_share",
+        "no_upstream_share",
+        "provided_poi_count",
+        "source_class_entropy",
+        "entropy_defined",
+        "log1p_poi_count",
+        "Mx4_F",
+        "Mx4_F_defined",
+        "S1_lagged_Mx4_F",
+        "S1_lagged_Mx4_F_defined",
+        "joint_defined",
+        "fold",
+        "crossfit_prediction",
+        "crossfit_residual"
+      ],
+      "deterministic_serialization": true
+    },
+    "script_sha256": "6588336c5cc06cef4ec2aa91249d9af744400db4fb9749d452d46bceb6572908"
+  },
+  "interpretation": "All preregistered support, boundedness, residual-variance, and predictor-correlation gates pass; retain only as an unregistered intrinsic-provenance diagnostic."
+}
