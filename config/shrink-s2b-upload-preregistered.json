@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "analysis_id": "SHRINK_S2B_UPLOAD_PREREG_V1",
+  "registered_before_upload": true,
+  "candidate": {
+    "candidate_id": "S2b_c2_expected_facility_mask_v1",
+    "artifact": "reports/candidates/S2b_c2_expected_facility_mask_v1.csv",
+    "sha256": "5761e2c17f25f66bbc9e1d769a04b76545e4cc660a8ca9481c30b89739b7ae6f",
+    "source_commit": "8a963133522f632df6f2b672c7742121611758c3"
+  },
+  "purpose": "test the rule-derived building-overlap level correction alone",
+  "steward_selection": "tick 86, 2026-10-27 20:15Z; S2b selected, S2 and S not selected",
+  "forecast": {
+    "metric": "hidden-target RMSE",
+    "numeric_rmse_forecast": null,
+    "qualitative_forecast": "A numeric RMSE or improvement margin cannot be defended without labels or permitted reference counts. Directionally, versus C2, S2b lowers the building-gap component only on tracts where the provided Microsoft-source share is positive; transport, establishments, and facility treatment follow the frozen C2 expected-count definedness rule. This rule-derived construction may better reflect the organizer's stated building-source composition than uncorrected C2, but target accuracy and relative RMSE are unknown.",
+    "basis": "Provided source-share feature and organizer's published reference-component composition only; no fitted coefficients, labels, C0, leaderboard values, score algebra, or target-proxy calibration.",
+    "accuracy_identifiable": false
+  },
+  "fixed_recipe": {
+    "candidate_is_immutable": true,
+    "building": "Use the frozen S2b Microsoft-source overlap adjustment from the existing committed candidate artifact.",
+    "facilities": "Retain/drop zero-Overture facility types by the already frozen C2 expected-count <0.5 rule; do not change S2b values or threshold.",
+    "transport_establishments_composite": "Unchanged from the frozen C2/S2b recipe.",
+    "no_rebuild_or_tuning_for_upload": true
+  },
+  "upload_plan": {
+    "earliest_utc": "2026-10-28T00:00:00Z",
+    "daily_lane_cap": 2,
+    "other_reserved_slot": "bias60-final-uploads-a3-v2-b-choice (B)",
+    "shrink_uploads_total": 1,
+    "no_second_shrink_upload": true,
+    "route": "$ORCHESTRATOR_ROOT/scripts/zindi_submit.py only",
+    "record_submission_id_and_ledger": true,
+    "record_public_score_without_retuning": true,
+    "upload_authorized_by_steward_pick": true,
+    "upload_before_earliest_utc": false
+  },
+  "prohibited": [
+    "C0 or public/private score algebra",
+    "target labels or sample score placeholders",
+    "removed reference sources or equivalent copies",
+    "external data",
+    "leaderboard probing, retuning, or candidate switching based on score",
+    "upload before 2026-10-28T00:00:00Z",
+    "uploading S2 or S"
+  ]
+}
