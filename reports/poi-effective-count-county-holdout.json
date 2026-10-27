@@ -1,0 +1,2175 @@
+{
+  "schema_version": 1,
+  "screen": "Leave-one-county-out transport of log1p provided POI effective primary-category count; label-free unregistered diagnostic",
+  "measure_before": {
+    "within_region_crossfit_residual_variance_ratio": 0.18096672540982753,
+    "within_region_joint_ids": 9327,
+    "official_coverage_fraction": 0.9944556989018019,
+    "county_heldout_transport_measured": false,
+    "source_effective_count_report_sha256": "9188213ee5b7fe479bc6fd519eb5388db42f06edcea8083881f42117574a95d0"
+  },
+  "method": {
+    "outcome": "log1p of the frozen effective primary-category count computed from provided Overture primary-category counts; only rows where that count is defined are eligible.",
+    "predictors": [
+      "log1p provided unique assigned POI count",
+      "provided pct_urban",
+      "frozen Mx4 F",
+      "frozen S1 lagged Mx4 F"
+    ],
+    "model": "For each county, fit pooled OLS with intercept, official-region intercept indicators, and globally standardized predictors on all other complete-case counties. Standardization means and population SDs are fit on training counties only; zero-SD predictors use scale 1.",
+    "baseline": "For each held county, predict the arithmetic mean of log1p effective count over all complete-case tracts in the other training counties; this mean is fitted without the held county.",
+    "county_fold": "County FIPS is the first five characters of each exact 11-digit official tract GEOID. Each county is held out once; no county-level target or feature statistics enter its model fit.",
+    "score": "County R2 = 1 - held-county model SSE / held-county training-mean baseline SSE. Pooled R2 uses the sums of held-county model SSE and fold-specific training-mean baseline SSE across all complete-case held-out tracts.",
+    "support": "One frozen complete-case mask: effective count, log1p unique place count, pct_urban, Mx4 F, and S1 lag all finite. No imputation, post-result exclusions, or alternative support.",
+    "unregistered": true,
+    "interpretation_limit": "Provided-feature transportability diagnostic only; not hidden-target accuracy, causal evidence, or estimator-promotion evidence."
+  },
+  "scope": {
+    "official_ids": 9379,
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "effective_count_defined_ids": 9327,
+    "pct_urban_defined_ids": 9353,
+    "Mx4_F_defined_ids": 9379,
+    "S1_lagged_Mx4_F_defined_ids": 9379,
+    "county_loco_joint_ids": 9308,
+    "county_loco_undefined_ids": 71,
+    "complete_case_mask_sha256": "0c126a6e080af7456c69d2e0afe60fd0bbb4dc971e501683cb84ae9ba1d53de4",
+    "county_coverage": {
+      "official_counties": 298,
+      "counties_with_complete_cases": 298,
+      "eligible_counties_n_ge_30": 41,
+      "positive_eligible_counties": 41,
+      "positive_eligible_county_share": 1.0,
+      "minimum_county_support": 30,
+      "county_fold_counts": [
+        {
+          "county_fips": "04001",
+          "heldout_n": 7,
+          "training_n": 9301,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "04003",
+          "heldout_n": 37,
+          "training_n": 9271,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "04005",
+          "heldout_n": 21,
+          "training_n": 9287,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "04007",
+          "heldout_n": 16,
+          "training_n": 9292,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "04009",
+          "heldout_n": 9,
+          "training_n": 9299,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "04011",
+          "heldout_n": 3,
+          "training_n": 9305,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "04012",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "04013",
+          "heldout_n": 994,
+          "training_n": 8314,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "04015",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "04017",
+          "heldout_n": 29,
+          "training_n": 9279,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "04019",
+          "heldout_n": 266,
+          "training_n": 9042,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "04021",
+          "heldout_n": 94,
+          "training_n": 9214,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "04023",
+          "heldout_n": 13,
+          "training_n": 9295,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "04025",
+          "heldout_n": 71,
+          "training_n": 9237,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "04027",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "06007",
+          "heldout_n": 54,
+          "training_n": 9254,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "06011",
+          "heldout_n": 6,
+          "training_n": 9302,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "06015",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "06017",
+          "heldout_n": 15,
+          "training_n": 9293,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "06021",
+          "heldout_n": 8,
+          "training_n": 9300,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "06023",
+          "heldout_n": 5,
+          "training_n": 9303,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "06033",
+          "heldout_n": 21,
+          "training_n": 9287,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "06035",
+          "heldout_n": 9,
+          "training_n": 9299,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "06045",
+          "heldout_n": 8,
+          "training_n": 9300,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "06049",
+          "heldout_n": 3,
+          "training_n": 9305,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "06055",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "06057",
+          "heldout_n": 20,
+          "training_n": 9288,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "06061",
+          "heldout_n": 80,
+          "training_n": 9228,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "06063",
+          "heldout_n": 7,
+          "training_n": 9301,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "06067",
+          "heldout_n": 200,
+          "training_n": 9108,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "06089",
+          "heldout_n": 50,
+          "training_n": 9258,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "06091",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "06093",
+          "heldout_n": 11,
+          "training_n": 9297,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "06097",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "06101",
+          "heldout_n": 21,
+          "training_n": 9287,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "06103",
+          "heldout_n": 14,
+          "training_n": 9294,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "06105",
+          "heldout_n": 4,
+          "training_n": 9304,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "06113",
+          "heldout_n": 27,
+          "training_n": 9281,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "06115",
+          "heldout_n": 19,
+          "training_n": 9289,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "35023",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40001",
+          "heldout_n": 5,
+          "training_n": 9303,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40003",
+          "heldout_n": 3,
+          "training_n": 9305,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40005",
+          "heldout_n": 4,
+          "training_n": 9304,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40009",
+          "heldout_n": 3,
+          "training_n": 9305,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40011",
+          "heldout_n": 5,
+          "training_n": 9303,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40013",
+          "heldout_n": 13,
+          "training_n": 9295,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40015",
+          "heldout_n": 10,
+          "training_n": 9298,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40017",
+          "heldout_n": 37,
+          "training_n": 9271,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "40019",
+          "heldout_n": 16,
+          "training_n": 9292,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40021",
+          "heldout_n": 13,
+          "training_n": 9295,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40023",
+          "heldout_n": 5,
+          "training_n": 9303,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40027",
+          "heldout_n": 71,
+          "training_n": 9237,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "40029",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40031",
+          "heldout_n": 38,
+          "training_n": 9270,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "40033",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40035",
+          "heldout_n": 5,
+          "training_n": 9303,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40037",
+          "heldout_n": 23,
+          "training_n": 9285,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40039",
+          "heldout_n": 7,
+          "training_n": 9301,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40041",
+          "heldout_n": 13,
+          "training_n": 9295,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40043",
+          "heldout_n": 3,
+          "training_n": 9305,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40045",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40047",
+          "heldout_n": 17,
+          "training_n": 9291,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40049",
+          "heldout_n": 9,
+          "training_n": 9299,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40051",
+          "heldout_n": 15,
+          "training_n": 9293,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40053",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40055",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40059",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40061",
+          "heldout_n": 4,
+          "training_n": 9304,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40063",
+          "heldout_n": 5,
+          "training_n": 9303,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40065",
+          "heldout_n": 8,
+          "training_n": 9300,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40067",
+          "heldout_n": 3,
+          "training_n": 9305,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40069",
+          "heldout_n": 4,
+          "training_n": 9304,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40071",
+          "heldout_n": 11,
+          "training_n": 9297,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40073",
+          "heldout_n": 4,
+          "training_n": 9304,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40075",
+          "heldout_n": 3,
+          "training_n": 9305,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40077",
+          "heldout_n": 3,
+          "training_n": 9305,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40079",
+          "heldout_n": 12,
+          "training_n": 9296,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40081",
+          "heldout_n": 8,
+          "training_n": 9300,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40083",
+          "heldout_n": 13,
+          "training_n": 9295,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40085",
+          "heldout_n": 3,
+          "training_n": 9305,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40087",
+          "heldout_n": 9,
+          "training_n": 9299,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40089",
+          "heldout_n": 9,
+          "training_n": 9299,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40091",
+          "heldout_n": 8,
+          "training_n": 9300,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40093",
+          "heldout_n": 3,
+          "training_n": 9305,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40095",
+          "heldout_n": 6,
+          "training_n": 9302,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40097",
+          "heldout_n": 10,
+          "training_n": 9298,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40099",
+          "heldout_n": 5,
+          "training_n": 9303,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40101",
+          "heldout_n": 20,
+          "training_n": 9288,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40103",
+          "heldout_n": 4,
+          "training_n": 9304,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40105",
+          "heldout_n": 4,
+          "training_n": 9304,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40107",
+          "heldout_n": 4,
+          "training_n": 9304,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40109",
+          "heldout_n": 265,
+          "training_n": 9043,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "40111",
+          "heldout_n": 11,
+          "training_n": 9297,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40113",
+          "heldout_n": 13,
+          "training_n": 9295,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40115",
+          "heldout_n": 9,
+          "training_n": 9299,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40117",
+          "heldout_n": 5,
+          "training_n": 9303,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40119",
+          "heldout_n": 23,
+          "training_n": 9285,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40121",
+          "heldout_n": 13,
+          "training_n": 9295,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40123",
+          "heldout_n": 11,
+          "training_n": 9297,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40125",
+          "heldout_n": 20,
+          "training_n": 9288,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40127",
+          "heldout_n": 4,
+          "training_n": 9304,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40129",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40131",
+          "heldout_n": 28,
+          "training_n": 9280,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40133",
+          "heldout_n": 9,
+          "training_n": 9299,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40135",
+          "heldout_n": 12,
+          "training_n": 9296,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40137",
+          "heldout_n": 11,
+          "training_n": 9297,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40141",
+          "heldout_n": 5,
+          "training_n": 9303,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40143",
+          "heldout_n": 207,
+          "training_n": 9101,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "40145",
+          "heldout_n": 24,
+          "training_n": 9284,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40147",
+          "heldout_n": 14,
+          "training_n": 9294,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40149",
+          "heldout_n": 4,
+          "training_n": 9304,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40151",
+          "heldout_n": 4,
+          "training_n": 9304,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "40153",
+          "heldout_n": 5,
+          "training_n": 9303,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48001",
+          "heldout_n": 10,
+          "training_n": 9298,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48005",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48007",
+          "heldout_n": 10,
+          "training_n": 9298,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48009",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48013",
+          "heldout_n": 13,
+          "training_n": 9295,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48015",
+          "heldout_n": 8,
+          "training_n": 9300,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48019",
+          "heldout_n": 7,
+          "training_n": 9301,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48021",
+          "heldout_n": 21,
+          "training_n": 9287,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48023",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48025",
+          "heldout_n": 9,
+          "training_n": 9299,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48027",
+          "heldout_n": 86,
+          "training_n": 9222,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48029",
+          "heldout_n": 373,
+          "training_n": 8935,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48031",
+          "heldout_n": 4,
+          "training_n": 9304,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48033",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48035",
+          "heldout_n": 7,
+          "training_n": 9301,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48039",
+          "heldout_n": 77,
+          "training_n": 9231,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48041",
+          "heldout_n": 63,
+          "training_n": 9245,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48047",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48049",
+          "heldout_n": 13,
+          "training_n": 9295,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48051",
+          "heldout_n": 7,
+          "training_n": 9301,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48053",
+          "heldout_n": 15,
+          "training_n": 9293,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48055",
+          "heldout_n": 11,
+          "training_n": 9297,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48057",
+          "heldout_n": 7,
+          "training_n": 9301,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48059",
+          "heldout_n": 3,
+          "training_n": 9305,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48061",
+          "heldout_n": 120,
+          "training_n": 9188,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48063",
+          "heldout_n": 3,
+          "training_n": 9305,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48073",
+          "heldout_n": 14,
+          "training_n": 9294,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48077",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48081",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48083",
+          "heldout_n": 3,
+          "training_n": 9305,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48085",
+          "heldout_n": 220,
+          "training_n": 9088,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48089",
+          "heldout_n": 5,
+          "training_n": 9303,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48091",
+          "heldout_n": 33,
+          "training_n": 9275,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48093",
+          "heldout_n": 5,
+          "training_n": 9303,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48095",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48097",
+          "heldout_n": 9,
+          "training_n": 9299,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48099",
+          "heldout_n": 19,
+          "training_n": 9289,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48105",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48107",
+          "heldout_n": 3,
+          "training_n": 9305,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48113",
+          "heldout_n": 642,
+          "training_n": 8666,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48115",
+          "heldout_n": 4,
+          "training_n": 9304,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48119",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48121",
+          "heldout_n": 193,
+          "training_n": 9115,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48123",
+          "heldout_n": 6,
+          "training_n": 9302,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48125",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48127",
+          "heldout_n": 3,
+          "training_n": 9305,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48131",
+          "heldout_n": 3,
+          "training_n": 9305,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48133",
+          "heldout_n": 7,
+          "training_n": 9301,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48137",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48139",
+          "heldout_n": 36,
+          "training_n": 9272,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48143",
+          "heldout_n": 12,
+          "training_n": 9296,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48145",
+          "heldout_n": 6,
+          "training_n": 9302,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48147",
+          "heldout_n": 9,
+          "training_n": 9299,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48149",
+          "heldout_n": 9,
+          "training_n": 9299,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48151",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48155",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48157",
+          "heldout_n": 133,
+          "training_n": 9175,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48159",
+          "heldout_n": 4,
+          "training_n": 9304,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48161",
+          "heldout_n": 8,
+          "training_n": 9300,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48163",
+          "heldout_n": 6,
+          "training_n": 9302,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48167",
+          "heldout_n": 45,
+          "training_n": 9263,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48169",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48171",
+          "heldout_n": 7,
+          "training_n": 9301,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48173",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48175",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48177",
+          "heldout_n": 6,
+          "training_n": 9302,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48181",
+          "heldout_n": 24,
+          "training_n": 9284,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48183",
+          "heldout_n": 6,
+          "training_n": 9302,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48185",
+          "heldout_n": 7,
+          "training_n": 9301,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48187",
+          "heldout_n": 41,
+          "training_n": 9267,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48193",
+          "heldout_n": 3,
+          "training_n": 9305,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48201",
+          "heldout_n": 1083,
+          "training_n": 8225,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48207",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48209",
+          "heldout_n": 46,
+          "training_n": 9262,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48213",
+          "heldout_n": 28,
+          "training_n": 9280,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48215",
+          "heldout_n": 210,
+          "training_n": 9098,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48217",
+          "heldout_n": 12,
+          "training_n": 9296,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48221",
+          "heldout_n": 14,
+          "training_n": 9294,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48223",
+          "heldout_n": 10,
+          "training_n": 9298,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48225",
+          "heldout_n": 8,
+          "training_n": 9300,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48227",
+          "heldout_n": 10,
+          "training_n": 9298,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48231",
+          "heldout_n": 21,
+          "training_n": 9287,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48235",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48237",
+          "heldout_n": 3,
+          "training_n": 9305,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48239",
+          "heldout_n": 3,
+          "training_n": 9305,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48247",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48249",
+          "heldout_n": 11,
+          "training_n": 9297,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48251",
+          "heldout_n": 39,
+          "training_n": 9269,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48253",
+          "heldout_n": 5,
+          "training_n": 9303,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48255",
+          "heldout_n": 5,
+          "training_n": 9303,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48257",
+          "heldout_n": 27,
+          "training_n": 9281,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48259",
+          "heldout_n": 9,
+          "training_n": 9299,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48261",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48263",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48265",
+          "heldout_n": 14,
+          "training_n": 9294,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48267",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48269",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48271",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48273",
+          "heldout_n": 9,
+          "training_n": 9299,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48275",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48277",
+          "heldout_n": 13,
+          "training_n": 9295,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48281",
+          "heldout_n": 6,
+          "training_n": 9302,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48283",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48285",
+          "heldout_n": 6,
+          "training_n": 9302,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48287",
+          "heldout_n": 4,
+          "training_n": 9304,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48289",
+          "heldout_n": 6,
+          "training_n": 9302,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48291",
+          "heldout_n": 9,
+          "training_n": 9299,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48293",
+          "heldout_n": 8,
+          "training_n": 9300,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48297",
+          "heldout_n": 4,
+          "training_n": 9304,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48299",
+          "heldout_n": 8,
+          "training_n": 9300,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48303",
+          "heldout_n": 104,
+          "training_n": 9204,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48305",
+          "heldout_n": 3,
+          "training_n": 9305,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48307",
+          "heldout_n": 3,
+          "training_n": 9305,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48309",
+          "heldout_n": 58,
+          "training_n": 9250,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48311",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48313",
+          "heldout_n": 4,
+          "training_n": 9304,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48317",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48319",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48321",
+          "heldout_n": 12,
+          "training_n": 9296,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48323",
+          "heldout_n": 13,
+          "training_n": 9295,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48325",
+          "heldout_n": 11,
+          "training_n": 9297,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48327",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48329",
+          "heldout_n": 4,
+          "training_n": 9304,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48331",
+          "heldout_n": 7,
+          "training_n": 9301,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48333",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48335",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48337",
+          "heldout_n": 7,
+          "training_n": 9301,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48339",
+          "heldout_n": 133,
+          "training_n": 9175,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48347",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48349",
+          "heldout_n": 12,
+          "training_n": 9296,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48353",
+          "heldout_n": 5,
+          "training_n": 9303,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48355",
+          "heldout_n": 95,
+          "training_n": 9213,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48363",
+          "heldout_n": 10,
+          "training_n": 9298,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48367",
+          "heldout_n": 29,
+          "training_n": 9279,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48371",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48373",
+          "heldout_n": 7,
+          "training_n": 9301,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48379",
+          "heldout_n": 3,
+          "training_n": 9305,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48383",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48385",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48387",
+          "heldout_n": 5,
+          "training_n": 9303,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48391",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48395",
+          "heldout_n": 6,
+          "training_n": 9302,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48397",
+          "heldout_n": 29,
+          "training_n": 9279,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48399",
+          "heldout_n": 4,
+          "training_n": 9304,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48401",
+          "heldout_n": 7,
+          "training_n": 9301,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48407",
+          "heldout_n": 9,
+          "training_n": 9299,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48409",
+          "heldout_n": 16,
+          "training_n": 9292,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48411",
+          "heldout_n": 2,
+          "training_n": 9306,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48413",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48415",
+          "heldout_n": 4,
+          "training_n": 9304,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48417",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48423",
+          "heldout_n": 55,
+          "training_n": 9253,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48425",
+          "heldout_n": 3,
+          "training_n": 9305,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48427",
+          "heldout_n": 17,
+          "training_n": 9291,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48429",
+          "heldout_n": 3,
+          "training_n": 9305,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48431",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48433",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48435",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48439",
+          "heldout_n": 448,
+          "training_n": 8860,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48441",
+          "heldout_n": 40,
+          "training_n": 9268,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48443",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48447",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48449",
+          "heldout_n": 9,
+          "training_n": 9299,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48451",
+          "heldout_n": 27,
+          "training_n": 9281,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48453",
+          "heldout_n": 290,
+          "training_n": 9018,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48455",
+          "heldout_n": 5,
+          "training_n": 9303,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48459",
+          "heldout_n": 10,
+          "training_n": 9298,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48461",
+          "heldout_n": 1,
+          "training_n": 9307,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48463",
+          "heldout_n": 6,
+          "training_n": 9302,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48465",
+          "heldout_n": 13,
+          "training_n": 9295,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48467",
+          "heldout_n": 14,
+          "training_n": 9294,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48469",
+          "heldout_n": 24,
+          "training_n": 9284,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48471",
+          "heldout_n": 12,
+          "training_n": 9296,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48473",
+          "heldout_n": 11,
+          "training_n": 9297,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48477",
+          "heldout_n": 9,
+          "training_n": 9299,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48479",
+          "heldout_n": 68,
+          "training_n": 9240,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48481",
+          "heldout_n": 12,
+          "training_n": 9296,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48489",
+          "heldout_n": 5,
+          "training_n": 9303,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48491",
+          "heldout_n": 135,
+          "training_n": 9173,
+          "eligible_n_ge_30": true
+        },
+        {
+          "county_fips": "48493",
+          "heldout_n": 12,
+          "training_n": 9296,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48497",
+          "heldout_n": 16,
+          "training_n": 9292,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48499",
+          "heldout_n": 12,
+          "training_n": 9296,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48503",
+          "heldout_n": 5,
+          "training_n": 9303,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48505",
+          "heldout_n": 6,
+          "training_n": 9302,
+          "eligible_n_ge_30": false
+        },
+        {
+          "county_fips": "48507",
+          "heldout_n": 4,
+          "training_n": 9304,
+          "eligible_n_ge_30": false
+        }
+      ]
+    },
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_references_read": false,
+    "external_data_used": [],
+    "leaderboard_feedback_used": false,
+    "post_result_exclusions": false,
+    "estimator_or_registry_changed": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "pooled_heldout_r2_vs_training_county_mean": 0.8572031109926739,
+    "pooled_heldout_baseline_sse": 3345.60353967546,
+    "pooled_heldout_model_sse": 477.74177731755424,
+    "counties_with_positive_r2_and_n_ge_30": 41,
+    "eligible_counties_n_ge_30": 41,
+    "positive_r2_share_of_eligible_counties": 1.0,
+    "eligible_county_scores": [
+      {
+        "county_fips": "04003",
+        "heldout_n": 37,
+        "heldout_r2_vs_training_county_mean": 0.8964596732229383
+      },
+      {
+        "county_fips": "04013",
+        "heldout_n": 994,
+        "heldout_r2_vs_training_county_mean": 0.8529722679920767
+      },
+      {
+        "county_fips": "04019",
+        "heldout_n": 266,
+        "heldout_r2_vs_training_county_mean": 0.8869565954962692
+      },
+      {
+        "county_fips": "04021",
+        "heldout_n": 94,
+        "heldout_r2_vs_training_county_mean": 0.9239049680306104
+      },
+      {
+        "county_fips": "04025",
+        "heldout_n": 71,
+        "heldout_r2_vs_training_county_mean": 0.9266425070175781
+      },
+      {
+        "county_fips": "06007",
+        "heldout_n": 54,
+        "heldout_r2_vs_training_county_mean": 0.9058590612760717
+      },
+      {
+        "county_fips": "06061",
+        "heldout_n": 80,
+        "heldout_r2_vs_training_county_mean": 0.8352385675823081
+      },
+      {
+        "county_fips": "06067",
+        "heldout_n": 200,
+        "heldout_r2_vs_training_county_mean": 0.8466080052844845
+      },
+      {
+        "county_fips": "06089",
+        "heldout_n": 50,
+        "heldout_r2_vs_training_county_mean": 0.8846323545936684
+      },
+      {
+        "county_fips": "40017",
+        "heldout_n": 37,
+        "heldout_r2_vs_training_county_mean": 0.9269579729152988
+      },
+      {
+        "county_fips": "40027",
+        "heldout_n": 71,
+        "heldout_r2_vs_training_county_mean": 0.8044534702955077
+      },
+      {
+        "county_fips": "40031",
+        "heldout_n": 38,
+        "heldout_r2_vs_training_county_mean": 0.8117823836596881
+      },
+      {
+        "county_fips": "40109",
+        "heldout_n": 265,
+        "heldout_r2_vs_training_county_mean": 0.8209608171128187
+      },
+      {
+        "county_fips": "40143",
+        "heldout_n": 207,
+        "heldout_r2_vs_training_county_mean": 0.8637029346338239
+      },
+      {
+        "county_fips": "48027",
+        "heldout_n": 86,
+        "heldout_r2_vs_training_county_mean": 0.9075916098277526
+      },
+      {
+        "county_fips": "48029",
+        "heldout_n": 373,
+        "heldout_r2_vs_training_county_mean": 0.8554552424685259
+      },
+      {
+        "county_fips": "48039",
+        "heldout_n": 77,
+        "heldout_r2_vs_training_county_mean": 0.8777496528040667
+      },
+      {
+        "county_fips": "48041",
+        "heldout_n": 63,
+        "heldout_r2_vs_training_county_mean": 0.8330690986955624
+      },
+      {
+        "county_fips": "48061",
+        "heldout_n": 120,
+        "heldout_r2_vs_training_county_mean": 0.9154963277796462
+      },
+      {
+        "county_fips": "48085",
+        "heldout_n": 220,
+        "heldout_r2_vs_training_county_mean": 0.8121968301856782
+      },
+      {
+        "county_fips": "48091",
+        "heldout_n": 33,
+        "heldout_r2_vs_training_county_mean": 0.9097185298179409
+      },
+      {
+        "county_fips": "48113",
+        "heldout_n": 642,
+        "heldout_r2_vs_training_county_mean": 0.8721001288134056
+      },
+      {
+        "county_fips": "48121",
+        "heldout_n": 193,
+        "heldout_r2_vs_training_county_mean": 0.8858518998244964
+      },
+      {
+        "county_fips": "48139",
+        "heldout_n": 36,
+        "heldout_r2_vs_training_county_mean": 0.9416450064922172
+      },
+      {
+        "county_fips": "48157",
+        "heldout_n": 133,
+        "heldout_r2_vs_training_county_mean": 0.8990906581362454
+      },
+      {
+        "county_fips": "48167",
+        "heldout_n": 45,
+        "heldout_r2_vs_training_county_mean": 0.9222584782825624
+      },
+      {
+        "county_fips": "48187",
+        "heldout_n": 41,
+        "heldout_r2_vs_training_county_mean": 0.9369846618955135
+      },
+      {
+        "county_fips": "48201",
+        "heldout_n": 1083,
+        "heldout_r2_vs_training_county_mean": 0.7919261765232104
+      },
+      {
+        "county_fips": "48209",
+        "heldout_n": 46,
+        "heldout_r2_vs_training_county_mean": 0.9092173952807912
+      },
+      {
+        "county_fips": "48215",
+        "heldout_n": 210,
+        "heldout_r2_vs_training_county_mean": 0.9014882861876421
+      },
+      {
+        "county_fips": "48251",
+        "heldout_n": 39,
+        "heldout_r2_vs_training_county_mean": 0.920668932958282
+      },
+      {
+        "county_fips": "48303",
+        "heldout_n": 104,
+        "heldout_r2_vs_training_county_mean": 0.754456615111866
+      },
+      {
+        "county_fips": "48309",
+        "heldout_n": 58,
+        "heldout_r2_vs_training_county_mean": 0.8600640486026527
+      },
+      {
+        "county_fips": "48339",
+        "heldout_n": 133,
+        "heldout_r2_vs_training_county_mean": 0.8903905060111048
+      },
+      {
+        "county_fips": "48355",
+        "heldout_n": 95,
+        "heldout_r2_vs_training_county_mean": 0.7357242329151935
+      },
+      {
+        "county_fips": "48423",
+        "heldout_n": 55,
+        "heldout_r2_vs_training_county_mean": 0.8899324833072683
+      },
+      {
+        "county_fips": "48439",
+        "heldout_n": 448,
+        "heldout_r2_vs_training_county_mean": 0.8643809485140292
+      },
+      {
+        "county_fips": "48441",
+        "heldout_n": 40,
+        "heldout_r2_vs_training_county_mean": 0.9153033426679662
+      },
+      {
+        "county_fips": "48453",
+        "heldout_n": 290,
+        "heldout_r2_vs_training_county_mean": 0.8611722412731886
+      },
+      {
+        "county_fips": "48479",
+        "heldout_n": 68,
+        "heldout_r2_vs_training_county_mean": 0.7493462970396509
+      },
+      {
+        "county_fips": "48491",
+        "heldout_n": 135,
+        "heldout_r2_vs_training_county_mean": 0.9052116631016821
+      }
+    ]
+  },
+  "thresholds": {
+    "pooled_heldout_r2_minimum_inclusive": 0.05,
+    "minimum_eligible_counties": 8,
+    "county_minimum_n_inclusive": 30,
+    "positive_eligible_county_share_minimum_inclusive": 0.75
+  },
+  "acceptance": {
+    "pooled_r2_at_least_0_05": true,
+    "at_least_8_eligible_counties_n_ge_30": true,
+    "positive_r2_in_at_least_75_percent_eligible_counties": true,
+    "county_transport_gate_pass": true
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "effective_count_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/poi-category-effective-count/effective-count-crossfit-residuals.parquet",
+      "sha256": "74c35567243ad8ea3c00cf5117ef641e49148b63f89f7f07616ac9dcf33b8d6e",
+      "rows": 9379,
+      "columns_read": [
+        "GEOID",
+        "region",
+        "unique_assigned_place_count",
+        "primary_categorized_place_count",
+        "effective_primary_category_count",
+        "effective_count_defined",
+        "Mx4_F",
+        "Mx4_F_defined",
+        "S1_lagged_Mx4_F",
+        "S1_lagged_Mx4_F_defined",
+        "joint_defined"
+      ],
+      "exact_official_pair_alignment": true
+    },
+    "effective_count_report": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/poi-category-effective-count.json",
+      "sha256": "9188213ee5b7fe479bc6fd519eb5388db42f06edcea8083881f42117574a95d0"
+    },
+    "pct_urban_strata_by_region": {
+      "maricopa-az": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+        "sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 1593,
+        "pct_urban_defined_ids": 1582
+      },
+      "northern-ca": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+        "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 591,
+        "pct_urban_defined_ids": 591
+      },
+      "eastern-ok": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+        "sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 1192,
+        "pct_urban_defined_ids": 1191
+      },
+      "south-central-tx": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+        "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 6003,
+        "pct_urban_defined_ids": 5989
+      }
+    },
+    "frozen_Mx4_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx4.parquet",
+      "sha256": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af"
+    },
+    "frozen_S1_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/S1.parquet",
+      "sha256": "632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03"
+    },
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/poi-effective-count-county-holdout/county-loco-predictions.parquet",
+      "sha256": "bdae6631d0efbe7132728083315593315f915d21573444a4c3a36bc834f6bde8",
+      "rows": 9379,
+      "columns": [
+        "GEOID",
+        "region",
+        "county_fips_from_geoid",
+        "unique_assigned_place_count",
+        "primary_categorized_place_count",
+        "effective_primary_category_count",
+        "log1p_effective_primary_category_count",
+        "log1p_unique_place_count",
+        "pct_urban",
+        "Mx4_F",
+        "Mx4_F_defined",
+        "S1_lagged_Mx4_F",
+        "S1_lagged_Mx4_F_defined",
+        "pct_urban_defined",
+        "effective_count_defined",
+        "county_loco_joint_defined",
+        "training_county_mean_prediction",
+        "county_loco_model_prediction"
+      ],
+      "deterministic_serialization": true
+    },
+    "script_sha256": "67d58e772d70f979a165c877b2f65fd148bb2df70aa94967009e198afec37b88"
+  },
+  "interpretation": "County-held-out transport met its preregistered pooled-R2, positive-county-share, and support gates; this remains a provided-feature transportability diagnostic only."
+}
