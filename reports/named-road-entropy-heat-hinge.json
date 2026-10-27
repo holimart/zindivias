@@ -1,0 +1,665 @@
+{
+  "schema_version": 1,
+  "screen": "Training-fold q75 upper-tail hinge of provided summer heat for normalized named-road class-share entropy; unregistered association screen",
+  "measure_before": {
+    "continuous_heat_pooled_heldout_delta_r2": 0.00019373184392459616,
+    "continuous_heat_bootstrap_95_ci": [
+      -0.0008463692946404365,
+      0.0012186074544889723
+    ],
+    "continuous_heat_positive_regions": 1,
+    "q75_heat_hinge_measured": false,
+    "continuous_heat_report_sha256": "f71b082e53d590d356a10cb1e9464f30c0104f422035d24044b23e384723107c"
+  },
+  "method": {
+    "outcome": "Provided normalized named-road class-share entropy; no label or target outcome is read.",
+    "baseline": "Region-specific OLS with intercept, log total named-road km, provided pct_urban, frozen Mx4 F, and frozen S1 lag.",
+    "hinge": "Add max(provided summer heat - training-fold q75 heat, 0) with a region-specific fitted slope; there is no added common linear heat term.",
+    "knot": "For each region and held-out fold, calculate q75 from complete-case training tracts in the other four fixed GEOID folds only; apply that knot to training and held-out rows.",
+    "folds": "Reuse exact five GEOID fold assignments stored with the named-road entropy artifact; no reassignment.",
+    "support": "Paired baseline and hinge models use identical official tracts with finite entropy, provided heat, baseline predictors, and frozen covariates; no imputation.",
+    "bootstrap": "2,000 paired tract bootstrap replicates within each region; pooled bootstrap stratifies by region and preserves each region's observed complete-case size. Bootstrap held-out entropy and paired OOF predictions.",
+    "metric": "Held-out delta R2=(SSE_baseline-SSE_hinge)/held-out entropy total sum of squares, pooled around pooled mean and separately within region around that region's mean.",
+    "unregistered": true,
+    "interpretation_limit": "Provided-feature association only; not target accuracy, causality, or promotion evidence."
+  },
+  "scope": {
+    "official_ids": 9379,
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "entropy_defined_ids": 9247,
+    "heat_covered_ids": 9377,
+    "paired_complete_case_ids": 9228,
+    "complete_case_null_ids": 151,
+    "official_fold_counts": {
+      "0": 1845,
+      "1": 1885,
+      "2": 1864,
+      "3": 1911,
+      "4": 1874
+    },
+    "complete_case_fold_counts": {
+      "0": 1811,
+      "1": 1853,
+      "2": 1829,
+      "3": 1883,
+      "4": 1852
+    },
+    "fold_support_sums_exact": true,
+    "entropy_null_mask_exact": true,
+    "heat_null_mask_exact": true,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_references_read": false,
+    "external_data_used": [],
+    "leaderboard_feedback_used": false,
+    "estimator_or_registry_changed": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "pooled_heldout_baseline_r2": 0.33925980196996786,
+    "pooled_heldout_hinge_r2": 0.3398429059068563,
+    "pooled_heldout_delta_r2": 0.0005831039368884199,
+    "pooled_bootstrap_95_ci": [
+      -0.0008986732365378346,
+      0.002156720503739079
+    ],
+    "pooled_bootstrap_seed": 2038504290,
+    "bootstrap_replicates": 2000,
+    "regions_with_positive_heldout_delta_r2": 2,
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "entropy_defined_ids": 1560,
+        "heat_covered_ids": 1593,
+        "joint_complete_case_ids": 1553,
+        "fold_heldout_support": {
+          "0": 306,
+          "1": 306,
+          "2": 321,
+          "3": 317,
+          "4": 303
+        },
+        "heldout_baseline_r2": 0.2873164000902976,
+        "heldout_hinge_r2": 0.2855913620430026,
+        "heldout_delta_r2": -0.0017250380472949975,
+        "paired_bootstrap_95_ci": [
+          -0.004527198011292843,
+          0.0004340345691900994
+        ],
+        "fold_hinge_slopes": {
+          "0": 0.0028833599171321994,
+          "1": -0.10151594206346864,
+          "2": -0.03708200524934783,
+          "3": -0.026158680103490997,
+          "4": -0.057818383659824724
+        },
+        "mean_fold_hinge_slope": -0.043938330231799994,
+        "sd_fold_hinge_slope": 0.034823075931789314,
+        "bootstrap_seed": 2573277916,
+        "bootstrap_replicates": 2000,
+        "fold_fit_diagnostics": [
+          {
+            "fold": 0,
+            "train_n": 1247,
+            "heldout_n": 306,
+            "training_heat_q75_knot": 15.444444444444445,
+            "training_heat_min": 10.88888888888889,
+            "training_heat_max": 16.666666666666668,
+            "heldout_heat_above_training_q75_n": 38,
+            "baseline_design_rank": 5,
+            "hinge_design_rank": 6,
+            "baseline_design_columns": 5,
+            "hinge_design_columns": 6,
+            "hinge_slope": 0.0028833599171321994,
+            "baseline_min_singular_value": 0.7113473041253895,
+            "hinge_min_singular_value": 0.7113410314434744
+          },
+          {
+            "fold": 1,
+            "train_n": 1247,
+            "heldout_n": 306,
+            "training_heat_q75_knot": 15.444444444444445,
+            "training_heat_min": 10.88888888888889,
+            "training_heat_max": 16.666666666666668,
+            "heldout_heat_above_training_q75_n": 44,
+            "baseline_design_rank": 5,
+            "hinge_design_rank": 6,
+            "baseline_design_columns": 5,
+            "hinge_design_columns": 6,
+            "hinge_slope": -0.10151594206346864,
+            "baseline_min_singular_value": 0.5901513441936352,
+            "hinge_min_singular_value": 0.5901495522351156
+          },
+          {
+            "fold": 2,
+            "train_n": 1232,
+            "heldout_n": 321,
+            "training_heat_q75_knot": 15.333333333333334,
+            "training_heat_min": 10.88888888888889,
+            "training_heat_max": 16.666666666666668,
+            "heldout_heat_above_training_q75_n": 92,
+            "baseline_design_rank": 5,
+            "hinge_design_rank": 6,
+            "baseline_design_columns": 5,
+            "hinge_design_columns": 6,
+            "hinge_slope": -0.03708200524934783,
+            "baseline_min_singular_value": 0.6960393887182479,
+            "hinge_min_singular_value": 0.6960148972731398
+          },
+          {
+            "fold": 3,
+            "train_n": 1236,
+            "heldout_n": 317,
+            "training_heat_q75_knot": 15.444444444444445,
+            "training_heat_min": 10.88888888888889,
+            "training_heat_max": 16.666666666666668,
+            "heldout_heat_above_training_q75_n": 41,
+            "baseline_design_rank": 5,
+            "hinge_design_rank": 6,
+            "baseline_design_columns": 5,
+            "hinge_design_columns": 6,
+            "hinge_slope": -0.026158680103490997,
+            "baseline_min_singular_value": 0.6832766347497174,
+            "hinge_min_singular_value": 0.6832073916762628
+          },
+          {
+            "fold": 4,
+            "train_n": 1250,
+            "heldout_n": 303,
+            "training_heat_q75_knot": 15.333333333333334,
+            "training_heat_min": 10.88888888888889,
+            "training_heat_max": 16.666666666666668,
+            "heldout_heat_above_training_q75_n": 77,
+            "baseline_design_rank": 5,
+            "hinge_design_rank": 6,
+            "baseline_design_columns": 5,
+            "hinge_design_columns": 6,
+            "hinge_slope": -0.057818383659824724,
+            "baseline_min_singular_value": 0.6557895051945709,
+            "hinge_min_singular_value": 0.6557781557109904
+          }
+        ]
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "entropy_defined_ids": 584,
+        "heat_covered_ids": 591,
+        "joint_complete_case_ids": 584,
+        "fold_heldout_support": {
+          "0": 117,
+          "1": 129,
+          "2": 130,
+          "3": 94,
+          "4": 114
+        },
+        "heldout_baseline_r2": 0.31844442186053945,
+        "heldout_hinge_r2": 0.32899114740949165,
+        "heldout_delta_r2": 0.010546725548952186,
+        "paired_bootstrap_95_ci": [
+          -0.0076293818323494005,
+          0.028998704866043976
+        ],
+        "fold_hinge_slopes": {
+          "0": -0.05883293053310176,
+          "1": -0.08322318808424728,
+          "2": -0.04935811363391027,
+          "3": -0.07093541453870669,
+          "4": -0.05286112516584563
+        },
+        "mean_fold_hinge_slope": -0.06304215439116231,
+        "sd_fold_hinge_slope": 0.0124755887211658,
+        "bootstrap_seed": 1616526770,
+        "bootstrap_replicates": 2000,
+        "fold_fit_diagnostics": [
+          {
+            "fold": 0,
+            "train_n": 467,
+            "heldout_n": 117,
+            "training_heat_q75_knot": 11.555555555555555,
+            "training_heat_min": 9.555555555555555,
+            "training_heat_max": 14.666666666666666,
+            "heldout_heat_above_training_q75_n": 27,
+            "baseline_design_rank": 5,
+            "hinge_design_rank": 6,
+            "baseline_design_columns": 5,
+            "hinge_design_columns": 6,
+            "hinge_slope": -0.05883293053310176,
+            "baseline_min_singular_value": 0.3690223306193139,
+            "hinge_min_singular_value": 0.36886935360808987
+          },
+          {
+            "fold": 1,
+            "train_n": 455,
+            "heldout_n": 129,
+            "training_heat_q75_knot": 11.555555555555555,
+            "training_heat_min": 9.222222222222221,
+            "training_heat_max": 14.666666666666666,
+            "heldout_heat_above_training_q75_n": 30,
+            "baseline_design_rank": 5,
+            "hinge_design_rank": 6,
+            "baseline_design_columns": 5,
+            "hinge_design_columns": 6,
+            "hinge_slope": -0.08322318808424728,
+            "baseline_min_singular_value": 0.3721545384815541,
+            "hinge_min_singular_value": 0.3721529214273347
+          },
+          {
+            "fold": 2,
+            "train_n": 454,
+            "heldout_n": 130,
+            "training_heat_q75_knot": 11.63888888888889,
+            "training_heat_min": 9.222222222222221,
+            "training_heat_max": 14.666666666666666,
+            "heldout_heat_above_training_q75_n": 25,
+            "baseline_design_rank": 5,
+            "hinge_design_rank": 6,
+            "baseline_design_columns": 5,
+            "hinge_design_columns": 6,
+            "hinge_slope": -0.04935811363391027,
+            "baseline_min_singular_value": 0.45590462796827375,
+            "hinge_min_singular_value": 0.4558914250533539
+          },
+          {
+            "fold": 3,
+            "train_n": 490,
+            "heldout_n": 94,
+            "training_heat_q75_knot": 11.555555555555555,
+            "training_heat_min": 9.222222222222221,
+            "training_heat_max": 14.666666666666666,
+            "heldout_heat_above_training_q75_n": 25,
+            "baseline_design_rank": 5,
+            "hinge_design_rank": 6,
+            "baseline_design_columns": 5,
+            "hinge_design_columns": 6,
+            "hinge_slope": -0.07093541453870669,
+            "baseline_min_singular_value": 0.46055069302748103,
+            "hinge_min_singular_value": 0.460547233605876
+          },
+          {
+            "fold": 4,
+            "train_n": 470,
+            "heldout_n": 114,
+            "training_heat_q75_knot": 11.555555555555555,
+            "training_heat_min": 9.222222222222221,
+            "training_heat_max": 14.444444444444445,
+            "heldout_heat_above_training_q75_n": 32,
+            "baseline_design_rank": 5,
+            "hinge_design_rank": 6,
+            "baseline_design_columns": 5,
+            "hinge_design_columns": 6,
+            "hinge_slope": -0.05286112516584563,
+            "baseline_min_singular_value": 0.4598472272636555,
+            "hinge_min_singular_value": 0.4597942970944978
+          }
+        ]
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "entropy_defined_ids": 1164,
+        "heat_covered_ids": 1192,
+        "joint_complete_case_ids": 1163,
+        "fold_heldout_support": {
+          "0": 226,
+          "1": 235,
+          "2": 233,
+          "3": 251,
+          "4": 218
+        },
+        "heldout_baseline_r2": 0.34001536207145433,
+        "heldout_hinge_r2": 0.33839272484675476,
+        "heldout_delta_r2": -0.0016226372246995458,
+        "paired_bootstrap_95_ci": [
+          -0.0033237833165438374,
+          -0.00012083731050156112
+        ],
+        "fold_hinge_slopes": {
+          "0": 0.0030809220697477664,
+          "1": 0.009418970530256865,
+          "2": -0.026825609813610575,
+          "3": 0.024086596722370672,
+          "4": -0.012421624308381552
+        },
+        "mean_fold_hinge_slope": -0.0005321489599233647,
+        "sd_fold_hinge_slope": 0.017611742719383233,
+        "bootstrap_seed": 1335880808,
+        "bootstrap_replicates": 2000,
+        "fold_fit_diagnostics": [
+          {
+            "fold": 0,
+            "train_n": 937,
+            "heldout_n": 226,
+            "training_heat_q75_knot": 11.777777777777779,
+            "training_heat_min": 9.555555555555555,
+            "training_heat_max": 13.555555555555555,
+            "heldout_heat_above_training_q75_n": 47,
+            "baseline_design_rank": 5,
+            "hinge_design_rank": 6,
+            "baseline_design_columns": 5,
+            "hinge_design_columns": 6,
+            "hinge_slope": 0.0030809220697477664,
+            "baseline_min_singular_value": 0.8090243508673032,
+            "hinge_min_singular_value": 0.8084142786641715
+          },
+          {
+            "fold": 1,
+            "train_n": 928,
+            "heldout_n": 235,
+            "training_heat_q75_knot": 11.777777777777779,
+            "training_heat_min": 9.555555555555555,
+            "training_heat_max": 13.555555555555555,
+            "heldout_heat_above_training_q75_n": 54,
+            "baseline_design_rank": 5,
+            "hinge_design_rank": 6,
+            "baseline_design_columns": 5,
+            "hinge_design_columns": 6,
+            "hinge_slope": 0.009418970530256865,
+            "baseline_min_singular_value": 0.7825680447378544,
+            "hinge_min_singular_value": 0.7822314012379529
+          },
+          {
+            "fold": 2,
+            "train_n": 930,
+            "heldout_n": 233,
+            "training_heat_q75_knot": 11.777777777777779,
+            "training_heat_min": 9.555555555555555,
+            "training_heat_max": 13.555555555555555,
+            "heldout_heat_above_training_q75_n": 33,
+            "baseline_design_rank": 5,
+            "hinge_design_rank": 6,
+            "baseline_design_columns": 5,
+            "hinge_design_columns": 6,
+            "hinge_slope": -0.026825609813610575,
+            "baseline_min_singular_value": 0.7830090885432985,
+            "hinge_min_singular_value": 0.7827644427668717
+          },
+          {
+            "fold": 3,
+            "train_n": 912,
+            "heldout_n": 251,
+            "training_heat_q75_knot": 11.777777777777779,
+            "training_heat_min": 9.555555555555555,
+            "training_heat_max": 13.444444444444445,
+            "heldout_heat_above_training_q75_n": 54,
+            "baseline_design_rank": 5,
+            "hinge_design_rank": 6,
+            "baseline_design_columns": 5,
+            "hinge_design_columns": 6,
+            "hinge_slope": 0.024086596722370672,
+            "baseline_min_singular_value": 0.7810543479650826,
+            "hinge_min_singular_value": 0.7805866016436074
+          },
+          {
+            "fold": 4,
+            "train_n": 945,
+            "heldout_n": 218,
+            "training_heat_q75_knot": 11.777777777777779,
+            "training_heat_min": 9.555555555555555,
+            "training_heat_max": 13.555555555555555,
+            "heldout_heat_above_training_q75_n": 41,
+            "baseline_design_rank": 5,
+            "hinge_design_rank": 6,
+            "baseline_design_columns": 5,
+            "hinge_design_columns": 6,
+            "hinge_slope": -0.012421624308381552,
+            "baseline_min_singular_value": 0.7898843126461906,
+            "hinge_min_singular_value": 0.7894713883226071
+          }
+        ]
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "entropy_defined_ids": 5939,
+        "heat_covered_ids": 6001,
+        "joint_complete_case_ids": 5928,
+        "fold_heldout_support": {
+          "0": 1162,
+          "1": 1183,
+          "2": 1145,
+          "3": 1221,
+          "4": 1217
+        },
+        "heldout_baseline_r2": 0.3470052851789228,
+        "heldout_hinge_r2": 0.3476519129249779,
+        "heldout_delta_r2": 0.0006466277460551191,
+        "paired_bootstrap_95_ci": [
+          -0.0005595297248206808,
+          0.0019357070288590378
+        ],
+        "fold_hinge_slopes": {
+          "0": -0.0077786349141224335,
+          "1": -0.013141817501136296,
+          "2": -0.011418094044702218,
+          "3": -0.009489813745868624,
+          "4": -0.010050893656047041
+        },
+        "mean_fold_hinge_slope": -0.010375850772375322,
+        "sd_fold_hinge_slope": 0.0018095873528225638,
+        "bootstrap_seed": 585686686,
+        "bootstrap_replicates": 2000,
+        "fold_fit_diagnostics": [
+          {
+            "fold": 0,
+            "train_n": 4766,
+            "heldout_n": 1162,
+            "training_heat_q75_knot": 16.555555555555557,
+            "training_heat_min": 11.0,
+            "training_heat_max": 21.555555555555557,
+            "heldout_heat_above_training_q75_n": 292,
+            "baseline_design_rank": 5,
+            "hinge_design_rank": 6,
+            "baseline_design_columns": 5,
+            "hinge_design_columns": 6,
+            "hinge_slope": -0.0077786349141224335,
+            "baseline_min_singular_value": 0.5825385283064093,
+            "hinge_min_singular_value": 0.5820836213185238
+          },
+          {
+            "fold": 1,
+            "train_n": 4745,
+            "heldout_n": 1183,
+            "training_heat_q75_knot": 16.555555555555557,
+            "training_heat_min": 11.0,
+            "training_heat_max": 21.333333333333332,
+            "heldout_heat_above_training_q75_n": 290,
+            "baseline_design_rank": 5,
+            "hinge_design_rank": 6,
+            "baseline_design_columns": 5,
+            "hinge_design_columns": 6,
+            "hinge_slope": -0.013141817501136296,
+            "baseline_min_singular_value": 0.5309058412545604,
+            "hinge_min_singular_value": 0.530473470235062
+          },
+          {
+            "fold": 2,
+            "train_n": 4783,
+            "heldout_n": 1145,
+            "training_heat_q75_knot": 16.555555555555557,
+            "training_heat_min": 11.0,
+            "training_heat_max": 21.555555555555557,
+            "heldout_heat_above_training_q75_n": 253,
+            "baseline_design_rank": 5,
+            "hinge_design_rank": 6,
+            "baseline_design_columns": 5,
+            "hinge_design_columns": 6,
+            "hinge_slope": -0.011418094044702218,
+            "baseline_min_singular_value": 0.5659179191438343,
+            "hinge_min_singular_value": 0.5653727974817416
+          },
+          {
+            "fold": 3,
+            "train_n": 4707,
+            "heldout_n": 1221,
+            "training_heat_q75_knot": 16.555555555555557,
+            "training_heat_min": 11.0,
+            "training_heat_max": 21.555555555555557,
+            "heldout_heat_above_training_q75_n": 294,
+            "baseline_design_rank": 5,
+            "hinge_design_rank": 6,
+            "baseline_design_columns": 5,
+            "hinge_design_columns": 6,
+            "hinge_slope": -0.009489813745868624,
+            "baseline_min_singular_value": 0.5567013942751953,
+            "hinge_min_singular_value": 0.5562417589200169
+          },
+          {
+            "fold": 4,
+            "train_n": 4711,
+            "heldout_n": 1217,
+            "training_heat_q75_knot": 16.444444444444443,
+            "training_heat_min": 11.0,
+            "training_heat_max": 21.555555555555557,
+            "heldout_heat_above_training_q75_n": 326,
+            "baseline_design_rank": 5,
+            "hinge_design_rank": 6,
+            "baseline_design_columns": 5,
+            "hinge_design_columns": 6,
+            "hinge_slope": -0.010050893656047041,
+            "baseline_min_singular_value": 0.5589938323409687,
+            "hinge_min_singular_value": 0.5585406236075576
+          }
+        ]
+      }
+    }
+  },
+  "thresholds": {
+    "pooled_delta_r2_minimum_inclusive": 0.01,
+    "pooled_bootstrap_ci_lower_strictly_above_zero": true,
+    "minimum_regions_with_positive_heldout_delta_r2": 3,
+    "q75_training_quantile": 0.75,
+    "bootstrap_replicates": 2000
+  },
+  "acceptance": {
+    "pooled_delta_r2_at_least_0_01": false,
+    "pooled_bootstrap_ci_lower_above_zero": false,
+    "positive_heldout_delta_r2_in_at_least_3_of_4_regions": false,
+    "heat_hinge_screen_pass": false
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "entropy_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/named-road-class-entropy/class-entropy-crossfit.parquet",
+      "sha256": "41610caca547f76604a8430f7cc0dfcdf628ea3f431632c5e5da11809da92f38",
+      "columns_read": [
+        "GEOID",
+        "region",
+        "class_mix_entropy",
+        "entropy_defined",
+        "total_named_road_km",
+        "pct_urban",
+        "Mx4_F",
+        "Mx4_F_defined",
+        "S1_lagged_Mx4_F",
+        "S1_lagged_Mx4_F_defined",
+        "fold"
+      ],
+      "rows": 9379,
+      "entropy_defined_ids": 9247
+    },
+    "heat_strata_by_region": {
+      "maricopa-az": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+        "sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd",
+        "columns_read": [
+          "GEOID",
+          "epht_heat_days_summer",
+          "epht_covered"
+        ],
+        "provided_rows": 1593,
+        "official_ids_joined": 1593,
+        "heat_covered_finite_official_ids": 1593,
+        "official_heat_missing": 0,
+        "nonofficial_table_rows_ignored": 0
+      },
+      "northern-ca": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+        "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+        "columns_read": [
+          "GEOID",
+          "epht_heat_days_summer",
+          "epht_covered"
+        ],
+        "provided_rows": 591,
+        "official_ids_joined": 591,
+        "heat_covered_finite_official_ids": 591,
+        "official_heat_missing": 0,
+        "nonofficial_table_rows_ignored": 0
+      },
+      "eastern-ok": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+        "sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54",
+        "columns_read": [
+          "GEOID",
+          "epht_heat_days_summer",
+          "epht_covered"
+        ],
+        "provided_rows": 1192,
+        "official_ids_joined": 1192,
+        "heat_covered_finite_official_ids": 1192,
+        "official_heat_missing": 0,
+        "nonofficial_table_rows_ignored": 0
+      },
+      "south-central-tx": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+        "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354",
+        "columns_read": [
+          "GEOID",
+          "epht_heat_days_summer",
+          "epht_covered"
+        ],
+        "provided_rows": 6010,
+        "official_ids_joined": 6003,
+        "heat_covered_finite_official_ids": 6001,
+        "official_heat_missing": 2,
+        "nonofficial_table_rows_ignored": 7
+      }
+    },
+    "frozen_predictors": {
+      "Mx4": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx4.parquet",
+        "sha256": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af"
+      },
+      "S1": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/S1.parquet",
+        "sha256": "632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03"
+      }
+    },
+    "entropy_baseline_report": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/named-road-class-entropy.json",
+      "sha256": "120e06a143fd64d1f2f0fc843aa81b2f30ba40cbcfdd43ed2a235ec2ad373b25"
+    },
+    "prior_quartile_report": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/named-road-entropy-heat-contrast.json",
+      "sha256": "b84d5950080a75f050e9792b0f8c3a9818a7c11fca74000b5e037ab16a67f2af"
+    },
+    "continuous_heat_report": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/named-road-entropy-continuous-heat.json",
+      "sha256": "f71b082e53d590d356a10cb1e9464f30c0104f422035d24044b23e384723107c"
+    },
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/named-road-entropy-heat-hinge/paired-crossfit-predictions.parquet",
+      "sha256": "11f1b5abb1d2192b8fdf0294b71024152fc72f8613a10492ee1868272bb60ce8",
+      "rows": 9379,
+      "columns": [
+        "GEOID",
+        "region",
+        "normalized_named_road_class_entropy",
+        "entropy_defined",
+        "epht_heat_days_summer",
+        "heat_defined",
+        "log_total_named_road_km",
+        "pct_urban",
+        "Mx4_F",
+        "S1_lagged_Mx4_F",
+        "fixed_entropy_fold",
+        "hinge_joint_defined",
+        "training_fold_q75_heat_knot",
+        "training_fold_q75_heat_hinge",
+        "baseline_oof_prediction",
+        "heat_hinge_oof_prediction"
+      ],
+      "deterministic_serialization": true
+    },
+    "script_sha256": "2ec227f12491aa01c1f39d9751485e8999889f4282464fd142d23cca4f22c437"
+  },
+  "interpretation": "The prespecified upper-tail hinge did not pass all held-out effect, paired-bootstrap and regional consistency gates; retain descriptive-only and make no target-accuracy or causal claim."
+}
