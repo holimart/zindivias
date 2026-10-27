@@ -1,0 +1,384 @@
+{
+  "schema_version": 1,
+  "screen": "Five-fold held-out additive association of provided POI effective count with frozen cross-fitted S1 disagreement residual; unregistered",
+  "measure_before": {
+    "effective_count_crossfit_residual_variance_ratio": 0.18096672540982753,
+    "effective_count_joint_ids": 9327,
+    "effective_count_prior_residual_prediction_delta_r2_measured": false,
+    "effective_count_source_report_sha256": "9188213ee5b7fe479bc6fd519eb5388db42f06edcea8083881f42117574a95d0"
+  },
+  "method": {
+    "outcome": "Frozen cross-fitted orthogonalized S1 disagreement residual from the exact input artifact; no refitting or alteration of its construction.",
+    "baseline": "OLS with region intercept indicators, globally train-standardized log1p unique place count, Mx4 F, and S1 lagged Mx4 F.",
+    "augmentation": "Add log1p effective POI primary-category count, standardized separately within each region using only the training rows of each fold; zero training SD uses scale 1.",
+    "cross_validation": "The exact frozen five deterministic GEOID folds within each official region. For every fold, fit both nested models and all scaling moments on the other four folds, then score their paired held-out predictions.",
+    "metric": "Pooled and regional/fold held-out delta-R2 = augmented held-out R2 minus baseline held-out R2, equivalently (baseline SSE - augmented SSE)/the same held-out target SST. Positive favors the augmentation.",
+    "bootstrap": "Paired with-replacement tract resampling over the pooled OOF complete-case support; percentile 95% interval, fixed seed and replicate count in report.",
+    "support": "One paired mask requiring frozen residual, effective count, unique count, Mx4 F and S1 lag to be defined; no imputation or post-result exclusions.",
+    "model_coefficients_disclosed": false,
+    "training_only_scaling_moments_recorded_by_fold": true,
+    "unregistered": true,
+    "interpretation_limit": "Provided-feature association only, not hidden-target accuracy, causal evidence, or estimator-promotion evidence."
+  },
+  "scope": {
+    "official_ids": 9379,
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "frozen_residual_defined_ids": 9379,
+    "effective_count_defined_ids": 9327,
+    "paired_screen_ids": 9327,
+    "paired_screen_undefined_ids": 52,
+    "residual_mask_sha256": "593459efd58441427b7c76d010f31880b0709ad2fe46b90bd254145da4ce27d6",
+    "effective_count_mask_sha256": "da10f86ae1f1c0942f5553a149d1b58e6bd990e0fecbe590d326ec4c42049bdd",
+    "paired_mask_sha256": "da10f86ae1f1c0942f5553a149d1b58e6bd990e0fecbe590d326ec4c42049bdd",
+    "fold_assignment_sha256": "c8b4f9875dbd127a1627458cba0d824bd743d5e5047b38ef243eb6608c3f5ce5",
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_references_read": false,
+    "external_data_used": [],
+    "leaderboard_feedback_used": false,
+    "post_result_exclusions": false,
+    "registry_changed": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "pooled": {
+      "baseline_r2": -0.011315114182193664,
+      "augmented_r2": -0.011461042015499023,
+      "delta_r2": -0.0001459278333052408,
+      "baseline_sse": 0.1509798228161409,
+      "augmented_sse": 0.15100160846742544,
+      "heldout_sst": 0.1492905828251481
+    },
+    "paired_pooled_delta_r2": -0.0001459278333052408,
+    "paired_pooled_delta_r2_ci_95": [
+      -0.0007680383497278556,
+      0.0004112583198289686
+    ],
+    "bootstrap": {
+      "replicates": 2000,
+      "seed": 20261029,
+      "resampling": "paired with-replacement tract resampling over the exact pooled OOF support",
+      "ci_95_percentile": [
+        -0.0007680383497278556,
+        0.0004112583198289686
+      ],
+      "degenerate_replicates": 0
+    },
+    "regional": {
+      "maricopa-az": {
+        "n": 1574,
+        "baseline_r2": -0.007916667229182606,
+        "augmented_r2": -0.010187693721429136,
+        "delta_r2": -0.0022710264922465003,
+        "baseline_sse": 0.025041854656439877,
+        "augmented_sse": 0.025098278681549117,
+        "heldout_sst": 0.02484516376267622
+      },
+      "northern-ca": {
+        "n": 586,
+        "baseline_r2": 0.005717158695531688,
+        "augmented_r2": 0.00539273342110369,
+        "delta_r2": -0.00032442527442802234,
+        "baseline_sse": 0.016611894212821523,
+        "augmented_sse": 0.016617314519916125,
+        "heldout_sst": 0.01670741314516424
+      },
+      "eastern-ok": {
+        "n": 1189,
+        "baseline_r2": -0.021788713617143074,
+        "augmented_r2": -0.021398782324507648,
+        "delta_r2": 0.0003899312926352695,
+        "baseline_sse": 0.07491549994790903,
+        "augmented_sse": 0.07488691096728729,
+        "heldout_sst": 0.0733179951486324
+      },
+      "south-central-tx": {
+        "n": 5978,
+        "baseline_r2": 0.00013324223500965626,
+        "augmented_r2": 0.00046651688626664356,
+        "delta_r2": 0.0003332746512570128,
+        "baseline_sse": 0.03441057399897048,
+        "augmented_sse": 0.03439910429867292,
+        "heldout_sst": 0.03441515955174737
+      }
+    },
+    "folds": [
+      {
+        "fold": 0,
+        "n": 1821,
+        "baseline_r2": -0.009545136707497237,
+        "augmented_r2": -0.009158276027967371,
+        "delta_r2": 0.00038686067952989247,
+        "baseline_sse": 0.02043908896789519,
+        "augmented_sse": 0.020431256648606445,
+        "heldout_sst": 0.020245839660576914
+      },
+      {
+        "fold": 1,
+        "n": 1831,
+        "baseline_r2": -0.003958833355862668,
+        "augmented_r2": -0.004101390861020349,
+        "delta_r2": -0.00014255750515756533,
+        "baseline_sse": 0.04722103782628494,
+        "augmented_sse": 0.047227742994982905,
+        "heldout_sst": 0.04703483475357499
+      },
+      {
+        "fold": 2,
+        "n": 1895,
+        "baseline_r2": -0.025409305813959282,
+        "augmented_r2": -0.025912473791542823,
+        "delta_r2": -0.0005031679775836874,
+        "baseline_sse": 0.023554904452556747,
+        "augmented_sse": 0.023566462835700307,
+        "heldout_sst": 0.022971221656564848
+      },
+      {
+        "fold": 3,
+        "n": 1924,
+        "baseline_r2": -0.029957717997850963,
+        "augmented_r2": -0.02999619210721871,
+        "delta_r2": -3.847410936785817e-05,
+        "baseline_sse": 0.020063636845677232,
+        "augmented_sse": 0.020064386323587664,
+        "heldout_sst": 0.019480058739381276
+      },
+      {
+        "fold": 4,
+        "n": 1856,
+        "baseline_r2": -0.006158400730351676,
+        "augmented_r2": -0.00642716496078477,
+        "delta_r2": -0.00026876423043308717,
+        "baseline_sse": 0.03970115472372681,
+        "augmented_sse": 0.03971175966454814,
+        "heldout_sst": 0.039458155589525944
+      }
+    ],
+    "positive_regions": 2
+  },
+  "thresholds": {
+    "pooled_delta_r2_minimum_inclusive": 0.01,
+    "paired_tract_bootstrap_ci_lower_strictly_above": 0.0,
+    "minimum_regions_with_positive_heldout_delta": 3
+  },
+  "acceptance": {
+    "pooled_delta_r2_at_least_0_01": false,
+    "bootstrap_ci_lower_above_zero": false,
+    "positive_delta_in_at_least_3_of_4_regions": false,
+    "effective_count_s1_residual_gate_pass": false
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "frozen_residual_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/s1-disagreement-orthogonalized/orthogonalized-disagreement.parquet",
+      "sha256": "437b8995e9aa97cc3cf0337cf4338c34e21ade2edaa6dc258700956695feab1e",
+      "rows": 9379,
+      "columns_read": [
+        "GEOID",
+        "region",
+        "fold",
+        "crossfit_residual",
+        "crossfit_joint_defined"
+      ],
+      "exact_official_pair_alignment": true
+    },
+    "effective_count_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/poi-category-effective-count/effective-count-crossfit-residuals.parquet",
+      "sha256": "74c35567243ad8ea3c00cf5117ef641e49148b63f89f7f07616ac9dcf33b8d6e",
+      "rows": 9379,
+      "columns_read": [
+        "GEOID",
+        "region",
+        "unique_assigned_place_count",
+        "primary_categorized_place_count",
+        "effective_primary_category_count",
+        "effective_count_defined",
+        "Mx4_F",
+        "Mx4_F_defined",
+        "S1_lagged_Mx4_F",
+        "S1_lagged_Mx4_F_defined"
+      ],
+      "exact_official_pair_alignment": true
+    },
+    "effective_count_report": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/poi-category-effective-count.json",
+      "sha256": "9188213ee5b7fe479bc6fd519eb5388db42f06edcea8083881f42117574a95d0"
+    },
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/poi-effective-count-s1-residual/paired-oof-predictions.parquet",
+      "sha256": "f1f0477316e1e7807bd71522f010b6cd59938a7932beb2c14cb1cc20384c180b",
+      "rows": 9379,
+      "columns": [
+        "GEOID",
+        "region",
+        "fold",
+        "frozen_s1_crossfit_residual",
+        "s1_residual_defined",
+        "effective_primary_category_count",
+        "log1p_effective_primary_category_count",
+        "unique_assigned_place_count",
+        "log1p_unique_place_count",
+        "Mx4_F",
+        "S1_lagged_Mx4_F",
+        "paired_screen_defined",
+        "baseline_oof_prediction",
+        "augmented_oof_prediction"
+      ],
+      "deterministic_serialization": true
+    },
+    "poi_scaler_training_stats_by_fold": {
+      "0": {
+        "eastern-ok": {
+          "training_mean": 4.204816080874053,
+          "training_sd": 0.5494615058188964,
+          "applied_scale": 0.5494615058188964,
+          "training_n": 949,
+          "heldout_n": 240
+        },
+        "maricopa-az": {
+          "training_mean": 4.140465398087642,
+          "training_sd": 0.6373052269654058,
+          "applied_scale": 0.6373052269654058,
+          "training_n": 1270,
+          "heldout_n": 304
+        },
+        "northern-ca": {
+          "training_mean": 4.15883928334501,
+          "training_sd": 0.6425582669653754,
+          "applied_scale": 0.6425582669653754,
+          "training_n": 475,
+          "heldout_n": 111
+        },
+        "south-central-tx": {
+          "training_mean": 4.256897809015773,
+          "training_sd": 0.5887247401958461,
+          "applied_scale": 0.5887247401958461,
+          "training_n": 4812,
+          "heldout_n": 1166
+        }
+      },
+      "1": {
+        "eastern-ok": {
+          "training_mean": 4.196498162824488,
+          "training_sd": 0.5601782210914752,
+          "applied_scale": 0.5601782210914752,
+          "training_n": 953,
+          "heldout_n": 236
+        },
+        "maricopa-az": {
+          "training_mean": 4.126939651265076,
+          "training_sd": 0.6465972596918095,
+          "applied_scale": 0.6465972596918095,
+          "training_n": 1251,
+          "heldout_n": 323
+        },
+        "northern-ca": {
+          "training_mean": 4.133497976314238,
+          "training_sd": 0.6392536267844721,
+          "applied_scale": 0.6392536267844721,
+          "training_n": 466,
+          "heldout_n": 120
+        },
+        "south-central-tx": {
+          "training_mean": 4.254835581713622,
+          "training_sd": 0.590607590739665,
+          "applied_scale": 0.590607590739665,
+          "training_n": 4826,
+          "heldout_n": 1152
+        }
+      },
+      "2": {
+        "eastern-ok": {
+          "training_mean": 4.199852462776856,
+          "training_sd": 0.5608446757396389,
+          "applied_scale": 0.5608446757396389,
+          "training_n": 941,
+          "heldout_n": 248
+        },
+        "maricopa-az": {
+          "training_mean": 4.13936289776268,
+          "training_sd": 0.6554524221956753,
+          "applied_scale": 0.6554524221956753,
+          "training_n": 1251,
+          "heldout_n": 323
+        },
+        "northern-ca": {
+          "training_mean": 4.163306924421339,
+          "training_sd": 0.6212759176140045,
+          "applied_scale": 0.6212759176140045,
+          "training_n": 466,
+          "heldout_n": 120
+        },
+        "south-central-tx": {
+          "training_mean": 4.262644668725698,
+          "training_sd": 0.588578903517017,
+          "applied_scale": 0.588578903517017,
+          "training_n": 4774,
+          "heldout_n": 1204
+        }
+      },
+      "3": {
+        "eastern-ok": {
+          "training_mean": 4.192159753196738,
+          "training_sd": 0.5531797700486483,
+          "applied_scale": 0.5531797700486483,
+          "training_n": 947,
+          "heldout_n": 242
+        },
+        "maricopa-az": {
+          "training_mean": 4.127769194524587,
+          "training_sd": 0.6665963312591828,
+          "applied_scale": 0.6665963312591828,
+          "training_n": 1263,
+          "heldout_n": 311
+        },
+        "northern-ca": {
+          "training_mean": 4.1440168407736175,
+          "training_sd": 0.6315169108774172,
+          "applied_scale": 0.6315169108774172,
+          "training_n": 465,
+          "heldout_n": 121
+        },
+        "south-central-tx": {
+          "training_mean": 4.256742382424738,
+          "training_sd": 0.5910432554026326,
+          "applied_scale": 0.5910432554026326,
+          "training_n": 4728,
+          "heldout_n": 1250
+        }
+      },
+      "4": {
+        "eastern-ok": {
+          "training_mean": 4.186515085883117,
+          "training_sd": 0.557670344990085,
+          "applied_scale": 0.557670344990085,
+          "training_n": 966,
+          "heldout_n": 223
+        },
+        "maricopa-az": {
+          "training_mean": 4.128242083861656,
+          "training_sd": 0.6557041319275309,
+          "applied_scale": 0.6557041319275309,
+          "training_n": 1261,
+          "heldout_n": 313
+        },
+        "northern-ca": {
+          "training_mean": 4.168104566426538,
+          "training_sd": 0.626718697975241,
+          "applied_scale": 0.626718697975241,
+          "training_n": 472,
+          "heldout_n": 114
+        },
+        "south-central-tx": {
+          "training_mean": 4.264957899659617,
+          "training_sd": 0.5895107227741843,
+          "applied_scale": 0.5895107227741843,
+          "training_n": 4772,
+          "heldout_n": 1206
+        }
+      }
+    },
+    "script_sha256": "0975455b4e73286a7aed702490da2ceb39ef863f7e77648043d12e130e1c7c11"
+  },
+  "interpretation": "The additive effective-count association failed at least one preregistered gate; retain the feature as descriptive only and do not integrate it."
+}
