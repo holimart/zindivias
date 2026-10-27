@@ -1,0 +1,235 @@
+{
+  "schema_version": 1,
+  "screen": "Interaction of provided POI source-class entropy and named-road class-share entropy on frozen cross-fitted orthogonalized S1 residual; unregistered",
+  "measure_before": {
+    "poi_source_class_entropy_residual_variance_ratio": 0.8104966782110836,
+    "poi_source_class_entropy_joint_ids": 9377,
+    "road_class_entropy_residual_variance_ratio": 0.6607401765971582,
+    "road_class_entropy_joint_ids": 9228,
+    "source_road_interaction_measured": false,
+    "poi_entropy_report_sha256": "20d3333afe1775eb7fc5625b5fedf8ec63ad4f9b75a8eb4fbe722ca892e20c5c",
+    "road_entropy_report_sha256": "120e06a143fd64d1f2f0fc843aa81b2f30ba40cbcfdd43ed2a235ec2ad373b25"
+  },
+  "method": {
+    "outcome": "Reuse the frozen cross-fitted orthogonalized S1 disagreement residual; do not refit it.",
+    "folds": "Reuse exact five GEOID fold IDs from the frozen S1 residual artifact. For each fold, fit on the other four folds and predict the held-out fold.",
+    "baseline": "OLS with intercept and region-specific intercepts, log1p provided Overture POI count, frozen Mx4 F, frozen S1 lag, and both source-entropy and road-entropy main effects.",
+    "interaction": "Add the product of the two entropy main effects, each standardized within region using that fold's training rows only.",
+    "scaling": "Fit mean and population SD for log1p POI count, Mx4 F, and S1 lag on the training rows only. Within each region, fit separate entropy means and population SDs on that region's training rows only. Apply these frozen training-fold scalers to held-out rows.",
+    "support": "Use exact official GEOID-region pairs where frozen residual, both entropies, log1p POI count, Mx4 F and S1 lag are finite; both models use identical support. Do not impute missing rows.",
+    "metric": "Per-fold and pooled held-out incremental delta R2=(SSE_baseline-SSE_interaction)/SST for the same held-out residual rows; pooled SST centers all pooled OOF residuals on their pooled held-out mean.",
+    "unregistered": true,
+    "interpretation_limit": "Label-free residual interaction screen; not target accuracy, causal evidence, or promotion."
+  },
+  "scope": {
+    "official_ids": 9379,
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "frozen_residual_defined_ids": 9379,
+    "poi_source_entropy_defined_ids": 9377,
+    "road_class_entropy_defined_ids": 9247,
+    "log1p_poi_count_defined_ids": 9379,
+    "Mx4_F_defined_ids": 9379,
+    "S1_lagged_Mx4_F_defined_ids": 9379,
+    "interaction_complete_case_ids": 9247,
+    "interaction_null_ids": 132,
+    "official_order_mask_sha256": {
+      "frozen_residual_defined": "593459efd58441427b7c76d010f31880b0709ad2fe46b90bd254145da4ce27d6",
+      "poi_source_entropy_defined": "3f2c3b32c223690813bd0a9d510e9f89a747096ea73933adad1bfaf24f020578",
+      "road_class_entropy_defined": "68afdf19c4b82663683a7e7489730b762b883628991a34000d28e00089ad8485",
+      "log1p_poi_count_defined": "593459efd58441427b7c76d010f31880b0709ad2fe46b90bd254145da4ce27d6",
+      "Mx4_F_defined": "593459efd58441427b7c76d010f31880b0709ad2fe46b90bd254145da4ce27d6",
+      "S1_lagged_Mx4_F_defined": "593459efd58441427b7c76d010f31880b0709ad2fe46b90bd254145da4ce27d6",
+      "interaction_joint_defined": "68afdf19c4b82663683a7e7489730b762b883628991a34000d28e00089ad8485"
+    },
+    "fold_counts_official": {
+      "0": 1831,
+      "1": 1843,
+      "2": 1911,
+      "3": 1930,
+      "4": 1864
+    },
+    "fold_counts_interaction": {
+      "0": 1801,
+      "1": 1818,
+      "2": 1888,
+      "3": 1913,
+      "4": 1827
+    },
+    "exact_source_entropy_null_masks": true,
+    "exact_frozen_residual_mask": true,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_references_read": false,
+    "external_data_used": [],
+    "leaderboard_feedback_used": false,
+    "estimator_or_registry_changed": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "pooled_heldout_baseline_r2": -0.011134168977157799,
+    "pooled_heldout_interaction_r2": -0.011182419949106182,
+    "pooled_heldout_delta_r2": -4.8250971948343004e-05,
+    "pooled_baseline_sse": 0.1485320945439039,
+    "pooled_interaction_sse": 0.1485391824439543,
+    "pooled_heldout_total_sum_squares": 0.14689652382547397,
+    "positive_fold_delta_r2_count": 0,
+    "folds": [
+      {
+        "fold": 0,
+        "train_n": 7446,
+        "heldout_n": 1801,
+        "baseline_sse": 0.019871409706964605,
+        "interaction_sse": 0.01987294534490702,
+        "heldout_total_sum_squares": 0.01967702144677,
+        "baseline_r2": -0.009878947416938288,
+        "interaction_r2": -0.009956989611818567,
+        "delta_r2": -7.80421948803981e-05
+      },
+      {
+        "fold": 1,
+        "train_n": 7429,
+        "heldout_n": 1818,
+        "baseline_sse": 0.04709222480211603,
+        "interaction_sse": 0.04709238901488635,
+        "heldout_total_sum_squares": 0.046999504324330414,
+        "baseline_r2": -0.0019727969287883784,
+        "interaction_r2": -0.001976290854366569,
+        "delta_r2": -3.4939255781497693e-06
+      },
+      {
+        "fold": 2,
+        "train_n": 7359,
+        "heldout_n": 1888,
+        "baseline_sse": 0.02332513648519817,
+        "interaction_sse": 0.02333008906574703,
+        "heldout_total_sum_squares": 0.022958458344305665,
+        "baseline_r2": -0.01597137470615273,
+        "interaction_r2": -0.016187093918418105,
+        "delta_r2": -0.0002157192122653947
+      },
+      {
+        "fold": 3,
+        "train_n": 7334,
+        "heldout_n": 1913,
+        "baseline_sse": 0.020298586963556797,
+        "interaction_sse": 0.020298683713619,
+        "heldout_total_sum_squares": 0.019445681478087173,
+        "baseline_r2": -0.04386092029897437,
+        "interaction_r2": -0.0438658956999296,
+        "delta_r2": -4.975400955239693e-06
+      },
+      {
+        "fold": 4,
+        "train_n": 7420,
+        "heldout_n": 1827,
+        "baseline_sse": 0.0379447365860683,
+        "interaction_sse": 0.037945075304794906,
+        "heldout_total_sum_squares": 0.037713682584727175,
+        "baseline_r2": -0.006126529829645788,
+        "interaction_r2": -0.0061355111516328,
+        "delta_r2": -8.981321986988388e-06
+      }
+    ]
+  },
+  "acceptance": {
+    "pooled_delta_r2_at_least_0_01": false,
+    "positive_delta_r2_in_at_least_4_of_5_folds": false,
+    "positive_fold_count": 0,
+    "interaction_screen_pass": false
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "poi_source_entropy_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/poi-source-class-entropy/source-class-entropy-crossfit.parquet",
+      "sha256": "f5220df3aed4b66023f40df1e9fac0988e8d89b1f35ef1a6311b5fbc4d2b50ff",
+      "rows": 9379,
+      "columns_read": [
+        "GEOID",
+        "region",
+        "provided_poi_count",
+        "source_class_entropy",
+        "entropy_defined",
+        "Mx4_F",
+        "Mx4_F_defined",
+        "S1_lagged_Mx4_F",
+        "S1_lagged_Mx4_F_defined"
+      ],
+      "exact_official_pair_alignment": true
+    },
+    "road_class_entropy_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/named-road-class-entropy/class-entropy-crossfit.parquet",
+      "sha256": "41610caca547f76604a8430f7cc0dfcdf628ea3f431632c5e5da11809da92f38",
+      "rows": 9379,
+      "columns_read": [
+        "GEOID",
+        "region",
+        "class_mix_entropy",
+        "entropy_defined"
+      ],
+      "exact_official_pair_alignment": true
+    },
+    "frozen_s1_residual_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/s1-disagreement-orthogonalized/orthogonalized-disagreement.parquet",
+      "sha256": "437b8995e9aa97cc3cf0337cf4338c34e21ade2edaa6dc258700956695feab1e",
+      "rows": 9379,
+      "columns_read": [
+        "GEOID",
+        "region",
+        "crossfit_residual",
+        "crossfit_joint_defined",
+        "Mx4_F",
+        "Mx4_F_defined",
+        "S1_lagged_Mx4_F",
+        "S1_lagged_Mx4_F_defined",
+        "fold"
+      ],
+      "exact_official_pair_alignment": true
+    },
+    "poi_entropy_report": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/poi-source-class-entropy.json",
+      "sha256": "20d3333afe1775eb7fc5625b5fedf8ec63ad4f9b75a8eb4fbe722ca892e20c5c",
+      "residual_variance_ratio": 0.8104966782110836,
+      "joint_crossfit_ids": 9377
+    },
+    "road_entropy_report": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/named-road-class-entropy.json",
+      "sha256": "120e06a143fd64d1f2f0fc843aa81b2f30ba40cbcfdd43ed2a235ec2ad373b25",
+      "residual_variance_ratio": 0.6607401765971582,
+      "joint_crossfit_ids": 9228
+    },
+    "frozen_s1_residual_report": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/s1-disagreement-orthogonalized.json",
+      "sha256": "b8bc5344339a1f4eb316484aea733c02d8fa37f1a7828583f13d01ffa58aa8fd"
+    },
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/source-road-entropy-interaction/oof-interaction-predictions.parquet",
+      "sha256": "99120048cc55058bb3a9b9f961857254b2aadd8c8c63207f7d09808374d7dc11",
+      "rows": 9379,
+      "columns": [
+        "GEOID",
+        "region",
+        "fixed_s1_fold",
+        "frozen_s1_residual",
+        "poi_source_entropy",
+        "road_class_entropy",
+        "log1p_poi_count",
+        "Mx4_F",
+        "Mx4_F_defined",
+        "S1_lagged_Mx4_F",
+        "S1_lagged_Mx4_F_defined",
+        "log1p_poi_count_defined",
+        "poi_entropy_defined",
+        "road_entropy_defined",
+        "interaction_joint_defined",
+        "training_fold_z_poi_entropy",
+        "training_fold_z_road_entropy",
+        "training_fold_entropy_product",
+        "baseline_oof_prediction",
+        "interaction_oof_prediction"
+      ],
+      "deterministic_serialization": true
+    },
+    "script_sha256": "2b6418ef54205a2e45d9a9b4ef5652f25470608d2c321d35b82ac605ae7353f3"
+  },
+  "interpretation": "The interaction did not pass the preregistered pooled incremental-R2 and fold-consistency gates; retire this interaction as unsupported or redundant."
+}
