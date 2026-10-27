@@ -1,0 +1,1236 @@
+{
+  "schema_version": 1,
+  "screen": "Within-region Tm5 POI p90 midpercentile × frozen Mx4 F; five-fold cross-fit residual after Mx4 F and S1 lagged Mx4 F; unregistered diagnostic",
+  "method": {
+    "feature": "rank product = average-tie within-region empirical midpercentile of defined provided Tm5 POI p90 version × frozen Mx4 F.",
+    "cross_fit": "Five deterministic region-local GEOID folds. For each fold, OLS with intercept, frozen Mx4 F and S1 lagged Mx4 F is fit on the other four folds and predicts the held-out fold. No tuning, labels, or imputation.",
+    "variance_ratio": "Pooled population variance (ddof=0) of held-out residuals divided by rank×Mx4 product variance on the same complete-case support.",
+    "correlation": "Pooled Pearson correlation of held-out residuals with each frozen predictor; regional values are descriptive.",
+    "nulls": "Source nulls remain null; interaction and cross-fit outputs are defined only on the exact POI-rank, Mx4, and S1 joint support.",
+    "unregistered": true
+  },
+  "measure_before": {
+    "global_POI_version_x_Mx4_passed_p95_change": 0.9415887339401863,
+    "regional_rank_transform_p95_change_from_global": 0.5005576527275482,
+    "regional_rank_x_Mx4_feature_previously_measured": false,
+    "global_interaction_report_sha256": "b3bda1e4e76fef1447d0df9415d07676637559f0b21c1ca8761ab5178297814b",
+    "region_rank_report_sha256": "a61003e24631302a360fec730ff5f48fe81d62a58f49ea250d786e9d7ada7565"
+  },
+  "scope": {
+    "official_ids": 9379,
+    "joint_defined_ids": 9377,
+    "joint_undefined_ids": 2,
+    "coverage_fraction": 0.9997867576500693,
+    "poi_version_defined_ids": 9377,
+    "Mx4_defined_ids": 9379,
+    "S1_lagged_Mx4_defined_ids": 9379,
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "joint_defined_ids": 1593,
+        "coverage_fraction": 1.0,
+        "product_distribution": {
+          "n": 1593,
+          "min": 0.0,
+          "p05": 0.0,
+          "p50": 0.00490387462354538,
+          "p95": 0.010358220866608328,
+          "max": 0.5310721108116392,
+          "mean": 0.01482174344961355,
+          "sd": 0.05363408122438172,
+          "variance": 0.002876614668783576
+        },
+        "crossfit_residual_distribution": {
+          "n": 1593,
+          "min": -0.23594391982992674,
+          "p05": -0.005324174365793838,
+          "p50": -0.0005514454980955494,
+          "p95": 0.004864172528879174,
+          "max": 0.28924449064556595,
+          "mean": 5.893285129469763e-07,
+          "sd": 0.019619414297531244,
+          "variance": 0.0003849214173781734
+        },
+        "residual_variance_ratio": 0.13381055918099166,
+        "residual_pearson_r_with_Mx4_F": -0.0028693563161118654,
+        "residual_pearson_r_with_S1_lagged_Mx4_F": -0.000790467397704867,
+        "folds": [
+          {
+            "fold": 0,
+            "train_joint_defined": 1285,
+            "heldout_joint_defined": 308,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.0001761628262273617,
+              0.42686260155997285,
+              0.03397514136070051
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.6790415342865683,
+            "maximum_singular_value": 35.880312073013044,
+            "heldout_residual_mean": 0.00011046426323648836,
+            "heldout_residual_variance": 0.0005639991772231199
+          },
+          {
+            "fold": 1,
+            "train_joint_defined": 1266,
+            "heldout_joint_defined": 327,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.00038316873854364483,
+              0.4807385307388174,
+              -0.027244923798818377
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.5652994676504423,
+            "maximum_singular_value": 35.620345671132526,
+            "heldout_residual_mean": 0.00028999563529259894,
+            "heldout_residual_variance": 0.00026832755063548383
+          },
+          {
+            "fold": 2,
+            "train_joint_defined": 1263,
+            "heldout_joint_defined": 330,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.00027167682223792303,
+              0.4652716136847091,
+              0.0006215352884169634
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.6665553833027658,
+            "maximum_singular_value": 35.574678515371616,
+            "heldout_residual_mean": -0.0010998903164061622,
+            "heldout_residual_variance": 0.0003530903882608547
+          },
+          {
+            "fold": 3,
+            "train_joint_defined": 1281,
+            "heldout_joint_defined": 312,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.00035607191127761404,
+              0.46388279251616704,
+              -0.01536926525251997
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.7107697737632233,
+            "maximum_singular_value": 35.82740329192764,
+            "heldout_residual_mean": 0.0012367094029251565,
+            "heldout_residual_variance": 0.0003848365112083035
+          },
+          {
+            "fold": 4,
+            "train_joint_defined": 1277,
+            "heldout_joint_defined": 316,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.00021666830820828996,
+              0.4559379251463054,
+              0.007447653868839166
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.7209454474392094,
+            "maximum_singular_value": 35.77495901815025,
+            "heldout_residual_mean": -0.0004772224518829403,
+            "heldout_residual_variance": 0.00036125477820737585
+          }
+        ]
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "joint_defined_ids": 591,
+        "coverage_fraction": 1.0,
+        "product_distribution": {
+          "n": 591,
+          "min": 0.0,
+          "p05": 0.0,
+          "p50": 0.0,
+          "p95": 0.10207468011775664,
+          "max": 0.3108833425504659,
+          "mean": 0.013978459352856682,
+          "sd": 0.049423717309446426,
+          "variance": 0.002442703832684074
+        },
+        "crossfit_residual_distribution": {
+          "n": 591,
+          "min": -0.19476959216532633,
+          "p05": -0.01582708208279552,
+          "p50": 0.0007323354503156902,
+          "p95": 0.0015941244862763078,
+          "max": 0.1309779944602731,
+          "mean": 0.0001511468800003344,
+          "sd": 0.023312358977020643,
+          "variance": 0.000543466081073475
+        },
+        "residual_variance_ratio": 0.2224854580411034,
+        "residual_pearson_r_with_Mx4_F": -0.001334475703094758,
+        "residual_pearson_r_with_S1_lagged_Mx4_F": 0.013533232040518726,
+        "folds": [
+          {
+            "fold": 0,
+            "train_joint_defined": 478,
+            "heldout_joint_defined": 113,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              -0.0001356478011154121,
+              0.6297399435041365,
+              -0.10214525974374983
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.42564800823571636,
+            "maximum_singular_value": 21.877209921942157,
+            "heldout_residual_mean": 0.0009834637894359666,
+            "heldout_residual_variance": 0.0005924619057877034
+          },
+          {
+            "fold": 1,
+            "train_joint_defined": 469,
+            "heldout_joint_defined": 122,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              -0.0007323354503156902,
+              0.52529241912023,
+              0.016476614923208233
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.43864189116914154,
+            "maximum_singular_value": 21.67227949340802,
+            "heldout_residual_mean": 0.001956121209456652,
+            "heldout_residual_variance": 0.0004883730233924104
+          },
+          {
+            "fold": 2,
+            "train_joint_defined": 470,
+            "heldout_joint_defined": 121,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              -0.0012918563038324315,
+              0.517007847541754,
+              0.07363509221940806
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.4537224358669525,
+            "maximum_singular_value": 21.697035412771353,
+            "heldout_residual_mean": -0.0016140133096332783,
+            "heldout_residual_variance": 0.0005523354365992024
+          },
+          {
+            "fold": 3,
+            "train_joint_defined": 470,
+            "heldout_joint_defined": 121,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              -0.0009560652158615203,
+              0.55808229383377,
+              0.016283637546183505
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.4590443372887076,
+            "maximum_singular_value": 21.694223382407905,
+            "heldout_residual_mean": -0.001139108880168163,
+            "heldout_residual_variance": 0.0006564699230836354
+          },
+          {
+            "fold": 4,
+            "train_joint_defined": 477,
+            "heldout_joint_defined": 114,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              -0.0005140653626999001,
+              0.6536617106394657,
+              -0.10925729886173657
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.37705440535525403,
+            "maximum_singular_value": 21.85509651842976,
+            "heldout_residual_mean": 0.0006375210112824234,
+            "heldout_residual_variance": 0.00041501875535498854
+          }
+        ]
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "joint_defined_ids": 1192,
+        "coverage_fraction": 1.0,
+        "product_distribution": {
+          "n": 1192,
+          "min": 0.0,
+          "p05": 0.0,
+          "p50": 0.0,
+          "p95": 0.3567265760528724,
+          "max": 0.5495724943008182,
+          "mean": 0.08469942652202335,
+          "sd": 0.14609262069850174,
+          "variance": 0.021343053822556295
+        },
+        "crossfit_residual_distribution": {
+          "n": 1192,
+          "min": -0.32561940520873706,
+          "p05": -0.06099119896861993,
+          "p50": -0.000782391023365726,
+          "p95": 0.16250573974422616,
+          "max": 0.24518098026521418,
+          "mean": 3.142315398179994e-05,
+          "sd": 0.06702580160775787,
+          "variance": 0.004492458081162517
+        },
+        "residual_variance_ratio": 0.21048806410330495,
+        "residual_pearson_r_with_Mx4_F": 3.062457827705851e-05,
+        "residual_pearson_r_with_S1_lagged_Mx4_F": -0.0012054589300897552,
+        "folds": [
+          {
+            "fold": 0,
+            "train_joint_defined": 951,
+            "heldout_joint_defined": 241,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.0015387429286341208,
+              0.7102888664822334,
+              -0.2116215661329105
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.7796332708145044,
+            "maximum_singular_value": 31.809463490979205,
+            "heldout_residual_mean": -0.002206642773725673,
+            "heldout_residual_variance": 0.005251120231584512
+          },
+          {
+            "fold": 1,
+            "train_joint_defined": 956,
+            "heldout_joint_defined": 236,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.000405507679676149,
+              0.6586969307469094,
+              -0.16248289028186913
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.8255034584462789,
+            "maximum_singular_value": 31.954108023745054,
+            "heldout_residual_mean": 0.005715737143165944,
+            "heldout_residual_variance": 0.003527884337174042
+          },
+          {
+            "fold": 2,
+            "train_joint_defined": 943,
+            "heldout_joint_defined": 249,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.0005265025125469733,
+              0.654838877959272,
+              -0.15210756348228938
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.8022342035116039,
+            "maximum_singular_value": 31.648936145394934,
+            "heldout_residual_mean": -0.00034929906758619214,
+            "heldout_residual_variance": 0.003999886127621384
+          },
+          {
+            "fold": 3,
+            "train_joint_defined": 949,
+            "heldout_joint_defined": 243,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.000782391023365726,
+              0.6245486125159891,
+              -0.11847672747455468
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.8604591420472412,
+            "maximum_singular_value": 31.71252125828055,
+            "heldout_residual_mean": -0.004241759929268665,
+            "heldout_residual_variance": 0.004603060611920676
+          },
+          {
+            "fold": 4,
+            "train_joint_defined": 969,
+            "heldout_joint_defined": 223,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.0004844483445652518,
+              0.4876728948993153,
+              0.013864315930605609
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.7429920606235458,
+            "maximum_singular_value": 32.10482743460706,
+            "heldout_residual_mean": 0.0015159931518756856,
+            "heldout_residual_variance": 0.005060971087689498
+          }
+        ]
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "joint_defined_ids": 6001,
+        "coverage_fraction": 0.9996668332500417,
+        "product_distribution": {
+          "n": 6001,
+          "min": 0.0,
+          "p05": 0.0,
+          "p50": 0.0,
+          "p95": 0.06467674308178184,
+          "max": 0.2530572351144065,
+          "mean": 0.010772680062505159,
+          "sd": 0.028507012870727665,
+          "variance": 0.0008126497828118329
+        },
+        "crossfit_residual_distribution": {
+          "n": 6001,
+          "min": -0.1367654879884449,
+          "p05": -0.008920552931150426,
+          "p50": -9.758562223956868e-05,
+          "p95": 0.0012362697644341843,
+          "max": 0.1157413970111407,
+          "mean": 4.919657759359122e-06,
+          "sd": 0.011418096086380744,
+          "variance": 0.00013037291823782325
+        },
+        "residual_variance_ratio": 0.16042940144119966,
+        "residual_pearson_r_with_Mx4_F": 0.0015277483278295031,
+        "residual_pearson_r_with_S1_lagged_Mx4_F": 0.001038823006252512,
+        "folds": [
+          {
+            "fold": 0,
+            "train_joint_defined": 4832,
+            "heldout_joint_defined": 1169,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              9.103438353139522e-05,
+              0.502285693919744,
+              -0.007778514139923587
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.5846886738981879,
+            "maximum_singular_value": 69.5459091001259,
+            "heldout_residual_mean": 0.00032530140145738546,
+            "heldout_residual_variance": 0.00012270841441753576
+          },
+          {
+            "fold": 1,
+            "train_joint_defined": 4843,
+            "heldout_joint_defined": 1158,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.0001892513195497612,
+              0.5395218517063041,
+              -0.05047539343628599
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.5612544793161146,
+            "maximum_singular_value": 69.6230485644989,
+            "heldout_residual_mean": 0.00042139020572986343,
+            "heldout_residual_variance": 0.0001703680998436744
+          },
+          {
+            "fold": 2,
+            "train_joint_defined": 4791,
+            "heldout_joint_defined": 1210,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              2.9473236624371614e-05,
+              0.5237410595024019,
+              -0.018420865531023678
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.5969937003027387,
+            "maximum_singular_value": 69.24853228361344,
+            "heldout_residual_mean": -0.0005332411940392902,
+            "heldout_residual_variance": 0.00011711912193554996
+          },
+          {
+            "fold": 3,
+            "train_joint_defined": 4747,
+            "heldout_joint_defined": 1254,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              5.851303016278707e-05,
+              0.49268329756485535,
+              0.0023053604863665367
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.5482646208865288,
+            "maximum_singular_value": 68.93031801057161,
+            "heldout_residual_mean": 0.0004106401426016571,
+            "heldout_residual_variance": 0.00013407056169957715
+          },
+          {
+            "fold": 4,
+            "train_joint_defined": 4791,
+            "heldout_joint_defined": 1210,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              9.758562223956868e-05,
+              0.5337926684519775,
+              -0.031169116174460332
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.5559652618117644,
+            "maximum_singular_value": 69.24936850811176,
+            "heldout_residual_mean": -0.0005854919209585853,
+            "heldout_residual_variance": 0.00010784907037126486
+          }
+        ]
+      }
+    },
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_reference_data_read": false,
+    "external_data_read": false,
+    "leaderboard_feedback_used": false,
+    "registry_integration": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "rank_x_Mx4_product_distribution": {
+      "n": 9377,
+      "min": 0.0,
+      "p05": 0.0,
+      "p50": 0.0,
+      "p95": 0.12020058429537567,
+      "max": 0.5495724943008182,
+      "mean": 0.02106013397271174,
+      "sd": 0.06684434655279331,
+      "variance": 0.00446816666606993
+    },
+    "product_variance": 0.00446816666606993,
+    "crossfit_residual_distribution": {
+      "n": 9377,
+      "min": -0.32561940520873706,
+      "p05": -0.018169953610543074,
+      "p50": -0.0001892513195497612,
+      "p95": 0.004833208357807219,
+      "max": 0.28924449064556595,
+      "mean": 1.676931557657483e-05,
+      "sd": 0.02746197381473187,
+      "variance": 0.0007541600058010189
+    },
+    "crossfit_residual_variance": 0.0007541600058010189,
+    "crossfit_residual_variance_ratio": 0.16878511079900163,
+    "pooled_residual_pearson_correlations": {
+      "Mx4_F": -7.752918804592671e-05,
+      "S1_lagged_Mx4_F": -0.0002421429983295767
+    },
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "joint_defined_ids": 1593,
+        "coverage_fraction": 1.0,
+        "product_distribution": {
+          "n": 1593,
+          "min": 0.0,
+          "p05": 0.0,
+          "p50": 0.00490387462354538,
+          "p95": 0.010358220866608328,
+          "max": 0.5310721108116392,
+          "mean": 0.01482174344961355,
+          "sd": 0.05363408122438172,
+          "variance": 0.002876614668783576
+        },
+        "crossfit_residual_distribution": {
+          "n": 1593,
+          "min": -0.23594391982992674,
+          "p05": -0.005324174365793838,
+          "p50": -0.0005514454980955494,
+          "p95": 0.004864172528879174,
+          "max": 0.28924449064556595,
+          "mean": 5.893285129469763e-07,
+          "sd": 0.019619414297531244,
+          "variance": 0.0003849214173781734
+        },
+        "residual_variance_ratio": 0.13381055918099166,
+        "residual_pearson_r_with_Mx4_F": -0.0028693563161118654,
+        "residual_pearson_r_with_S1_lagged_Mx4_F": -0.000790467397704867,
+        "folds": [
+          {
+            "fold": 0,
+            "train_joint_defined": 1285,
+            "heldout_joint_defined": 308,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.0001761628262273617,
+              0.42686260155997285,
+              0.03397514136070051
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.6790415342865683,
+            "maximum_singular_value": 35.880312073013044,
+            "heldout_residual_mean": 0.00011046426323648836,
+            "heldout_residual_variance": 0.0005639991772231199
+          },
+          {
+            "fold": 1,
+            "train_joint_defined": 1266,
+            "heldout_joint_defined": 327,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.00038316873854364483,
+              0.4807385307388174,
+              -0.027244923798818377
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.5652994676504423,
+            "maximum_singular_value": 35.620345671132526,
+            "heldout_residual_mean": 0.00028999563529259894,
+            "heldout_residual_variance": 0.00026832755063548383
+          },
+          {
+            "fold": 2,
+            "train_joint_defined": 1263,
+            "heldout_joint_defined": 330,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.00027167682223792303,
+              0.4652716136847091,
+              0.0006215352884169634
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.6665553833027658,
+            "maximum_singular_value": 35.574678515371616,
+            "heldout_residual_mean": -0.0010998903164061622,
+            "heldout_residual_variance": 0.0003530903882608547
+          },
+          {
+            "fold": 3,
+            "train_joint_defined": 1281,
+            "heldout_joint_defined": 312,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.00035607191127761404,
+              0.46388279251616704,
+              -0.01536926525251997
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.7107697737632233,
+            "maximum_singular_value": 35.82740329192764,
+            "heldout_residual_mean": 0.0012367094029251565,
+            "heldout_residual_variance": 0.0003848365112083035
+          },
+          {
+            "fold": 4,
+            "train_joint_defined": 1277,
+            "heldout_joint_defined": 316,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.00021666830820828996,
+              0.4559379251463054,
+              0.007447653868839166
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.7209454474392094,
+            "maximum_singular_value": 35.77495901815025,
+            "heldout_residual_mean": -0.0004772224518829403,
+            "heldout_residual_variance": 0.00036125477820737585
+          }
+        ]
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "joint_defined_ids": 591,
+        "coverage_fraction": 1.0,
+        "product_distribution": {
+          "n": 591,
+          "min": 0.0,
+          "p05": 0.0,
+          "p50": 0.0,
+          "p95": 0.10207468011775664,
+          "max": 0.3108833425504659,
+          "mean": 0.013978459352856682,
+          "sd": 0.049423717309446426,
+          "variance": 0.002442703832684074
+        },
+        "crossfit_residual_distribution": {
+          "n": 591,
+          "min": -0.19476959216532633,
+          "p05": -0.01582708208279552,
+          "p50": 0.0007323354503156902,
+          "p95": 0.0015941244862763078,
+          "max": 0.1309779944602731,
+          "mean": 0.0001511468800003344,
+          "sd": 0.023312358977020643,
+          "variance": 0.000543466081073475
+        },
+        "residual_variance_ratio": 0.2224854580411034,
+        "residual_pearson_r_with_Mx4_F": -0.001334475703094758,
+        "residual_pearson_r_with_S1_lagged_Mx4_F": 0.013533232040518726,
+        "folds": [
+          {
+            "fold": 0,
+            "train_joint_defined": 478,
+            "heldout_joint_defined": 113,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              -0.0001356478011154121,
+              0.6297399435041365,
+              -0.10214525974374983
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.42564800823571636,
+            "maximum_singular_value": 21.877209921942157,
+            "heldout_residual_mean": 0.0009834637894359666,
+            "heldout_residual_variance": 0.0005924619057877034
+          },
+          {
+            "fold": 1,
+            "train_joint_defined": 469,
+            "heldout_joint_defined": 122,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              -0.0007323354503156902,
+              0.52529241912023,
+              0.016476614923208233
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.43864189116914154,
+            "maximum_singular_value": 21.67227949340802,
+            "heldout_residual_mean": 0.001956121209456652,
+            "heldout_residual_variance": 0.0004883730233924104
+          },
+          {
+            "fold": 2,
+            "train_joint_defined": 470,
+            "heldout_joint_defined": 121,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              -0.0012918563038324315,
+              0.517007847541754,
+              0.07363509221940806
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.4537224358669525,
+            "maximum_singular_value": 21.697035412771353,
+            "heldout_residual_mean": -0.0016140133096332783,
+            "heldout_residual_variance": 0.0005523354365992024
+          },
+          {
+            "fold": 3,
+            "train_joint_defined": 470,
+            "heldout_joint_defined": 121,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              -0.0009560652158615203,
+              0.55808229383377,
+              0.016283637546183505
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.4590443372887076,
+            "maximum_singular_value": 21.694223382407905,
+            "heldout_residual_mean": -0.001139108880168163,
+            "heldout_residual_variance": 0.0006564699230836354
+          },
+          {
+            "fold": 4,
+            "train_joint_defined": 477,
+            "heldout_joint_defined": 114,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              -0.0005140653626999001,
+              0.6536617106394657,
+              -0.10925729886173657
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.37705440535525403,
+            "maximum_singular_value": 21.85509651842976,
+            "heldout_residual_mean": 0.0006375210112824234,
+            "heldout_residual_variance": 0.00041501875535498854
+          }
+        ]
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "joint_defined_ids": 1192,
+        "coverage_fraction": 1.0,
+        "product_distribution": {
+          "n": 1192,
+          "min": 0.0,
+          "p05": 0.0,
+          "p50": 0.0,
+          "p95": 0.3567265760528724,
+          "max": 0.5495724943008182,
+          "mean": 0.08469942652202335,
+          "sd": 0.14609262069850174,
+          "variance": 0.021343053822556295
+        },
+        "crossfit_residual_distribution": {
+          "n": 1192,
+          "min": -0.32561940520873706,
+          "p05": -0.06099119896861993,
+          "p50": -0.000782391023365726,
+          "p95": 0.16250573974422616,
+          "max": 0.24518098026521418,
+          "mean": 3.142315398179994e-05,
+          "sd": 0.06702580160775787,
+          "variance": 0.004492458081162517
+        },
+        "residual_variance_ratio": 0.21048806410330495,
+        "residual_pearson_r_with_Mx4_F": 3.062457827705851e-05,
+        "residual_pearson_r_with_S1_lagged_Mx4_F": -0.0012054589300897552,
+        "folds": [
+          {
+            "fold": 0,
+            "train_joint_defined": 951,
+            "heldout_joint_defined": 241,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.0015387429286341208,
+              0.7102888664822334,
+              -0.2116215661329105
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.7796332708145044,
+            "maximum_singular_value": 31.809463490979205,
+            "heldout_residual_mean": -0.002206642773725673,
+            "heldout_residual_variance": 0.005251120231584512
+          },
+          {
+            "fold": 1,
+            "train_joint_defined": 956,
+            "heldout_joint_defined": 236,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.000405507679676149,
+              0.6586969307469094,
+              -0.16248289028186913
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.8255034584462789,
+            "maximum_singular_value": 31.954108023745054,
+            "heldout_residual_mean": 0.005715737143165944,
+            "heldout_residual_variance": 0.003527884337174042
+          },
+          {
+            "fold": 2,
+            "train_joint_defined": 943,
+            "heldout_joint_defined": 249,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.0005265025125469733,
+              0.654838877959272,
+              -0.15210756348228938
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.8022342035116039,
+            "maximum_singular_value": 31.648936145394934,
+            "heldout_residual_mean": -0.00034929906758619214,
+            "heldout_residual_variance": 0.003999886127621384
+          },
+          {
+            "fold": 3,
+            "train_joint_defined": 949,
+            "heldout_joint_defined": 243,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.000782391023365726,
+              0.6245486125159891,
+              -0.11847672747455468
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.8604591420472412,
+            "maximum_singular_value": 31.71252125828055,
+            "heldout_residual_mean": -0.004241759929268665,
+            "heldout_residual_variance": 0.004603060611920676
+          },
+          {
+            "fold": 4,
+            "train_joint_defined": 969,
+            "heldout_joint_defined": 223,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.0004844483445652518,
+              0.4876728948993153,
+              0.013864315930605609
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.7429920606235458,
+            "maximum_singular_value": 32.10482743460706,
+            "heldout_residual_mean": 0.0015159931518756856,
+            "heldout_residual_variance": 0.005060971087689498
+          }
+        ]
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "joint_defined_ids": 6001,
+        "coverage_fraction": 0.9996668332500417,
+        "product_distribution": {
+          "n": 6001,
+          "min": 0.0,
+          "p05": 0.0,
+          "p50": 0.0,
+          "p95": 0.06467674308178184,
+          "max": 0.2530572351144065,
+          "mean": 0.010772680062505159,
+          "sd": 0.028507012870727665,
+          "variance": 0.0008126497828118329
+        },
+        "crossfit_residual_distribution": {
+          "n": 6001,
+          "min": -0.1367654879884449,
+          "p05": -0.008920552931150426,
+          "p50": -9.758562223956868e-05,
+          "p95": 0.0012362697644341843,
+          "max": 0.1157413970111407,
+          "mean": 4.919657759359122e-06,
+          "sd": 0.011418096086380744,
+          "variance": 0.00013037291823782325
+        },
+        "residual_variance_ratio": 0.16042940144119966,
+        "residual_pearson_r_with_Mx4_F": 0.0015277483278295031,
+        "residual_pearson_r_with_S1_lagged_Mx4_F": 0.001038823006252512,
+        "folds": [
+          {
+            "fold": 0,
+            "train_joint_defined": 4832,
+            "heldout_joint_defined": 1169,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              9.103438353139522e-05,
+              0.502285693919744,
+              -0.007778514139923587
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.5846886738981879,
+            "maximum_singular_value": 69.5459091001259,
+            "heldout_residual_mean": 0.00032530140145738546,
+            "heldout_residual_variance": 0.00012270841441753576
+          },
+          {
+            "fold": 1,
+            "train_joint_defined": 4843,
+            "heldout_joint_defined": 1158,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              0.0001892513195497612,
+              0.5395218517063041,
+              -0.05047539343628599
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.5612544793161146,
+            "maximum_singular_value": 69.6230485644989,
+            "heldout_residual_mean": 0.00042139020572986343,
+            "heldout_residual_variance": 0.0001703680998436744
+          },
+          {
+            "fold": 2,
+            "train_joint_defined": 4791,
+            "heldout_joint_defined": 1210,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              2.9473236624371614e-05,
+              0.5237410595024019,
+              -0.018420865531023678
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.5969937003027387,
+            "maximum_singular_value": 69.24853228361344,
+            "heldout_residual_mean": -0.0005332411940392902,
+            "heldout_residual_variance": 0.00011711912193554996
+          },
+          {
+            "fold": 3,
+            "train_joint_defined": 4747,
+            "heldout_joint_defined": 1254,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              5.851303016278707e-05,
+              0.49268329756485535,
+              0.0023053604863665367
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.5482646208865288,
+            "maximum_singular_value": 68.93031801057161,
+            "heldout_residual_mean": 0.0004106401426016571,
+            "heldout_residual_variance": 0.00013407056169957715
+          },
+          {
+            "fold": 4,
+            "train_joint_defined": 4791,
+            "heldout_joint_defined": 1210,
+            "coefficient_order": [
+              "intercept",
+              "Mx4|F|covariate",
+              "S1|F|covariate:lag_mx4_f_covariate"
+            ],
+            "coefficients": [
+              9.758562223956868e-05,
+              0.5337926684519775,
+              -0.031169116174460332
+            ],
+            "design_rank": 3,
+            "design_columns": 3,
+            "minimum_singular_value": 0.5559652618117644,
+            "maximum_singular_value": 69.24936850811176,
+            "heldout_residual_mean": -0.0005854919209585853,
+            "heldout_residual_variance": 0.00010784907037126486
+          }
+        ]
+      }
+    }
+  },
+  "thresholds": {
+    "minimum_coverage_inclusive": 0.9859,
+    "minimum_residual_variance_ratio_inclusive": 0.1,
+    "maximum_absolute_residual_predictor_correlation_exclusive": 0.8,
+    "interaction_bounds_inclusive": [
+      0.0,
+      1.0
+    ]
+  },
+  "acceptance": {
+    "exact_9379_id_alignment": true,
+    "coverage_fraction": 0.9997867576500693,
+    "coverage_at_least_98_59_percent": true,
+    "finite_interaction_bounded_0_1": true,
+    "all_joint_ids_have_out_of_fold_prediction_and_residual": true,
+    "crossfit_residual_variance_ratio": 0.16878511079900163,
+    "residual_variance_at_least_10_percent": true,
+    "pooled_residual_pearson_correlations": {
+      "Mx4_F": -7.752918804592671e-05,
+      "S1_lagged_Mx4_F": -0.0002421429983295767
+    },
+    "absolute_residual_correlation_below_0_80_with_each_predictor": true,
+    "frozen_Tm5_Mx4_S1_and_registry_unchanged": true,
+    "distinct_screen_pass": true
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "Tm5_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Tm5.parquet",
+      "sha256_before": "ae363dff82f4ee47546485f45cd71250150a402479718795b0247585efdfe45e",
+      "sha256_after": "ae363dff82f4ee47546485f45cd71250150a402479718795b0247585efdfe45e",
+      "poi_emission_sha256": "fb120409c05b33cefe486745ec9f44e6e76760041e7f69b7a757800975f47d8c"
+    },
+    "Mx4_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx4.parquet",
+      "sha256_before": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+      "sha256_after": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af"
+    },
+    "S1_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/S1.parquet",
+      "sha256_before": "632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03",
+      "sha256_after": "632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03"
+    },
+    "registry_sha256_before": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "registry_sha256_after": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/tm5-poi-region-rank-mx4-interaction/rank-mx4-crossfit-residuals.parquet",
+      "rows": 9379,
+      "sha256": "a10ceacb563eaaf8df11a2c69b2ce6caaee50a770714111859a0ce3e016813cb",
+      "columns": [
+        "GEOID",
+        "region",
+        "Tm5_POI_p90_version",
+        "POI_version_defined",
+        "within_region_midpercentile",
+        "Mx4_F",
+        "Mx4_F_defined",
+        "S1_lagged_Mx4_F",
+        "S1_lagged_Mx4_F_defined",
+        "rank_x_Mx4_F",
+        "joint_defined",
+        "fold",
+        "crossfit_prediction",
+        "crossfit_residual"
+      ],
+      "deterministic_bytes": true
+    },
+    "script_sha256": "dec4ff82441b9bdfa478ed1ae401187e2c3251e2871d4545de513a0012fe9310"
+  },
+  "interpretation": "The POI regional-rank×Mx4 interaction passes the preregistered distinctness screen; keep as an unregistered diagnostic only, not an accuracy claim or integration authorization."
+}
