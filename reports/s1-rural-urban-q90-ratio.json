@@ -1,0 +1,238 @@
+{
+  "schema_version": 1,
+  "screen": "Rural/urban ratio of q90 absolute frozen cross-fitted orthogonalized S1 residual; descriptive and unregistered",
+  "measure_before": {
+    "absolute_equal_region_q90_gap": 0.0005424407320647002,
+    "absolute_q90_gap_bootstrap_95_ci": [
+      6.186952912855549e-06,
+      0.0011112970401510032
+    ],
+    "all_four_regions_had_at_least_30_per_stratum": true,
+    "relative_q90_statistic_measured": false,
+    "absolute_q90_report_sha256": "161bd98ac4507208fd54488619164a884f2ba181b2aeb3e20d2ffa3255d60ffe",
+    "frozen_residual_artifact_sha256": "437b8995e9aa97cc3cf0337cf4338c34e21ade2edaa6dc258700956695feab1e"
+  },
+  "method": {
+    "residual": "Reuse the exact frozen cross-fitted orthogonalized S1 residual values; do not refit or recompute.",
+    "strata": "Provided pct_urban < 0.5 is rural; pct_urban >= 0.5 is urban. Missing pct_urban is excluded without imputation.",
+    "regional_statistic": "For each region, compute q90(|frozen residual|) in each stratum, the rural-to-urban q90 ratio, and its natural logarithm.",
+    "equal_region_statistic": "Unweighted mean of the four regional log(rural q90 / urban q90)) values.",
+    "bootstrap": "2,000 deterministic percentile-bootstrap replicates; independently resample tracts with replacement within each region×stratum, recompute q90 ratios and the equal-region mean log ratio.",
+    "folds": "Reuse fixed GEOID fold IDs from the frozen residual artifact; no model refit or fold reassignment.",
+    "unregistered": true,
+    "interpretation_limit": "Descriptive residual-scale heterogeneity only; not hidden-target error, accuracy, causal inference, or promotion evidence."
+  },
+  "scope": {
+    "official_ids": 9379,
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "residual_defined_ids": 9379,
+    "pct_urban_defined_ids": 9353,
+    "joint_defined_ids": 9353,
+    "residual_defined_without_pct_urban": 26,
+    "pct_urban_defined_without_residual": 0,
+    "fixed_fold_counts": {
+      "0": 1831,
+      "1": 1843,
+      "2": 1911,
+      "3": 1930,
+      "4": 1864
+    },
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "pct_urban_defined_ids": 1582,
+        "rural_n": 163,
+        "urban_n": 1419,
+        "rural_q90_abs_residual": 0.0031259992625027218,
+        "urban_q90_abs_residual": 0.00022450847383583786,
+        "rural_to_urban_q90_ratio": 13.923747327187632,
+        "log_rural_to_urban_q90_ratio": 2.633595823216575,
+        "both_strata_n_at_least_30": true,
+        "fixed_fold_counts": {
+          "0": 304,
+          "1": 324,
+          "2": 327,
+          "3": 311,
+          "4": 316
+        }
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "pct_urban_defined_ids": 591,
+        "rural_n": 147,
+        "urban_n": 444,
+        "rural_q90_abs_residual": 0.001807428250397021,
+        "urban_q90_abs_residual": 0.0018188333001883947,
+        "rural_to_urban_q90_ratio": 0.9937294694405516,
+        "log_rural_to_urban_q90_ratio": -0.006290272909473347,
+        "both_strata_n_at_least_30": true,
+        "fixed_fold_counts": {
+          "0": 113,
+          "1": 122,
+          "2": 121,
+          "3": 121,
+          "4": 114
+        }
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "pct_urban_defined_ids": 1191,
+        "rural_n": 411,
+        "urban_n": 780,
+        "rural_q90_abs_residual": 0.0028710656173409257,
+        "urban_q90_abs_residual": 0.0037823302412218762,
+        "rural_to_urban_q90_ratio": 0.7590732258253134,
+        "log_rural_to_urban_q90_ratio": -0.27565702952689297,
+        "both_strata_n_at_least_30": true,
+        "fixed_fold_counts": {
+          "0": 240,
+          "1": 236,
+          "2": 249,
+          "3": 243,
+          "4": 223
+        }
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "pct_urban_defined_ids": 5989,
+        "rural_n": 991,
+        "urban_n": 4998,
+        "rural_q90_abs_residual": 0.0009601143950963887,
+        "urban_q90_abs_residual": 0.0007691725818321474,
+        "rural_to_urban_q90_ratio": 1.2482431352524597,
+        "log_rural_to_urban_q90_ratio": 0.2217370708861308,
+        "both_strata_n_at_least_30": true,
+        "fixed_fold_counts": {
+          "0": 1166,
+          "1": 1157,
+          "2": 1207,
+          "3": 1251,
+          "4": 1208
+        }
+      }
+    },
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_references_read": false,
+    "external_data_used": [],
+    "post_result_strata_used": false,
+    "leaderboard_feedback_used": false,
+    "registry_changes": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "equal_region_mean_log_rural_to_urban_q90_ratio": 0.643346397916585,
+    "equal_region_geometric_mean_rural_to_urban_q90_ratio": 1.9028378895789193,
+    "stratified_bootstrap": {
+      "replicates": 2000,
+      "seed": 20261028,
+      "resampling": "independent with-replacement tract resampling within each region×rural/urban stratum; recompute q90 ratios, log them, and average equally across four regions",
+      "ci_95_percentile": [
+        0.3318403259788963,
+        0.8687399991976871
+      ],
+      "bootstrap_log_ratio_distribution": {
+        "mean": 0.6311026925842039,
+        "sd": 0.14016019053068032,
+        "min": 0.07697160539782164,
+        "max": 1.137105496185123
+      },
+      "ci_excludes_zero": true
+    },
+    "regions_with_at_least_30_per_stratum": 4
+  },
+  "thresholds": {
+    "minimum_region_strata_support_inclusive": 30,
+    "minimum_regions_meeting_support": 3,
+    "minimum_absolute_equal_region_mean_log_ratio_inclusive": 0.22314355131420976,
+    "equivalent_ratio_threshold": 1.25,
+    "bootstrap_ci_must_exclude_zero": true,
+    "bootstrap_replicates": 2000,
+    "bootstrap_seed": 20261028
+  },
+  "acceptance": {
+    "at_least_3_regions_have_n_ge_30_in_each_stratum": true,
+    "absolute_mean_log_ratio_at_least_log_1_25": true,
+    "stratified_bootstrap_ci_excludes_zero": true,
+    "relative_tail_heterogeneity_gate_pass": true
+  },
+  "provenance": {
+    "official_id_reader": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/scripts/audit_v2_component_masks.py",
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "residual_source_report": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/s1-disagreement-orthogonalized.json",
+    "residual_source_report_sha256": "b8bc5344339a1f4eb316484aea733c02d8fa37f1a7828583f13d01ffa58aa8fd",
+    "residual_artifact": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/s1-disagreement-orthogonalized/orthogonalized-disagreement.parquet",
+    "residual_artifact_sha256": "437b8995e9aa97cc3cf0337cf4338c34e21ade2edaa6dc258700956695feab1e",
+    "residual_artifact_columns_read": [
+      "GEOID",
+      "region",
+      "crossfit_residual",
+      "crossfit_joint_defined",
+      "fold"
+    ],
+    "fixed_fold_sha256": "936352ae9328f8d94d77512569dc6cd098e86046a802e9b436b935240b802d8a",
+    "pct_urban_strata_inputs": {
+      "maricopa-az": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+        "sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 1593,
+        "pct_urban_defined_ids": 1582
+      },
+      "northern-ca": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+        "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 591,
+        "pct_urban_defined_ids": 591
+      },
+      "eastern-ok": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+        "sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 1192,
+        "pct_urban_defined_ids": 1191
+      },
+      "south-central-tx": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+        "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 6003,
+        "pct_urban_defined_ids": 5989
+      }
+    },
+    "prior_absolute_q90_report": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/s1-orthogonalized-rural-q90.json",
+    "prior_absolute_q90_report_sha256": "161bd98ac4507208fd54488619164a884f2ba181b2aeb3e20d2ffa3255d60ffe",
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/s1-rural-urban-q90-ratio/rural-q90-ratio-input.parquet",
+      "sha256": "80dde5bf8d36002a95ea25046d6f38021bbfdee1807b2e360ea30d696da2b2c2",
+      "rows": 9379,
+      "columns": [
+        "GEOID",
+        "region",
+        "fixed_source_fold",
+        "crossfit_residual",
+        "absolute_crossfit_residual",
+        "residual_defined",
+        "pct_urban",
+        "rural_indicator",
+        "urban_indicator"
+      ],
+      "deterministic_serialization": true
+    },
+    "script_sha256": "e55f2a6565f284b3ddf619621559067cb697697e9b058d472872987af14d44f2"
+  },
+  "interpretation": "The relative q90 screen passed support, magnitude and CI gates; this remains a descriptive feature diagnostic, not a target-accuracy, causal, or promotion claim."
+}
