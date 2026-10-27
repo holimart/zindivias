@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "analysis_id": "T2_CONNECTOR_TOPOLOGY_SUPPORT_V1",
+  "registered_before_topology_measurement": true,
+  "purpose": "Discovery-only screen of strict connector-topology carriageway support for T2 orphan links; no model fit, target accuracy claim, candidate change, or upload.",
+  "scope": {
+    "official_regions": ["maricopa-az", "northern-ca", "eastern-ok", "south-central-tx"],
+    "official_tract_counts": {
+      "maricopa-az": 1593,
+      "northern-ca": 591,
+      "eastern-ok": 1192,
+      "south-central-tx": 6003
+    },
+    "official_total": 9379,
+    "official_geoid_reader": "Four authoritative per-region sample GEOID columns only; preserve string IDs and sample order.",
+    "provided_inputs_only": true
+  },
+  "measure_before": {
+    "source_report": "reports/t2-orphan-ramp-support-radius.json",
+    "source_report_sha256": "027a68729229d3b95bc88d93b2584f30f46eff7f6485702d16655ba28b59d731",
+    "radii_m": [2000, 5000, 10000],
+    "reproduce": "For each radius, derive positive-support GEOID sets from the frozen per-tract report in official sample order; verify regional and overall counts against the frozen aggregate summaries and report both order and support-set SHA-256 hashes.",
+    "sha256_encoding": "SHA-256 of newline-joined GEOID strings in authoritative sample order; no trailing newline."
+  },
+  "topology_definition": {
+    "road_source": "provided Overture roads-unfiltered only; source row is zero-based ordinal across concatenated Parquet row groups; retain distinct source rows even if geometry duplicates.",
+    "named_classes": ["motorway", "trunk", "primary", "secondary"],
+    "link_rule": "class/subclass contains link under the existing T2 exact predicate; use distinct connector IDs sorted by at-position and define first/last as link endpoint connectors.",
+    "orphan_link_rule": "Both endpoint connectors must have at least one other incident road and no other incident named-class road, excluding the link row itself; matches registered T2-v2 semantics.",
+    "carriageway_candidate_rule": "A candidate is a non-named, non-link road with exactly two distinct endpoint connector IDs and non-null geometry, incident at one orphan-link endpoint connector.",
+    "endpoint_pair": "(orphan-link source row, candidate road source row, shared connector ID, candidate road's opposite endpoint connector ID).",
+    "unique_acceptance": "Accept a pair only when exactly one qualifying orphan-link endpoint occurrence and exactly one eligible candidate road source row are incident to the shared connector, and that candidate road is incident to exactly one target orphan-link endpoint connector in the full region.",
+    "ambiguity_policy": "Any endpoint with multiple eligible roads, repeated orphan-link endpoint incidence, or a candidate road touching multiple target orphan connectors is ambiguous; count and reject every such pair. No ambiguous pair may contribute coverage.",
+    "tract_support": "Positive EPSG:5070 length of an accepted candidate-road source geometry inside an authoritative tract polygon, with no Euclidean buffer or radius.",
+    "unique_match_precision_proxy": "accepted unique connector pairs divided by all eligible endpoint-to-road candidate pairs; this is only a topology-specificity proxy, not empirical precision against a reference.",
+    "coverage_metrics": "Report orphan endpoint and orphan-link coverage; eligible/accepted/ambiguous connector pairs and road rows; unique source roads; official tracts with positive accepted attached-road length overall, by region, and by provided RUCA primary category/coverage flag."
+  },
+  "acceptance": {
+    "before_radius_counts_and_support_geoid_hashes_reproduced": true,
+    "exact_official_9379_id_partition_verified": true,
+    "deterministic_region_rerun_byte_identical": true,
+    "ambiguous_pairs_accepted": 0,
+    "all_ambiguous_pairs_rejected": true,
+    "report_overall_80pct_and_each_region_50pct_gate": true
+  },
+  "forbidden": [
+    "labels, target values, removed reference layers or equivalents",
+    "external data, external road networks, or outside packages/services",
+    "leaderboard/submission information",
+    "model fitting or target tuning",
+    "candidate edits or uploads"
+  ],
+  "outputs": {
+    "script": "scripts/audit_t2_connector_topology_support.py",
+    "tests": "tests/test_t2_connector_topology_support.py",
+    "report": "reports/t2-connector-topology-support.json",
+    "large_region_checkpoints": "$COMPETITION_WORKSPACE/t2-connector-topology-checkpoints/"
+  }
+}
