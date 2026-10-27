@@ -59,11 +59,125 @@ def load_official_ids(workspace: Path) -> tuple[list[str], dict[str, str]]:
     return ids, region_of
 
 
+def _skip_json_value(text: str, position: int) -> int:
+    """Skip one JSON value lexically, without decoding ignored values (notably scores)."""
+    decoder = json.JSONDecoder()
+    n = len(text)
+    while position < n and text[position].isspace():
+        position += 1
+    if position >= n:
+        raise ValueError("unexpected end of JSON")
+    char = text[position]
+    if char == '"':
+        _, end = decoder.raw_decode(text, position)
+        return end
+    if char in "[{":
+        closing = "]" if char == "[" else "}"
+        position += 1
+        while True:
+            while position < n and (text[position].isspace() or text[position] == ","):
+                position += 1
+            if position >= n:
+                raise ValueError("unterminated JSON container")
+            if text[position] == closing:
+                return position + 1
+            if char == "{":
+                key, position = decoder.raw_decode(text, position)
+                if not isinstance(key, str):
+                    raise ValueError("JSON object key must be a string")
+                while position < n and text[position].isspace():
+                    position += 1
+                if position >= n or text[position] != ":":
+                    raise ValueError("expected colon in JSON object")
+                position = _skip_json_value(text, position + 1)
+            else:
+                position = _skip_json_value(text, position)
+    # A primitive terminates at a JSON structural delimiter or whitespace.
+    while position < n and text[position] not in ",]} \t\r\n":
+        position += 1
+    if position == n:
+        return position
+    return position
+
+
+def _project_json_object(text: str, position: int, wanted: set[str]) -> tuple[dict[str, Any], int]:
+    decoder = json.JSONDecoder()
+    while position < len(text) and text[position].isspace():
+        position += 1
+    if position >= len(text) or text[position] != "{":
+        raise ValueError("expected candidate registration object")
+    position += 1
+    result: dict[str, Any] = {}
+    while True:
+        while position < len(text) and (text[position].isspace() or text[position] == ","):
+            position += 1
+        if position >= len(text):
+            raise ValueError("unterminated candidate registration")
+        if text[position] == "}":
+            return result, position + 1
+        key, position = decoder.raw_decode(text, position)
+        while position < len(text) and text[position].isspace():
+            position += 1
+        if not isinstance(key, str) or position >= len(text) or text[position] != ":":
+            raise ValueError("malformed candidate registration field")
+        position += 1
+        while position < len(text) and text[position].isspace():
+            position += 1
+        if key in wanted:
+            value, position = decoder.raw_decode(text, position)
+            result[key] = value
+        else:
+            position = _skip_json_value(text, position)
+
+
 def load_registrations(path: Path, expected_ids: tuple[str, ...] = EXPECTED_CANDIDATES) -> tuple[dict[str, dict[str, Any]], str]:
-    """Use only frozen artifact metadata; public-score/leaderboard fields are ignored."""
-    raw = json.loads(path.read_text(encoding="utf-8"))
-    rows = raw.get("candidate_registrations")
-    if not isinstance(rows, list):
+    """Project artifact metadata from final-two without decoding score/leaderboard fields."""
+    text = path.read_text(encoding="utf-8")
+    decoder = json.JSONDecoder()
+    position = 0
+    while position < len(text) and text[position].isspace():
+        position += 1
+    if position >= len(text) or text[position] != "{":
+        raise ValueError("final-two manifest must be a JSON object")
+    position += 1
+    rows: list[dict[str, Any]] | None = None
+    wanted_fields = {"candidate_id", "artifact", "sha256", "rows", "columns",
+                     "preregistered_card_path", "preregistered_card_sha256",
+                     "official_id_order_verified_against_authoritative_samples", "template_only_rows"}
+    while position < len(text):
+        while position < len(text) and (text[position].isspace() or text[position] == ","):
+            position += 1
+        if position >= len(text):
+            break
+        if text[position] == "}":
+            break
+        key, position = decoder.raw_decode(text, position)
+        while position < len(text) and text[position].isspace():
+            position += 1
+        if not isinstance(key, str) or position >= len(text) or text[position] != ":":
+            raise ValueError("malformed final-two manifest")
+        position += 1
+        while position < len(text) and text[position].isspace():
+            position += 1
+        if key != "candidate_registrations":
+            position = _skip_json_value(text, position)
+            continue
+        if position >= len(text) or text[position] != "[":
+            raise ValueError("candidate_registrations must be an array")
+        position += 1
+        rows = []
+        while position < len(text):
+            while position < len(text) and (text[position].isspace() or text[position] == ","):
+                position += 1
+            if position >= len(text):
+                raise ValueError("unterminated candidate_registrations array")
+            if text[position] == "]":
+                position += 1
+                break
+            row, position = _project_json_object(text, position, wanted_fields)
+            rows.append(row)
+        break
+    if rows is None:
         raise ValueError("final-two manifest has no candidate_registrations list")
     selected: dict[str, dict[str, Any]] = {}
     for row in rows:
@@ -72,11 +186,7 @@ def load_registrations(path: Path, expected_ids: tuple[str, ...] = EXPECTED_CAND
             continue
         if cid in selected:
             raise ValueError(f"duplicate registration for {cid}")
-        selected[cid] = {key: row.get(key) for key in (
-            "candidate_id", "artifact", "sha256", "rows", "columns",
-            "preregistered_card_path", "preregistered_card_sha256",
-            "official_id_order_verified_against_authoritative_samples", "template_only_rows"
-        )}
+        selected[cid] = row
     if set(selected) != set(expected_ids):
         raise ValueError(f"frozen cohort registration mismatch: {sorted(selected)}")
     return selected, sha256(path)
@@ -194,6 +304,11 @@ def build_report(workspace: Path, output: Path) -> dict[str, Any]:
         by_region[region] = region_data
     if sum(x["official_tracts"] for x in by_region.values()) != 9379:
         raise ValueError("region summary does not cover exact official scope")
+    if sha256(FINAL_TWO) != final_two_hash:
+        raise ValueError("final-two manifest changed during the read-only audit")
+    for candidate, meta in candidate_meta.items():
+        if sha256(ROOT / meta["artifact"]) != meta["sha256"]:
+            raise ValueError(f"frozen candidate artifact changed during audit: {candidate}")
 
     report = {
         "schema_version": 1,

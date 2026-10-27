@@ -38,9 +38,7 @@ def test_final_two_registration_projection_ignores_score_fields(tmp_path):
          "columns":["GEOID","coverage_gap_score"],"public_rmse":12345,"submission_id":"must-not-be-used"}
     path.write_text(json.dumps({"candidate_registrations":[row]}))
     selected,digest=module.load_registrations(path,expected_ids=("C",))
-    assert set(selected["C"])=={"candidate_id","artifact","sha256","rows","columns",
-        "preregistered_card_path","preregistered_card_sha256",
-        "official_id_order_verified_against_authoritative_samples","template_only_rows"}
+    assert set(selected["C"])=={"candidate_id","artifact","sha256","rows","columns"}
     assert "public_rmse" not in selected["C"]
     assert digest==hashlib.sha256(path.read_bytes()).hexdigest()
 
