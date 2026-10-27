@@ -1,0 +1,229 @@
+{
+  "schema_version": 1,
+  "screen": "Absolute frozen cross-fitted orthogonalized S1 disagreement residual q90 rural/urban contrast; descriptive and unregistered",
+  "measure_before": {
+    "prior_absolute_rural_minus_urban_median_gap": 4.933868494245855e-06,
+    "median_report_sha256": "02ca7365bf2675c6724b5e8c7d8c8460320fc62676761319c14f4c74109cf3c3",
+    "source_residual_artifact_sha256": "437b8995e9aa97cc3cf0337cf4338c34e21ade2edaa6dc258700956695feab1e",
+    "q90_contrast_or_ci_measured": false
+  },
+  "method": {
+    "residual": "Reuse the frozen cross-fitted orthogonalized S1 residual as emitted; no refit or recomputation.",
+    "outcome": "Within each official region, compute q90(|crossfit residual|) for rural pct_urban<0.5 and urban pct_urban>=0.5; regional gap is rural minus urban. Overall statistic is the unweighted mean of the four signed regional gaps.",
+    "bootstrap": "2,000 deterministic percentile-bootstrap replicates. Resample tracts independently with replacement within each region×rural/urban stratum, recompute four signed q90 gaps, and take their equal-region mean.",
+    "folds": "Copy and validate the fixed fold IDs from the frozen residual artifact; no fold reassignment or model fitting.",
+    "nulls": "Preserve source residual nulls; exclude missing/nonfinite pct_urban from both strata without imputation.",
+    "rural_definition": "Provided pct_urban < 0.5 is rural; pct_urban >= 0.5 is urban.",
+    "interpretation_limit": "Descriptive residual heterogeneity only; not a hidden-target error, causal, or accuracy claim.",
+    "unregistered": true
+  },
+  "scope": {
+    "official_ids": 9379,
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "residual_defined_ids": 9379,
+    "pct_urban_defined_ids": 9353,
+    "joint_defined_ids": 9353,
+    "residual_defined_without_pct_urban": 26,
+    "pct_urban_defined_without_residual": 0,
+    "fold_counts": {
+      "0": 1831,
+      "1": 1843,
+      "2": 1911,
+      "3": 1930,
+      "4": 1864
+    },
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "pct_urban_defined_ids": 1582,
+        "rural_n": 163,
+        "urban_n": 1419,
+        "rural_q90_abs_residual": 0.0031259992625027218,
+        "urban_q90_abs_residual": 0.00022450847383583786,
+        "signed_rural_minus_urban_q90_gap": 0.002901490788666884,
+        "both_strata_n_at_least_30": true,
+        "fixed_fold_counts": {
+          "0": 304,
+          "1": 324,
+          "2": 327,
+          "3": 311,
+          "4": 316
+        }
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "pct_urban_defined_ids": 591,
+        "rural_n": 147,
+        "urban_n": 444,
+        "rural_q90_abs_residual": 0.001807428250397021,
+        "urban_q90_abs_residual": 0.0018188333001883947,
+        "signed_rural_minus_urban_q90_gap": -1.1405049791373637e-05,
+        "both_strata_n_at_least_30": true,
+        "fixed_fold_counts": {
+          "0": 113,
+          "1": 122,
+          "2": 121,
+          "3": 121,
+          "4": 114
+        }
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "pct_urban_defined_ids": 1191,
+        "rural_n": 411,
+        "urban_n": 780,
+        "rural_q90_abs_residual": 0.0028710656173409257,
+        "urban_q90_abs_residual": 0.0037823302412218762,
+        "signed_rural_minus_urban_q90_gap": -0.0009112646238809505,
+        "both_strata_n_at_least_30": true,
+        "fixed_fold_counts": {
+          "0": 240,
+          "1": 236,
+          "2": 249,
+          "3": 243,
+          "4": 223
+        }
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "pct_urban_defined_ids": 5989,
+        "rural_n": 991,
+        "urban_n": 4998,
+        "rural_q90_abs_residual": 0.0009601143950963887,
+        "urban_q90_abs_residual": 0.0007691725818321474,
+        "signed_rural_minus_urban_q90_gap": 0.00019094181326424135,
+        "both_strata_n_at_least_30": true,
+        "fixed_fold_counts": {
+          "0": 1166,
+          "1": 1157,
+          "2": 1207,
+          "3": 1251,
+          "4": 1208
+        }
+      }
+    },
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_reference_data_read": false,
+    "external_layers_read": false,
+    "leaderboard_feedback_used": false,
+    "registry_changes": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "equal_region_signed_rural_minus_urban_q90_gap": 0.0005424407320647002,
+    "absolute_equal_region_gap": 0.0005424407320647002,
+    "stratified_bootstrap": {
+      "replicates": 2000,
+      "seed": 20261028,
+      "resampling": "independent with-replacement tract resampling within each region×rural/urban stratum; equal-weight mean of four signed regional q90 gaps",
+      "ci_95_percentile": [
+        6.186952912855549e-06,
+        0.0011112970401510032
+      ],
+      "bootstrap_gap_distribution": {
+        "mean": 0.0005739795271357952,
+        "sd": 0.0003060045501182833,
+        "min": -0.0005712409585089345,
+        "max": 0.0018985565427349044
+      },
+      "ci_excludes_zero": true
+    }
+  },
+  "thresholds": {
+    "minimum_each_region_stratum_support_inclusive": 30,
+    "minimum_absolute_equal_region_gap_inclusive": 0.001,
+    "bootstrap_ci_must_exclude_zero": true,
+    "bootstrap_replicates": 2000,
+    "bootstrap_seed": 20261028
+  },
+  "acceptance": {
+    "exact_official_id_and_null_alignment": true,
+    "each_included_region_stratum_n_at_least_30": true,
+    "equal_region_signed_rural_minus_urban_q90_gap": 0.0005424407320647002,
+    "absolute_equal_region_gap_at_least_0_001": false,
+    "stratified_bootstrap_95_percent_ci": [
+      6.186952912855549e-06,
+      0.0011112970401510032
+    ],
+    "bootstrap_ci_excludes_zero": true,
+    "upper_tail_heterogeneity_gate_pass": false
+  },
+  "provenance": {
+    "official_id_reader": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/scripts/audit_v2_component_masks.py",
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "source_report": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/s1-disagreement-orthogonalized.json",
+    "source_report_sha256": "b8bc5344339a1f4eb316484aea733c02d8fa37f1a7828583f13d01ffa58aa8fd",
+    "source_residual_artifact": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/s1-disagreement-orthogonalized/orthogonalized-disagreement.parquet",
+    "source_residual_artifact_sha256": "437b8995e9aa97cc3cf0337cf4338c34e21ade2edaa6dc258700956695feab1e",
+    "source_residual_artifact_columns_read": [
+      "GEOID",
+      "region",
+      "crossfit_residual",
+      "crossfit_joint_defined",
+      "fold"
+    ],
+    "fixed_fold_sha256": "936352ae9328f8d94d77512569dc6cd098e86046a802e9b436b935240b802d8a",
+    "strata_inputs": {
+      "maricopa-az": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+        "sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 1593,
+        "pct_urban_defined_ids": 1582
+      },
+      "northern-ca": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+        "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 591,
+        "pct_urban_defined_ids": 591
+      },
+      "eastern-ok": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+        "sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 1192,
+        "pct_urban_defined_ids": 1191
+      },
+      "south-central-tx": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+        "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 6003,
+        "pct_urban_defined_ids": 5989
+      }
+    },
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/s1-orthogonalized-rural-q90/rural-q90-residual-input.parquet",
+      "sha256": "80dde5bf8d36002a95ea25046d6f38021bbfdee1807b2e360ea30d696da2b2c2",
+      "rows": 9379,
+      "columns": [
+        "GEOID",
+        "region",
+        "fixed_source_fold",
+        "crossfit_residual",
+        "absolute_crossfit_residual",
+        "residual_defined",
+        "pct_urban",
+        "rural_indicator",
+        "urban_indicator"
+      ],
+      "deterministic_serialization": true
+    },
+    "script_sha256": "41abf17789a917d52580c2014a53515ffe4ec66c1b9975db2ef394b407317370"
+  },
+  "interpretation": "Descriptive/inconclusive: at least one preregistered support, effect-size, or CI gate fails; no target-error or causal inference is warranted."
+}
