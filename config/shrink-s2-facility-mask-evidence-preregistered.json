@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "analysis_id": "SHRINK_S2_FACILITY_MASK_EVIDENCE_V1",
+  "registered_before_s2b_value_computation": true,
+  "purpose": "Resolve the S2 zero-Overture facility mask with the frozen C2 feature-derived expected-count rule and provided-data structural diagnostics; no organizer-reference, accuracy, or upload claim.",
+  "scope": {
+    "official_regions": ["maricopa-az", "northern-ca", "eastern-ok", "south-central-tx"],
+    "official_region_counts": {"maricopa-az": 1593, "northern-ca": 591, "eastern-ok": 1192, "south-central-tx": 6003},
+    "official_scored_rows": 9379,
+    "expected_zero_count_tract_types": {"ems": 7282, "fire": 5892, "schools": 1088},
+    "candidate_id": "S2b_c2_expected_facility_mask_v1",
+    "candidate_artifact": "reports/candidates/S2b_c2_expected_facility_mask_v1.csv",
+    "comparison_artifact": "reports/s2-facility-mask-evidence.json",
+    "candidate_registry_upload_authorized": false,
+    "uploads_authorized": false
+  },
+  "frozen_inputs": {
+    "S": {"path": "reports/candidates/S_crossmethod_reliability_shrink_v1.csv", "sha256": "26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a"},
+    "S2": {"path": "reports/candidates/S2_h1b_assumption_bound_v1.csv", "sha256": "44ba76abcd9e1fb0aa7194e3c0fadf567debce40e29ed4bdf93ef02ae9514577"},
+    "C2": {"path": "reports/candidates/C2_component_estimator_v0.csv", "sha256": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514"},
+    "gap_estimates": {"path": "reports/gap-estimates.csv", "sha256": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852"},
+    "C2_recipe": {"path": "scripts/estimate_gaps.py", "sha256": "4f59982e0349af048ba11efbd5dbc629076eef8d3c8dc08d5747da5833bfc4fe"},
+    "S2_preregistration": {"path": "config/shrink-s2-assumption-bound-preregistered.json", "sha256": "d0a85a584dd80990a9a81022f82b66f653250dac097832669676384ddae5d479"},
+    "prior_mask_endpoint_audit": {"path": "reports/s2-poi-facility-mask-endpoints.json", "sha256": "2b17cec8db5b1289bb38e4c9aeac14dd7e466b7f897525b6262f8158fd45ec07"},
+    "feature_and_strata_hashes": "Pin and verify the region-specific feature-summary and strata hashes in config/shrink-h1b-rule-level-preregistered.json; read only its declared provided-data columns.",
+    "official_samples": {
+      "maricopa-az": {"sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31", "rows": 1593},
+      "northern-ca": {"sha256": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902", "rows": 591},
+      "eastern-ok": {"sha256": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4", "rows": 1192},
+      "south-central-tx": {"sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e", "rows": 6003},
+      "columns_consumed": ["GEOID"], "sample_score_placeholders_consumed": false
+    }
+  },
+  "C2_count_expectation": {
+    "source": "C2 v0 scripts/estimate_gaps.py::estimate_one, scale=1.0; use provided pop_total, ALAND, and urban_fraction exactly as defined there.",
+    "urban_fraction": "clamp finite pct_urban to [0,1]; else clamp pop_urban/pop_total when pop_total>0; else use neutral 0.5, matching C2.",
+    "expected_reference_count": {
+      "fire": "0.15 + pop_total/30000 + 0.45*urban_fraction",
+      "ems": "0.15 + pop_total/40000 + 0.45*urban_fraction",
+      "schools": "0.20 + pop_total/2500 + 0.20*urban_fraction"
+    },
+    "presence_probability": "For transparent probability summaries only, map C2's expected count lambda to P(N>=1)=1-exp(-lambda), P(N=0)=exp(-lambda) under an explicitly assumed Poisson count model. C2 itself does not identify a count distribution; these are scenario probabilities, not empirical USGS probabilities.",
+    "mask_rule": "S2b applies the already fixed decision rule: drop a zero-raw-Overture-count type iff its C2 expected reference count is strictly <0.5; otherwise retain it with the frozen C2 per-type gap and defined flag. Nonzero raw-count types and all non-facility components follow S2 unchanged. No threshold search."
+  },
+  "structure_only_diagnostics": {
+    "inputs": ["provided ALAND", "provided pop_total", "provided pop_urban", "provided pct_urban", "provided raw Overture fire/EMS/school counts", "provided ACS tract polygons for adjacency"],
+    "adjacency": "Within each official region, use only provided tract polygons; neighbors share positive-length boundary in EPSG:5070 (not point-only touches). For zero-count focal tracts report adjacent-tract count, adjacent tracts with positive same-type Overture count, and their summed same-type Overture count.",
+    "summaries": "For each type's zero-count focal tracts report quantiles and thresholds for C2 expected count, Poisson P(N>=1)/P(N=0), area, population, urban fraction, and neighbor counts; compare these structural distributions with nonzero-count tracts. Interpret only as provided-data plausibility indicators, never as a USGS reference observation."
+  },
+  "S2b_recipe": {
+    "base": "Frozen S2 assumption-bound artifact and recipe; rebuild official rows from its pinned C2/gap-estimate/feature inputs, not by mutation of S2.",
+    "building": "Use S2 building source-share adjustment unchanged.",
+    "facilities": "For each fire/EMS/school type, keep the frozen C2 gap only when its C2 defined flag is true and either the provided raw Overture count is nonzero or (raw count is zero and C2 expected reference count >=0.5). Drop a zero-count type only when C2 expected count <0.5. Average retained defined facility gaps arithmetically.",
+    "establishments_transport_composite": "Use frozen S2 rules and inputs unchanged.",
+    "template_only_rows": "Copy only GEOID/order from frozen C2 template; format-only eastern-WA values remain deterministic 0.0 and are excluded from scored-region comparisons.",
+    "freezing": "Write a distinct S2b candidate artifact and register its exact SHA-256 with upload_authorized=false; never modify S or S2."
+  },
+  "comparison": {
+    "models": ["S_crossmethod_reliability_shrink_v1", "S2_h1b_assumption_bound_v1", "S2b_c2_expected_facility_mask_v1", "C2_component_estimator_v0"],
+    "statistics": ["regional mean composite level", "regional defined component means where identifiable", "zero-count type mask counts and C2 expected-count/probability summaries", "share of official tracts changed relative to S2 and C2"],
+    "scope": "official 9,379 GEOIDs only; no template-only predictions or sample score placeholders"
+  },
+  "recommendation_rule": "Recommend S2b as the internally consistent mask option if the frozen implementation exactly follows C2's preregistered <0.5 definedness threshold; state that neither S2 nor S2b is accuracy-validated and the steward retains final choice. Do not use S/S2/C2 agreement or structural associations as accuracy evidence.",
+  "forbidden": ["labels or sample score placeholders", "USGS or any removed/equivalent reference layers", "external data or their numerical counts", "leaderboard/public/private scores or scorecards", "C0", "target fitting or threshold search", "modifying S or S2", "uploading/submitting"],
+  "outputs": {
+    "script": "scripts/audit_s2_facility_mask_evidence.py",
+    "tests": "tests/test_audit_s2_facility_mask_evidence.py",
+    "candidate": "reports/candidates/S2b_c2_expected_facility_mask_v1.csv",
+    "report": "reports/s2-facility-mask-evidence.json",
+    "S2b_registry_upload_authorized": false
+  }
+}
