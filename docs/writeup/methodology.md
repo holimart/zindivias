@@ -525,3 +525,51 @@ closed if either ever changes. The rural/tribal/wildfire asymmetry is reported b
 encourage reflecting on the scorecard, and because it is consistent with the descriptive findings in
 `docs/writeup/bias-discovery.md`, which are evidence for follow-up investigation and not for any
 score-driven adjustment.
+
+## Shrink diagnosis — H1 rule-anchored phase (partial)
+
+This diagnostic uses the frozen feature-only C2 component table and the organizer's published
+aggregate definedness context. It reads no score placeholders, hidden/reference layers, external
+data, or leaderboard/submission scores. The score distributions, component masks, clipping mass,
+source-membership counts and input SHA-256s are in `reports/shrink-diagnosis.json`; reproduce with:
+
+```sh
+uv run --with-requirements requirements.txt python scripts/audit_shrink_diagnosis_h1.py \
+  --workspace "$COMPETITION_WORKSPACE" --out reports/shrink-diagnosis.json
+```
+
+| Region | Our any-top-level-component undefined | Published any-reference-component undefined | Difference (pp) | C2 transport / building / POI defined rates | Overture named/route proxy ratio |
+|---|---:|---:|---:|---:|---:|
+| Maricopa AZ | 36.53% | 55% | −18.47 | 63.47% / 100% / 100% | 1.929 |
+| Northern CA | 30.46% | 37% | −6.54 | 69.54% / 100% / 100% | 1.504 |
+| Eastern OK | 40.69% | 21% | +19.69 | 59.31% / 100% / 100% | 1.161 |
+| South-Central TX | 36.95% | 28% | +8.95 | 63.05% / 100% / 99.97% | 1.183 |
+
+The direction reverses by region: our estimator has fewer undefined rows than the published
+aggregate in Arizona/California, but more in Oklahoma/Texas. This flags region-specific H1 risk,
+not a single global definedness correction. The organizer publishes only the aggregate
+any-component rate, so these figures cannot validate individual component masks. The
+named/route ratios are internal Overture named-length / selected Overture route-network-length
+ratios; they are not regional Overture/TIGER ratios. Maricopa's 1.929 is outside the disclosed
+cross-region range 0.71–1.59, while the other three are inside, but that comparison is not a
+per-region target test.
+
+On defined rows, C2's mean transport/building/POI gaps are respectively AZ
+`0.15360/0.04905/0.31285`, Northern CA `0.11917/0.04657/0.23368`, Eastern OK
+`0.07051/0.01922/0.19935`, and South-Central TX `0.08479/0.09167/0.25591`. The audit also
+reports quantiles and exact 0/1 clipping mass for transport, building, the POI composite, fire,
+EMS, schools, establishments, and the composite. These are proxy distributions, not observed
+reference scores. The proxy recipes mix provided Overture road/building/place records with
+provided strata land/population/urbanity features. Building and POI Overture source memberships
+are multi-source and overlap (e.g. Microsoft/OSM/Esri for buildings and Meta/Microsoft/other
+providers for places); their percentages describe input provenance, not correctness or signal
+reliability. A road-source membership decomposition was not available in this audit.
+
+**H1 verdict: mixed and inconclusive.** Aggregate definedness mismatches are substantial in two
+regions in opposite directions, and the Maricopa Overture route denominator is a proxy concern;
+neither establishes that a component was computed contrary to the official target definition or
+explains candidate error without per-component reference masks/scores. **H2 and candidate S are
+pending.** No reliability-based signal share or shrink factor `c` has been estimated, no additional candidate S
+has been frozen, and no public-score-derived value or regional split was used. The next phase must
+measure agreement/retest reliability from independent provided-feature constructions before any
+candidate registration; an unlabelled feature correlation is not target accuracy.
