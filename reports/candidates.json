@@ -1628,7 +1628,7 @@
       "upload_authorized": false,
       "registration_status": "frozen_no_upload"
     },
-            {
+    {
       "candidate_id": "S2_h1b_assumption_bound_v1",
       "name": "S2 H1b assumption-bound rule counterfactual",
       "artifact": "reports/candidates/S2_h1b_assumption_bound_v1.csv",
@@ -1677,7 +1677,56 @@
       },
       "upload_authorized": false,
       "registration_status": "frozen_no_upload"
-    }],
+    },
+    {
+      "candidate_id": "S2b_c2_expected_facility_mask_v1",
+      "name": "S2b C2 expected-count facility mask scenario",
+      "artifact": "reports/candidates/S2b_c2_expected_facility_mask_v1.csv",
+      "sha256": "5761e2c17f25f66bbc9e1d769a04b76545e4cc660a8ca9481c30b89739b7ae6f",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "pre_registered": true,
+      "preregistered_card_path": "config/shrink-s2-facility-mask-evidence-preregistered.json",
+      "preregistered_card_sha256": "28bf71510cc069de9b214f60a32f384512e9fe7b1dd9d1a59b3b94229ac4fa9c",
+      "build_script_sha256": "4fb1c09534cdf15fa5d2060c4360d8f6c7f890a65e6fb2ded9ee204bfec7011d",
+      "purpose": "improvement",
+      "description": "Distinct S2 sensitivity candidate using the preregistered C2 expected-count threshold for zero-Overture facility types; not accuracy evidence.",
+      "predicted_score": null,
+      "predicted_score_scope": "Label-free output values only; organizer-target score and RMSE are not identifiable.",
+      "predicted_score_basis": "Frozen C2 feature-only per-type gaps and C2 expected-count mask; no fitted coefficients or target information.",
+      "target_RMSE_forecast": null,
+      "target_RMSE_forecast_limitation": "No permitted USGS reference counts or labels; no accuracy inference.",
+      "assumptions": [
+        "C2 expected counts are feature-derived proxy levels, not observed USGS counts.",
+        "Poisson presence probabilities are an explicit distributional bridge, not empirical/reference probabilities.",
+        "415 eastern-WA template-only rows are fixed zero fills and excluded from comparisons."
+      ],
+      "parameters": {
+        "fitted_coefficients": [],
+        "S_style_shrink_applied": false,
+        "facility_zero_mask": "drop iff C2 expected count <0.5; keep C2 per-type gap otherwise"
+      },
+      "eastern_wa_fill": {
+        "region": "eastern-wa",
+        "rows": 415,
+        "value": 0.0,
+        "scored_target_claim": false
+      },
+      "column_checks": {
+        "unique_columns": true,
+        "all_rows_have_columns": true,
+        "finite_bounded_scores": true
+      },
+      "upload_authorized": false,
+      "registration_status": "frozen_no_upload"
+    }
+  ],
   "feature_source": "provided Overture buildings/roads/POIs plus provided ACS housing geometries and strata covariates",
   "estimator_version": "v0",
   "platform_template": {
