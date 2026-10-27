@@ -1,0 +1,2362 @@
+{
+  "audit": "H1b rule-anchored C2 level and mask diagnostic; feature-only, not target evaluation",
+  "data_use": {
+    "C0_all_zero_candidate_read_or_used": false,
+    "candidate_or_registry_edits": false,
+    "external_data_or_numerical_counts_read": false,
+    "labels_or_target_values_read": false,
+    "official_sample_score_placeholders_read": false,
+    "provided_data_only": true,
+    "public_or_private_leaderboard_scores_or_scorecards_read": false,
+    "removed_references_or_equivalents_read": false,
+    "target_or_region_moment_fit": false,
+    "uploads": 0
+  },
+  "decision": {
+    "H1b_verdict": "inconclusive for organizer-reference levels/masks; internal proxy rules are already clipped, and the only additional source/zero-count signals do not identify the removed reference counts or undefined masks",
+    "S2_built": false,
+    "S2_registered": false,
+    "existing_S_candidate_changed": false,
+    "reason_S2_not_built": [
+      "TIGER S1100/S1200 tract presence is absent, so the organizer transport-defined mask and any hidden-reference undefined mass cannot be identified.",
+      "Microsoft-sourced Overture membership is measurable, but it does not prove exact overlap, completeness, vintage, or count equality with the removed Microsoft US Building Footprints reference; the source-share correction is only a sensitivity.",
+      "CBP and USGS counts are absent/forbidden. Overture all-place counts and exact-category zeros cannot prove Overture>=CBP or USGS-zero; facility stress tests therefore cannot be promoted to S2.",
+      "The C2 estimator already clips its own feature-derived expected-count ratios at zero when Overture counts meet/exceed those internal proxies. Those proxies are assumptions, not validated reference counts. No rule correction has an admissible identified effect on hidden-target levels.",
+      "The one-candidate cap is already occupied by S; an unsupported second shrink artifact would violate the row's candidate budget without providing evidence of a target-level improvement."
+    ],
+    "recommendation": "retain S_crossmethod_reliability_shrink_v1 as the sole shrink candidate; do not build or register S2",
+    "upload_authorized": false,
+    "upload_performed": false
+  },
+  "limitations": [
+    "Internal expected counts are deterministic recipe priors derived from provided population, land, urbanity, and Overture counts; they are not organizer reference counts or independent validation.",
+    "Microsoft source share is Overture provenance, not proof that each record matches a reference footprint, and not an observation of Microsoft-reference coverage.",
+    "The raw-zero facility scenarios assume Overture count zero implies USGS count zero; actual reference-definedness cannot be measured under the competition restriction.",
+    "Without labels or permitted reference counts, no corrected component level is a hidden-target accuracy claim."
+  ],
+  "measure_before": {
+    "C2_component_mass_by_region": {
+      "eastern-ok": {
+        "building": {
+          "C2_component_column": "building_gap",
+          "all_official_prediction_mass_sum": 22.911273041581747,
+          "defined_flag_source": "reports/gap-estimates.csv:building_defined",
+          "defined_gap_mass_sum": 22.911273041581747,
+          "defined_mean": 0.01922086664562227,
+          "defined_rows": 1192,
+          "positive_defined_rows": 80,
+          "undefined_rows": 0
+        },
+        "poi": {
+          "C2_component_column": "poi_gap",
+          "all_official_prediction_mass_sum": 237.62067617505315,
+          "defined_flag_source": "reports/gap-estimates.csv:poi_defined",
+          "defined_gap_mass_sum": 237.62067617505315,
+          "defined_mean": 0.19934620484484325,
+          "defined_rows": 1192,
+          "positive_defined_rows": 779,
+          "undefined_rows": 0
+        },
+        "transport": {
+          "C2_component_column": "transport_gap",
+          "all_official_prediction_mass_sum": 84.04404900212643,
+          "defined_flag_source": "reports/gap-estimates.csv:transport_defined",
+          "defined_gap_mass_sum": 84.04404900212643,
+          "defined_mean": 0.11887418529296524,
+          "defined_rows": 707,
+          "positive_defined_rows": 174,
+          "undefined_rows": 485
+        }
+      },
+      "maricopa-az": {
+        "building": {
+          "C2_component_column": "building_gap",
+          "all_official_prediction_mass_sum": 78.13643086259468,
+          "defined_flag_source": "reports/gap-estimates.csv:building_defined",
+          "defined_gap_mass_sum": 78.13643086259468,
+          "defined_mean": 0.0490498624372848,
+          "defined_rows": 1593,
+          "positive_defined_rows": 330,
+          "undefined_rows": 0
+        },
+        "poi": {
+          "C2_component_column": "poi_gap",
+          "all_official_prediction_mass_sum": 498.3721836595029,
+          "defined_flag_source": "reports/gap-estimates.csv:poi_defined",
+          "defined_gap_mass_sum": 498.3721836595029,
+          "defined_mean": 0.31285133939705145,
+          "defined_rows": 1593,
+          "positive_defined_rows": 1382,
+          "undefined_rows": 0
+        },
+        "transport": {
+          "C2_component_column": "transport_gap",
+          "all_official_prediction_mass_sum": 244.68093594888595,
+          "defined_flag_source": "reports/gap-estimates.csv:transport_defined",
+          "defined_gap_mass_sum": 244.68093594888595,
+          "defined_mean": 0.2420187299197685,
+          "defined_rows": 1011,
+          "positive_defined_rows": 513,
+          "undefined_rows": 582
+        }
+      },
+      "northern-ca": {
+        "building": {
+          "C2_component_column": "building_gap",
+          "all_official_prediction_mass_sum": 27.522159986295883,
+          "defined_flag_source": "reports/gap-estimates.csv:building_defined",
+          "defined_gap_mass_sum": 27.522159986295883,
+          "defined_mean": 0.04656879862317408,
+          "defined_rows": 591,
+          "positive_defined_rows": 126,
+          "undefined_rows": 0
+        },
+        "poi": {
+          "C2_component_column": "poi_gap",
+          "all_official_prediction_mass_sum": 138.10615648939944,
+          "defined_flag_source": "reports/gap-estimates.csv:poi_defined",
+          "defined_gap_mass_sum": 138.10615648939944,
+          "defined_mean": 0.2336821598805405,
+          "defined_rows": 591,
+          "positive_defined_rows": 424,
+          "undefined_rows": 0
+        },
+        "transport": {
+          "C2_component_column": "transport_gap",
+          "all_official_prediction_mass_sum": 70.43149314321711,
+          "defined_flag_source": "reports/gap-estimates.csv:transport_defined",
+          "defined_gap_mass_sum": 70.43149314321711,
+          "defined_mean": 0.17136616336549176,
+          "defined_rows": 411,
+          "positive_defined_rows": 152,
+          "undefined_rows": 180
+        }
+      },
+      "south-central-tx": {
+        "building": {
+          "C2_component_column": "building_gap",
+          "all_official_prediction_mass_sum": 550.2830407279623,
+          "defined_flag_source": "reports/gap-estimates.csv:building_defined",
+          "defined_gap_mass_sum": 550.2830407279623,
+          "defined_mean": 0.09166800611826792,
+          "defined_rows": 6003,
+          "positive_defined_rows": 1528,
+          "undefined_rows": 0
+        },
+        "poi": {
+          "C2_component_column": "poi_gap",
+          "all_official_prediction_mass_sum": 1536.2086179821474,
+          "defined_flag_source": "reports/gap-estimates.csv:poi_defined",
+          "defined_gap_mass_sum": 1536.2086179821474,
+          "defined_mean": 0.2559921043129724,
+          "defined_rows": 6001,
+          "positive_defined_rows": 4732,
+          "undefined_rows": 2
+        },
+        "transport": {
+          "C2_component_column": "transport_gap",
+          "all_official_prediction_mass_sum": 508.9860485081244,
+          "defined_flag_source": "reports/gap-estimates.csv:transport_defined",
+          "defined_gap_mass_sum": 508.9860485081244,
+          "defined_mean": 0.13447451743939878,
+          "defined_rows": 3785,
+          "positive_defined_rows": 1191,
+          "undefined_rows": 2218
+        }
+      }
+    },
+    "C2_component_mass_overall": {
+      "building": {
+        "defined_gap_mass_sum": 678.8529046184346,
+        "defined_mean": 0.0723800943190569,
+        "defined_rows": 9379,
+        "positive_defined_rows": 2064
+      },
+      "poi": {
+        "defined_gap_mass_sum": 2410.307634306103,
+        "defined_mean": 0.2570446448017599,
+        "defined_rows": 9377,
+        "positive_defined_rows": 7317
+      },
+      "transport": {
+        "defined_gap_mass_sum": 908.1425266023539,
+        "defined_mean": 0.15355808701426343,
+        "defined_rows": 5914,
+        "positive_defined_rows": 2030
+      }
+    },
+    "source_H1_C2_means_note": "All means here are recomputed from the frozen C2 feature-only component CSV over the existing recipe's defined flags; no organizer reference values are available."
+  },
+  "preregistration": {
+    "path": "config/shrink-h1b-rule-level-preregistered.json",
+    "registered_before_h1b_measurement": true,
+    "sha256": "d2ca6ad5a6e7701a85068c355598490d9d2444e86e1f9490b0c6b15e39881c9e",
+    "thresholds_or_fitted_parameters_added": false
+  },
+  "provenance": {
+    "C2_feature_only_prediction_sha256": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514",
+    "C2_recipe_gap_estimates_sha256": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852",
+    "C2_recipe_source_sha256": "4f59982e0349af048ba11efbd5dbc629076eef8d3c8dc08d5747da5833bfc4fe",
+    "audit_script_sha256": "a38e70b251f99e6a6121dec11fc6747b66c46271450a16adde1315e5bdcc01ca",
+    "preregistration_sha256": "d2ca6ad5a6e7701a85068c355598490d9d2444e86e1f9490b0c6b15e39881c9e",
+    "region_inputs": {
+      "eastern-ok": {
+        "feature_columns_read": [
+          "GEOID",
+          "overture_road_km",
+          "overture_named_road_km_5070",
+          "overture_buildings",
+          "overture_building_microsoft_source_share",
+          "overture_poi_all",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "feature_summary_path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/eastern-ok-overture-tract-summary.parquet",
+        "feature_summary_sha256": "e5a06316c316f61bf25b80b48e89c1e7f0b1461a0b8cec5831aae24e0cf83fa6",
+        "official_geoids": 1192,
+        "official_sample_sha256": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+        "strata_columns_read": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban"
+        ],
+        "strata_path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+        "strata_sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54"
+      },
+      "maricopa-az": {
+        "feature_columns_read": [
+          "GEOID",
+          "overture_road_km",
+          "overture_named_road_km_5070",
+          "overture_buildings",
+          "overture_building_microsoft_source_share",
+          "overture_poi_all",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "feature_summary_path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/maricopa-az-overture-tract-summary.parquet",
+        "feature_summary_sha256": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22",
+        "official_geoids": 1593,
+        "official_sample_sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+        "strata_columns_read": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban"
+        ],
+        "strata_path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+        "strata_sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd"
+      },
+      "northern-ca": {
+        "feature_columns_read": [
+          "GEOID",
+          "overture_road_km",
+          "overture_named_road_km_5070",
+          "overture_buildings",
+          "overture_building_microsoft_source_share",
+          "overture_poi_all",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "feature_summary_path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/northern-ca-overture-tract-summary.parquet",
+        "feature_summary_sha256": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c",
+        "official_geoids": 591,
+        "official_sample_sha256": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+        "strata_columns_read": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban"
+        ],
+        "strata_path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+        "strata_sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243"
+      },
+      "south-central-tx": {
+        "feature_columns_read": [
+          "GEOID",
+          "overture_road_km",
+          "overture_named_road_km_5070",
+          "overture_buildings",
+          "overture_building_microsoft_source_share",
+          "overture_poi_all",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "feature_summary_path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/south-central-tx-overture-tract-summary.parquet",
+        "feature_summary_sha256": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746",
+        "official_geoids": 6003,
+        "official_sample_sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e",
+        "strata_columns_read": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban"
+        ],
+        "strata_path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+        "strata_sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354"
+      }
+    }
+  },
+  "reproduction": {
+    "command": "uv run --with-requirements requirements.txt python scripts/audit_shrink_h1b_rule_levels.py --workspace $COMPETITION_WORKSPACE --out reports/shrink-h1b-rule-level-audit.json",
+    "determinism": "No random operations; report is sorted-key JSON with input hashes and no generation timestamp."
+  },
+  "rule_level_measurements": {
+    "interpretation": "Numeric mass values are sums of frozen C2/recipe gap predictions or explicitly labeled proxy counterfactuals. Null actual-reference mass means it is not identifiable from permitted provided data, not zero.",
+    "per_region": {
+      "eastern-ok": {
+        "building_Microsoft_source": {
+          "C2_building_gap_mass": 22.911273041581747,
+          "Microsoft_sourced_building_count_equivalent": 2246412.0,
+          "Microsoft_sourced_weighted_share": 0.8803610464264132,
+          "actual_MS_reference_overlap_count": null,
+          "actual_rule_mass_removed": null,
+          "hypothetical_mass_removed_if_source_share_equals_exact_reference_overlap": 18.58262823669277,
+          "hypothetical_remaining_building_mass_under_that_assumption": 4.3286448048889845,
+          "interpretation": "provided Overture source-membership diagnostic only; not proof that Microsoft US reference counts match these records",
+          "overture_buildings_total": 2551694.0,
+          "source_share_known_building_count": 2551694.0,
+          "source_share_unknown_building_count": 0.0
+        },
+        "component_mass": {
+          "building": {
+            "C2_component_column": "building_gap",
+            "all_official_prediction_mass_sum": 22.911273041581747,
+            "defined_flag_source": "reports/gap-estimates.csv:building_defined",
+            "defined_gap_mass_sum": 22.911273041581747,
+            "defined_mean": 0.01922086664562227,
+            "defined_rows": 1192,
+            "positive_defined_rows": 80,
+            "undefined_rows": 0
+          },
+          "poi": {
+            "C2_component_column": "poi_gap",
+            "all_official_prediction_mass_sum": 237.62067617505315,
+            "defined_flag_source": "reports/gap-estimates.csv:poi_defined",
+            "defined_gap_mass_sum": 237.62067617505315,
+            "defined_mean": 0.19934620484484325,
+            "defined_rows": 1192,
+            "positive_defined_rows": 779,
+            "undefined_rows": 0
+          },
+          "transport": {
+            "C2_component_column": "transport_gap",
+            "all_official_prediction_mass_sum": 84.04404900212643,
+            "defined_flag_source": "reports/gap-estimates.csv:transport_defined",
+            "defined_gap_mass_sum": 84.04404900212643,
+            "defined_mean": 0.11887418529296524,
+            "defined_rows": 707,
+            "positive_defined_rows": 174,
+            "undefined_rows": 485
+          }
+        },
+        "data_use": {
+          "CBP_reference_or_equivalent_read": false,
+          "Microsoft_US_Building_Footprints_or_equivalent_read": false,
+          "TIGER_reference_layer_or_equivalent_read": false,
+          "USGS_facility_reference_or_equivalent_read": false,
+          "candidate_artifacts_modified": false,
+          "candidate_registration_modified": false,
+          "external_data_or_numerical_counts_read": false,
+          "hidden_labels_or_target_values_read": false,
+          "leaderboard_or_scorecard_information_used": false,
+          "official_sample_ids_only": true,
+          "sample_score_placeholders_read": false,
+          "target_or_region_moment_fitting": false,
+          "uploads": 0
+        },
+        "deficit_only_proxy_audit": {
+          "building": {
+            "actual_hidden_reference_clipped_mass": null,
+            "defined_rows": 1192,
+            "fraction_at_or_above_internal_expected_count": 0.9328859060402684,
+            "interpretation": "current recipe clips against its own population/land/urbanity expected-count proxy; this proxy is not an observed or validated organizer reference count",
+            "positive_gap_rows_on_at_or_above_rows": 0,
+            "recipe_component": "building",
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "total_defined_recipe_gap_mass": 22.911273041581747,
+            "tracts_at_or_above_internal_expected_count": 1112
+          },
+          "ems": {
+            "actual_hidden_reference_clipped_mass": null,
+            "defined_rows": 960,
+            "fraction_at_or_above_internal_expected_count": 0.2751677852348993,
+            "interpretation": "current recipe clips against its own population/land/urbanity expected-count proxy; this proxy is not an observed or validated organizer reference count",
+            "positive_gap_rows_on_at_or_above_rows": 0,
+            "recipe_component": "ems",
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "total_defined_recipe_gap_mass": 614.6129556391337,
+            "tracts_at_or_above_internal_expected_count": 328
+          },
+          "establishments": {
+            "actual_hidden_reference_clipped_mass": null,
+            "defined_rows": 1192,
+            "fraction_at_or_above_internal_expected_count": 0.9295302013422819,
+            "interpretation": "current recipe clips against its own population/land/urbanity expected-count proxy; this proxy is not an observed or validated organizer reference count",
+            "positive_gap_rows_on_at_or_above_rows": 0,
+            "recipe_component": "cbp",
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "total_defined_recipe_gap_mass": 24.986236380749713,
+            "tracts_at_or_above_internal_expected_count": 1108
+          },
+          "fire": {
+            "actual_hidden_reference_clipped_mass": null,
+            "defined_rows": 1082,
+            "fraction_at_or_above_internal_expected_count": 0.45805369127516776,
+            "interpretation": "current recipe clips against its own population/land/urbanity expected-count proxy; this proxy is not an observed or validated organizer reference count",
+            "positive_gap_rows_on_at_or_above_rows": 0,
+            "recipe_component": "fire",
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "total_defined_recipe_gap_mass": 510.3925401348644,
+            "tracts_at_or_above_internal_expected_count": 546
+          },
+          "schools": {
+            "actual_hidden_reference_clipped_mass": null,
+            "defined_rows": 1187,
+            "fraction_at_or_above_internal_expected_count": 0.7651006711409396,
+            "interpretation": "current recipe clips against its own population/land/urbanity expected-count proxy; this proxy is not an observed or validated organizer reference count",
+            "positive_gap_rows_on_at_or_above_rows": 0,
+            "recipe_component": "schools",
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "total_defined_recipe_gap_mass": 158.82129042092268,
+            "tracts_at_or_above_internal_expected_count": 912
+          },
+          "transport": {
+            "actual_hidden_reference_clipped_mass": null,
+            "defined_rows": 707,
+            "fraction_at_or_above_internal_expected_count": 0.6174496644295302,
+            "interpretation": "current recipe clips against its own population/land/urbanity expected-count proxy; this proxy is not an observed or validated organizer reference count",
+            "positive_gap_rows_on_at_or_above_rows": 0,
+            "recipe_component": "transport",
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "total_defined_recipe_gap_mass": 84.04404900212643,
+            "tracts_at_or_above_internal_expected_count": 736
+          }
+        },
+        "official_tracts": 1192,
+        "poi_establishments": {
+          "CBP_reference_counts_read": false,
+          "actual_O_count_vs_CBP_excess_mass": null,
+          "actual_rule_mass_removed": null,
+          "internal_expected_establishment_count_proxy": "0.20 + pop_total/70 + 0.50*urban_fraction",
+          "maximum_candidate_POI_mass_at_risk": 237.62067617505315,
+          "overture_all_places_mean_per_official_tract": 173.96728187919464,
+          "overture_all_places_total": 207369.0,
+          "overture_all_places_zero_tracts": 0,
+          "recipe_CBP_proxy_gap_mass": 24.986236380749713,
+          "recipe_CBP_proxy_gap_mass_on_overproxy_rows": 0.0,
+          "recipe_defined_CBP_proxy_rows": 1192,
+          "tracts_overture_all_places_at_or_above_internal_proxy": 1108
+        },
+        "poi_facility_combined_zero_counterfactual": {
+          "actual_hidden_reference_mass_moved": null,
+          "baseline_poi_defined_tracts": 1192,
+          "baseline_poi_mass": 237.62067617505315,
+          "counterfactual_poi_defined_tracts": 1192,
+          "counterfactual_poi_mass_after_dropping_all_types_with_zero_raw_Overture_count": 34.23953853990562,
+          "mass_removed_under_unverified_zero_equals_reference_zero_assumption": 203.38113763514752
+        },
+        "poi_facility_zero_masks": {
+          "ems": {
+            "actual_rule_mass_removed": null,
+            "assumption_bound_POI_counterfactual": {
+              "actual_USGS_undefined_mass": null,
+              "aggregate_poi_mass_after_drop_type_where_overture_zero": 182.15671502937056,
+              "aggregate_poi_mass_before": 237.62067617505315,
+              "aggregate_poi_mass_removed_under_this_stress_test": 55.46396114568259,
+              "overture_exact_category_zero_fraction": 0.7248322147651006,
+              "overture_exact_category_zero_tracts": 864,
+              "per_type_recipe_gap_mass_on_overture_zero_tracts": 614.6129556391337,
+              "poi_defined_rows_after": 1192,
+              "poi_defined_rows_before": 1192,
+              "recipe_defined_on_overture_zero_tracts": 632,
+              "recipe_undefined_on_overture_zero_tracts": 232,
+              "reference_zero_tracts": null,
+              "stress_test_assumption": "raw Overture exact-category count 0 implies USGS reference count 0; explicitly unverified"
+            },
+            "overture_raw_category_total": 471.0,
+            "overture_raw_category_zero_tracts": 864,
+            "recipe_defined_on_zero_tracts": 632,
+            "recipe_per_type_gap_mass_on_zero_tracts": 614.6129556391337,
+            "recipe_undefined_on_zero_tracts": 232,
+            "total_defined_per_type_gap_mass": 614.6129556391337,
+            "true_USGS_zero_count": null
+          },
+          "fire": {
+            "actual_rule_mass_removed": null,
+            "assumption_bound_POI_counterfactual": {
+              "actual_USGS_undefined_mass": null,
+              "aggregate_poi_mass_after_drop_type_where_overture_zero": 199.42485877024387,
+              "aggregate_poi_mass_before": 237.62067617505315,
+              "aggregate_poi_mass_removed_under_this_stress_test": 38.195817404809276,
+              "overture_exact_category_zero_fraction": 0.5419463087248322,
+              "overture_exact_category_zero_tracts": 646,
+              "per_type_recipe_gap_mass_on_overture_zero_tracts": 510.3925401348644,
+              "poi_defined_rows_after": 1192,
+              "poi_defined_rows_before": 1192,
+              "recipe_defined_on_overture_zero_tracts": 536,
+              "recipe_undefined_on_overture_zero_tracts": 110,
+              "reference_zero_tracts": null,
+              "stress_test_assumption": "raw Overture exact-category count 0 implies USGS reference count 0; explicitly unverified"
+            },
+            "overture_raw_category_total": 866.0,
+            "overture_raw_category_zero_tracts": 646,
+            "recipe_defined_on_zero_tracts": 536,
+            "recipe_per_type_gap_mass_on_zero_tracts": 510.3925401348644,
+            "recipe_undefined_on_zero_tracts": 110,
+            "total_defined_per_type_gap_mass": 510.3925401348644,
+            "true_USGS_zero_count": null
+          },
+          "schools": {
+            "actual_rule_mass_removed": null,
+            "assumption_bound_POI_counterfactual": {
+              "actual_USGS_undefined_mass": null,
+              "aggregate_poi_mass_after_drop_type_where_overture_zero": 219.66680978960156,
+              "aggregate_poi_mass_before": 237.62067617505315,
+              "aggregate_poi_mass_removed_under_this_stress_test": 17.95386638545159,
+              "overture_exact_category_zero_fraction": 0.10906040268456375,
+              "overture_exact_category_zero_tracts": 130,
+              "per_type_recipe_gap_mass_on_overture_zero_tracts": 117.4222462887596,
+              "poi_defined_rows_after": 1192,
+              "poi_defined_rows_before": 1192,
+              "recipe_defined_on_overture_zero_tracts": 125,
+              "recipe_undefined_on_overture_zero_tracts": 5,
+              "reference_zero_tracts": null,
+              "stress_test_assumption": "raw Overture exact-category count 0 implies USGS reference count 0; explicitly unverified"
+            },
+            "overture_raw_category_total": 4836.0,
+            "overture_raw_category_zero_tracts": 130,
+            "recipe_defined_on_zero_tracts": 125,
+            "recipe_per_type_gap_mass_on_zero_tracts": 117.4222462887596,
+            "recipe_undefined_on_zero_tracts": 5,
+            "total_defined_per_type_gap_mass": 158.82129042092268,
+            "true_USGS_zero_count": null
+          }
+        },
+        "provided_feature_count_checks": {
+          "overture_all_places_total": 207369.0,
+          "rule_has_no_CBP_reference_input": true
+        },
+        "region": "eastern-ok",
+        "rule_mass_table": [
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "transport",
+            "current_defined_recipe_gap_mass": 84.04404900212643,
+            "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+            "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 84.04404900212643,
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "rule": "deficit_only_clip_against_C2_internal_proxy",
+            "tracts_at_or_above_internal_proxy": 736
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "building",
+            "current_defined_recipe_gap_mass": 22.911273041581747,
+            "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+            "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 22.911273041581747,
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "rule": "deficit_only_clip_against_C2_internal_proxy",
+            "tracts_at_or_above_internal_proxy": 1112
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "fire",
+            "current_defined_recipe_gap_mass": 510.3925401348644,
+            "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+            "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 510.3925401348644,
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "rule": "deficit_only_clip_against_C2_internal_proxy",
+            "tracts_at_or_above_internal_proxy": 546
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "ems",
+            "current_defined_recipe_gap_mass": 614.6129556391337,
+            "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+            "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 614.6129556391337,
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "rule": "deficit_only_clip_against_C2_internal_proxy",
+            "tracts_at_or_above_internal_proxy": 328
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "schools",
+            "current_defined_recipe_gap_mass": 158.82129042092268,
+            "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+            "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 158.82129042092268,
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "rule": "deficit_only_clip_against_C2_internal_proxy",
+            "tracts_at_or_above_internal_proxy": 912
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "establishments",
+            "current_defined_recipe_gap_mass": 24.986236380749713,
+            "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+            "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 24.986236380749713,
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "rule": "deficit_only_clip_against_C2_internal_proxy",
+            "tracts_at_or_above_internal_proxy": 1108
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "building",
+            "current_defined_recipe_gap_mass": 22.911273041581747,
+            "hypothetical_mass_removed_if_each_Microsoft_share_is_exact_reference_overlap": 18.58262823669277,
+            "hypothetical_mass_retained_under_that_assumption": 4.3286448048889845,
+            "identification": "upstream source membership does not prove footprint-level equality, coverage, vintage, or exact reference overlap",
+            "microsoft_source_weighted_share": 0.8803610464264132,
+            "rule": "Microsoft_source_overlap_counterfactual",
+            "source_known_building_count": 2551694.0,
+            "source_labeled_building_count_equivalent": 2246412.0
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "fire",
+            "current_defined_recipe_gap_mass_on_overture_zero_mask": 510.3925401348644,
+            "identification": "zero Overture count is not evidence of zero USGS count; stress test is not scored or promoted",
+            "overture_zero_tracts": 646,
+            "recipe_defined_on_overture_zero_tracts": 536,
+            "rule": "undefined_facility_type_if_USGS_reference_zero",
+            "stress_test_POI_mass_removed_if_overture_zero_equals_USGS_zero": 38.195817404809276
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "ems",
+            "current_defined_recipe_gap_mass_on_overture_zero_mask": 614.6129556391337,
+            "identification": "zero Overture count is not evidence of zero USGS count; stress test is not scored or promoted",
+            "overture_zero_tracts": 864,
+            "recipe_defined_on_overture_zero_tracts": 632,
+            "rule": "undefined_facility_type_if_USGS_reference_zero",
+            "stress_test_POI_mass_removed_if_overture_zero_equals_USGS_zero": 55.46396114568259
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "schools",
+            "current_defined_recipe_gap_mass_on_overture_zero_mask": 117.4222462887596,
+            "identification": "zero Overture count is not evidence of zero USGS count; stress test is not scored or promoted",
+            "overture_zero_tracts": 130,
+            "recipe_defined_on_overture_zero_tracts": 125,
+            "rule": "undefined_facility_type_if_USGS_reference_zero",
+            "stress_test_POI_mass_removed_if_overture_zero_equals_USGS_zero": 17.95386638545159
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "transport",
+            "current_defined_recipe_gap_mass": 84.04404900212643,
+            "identification": "TIGER highway presence is not observed; Overture named-road absence cannot establish the reference mask",
+            "maximum_mass_at_risk_if_all_transport_scores_were_undefined": 84.04404900212643,
+            "overture_named_road_zero_tracts": 28,
+            "rule": "transport_defined_only_if_TIGER_S1100_S1200_present"
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "POI_establishments",
+            "current_defined_recipe_gap_mass": 24.986236380749713,
+            "identification": "CBP reference counts unavailable/forbidden; all-place counts alone do not establish Overtures>=CBP",
+            "maximum_mass_at_risk": 24.986236380749713,
+            "overture_all_places_total": 207369.0,
+            "rule": "all_Overture_places_vs_CBP_establishments",
+            "tracts_at_or_above_internal_expected_count_proxy": 1108
+          }
+        ],
+        "transport_TIGER_mask": {
+          "TIGER_S1100_S1200_reference_presence_read": false,
+          "actual_rule_mass_removed": null,
+          "actual_transport_undefined_tracts": null,
+          "maximum_candidate_transport_mass_at_risk": 84.04404900212643,
+          "overture_model_road_length_zero_tracts": 28,
+          "overture_named_class_road_zero_tracts": 28,
+          "recipe_transport_defined_rows": 707,
+          "recipe_transport_gap_mass": 84.04404900212643,
+          "recipe_transport_gap_mass_on_overture_named_road_zero_tracts": 12.0
+        }
+      },
+      "maricopa-az": {
+        "building_Microsoft_source": {
+          "C2_building_gap_mass": 78.13643086259468,
+          "Microsoft_sourced_building_count_equivalent": 1299748.0,
+          "Microsoft_sourced_weighted_share": 0.446921557624172,
+          "actual_MS_reference_overlap_count": null,
+          "actual_rule_mass_removed": null,
+          "hypothetical_mass_removed_if_source_share_equals_exact_reference_overlap": 32.01382255679171,
+          "hypothetical_remaining_building_mass_under_that_assumption": 46.1226083058029,
+          "interpretation": "provided Overture source-membership diagnostic only; not proof that Microsoft US reference counts match these records",
+          "overture_buildings_total": 2908224.0,
+          "source_share_known_building_count": 2908224.0,
+          "source_share_unknown_building_count": 0.0
+        },
+        "component_mass": {
+          "building": {
+            "C2_component_column": "building_gap",
+            "all_official_prediction_mass_sum": 78.13643086259468,
+            "defined_flag_source": "reports/gap-estimates.csv:building_defined",
+            "defined_gap_mass_sum": 78.13643086259468,
+            "defined_mean": 0.0490498624372848,
+            "defined_rows": 1593,
+            "positive_defined_rows": 330,
+            "undefined_rows": 0
+          },
+          "poi": {
+            "C2_component_column": "poi_gap",
+            "all_official_prediction_mass_sum": 498.3721836595029,
+            "defined_flag_source": "reports/gap-estimates.csv:poi_defined",
+            "defined_gap_mass_sum": 498.3721836595029,
+            "defined_mean": 0.31285133939705145,
+            "defined_rows": 1593,
+            "positive_defined_rows": 1382,
+            "undefined_rows": 0
+          },
+          "transport": {
+            "C2_component_column": "transport_gap",
+            "all_official_prediction_mass_sum": 244.68093594888595,
+            "defined_flag_source": "reports/gap-estimates.csv:transport_defined",
+            "defined_gap_mass_sum": 244.68093594888595,
+            "defined_mean": 0.2420187299197685,
+            "defined_rows": 1011,
+            "positive_defined_rows": 513,
+            "undefined_rows": 582
+          }
+        },
+        "data_use": {
+          "CBP_reference_or_equivalent_read": false,
+          "Microsoft_US_Building_Footprints_or_equivalent_read": false,
+          "TIGER_reference_layer_or_equivalent_read": false,
+          "USGS_facility_reference_or_equivalent_read": false,
+          "candidate_artifacts_modified": false,
+          "candidate_registration_modified": false,
+          "external_data_or_numerical_counts_read": false,
+          "hidden_labels_or_target_values_read": false,
+          "leaderboard_or_scorecard_information_used": false,
+          "official_sample_ids_only": true,
+          "sample_score_placeholders_read": false,
+          "target_or_region_moment_fitting": false,
+          "uploads": 0
+        },
+        "deficit_only_proxy_audit": {
+          "building": {
+            "actual_hidden_reference_clipped_mass": null,
+            "defined_rows": 1593,
+            "fraction_at_or_above_internal_expected_count": 0.7928436911487758,
+            "interpretation": "current recipe clips against its own population/land/urbanity expected-count proxy; this proxy is not an observed or validated organizer reference count",
+            "positive_gap_rows_on_at_or_above_rows": 0,
+            "recipe_component": "building",
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "total_defined_recipe_gap_mass": 78.13643086259468,
+            "tracts_at_or_above_internal_expected_count": 1263
+          },
+          "ems": {
+            "actual_hidden_reference_clipped_mass": null,
+            "defined_rows": 1482,
+            "fraction_at_or_above_internal_expected_count": 0.15505335844318896,
+            "interpretation": "current recipe clips against its own population/land/urbanity expected-count proxy; this proxy is not an observed or validated organizer reference count",
+            "positive_gap_rows_on_at_or_above_rows": 0,
+            "recipe_component": "ems",
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "total_defined_recipe_gap_mass": 1218.958821184909,
+            "tracts_at_or_above_internal_expected_count": 247
+          },
+          "establishments": {
+            "actual_hidden_reference_clipped_mass": null,
+            "defined_rows": 1593,
+            "fraction_at_or_above_internal_expected_count": 0.775894538606403,
+            "interpretation": "current recipe clips against its own population/land/urbanity expected-count proxy; this proxy is not an observed or validated organizer reference count",
+            "positive_gap_rows_on_at_or_above_rows": 0,
+            "recipe_component": "cbp",
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "total_defined_recipe_gap_mass": 130.3400234982113,
+            "tracts_at_or_above_internal_expected_count": 1236
+          },
+          "fire": {
+            "actual_hidden_reference_clipped_mass": null,
+            "defined_rows": 1519,
+            "fraction_at_or_above_internal_expected_count": 0.30634023854362835,
+            "interpretation": "current recipe clips against its own population/land/urbanity expected-count proxy; this proxy is not an observed or validated organizer reference count",
+            "positive_gap_rows_on_at_or_above_rows": 0,
+            "recipe_component": "fire",
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "total_defined_recipe_gap_mass": 1002.2501121399146,
+            "tracts_at_or_above_internal_expected_count": 488
+          },
+          "schools": {
+            "actual_hidden_reference_clipped_mass": null,
+            "defined_rows": 1578,
+            "fraction_at_or_above_internal_expected_count": 0.6277463904582549,
+            "interpretation": "current recipe clips against its own population/land/urbanity expected-count proxy; this proxy is not an observed or validated organizer reference count",
+            "positive_gap_rows_on_at_or_above_rows": 0,
+            "recipe_component": "schools",
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "total_defined_recipe_gap_mass": 339.03347547336176,
+            "tracts_at_or_above_internal_expected_count": 1000
+          },
+          "transport": {
+            "actual_hidden_reference_clipped_mass": null,
+            "defined_rows": 1011,
+            "fraction_at_or_above_internal_expected_count": 0.44130571249215317,
+            "interpretation": "current recipe clips against its own population/land/urbanity expected-count proxy; this proxy is not an observed or validated organizer reference count",
+            "positive_gap_rows_on_at_or_above_rows": 0,
+            "recipe_component": "transport",
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "total_defined_recipe_gap_mass": 244.68093594888595,
+            "tracts_at_or_above_internal_expected_count": 703
+          }
+        },
+        "official_tracts": 1593,
+        "poi_establishments": {
+          "CBP_reference_counts_read": false,
+          "actual_O_count_vs_CBP_excess_mass": null,
+          "actual_rule_mass_removed": null,
+          "internal_expected_establishment_count_proxy": "0.20 + pop_total/70 + 0.50*urban_fraction",
+          "maximum_candidate_POI_mass_at_risk": 498.3721836595029,
+          "overture_all_places_mean_per_official_tract": 188.35279347143754,
+          "overture_all_places_total": 300046.0,
+          "overture_all_places_zero_tracts": 0,
+          "recipe_CBP_proxy_gap_mass": 130.3400234982113,
+          "recipe_CBP_proxy_gap_mass_on_overproxy_rows": 0.0,
+          "recipe_defined_CBP_proxy_rows": 1593,
+          "tracts_overture_all_places_at_or_above_internal_proxy": 1236
+        },
+        "poi_facility_combined_zero_counterfactual": {
+          "actual_hidden_reference_mass_moved": null,
+          "baseline_poi_defined_tracts": 1593,
+          "baseline_poi_mass": 498.3721836595029,
+          "counterfactual_poi_defined_tracts": 1593,
+          "counterfactual_poi_mass_after_dropping_all_types_with_zero_raw_Overture_count": 132.6313222175826,
+          "mass_removed_under_unverified_zero_equals_reference_zero_assumption": 365.7408614419203
+        },
+        "poi_facility_zero_masks": {
+          "ems": {
+            "actual_rule_mass_removed": null,
+            "assumption_bound_POI_counterfactual": {
+              "actual_USGS_undefined_mass": null,
+              "aggregate_poi_mass_after_drop_type_where_overture_zero": 397.96216589322756,
+              "aggregate_poi_mass_before": 498.3721836595029,
+              "aggregate_poi_mass_removed_under_this_stress_test": 100.41001776627536,
+              "overture_exact_category_zero_fraction": 0.8449466415568111,
+              "overture_exact_category_zero_tracts": 1346,
+              "per_type_recipe_gap_mass_on_overture_zero_tracts": 1218.958821184909,
+              "poi_defined_rows_after": 1593,
+              "poi_defined_rows_before": 1593,
+              "recipe_defined_on_overture_zero_tracts": 1235,
+              "recipe_undefined_on_overture_zero_tracts": 111,
+              "reference_zero_tracts": null,
+              "stress_test_assumption": "raw Overture exact-category count 0 implies USGS reference count 0; explicitly unverified"
+            },
+            "overture_raw_category_total": 304.0,
+            "overture_raw_category_zero_tracts": 1346,
+            "recipe_defined_on_zero_tracts": 1235,
+            "recipe_per_type_gap_mass_on_zero_tracts": 1218.958821184909,
+            "recipe_undefined_on_zero_tracts": 111,
+            "total_defined_per_type_gap_mass": 1218.958821184909,
+            "true_USGS_zero_count": null
+          },
+          "fire": {
+            "actual_rule_mass_removed": null,
+            "assumption_bound_POI_counterfactual": {
+              "actual_USGS_undefined_mass": null,
+              "aggregate_poi_mass_after_drop_type_where_overture_zero": 431.6028176148125,
+              "aggregate_poi_mass_before": 498.3721836595029,
+              "aggregate_poi_mass_removed_under_this_stress_test": 66.7693660446904,
+              "overture_exact_category_zero_fraction": 0.6936597614563716,
+              "overture_exact_category_zero_tracts": 1105,
+              "per_type_recipe_gap_mass_on_overture_zero_tracts": 1002.2501121399146,
+              "poi_defined_rows_after": 1593,
+              "poi_defined_rows_before": 1593,
+              "recipe_defined_on_overture_zero_tracts": 1031,
+              "recipe_undefined_on_overture_zero_tracts": 74,
+              "reference_zero_tracts": null,
+              "stress_test_assumption": "raw Overture exact-category count 0 implies USGS reference count 0; explicitly unverified"
+            },
+            "overture_raw_category_total": 716.0,
+            "overture_raw_category_zero_tracts": 1105,
+            "recipe_defined_on_zero_tracts": 1031,
+            "recipe_per_type_gap_mass_on_zero_tracts": 1002.2501121399146,
+            "recipe_undefined_on_zero_tracts": 74,
+            "total_defined_per_type_gap_mass": 1002.2501121399146,
+            "true_USGS_zero_count": null
+          },
+          "schools": {
+            "actual_rule_mass_removed": null,
+            "assumption_bound_POI_counterfactual": {
+              "actual_USGS_undefined_mass": null,
+              "aggregate_poi_mass_after_drop_type_where_overture_zero": 487.7977009102799,
+              "aggregate_poi_mass_before": 498.3721836595029,
+              "aggregate_poi_mass_removed_under_this_stress_test": 10.574482749223023,
+              "overture_exact_category_zero_fraction": 0.15944758317639673,
+              "overture_exact_category_zero_tracts": 254,
+              "per_type_recipe_gap_mass_on_overture_zero_tracts": 226.57664283578538,
+              "poi_defined_rows_after": 1593,
+              "poi_defined_rows_before": 1593,
+              "recipe_defined_on_overture_zero_tracts": 239,
+              "recipe_undefined_on_overture_zero_tracts": 15,
+              "reference_zero_tracts": null,
+              "stress_test_assumption": "raw Overture exact-category count 0 implies USGS reference count 0; explicitly unverified"
+            },
+            "overture_raw_category_total": 5582.0,
+            "overture_raw_category_zero_tracts": 254,
+            "recipe_defined_on_zero_tracts": 239,
+            "recipe_per_type_gap_mass_on_zero_tracts": 226.57664283578538,
+            "recipe_undefined_on_zero_tracts": 15,
+            "total_defined_per_type_gap_mass": 339.03347547336176,
+            "true_USGS_zero_count": null
+          }
+        },
+        "provided_feature_count_checks": {
+          "overture_all_places_total": 300046.0,
+          "rule_has_no_CBP_reference_input": true
+        },
+        "region": "maricopa-az",
+        "rule_mass_table": [
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "transport",
+            "current_defined_recipe_gap_mass": 244.68093594888595,
+            "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+            "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 244.68093594888595,
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "rule": "deficit_only_clip_against_C2_internal_proxy",
+            "tracts_at_or_above_internal_proxy": 703
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "building",
+            "current_defined_recipe_gap_mass": 78.13643086259468,
+            "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+            "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 78.13643086259468,
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "rule": "deficit_only_clip_against_C2_internal_proxy",
+            "tracts_at_or_above_internal_proxy": 1263
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "fire",
+            "current_defined_recipe_gap_mass": 1002.2501121399146,
+            "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+            "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 1002.2501121399146,
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "rule": "deficit_only_clip_against_C2_internal_proxy",
+            "tracts_at_or_above_internal_proxy": 488
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "ems",
+            "current_defined_recipe_gap_mass": 1218.958821184909,
+            "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+            "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 1218.958821184909,
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "rule": "deficit_only_clip_against_C2_internal_proxy",
+            "tracts_at_or_above_internal_proxy": 247
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "schools",
+            "current_defined_recipe_gap_mass": 339.03347547336176,
+            "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+            "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 339.03347547336176,
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "rule": "deficit_only_clip_against_C2_internal_proxy",
+            "tracts_at_or_above_internal_proxy": 1000
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "establishments",
+            "current_defined_recipe_gap_mass": 130.3400234982113,
+            "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+            "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 130.3400234982113,
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "rule": "deficit_only_clip_against_C2_internal_proxy",
+            "tracts_at_or_above_internal_proxy": 1236
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "building",
+            "current_defined_recipe_gap_mass": 78.13643086259468,
+            "hypothetical_mass_removed_if_each_Microsoft_share_is_exact_reference_overlap": 32.01382255679171,
+            "hypothetical_mass_retained_under_that_assumption": 46.1226083058029,
+            "identification": "upstream source membership does not prove footprint-level equality, coverage, vintage, or exact reference overlap",
+            "microsoft_source_weighted_share": 0.446921557624172,
+            "rule": "Microsoft_source_overlap_counterfactual",
+            "source_known_building_count": 2908224.0,
+            "source_labeled_building_count_equivalent": 1299748.0
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "fire",
+            "current_defined_recipe_gap_mass_on_overture_zero_mask": 1002.2501121399146,
+            "identification": "zero Overture count is not evidence of zero USGS count; stress test is not scored or promoted",
+            "overture_zero_tracts": 1105,
+            "recipe_defined_on_overture_zero_tracts": 1031,
+            "rule": "undefined_facility_type_if_USGS_reference_zero",
+            "stress_test_POI_mass_removed_if_overture_zero_equals_USGS_zero": 66.7693660446904
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "ems",
+            "current_defined_recipe_gap_mass_on_overture_zero_mask": 1218.958821184909,
+            "identification": "zero Overture count is not evidence of zero USGS count; stress test is not scored or promoted",
+            "overture_zero_tracts": 1346,
+            "recipe_defined_on_overture_zero_tracts": 1235,
+            "rule": "undefined_facility_type_if_USGS_reference_zero",
+            "stress_test_POI_mass_removed_if_overture_zero_equals_USGS_zero": 100.41001776627536
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "schools",
+            "current_defined_recipe_gap_mass_on_overture_zero_mask": 226.57664283578538,
+            "identification": "zero Overture count is not evidence of zero USGS count; stress test is not scored or promoted",
+            "overture_zero_tracts": 254,
+            "recipe_defined_on_overture_zero_tracts": 239,
+            "rule": "undefined_facility_type_if_USGS_reference_zero",
+            "stress_test_POI_mass_removed_if_overture_zero_equals_USGS_zero": 10.574482749223023
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "transport",
+            "current_defined_recipe_gap_mass": 244.68093594888595,
+            "identification": "TIGER highway presence is not observed; Overture named-road absence cannot establish the reference mask",
+            "maximum_mass_at_risk_if_all_transport_scores_were_undefined": 244.68093594888595,
+            "overture_named_road_zero_tracts": 33,
+            "rule": "transport_defined_only_if_TIGER_S1100_S1200_present"
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "POI_establishments",
+            "current_defined_recipe_gap_mass": 130.3400234982113,
+            "identification": "CBP reference counts unavailable/forbidden; all-place counts alone do not establish Overtures>=CBP",
+            "maximum_mass_at_risk": 130.3400234982113,
+            "overture_all_places_total": 300046.0,
+            "rule": "all_Overture_places_vs_CBP_establishments",
+            "tracts_at_or_above_internal_expected_count_proxy": 1236
+          }
+        ],
+        "transport_TIGER_mask": {
+          "TIGER_S1100_S1200_reference_presence_read": false,
+          "actual_rule_mass_removed": null,
+          "actual_transport_undefined_tracts": null,
+          "maximum_candidate_transport_mass_at_risk": 244.68093594888595,
+          "overture_model_road_length_zero_tracts": 33,
+          "overture_named_class_road_zero_tracts": 33,
+          "recipe_transport_defined_rows": 1011,
+          "recipe_transport_gap_mass": 244.68093594888595,
+          "recipe_transport_gap_mass_on_overture_named_road_zero_tracts": 18.0
+        }
+      },
+      "northern-ca": {
+        "building_Microsoft_source": {
+          "C2_building_gap_mass": 27.522159986295883,
+          "Microsoft_sourced_building_count_equivalent": 1042980.0,
+          "Microsoft_sourced_weighted_share": 0.8954747180230836,
+          "actual_MS_reference_overlap_count": null,
+          "actual_rule_mass_removed": null,
+          "hypothetical_mass_removed_if_source_share_equals_exact_reference_overlap": 23.2880736421627,
+          "hypothetical_remaining_building_mass_under_that_assumption": 4.234086344133182,
+          "interpretation": "provided Overture source-membership diagnostic only; not proof that Microsoft US reference counts match these records",
+          "overture_buildings_total": 1164723.0,
+          "source_share_known_building_count": 1164723.0,
+          "source_share_unknown_building_count": 0.0
+        },
+        "component_mass": {
+          "building": {
+            "C2_component_column": "building_gap",
+            "all_official_prediction_mass_sum": 27.522159986295883,
+            "defined_flag_source": "reports/gap-estimates.csv:building_defined",
+            "defined_gap_mass_sum": 27.522159986295883,
+            "defined_mean": 0.04656879862317408,
+            "defined_rows": 591,
+            "positive_defined_rows": 126,
+            "undefined_rows": 0
+          },
+          "poi": {
+            "C2_component_column": "poi_gap",
+            "all_official_prediction_mass_sum": 138.10615648939944,
+            "defined_flag_source": "reports/gap-estimates.csv:poi_defined",
+            "defined_gap_mass_sum": 138.10615648939944,
+            "defined_mean": 0.2336821598805405,
+            "defined_rows": 591,
+            "positive_defined_rows": 424,
+            "undefined_rows": 0
+          },
+          "transport": {
+            "C2_component_column": "transport_gap",
+            "all_official_prediction_mass_sum": 70.43149314321711,
+            "defined_flag_source": "reports/gap-estimates.csv:transport_defined",
+            "defined_gap_mass_sum": 70.43149314321711,
+            "defined_mean": 0.17136616336549176,
+            "defined_rows": 411,
+            "positive_defined_rows": 152,
+            "undefined_rows": 180
+          }
+        },
+        "data_use": {
+          "CBP_reference_or_equivalent_read": false,
+          "Microsoft_US_Building_Footprints_or_equivalent_read": false,
+          "TIGER_reference_layer_or_equivalent_read": false,
+          "USGS_facility_reference_or_equivalent_read": false,
+          "candidate_artifacts_modified": false,
+          "candidate_registration_modified": false,
+          "external_data_or_numerical_counts_read": false,
+          "hidden_labels_or_target_values_read": false,
+          "leaderboard_or_scorecard_information_used": false,
+          "official_sample_ids_only": true,
+          "sample_score_placeholders_read": false,
+          "target_or_region_moment_fitting": false,
+          "uploads": 0
+        },
+        "deficit_only_proxy_audit": {
+          "building": {
+            "actual_hidden_reference_clipped_mass": null,
+            "defined_rows": 591,
+            "fraction_at_or_above_internal_expected_count": 0.7868020304568528,
+            "interpretation": "current recipe clips against its own population/land/urbanity expected-count proxy; this proxy is not an observed or validated organizer reference count",
+            "positive_gap_rows_on_at_or_above_rows": 0,
+            "recipe_component": "building",
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "total_defined_recipe_gap_mass": 27.522159986295883,
+            "tracts_at_or_above_internal_expected_count": 465
+          },
+          "ems": {
+            "actual_hidden_reference_clipped_mass": null,
+            "defined_rows": 509,
+            "fraction_at_or_above_internal_expected_count": 0.23688663282571912,
+            "interpretation": "current recipe clips against its own population/land/urbanity expected-count proxy; this proxy is not an observed or validated organizer reference count",
+            "positive_gap_rows_on_at_or_above_rows": 0,
+            "recipe_component": "ems",
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "total_defined_recipe_gap_mass": 361.8209124933596,
+            "tracts_at_or_above_internal_expected_count": 140
+          },
+          "establishments": {
+            "actual_hidden_reference_clipped_mass": null,
+            "defined_rows": 591,
+            "fraction_at_or_above_internal_expected_count": 0.8392554991539763,
+            "interpretation": "current recipe clips against its own population/land/urbanity expected-count proxy; this proxy is not an observed or validated organizer reference count",
+            "positive_gap_rows_on_at_or_above_rows": 0,
+            "recipe_component": "cbp",
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "total_defined_recipe_gap_mass": 38.16424751596267,
+            "tracts_at_or_above_internal_expected_count": 496
+          },
+          "fire": {
+            "actual_hidden_reference_clipped_mass": null,
+            "defined_rows": 553,
+            "fraction_at_or_above_internal_expected_count": 0.4653130287648054,
+            "interpretation": "current recipe clips against its own population/land/urbanity expected-count proxy; this proxy is not an observed or validated organizer reference count",
+            "positive_gap_rows_on_at_or_above_rows": 0,
+            "recipe_component": "fire",
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "total_defined_recipe_gap_mass": 266.9917486579653,
+            "tracts_at_or_above_internal_expected_count": 275
+          },
+          "schools": {
+            "actual_hidden_reference_clipped_mass": null,
+            "defined_rows": 590,
+            "fraction_at_or_above_internal_expected_count": 0.7884940778341794,
+            "interpretation": "current recipe clips against its own population/land/urbanity expected-count proxy; this proxy is not an observed or validated organizer reference count",
+            "positive_gap_rows_on_at_or_above_rows": 0,
+            "recipe_component": "schools",
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "total_defined_recipe_gap_mass": 69.92378677875588,
+            "tracts_at_or_above_internal_expected_count": 466
+          },
+          "transport": {
+            "actual_hidden_reference_clipped_mass": null,
+            "defined_rows": 411,
+            "fraction_at_or_above_internal_expected_count": 0.5499153976311336,
+            "interpretation": "current recipe clips against its own population/land/urbanity expected-count proxy; this proxy is not an observed or validated organizer reference count",
+            "positive_gap_rows_on_at_or_above_rows": 0,
+            "recipe_component": "transport",
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "total_defined_recipe_gap_mass": 70.43149314321711,
+            "tracts_at_or_above_internal_expected_count": 325
+          }
+        },
+        "official_tracts": 591,
+        "poi_establishments": {
+          "CBP_reference_counts_read": false,
+          "actual_O_count_vs_CBP_excess_mass": null,
+          "actual_rule_mass_removed": null,
+          "internal_expected_establishment_count_proxy": "0.20 + pop_total/70 + 0.50*urban_fraction",
+          "maximum_candidate_POI_mass_at_risk": 138.10615648939944,
+          "overture_all_places_mean_per_official_tract": 197.79526226734347,
+          "overture_all_places_total": 116897.0,
+          "overture_all_places_zero_tracts": 0,
+          "recipe_CBP_proxy_gap_mass": 38.16424751596267,
+          "recipe_CBP_proxy_gap_mass_on_overproxy_rows": 0.0,
+          "recipe_defined_CBP_proxy_rows": 591,
+          "tracts_overture_all_places_at_or_above_internal_proxy": 496
+        },
+        "poi_facility_combined_zero_counterfactual": {
+          "actual_hidden_reference_mass_moved": null,
+          "baseline_poi_defined_tracts": 591,
+          "baseline_poi_mass": 138.10615648939944,
+          "counterfactual_poi_defined_tracts": 591,
+          "counterfactual_poi_mass_after_dropping_all_types_with_zero_raw_Overture_count": 33.9530179397574,
+          "mass_removed_under_unverified_zero_equals_reference_zero_assumption": 104.15313854964204
+        },
+        "poi_facility_zero_masks": {
+          "ems": {
+            "actual_rule_mass_removed": null,
+            "assumption_bound_POI_counterfactual": {
+              "actual_USGS_undefined_mass": null,
+              "aggregate_poi_mass_after_drop_type_where_overture_zero": 103.03023510161461,
+              "aggregate_poi_mass_before": 138.10615648939944,
+              "aggregate_poi_mass_removed_under_this_stress_test": 35.07592138778483,
+              "overture_exact_category_zero_fraction": 0.7631133671742809,
+              "overture_exact_category_zero_tracts": 451,
+              "per_type_recipe_gap_mass_on_overture_zero_tracts": 361.8209124933596,
+              "poi_defined_rows_after": 591,
+              "poi_defined_rows_before": 591,
+              "recipe_defined_on_overture_zero_tracts": 369,
+              "recipe_undefined_on_overture_zero_tracts": 82,
+              "reference_zero_tracts": null,
+              "stress_test_assumption": "raw Overture exact-category count 0 implies USGS reference count 0; explicitly unverified"
+            },
+            "overture_raw_category_total": 177.0,
+            "overture_raw_category_zero_tracts": 451,
+            "recipe_defined_on_zero_tracts": 369,
+            "recipe_per_type_gap_mass_on_zero_tracts": 361.8209124933596,
+            "recipe_undefined_on_zero_tracts": 82,
+            "total_defined_per_type_gap_mass": 361.8209124933596,
+            "true_USGS_zero_count": null
+          },
+          "fire": {
+            "actual_rule_mass_removed": null,
+            "assumption_bound_POI_counterfactual": {
+              "actual_USGS_undefined_mass": null,
+              "aggregate_poi_mass_after_drop_type_where_overture_zero": 118.99731448005653,
+              "aggregate_poi_mass_before": 138.10615648939944,
+              "aggregate_poi_mass_removed_under_this_stress_test": 19.108842009342908,
+              "overture_exact_category_zero_fraction": 0.5346869712351946,
+              "overture_exact_category_zero_tracts": 316,
+              "per_type_recipe_gap_mass_on_overture_zero_tracts": 266.9917486579653,
+              "poi_defined_rows_after": 591,
+              "poi_defined_rows_before": 591,
+              "recipe_defined_on_overture_zero_tracts": 278,
+              "recipe_undefined_on_overture_zero_tracts": 38,
+              "reference_zero_tracts": null,
+              "stress_test_assumption": "raw Overture exact-category count 0 implies USGS reference count 0; explicitly unverified"
+            },
+            "overture_raw_category_total": 491.0,
+            "overture_raw_category_zero_tracts": 316,
+            "recipe_defined_on_zero_tracts": 278,
+            "recipe_per_type_gap_mass_on_zero_tracts": 266.9917486579653,
+            "recipe_undefined_on_zero_tracts": 38,
+            "total_defined_per_type_gap_mass": 266.9917486579653,
+            "true_USGS_zero_count": null
+          },
+          "schools": {
+            "actual_rule_mass_removed": null,
+            "assumption_bound_POI_counterfactual": {
+              "actual_USGS_undefined_mass": null,
+              "aggregate_poi_mass_after_drop_type_where_overture_zero": 134.30937907253968,
+              "aggregate_poi_mass_before": 138.10615648939944,
+              "aggregate_poi_mass_removed_under_this_stress_test": 3.7967774168597543,
+              "overture_exact_category_zero_fraction": 0.0829103214890017,
+              "overture_exact_category_zero_tracts": 49,
+              "per_type_recipe_gap_mass_on_overture_zero_tracts": 45.67845490211599,
+              "poi_defined_rows_after": 591,
+              "poi_defined_rows_before": 591,
+              "recipe_defined_on_overture_zero_tracts": 48,
+              "recipe_undefined_on_overture_zero_tracts": 1,
+              "reference_zero_tracts": null,
+              "stress_test_assumption": "raw Overture exact-category count 0 implies USGS reference count 0; explicitly unverified"
+            },
+            "overture_raw_category_total": 2773.0,
+            "overture_raw_category_zero_tracts": 49,
+            "recipe_defined_on_zero_tracts": 48,
+            "recipe_per_type_gap_mass_on_zero_tracts": 45.67845490211599,
+            "recipe_undefined_on_zero_tracts": 1,
+            "total_defined_per_type_gap_mass": 69.92378677875588,
+            "true_USGS_zero_count": null
+          }
+        },
+        "provided_feature_count_checks": {
+          "overture_all_places_total": 116897.0,
+          "rule_has_no_CBP_reference_input": true
+        },
+        "region": "northern-ca",
+        "rule_mass_table": [
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "transport",
+            "current_defined_recipe_gap_mass": 70.43149314321711,
+            "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+            "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 70.43149314321711,
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "rule": "deficit_only_clip_against_C2_internal_proxy",
+            "tracts_at_or_above_internal_proxy": 325
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "building",
+            "current_defined_recipe_gap_mass": 27.522159986295883,
+            "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+            "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 27.522159986295883,
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "rule": "deficit_only_clip_against_C2_internal_proxy",
+            "tracts_at_or_above_internal_proxy": 465
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "fire",
+            "current_defined_recipe_gap_mass": 266.9917486579653,
+            "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+            "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 266.9917486579653,
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "rule": "deficit_only_clip_against_C2_internal_proxy",
+            "tracts_at_or_above_internal_proxy": 275
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "ems",
+            "current_defined_recipe_gap_mass": 361.8209124933596,
+            "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+            "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 361.8209124933596,
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "rule": "deficit_only_clip_against_C2_internal_proxy",
+            "tracts_at_or_above_internal_proxy": 140
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "schools",
+            "current_defined_recipe_gap_mass": 69.92378677875588,
+            "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+            "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 69.92378677875588,
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "rule": "deficit_only_clip_against_C2_internal_proxy",
+            "tracts_at_or_above_internal_proxy": 466
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "establishments",
+            "current_defined_recipe_gap_mass": 38.16424751596267,
+            "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+            "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 38.16424751596267,
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "rule": "deficit_only_clip_against_C2_internal_proxy",
+            "tracts_at_or_above_internal_proxy": 496
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "building",
+            "current_defined_recipe_gap_mass": 27.522159986295883,
+            "hypothetical_mass_removed_if_each_Microsoft_share_is_exact_reference_overlap": 23.2880736421627,
+            "hypothetical_mass_retained_under_that_assumption": 4.234086344133182,
+            "identification": "upstream source membership does not prove footprint-level equality, coverage, vintage, or exact reference overlap",
+            "microsoft_source_weighted_share": 0.8954747180230836,
+            "rule": "Microsoft_source_overlap_counterfactual",
+            "source_known_building_count": 1164723.0,
+            "source_labeled_building_count_equivalent": 1042980.0
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "fire",
+            "current_defined_recipe_gap_mass_on_overture_zero_mask": 266.9917486579653,
+            "identification": "zero Overture count is not evidence of zero USGS count; stress test is not scored or promoted",
+            "overture_zero_tracts": 316,
+            "recipe_defined_on_overture_zero_tracts": 278,
+            "rule": "undefined_facility_type_if_USGS_reference_zero",
+            "stress_test_POI_mass_removed_if_overture_zero_equals_USGS_zero": 19.108842009342908
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "ems",
+            "current_defined_recipe_gap_mass_on_overture_zero_mask": 361.8209124933596,
+            "identification": "zero Overture count is not evidence of zero USGS count; stress test is not scored or promoted",
+            "overture_zero_tracts": 451,
+            "recipe_defined_on_overture_zero_tracts": 369,
+            "rule": "undefined_facility_type_if_USGS_reference_zero",
+            "stress_test_POI_mass_removed_if_overture_zero_equals_USGS_zero": 35.07592138778483
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "schools",
+            "current_defined_recipe_gap_mass_on_overture_zero_mask": 45.67845490211599,
+            "identification": "zero Overture count is not evidence of zero USGS count; stress test is not scored or promoted",
+            "overture_zero_tracts": 49,
+            "recipe_defined_on_overture_zero_tracts": 48,
+            "rule": "undefined_facility_type_if_USGS_reference_zero",
+            "stress_test_POI_mass_removed_if_overture_zero_equals_USGS_zero": 3.7967774168597543
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "transport",
+            "current_defined_recipe_gap_mass": 70.43149314321711,
+            "identification": "TIGER highway presence is not observed; Overture named-road absence cannot establish the reference mask",
+            "maximum_mass_at_risk_if_all_transport_scores_were_undefined": 70.43149314321711,
+            "overture_named_road_zero_tracts": 7,
+            "rule": "transport_defined_only_if_TIGER_S1100_S1200_present"
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "POI_establishments",
+            "current_defined_recipe_gap_mass": 38.16424751596267,
+            "identification": "CBP reference counts unavailable/forbidden; all-place counts alone do not establish Overtures>=CBP",
+            "maximum_mass_at_risk": 38.16424751596267,
+            "overture_all_places_total": 116897.0,
+            "rule": "all_Overture_places_vs_CBP_establishments",
+            "tracts_at_or_above_internal_expected_count_proxy": 496
+          }
+        ],
+        "transport_TIGER_mask": {
+          "TIGER_S1100_S1200_reference_presence_read": false,
+          "actual_rule_mass_removed": null,
+          "actual_transport_undefined_tracts": null,
+          "maximum_candidate_transport_mass_at_risk": 70.43149314321711,
+          "overture_model_road_length_zero_tracts": 7,
+          "overture_named_class_road_zero_tracts": 7,
+          "recipe_transport_defined_rows": 411,
+          "recipe_transport_gap_mass": 70.43149314321711,
+          "recipe_transport_gap_mass_on_overture_named_road_zero_tracts": 6.0
+        }
+      },
+      "south-central-tx": {
+        "building_Microsoft_source": {
+          "C2_building_gap_mass": 550.2830407279623,
+          "Microsoft_sourced_building_count_equivalent": 8243296.0,
+          "Microsoft_sourced_weighted_share": 0.719071860988503,
+          "actual_MS_reference_overlap_count": null,
+          "actual_rule_mass_removed": null,
+          "hypothetical_mass_removed_if_source_share_equals_exact_reference_overlap": 334.91693665136177,
+          "hypothetical_remaining_building_mass_under_that_assumption": 213.36610407660032,
+          "interpretation": "provided Overture source-membership diagnostic only; not proof that Microsoft US reference counts match these records",
+          "overture_buildings_total": 11463800.0,
+          "source_share_known_building_count": 11463800.0,
+          "source_share_unknown_building_count": 0.0
+        },
+        "component_mass": {
+          "building": {
+            "C2_component_column": "building_gap",
+            "all_official_prediction_mass_sum": 550.2830407279623,
+            "defined_flag_source": "reports/gap-estimates.csv:building_defined",
+            "defined_gap_mass_sum": 550.2830407279623,
+            "defined_mean": 0.09166800611826792,
+            "defined_rows": 6003,
+            "positive_defined_rows": 1528,
+            "undefined_rows": 0
+          },
+          "poi": {
+            "C2_component_column": "poi_gap",
+            "all_official_prediction_mass_sum": 1536.2086179821474,
+            "defined_flag_source": "reports/gap-estimates.csv:poi_defined",
+            "defined_gap_mass_sum": 1536.2086179821474,
+            "defined_mean": 0.2559921043129724,
+            "defined_rows": 6001,
+            "positive_defined_rows": 4732,
+            "undefined_rows": 2
+          },
+          "transport": {
+            "C2_component_column": "transport_gap",
+            "all_official_prediction_mass_sum": 508.9860485081244,
+            "defined_flag_source": "reports/gap-estimates.csv:transport_defined",
+            "defined_gap_mass_sum": 508.9860485081244,
+            "defined_mean": 0.13447451743939878,
+            "defined_rows": 3785,
+            "positive_defined_rows": 1191,
+            "undefined_rows": 2218
+          }
+        },
+        "data_use": {
+          "CBP_reference_or_equivalent_read": false,
+          "Microsoft_US_Building_Footprints_or_equivalent_read": false,
+          "TIGER_reference_layer_or_equivalent_read": false,
+          "USGS_facility_reference_or_equivalent_read": false,
+          "candidate_artifacts_modified": false,
+          "candidate_registration_modified": false,
+          "external_data_or_numerical_counts_read": false,
+          "hidden_labels_or_target_values_read": false,
+          "leaderboard_or_scorecard_information_used": false,
+          "official_sample_ids_only": true,
+          "sample_score_placeholders_read": false,
+          "target_or_region_moment_fitting": false,
+          "uploads": 0
+        },
+        "deficit_only_proxy_audit": {
+          "building": {
+            "actual_hidden_reference_clipped_mass": null,
+            "defined_rows": 6003,
+            "fraction_at_or_above_internal_expected_count": 0.7454606030318174,
+            "interpretation": "current recipe clips against its own population/land/urbanity expected-count proxy; this proxy is not an observed or validated organizer reference count",
+            "positive_gap_rows_on_at_or_above_rows": 0,
+            "recipe_component": "building",
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "total_defined_recipe_gap_mass": 550.2830407279623,
+            "tracts_at_or_above_internal_expected_count": 4475
+          },
+          "ems": {
+            "actual_hidden_reference_clipped_mass": null,
+            "defined_rows": 5422,
+            "fraction_at_or_above_internal_expected_count": 0.2318840579710145,
+            "interpretation": "current recipe clips against its own population/land/urbanity expected-count proxy; this proxy is not an observed or validated organizer reference count",
+            "positive_gap_rows_on_at_or_above_rows": 0,
+            "recipe_component": "ems",
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "total_defined_recipe_gap_mass": 3931.31042595096,
+            "tracts_at_or_above_internal_expected_count": 1392
+          },
+          "establishments": {
+            "actual_hidden_reference_clipped_mass": null,
+            "defined_rows": 6001,
+            "fraction_at_or_above_internal_expected_count": 0.868232550391471,
+            "interpretation": "current recipe clips against its own population/land/urbanity expected-count proxy; this proxy is not an observed or validated organizer reference count",
+            "positive_gap_rows_on_at_or_above_rows": 0,
+            "recipe_component": "cbp",
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "total_defined_recipe_gap_mass": 268.0530440073728,
+            "tracts_at_or_above_internal_expected_count": 5212
+          },
+          "fire": {
+            "actual_hidden_reference_clipped_mass": null,
+            "defined_rows": 5641,
+            "fraction_at_or_above_internal_expected_count": 0.3669831750791271,
+            "interpretation": "current recipe clips against its own population/land/urbanity expected-count proxy; this proxy is not an observed or validated organizer reference count",
+            "positive_gap_rows_on_at_or_above_rows": 0,
+            "recipe_component": "fire",
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "total_defined_recipe_gap_mass": 3320.53795402264,
+            "tracts_at_or_above_internal_expected_count": 2203
+          },
+          "schools": {
+            "actual_hidden_reference_clipped_mass": null,
+            "defined_rows": 5983,
+            "fraction_at_or_above_internal_expected_count": 0.716808262535399,
+            "interpretation": "current recipe clips against its own population/land/urbanity expected-count proxy; this proxy is not an observed or validated organizer reference count",
+            "positive_gap_rows_on_at_or_above_rows": 0,
+            "recipe_component": "schools",
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "total_defined_recipe_gap_mass": 920.934928594924,
+            "tracts_at_or_above_internal_expected_count": 4303
+          },
+          "transport": {
+            "actual_hidden_reference_clipped_mass": null,
+            "defined_rows": 3785,
+            "fraction_at_or_above_internal_expected_count": 0.6066966516741629,
+            "interpretation": "current recipe clips against its own population/land/urbanity expected-count proxy; this proxy is not an observed or validated organizer reference count",
+            "positive_gap_rows_on_at_or_above_rows": 0,
+            "recipe_component": "transport",
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "total_defined_recipe_gap_mass": 508.9860485081244,
+            "tracts_at_or_above_internal_expected_count": 3642
+          }
+        },
+        "official_tracts": 6003,
+        "poi_establishments": {
+          "CBP_reference_counts_read": false,
+          "actual_O_count_vs_CBP_excess_mass": null,
+          "actual_rule_mass_removed": null,
+          "internal_expected_establishment_count_proxy": "0.20 + pop_total/70 + 0.50*urban_fraction",
+          "maximum_candidate_POI_mass_at_risk": 1536.2086179821474,
+          "overture_all_places_mean_per_official_tract": 216.61352657004832,
+          "overture_all_places_total": 1300331.0,
+          "overture_all_places_zero_tracts": 2,
+          "recipe_CBP_proxy_gap_mass": 268.0530440073728,
+          "recipe_CBP_proxy_gap_mass_on_overproxy_rows": 0.0,
+          "recipe_defined_CBP_proxy_rows": 6001,
+          "tracts_overture_all_places_at_or_above_internal_proxy": 5212
+        },
+        "poi_facility_combined_zero_counterfactual": {
+          "actual_hidden_reference_mass_moved": null,
+          "baseline_poi_defined_tracts": 6001,
+          "baseline_poi_mass": 1536.2086179821474,
+          "counterfactual_poi_defined_tracts": 6001,
+          "counterfactual_poi_mass_after_dropping_all_types_with_zero_raw_Overture_count": 306.87873354933186,
+          "mass_removed_under_unverified_zero_equals_reference_zero_assumption": 1229.3298844328156
+        },
+        "poi_facility_zero_masks": {
+          "ems": {
+            "actual_rule_mass_removed": null,
+            "assumption_bound_POI_counterfactual": {
+              "actual_USGS_undefined_mass": null,
+              "aggregate_poi_mass_after_drop_type_where_overture_zero": 1192.1165709564327,
+              "aggregate_poi_mass_before": 1536.2086179821474,
+              "aggregate_poi_mass_removed_under_this_stress_test": 344.0920470257147,
+              "overture_exact_category_zero_fraction": 0.7697817757787773,
+              "overture_exact_category_zero_tracts": 4621,
+              "per_type_recipe_gap_mass_on_overture_zero_tracts": 3931.1620865468385,
+              "poi_defined_rows_after": 6001,
+              "poi_defined_rows_before": 6001,
+              "recipe_defined_on_overture_zero_tracts": 4040,
+              "recipe_undefined_on_overture_zero_tracts": 581,
+              "reference_zero_tracts": null,
+              "stress_test_assumption": "raw Overture exact-category count 0 implies USGS reference count 0; explicitly unverified"
+            },
+            "overture_raw_category_total": 1787.0,
+            "overture_raw_category_zero_tracts": 4621,
+            "recipe_defined_on_zero_tracts": 4040,
+            "recipe_per_type_gap_mass_on_zero_tracts": 3931.1620865468385,
+            "recipe_undefined_on_zero_tracts": 581,
+            "total_defined_per_type_gap_mass": 3931.31042595096,
+            "true_USGS_zero_count": null
+          },
+          "fire": {
+            "actual_rule_mass_removed": null,
+            "assumption_bound_POI_counterfactual": {
+              "actual_USGS_undefined_mass": null,
+              "aggregate_poi_mass_after_drop_type_where_overture_zero": 1292.5026647294019,
+              "aggregate_poi_mass_before": 1536.2086179821474,
+              "aggregate_poi_mass_removed_under_this_stress_test": 243.70595325274553,
+              "overture_exact_category_zero_fraction": 0.6371814092953523,
+              "overture_exact_category_zero_tracts": 3825,
+              "per_type_recipe_gap_mass_on_overture_zero_tracts": 3320.1145068307333,
+              "poi_defined_rows_after": 6001,
+              "poi_defined_rows_before": 6001,
+              "recipe_defined_on_overture_zero_tracts": 3463,
+              "recipe_undefined_on_overture_zero_tracts": 362,
+              "reference_zero_tracts": null,
+              "stress_test_assumption": "raw Overture exact-category count 0 implies USGS reference count 0; explicitly unverified"
+            },
+            "overture_raw_category_total": 3169.0,
+            "overture_raw_category_zero_tracts": 3825,
+            "recipe_defined_on_zero_tracts": 3463,
+            "recipe_per_type_gap_mass_on_zero_tracts": 3320.1145068307333,
+            "recipe_undefined_on_zero_tracts": 362,
+            "total_defined_per_type_gap_mass": 3320.53795402264,
+            "true_USGS_zero_count": null
+          },
+          "schools": {
+            "actual_rule_mass_removed": null,
+            "assumption_bound_POI_counterfactual": {
+              "actual_USGS_undefined_mass": null,
+              "aggregate_poi_mass_after_drop_type_where_overture_zero": 1477.9348547579295,
+              "aggregate_poi_mass_before": 1536.2086179821474,
+              "aggregate_poi_mass_removed_under_this_stress_test": 58.27376322421787,
+              "overture_exact_category_zero_fraction": 0.10911211061136099,
+              "overture_exact_category_zero_tracts": 655,
+              "per_type_recipe_gap_mass_on_overture_zero_tracts": 587.8562372435024,
+              "poi_defined_rows_after": 6001,
+              "poi_defined_rows_before": 6001,
+              "recipe_defined_on_overture_zero_tracts": 635,
+              "recipe_undefined_on_overture_zero_tracts": 20,
+              "reference_zero_tracts": null,
+              "stress_test_assumption": "raw Overture exact-category count 0 implies USGS reference count 0; explicitly unverified"
+            },
+            "overture_raw_category_total": 26247.0,
+            "overture_raw_category_zero_tracts": 655,
+            "recipe_defined_on_zero_tracts": 635,
+            "recipe_per_type_gap_mass_on_zero_tracts": 587.8562372435024,
+            "recipe_undefined_on_zero_tracts": 20,
+            "total_defined_per_type_gap_mass": 920.934928594924,
+            "true_USGS_zero_count": null
+          }
+        },
+        "provided_feature_count_checks": {
+          "overture_all_places_total": 1300331.0,
+          "rule_has_no_CBP_reference_input": true
+        },
+        "region": "south-central-tx",
+        "rule_mass_table": [
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "transport",
+            "current_defined_recipe_gap_mass": 508.9860485081244,
+            "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+            "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 508.9860485081244,
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "rule": "deficit_only_clip_against_C2_internal_proxy",
+            "tracts_at_or_above_internal_proxy": 3642
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "building",
+            "current_defined_recipe_gap_mass": 550.2830407279623,
+            "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+            "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 550.2830407279623,
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "rule": "deficit_only_clip_against_C2_internal_proxy",
+            "tracts_at_or_above_internal_proxy": 4475
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "fire",
+            "current_defined_recipe_gap_mass": 3320.53795402264,
+            "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+            "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 3320.53795402264,
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "rule": "deficit_only_clip_against_C2_internal_proxy",
+            "tracts_at_or_above_internal_proxy": 2203
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "ems",
+            "current_defined_recipe_gap_mass": 3931.31042595096,
+            "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+            "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 3931.31042595096,
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "rule": "deficit_only_clip_against_C2_internal_proxy",
+            "tracts_at_or_above_internal_proxy": 1392
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "schools",
+            "current_defined_recipe_gap_mass": 920.934928594924,
+            "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+            "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 920.934928594924,
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "rule": "deficit_only_clip_against_C2_internal_proxy",
+            "tracts_at_or_above_internal_proxy": 4303
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "establishments",
+            "current_defined_recipe_gap_mass": 268.0530440073728,
+            "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+            "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 268.0530440073728,
+            "recipe_gap_mass_on_at_or_above_rows": 0.0,
+            "rule": "deficit_only_clip_against_C2_internal_proxy",
+            "tracts_at_or_above_internal_proxy": 5212
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "building",
+            "current_defined_recipe_gap_mass": 550.2830407279623,
+            "hypothetical_mass_removed_if_each_Microsoft_share_is_exact_reference_overlap": 334.91693665136177,
+            "hypothetical_mass_retained_under_that_assumption": 213.36610407660032,
+            "identification": "upstream source membership does not prove footprint-level equality, coverage, vintage, or exact reference overlap",
+            "microsoft_source_weighted_share": 0.719071860988503,
+            "rule": "Microsoft_source_overlap_counterfactual",
+            "source_known_building_count": 11463800.0,
+            "source_labeled_building_count_equivalent": 8243296.0
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "fire",
+            "current_defined_recipe_gap_mass_on_overture_zero_mask": 3320.1145068307333,
+            "identification": "zero Overture count is not evidence of zero USGS count; stress test is not scored or promoted",
+            "overture_zero_tracts": 3825,
+            "recipe_defined_on_overture_zero_tracts": 3463,
+            "rule": "undefined_facility_type_if_USGS_reference_zero",
+            "stress_test_POI_mass_removed_if_overture_zero_equals_USGS_zero": 243.70595325274553
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "ems",
+            "current_defined_recipe_gap_mass_on_overture_zero_mask": 3931.1620865468385,
+            "identification": "zero Overture count is not evidence of zero USGS count; stress test is not scored or promoted",
+            "overture_zero_tracts": 4621,
+            "recipe_defined_on_overture_zero_tracts": 4040,
+            "rule": "undefined_facility_type_if_USGS_reference_zero",
+            "stress_test_POI_mass_removed_if_overture_zero_equals_USGS_zero": 344.0920470257147
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "schools",
+            "current_defined_recipe_gap_mass_on_overture_zero_mask": 587.8562372435024,
+            "identification": "zero Overture count is not evidence of zero USGS count; stress test is not scored or promoted",
+            "overture_zero_tracts": 655,
+            "recipe_defined_on_overture_zero_tracts": 635,
+            "rule": "undefined_facility_type_if_USGS_reference_zero",
+            "stress_test_POI_mass_removed_if_overture_zero_equals_USGS_zero": 58.27376322421787
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "transport",
+            "current_defined_recipe_gap_mass": 508.9860485081244,
+            "identification": "TIGER highway presence is not observed; Overture named-road absence cannot establish the reference mask",
+            "maximum_mass_at_risk_if_all_transport_scores_were_undefined": 508.9860485081244,
+            "overture_named_road_zero_tracts": 64,
+            "rule": "transport_defined_only_if_TIGER_S1100_S1200_present"
+          },
+          {
+            "actual_hidden_reference_mass_moved": null,
+            "component_or_half": "POI_establishments",
+            "current_defined_recipe_gap_mass": 268.0530440073728,
+            "identification": "CBP reference counts unavailable/forbidden; all-place counts alone do not establish Overtures>=CBP",
+            "maximum_mass_at_risk": 268.0530440073728,
+            "overture_all_places_total": 1300331.0,
+            "rule": "all_Overture_places_vs_CBP_establishments",
+            "tracts_at_or_above_internal_expected_count_proxy": 5212
+          }
+        ],
+        "transport_TIGER_mask": {
+          "TIGER_S1100_S1200_reference_presence_read": false,
+          "actual_rule_mass_removed": null,
+          "actual_transport_undefined_tracts": null,
+          "maximum_candidate_transport_mass_at_risk": 508.9860485081244,
+          "overture_model_road_length_zero_tracts": 64,
+          "overture_named_class_road_zero_tracts": 64,
+          "recipe_transport_defined_rows": 3785,
+          "recipe_transport_gap_mass": 508.9860485081244,
+          "recipe_transport_gap_mass_on_overture_named_road_zero_tracts": 31.0
+        }
+      }
+    },
+    "per_rule_component_region_table": [
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "transport",
+        "current_defined_recipe_gap_mass": 244.68093594888595,
+        "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+        "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 244.68093594888595,
+        "recipe_gap_mass_on_at_or_above_rows": 0.0,
+        "region": "maricopa-az",
+        "rule": "deficit_only_clip_against_C2_internal_proxy",
+        "tracts_at_or_above_internal_proxy": 703
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "building",
+        "current_defined_recipe_gap_mass": 78.13643086259468,
+        "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+        "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 78.13643086259468,
+        "recipe_gap_mass_on_at_or_above_rows": 0.0,
+        "region": "maricopa-az",
+        "rule": "deficit_only_clip_against_C2_internal_proxy",
+        "tracts_at_or_above_internal_proxy": 1263
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "fire",
+        "current_defined_recipe_gap_mass": 1002.2501121399146,
+        "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+        "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 1002.2501121399146,
+        "recipe_gap_mass_on_at_or_above_rows": 0.0,
+        "region": "maricopa-az",
+        "rule": "deficit_only_clip_against_C2_internal_proxy",
+        "tracts_at_or_above_internal_proxy": 488
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "ems",
+        "current_defined_recipe_gap_mass": 1218.958821184909,
+        "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+        "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 1218.958821184909,
+        "recipe_gap_mass_on_at_or_above_rows": 0.0,
+        "region": "maricopa-az",
+        "rule": "deficit_only_clip_against_C2_internal_proxy",
+        "tracts_at_or_above_internal_proxy": 247
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "schools",
+        "current_defined_recipe_gap_mass": 339.03347547336176,
+        "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+        "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 339.03347547336176,
+        "recipe_gap_mass_on_at_or_above_rows": 0.0,
+        "region": "maricopa-az",
+        "rule": "deficit_only_clip_against_C2_internal_proxy",
+        "tracts_at_or_above_internal_proxy": 1000
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "establishments",
+        "current_defined_recipe_gap_mass": 130.3400234982113,
+        "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+        "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 130.3400234982113,
+        "recipe_gap_mass_on_at_or_above_rows": 0.0,
+        "region": "maricopa-az",
+        "rule": "deficit_only_clip_against_C2_internal_proxy",
+        "tracts_at_or_above_internal_proxy": 1236
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "building",
+        "current_defined_recipe_gap_mass": 78.13643086259468,
+        "hypothetical_mass_removed_if_each_Microsoft_share_is_exact_reference_overlap": 32.01382255679171,
+        "hypothetical_mass_retained_under_that_assumption": 46.1226083058029,
+        "identification": "upstream source membership does not prove footprint-level equality, coverage, vintage, or exact reference overlap",
+        "microsoft_source_weighted_share": 0.446921557624172,
+        "region": "maricopa-az",
+        "rule": "Microsoft_source_overlap_counterfactual",
+        "source_known_building_count": 2908224.0,
+        "source_labeled_building_count_equivalent": 1299748.0
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "fire",
+        "current_defined_recipe_gap_mass_on_overture_zero_mask": 1002.2501121399146,
+        "identification": "zero Overture count is not evidence of zero USGS count; stress test is not scored or promoted",
+        "overture_zero_tracts": 1105,
+        "recipe_defined_on_overture_zero_tracts": 1031,
+        "region": "maricopa-az",
+        "rule": "undefined_facility_type_if_USGS_reference_zero",
+        "stress_test_POI_mass_removed_if_overture_zero_equals_USGS_zero": 66.7693660446904
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "ems",
+        "current_defined_recipe_gap_mass_on_overture_zero_mask": 1218.958821184909,
+        "identification": "zero Overture count is not evidence of zero USGS count; stress test is not scored or promoted",
+        "overture_zero_tracts": 1346,
+        "recipe_defined_on_overture_zero_tracts": 1235,
+        "region": "maricopa-az",
+        "rule": "undefined_facility_type_if_USGS_reference_zero",
+        "stress_test_POI_mass_removed_if_overture_zero_equals_USGS_zero": 100.41001776627536
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "schools",
+        "current_defined_recipe_gap_mass_on_overture_zero_mask": 226.57664283578538,
+        "identification": "zero Overture count is not evidence of zero USGS count; stress test is not scored or promoted",
+        "overture_zero_tracts": 254,
+        "recipe_defined_on_overture_zero_tracts": 239,
+        "region": "maricopa-az",
+        "rule": "undefined_facility_type_if_USGS_reference_zero",
+        "stress_test_POI_mass_removed_if_overture_zero_equals_USGS_zero": 10.574482749223023
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "transport",
+        "current_defined_recipe_gap_mass": 244.68093594888595,
+        "identification": "TIGER highway presence is not observed; Overture named-road absence cannot establish the reference mask",
+        "maximum_mass_at_risk_if_all_transport_scores_were_undefined": 244.68093594888595,
+        "overture_named_road_zero_tracts": 33,
+        "region": "maricopa-az",
+        "rule": "transport_defined_only_if_TIGER_S1100_S1200_present"
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "POI_establishments",
+        "current_defined_recipe_gap_mass": 130.3400234982113,
+        "identification": "CBP reference counts unavailable/forbidden; all-place counts alone do not establish Overtures>=CBP",
+        "maximum_mass_at_risk": 130.3400234982113,
+        "overture_all_places_total": 300046.0,
+        "region": "maricopa-az",
+        "rule": "all_Overture_places_vs_CBP_establishments",
+        "tracts_at_or_above_internal_expected_count_proxy": 1236
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "transport",
+        "current_defined_recipe_gap_mass": 70.43149314321711,
+        "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+        "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 70.43149314321711,
+        "recipe_gap_mass_on_at_or_above_rows": 0.0,
+        "region": "northern-ca",
+        "rule": "deficit_only_clip_against_C2_internal_proxy",
+        "tracts_at_or_above_internal_proxy": 325
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "building",
+        "current_defined_recipe_gap_mass": 27.522159986295883,
+        "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+        "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 27.522159986295883,
+        "recipe_gap_mass_on_at_or_above_rows": 0.0,
+        "region": "northern-ca",
+        "rule": "deficit_only_clip_against_C2_internal_proxy",
+        "tracts_at_or_above_internal_proxy": 465
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "fire",
+        "current_defined_recipe_gap_mass": 266.9917486579653,
+        "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+        "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 266.9917486579653,
+        "recipe_gap_mass_on_at_or_above_rows": 0.0,
+        "region": "northern-ca",
+        "rule": "deficit_only_clip_against_C2_internal_proxy",
+        "tracts_at_or_above_internal_proxy": 275
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "ems",
+        "current_defined_recipe_gap_mass": 361.8209124933596,
+        "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+        "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 361.8209124933596,
+        "recipe_gap_mass_on_at_or_above_rows": 0.0,
+        "region": "northern-ca",
+        "rule": "deficit_only_clip_against_C2_internal_proxy",
+        "tracts_at_or_above_internal_proxy": 140
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "schools",
+        "current_defined_recipe_gap_mass": 69.92378677875588,
+        "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+        "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 69.92378677875588,
+        "recipe_gap_mass_on_at_or_above_rows": 0.0,
+        "region": "northern-ca",
+        "rule": "deficit_only_clip_against_C2_internal_proxy",
+        "tracts_at_or_above_internal_proxy": 466
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "establishments",
+        "current_defined_recipe_gap_mass": 38.16424751596267,
+        "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+        "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 38.16424751596267,
+        "recipe_gap_mass_on_at_or_above_rows": 0.0,
+        "region": "northern-ca",
+        "rule": "deficit_only_clip_against_C2_internal_proxy",
+        "tracts_at_or_above_internal_proxy": 496
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "building",
+        "current_defined_recipe_gap_mass": 27.522159986295883,
+        "hypothetical_mass_removed_if_each_Microsoft_share_is_exact_reference_overlap": 23.2880736421627,
+        "hypothetical_mass_retained_under_that_assumption": 4.234086344133182,
+        "identification": "upstream source membership does not prove footprint-level equality, coverage, vintage, or exact reference overlap",
+        "microsoft_source_weighted_share": 0.8954747180230836,
+        "region": "northern-ca",
+        "rule": "Microsoft_source_overlap_counterfactual",
+        "source_known_building_count": 1164723.0,
+        "source_labeled_building_count_equivalent": 1042980.0
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "fire",
+        "current_defined_recipe_gap_mass_on_overture_zero_mask": 266.9917486579653,
+        "identification": "zero Overture count is not evidence of zero USGS count; stress test is not scored or promoted",
+        "overture_zero_tracts": 316,
+        "recipe_defined_on_overture_zero_tracts": 278,
+        "region": "northern-ca",
+        "rule": "undefined_facility_type_if_USGS_reference_zero",
+        "stress_test_POI_mass_removed_if_overture_zero_equals_USGS_zero": 19.108842009342908
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "ems",
+        "current_defined_recipe_gap_mass_on_overture_zero_mask": 361.8209124933596,
+        "identification": "zero Overture count is not evidence of zero USGS count; stress test is not scored or promoted",
+        "overture_zero_tracts": 451,
+        "recipe_defined_on_overture_zero_tracts": 369,
+        "region": "northern-ca",
+        "rule": "undefined_facility_type_if_USGS_reference_zero",
+        "stress_test_POI_mass_removed_if_overture_zero_equals_USGS_zero": 35.07592138778483
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "schools",
+        "current_defined_recipe_gap_mass_on_overture_zero_mask": 45.67845490211599,
+        "identification": "zero Overture count is not evidence of zero USGS count; stress test is not scored or promoted",
+        "overture_zero_tracts": 49,
+        "recipe_defined_on_overture_zero_tracts": 48,
+        "region": "northern-ca",
+        "rule": "undefined_facility_type_if_USGS_reference_zero",
+        "stress_test_POI_mass_removed_if_overture_zero_equals_USGS_zero": 3.7967774168597543
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "transport",
+        "current_defined_recipe_gap_mass": 70.43149314321711,
+        "identification": "TIGER highway presence is not observed; Overture named-road absence cannot establish the reference mask",
+        "maximum_mass_at_risk_if_all_transport_scores_were_undefined": 70.43149314321711,
+        "overture_named_road_zero_tracts": 7,
+        "region": "northern-ca",
+        "rule": "transport_defined_only_if_TIGER_S1100_S1200_present"
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "POI_establishments",
+        "current_defined_recipe_gap_mass": 38.16424751596267,
+        "identification": "CBP reference counts unavailable/forbidden; all-place counts alone do not establish Overtures>=CBP",
+        "maximum_mass_at_risk": 38.16424751596267,
+        "overture_all_places_total": 116897.0,
+        "region": "northern-ca",
+        "rule": "all_Overture_places_vs_CBP_establishments",
+        "tracts_at_or_above_internal_expected_count_proxy": 496
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "transport",
+        "current_defined_recipe_gap_mass": 84.04404900212643,
+        "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+        "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 84.04404900212643,
+        "recipe_gap_mass_on_at_or_above_rows": 0.0,
+        "region": "eastern-ok",
+        "rule": "deficit_only_clip_against_C2_internal_proxy",
+        "tracts_at_or_above_internal_proxy": 736
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "building",
+        "current_defined_recipe_gap_mass": 22.911273041581747,
+        "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+        "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 22.911273041581747,
+        "recipe_gap_mass_on_at_or_above_rows": 0.0,
+        "region": "eastern-ok",
+        "rule": "deficit_only_clip_against_C2_internal_proxy",
+        "tracts_at_or_above_internal_proxy": 1112
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "fire",
+        "current_defined_recipe_gap_mass": 510.3925401348644,
+        "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+        "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 510.3925401348644,
+        "recipe_gap_mass_on_at_or_above_rows": 0.0,
+        "region": "eastern-ok",
+        "rule": "deficit_only_clip_against_C2_internal_proxy",
+        "tracts_at_or_above_internal_proxy": 546
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "ems",
+        "current_defined_recipe_gap_mass": 614.6129556391337,
+        "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+        "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 614.6129556391337,
+        "recipe_gap_mass_on_at_or_above_rows": 0.0,
+        "region": "eastern-ok",
+        "rule": "deficit_only_clip_against_C2_internal_proxy",
+        "tracts_at_or_above_internal_proxy": 328
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "schools",
+        "current_defined_recipe_gap_mass": 158.82129042092268,
+        "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+        "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 158.82129042092268,
+        "recipe_gap_mass_on_at_or_above_rows": 0.0,
+        "region": "eastern-ok",
+        "rule": "deficit_only_clip_against_C2_internal_proxy",
+        "tracts_at_or_above_internal_proxy": 912
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "establishments",
+        "current_defined_recipe_gap_mass": 24.986236380749713,
+        "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+        "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 24.986236380749713,
+        "recipe_gap_mass_on_at_or_above_rows": 0.0,
+        "region": "eastern-ok",
+        "rule": "deficit_only_clip_against_C2_internal_proxy",
+        "tracts_at_or_above_internal_proxy": 1108
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "building",
+        "current_defined_recipe_gap_mass": 22.911273041581747,
+        "hypothetical_mass_removed_if_each_Microsoft_share_is_exact_reference_overlap": 18.58262823669277,
+        "hypothetical_mass_retained_under_that_assumption": 4.3286448048889845,
+        "identification": "upstream source membership does not prove footprint-level equality, coverage, vintage, or exact reference overlap",
+        "microsoft_source_weighted_share": 0.8803610464264132,
+        "region": "eastern-ok",
+        "rule": "Microsoft_source_overlap_counterfactual",
+        "source_known_building_count": 2551694.0,
+        "source_labeled_building_count_equivalent": 2246412.0
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "fire",
+        "current_defined_recipe_gap_mass_on_overture_zero_mask": 510.3925401348644,
+        "identification": "zero Overture count is not evidence of zero USGS count; stress test is not scored or promoted",
+        "overture_zero_tracts": 646,
+        "recipe_defined_on_overture_zero_tracts": 536,
+        "region": "eastern-ok",
+        "rule": "undefined_facility_type_if_USGS_reference_zero",
+        "stress_test_POI_mass_removed_if_overture_zero_equals_USGS_zero": 38.195817404809276
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "ems",
+        "current_defined_recipe_gap_mass_on_overture_zero_mask": 614.6129556391337,
+        "identification": "zero Overture count is not evidence of zero USGS count; stress test is not scored or promoted",
+        "overture_zero_tracts": 864,
+        "recipe_defined_on_overture_zero_tracts": 632,
+        "region": "eastern-ok",
+        "rule": "undefined_facility_type_if_USGS_reference_zero",
+        "stress_test_POI_mass_removed_if_overture_zero_equals_USGS_zero": 55.46396114568259
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "schools",
+        "current_defined_recipe_gap_mass_on_overture_zero_mask": 117.4222462887596,
+        "identification": "zero Overture count is not evidence of zero USGS count; stress test is not scored or promoted",
+        "overture_zero_tracts": 130,
+        "recipe_defined_on_overture_zero_tracts": 125,
+        "region": "eastern-ok",
+        "rule": "undefined_facility_type_if_USGS_reference_zero",
+        "stress_test_POI_mass_removed_if_overture_zero_equals_USGS_zero": 17.95386638545159
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "transport",
+        "current_defined_recipe_gap_mass": 84.04404900212643,
+        "identification": "TIGER highway presence is not observed; Overture named-road absence cannot establish the reference mask",
+        "maximum_mass_at_risk_if_all_transport_scores_were_undefined": 84.04404900212643,
+        "overture_named_road_zero_tracts": 28,
+        "region": "eastern-ok",
+        "rule": "transport_defined_only_if_TIGER_S1100_S1200_present"
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "POI_establishments",
+        "current_defined_recipe_gap_mass": 24.986236380749713,
+        "identification": "CBP reference counts unavailable/forbidden; all-place counts alone do not establish Overtures>=CBP",
+        "maximum_mass_at_risk": 24.986236380749713,
+        "overture_all_places_total": 207369.0,
+        "region": "eastern-ok",
+        "rule": "all_Overture_places_vs_CBP_establishments",
+        "tracts_at_or_above_internal_expected_count_proxy": 1108
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "transport",
+        "current_defined_recipe_gap_mass": 508.9860485081244,
+        "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+        "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 508.9860485081244,
+        "recipe_gap_mass_on_at_or_above_rows": 0.0,
+        "region": "south-central-tx",
+        "rule": "deficit_only_clip_against_C2_internal_proxy",
+        "tracts_at_or_above_internal_proxy": 3642
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "building",
+        "current_defined_recipe_gap_mass": 550.2830407279623,
+        "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+        "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 550.2830407279623,
+        "recipe_gap_mass_on_at_or_above_rows": 0.0,
+        "region": "south-central-tx",
+        "rule": "deficit_only_clip_against_C2_internal_proxy",
+        "tracts_at_or_above_internal_proxy": 4475
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "fire",
+        "current_defined_recipe_gap_mass": 3320.53795402264,
+        "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+        "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 3320.53795402264,
+        "recipe_gap_mass_on_at_or_above_rows": 0.0,
+        "region": "south-central-tx",
+        "rule": "deficit_only_clip_against_C2_internal_proxy",
+        "tracts_at_or_above_internal_proxy": 2203
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "ems",
+        "current_defined_recipe_gap_mass": 3931.31042595096,
+        "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+        "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 3931.31042595096,
+        "recipe_gap_mass_on_at_or_above_rows": 0.0,
+        "region": "south-central-tx",
+        "rule": "deficit_only_clip_against_C2_internal_proxy",
+        "tracts_at_or_above_internal_proxy": 1392
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "schools",
+        "current_defined_recipe_gap_mass": 920.934928594924,
+        "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+        "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 920.934928594924,
+        "recipe_gap_mass_on_at_or_above_rows": 0.0,
+        "region": "south-central-tx",
+        "rule": "deficit_only_clip_against_C2_internal_proxy",
+        "tracts_at_or_above_internal_proxy": 4303
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "establishments",
+        "current_defined_recipe_gap_mass": 268.0530440073728,
+        "identification": "internal-proxy clip is already zero; organizer-reference comparison unavailable",
+        "maximum_mass_at_risk_if_all_current_positive_mass_were_clipped": 268.0530440073728,
+        "recipe_gap_mass_on_at_or_above_rows": 0.0,
+        "region": "south-central-tx",
+        "rule": "deficit_only_clip_against_C2_internal_proxy",
+        "tracts_at_or_above_internal_proxy": 5212
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "building",
+        "current_defined_recipe_gap_mass": 550.2830407279623,
+        "hypothetical_mass_removed_if_each_Microsoft_share_is_exact_reference_overlap": 334.91693665136177,
+        "hypothetical_mass_retained_under_that_assumption": 213.36610407660032,
+        "identification": "upstream source membership does not prove footprint-level equality, coverage, vintage, or exact reference overlap",
+        "microsoft_source_weighted_share": 0.719071860988503,
+        "region": "south-central-tx",
+        "rule": "Microsoft_source_overlap_counterfactual",
+        "source_known_building_count": 11463800.0,
+        "source_labeled_building_count_equivalent": 8243296.0
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "fire",
+        "current_defined_recipe_gap_mass_on_overture_zero_mask": 3320.1145068307333,
+        "identification": "zero Overture count is not evidence of zero USGS count; stress test is not scored or promoted",
+        "overture_zero_tracts": 3825,
+        "recipe_defined_on_overture_zero_tracts": 3463,
+        "region": "south-central-tx",
+        "rule": "undefined_facility_type_if_USGS_reference_zero",
+        "stress_test_POI_mass_removed_if_overture_zero_equals_USGS_zero": 243.70595325274553
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "ems",
+        "current_defined_recipe_gap_mass_on_overture_zero_mask": 3931.1620865468385,
+        "identification": "zero Overture count is not evidence of zero USGS count; stress test is not scored or promoted",
+        "overture_zero_tracts": 4621,
+        "recipe_defined_on_overture_zero_tracts": 4040,
+        "region": "south-central-tx",
+        "rule": "undefined_facility_type_if_USGS_reference_zero",
+        "stress_test_POI_mass_removed_if_overture_zero_equals_USGS_zero": 344.0920470257147
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "schools",
+        "current_defined_recipe_gap_mass_on_overture_zero_mask": 587.8562372435024,
+        "identification": "zero Overture count is not evidence of zero USGS count; stress test is not scored or promoted",
+        "overture_zero_tracts": 655,
+        "recipe_defined_on_overture_zero_tracts": 635,
+        "region": "south-central-tx",
+        "rule": "undefined_facility_type_if_USGS_reference_zero",
+        "stress_test_POI_mass_removed_if_overture_zero_equals_USGS_zero": 58.27376322421787
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "transport",
+        "current_defined_recipe_gap_mass": 508.9860485081244,
+        "identification": "TIGER highway presence is not observed; Overture named-road absence cannot establish the reference mask",
+        "maximum_mass_at_risk_if_all_transport_scores_were_undefined": 508.9860485081244,
+        "overture_named_road_zero_tracts": 64,
+        "region": "south-central-tx",
+        "rule": "transport_defined_only_if_TIGER_S1100_S1200_present"
+      },
+      {
+        "actual_hidden_reference_mass_moved": null,
+        "component_or_half": "POI_establishments",
+        "current_defined_recipe_gap_mass": 268.0530440073728,
+        "identification": "CBP reference counts unavailable/forbidden; all-place counts alone do not establish Overtures>=CBP",
+        "maximum_mass_at_risk": 268.0530440073728,
+        "overture_all_places_total": 1300331.0,
+        "region": "south-central-tx",
+        "rule": "all_Overture_places_vs_CBP_establishments",
+        "tracts_at_or_above_internal_expected_count_proxy": 5212
+      }
+    ]
+  },
+  "schema_version": 1,
+  "scope": {
+    "exact_official_GEOID_partition_verified": true,
+    "official_order_sha256": "706a3a3e53f3752ca1165bb8bb11aba95ef84f843017d6007401c99a9dd6ccc0",
+    "official_region_counts": {
+      "eastern-ok": 1192,
+      "maricopa-az": 1593,
+      "northern-ca": 591,
+      "south-central-tx": 6003
+    },
+    "official_regions": [
+      "maricopa-az",
+      "northern-ca",
+      "eastern-ok",
+      "south-central-tx"
+    ],
+    "official_tracts": 9379
+  }
+}

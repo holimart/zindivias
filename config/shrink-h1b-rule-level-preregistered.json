@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "analysis_id": "SHRINK_H1B_RULE_LEVEL_AUDIT_V1",
+  "registered_before_h1b_measurement": true,
+  "purpose": "Audit whether provided-data evidence identifies rule-anchored C2 level/mask corrections, without recreating removed references or tuning to target/leaderboard scores; decide whether a second shrink artifact S2 is justified.",
+  "scope": {
+    "official_regions": ["maricopa-az", "northern-ca", "eastern-ok", "south-central-tx"],
+    "official_rows": {"maricopa-az": 1593, "northern-ca": 591, "eastern-ok": 1192, "south-central-tx": 6003},
+    "total_official_rows": 9379,
+    "sample_use": "GEOID and row order only; sample score placeholders are forbidden.",
+    "current_single_shrink_candidate": "S_crossmethod_reliability_shrink_v1",
+    "candidate_budget": "Do not create/register/upload a second shrink candidate; if any S2 counterfactual is non-identifiable, preserve one-candidate limit and recommend whether the existing S remains the sole option."
+  },
+  "pinned_inputs": {
+    "C2_feature_only_prediction_csv": {
+      "path": "reports/candidates/C2_component_estimator_v0.csv",
+      "sha256": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514",
+      "columns_read": ["GEOID", "transport_gap", "building_gap", "poi_gap"]
+    },
+    "C2_recipe_gap_estimates_csv": {
+      "path": "reports/gap-estimates.csv",
+      "sha256": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852",
+      "columns_read": ["GEOID", "transport_gap", "transport_defined", "building_gap", "building_defined", "poi_gap", "poi_defined", "fire_gap", "fire_defined", "ems_gap", "ems_defined", "schools_gap", "schools_defined", "cbp_gap", "cbp_defined"]
+    },
+    "C2_recipe_source": {"path": "scripts/estimate_gaps.py", "sha256": "4f59982e0349af048ba11efbd5dbc629076eef8d3c8dc08d5747da5833bfc4fe"},
+    "provided_strata": {
+      "maricopa-az": {"path": "$COMPETITION_WORKSPACE/defined-flags-inputs/maricopa-az-strata-tract-table.parquet", "sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd"},
+      "northern-ca": {"path": "$COMPETITION_WORKSPACE/defined-flags-inputs/northern-ca-strata-tract-table.parquet", "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243"},
+      "eastern-ok": {"path": "$COMPETITION_WORKSPACE/defined-flags-inputs/eastern-ok-strata-tract-table.parquet", "sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54"},
+      "south-central-tx": {"path": "$COMPETITION_WORKSPACE/defined-flags-inputs/south-central-tx-strata-tract-table.parquet", "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354"},
+      "columns_read": ["GEOID", "ALAND", "pop_total", "pop_urban", "pct_urban"]
+    },
+    "provided_overture_tract_summaries": {
+      "maricopa-az": {"path": "$COMPETITION_WORKSPACE/gap-estimator/features/maricopa-az-overture-tract-summary.parquet", "sha256": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22"},
+      "northern-ca": {"path": "$COMPETITION_WORKSPACE/gap-estimator/features/northern-ca-overture-tract-summary.parquet", "sha256": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c"},
+      "eastern-ok": {"path": "$COMPETITION_WORKSPACE/gap-estimator/features/eastern-ok-overture-tract-summary.parquet", "sha256": "e5a06316c316f61bf25b80b48e89c1e7f0b1461a0b8cec5831aae24e0cf83fa6"},
+      "south-central-tx": {"path": "$COMPETITION_WORKSPACE/gap-estimator/features/south-central-tx-overture-tract-summary.parquet", "sha256": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746"},
+      "columns_read": ["GEOID", "overture_road_km", "overture_named_road_km_5070", "overture_buildings", "overture_building_microsoft_source_share", "overture_poi_all", "overture_poi_fire", "overture_poi_ems", "overture_poi_schools", "overture_poi_unclassified", "overture_unclassified_fire_share", "overture_unclassified_ems_share", "overture_unclassified_schools_share"]
+    }
+  },
+  "measurement_definitions": {
+    "C2_component_mass": "For each official region and each of transport_gap, building_gap, poi_gap: sum the finite nonnegative frozen C2 component predictions; also report mean, positive-row count, and official n. This is model-output mass, not hidden-reference error or mass against organizer targets.",
+    "deficit_only_clip": "Reproduce the frozen recipe's internal proxy denominators exactly (road=.35+.55*sqrt(ALAND_km2)+.0007*pop_total+2*urban; buildings=max(.5,.30*pop_total+4*sqrt(ALAND_km2)+5*urban); fire=.15+pop_total/30000+.45*urban; EMS=.15+pop_total/40000+.45*urban; schools=.20+pop_total/2500+.20*urban; establishments=.20+pop_total/70+.50*urban). For every type report rows O>=proxy, recipe gap mass on those rows (should be zero due existing clip), and positive C2 mass upper bound. These denominators are the estimator's own domain assumptions, not independent/validated reference counts; actual organizer-reference clip mass remains null.",
+    "microsoft_building_source": "Compute building-record-weighted mean of the provided per-tract Overture Microsoft-source share: sum(overture_buildings * microsoft_source_share) / sum(overture_buildings), over official tracts with valid shares. Also report source-overlap counterfactual mass removed if and only if each source-labeled share were an exact matched reference share, as an unvalidated sensitivity, not an applied correction.",
+    "poi_establishments": "Report provided overture_poi_all count, zero-count coverage, and C2 aggregate POI mass. CBP counts are absent/forbidden; no establishments-half ratio or actual clipped mass may be inferred.",
+    "poi_facilities": "For each provided Overture fire/EMS/school count, report Overture-zero tracts, current recipe-defined status, per-type recipe gap mass on the zero mask, and the changed aggregate POI mass under the explicit stress-test assumption Overture-zero equals USGS-zero. This is an overlap diagnostic only: Overture zero is not USGS zero; true per-type undefined counts and actual dropped mass are null because USGS reference counts are unavailable/forbidden.",
+    "transport_definedness": "Report provided Overture named-road zero support and C2 transport mass. TIGER S1100/S1200 presence is not observed; actual transport undefined rows and corrected mass are null.",
+    "rule_correction": "Only apply a correction in a candidate if the relevant provided-data evidence directly identifies the rule condition; do not treat upstream source provenance, Overture absence, population, density, or a model prior as a validated reference count/mask.",
+    "facility_stress_test": "For each tract, recompute only the POI aggregate if a type is dropped where its Overture selected-category count is zero, using the frozen gap-estimates facility/CBP values and current defined flags. Report this as an assumption-bound counterfactual, never as an estimate of hidden-reference correction."
+  },
+  "decision_rule": {
+    "build_S2": "Only if a provided, permitted reference proxy identifies a prespecified level clip or reference-absence mask for the required component(s) and an exact deterministic structural correction can be justified without fitting a coefficient.",
+    "do_not_build_S2": "If the key denominator/presence evidence is absent, report rule-specific model-mass upper bounds and provided-data proxy overlays, retain the single existing S candidate as the sole shrink option, and state why S2 is not identified.",
+    "no_threshold_search": true
+  },
+  "forbidden": [
+    "public/private leaderboard scores, scorecards, or algebra on any score",
+    "C0/all-zero candidate or its values for choosing any level/factor/rule",
+    "labels or sample score placeholders",
+    "removed TIGER, Microsoft US Building Footprints, USGS facilities, CBP layers or any equivalent copy",
+    "external datasets or their numerical counts",
+    "fitting, target-moment calibration, candidate-registration edits, or uploads"
+  ],
+  "outputs": {
+    "script": "scripts/audit_shrink_h1b_rule_levels.py",
+    "tests": "tests/test_shrink_h1b_rule_levels.py",
+    "report": "reports/shrink-h1b-rule-level-audit.json",
+    "S2_artifact": "none unless the decision rule is met; this preregistration does not authorize a second candidate or upload"
+  }
+}
