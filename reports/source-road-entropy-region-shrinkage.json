@@ -1,0 +1,650 @@
+{
+  "schema_version": 1,
+  "screen": "Region-varying provided source-entropy × road-entropy effects with fixed ridge-shrunk deviations against frozen S1 residual; unregistered",
+  "measure_before": {
+    "pooled_interaction_delta_r2": -4.8250971948343004e-05,
+    "pooled_interaction_positive_folds": 0,
+    "pooled_interaction_report_sha256": "96770760e578a871fa9f2e6ea388994637b7732b51fe985a32aed73a587a614d",
+    "poi_source_entropy_residual_variance_ratio": 0.8104966782110836,
+    "road_class_entropy_residual_variance_ratio": 0.6607401765971582,
+    "complete_case_ids": 9247
+  },
+  "method": {
+    "outcome": "Reuse frozen cross-fitted orthogonalized S1 disagreement residual and its existing five GEOID folds; no residual refit.",
+    "baseline": "Same region-intercept, log1p POI count, frozen Mx4 F, S1 lag and both entropy main effects as the pooled interaction screen.",
+    "baseline_model": "OLS; all base features training-standardized globally per fold; entropy main effects standardized by region using that region's training-fold values only.",
+    "augmented_model": "Add a common standardized source-entropy × road-entropy product slope plus four region-specific interaction deviations constrained to sum to zero. Parameterize four deviations with three independent region contrasts; each region slope is common slope plus its deviation.",
+    "ridge_penalty": "Fixed alpha=100; penalize alpha times the sum of squares of the four sum-zero regional deviations only. Common product slope and baseline terms are unpenalized. Objective is training SSE + penalty; no outer tuning.",
+    "coefficient_shrinkage": "For disclosure only, report ridge and unpenalized four-deviation L2 norms and their ratio for each fold; unpenalized fit is not used for predictions or selection.",
+    "folds": "Reuse the exact five GEOID folds from the frozen S1 residual artifact. Every transform and model fit uses only the other four folds; predictions are paired on held-out complete cases.",
+    "support": "Exact same official ID mask as the previous pooled source-road interaction, requiring frozen residual, both entropy features and log count/Mx4/S1 predictors. No imputation.",
+    "metric": "Pooled and regional OOF incremental delta-R2=(baseline SSE - ridge model SSE)/shared held-out residual SST.",
+    "unregistered": true,
+    "interpretation_limit": "Label-free provided-feature association screen only; not target accuracy, causality, or estimator-promotion evidence."
+  },
+  "scope": {
+    "official_ids": 9379,
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "complete_case_ids": 9247,
+    "complete_case_mask_sha256": "68afdf19c4b82663683a7e7489730b762b883628991a34000d28e00089ad8485",
+    "frozen_residual_mask_sha256": "593459efd58441427b7c76d010f31880b0709ad2fe46b90bd254145da4ce27d6",
+    "fold_assignment_sha256": "c8b4f9875dbd127a1627458cba0d824bd743d5e5047b38ef243eb6608c3f5ce5",
+    "fold_support": {
+      "0": 1801,
+      "1": 1818,
+      "2": 1888,
+      "3": 1913,
+      "4": 1827
+    },
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_references_read": false,
+    "external_data_used": [],
+    "heldout_preprocessing": false,
+    "changed_folds": false,
+    "registry_changed": false,
+    "leaderboard_feedback_used": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "pooled": {
+      "baseline_sse": 0.1485320945439039,
+      "interaction_sse": 0.1486812489378851,
+      "heldout_total_sum_squares": 0.14689652382547397,
+      "baseline_r2": -0.011134168977157799,
+      "interaction_r2": -0.01214953945766295,
+      "delta_r2": -0.0010153704805050529
+    },
+    "regional": {
+      "maricopa-az": {
+        "n": 1560,
+        "baseline_sse": 0.025007949334986575,
+        "interaction_sse": 0.025060431192615987,
+        "heldout_total_sum_squares": 0.0247890229163144,
+        "baseline_r2": -0.008831587247760897,
+        "interaction_r2": -0.010948728282588416,
+        "delta_r2": -0.0021171410348276415
+      },
+      "northern-ca": {
+        "n": 584,
+        "baseline_sse": 0.016767132145082443,
+        "interaction_sse": 0.016810481993301686,
+        "heldout_total_sum_squares": 0.016744791307964236,
+        "baseline_r2": -0.001334196211067784,
+        "interaction_r2": -0.003923051898903296,
+        "delta_r2": -0.002588855687835576
+      },
+      "eastern-ok": {
+        "n": 1164,
+        "baseline_sse": 0.07225409964011259,
+        "interaction_sse": 0.07229952273263834,
+        "heldout_total_sum_squares": 0.07097481887421872,
+        "baseline_r2": -0.018024431568624433,
+        "interaction_r2": -0.018664420416024674,
+        "delta_r2": -0.0006399888474002636
+      },
+      "south-central-tx": {
+        "n": 5939,
+        "baseline_sse": 0.0345029134237223,
+        "interaction_sse": 0.03451081301932908,
+        "heldout_total_sum_squares": 0.03438521744370941,
+        "baseline_r2": -0.0034228656603834118,
+        "interaction_r2": -0.003652603791884701,
+        "delta_r2": -0.00022973813150113073
+      }
+    },
+    "folds": [
+      {
+        "fold": 0,
+        "training_n": 7446,
+        "heldout_n": 1801,
+        "baseline_sse": 0.019871409706964605,
+        "interaction_sse": 0.019933540756588236,
+        "heldout_total_sum_squares": 0.01967702144677,
+        "baseline_r2": -0.009878947416938288,
+        "interaction_r2": -0.013036490838421289,
+        "delta_r2": -0.003157543421483156
+      },
+      {
+        "fold": 1,
+        "training_n": 7429,
+        "heldout_n": 1818,
+        "baseline_sse": 0.04709222480211603,
+        "interaction_sse": 0.04714654394790015,
+        "heldout_total_sum_squares": 0.046999504324330414,
+        "baseline_r2": -0.0019727969287883784,
+        "interaction_r2": -0.0031285356235899453,
+        "delta_r2": -0.0011557386948016246
+      },
+      {
+        "fold": 2,
+        "training_n": 7359,
+        "heldout_n": 1888,
+        "baseline_sse": 0.02332513648519817,
+        "interaction_sse": 0.023368726396726765,
+        "heldout_total_sum_squares": 0.022958458344305665,
+        "baseline_r2": -0.01597137470615273,
+        "interaction_r2": -0.01787001750153916,
+        "delta_r2": -0.001898642795386446
+      },
+      {
+        "fold": 3,
+        "training_n": 7334,
+        "heldout_n": 1913,
+        "baseline_sse": 0.020298586963556797,
+        "interaction_sse": 0.020281797775254188,
+        "heldout_total_sum_squares": 0.019445681478087173,
+        "baseline_r2": -0.04386092029897437,
+        "interaction_r2": -0.042997531256963706,
+        "delta_r2": 0.0008633890420106183
+      },
+      {
+        "fold": 4,
+        "training_n": 7420,
+        "heldout_n": 1827,
+        "baseline_sse": 0.0379447365860683,
+        "interaction_sse": 0.03795064006141577,
+        "heldout_total_sum_squares": 0.037713682584727175,
+        "baseline_r2": -0.006126529829645788,
+        "interaction_r2": -0.006283063876253658,
+        "delta_r2": -0.0001565340466078479
+      }
+    ],
+    "positive_regions": 0,
+    "coefficient_shrinkage_by_fold": [
+      {
+        "fold": 0,
+        "alpha": 100.0,
+        "penalized_objective": "training SSE + alpha * sum of squares of four sum-zero region deviations; common slope and baseline terms unpenalized",
+        "common_product_coefficient": 6.568667368866203e-05,
+        "region_deviation_coefficients": {
+          "maricopa-az": -0.0001600141855018943,
+          "northern-ca": 7.982659249119665e-05,
+          "eastern-ok": 0.00015114273585935367,
+          "south-central-tx": -7.095514284865603e-05
+        },
+        "region_interaction_slopes": {
+          "maricopa-az": -9.432751181323226e-05,
+          "northern-ca": 0.0001455132661798587,
+          "eastern-ok": 0.0002168294095480157,
+          "south-central-tx": -5.268469159993994e-06
+        },
+        "ridge_deviation_l2_norm": 0.0002446540073865821,
+        "unpenalized_deviation_l2_norm": 0.00026624019184968083,
+        "ridge_to_unpenalized_deviation_norm_ratio": 0.9189221420209677,
+        "training_only_global_scalers": {
+          "log1p_poi_count": {
+            "training_mean": 4.960013631719618,
+            "training_sd": 0.8747192800668767
+          },
+          "Mx4_F": {
+            "training_mean": 0.04133722816467372,
+            "training_sd": 0.12059121832145552
+          },
+          "S1_lagged_Mx4_F": {
+            "training_mean": 0.04149416762485014,
+            "training_sd": 0.11783400152323804
+          }
+        },
+        "training_only_region_entropy_scalers": {
+          "maricopa-az": {
+            "poi_source_entropy": {
+              "training_mean": 0.5708595858043438,
+              "training_sd": 0.08795458593580255
+            },
+            "road_class_entropy": {
+              "training_mean": 0.3533964993729871,
+              "training_sd": 0.2584613061466579
+            }
+          },
+          "northern-ca": {
+            "poi_source_entropy": {
+              "training_mean": 0.5366256622758522,
+              "training_sd": 0.09605775466523478
+            },
+            "road_class_entropy": {
+              "training_mean": 0.3726843619781251,
+              "training_sd": 0.26034385356570244
+            }
+          },
+          "eastern-ok": {
+            "poi_source_entropy": {
+              "training_mean": 0.5084053224154422,
+              "training_sd": 0.09795453284382914
+            },
+            "road_class_entropy": {
+              "training_mean": 0.38090473350183973,
+              "training_sd": 0.26998120875558235
+            }
+          },
+          "south-central-tx": {
+            "poi_source_entropy": {
+              "training_mean": 0.5299754489995492,
+              "training_sd": 0.0948324488269498
+            },
+            "road_class_entropy": {
+              "training_mean": 0.4088504020217577,
+              "training_sd": 0.2658145098259238
+            }
+          }
+        }
+      },
+      {
+        "fold": 1,
+        "alpha": 100.0,
+        "penalized_objective": "training SSE + alpha * sum of squares of four sum-zero region deviations; common slope and baseline terms unpenalized",
+        "common_product_coefficient": 6.495377484353338e-05,
+        "region_deviation_coefficients": {
+          "maricopa-az": -0.00017364481694585234,
+          "northern-ca": 0.0001793707483267417,
+          "eastern-ok": 8.119851522779735e-05,
+          "south-central-tx": -8.692444660868672e-05
+        },
+        "region_interaction_slopes": {
+          "maricopa-az": -0.00010869104210231895,
+          "northern-ca": 0.0002443245231702751,
+          "eastern-ok": 0.00014615229007133073,
+          "south-central-tx": -2.1970671765153332e-05
+        },
+        "ridge_deviation_l2_norm": 0.0002765419427516903,
+        "unpenalized_deviation_l2_norm": 0.0003096202548197004,
+        "ridge_to_unpenalized_deviation_norm_ratio": 0.8931648961813805,
+        "training_only_global_scalers": {
+          "log1p_poi_count": {
+            "training_mean": 4.9536770865961195,
+            "training_sd": 0.8815670831233708
+          },
+          "Mx4_F": {
+            "training_mean": 0.042273207947774685,
+            "training_sd": 0.12242200174219922
+          },
+          "S1_lagged_Mx4_F": {
+            "training_mean": 0.04212802067682595,
+            "training_sd": 0.11929604011816318
+          }
+        },
+        "training_only_region_entropy_scalers": {
+          "maricopa-az": {
+            "poi_source_entropy": {
+              "training_mean": 0.5710864510726779,
+              "training_sd": 0.09069189768515679
+            },
+            "road_class_entropy": {
+              "training_mean": 0.3497901382705976,
+              "training_sd": 0.2617864647877021
+            }
+          },
+          "northern-ca": {
+            "poi_source_entropy": {
+              "training_mean": 0.5326440859836716,
+              "training_sd": 0.09548366916335006
+            },
+            "road_class_entropy": {
+              "training_mean": 0.37829731478761724,
+              "training_sd": 0.2682230554609806
+            }
+          },
+          "eastern-ok": {
+            "poi_source_entropy": {
+              "training_mean": 0.508481157195487,
+              "training_sd": 0.09821042473150324
+            },
+            "road_class_entropy": {
+              "training_mean": 0.38658647197803614,
+              "training_sd": 0.26831259154174736
+            }
+          },
+          "south-central-tx": {
+            "poi_source_entropy": {
+              "training_mean": 0.5314090031427806,
+              "training_sd": 0.09402560462197022
+            },
+            "road_class_entropy": {
+              "training_mean": 0.4069278107633399,
+              "training_sd": 0.26496201366690203
+            }
+          }
+        }
+      },
+      {
+        "fold": 2,
+        "alpha": 100.0,
+        "penalized_objective": "training SSE + alpha * sum of squares of four sum-zero region deviations; common slope and baseline terms unpenalized",
+        "common_product_coefficient": 6.052960164100154e-05,
+        "region_deviation_coefficients": {
+          "maricopa-az": -1.3230111652271418e-05,
+          "northern-ca": 0.00015758908040453708,
+          "eastern-ok": -8.538806893231414e-05,
+          "south-central-tx": -5.897089981995153e-05
+        },
+        "region_interaction_slopes": {
+          "maricopa-az": 4.729948998873012e-05,
+          "northern-ca": 0.00021811868204553862,
+          "eastern-ok": -2.4858467291312597e-05,
+          "south-central-tx": 1.5587018210500136e-06
+        },
+        "ridge_deviation_l2_norm": 0.00018915084842168598,
+        "unpenalized_deviation_l2_norm": 0.00021980228546865464,
+        "ridge_to_unpenalized_deviation_norm_ratio": 0.860549962064249,
+        "training_only_global_scalers": {
+          "log1p_poi_count": {
+            "training_mean": 4.964143675580094,
+            "training_sd": 0.8744101191205401
+          },
+          "Mx4_F": {
+            "training_mean": 0.04089685938270985,
+            "training_sd": 0.11947159541476043
+          },
+          "S1_lagged_Mx4_F": {
+            "training_mean": 0.04078984809781882,
+            "training_sd": 0.11618015531620243
+          }
+        },
+        "training_only_region_entropy_scalers": {
+          "maricopa-az": {
+            "poi_source_entropy": {
+              "training_mean": 0.5709562116138966,
+              "training_sd": 0.09268987994663157
+            },
+            "road_class_entropy": {
+              "training_mean": 0.34823356525105376,
+              "training_sd": 0.2590640310031273
+            }
+          },
+          "northern-ca": {
+            "poi_source_entropy": {
+              "training_mean": 0.5378288812115065,
+              "training_sd": 0.09242205172184283
+            },
+            "road_class_entropy": {
+              "training_mean": 0.37238322647603955,
+              "training_sd": 0.2622422864621876
+            }
+          },
+          "eastern-ok": {
+            "poi_source_entropy": {
+              "training_mean": 0.5088594801449012,
+              "training_sd": 0.09779653349723866
+            },
+            "road_class_entropy": {
+              "training_mean": 0.392990877008041,
+              "training_sd": 0.2666915713053923
+            }
+          },
+          "south-central-tx": {
+            "poi_source_entropy": {
+              "training_mean": 0.5318986921398706,
+              "training_sd": 0.09320583135096006
+            },
+            "road_class_entropy": {
+              "training_mean": 0.40974496177614694,
+              "training_sd": 0.2648757942259896
+            }
+          }
+        }
+      },
+      {
+        "fold": 3,
+        "alpha": 100.0,
+        "penalized_objective": "training SSE + alpha * sum of squares of four sum-zero region deviations; common slope and baseline terms unpenalized",
+        "common_product_coefficient": 2.1873152753324928e-05,
+        "region_deviation_coefficients": {
+          "maricopa-az": -8.978485291528889e-05,
+          "northern-ca": 8.652505538130809e-05,
+          "eastern-ok": 2.3996310600743075e-05,
+          "south-central-tx": -2.073651306676228e-05
+        },
+        "region_interaction_slopes": {
+          "maricopa-az": -6.791170016196395e-05,
+          "northern-ca": 0.00010839820813463301,
+          "eastern-ok": 4.5869463354068e-05,
+          "south-central-tx": 1.1366396865626489e-06
+        },
+        "ridge_deviation_l2_norm": 0.0001286613031115954,
+        "unpenalized_deviation_l2_norm": 0.00014475538138906924,
+        "ridge_to_unpenalized_deviation_norm_ratio": 0.888818791239155,
+        "training_only_global_scalers": {
+          "log1p_poi_count": {
+            "training_mean": 4.9513750568802495,
+            "training_sd": 0.8861200230895752
+          },
+          "Mx4_F": {
+            "training_mean": 0.04074236772033486,
+            "training_sd": 0.1189778145161135
+          },
+          "S1_lagged_Mx4_F": {
+            "training_mean": 0.04082977139825235,
+            "training_sd": 0.11605624578667988
+          }
+        },
+        "training_only_region_entropy_scalers": {
+          "maricopa-az": {
+            "poi_source_entropy": {
+              "training_mean": 0.5689788989062254,
+              "training_sd": 0.09481348719923308
+            },
+            "road_class_entropy": {
+              "training_mean": 0.3530352282591689,
+              "training_sd": 0.25932202663362536
+            }
+          },
+          "northern-ca": {
+            "poi_source_entropy": {
+              "training_mean": 0.5352438313875301,
+              "training_sd": 0.09549990291801469
+            },
+            "road_class_entropy": {
+              "training_mean": 0.38020666056726066,
+              "training_sd": 0.26231848189007234
+            }
+          },
+          "eastern-ok": {
+            "poi_source_entropy": {
+              "training_mean": 0.5057934484194754,
+              "training_sd": 0.09984834703590031
+            },
+            "road_class_entropy": {
+              "training_mean": 0.38632162749675103,
+              "training_sd": 0.27051469996209415
+            }
+          },
+          "south-central-tx": {
+            "poi_source_entropy": {
+              "training_mean": 0.5320162443658755,
+              "training_sd": 0.09332681042937091
+            },
+            "road_class_entropy": {
+              "training_mean": 0.4122623230371052,
+              "training_sd": 0.2658299219782019
+            }
+          }
+        }
+      },
+      {
+        "fold": 4,
+        "alpha": 100.0,
+        "penalized_objective": "training SSE + alpha * sum of squares of four sum-zero region deviations; common slope and baseline terms unpenalized",
+        "common_product_coefficient": 1.2429623591349867e-05,
+        "region_deviation_coefficients": {
+          "maricopa-az": -7.941860981077741e-05,
+          "northern-ca": -2.1285341705767787e-05,
+          "eastern-ok": 0.00011837868852349071,
+          "south-central-tx": -1.767473700694551e-05
+        },
+        "region_interaction_slopes": {
+          "maricopa-az": -6.698898621942755e-05,
+          "northern-ca": -8.85571811441792e-06,
+          "eastern-ok": 0.0001308083121148406,
+          "south-central-tx": -5.245113415595644e-06
+        },
+        "ridge_deviation_l2_norm": 0.00014521119647125744,
+        "unpenalized_deviation_l2_norm": 0.00015889829602504425,
+        "ridge_to_unpenalized_deviation_norm_ratio": 0.9138625152303108,
+        "training_only_global_scalers": {
+          "log1p_poi_count": {
+            "training_mean": 4.959931576727206,
+            "training_sd": 0.8832919642093017
+          },
+          "Mx4_F": {
+            "training_mean": 0.04211489932759663,
+            "training_sd": 0.12206541261667292
+          },
+          "S1_lagged_Mx4_F": {
+            "training_mean": 0.04191950467764958,
+            "training_sd": 0.1189956961177547
+          }
+        },
+        "training_only_region_entropy_scalers": {
+          "maricopa-az": {
+            "poi_source_entropy": {
+              "training_mean": 0.5684777612472051,
+              "training_sd": 0.09280390435750861
+            },
+            "road_class_entropy": {
+              "training_mean": 0.3507920221924096,
+              "training_sd": 0.2607221177282326
+            }
+          },
+          "northern-ca": {
+            "poi_source_entropy": {
+              "training_mean": 0.5346277459089324,
+              "training_sd": 0.09560438928580714
+            },
+            "road_class_entropy": {
+              "training_mean": 0.3744181145811244,
+              "training_sd": 0.2638243416139441
+            }
+          },
+          "eastern-ok": {
+            "poi_source_entropy": {
+              "training_mean": 0.5073195323707799,
+              "training_sd": 0.09998204547165565
+            },
+            "road_class_entropy": {
+              "training_mean": 0.3868471924812637,
+              "training_sd": 0.2672890423456319
+            }
+          },
+          "south-central-tx": {
+            "poi_source_entropy": {
+              "training_mean": 0.5312044970736897,
+              "training_sd": 0.09333915116312072
+            },
+            "road_class_entropy": {
+              "training_mean": 0.40880565894931764,
+              "training_sd": 0.2647165757981722
+            }
+          }
+        }
+      }
+    ]
+  },
+  "thresholds": {
+    "pooled_delta_r2_minimum_inclusive": 0.01,
+    "minimum_positive_region_estimates": 3,
+    "fixed_ridge_alpha": 100.0
+  },
+  "acceptance": {
+    "pooled_delta_r2_at_least_0_01": false,
+    "positive_delta_in_at_least_3_of_4_regions": false,
+    "region_shrinkage_screen_pass": false
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "poi_source_entropy_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/poi-source-class-entropy/source-class-entropy-crossfit.parquet",
+      "sha256": "f5220df3aed4b66023f40df1e9fac0988e8d89b1f35ef1a6311b5fbc4d2b50ff",
+      "rows": 9379,
+      "columns_read": [
+        "GEOID",
+        "region",
+        "provided_poi_count",
+        "source_class_entropy",
+        "entropy_defined",
+        "Mx4_F",
+        "Mx4_F_defined",
+        "S1_lagged_Mx4_F",
+        "S1_lagged_Mx4_F_defined"
+      ],
+      "exact_official_pair_alignment": true
+    },
+    "road_class_entropy_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/named-road-class-entropy/class-entropy-crossfit.parquet",
+      "sha256": "41610caca547f76604a8430f7cc0dfcdf628ea3f431632c5e5da11809da92f38",
+      "rows": 9379,
+      "columns_read": [
+        "GEOID",
+        "region",
+        "class_mix_entropy",
+        "entropy_defined"
+      ],
+      "exact_official_pair_alignment": true
+    },
+    "frozen_s1_residual_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/s1-disagreement-orthogonalized/orthogonalized-disagreement.parquet",
+      "sha256": "437b8995e9aa97cc3cf0337cf4338c34e21ade2edaa6dc258700956695feab1e",
+      "rows": 9379,
+      "columns_read": [
+        "GEOID",
+        "region",
+        "crossfit_residual",
+        "crossfit_joint_defined",
+        "Mx4_F",
+        "Mx4_F_defined",
+        "S1_lagged_Mx4_F",
+        "S1_lagged_Mx4_F_defined",
+        "fold"
+      ],
+      "exact_official_pair_alignment": true
+    },
+    "poi_entropy_report": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/poi-source-class-entropy.json",
+      "sha256": "20d3333afe1775eb7fc5625b5fedf8ec63ad4f9b75a8eb4fbe722ca892e20c5c",
+      "residual_variance_ratio": 0.8104966782110836,
+      "joint_crossfit_ids": 9377
+    },
+    "road_entropy_report": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/named-road-class-entropy.json",
+      "sha256": "120e06a143fd64d1f2f0fc843aa81b2f30ba40cbcfdd43ed2a235ec2ad373b25",
+      "residual_variance_ratio": 0.6607401765971582,
+      "joint_crossfit_ids": 9228
+    },
+    "frozen_s1_residual_report": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/s1-disagreement-orthogonalized.json",
+      "sha256": "b8bc5344339a1f4eb316484aea733c02d8fa37f1a7828583f13d01ffa58aa8fd"
+    },
+    "pooled_interaction_report": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/source-road-entropy-interaction.json",
+      "sha256": "96770760e578a871fa9f2e6ea388994637b7732b51fe985a32aed73a587a614d"
+    },
+    "source_entropy_report_sha256": "20d3333afe1775eb7fc5625b5fedf8ec63ad4f9b75a8eb4fbe722ca892e20c5c",
+    "road_entropy_report_sha256": "120e06a143fd64d1f2f0fc843aa81b2f30ba40cbcfdd43ed2a235ec2ad373b25",
+    "frozen_residual_report_sha256": "b8bc5344339a1f4eb316484aea733c02d8fa37f1a7828583f13d01ffa58aa8fd",
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/source-road-entropy-region-shrinkage/oof-predictions.parquet",
+      "sha256": "8b1074c2b334c195224de44ff8aedad095312eedb418158c236f4bbaba569f12",
+      "rows": 9379,
+      "columns": [
+        "GEOID",
+        "region",
+        "fixed_s1_fold",
+        "frozen_s1_residual",
+        "frozen_s1_residual_defined",
+        "poi_source_entropy",
+        "poi_source_entropy_defined",
+        "road_class_entropy",
+        "road_class_entropy_defined",
+        "log1p_poi_count",
+        "Mx4_F",
+        "S1_lagged_Mx4_F",
+        "interaction_complete_case_defined",
+        "training_fold_region_standardized_entropy_product",
+        "baseline_oof_prediction",
+        "region_shrinkage_oof_prediction"
+      ],
+      "deterministic_serialization": true
+    },
+    "script_sha256": "85a9c5f1d4969bf4c86e93c1c510ebe138ab751c45d0b71b170432f7cf088915"
+  },
+  "interpretation": "The fixed ridge-shrunk region-varying source-road interaction failed one or more preregistered gates; retire the interaction as unsupported and do not integrate it."
+}
