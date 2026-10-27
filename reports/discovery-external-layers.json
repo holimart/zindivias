@@ -1,0 +1,1719 @@
+{
+  "acquisition_manifest": {
+    "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/external-discovery-2026-10-27/MANIFEST.json",
+    "sha256": "0fb9d13e616ed9ac47a0675db95075d011b5dc84f69c53ae66cccb48f164496f",
+    "sha256sums_path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/external-discovery-2026-10-27/SHA256SUMS",
+    "sha256sums_sha256": "ce2fab5138cad0c034d81cd45e1619c1dd82817ac47d407d019bea452f78bde8"
+  },
+  "analysis_id": "discovery-external-layers-2026-10-27",
+  "candidate_files_read_only": {
+    "A1_physical_equal": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/candidates/A1_physical_equal.csv",
+      "sha256": "6af088b83ff3481d420e11b14d903fc510c2b4be2cea285c762ca12d500862de"
+    },
+    "A2_spectral": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/candidates/A2_spectral.csv",
+      "sha256": "f88573996566a1975726845a49f42fb2cd3781d5f0e83d55944fc65647692997"
+    },
+    "A3_dawid_skene": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/candidates/A3_dawid_skene.csv",
+      "sha256": "6d588f2f7a45a58b128860a049ac19995b21902f7f98d3b2ab39d1d9fbb073b3"
+    },
+    "V2_model": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/candidates/V2_model.csv",
+      "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12"
+    }
+  },
+  "candidate_outputs_modified": false,
+  "external_data_used_in_scored_candidates": false,
+  "external_sources": [
+    {
+      "download_utc": "2026-10-27T09:11:42Z",
+      "files": [
+        {
+          "bytes": 61102059,
+          "name": "SVI_2022_US.csv",
+          "sha256": "58df3dca3d4194879ffbd4b5e753eae48676ef691da1fa669f5fc40c3f79bc6a"
+        }
+      ],
+      "geoid_column": "FIPS (11-digit text, read as text)",
+      "id": "cdc-svi-2022",
+      "join_coverage": {
+        "eastern-ok": "1192/1192",
+        "maricopa-az": "1593/1593",
+        "northern-ca": "591/591",
+        "south-central-tx": "6001/6003"
+      },
+      "licence_terms": "Not stated on the fetched ATSDR SVI page (https://www.atsdr.cdc.gov/place-health/php/svi/index.html, dated July 22, 2024); the page's terms text was not included in the fetch. Public-domain status not verified.",
+      "name": "CDC/ATSDR Social Vulnerability Index 2022, US census tracts (CSV)",
+      "publisher": "CDC/ATSDR (Agency for Toxic Substances and Disease Registry)",
+      "source_url": "https://svi.cdc.gov/Documents/Data/2022/csv/states/SVI_2022_US.csv",
+      "status": "downloaded",
+      "tract_vintage": "2020 boundaries (SVI 2022 is built on 2020 census tracts; not independently verified on the source page)"
+    },
+    {
+      "discovered_via": "https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes (page last updated 12/9/2025 per fetch)",
+      "download_utc": "2026-10-27T09:12:09Z",
+      "files": [
+        {
+          "bytes": 25031067,
+          "name": "ruca-2020-census-tracts.csv",
+          "sha256": "e056ee1bcf387e39c220f20a506801030c1105351fa8a1bb814d0a686013a8a8"
+        }
+      ],
+      "geoid_column": "TractFIPS20 (11-digit text; file is Latin-1 encoded)",
+      "id": "usda-ers-ruca-2020",
+      "join_coverage": {
+        "eastern-ok": "1192/1192",
+        "maricopa-az": "1593/1593",
+        "northern-ca": "591/591",
+        "south-central-tx": "6003/6003"
+      },
+      "licence_terms": "No terms or copyright statement found on the ERS RUCA page as fetched; not verified. ERS asks to be cited as '2020 Rural-Urban Commuting Area Codes, July 2025'.",
+      "name": "USDA ERS 2020 Rural-Urban Commuting Area Codes, census tracts (CSV)",
+      "publisher": "USDA Economic Research Service",
+      "source_url": "https://www.ers.usda.gov/media/5443/2020-rural-urban-commuting-area-codes-census-tracts.csv",
+      "status": "downloaded",
+      "tract_vintage": "2020 boundaries (2020 RUCA)"
+    },
+    {
+      "documentation_url": "https://www2.census.gov/adrm/PDB/2026/2026_PDB_Documentation.pdf",
+      "download_utc": "2026-10-27T09:11:47Z",
+      "files": [
+        {
+          "bytes": 200287020,
+          "name": "pdb2026tr.csv",
+          "sha256": "2faf8d075dfdf9841dc265c40b97f181a5716d604672eb130444138e363f65d5"
+        },
+        {
+          "bytes": 768306,
+          "name": "2026_PDB_Documentation.pdf",
+          "sha256": "d32e5f787bc7b5975ef9178879ecbb4ce04d5c7d348383df963b046937f2235a"
+        }
+      ],
+      "geoid_column": "GIDTR (11-digit text, e.g. 01001020100); GEO_ID is the 1400000US-prefixed form",
+      "id": "census-pdb-2026",
+      "join_coverage": {
+        "eastern-ok": "1192/1192",
+        "maricopa-az": "1593/1593",
+        "northern-ca": "591/591",
+        "south-central-tx": "6003/6003"
+      },
+      "licence_terms": "Not verified: census.gov pages timed out during fetch (terms and copyright pages not read).",
+      "name": "Census Bureau Planning Database 2026, tract-level file (pdb2026tr.csv) with documentation",
+      "publisher": "US Census Bureau",
+      "source_url": "https://www2.census.gov/adrm/PDB/2026/pdb2026tr.csv",
+      "status": "downloaded",
+      "tract_vintage": "2020 boundaries (PDB 2026 tract file; per the documentation PDF, not read in full)"
+    },
+    {
+      "download_utc": "2026-10-27T09:11:42Z",
+      "files": [
+        {
+          "bytes": 8890886,
+          "name": "tl_2020_us_aiannh.zip",
+          "sha256": "f58e00ff9df3c9d5371fd1c9e1e6419c09d69f37a7e2f1b8d2f45c196c692d60"
+        },
+        {
+          "bytes": 5,
+          "name": "tl_2020_us_aiannh.cpg",
+          "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+        },
+        {
+          "bytes": 241893,
+          "name": "tl_2020_us_aiannh.dbf",
+          "sha256": "73a079f1e57a56e62e45f2d386f593a2d9560506857466d3f9b81301da0a137e"
+        },
+        {
+          "bytes": 165,
+          "name": "tl_2020_us_aiannh.prj",
+          "sha256": "0b9041e921d9ebb43247d314608fe9e38a0b008ee793067fc1806199ea1fb9dd"
+        },
+        {
+          "bytes": 14049260,
+          "name": "tl_2020_us_aiannh.shp",
+          "sha256": "4903757beed1d759628526a2630394bcef74605ea3ce2c7dd14dbd3622999422"
+        },
+        {
+          "bytes": 62842,
+          "name": "tl_2020_us_aiannh.shp.ea.iso.xml",
+          "sha256": "5f2c8b332206569829505f4a1fd700c17818158eb0844a08209551212d773310"
+        },
+        {
+          "bytes": 39413,
+          "name": "tl_2020_us_aiannh.shp.iso.xml",
+          "sha256": "5d67478d29d4c8a285d35b5228db0231e08449f3a1986b9b623ea7cd83078e6e"
+        },
+        {
+          "bytes": 6972,
+          "name": "tl_2020_us_aiannh.shx",
+          "sha256": "ac789f75089607ba9bd4fb95d1bac766169a1f2e80bcb829793ede327bf23434"
+        }
+      ],
+      "geoid_column": "polygon layer; DBF fields: AIANNHCE, AIANNHNS, GEOID, NAME, NAMELSAD, LSAD, CLASSFP, COMPTYP, AIANNHR, MTFCC, FUNCSTAT, ALAND, AWATER, INTPTLAT, INTPTLON",
+      "id": "census-tiger-aiannh-2020",
+      "join_coverage": "Polygon layer, not a tract table: coverage not computed (note only).",
+      "licence_terms": "Not verified: census.gov pages timed out during fetch.",
+      "name": "Census TIGER/Line 2020 American Indian/Alaska Native/Native Hawaiian areas (AIANNH), national shapefile",
+      "publisher": "US Census Bureau",
+      "source_url": "https://www2.census.gov/geo/tiger/TIGER2020/AIANNH/tl_2020_us_aiannh.zip",
+      "status": "downloaded (unzipped; zip kept)",
+      "tract_vintage": "2020 boundaries (TIGER2020 polygon layer; not a tract table)"
+    }
+  ],
+  "failed_or_skipped_sources": [
+    {
+      "id": "fema-nri-census-tracts",
+      "status": "failed",
+      "url": "https://hazards.fema.gov/nri/Content/StaticDocuments/DataDownload//NRI_Table_CensusTracts/NRI_Table_CensusTracts.zip",
+      "why": "Connection reset by peer on every attempt (curl error 35), including a TLS-level failure; a fetch attempt with a browser User-Agent was denied by policy and not retried. fema.gov/openfema pages return 403 (Akamai)."
+    },
+    {
+      "id": "fcc-national-broadband-map",
+      "status": "skipped",
+      "why": "https://www.fcc.gov/broadbandmap returned 403; the publication needs an interactive export and no single direct public file was found."
+    }
+  ],
+  "license_assessment": {
+    "assessment": "The publisher agencies are U.S. federal agencies; these government-produced datasets are treated as U.S. government works in the public domain under 17 U.S.C. Section 105, subject to any third-party material exceptions. The fetched dataset pages did not state a dataset-specific license, so this is a documented statutory assessment rather than a quoted dataset license.",
+    "caveat": "Not legal advice; check for third-party exceptions before redistribution. Raw source data remain in the authorized workspace and are not committed.",
+    "legal_reference": "17 U.S.C. Section 105",
+    "legal_reference_url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title17-section105&num=0&edition=prelim",
+    "per_dataset": [
+      {
+        "id": "cdc-svi-2022",
+        "public_domain_basis": "U.S. federal agency-produced dataset; treated as a U.S. government work under 17 U.S.C. Section 105, subject to third-party exceptions",
+        "publisher": "CDC/ATSDR (Agency for Toxic Substances and Disease Registry)",
+        "publisher_page_dataset_specific_license": "Not stated on the fetched ATSDR SVI page (https://www.atsdr.cdc.gov/place-health/php/svi/index.html, dated July 22, 2024); the page's terms text was not included in the fetch. Public-domain status not verified."
+      },
+      {
+        "id": "usda-ers-ruca-2020",
+        "public_domain_basis": "U.S. federal agency-produced dataset; treated as a U.S. government work under 17 U.S.C. Section 105, subject to third-party exceptions",
+        "publisher": "USDA Economic Research Service",
+        "publisher_page_dataset_specific_license": "No terms or copyright statement found on the ERS RUCA page as fetched; not verified. ERS asks to be cited as '2020 Rural-Urban Commuting Area Codes, July 2025'."
+      },
+      {
+        "id": "census-pdb-2026",
+        "public_domain_basis": "U.S. federal agency-produced dataset; treated as a U.S. government work under 17 U.S.C. Section 105, subject to third-party exceptions",
+        "publisher": "US Census Bureau",
+        "publisher_page_dataset_specific_license": "Not verified: census.gov pages timed out during fetch (terms and copyright pages not read)."
+      },
+      {
+        "id": "census-tiger-aiannh-2020",
+        "public_domain_basis": "U.S. federal agency-produced dataset; treated as a U.S. government work under 17 U.S.C. Section 105, subject to third-party exceptions",
+        "publisher": "US Census Bureau",
+        "publisher_page_dataset_specific_license": "Not verified: census.gov pages timed out during fetch."
+      }
+    ]
+  },
+  "manifest_join_coverage": {
+    "cdc-svi-2022": {
+      "eastern-ok": "1192/1192",
+      "maricopa-az": "1593/1593",
+      "northern-ca": "591/591",
+      "south-central-tx": "6001/6003"
+    },
+    "census-pdb-2026": {
+      "eastern-ok": "1192/1192",
+      "maricopa-az": "1593/1593",
+      "northern-ca": "591/591",
+      "south-central-tx": "6003/6003"
+    },
+    "census-tiger-aiannh-2020": "Polygon layer, not a tract table: coverage not computed (note only).",
+    "usda-ers-ruca-2020": {
+      "eastern-ok": "1192/1192",
+      "maricopa-az": "1593/1593",
+      "northern-ca": "591/591",
+      "south-central-tx": "6003/6003"
+    }
+  },
+  "method": {
+    "base_model": "region fixed effects plus provided pct_urban, svi_overall, ruca_primary and tribal_pct",
+    "conditional_p_values": "two-sided add-one sign-frequency from the county-cluster bootstrap; BH applied to these 28 conditional residual-screen p-values; a non-estimable exposure receives p=1",
+    "holdout": "5-fold region-stratified group assignment; entire state|county clusters held out; OOF delta R2 compares baseline controls with same model plus one external layer",
+    "limitations": [
+      "all outcomes are label-free provided-data estimates, not measured organizer scores",
+      "county clustering does not remove spatial dependence between neighboring counties",
+      "four study regions do not support national generalization",
+      "external covariates are not causal effects",
+      "the overall-score candidate components may share inputs with provided controls",
+      "dataset pages did not state a dataset-specific licence; the separate federal public-domain assessment is subject to third-party exceptions"
+    ],
+    "multiplicity": "Benjamini-Hochberg across all 28 layer-by-outcome conditional county-bootstrap tests; non-identifiable conditional exposure residuals are assigned p=1",
+    "official_geoid_count": 9379,
+    "official_geoids_with_state_prefix_outside_region_label": [
+      "35023970000"
+    ],
+    "primary_effect": "region-adjusted partial correlation of each external exposure with frozen proxy scores, with county-cluster percentile CI; descriptive, not causal",
+    "region_counts": {
+      "eastern-ok": 1192,
+      "maricopa-az": 1593,
+      "northern-ca": 591,
+      "south-central-tx": 6003
+    },
+    "residual_screen": "conditional partial correlation after residualizing both variables on region fixed effects plus provided pct_urban, svi_overall, ruca_primary and tribal_pct; near-duplicates are reported not estimable",
+    "uncertainty": "1000 county cluster bootstrap draws, resampling counties with replacement within each region; percentile CI"
+  },
+  "preregistration": {
+    "path": "config/discovery-external-layers-preregistered.json",
+    "sha256": "e4238d1293ef019eae91ac1197c8d08eeb6e7d887a6e841c7b28ad6b0823f75f"
+  },
+  "removed_reference_layers_used": false,
+  "schema_version": 1,
+  "source_access_notes": [
+    "Four differently phrased/prefixed web searches were denied by per-lane capability policy during source discovery; analysis used the steward-staged data and official source URLs recorded in its manifest.",
+    "FEMA NRI and FCC national broadband access outcomes are retained from the acquisition manifest; they were not substituted with unrelated layers."
+  ],
+  "source_files_verified": {
+    "cdc-svi-2022/SVI_2022_US.csv": {
+      "bytes": 61102059,
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/external-discovery-2026-10-27/cdc-svi-2022/SVI_2022_US.csv",
+      "sha256": "58df3dca3d4194879ffbd4b5e753eae48676ef691da1fa669f5fc40c3f79bc6a"
+    },
+    "census-pdb-2026/2026_PDB_Documentation.pdf": {
+      "bytes": 768306,
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/external-discovery-2026-10-27/census-pdb-2026/2026_PDB_Documentation.pdf",
+      "sha256": "d32e5f787bc7b5975ef9178879ecbb4ce04d5c7d348383df963b046937f2235a"
+    },
+    "census-pdb-2026/pdb2026tr.csv": {
+      "bytes": 200287020,
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/external-discovery-2026-10-27/census-pdb-2026/pdb2026tr.csv",
+      "sha256": "2faf8d075dfdf9841dc265c40b97f181a5716d604672eb130444138e363f65d5"
+    },
+    "census-tiger-aiannh-2020/tl_2020_us_aiannh.cpg": {
+      "bytes": 5,
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/external-discovery-2026-10-27/census-tiger-aiannh-2020/tl_2020_us_aiannh.cpg",
+      "sha256": "3ad3031f5503a4404af825262ee8232cc04d4ea6683d42c5dd0a2f2a27ac9824"
+    },
+    "census-tiger-aiannh-2020/tl_2020_us_aiannh.dbf": {
+      "bytes": 241893,
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/external-discovery-2026-10-27/census-tiger-aiannh-2020/tl_2020_us_aiannh.dbf",
+      "sha256": "73a079f1e57a56e62e45f2d386f593a2d9560506857466d3f9b81301da0a137e"
+    },
+    "census-tiger-aiannh-2020/tl_2020_us_aiannh.prj": {
+      "bytes": 165,
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/external-discovery-2026-10-27/census-tiger-aiannh-2020/tl_2020_us_aiannh.prj",
+      "sha256": "0b9041e921d9ebb43247d314608fe9e38a0b008ee793067fc1806199ea1fb9dd"
+    },
+    "census-tiger-aiannh-2020/tl_2020_us_aiannh.shp": {
+      "bytes": 14049260,
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/external-discovery-2026-10-27/census-tiger-aiannh-2020/tl_2020_us_aiannh.shp",
+      "sha256": "4903757beed1d759628526a2630394bcef74605ea3ce2c7dd14dbd3622999422"
+    },
+    "census-tiger-aiannh-2020/tl_2020_us_aiannh.shp.ea.iso.xml": {
+      "bytes": 62842,
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/external-discovery-2026-10-27/census-tiger-aiannh-2020/tl_2020_us_aiannh.shp.ea.iso.xml",
+      "sha256": "5f2c8b332206569829505f4a1fd700c17818158eb0844a08209551212d773310"
+    },
+    "census-tiger-aiannh-2020/tl_2020_us_aiannh.shp.iso.xml": {
+      "bytes": 39413,
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/external-discovery-2026-10-27/census-tiger-aiannh-2020/tl_2020_us_aiannh.shp.iso.xml",
+      "sha256": "5d67478d29d4c8a285d35b5228db0231e08449f3a1986b9b623ea7cd83078e6e"
+    },
+    "census-tiger-aiannh-2020/tl_2020_us_aiannh.shx": {
+      "bytes": 6972,
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/external-discovery-2026-10-27/census-tiger-aiannh-2020/tl_2020_us_aiannh.shx",
+      "sha256": "ac789f75089607ba9bd4fb95d1bac766169a1f2e80bcb829793ede327bf23434"
+    },
+    "census-tiger-aiannh-2020/tl_2020_us_aiannh.zip": {
+      "bytes": 8890886,
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/external-discovery-2026-10-27/census-tiger-aiannh-2020/tl_2020_us_aiannh.zip",
+      "sha256": "f58e00ff9df3c9d5371fd1c9e1e6419c09d69f37a7e2f1b8d2f45c196c692d60"
+    },
+    "usda-ers-ruca-2020/ruca-2020-census-tracts.csv": {
+      "bytes": 25031067,
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/external-discovery-2026-10-27/usda-ers-ruca-2020/ruca-2020-census-tracts.csv",
+      "sha256": "e056ee1bcf387e39c220f20a506801030c1105351fa8a1bb814d0a686013a8a8"
+    }
+  },
+  "source_join_counts": {
+    "cdc_svi_2022": {
+      "official_geoids": 9379,
+      "selected_exposure_missing_official_geoids": 85,
+      "selected_exposure_nonmissing_by_region": {
+        "eastern-ok": 1181,
+        "maricopa-az": 1564,
+        "northern-ca": 591,
+        "south-central-tx": 5958
+      },
+      "selected_exposure_nonmissing_official_geoids": 9294
+    },
+    "census_aiannh_2020_overlap": {
+      "official_geoids": 9379,
+      "selected_exposure_missing_official_geoids": 0,
+      "selected_exposure_nonmissing_by_region": {
+        "eastern-ok": 1192,
+        "maricopa-az": 1593,
+        "northern-ca": 591,
+        "south-central-tx": 6003
+      },
+      "selected_exposure_nonmissing_official_geoids": 9379
+    },
+    "census_pdb_2026_broadband": {
+      "official_geoids": 9379,
+      "selected_exposure_missing_official_geoids": 82,
+      "selected_exposure_nonmissing_by_region": {
+        "eastern-ok": 1182,
+        "maricopa-az": 1566,
+        "northern-ca": 591,
+        "south-central-tx": 5958
+      },
+      "selected_exposure_nonmissing_official_geoids": 9297
+    },
+    "usda_ruca_2020": {
+      "official_geoids": 9379,
+      "selected_exposure_missing_official_geoids": 0,
+      "selected_exposure_nonmissing_by_region": {
+        "eastern-ok": 1192,
+        "maricopa-az": 1593,
+        "northern-ca": 591,
+        "south-central-tx": 6003
+      },
+      "selected_exposure_nonmissing_official_geoids": 9379
+    }
+  },
+  "status": "discovery-only; descriptive associations of external context with frozen provided-data proxies; not target-accuracy evidence",
+  "tests": [
+    {
+      "bh_q_value_28_tests": 1.0,
+      "conditional_county_bootstrap_95_ci": null,
+      "conditional_county_bootstrap_p_for_bh": 1.0,
+      "conditional_county_cluster_robust_se": null,
+      "conditional_nonestimable_reason": "external exposure is exactly represented by region and supplied controls",
+      "grouped_county_holdout": {
+        "baseline_oof_r2": 0.6096751723357362,
+        "delta_oof_r2": 0.0,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": 0.6096751723357362
+      },
+      "layer": "cdc_svi_2022",
+      "n": 9294,
+      "outcome": "A1_physical_equal.coverage_gap_score",
+      "provided_control_residual_partial_correlation": null,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": -0.0420245893257963
+        },
+        "maricopa-az": {
+          "n": 1564,
+          "region_adjusted_r": -0.018255435861844315
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": 0.08506431185516725
+        },
+        "south-central-tx": {
+          "n": 5958,
+          "region_adjusted_r": 0.0013579402414575347
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        -0.0446552895598876,
+        0.03515712693828553
+      ],
+      "region_adjusted_county_bootstrap_p": 0.8231768231768232,
+      "region_adjusted_partial_correlation": -0.0031456351232385282,
+      "regions_matching_pooled_marginal_sign": 2,
+      "residual_to_raw_exposure_sd_ratio": 7.508390051094354e-16
+    },
+    {
+      "bh_q_value_28_tests": 1.0,
+      "conditional_county_bootstrap_95_ci": null,
+      "conditional_county_bootstrap_p_for_bh": 1.0,
+      "conditional_county_cluster_robust_se": null,
+      "conditional_nonestimable_reason": "external exposure is exactly represented by region and supplied controls",
+      "grouped_county_holdout": {
+        "baseline_oof_r2": 0.08316928898889997,
+        "delta_oof_r2": -2.220446049250313e-16,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": 0.08316928898889975
+      },
+      "layer": "cdc_svi_2022",
+      "n": 9294,
+      "outcome": "A1_physical_equal.transport_gap",
+      "provided_control_residual_partial_correlation": null,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": -0.005574803253249874
+        },
+        "maricopa-az": {
+          "n": 1564,
+          "region_adjusted_r": -0.02082834233835762
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": 0.07384629502129593
+        },
+        "south-central-tx": {
+          "n": 5958,
+          "region_adjusted_r": -0.003197651680266557
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        -0.038722262830087235,
+        0.03347082769159034
+      ],
+      "region_adjusted_county_bootstrap_p": 0.9690309690309691,
+      "region_adjusted_partial_correlation": -0.0015085491246085493,
+      "regions_matching_pooled_marginal_sign": 3,
+      "residual_to_raw_exposure_sd_ratio": 7.508390051094354e-16
+    },
+    {
+      "bh_q_value_28_tests": 1.0,
+      "conditional_county_bootstrap_95_ci": null,
+      "conditional_county_bootstrap_p_for_bh": 1.0,
+      "conditional_county_cluster_robust_se": null,
+      "conditional_nonestimable_reason": "external exposure is exactly represented by region and supplied controls",
+      "grouped_county_holdout": {
+        "baseline_oof_r2": 0.002971331020158341,
+        "delta_oof_r2": 0.0,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": 0.002971331020158341
+      },
+      "layer": "cdc_svi_2022",
+      "n": 9294,
+      "outcome": "A1_physical_equal.building_gap",
+      "provided_control_residual_partial_correlation": null,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": 0.04373701942085248
+        },
+        "maricopa-az": {
+          "n": 1564,
+          "region_adjusted_r": -0.03924043796487718
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": 0.10392651684253695
+        },
+        "south-central-tx": {
+          "n": 5958,
+          "region_adjusted_r": -0.01763118258951147
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        -0.03996049050163719,
+        0.023040688113858846
+      ],
+      "region_adjusted_county_bootstrap_p": 0.5234765234765235,
+      "region_adjusted_partial_correlation": -0.010373473069495452,
+      "regions_matching_pooled_marginal_sign": 2,
+      "residual_to_raw_exposure_sd_ratio": 7.508390051094354e-16
+    },
+    {
+      "bh_q_value_28_tests": 1.0,
+      "conditional_county_bootstrap_95_ci": null,
+      "conditional_county_bootstrap_p_for_bh": 1.0,
+      "conditional_county_cluster_robust_se": null,
+      "conditional_nonestimable_reason": "external exposure is exactly represented by region and supplied controls",
+      "grouped_county_holdout": {
+        "baseline_oof_r2": 0.06154677706204026,
+        "delta_oof_r2": 0.0,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": 0.06154677706204026
+      },
+      "layer": "cdc_svi_2022",
+      "n": 9294,
+      "outcome": "A1_physical_equal.poi_gap",
+      "provided_control_residual_partial_correlation": null,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": -0.24001662701376072
+        },
+        "maricopa-az": {
+          "n": 1564,
+          "region_adjusted_r": -0.09842377781317482
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": -0.15267184840383033
+        },
+        "south-central-tx": {
+          "n": 5958,
+          "region_adjusted_r": -0.10581733850130833
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        -0.18126874243343402,
+        -0.07861917285243454
+      ],
+      "region_adjusted_county_bootstrap_p": 0.001998001998001998,
+      "region_adjusted_partial_correlation": -0.1224662623240531,
+      "regions_matching_pooled_marginal_sign": 4,
+      "residual_to_raw_exposure_sd_ratio": 7.508390051094354e-16
+    },
+    {
+      "bh_q_value_28_tests": 1.0,
+      "conditional_county_bootstrap_95_ci": null,
+      "conditional_county_bootstrap_p_for_bh": 1.0,
+      "conditional_county_cluster_robust_se": null,
+      "conditional_nonestimable_reason": "external exposure is exactly represented by region and supplied controls",
+      "grouped_county_holdout": {
+        "baseline_oof_r2": 0.06429923714228913,
+        "delta_oof_r2": 0.0,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": 0.06429923714228913
+      },
+      "layer": "cdc_svi_2022",
+      "n": 9294,
+      "outcome": "A2_spectral.coverage_gap_score",
+      "provided_control_residual_partial_correlation": null,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": -0.12205891945401345
+        },
+        "maricopa-az": {
+          "n": 1564,
+          "region_adjusted_r": -0.07838313658663772
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": -0.016449766374759044
+        },
+        "south-central-tx": {
+          "n": 5958,
+          "region_adjusted_r": -0.07660527093215916
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        -0.1121298786582184,
+        -0.050267486833567174
+      ],
+      "region_adjusted_county_bootstrap_p": 0.001998001998001998,
+      "region_adjusted_partial_correlation": -0.07882201428874648,
+      "regions_matching_pooled_marginal_sign": 4,
+      "residual_to_raw_exposure_sd_ratio": 7.508390051094354e-16
+    },
+    {
+      "bh_q_value_28_tests": 1.0,
+      "conditional_county_bootstrap_95_ci": null,
+      "conditional_county_bootstrap_p_for_bh": 1.0,
+      "conditional_county_cluster_robust_se": null,
+      "conditional_nonestimable_reason": "external exposure is exactly represented by region and supplied controls",
+      "grouped_county_holdout": {
+        "baseline_oof_r2": 0.15404514938093317,
+        "delta_oof_r2": -2.220446049250313e-16,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": 0.15404514938093294
+      },
+      "layer": "cdc_svi_2022",
+      "n": 9294,
+      "outcome": "A3_dawid_skene.coverage_gap_score",
+      "provided_control_residual_partial_correlation": null,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": -0.00252918928356003
+        },
+        "maricopa-az": {
+          "n": 1564,
+          "region_adjusted_r": -0.05058525603012371
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": 0.12709396015901045
+        },
+        "south-central-tx": {
+          "n": 5958,
+          "region_adjusted_r": -0.05080765806289666
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        -0.0722595566257215,
+        0.003559701562162
+      ],
+      "region_adjusted_county_bootstrap_p": 0.08191808191808192,
+      "region_adjusted_partial_correlation": -0.0354153590117407,
+      "regions_matching_pooled_marginal_sign": 3,
+      "residual_to_raw_exposure_sd_ratio": 7.508390051094354e-16
+    },
+    {
+      "bh_q_value_28_tests": 1.0,
+      "conditional_county_bootstrap_95_ci": null,
+      "conditional_county_bootstrap_p_for_bh": 1.0,
+      "conditional_county_cluster_robust_se": null,
+      "conditional_nonestimable_reason": "external exposure is exactly represented by region and supplied controls",
+      "grouped_county_holdout": {
+        "baseline_oof_r2": 0.03199956808404725,
+        "delta_oof_r2": 2.220446049250313e-16,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": 0.03199956808404747
+      },
+      "layer": "cdc_svi_2022",
+      "n": 9294,
+      "outcome": "V2_model.coverage_gap_score",
+      "provided_control_residual_partial_correlation": null,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": -0.2726137663074337
+        },
+        "maricopa-az": {
+          "n": 1564,
+          "region_adjusted_r": -0.15830384620033192
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": -0.24736691533591967
+        },
+        "south-central-tx": {
+          "n": 5958,
+          "region_adjusted_r": -0.09186365413707934
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        -0.1744290724525505,
+        -0.09599210826318078
+      ],
+      "region_adjusted_county_bootstrap_p": 0.001998001998001998,
+      "region_adjusted_partial_correlation": -0.13019630639921018,
+      "regions_matching_pooled_marginal_sign": 4,
+      "residual_to_raw_exposure_sd_ratio": 7.508390051094354e-16
+    },
+    {
+      "bh_q_value_28_tests": 1.0,
+      "conditional_county_bootstrap_95_ci": null,
+      "conditional_county_bootstrap_p_for_bh": 1.0,
+      "conditional_county_cluster_robust_se": null,
+      "conditional_nonestimable_reason": "external exposure is exactly represented by region and supplied controls",
+      "grouped_county_holdout": {
+        "baseline_oof_r2": 0.6075459605681243,
+        "delta_oof_r2": 2.220446049250313e-16,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": 0.6075459605681245
+      },
+      "layer": "usda_ruca_2020",
+      "n": 9294,
+      "outcome": "A1_physical_equal.coverage_gap_score",
+      "provided_control_residual_partial_correlation": null,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": 0.08794951858951296
+        },
+        "maricopa-az": {
+          "n": 1564,
+          "region_adjusted_r": -0.1784990685666721
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": -0.08835405200168762
+        },
+        "south-central-tx": {
+          "n": 5958,
+          "region_adjusted_r": 0.07469200634601116
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        -0.0013754155621816967,
+        0.07434541925169828
+      ],
+      "region_adjusted_county_bootstrap_p": 0.059940059940059943,
+      "region_adjusted_partial_correlation": 0.029415970495033573,
+      "regions_matching_pooled_marginal_sign": 2,
+      "residual_to_raw_exposure_sd_ratio": 6.4552009119343046e-15
+    },
+    {
+      "bh_q_value_28_tests": 1.0,
+      "conditional_county_bootstrap_95_ci": null,
+      "conditional_county_bootstrap_p_for_bh": 1.0,
+      "conditional_county_cluster_robust_se": null,
+      "conditional_nonestimable_reason": "external exposure is exactly represented by region and supplied controls",
+      "grouped_county_holdout": {
+        "baseline_oof_r2": 0.08184244253451567,
+        "delta_oof_r2": 0.0,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": 0.08184244253451567
+      },
+      "layer": "usda_ruca_2020",
+      "n": 9294,
+      "outcome": "A1_physical_equal.transport_gap",
+      "provided_control_residual_partial_correlation": null,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": 0.5117730359829394
+        },
+        "maricopa-az": {
+          "n": 1564,
+          "region_adjusted_r": -0.23780665229460515
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": 0.03567256198517184
+        },
+        "south-central-tx": {
+          "n": 5958,
+          "region_adjusted_r": 0.3863564467152282
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        0.2690742088994079,
+        0.3742113468651931
+      ],
+      "region_adjusted_county_bootstrap_p": 0.001998001998001998,
+      "region_adjusted_partial_correlation": 0.32212037992504344,
+      "regions_matching_pooled_marginal_sign": 3,
+      "residual_to_raw_exposure_sd_ratio": 6.4552009119343046e-15
+    },
+    {
+      "bh_q_value_28_tests": 1.0,
+      "conditional_county_bootstrap_95_ci": null,
+      "conditional_county_bootstrap_p_for_bh": 1.0,
+      "conditional_county_cluster_robust_se": null,
+      "conditional_nonestimable_reason": "external exposure is exactly represented by region and supplied controls",
+      "grouped_county_holdout": {
+        "baseline_oof_r2": -0.0034481678266218285,
+        "delta_oof_r2": -2.220446049250313e-16,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": -0.0034481678266220506
+      },
+      "layer": "usda_ruca_2020",
+      "n": 9294,
+      "outcome": "A1_physical_equal.building_gap",
+      "provided_control_residual_partial_correlation": null,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": 0.0037637618356197227
+        },
+        "maricopa-az": {
+          "n": 1564,
+          "region_adjusted_r": -0.03982824224104976
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": 0.004985983519522051
+        },
+        "south-central-tx": {
+          "n": 5958,
+          "region_adjusted_r": 0.04860115711691231
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        -0.00986296661727081,
+        0.06054292890415748
+      ],
+      "region_adjusted_county_bootstrap_p": 0.15784215784215785,
+      "region_adjusted_partial_correlation": 0.022775656314771003,
+      "regions_matching_pooled_marginal_sign": 3,
+      "residual_to_raw_exposure_sd_ratio": 6.4552009119343046e-15
+    },
+    {
+      "bh_q_value_28_tests": 1.0,
+      "conditional_county_bootstrap_95_ci": null,
+      "conditional_county_bootstrap_p_for_bh": 1.0,
+      "conditional_county_cluster_robust_se": null,
+      "conditional_nonestimable_reason": "external exposure is exactly represented by region and supplied controls",
+      "grouped_county_holdout": {
+        "baseline_oof_r2": 0.05887185898055525,
+        "delta_oof_r2": 0.0,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": 0.05887185898055525
+      },
+      "layer": "usda_ruca_2020",
+      "n": 9294,
+      "outcome": "A1_physical_equal.poi_gap",
+      "provided_control_residual_partial_correlation": null,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": -0.3050306689127875
+        },
+        "maricopa-az": {
+          "n": 1564,
+          "region_adjusted_r": -0.02080696227806056
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": -0.19331794998419569
+        },
+        "south-central-tx": {
+          "n": 5958,
+          "region_adjusted_r": -0.14588710750477327
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        -0.2095478329402011,
+        -0.12249288867409805
+      ],
+      "region_adjusted_county_bootstrap_p": 0.001998001998001998,
+      "region_adjusted_partial_correlation": -0.15638143401219753,
+      "regions_matching_pooled_marginal_sign": 4,
+      "residual_to_raw_exposure_sd_ratio": 6.4552009119343046e-15
+    },
+    {
+      "bh_q_value_28_tests": 1.0,
+      "conditional_county_bootstrap_95_ci": null,
+      "conditional_county_bootstrap_p_for_bh": 1.0,
+      "conditional_county_cluster_robust_se": null,
+      "conditional_nonestimable_reason": "external exposure is exactly represented by region and supplied controls",
+      "grouped_county_holdout": {
+        "baseline_oof_r2": 0.06315813439609574,
+        "delta_oof_r2": -2.220446049250313e-16,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": 0.06315813439609552
+      },
+      "layer": "usda_ruca_2020",
+      "n": 9294,
+      "outcome": "A2_spectral.coverage_gap_score",
+      "provided_control_residual_partial_correlation": null,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": 0.1706680759221313
+        },
+        "maricopa-az": {
+          "n": 1564,
+          "region_adjusted_r": -0.011905108063277183
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": -0.03579125905833508
+        },
+        "south-central-tx": {
+          "n": 5958,
+          "region_adjusted_r": 0.15592232047152713
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        0.08363198623104132,
+        0.14974654298457546
+      ],
+      "region_adjusted_county_bootstrap_p": 0.001998001998001998,
+      "region_adjusted_partial_correlation": 0.11863390570058606,
+      "regions_matching_pooled_marginal_sign": 2,
+      "residual_to_raw_exposure_sd_ratio": 6.4552009119343046e-15
+    },
+    {
+      "bh_q_value_28_tests": 1.0,
+      "conditional_county_bootstrap_95_ci": null,
+      "conditional_county_bootstrap_p_for_bh": 1.0,
+      "conditional_county_cluster_robust_se": null,
+      "conditional_nonestimable_reason": "external exposure is exactly represented by region and supplied controls",
+      "grouped_county_holdout": {
+        "baseline_oof_r2": 0.15073406262546718,
+        "delta_oof_r2": -3.3306690738754696e-16,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": 0.15073406262546685
+      },
+      "layer": "usda_ruca_2020",
+      "n": 9294,
+      "outcome": "A3_dawid_skene.coverage_gap_score",
+      "provided_control_residual_partial_correlation": null,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": 0.522923407492335
+        },
+        "maricopa-az": {
+          "n": 1564,
+          "region_adjusted_r": 0.04707039118336123
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": 0.21243352240413707
+        },
+        "south-central-tx": {
+          "n": 5958,
+          "region_adjusted_r": 0.37573784267000876
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        0.2861622168721043,
+        0.4038648265768778
+      ],
+      "region_adjusted_county_bootstrap_p": 0.001998001998001998,
+      "region_adjusted_partial_correlation": 0.3417962213659637,
+      "regions_matching_pooled_marginal_sign": 4,
+      "residual_to_raw_exposure_sd_ratio": 6.4552009119343046e-15
+    },
+    {
+      "bh_q_value_28_tests": 1.0,
+      "conditional_county_bootstrap_95_ci": null,
+      "conditional_county_bootstrap_p_for_bh": 1.0,
+      "conditional_county_cluster_robust_se": null,
+      "conditional_nonestimable_reason": "external exposure is exactly represented by region and supplied controls",
+      "grouped_county_holdout": {
+        "baseline_oof_r2": 0.03659801489618708,
+        "delta_oof_r2": 1.1102230246251565e-16,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": 0.03659801489618719
+      },
+      "layer": "usda_ruca_2020",
+      "n": 9294,
+      "outcome": "V2_model.coverage_gap_score",
+      "provided_control_residual_partial_correlation": null,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": -0.28792792697891323
+        },
+        "maricopa-az": {
+          "n": 1564,
+          "region_adjusted_r": -0.15616655573723123
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": -0.28478443660795183
+        },
+        "south-central-tx": {
+          "n": 5958,
+          "region_adjusted_r": 0.06613683422195592
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        -0.07420881302968906,
+        -0.00641192334604818
+      ],
+      "region_adjusted_county_bootstrap_p": 0.025974025974025976,
+      "region_adjusted_partial_correlation": -0.046128867600222494,
+      "regions_matching_pooled_marginal_sign": 3,
+      "residual_to_raw_exposure_sd_ratio": 6.4552009119343046e-15
+    },
+    {
+      "bh_q_value_28_tests": 0.2517482517482518,
+      "conditional_county_bootstrap_95_ci": [
+        -0.07107761817373019,
+        -0.00923742632768785
+      ],
+      "conditional_county_bootstrap_p_for_bh": 0.017982017982017984,
+      "conditional_county_cluster_robust_se": 0.014744578526328303,
+      "conditional_nonestimable_reason": null,
+      "grouped_county_holdout": {
+        "baseline_oof_r2": 0.5858607681314507,
+        "delta_oof_r2": 0.0013020251531382643,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": 0.587162793284589
+      },
+      "layer": "census_pdb_2026_broadband",
+      "n": 9292,
+      "outcome": "A1_physical_equal.coverage_gap_score",
+      "provided_control_residual_partial_correlation": -0.044615454241280425,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": 0.04820326458445963
+        },
+        "maricopa-az": {
+          "n": 1563,
+          "region_adjusted_r": -0.09551398511751402
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": 0.04188140555393531
+        },
+        "south-central-tx": {
+          "n": 5957,
+          "region_adjusted_r": -0.0027751789020858974
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        -0.04845487916513483,
+        0.03582809441497396
+      ],
+      "region_adjusted_county_bootstrap_p": 0.6753246753246753,
+      "region_adjusted_partial_correlation": -0.009318300834056197,
+      "regions_matching_pooled_marginal_sign": 2,
+      "residual_to_raw_exposure_sd_ratio": 0.7893880361185099
+    },
+    {
+      "bh_q_value_28_tests": 1.0,
+      "conditional_county_bootstrap_95_ci": [
+        -0.02453315979027503,
+        0.043066685345180364
+      ],
+      "conditional_county_bootstrap_p_for_bh": 0.6553446553446554,
+      "conditional_county_cluster_robust_se": 0.016912846858212698,
+      "conditional_nonestimable_reason": null,
+      "grouped_county_holdout": {
+        "baseline_oof_r2": -0.0135374046546346,
+        "delta_oof_r2": -0.002065789959766695,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": -0.015603194614401295
+      },
+      "layer": "census_pdb_2026_broadband",
+      "n": 9292,
+      "outcome": "A1_physical_equal.transport_gap",
+      "provided_control_residual_partial_correlation": 0.00682258487557775,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": 0.2652337823518991
+        },
+        "maricopa-az": {
+          "n": 1563,
+          "region_adjusted_r": -0.11067887626732793
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": -0.023231084132068074
+        },
+        "south-central-tx": {
+          "n": 5957,
+          "region_adjusted_r": 0.10394099002986301
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        0.06031817243762116,
+        0.14673407699010188
+      ],
+      "region_adjusted_county_bootstrap_p": 0.001998001998001998,
+      "region_adjusted_partial_correlation": 0.0999934757836048,
+      "regions_matching_pooled_marginal_sign": 2,
+      "residual_to_raw_exposure_sd_ratio": 0.7893880361185099
+    },
+    {
+      "bh_q_value_28_tests": 0.055944055944055944,
+      "conditional_county_bootstrap_95_ci": [
+        -0.07393771003906355,
+        -0.02960520092244623
+      ],
+      "conditional_county_bootstrap_p_for_bh": 0.001998001998001998,
+      "conditional_county_cluster_robust_se": 0.011751933046898698,
+      "conditional_nonestimable_reason": null,
+      "grouped_county_holdout": {
+        "baseline_oof_r2": -0.004076632202106634,
+        "delta_oof_r2": 0.003284810138241223,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": -0.0007918220638654105
+      },
+      "layer": "census_pdb_2026_broadband",
+      "n": 9292,
+      "outcome": "A1_physical_equal.building_gap",
+      "provided_control_residual_partial_correlation": -0.05092004927145838,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": -0.02913381395428119
+        },
+        "maricopa-az": {
+          "n": 1563,
+          "region_adjusted_r": -0.08063821367361232
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": 0.012885430651309107
+        },
+        "south-central-tx": {
+          "n": 5957,
+          "region_adjusted_r": -0.035888636975087276
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        -0.07474270255625816,
+        -0.007312684380902457
+      ],
+      "region_adjusted_county_bootstrap_p": 0.027972027972027972,
+      "region_adjusted_partial_correlation": -0.04187110582742905,
+      "regions_matching_pooled_marginal_sign": 3,
+      "residual_to_raw_exposure_sd_ratio": 0.7893880361185099
+    },
+    {
+      "bh_q_value_28_tests": 1.0,
+      "conditional_county_bootstrap_95_ci": [
+        -0.027709286708164606,
+        0.02481228015601842
+      ],
+      "conditional_county_bootstrap_p_for_bh": 0.8171828171828172,
+      "conditional_county_cluster_robust_se": 0.012281199919792558,
+      "conditional_nonestimable_reason": null,
+      "grouped_county_holdout": {
+        "baseline_oof_r2": 0.060132897098008176,
+        "delta_oof_r2": -0.0006552175783451908,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": 0.059477679519662985
+      },
+      "layer": "census_pdb_2026_broadband",
+      "n": 9292,
+      "outcome": "A1_physical_equal.poi_gap",
+      "provided_control_residual_partial_correlation": -0.0029407572837571792,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": -0.20244259638235254
+        },
+        "maricopa-az": {
+          "n": 1563,
+          "region_adjusted_r": -0.04834862180590888
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": -0.050001309711943345
+        },
+        "south-central-tx": {
+          "n": 5957,
+          "region_adjusted_r": -0.07065821358636895
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        -0.11592951041562129,
+        -0.05074536819875143
+      ],
+      "region_adjusted_county_bootstrap_p": 0.001998001998001998,
+      "region_adjusted_partial_correlation": -0.0820172030459614,
+      "regions_matching_pooled_marginal_sign": 4,
+      "residual_to_raw_exposure_sd_ratio": 0.7893880361185099
+    },
+    {
+      "bh_q_value_28_tests": 0.9430569430569431,
+      "conditional_county_bootstrap_95_ci": [
+        -0.04054221825429134,
+        0.011281217604131527
+      ],
+      "conditional_county_bootstrap_p_for_bh": 0.2057942057942058,
+      "conditional_county_cluster_robust_se": 0.013105206428201573,
+      "conditional_nonestimable_reason": null,
+      "grouped_county_holdout": {
+        "baseline_oof_r2": 0.05295376773409599,
+        "delta_oof_r2": -0.001149118220501455,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": 0.051804649513594536
+      },
+      "layer": "census_pdb_2026_broadband",
+      "n": 9292,
+      "outcome": "A2_spectral.coverage_gap_score",
+      "provided_control_residual_partial_correlation": -0.018374579558181947,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": 0.0685489255466809
+        },
+        "maricopa-az": {
+          "n": 1563,
+          "region_adjusted_r": -0.07692376446303326
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": 0.06299347618536323
+        },
+        "south-central-tx": {
+          "n": 5957,
+          "region_adjusted_r": 0.012257882043675821
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        -0.02709810066319412,
+        0.04817400086083698
+      ],
+      "region_adjusted_county_bootstrap_p": 0.7112887112887113,
+      "region_adjusted_partial_correlation": 0.007633054557351473,
+      "regions_matching_pooled_marginal_sign": 3,
+      "residual_to_raw_exposure_sd_ratio": 0.7893880361185099
+    },
+    {
+      "bh_q_value_28_tests": 0.3543123543123543,
+      "conditional_county_bootstrap_95_ci": [
+        -0.05772638839175359,
+        -0.001665337827921152
+      ],
+      "conditional_county_bootstrap_p_for_bh": 0.03796203796203796,
+      "conditional_county_cluster_robust_se": 0.01484765894765994,
+      "conditional_nonestimable_reason": null,
+      "grouped_county_holdout": {
+        "baseline_oof_r2": 0.1145091301626382,
+        "delta_oof_r2": 0.0004174652764162845,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": 0.11492659543905448
+      },
+      "layer": "census_pdb_2026_broadband",
+      "n": 9292,
+      "outcome": "A3_dawid_skene.coverage_gap_score",
+      "provided_control_residual_partial_correlation": -0.030959810334993565,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": 0.2718793824873245
+        },
+        "maricopa-az": {
+          "n": 1563,
+          "region_adjusted_r": -0.06692569892287165
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": 0.14101788906592325
+        },
+        "south-central-tx": {
+          "n": 5957,
+          "region_adjusted_r": 0.061476662751588446
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        0.019627620979053465,
+        0.1365584926074859
+      ],
+      "region_adjusted_county_bootstrap_p": 0.005994005994005994,
+      "region_adjusted_partial_correlation": 0.0736272636105941,
+      "regions_matching_pooled_marginal_sign": 3,
+      "residual_to_raw_exposure_sd_ratio": 0.7893880361185099
+    },
+    {
+      "bh_q_value_28_tests": 1.0,
+      "conditional_county_bootstrap_95_ci": [
+        -0.021686529350871436,
+        0.024493102643539752
+      ],
+      "conditional_county_bootstrap_p_for_bh": 0.9370629370629371,
+      "conditional_county_cluster_robust_se": 0.011379174558478145,
+      "conditional_nonestimable_reason": null,
+      "grouped_county_holdout": {
+        "baseline_oof_r2": -0.005474864380649258,
+        "delta_oof_r2": -0.0012064687200559199,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": -0.006681333100705178
+      },
+      "layer": "census_pdb_2026_broadband",
+      "n": 9292,
+      "outcome": "V2_model.coverage_gap_score",
+      "provided_control_residual_partial_correlation": -0.0008293473850224705,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": -0.28820754102995005
+        },
+        "maricopa-az": {
+          "n": 1563,
+          "region_adjusted_r": -0.1555159766182047
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": -0.25716477223139533
+        },
+        "south-central-tx": {
+          "n": 5957,
+          "region_adjusted_r": -0.01311563581315937
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        -0.10780718711322047,
+        -0.0419296817757563
+      ],
+      "region_adjusted_county_bootstrap_p": 0.001998001998001998,
+      "region_adjusted_partial_correlation": -0.07758987387114248,
+      "regions_matching_pooled_marginal_sign": 4,
+      "residual_to_raw_exposure_sd_ratio": 0.7893880361185099
+    },
+    {
+      "bh_q_value_28_tests": 1.0,
+      "conditional_county_bootstrap_95_ci": [
+        -0.02283446893907299,
+        0.0051064545198694355
+      ],
+      "conditional_county_bootstrap_p_for_bh": 0.34765234765234765,
+      "conditional_county_cluster_robust_se": 0.008551831071021206,
+      "conditional_nonestimable_reason": null,
+      "grouped_county_holdout": {
+        "baseline_oof_r2": 0.6095455268491168,
+        "delta_oof_r2": -5.886160805435026e-06,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": 0.6095396406883113
+      },
+      "layer": "census_aiannh_2020_overlap",
+      "n": 9294,
+      "outcome": "A1_physical_equal.coverage_gap_score",
+      "provided_control_residual_partial_correlation": -0.0070498362187311914,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": 0.14263578467617316
+        },
+        "maricopa-az": {
+          "n": 1564,
+          "region_adjusted_r": -0.09356321221858606
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": -0.013951784170386694
+        },
+        "south-central-tx": {
+          "n": 5958,
+          "region_adjusted_r": 0.02230951070994461
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        -0.020377244322712245,
+        0.07326921862097248
+      ],
+      "region_adjusted_county_bootstrap_p": 0.1918081918081918,
+      "region_adjusted_partial_correlation": 0.038346480934930406,
+      "regions_matching_pooled_marginal_sign": 2,
+      "residual_to_raw_exposure_sd_ratio": 0.001982726960472498
+    },
+    {
+      "bh_q_value_28_tests": 1.0,
+      "conditional_county_bootstrap_95_ci": [
+        -0.011380620689338256,
+        0.015641032201774267
+      ],
+      "conditional_county_bootstrap_p_for_bh": 0.5254745254745254,
+      "conditional_county_cluster_robust_se": 0.002434071050842387,
+      "conditional_nonestimable_reason": null,
+      "grouped_county_holdout": {
+        "baseline_oof_r2": 0.0914450587397807,
+        "delta_oof_r2": -0.0017349713322766247,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": 0.08971008740750408
+      },
+      "layer": "census_aiannh_2020_overlap",
+      "n": 9294,
+      "outcome": "A1_physical_equal.transport_gap",
+      "provided_control_residual_partial_correlation": -0.0024201363314788563,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": 0.20847974246284318
+        },
+        "maricopa-az": {
+          "n": 1564,
+          "region_adjusted_r": -0.191884161667592
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": -0.04304474694995153
+        },
+        "south-central-tx": {
+          "n": 5958,
+          "region_adjusted_r": 0.007047074850985519
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        -0.04090360910446956,
+        0.1622464391491918
+      ],
+      "region_adjusted_county_bootstrap_p": 0.22977022977022976,
+      "region_adjusted_partial_correlation": 0.08647956670800144,
+      "regions_matching_pooled_marginal_sign": 2,
+      "residual_to_raw_exposure_sd_ratio": 0.001982726960472498
+    },
+    {
+      "bh_q_value_28_tests": 0.593006993006993,
+      "conditional_county_bootstrap_95_ci": [
+        -0.024742460881539252,
+        0.006941844168951796
+      ],
+      "conditional_county_bootstrap_p_for_bh": 0.10589410589410589,
+      "conditional_county_cluster_robust_se": 0.00404542642129873,
+      "conditional_nonestimable_reason": null,
+      "grouped_county_holdout": {
+        "baseline_oof_r2": 0.0011232971443314588,
+        "delta_oof_r2": -0.001408397671152417,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": -0.0002851005268209583
+      },
+      "layer": "census_aiannh_2020_overlap",
+      "n": 9294,
+      "outcome": "A1_physical_equal.building_gap",
+      "provided_control_residual_partial_correlation": -0.01436228943898536,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": 0.16979771395140836
+        },
+        "maricopa-az": {
+          "n": 1564,
+          "region_adjusted_r": -0.027224736785821824
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": 0.015096523234161805
+        },
+        "south-central-tx": {
+          "n": 5958,
+          "region_adjusted_r": 0.020662808907937542
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        -0.008067314998075793,
+        0.09448039322026419
+      ],
+      "region_adjusted_county_bootstrap_p": 0.0999000999000999,
+      "region_adjusted_partial_correlation": 0.048616841626955655,
+      "regions_matching_pooled_marginal_sign": 3,
+      "residual_to_raw_exposure_sd_ratio": 0.001982726960472498
+    },
+    {
+      "bh_q_value_28_tests": 1.0,
+      "conditional_county_bootstrap_95_ci": [
+        -0.010744430950838374,
+        0.034577000097016225
+      ],
+      "conditional_county_bootstrap_p_for_bh": 0.3596403596403596,
+      "conditional_county_cluster_robust_se": 0.009324682240694224,
+      "conditional_nonestimable_reason": null,
+      "grouped_county_holdout": {
+        "baseline_oof_r2": 0.05937893253211368,
+        "delta_oof_r2": -0.0001892941408762061,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": 0.059189638391237476
+      },
+      "layer": "census_aiannh_2020_overlap",
+      "n": 9294,
+      "outcome": "A1_physical_equal.poi_gap",
+      "provided_control_residual_partial_correlation": 0.015373803669539006,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": -0.08146153568190045
+        },
+        "maricopa-az": {
+          "n": 1564,
+          "region_adjusted_r": 0.020944197692286132
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": -0.0170252324575371
+        },
+        "south-central-tx": {
+          "n": 5958,
+          "region_adjusted_r": 0.009986354629115898
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        -0.049449569958616255,
+        -0.002885718358969294
+      ],
+      "region_adjusted_county_bootstrap_p": 0.025974025974025976,
+      "region_adjusted_partial_correlation": -0.02493833644934236,
+      "regions_matching_pooled_marginal_sign": 2,
+      "residual_to_raw_exposure_sd_ratio": 0.001982726960472498
+    },
+    {
+      "bh_q_value_28_tests": 1.0,
+      "conditional_county_bootstrap_95_ci": [
+        -0.02721193111845095,
+        0.0180515104951312
+      ],
+      "conditional_county_bootstrap_p_for_bh": 0.961038961038961,
+      "conditional_county_cluster_robust_se": 0.01239226164986696,
+      "conditional_nonestimable_reason": null,
+      "grouped_county_holdout": {
+        "baseline_oof_r2": 0.06347612680587011,
+        "delta_oof_r2": -0.0007348467296893757,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": 0.06274128007618074
+      },
+      "layer": "census_aiannh_2020_overlap",
+      "n": 9294,
+      "outcome": "A2_spectral.coverage_gap_score",
+      "provided_control_residual_partial_correlation": -1.5027607256797571e-05,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": 0.2082237804978809
+        },
+        "maricopa-az": {
+          "n": 1564,
+          "region_adjusted_r": 0.006922537073503615
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": -0.0018139853040518368
+        },
+        "south-central-tx": {
+          "n": 5958,
+          "region_adjusted_r": 0.027248415078607962
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        -0.012960525668250157,
+        0.11611538072840148
+      ],
+      "region_adjusted_county_bootstrap_p": 0.17182817182817184,
+      "region_adjusted_partial_correlation": 0.07298009990349925,
+      "regions_matching_pooled_marginal_sign": 3,
+      "residual_to_raw_exposure_sd_ratio": 0.001982726960472498
+    },
+    {
+      "bh_q_value_28_tests": 0.9430569430569431,
+      "conditional_county_bootstrap_95_ci": [
+        -0.03266215501106418,
+        0.011100922567226763
+      ],
+      "conditional_county_bootstrap_p_for_bh": 0.23576423576423577,
+      "conditional_county_cluster_robust_se": 0.005243131740004335,
+      "conditional_nonestimable_reason": null,
+      "grouped_county_holdout": {
+        "baseline_oof_r2": 0.15198891955015692,
+        "delta_oof_r2": -0.0033726428225263616,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": 0.14861627672763056
+      },
+      "layer": "census_aiannh_2020_overlap",
+      "n": 9294,
+      "outcome": "A3_dawid_skene.coverage_gap_score",
+      "provided_control_residual_partial_correlation": -0.018350677403705946,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": 0.35849855342938736
+        },
+        "maricopa-az": {
+          "n": 1564,
+          "region_adjusted_r": 0.005577498226085159
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": 0.0004527850900987066
+        },
+        "south-central-tx": {
+          "n": 5958,
+          "region_adjusted_r": 0.029604375555826415
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        -0.001642062053491434,
+        0.20386748704073146
+      ],
+      "region_adjusted_county_bootstrap_p": 0.057942057942057944,
+      "region_adjusted_partial_correlation": 0.1358937238033843,
+      "regions_matching_pooled_marginal_sign": 4,
+      "residual_to_raw_exposure_sd_ratio": 0.001982726960472498
+    },
+    {
+      "bh_q_value_28_tests": 0.5454545454545454,
+      "conditional_county_bootstrap_95_ci": [
+        -0.0006731106910505555,
+        0.014866682492583308
+      ],
+      "conditional_county_bootstrap_p_for_bh": 0.07792207792207792,
+      "conditional_county_cluster_robust_se": 0.0020908237009334214,
+      "conditional_nonestimable_reason": null,
+      "grouped_county_holdout": {
+        "baseline_oof_r2": 0.03629080988013911,
+        "delta_oof_r2": 1.560222935070854e-06,
+        "folds": 5,
+        "group_unit": "region|county",
+        "layer_added_oof_r2": 0.03629237010307418
+      },
+      "layer": "census_aiannh_2020_overlap",
+      "n": 9294,
+      "outcome": "V2_model.coverage_gap_score",
+      "provided_control_residual_partial_correlation": 0.003974929151995025,
+      "region_adjusted_correlations": {
+        "eastern-ok": {
+          "n": 1181,
+          "region_adjusted_r": -0.09982058481879358
+        },
+        "maricopa-az": {
+          "n": 1564,
+          "region_adjusted_r": -0.05298457205041677
+        },
+        "northern-ca": {
+          "n": 591,
+          "region_adjusted_r": -0.024555622136362632
+        },
+        "south-central-tx": {
+          "n": 5958,
+          "region_adjusted_r": 0.02705379911608197
+        }
+      },
+      "region_adjusted_county_bootstrap_95_ci": [
+        -0.05879200151122618,
+        0.0009483891614281135
+      ],
+      "region_adjusted_county_bootstrap_p": 0.06393606393606394,
+      "region_adjusted_partial_correlation": -0.033219642000687076,
+      "regions_matching_pooled_marginal_sign": 3,
+      "residual_to_raw_exposure_sd_ratio": 0.001982726960472498
+    }
+  ],
+  "tract_geometry_provenance": {
+    "aiannh_features_intersecting_study_envelope": 312,
+    "aiannh_sha256": "f58e00ff9df3c9d5371fd1c9e1e6419c09d69f37a7e2f1b8d2f45c196c692d60",
+    "aiannh_source": "external-discovery-2026-10-27/census-tiger-aiannh-2020/tl_2020_us_aiannh.zip",
+    "operation": "area-weighted intersection in EPSG:5070 of 2024 Census tract polygons with the dissolved 2020 Census AIANNH polygon union; missing tract geometry remains missing, never coded zero",
+    "tract_geometry_matched_official_geoids": 9379,
+    "tract_geometry_missing_official_geoids": [],
+    "tract_geometry_sources": {
+      "04": {
+        "bytes": 8477370,
+        "credentials_used": false,
+        "name": "tl_2024_04_tract.zip",
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/lab-prerequisites/tl_2024_04_tract.zip",
+        "retrieval": "network",
+        "retrieval_date_utc": "2026-10-25T12:06:24Z",
+        "sha256": "5405732b0167843f07e0575c9a42dca99de2a83710cb5dafbe30db65ee9414ba",
+        "url": "https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_04_tract.zip",
+        "version": "TIGER2024"
+      },
+      "06": {
+        "bytes": 32451946,
+        "credentials_used": false,
+        "name": "tl_2024_06_tract.zip",
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/lab-prerequisites/tl_2024_06_tract.zip",
+        "retrieval": "network",
+        "retrieval_date_utc": "2026-10-25T12:06:26Z",
+        "sha256": "8ad60e582b4d61be94ac072a4dd80d763255c0c987c616c7e6f9ffc7ee0bd318",
+        "url": "https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_06_tract.zip",
+        "version": "TIGER2024"
+      },
+      "35": {
+        "bytes": 4962757,
+        "credentials_used": false,
+        "name": "tl_2024_35_tract.zip",
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/lab-prerequisites/tl_2024_35_tract.zip",
+        "retrieval": "network",
+        "retrieval_date_utc": "2026-10-25T12:06:28Z",
+        "sha256": "cc3433398355893969d01cf9fb3985056d3431ebbd6073fa51d72f695785f4ab",
+        "url": "https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_35_tract.zip",
+        "version": "TIGER2024"
+      },
+      "40": {
+        "bytes": 6918822,
+        "credentials_used": false,
+        "name": "tl_2024_40_tract.zip",
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/lab-prerequisites/tl_2024_40_tract.zip",
+        "retrieval": "network",
+        "retrieval_date_utc": "2026-10-25T12:06:29Z",
+        "sha256": "d58e2a8a94f7644ca22636de0da6116652ca8ab89b57e293f083901575d0e677",
+        "url": "https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_40_tract.zip",
+        "version": "TIGER2024"
+      },
+      "48": {
+        "bytes": 32628659,
+        "credentials_used": false,
+        "name": "tl_2024_48_tract.zip",
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/lab-prerequisites/tl_2024_48_tract.zip",
+        "retrieval": "network",
+        "retrieval_date_utc": "2026-10-25T12:06:31Z",
+        "sha256": "aca646a9adcf777ce2e9a8f9fc86c51f8270a14ca5f68f84a2749c3b6e4e69a1",
+        "url": "https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_48_tract.zip",
+        "version": "TIGER2024"
+      }
+    },
+    "tracts_with_positive_aiannh_area_share": 1042,
+    "union_used_to_avoid_double_counting_overlapping_aiannh_polygons": true
+  }
+}

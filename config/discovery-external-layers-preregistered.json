@@ -1,0 +1,45 @@
+{
+  "schema_version": 2,
+  "method_revision": "Updated before final estimates after a preliminary implementation audit exposed severe scale instability when the AIANNH exposure was nearly collinear with supplied tribal_pct. The primary effect is region-adjusted correlation; provided-control residual screens use bounded partial correlation, and exact/non-identifiable exposure residuals are not estimable. No exposure or outcome selection changed.",
+  "analysis_id": "discovery-external-layers-2026-10-27",
+  "backlog_item": "bias-discovery-external-geo-mining",
+  "scope": {
+    "official_regions": ["maricopa-az", "northern-ca", "eastern-ok", "south-central-tx"],
+    "official_tract_count": 9379,
+    "external_layers": ["cdc_svi_2022", "usda_ruca_2020", "census_pdb_2026_broadband", "census_aiannh_2020_overlap"],
+    "discovery_only": true,
+    "no_external_scored_inputs": true,
+    "no_removed_reference_layers": true
+  },
+  "exposure_fields": {
+    "cdc_svi_2022": {"source_column": "RPL_THEMES", "definition": "CDC/ATSDR overall social vulnerability percentile rank"},
+    "usda_ruca_2020": {"source_column": "PrimaryRUCA", "definition": "USDA primary rural-urban commuting-area code; numeric code treated as ordinal, not interval"},
+    "census_pdb_2026_broadband": {"source_column": "pct_HHD_No_Internet_ACS_20_24", "definition": "PDB percent of households with no internet; convert percent points to fraction"},
+    "census_aiannh_2020_overlap": {"source_column": "derived_aiannh_area_share", "definition": "fraction of each study tract polygon overlapping the dissolved 2020 Census AIANNH polygon union; tract overlay uses 2024 TIGER tract geometry with matching 2020 tract GEOIDs"}
+  },
+  "outcomes": [
+    "A1_physical_equal.coverage_gap_score",
+    "A1_physical_equal.transport_gap",
+    "A1_physical_equal.building_gap",
+    "A1_physical_equal.poi_gap",
+    "A2_spectral.coverage_gap_score",
+    "A3_dawid_skene.coverage_gap_score",
+    "V2_model.coverage_gap_score"
+  ],
+  "baseline_controls": ["region_fixed_effects", "pct_urban", "svi_overall", "ruca_primary", "tribal_pct"],
+  "primary_effect": "region-adjusted partial correlation between the external exposure and frozen proxy outcome; county-cluster bootstrap 95% CI; descriptive, not causal or a target estimate",
+  "residual_screen": "secondary partial correlation after residualizing both exposure and outcome on region fixed effects plus provided pct_urban, svi_overall, ruca_primary and tribal_pct; near-duplicate exposures are reported not estimable",
+  "holdout_metric": "compare baseline-control OOF R2 with external-layer-added OOF R2 on identical held-out tracts; five deterministic folds grouped by state+county, with no test-county rows used for fitting",
+  "holdout_replication": "report region-specific region-adjusted correlation signs and count regions matching pooled direction; county-grouped OOF delta-R2 is the predictive replication metric",
+  "near_collinearity_rule": "if residual external-exposure SD after provided controls is below 1e-10 times raw exposure SD, report conditional residual effect and CI as not estimable, set p=1 for the fixed 28-test FDR family, and retain region-adjusted effect and county holdout delta-R2",
+  "uncertainty": {
+    "method": "county cluster bootstrap, resampling counties with replacement within each of the four regions and retaining every tract row in a sampled county",
+    "replicates": 1000,
+    "seed": 20261027,
+    "interval": "percentile 95% CI"
+  },
+  "multiple_testing": "Benjamini-Hochberg FDR across all 28 layer-by-outcome conditional residual-screen tests; two-sided add-one sign-frequency from county-cluster bootstrap",
+  "missingness": "complete case for selected exposure, outcome and provided controls; report exact analytic N; do not impute absent exposure data",
+  "candidate_policy": "read only frozen candidate CSVs; never modify or use external fields in any candidate build/upload",
+  "release_note": "source terms/licensing statements are recorded from the acquisition manifest; terms marked unverified remain explicitly unverified"
+}
