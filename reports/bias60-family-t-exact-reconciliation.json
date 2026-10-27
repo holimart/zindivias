@@ -1,7 +1,7 @@
 {
   "family": "T",
-  "version": "exact-recipe-reconciliation-progress-v5",
-  "scope": "T2-v2 estimator logic and synthetic test added; official-region artifacts are not yet emitted. Exact count remains 1/4.",
+  "version": "exact-recipe-reconciliation-progress-v6",
+  "scope": "T1-v2 and T2-v2 official artifacts emitted; T3/T4 remain pending. Partial T1/T2 orthogonality refresh recorded; full-family refresh pending.",
   "official_scored_rows": 9379,
   "regions": {
     "maricopa-az": {
@@ -366,7 +366,7 @@
     }
   },
   "measure_after": {
-    "exact_recipes": 1,
+    "exact_recipes": 2,
     "exact_recipes_total": 4,
     "v2_artifacts_emitted": [
       {
@@ -386,13 +386,42 @@
           "south-central-tx": 1303
         },
         "recipe": "same name.primary or route identity; join shared connectors only below 30-degree deflection; per-tract drop ratio for strokes with >=70% named-class length outside the tract"
+      },
+      {
+        "id": "T2-v2",
+        "base_id": "T2",
+        "version": 2,
+        "family": "T",
+        "status": "implemented_exact_recipe",
+        "path": "ideas/T2-v2.parquet",
+        "sha256": "8e778af0333b99c1ca58b2b058077ed1a855ea62b90717ecc368b798ec443cc3",
+        "official_rows": 9379,
+        "defined_rows_by_region": {
+          "maricopa-az": {
+            "covariate:orphan_link_segments": 1593,
+            "covariate:attached_carriageway_length_km": 1593
+          },
+          "northern-ca": {
+            "covariate:orphan_link_segments": 591,
+            "covariate:attached_carriageway_length_km": 591
+          },
+          "eastern-ok": {
+            "covariate:orphan_link_segments": 1192,
+            "covariate:attached_carriageway_length_km": 1192
+          },
+          "south-central-tx": {
+            "covariate:orphan_link_segments": 6003,
+            "covariate:attached_carriageway_length_km": 6003
+          }
+        },
+        "recipe": "orphan links have only non-named neighbors at both endpoint connectors; attached non-named carriageway length clipped to 2 km link buffer"
       }
     ],
     "coverage_and_orthogonality_refreshed": false
   },
   "implementation_progress": {
     "T1": "Implemented and built T1-v2 using the strict <30-degree identity-connected stroke rule; defined coverage is reported by region.",
-    "T2": "Implemented the provided-layer estimator logic for orphan-link counts and attached non-named carriageway length intersecting each link buffer of radius 2 km; synthetic geometry test passes. Registry remains pending because official 9,379-row v2 artifact has not yet been built and validated.",
+    "T2": "Implemented and built T2-v2 from provided roads-unfiltered layer; both emissions are defined for 9,379/9,379 official GEOIDs, with regional diagnostics and verified shards.",
     "T3": "No v2 implementation yet.",
     "T4": "No v2 implementation yet; supplied centroid interpretation remains unresolved."
   },
@@ -484,8 +513,135 @@
   },
   "validation": {
     "test_command": "uv run --python 3.12.3 --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with pyproj==3.8.0 --with pytest python -m pytest tests/test_family_t_exact.py -q",
-    "test_output": "10 passed in 0.36s; py_compile passed; git diff --check passed.",
-    "artifact_checks": "9,379 unique official GEOIDs; 2,057 defined; SHA-256 verified; all T1-T4 v1 hashes re-verified unchanged",
-    "orthogonality_refresh": "not run; no official T2-v2 artifact emitted yet; T3-v2/T4-v2 remain pending."
+    "test_output": "16 passed in 0.48s; build shards and merged T2 artifact verified; T1-T4 v1 SHA-256 values all match pre-build records; py_compile and git diff --check passed.",
+    "artifact_checks": "T2-v2: 18,758 rows, 9,379 unique official GEOIDs, two fully-defined emissions (9,379 each), SHA-256 8e778af0333b99c1ca58b2b058077ed1a855ea62b90717ecc368b798ec443cc3; all four v1 artifact hashes re-verified unchanged.",
+    "orthogonality_refresh": "Partial T1/T2 pairwise report only; full T1-T4 refresh pending T3/T4."
+  },
+  "T2_v2_artifact": {
+    "id": "T2-v2",
+    "base_id": "T2",
+    "version": 2,
+    "family": "T",
+    "status": "implemented_exact_recipe",
+    "path": "ideas/T2-v2.parquet",
+    "sha256": "8e778af0333b99c1ca58b2b058077ed1a855ea62b90717ecc368b798ec443cc3",
+    "official_rows": 9379,
+    "defined_rows_by_region": {
+      "maricopa-az": {
+        "covariate:orphan_link_segments": 1593,
+        "covariate:attached_carriageway_length_km": 1593
+      },
+      "northern-ca": {
+        "covariate:orphan_link_segments": 591,
+        "covariate:attached_carriageway_length_km": 591
+      },
+      "eastern-ok": {
+        "covariate:orphan_link_segments": 1192,
+        "covariate:attached_carriageway_length_km": 1192
+      },
+      "south-central-tx": {
+        "covariate:orphan_link_segments": 6003,
+        "covariate:attached_carriageway_length_km": 6003
+      }
+    },
+    "recipe": "orphan links have only non-named neighbors at both endpoint connectors; attached non-named carriageway length clipped to 2 km link buffer"
+  },
+  "T2_v2_coverage_by_region": {
+    "maricopa-az": {
+      "region": "maricopa-az",
+      "official_geoids": 1593,
+      "emissions": {
+        "covariate:orphan_link_segments": {
+          "defined_rows": 1593,
+          "undefined_rows": 0
+        },
+        "covariate:attached_carriageway_length_km": {
+          "defined_rows": 1593,
+          "undefined_rows": 0
+        }
+      },
+      "diagnostics": {
+        "rows_read": 1170165,
+        "orphan_links": 802,
+        "attached_length_limit_m": 2000.0,
+        "connector_rule": "both endpoint neighbors non-named; named neighbor disqualifies",
+        "no_target_or_reference_data_read": true
+      },
+      "sha256": "4b714d323b8079d5c66af305d19553ccdbdbfcc8421344132be3ee5ee7aaef81"
+    },
+    "northern-ca": {
+      "region": "northern-ca",
+      "official_geoids": 591,
+      "emissions": {
+        "covariate:orphan_link_segments": {
+          "defined_rows": 591,
+          "undefined_rows": 0
+        },
+        "covariate:attached_carriageway_length_km": {
+          "defined_rows": 591,
+          "undefined_rows": 0
+        }
+      },
+      "diagnostics": {
+        "rows_read": 479596,
+        "orphan_links": 226,
+        "attached_length_limit_m": 2000.0,
+        "connector_rule": "both endpoint neighbors non-named; named neighbor disqualifies",
+        "no_target_or_reference_data_read": true
+      },
+      "sha256": "aea0cd6ac4088b2cf76737788e892e8b478976ed58daf74b139c571ee89106ce"
+    },
+    "eastern-ok": {
+      "region": "eastern-ok",
+      "official_geoids": 1192,
+      "emissions": {
+        "covariate:orphan_link_segments": {
+          "defined_rows": 1192,
+          "undefined_rows": 0
+        },
+        "covariate:attached_carriageway_length_km": {
+          "defined_rows": 1192,
+          "undefined_rows": 0
+        }
+      },
+      "diagnostics": {
+        "rows_read": 1037555,
+        "orphan_links": 306,
+        "attached_length_limit_m": 2000.0,
+        "connector_rule": "both endpoint neighbors non-named; named neighbor disqualifies",
+        "no_target_or_reference_data_read": true
+      },
+      "sha256": "4fbdc7009c5c9b6b22c595f7f1d49674d9a3f66cad2536c661ca8d39e0eb0158"
+    },
+    "south-central-tx": {
+      "region": "south-central-tx",
+      "official_geoids": 6003,
+      "emissions": {
+        "covariate:orphan_link_segments": {
+          "defined_rows": 6003,
+          "undefined_rows": 0
+        },
+        "covariate:attached_carriageway_length_km": {
+          "defined_rows": 6003,
+          "undefined_rows": 0
+        }
+      },
+      "diagnostics": {
+        "rows_read": 4122701,
+        "orphan_links": 4532,
+        "attached_length_limit_m": 2000.0,
+        "connector_rule": "both endpoint neighbors non-named; named neighbor disqualifies",
+        "no_target_or_reference_data_read": true
+      },
+      "sha256": "65ccde1f68754c63f4620c4df99a579be69735a357f3b21e39f13ab91b8ba424"
+    }
+  },
+  "partial_orthogonality_refresh": {
+    "path": "reports/bias60-family-t-exact-orthogonality.json",
+    "sha256": "0524777df77f73f35850f846dd8cb0e9428f89a29d283c077368f605b7780086",
+    "joint_defined_rows": 2057,
+    "pearson_r_T1gap_T2orphan_link_segments": 0.027301788163217624,
+    "pearson_r_T1gap_T2attached_length": 0.004280890412423177,
+    "limitation": "T3/T4 absent; not the full-family gate and does not authorize integration."
   }
 }

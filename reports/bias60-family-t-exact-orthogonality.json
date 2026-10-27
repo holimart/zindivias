@@ -1,0 +1,28 @@
+{
+  "family": "T",
+  "purpose": "partial v2 pairwise orthogonality refresh; descriptive, not integration authorization",
+  "input_artifacts": {
+    "T1-v2": "508a885905e6ba269c72aa421ca848bc26363b60fb2f0030c7bd520bfd1288cc",
+    "T2-v2": "8e778af0333b99c1ca58b2b058077ed1a855ea62b90717ecc368b798ec443cc3"
+  },
+  "coverage": {
+    "T1-v2_gap": 2057,
+    "T2-v2_orphan_link_segments": 9379,
+    "T2-v2_attached_carriageway_length_km": 9379
+  },
+  "pairwise": [
+    {
+      "T1_channel": "gap",
+      "T2_channel": "covariate:orphan_link_segments",
+      "joint_defined_rows": 2057,
+      "pearson_r": 0.027301788163217624
+    },
+    {
+      "T1_channel": "gap",
+      "T2_channel": "covariate:attached_carriageway_length_km",
+      "joint_defined_rows": 2057,
+      "pearson_r": 0.004280890412423177
+    }
+  ],
+  "limitations": "T3-v2/T4-v2 absent; this does not replace the full-family orthogonality refresh. No labels or reference layers read."
+}

@@ -161,4 +161,6 @@ def test_versioned_family_registry_keeps_pending_recipes_visible():
     assert set(entries) == {"T1-v2", "T2-v2", "T3-v2", "T4-v2"}
     assert entries["T1-v2"]["status"] == "implemented_exact_recipe"
     assert entries["T1-v2"]["official_rows"] == 9379
-    assert all(entries[f"T{i}-v2"]["status"] == "pending" for i in (2, 3, 4))
+    assert entries["T2-v2"]["status"] == "implemented_exact_recipe"
+    assert entries["T2-v2"]["official_rows"] == 9379
+    assert all(entries[f"T{i}-v2"]["status"] == "pending" for i in (3, 4))
