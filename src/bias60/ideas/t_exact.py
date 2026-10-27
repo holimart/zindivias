@@ -89,6 +89,40 @@ def stroke_components(identities: Sequence[str | None],
     return labels
 
 
+def orphan_link_indices(classes: Sequence[str | None], subclasses: Sequence[str | None],
+                        endpoint_connectors: Sequence[Sequence[str]],
+                        named_classes: set[str]) -> list[int]:
+    """Select link rows whose two connector endpoints attach only to non-named roads.
+
+    The candidate link itself is excluded from endpoint incidence. Both ends must have at
+    least one other incident segment; any named-class carriageway disqualifies the link.
+    """
+    if not (len(classes) == len(subclasses) == len(endpoint_connectors)):
+        raise ValueError("class, subclass and connector arrays must have equal lengths")
+    incidence: dict[str, list[tuple[int, str | None]]] = defaultdict(list)
+    for index, (road_class, connectors) in enumerate(zip(classes, endpoint_connectors)):
+        for connector in set(connectors):
+            if connector:
+                incidence[connector].append((index, road_class))
+    selected = []
+    for index, (road_class, subclass, connectors) in enumerate(
+            zip(classes, subclasses, endpoint_connectors)):
+        is_link = (isinstance(subclass, str) and "link" in subclass.casefold()) or (
+            isinstance(road_class, str) and "_link" in road_class.casefold())
+        endpoints = list(dict.fromkeys(connector for connector in connectors if connector))
+        if not is_link or len(endpoints) < 2:
+            continue
+        valid = True
+        for connector in (endpoints[0], endpoints[-1]):
+            neighbors = [(row, cls) for row, cls in incidence[connector] if row != index]
+            if not neighbors or any(cls in named_classes for _, cls in neighbors):
+                valid = False
+                break
+        if valid:
+            selected.append(index)
+    return selected
+
+
 def t1_exact(inputs):
     """Compute exact T1 per-tract class-drop scores from the provided roads-unfiltered layer."""
     import numpy as np

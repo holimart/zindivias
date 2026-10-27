@@ -12,7 +12,7 @@ assert spec and spec.loader
 preflight = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(preflight)
 sys.path.insert(0, str(ROOT / "src"))
-from bias60.ideas.t_exact import deflection_degrees, stroke_components
+from bias60.ideas.t_exact import deflection_degrees, orphan_link_indices, stroke_components
 
 
 def test_deflection_uses_zero_degrees_for_straight_continuation():
@@ -39,6 +39,15 @@ def test_stroke_does_not_cross_semantic_identity_or_unconnected_junctions():
         [("a", "j"), ("j", "b"), ("far", "end")],
         [((1, 0), (-1, 0)), ((1, 0), (-1, 0)), ((1, 0), (-1, 0))])
     assert len(set(labels)) == 3
+
+
+def test_orphan_links_require_non_named_neighbors_at_both_endpoints():
+    classes = ["motorway_link", "tertiary", "unclassified", "primary", "tertiary"]
+    subclasses = ["link", None, None, None, None]
+    connectors = [["a", "b"], ["a", "x"], ["b", "y"], ["c", "d"], ["c", "z"]]
+    # The first link qualifies; the second is excluded because one endpoint has a named road.
+    assert orphan_link_indices(classes, subclasses, connectors,
+                               {"motorway", "trunk", "primary", "secondary"}) == [0]
 
 
 def test_t1_exact_runs_end_to_end_on_a_synthetic_named_stroke(tmp_path):

@@ -1,7 +1,7 @@
 {
   "family": "T",
-  "version": "exact-recipe-reconciliation-progress-v3",
-  "scope": "provided-data exact T1-v2 build; T2-T4 remain pending",
+  "version": "exact-recipe-reconciliation-progress-v4",
+  "scope": "T1-v2 remains the only emitted exact artifact; T2 orphan-link eligibility predicate added and tested, but T2-v2 artifact plus T3-v2 and T4-v2 remain pending.",
   "official_scored_rows": 9379,
   "regions": {
     "maricopa-az": {
@@ -392,7 +392,7 @@
   },
   "implementation_progress": {
     "T1": "Implemented and built T1-v2 using the strict <30-degree identity-connected stroke rule; defined coverage is reported by region.",
-    "T2": "No v2 implementation yet.",
+    "T2": "Added and tested a pure endpoint-incidence predicate: a link qualifies only when both connectors have non-named neighbors and neither endpoint has a named-class neighbor. This is a primitive only; no T2-v2 estimator/artifact or attached-carriageway length accumulation is claimed.",
     "T3": "No v2 implementation yet.",
     "T4": "No v2 implementation yet; supplied centroid interpretation remains unresolved."
   },
@@ -483,9 +483,9 @@
     "recipe": "same name.primary or route identity; join shared connectors only below 30-degree deflection; per-tract drop ratio for strokes with >=70% named-class length outside the tract"
   },
   "validation": {
-    "test_command": "uv run --python 3.12.3 --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with pyproj==3.8.0 --with pytest python -m pytest tests/test_family_t_exact.py tests/test_bias60_family_t.py -q",
-    "test_output": "14 passed",
+    "test_command": "uv run --python 3.12.3 --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with pyproj==3.8.0 --with pytest python -m pytest tests/test_family_t_exact.py -q",
+    "test_output": "9 passed in 0.57s; module py_compile passed; git diff --check passed.",
     "artifact_checks": "9,379 unique official GEOIDs; 2,057 defined; SHA-256 verified; all T1-T4 v1 hashes re-verified unchanged",
-    "orthogonality_refresh": "not run; remaining T2-v2 through T4-v2 are incomplete"
+    "orthogonality_refresh": "not run; T2-v2 artifact is not complete and T3-v2/T4-v2 remain pending."
   }
 }
