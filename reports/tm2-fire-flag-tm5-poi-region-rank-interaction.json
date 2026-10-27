@@ -1,0 +1,372 @@
+{
+  "schema_version": 1,
+  "screen": "Binary Tm2×Tm3 recovery flag × within-region POI p90 version midpercentile rank; unregistered label-free interaction sensitivity",
+  "definition": "interaction = recovery_flag × within-region average-tie midpercentile of provided defined Tm5 POI p90 version. Flagged-only change = |interaction − recovery_flag|, measured only for the exact source flag=1 set.",
+  "method": {
+    "recovery_flag": "Reuse the frozen validated flag artifact and validate all 30 GEOIDs against the frozen source report; do not recompute or alter the flag.",
+    "poi_rank": "Rank only defined provided Tm5 Est covariate:tm5_poi_p90_version separately within each official region; ties receive average rank, normalized by (n−1), singleton at 0.5; undefined values remain null.",
+    "joint_mask": "Exact AND of source flag-defined and POI-version-defined masks; preserve all nulls.",
+    "unregistered": true
+  },
+  "measure_before": {
+    "flagged_ids": 30,
+    "flagged_regions": 4,
+    "flagged_only_p95_change_from_global_log_normalized": 0.09138189387194806,
+    "regional_rank_vs_global_log_transform_p95_absolute_change": 0.5005576527275482,
+    "flag_x_region_rank_previously_measured": false,
+    "source_flag_report_sha256": "72102e0cec6497af698246782db5437b71af90570d7bf0dc52ff6cb31a572b98",
+    "global_interaction_report_sha256": "0b90a9af0acbd927fef3b94a03a74605464848268a4ca96ec715c280df21b6f2",
+    "region_rank_report_sha256": "a61003e24631302a360fec730ff5f48fe81d62a58f49ea250d786e9d7ada7565"
+  },
+  "scope": {
+    "official_ids": 9379,
+    "exact_official_id_alignment": true,
+    "flag_defined_ids": 9362,
+    "poi_version_defined_ids": 9377,
+    "joint_defined_ids": 9362,
+    "joint_undefined_ids": 17,
+    "joint_coverage_fraction": 0.9981874400255891,
+    "flagged_ids": 30,
+    "flagged_ids_with_defined_poi_rank": 30,
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "flag_defined_ids": 1588,
+        "poi_version_defined_ids": 1593,
+        "joint_defined_ids": 1588,
+        "joint_coverage_fraction": 0.9968612680477087,
+        "flagged_ids": 8,
+        "flagged_geoid_list": [
+          "04003000101",
+          "04003001401",
+          "04003001402",
+          "04003002002",
+          "04007940400",
+          "04009961600",
+          "04013050603",
+          "04013980100"
+        ],
+        "flagged_only_absolute_change_distribution": {
+          "n": 8,
+          "min": 0.09579145728643212,
+          "p50": 0.5719221105527639,
+          "p95": 0.5719221105527639,
+          "max": 0.5719221105527639
+        },
+        "rank_distribution": {
+          "n": 1593,
+          "min": 0.0,
+          "p50": 0.4280778894472362,
+          "p95": 0.9042085427135679,
+          "max": 1.0
+        }
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "flag_defined_ids": 591,
+        "poi_version_defined_ids": 591,
+        "joint_defined_ids": 591,
+        "joint_coverage_fraction": 1.0,
+        "flagged_ids": 7,
+        "flagged_geoid_list": [
+          "06007001800",
+          "06007001900",
+          "06007002000",
+          "06007002100",
+          "06007002200",
+          "06007002300",
+          "06033000501"
+        ],
+        "flagged_only_absolute_change_distribution": {
+          "n": 7,
+          "min": 0.5754237288135593,
+          "p50": 0.5754237288135593,
+          "p95": 0.5754237288135593,
+          "max": 0.5754237288135593
+        },
+        "rank_distribution": {
+          "n": 591,
+          "min": 0.0,
+          "p50": 0.4245762711864407,
+          "p95": 0.9110169491525424,
+          "max": 1.0
+        }
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "flag_defined_ids": 1189,
+        "poi_version_defined_ids": 1192,
+        "joint_defined_ids": 1189,
+        "joint_coverage_fraction": 0.99748322147651,
+        "flagged_ids": 8,
+        "flagged_geoid_list": [
+          "40021977600",
+          "40103956600",
+          "40113940011",
+          "40147001000",
+          "40147001100",
+          "40147001200",
+          "40151954201",
+          "40153953100"
+        ],
+        "flagged_only_absolute_change_distribution": {
+          "n": 8,
+          "min": 0.5919395465994962,
+          "p50": 0.5919395465994962,
+          "p95": 0.8484466834592777,
+          "max": 0.9865659109991604
+        },
+        "rank_distribution": {
+          "n": 1192,
+          "min": 0.0,
+          "p50": 0.4080604534005038,
+          "p95": 0.8946263643996641,
+          "max": 1.0
+        }
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "flag_defined_ids": 5994,
+        "poi_version_defined_ids": 6001,
+        "joint_defined_ids": 5994,
+        "joint_coverage_fraction": 0.9985007496251874,
+        "flagged_ids": 7,
+        "flagged_geoid_list": [
+          "48013960602",
+          "48099980000",
+          "48221160302",
+          "48251130100",
+          "48305950600",
+          "48367140713",
+          "48367140714"
+        ],
+        "flagged_only_absolute_change_distribution": {
+          "n": 7,
+          "min": 0.09750000000000003,
+          "p50": 0.5815833333333333,
+          "p95": 0.5815833333333333,
+          "max": 0.5815833333333333
+        },
+        "rank_distribution": {
+          "n": 6001,
+          "min": 0.0,
+          "p50": 0.41841666666666666,
+          "p95": 0.9025,
+          "max": 0.9996666666666667
+        }
+      }
+    },
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "Tm1_or_Tm4_read": false,
+    "removed_or_equivalent_reference_data_read": false,
+    "external_data_read": false,
+    "leaderboard_feedback_used": false,
+    "registry_integration": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "flagged_only_absolute_change_distribution": {
+      "n": 30,
+      "min": 0.09579145728643212,
+      "p50": 0.5754237288135593,
+      "p95": 0.5919395465994962,
+      "max": 0.9865659109991604
+    },
+    "flagged_only_p95_absolute_change_from_binary_flag": 0.5919395465994962,
+    "joint_interaction_distribution": {
+      "n": 9362,
+      "min": 0.0,
+      "p50": 0.0,
+      "p95": 0.0,
+      "max": 0.9042085427135679
+    },
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "flag_defined_ids": 1588,
+        "poi_version_defined_ids": 1593,
+        "joint_defined_ids": 1588,
+        "joint_coverage_fraction": 0.9968612680477087,
+        "flagged_ids": 8,
+        "flagged_geoid_list": [
+          "04003000101",
+          "04003001401",
+          "04003001402",
+          "04003002002",
+          "04007940400",
+          "04009961600",
+          "04013050603",
+          "04013980100"
+        ],
+        "flagged_only_absolute_change_distribution": {
+          "n": 8,
+          "min": 0.09579145728643212,
+          "p50": 0.5719221105527639,
+          "p95": 0.5719221105527639,
+          "max": 0.5719221105527639
+        },
+        "rank_distribution": {
+          "n": 1593,
+          "min": 0.0,
+          "p50": 0.4280778894472362,
+          "p95": 0.9042085427135679,
+          "max": 1.0
+        }
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "flag_defined_ids": 591,
+        "poi_version_defined_ids": 591,
+        "joint_defined_ids": 591,
+        "joint_coverage_fraction": 1.0,
+        "flagged_ids": 7,
+        "flagged_geoid_list": [
+          "06007001800",
+          "06007001900",
+          "06007002000",
+          "06007002100",
+          "06007002200",
+          "06007002300",
+          "06033000501"
+        ],
+        "flagged_only_absolute_change_distribution": {
+          "n": 7,
+          "min": 0.5754237288135593,
+          "p50": 0.5754237288135593,
+          "p95": 0.5754237288135593,
+          "max": 0.5754237288135593
+        },
+        "rank_distribution": {
+          "n": 591,
+          "min": 0.0,
+          "p50": 0.4245762711864407,
+          "p95": 0.9110169491525424,
+          "max": 1.0
+        }
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "flag_defined_ids": 1189,
+        "poi_version_defined_ids": 1192,
+        "joint_defined_ids": 1189,
+        "joint_coverage_fraction": 0.99748322147651,
+        "flagged_ids": 8,
+        "flagged_geoid_list": [
+          "40021977600",
+          "40103956600",
+          "40113940011",
+          "40147001000",
+          "40147001100",
+          "40147001200",
+          "40151954201",
+          "40153953100"
+        ],
+        "flagged_only_absolute_change_distribution": {
+          "n": 8,
+          "min": 0.5919395465994962,
+          "p50": 0.5919395465994962,
+          "p95": 0.8484466834592777,
+          "max": 0.9865659109991604
+        },
+        "rank_distribution": {
+          "n": 1192,
+          "min": 0.0,
+          "p50": 0.4080604534005038,
+          "p95": 0.8946263643996641,
+          "max": 1.0
+        }
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "flag_defined_ids": 5994,
+        "poi_version_defined_ids": 6001,
+        "joint_defined_ids": 5994,
+        "joint_coverage_fraction": 0.9985007496251874,
+        "flagged_ids": 7,
+        "flagged_geoid_list": [
+          "48013960602",
+          "48099980000",
+          "48221160302",
+          "48251130100",
+          "48305950600",
+          "48367140713",
+          "48367140714"
+        ],
+        "flagged_only_absolute_change_distribution": {
+          "n": 7,
+          "min": 0.09750000000000003,
+          "p50": 0.5815833333333333,
+          "p95": 0.5815833333333333,
+          "max": 0.5815833333333333
+        },
+        "rank_distribution": {
+          "n": 6001,
+          "min": 0.0,
+          "p50": 0.41841666666666666,
+          "p95": 0.9025,
+          "max": 0.9996666666666667
+        }
+      }
+    }
+  },
+  "thresholds": {
+    "minimum_joint_coverage_inclusive": 0.9859,
+    "interaction_bounds_inclusive": [
+      0.0,
+      1.0
+    ],
+    "minimum_flagged_only_p95_absolute_change_inclusive": 0.05
+  },
+  "acceptance": {
+    "exact_9379_id_alignment": true,
+    "exact_30_flag_alignment": true,
+    "joint_defined_mask_equals_flag_and_version_masks": true,
+    "undefined_interactions_remain_null": true,
+    "joint_coverage_fraction": 0.9981874400255891,
+    "coverage_at_least_98_59_percent": true,
+    "interaction_finite_and_bounded_0_1": true,
+    "flagged_ids_with_rank": 30,
+    "flagged_only_p95_absolute_change_from_binary_flag": 0.5919395465994962,
+    "flagged_only_p95_change_at_least_0_05": true,
+    "frozen_flag_Tm5_and_registry_unchanged": true,
+    "screen_pass": true
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "7138951b53cecabf981295c57ae067a73785c7c94f2a0d4bad2614d5a61c3ab9",
+    "source_flag_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/tm2-fire-recovery-flag/tm2-fire-recovery-flag.parquet",
+      "sha256_before": "5a51033b3c8c6cec395f5f51c6f86bd6d60e3c95098b5586ae13ca946e09d133",
+      "sha256_after": "5a51033b3c8c6cec395f5f51c6f86bd6d60e3c95098b5586ae13ca946e09d133"
+    },
+    "source_flag_report_sha256": "72102e0cec6497af698246782db5437b71af90570d7bf0dc52ff6cb31a572b98",
+    "Tm5_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Tm5.parquet",
+      "sha256_before": "ae363dff82f4ee47546485f45cd71250150a402479718795b0247585efdfe45e",
+      "sha256_after": "ae363dff82f4ee47546485f45cd71250150a402479718795b0247585efdfe45e",
+      "poi_p90_version_emission_sha256": "fb120409c05b33cefe486745ec9f44e6e76760041e7f69b7a757800975f47d8c"
+    },
+    "registry_sha256_before": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "registry_sha256_after": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "script_sha256": "d8699fd1d7265e68a9590bfad9ac9c409aca86ae1a9cf9cfaeaf71ff212be0bb",
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/tm2-fire-flag-tm5-poi-region-rank-interaction/flag-region-rank-interaction.parquet",
+      "rows": 9379,
+      "sha256": "9547835da6e313791b309a298865d6e02c16842849cf0c32e94ef41fd3d58141",
+      "columns": [
+        "GEOID",
+        "region",
+        "recovery_flag",
+        "recovery_flag_defined",
+        "tm5_poi_p90_version",
+        "poi_version_defined",
+        "within_region_midpercentile",
+        "recovery_flag_x_region_rank",
+        "absolute_change_from_binary_flag",
+        "interaction_defined"
+      ],
+      "deterministic_bytes": true
+    }
+  },
+  "interpretation": "The preregistered flagged-only region-rank interaction passes the requested coverage, mask, bounds and effect gates; retain only as an unregistered diagnostic, with no promotion or estimator change."
+}
