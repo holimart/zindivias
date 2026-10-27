@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "preregistration_id": "bias60-track-a-ensemble-disagreement-v1",
+  "created_before_summary": true,
+  "scope": {
+    "source_manifest": "reports/final-two.json",
+    "candidate_ids": [
+      "A1_physical_equal",
+      "A2_spectral",
+      "A3_dawid_skene",
+      "V2_model"
+    ],
+    "official_scored_ids": 9379,
+    "regions": [
+      "maricopa-az",
+      "northern-ca",
+      "eastern-ok",
+      "south-central-tx"
+    ],
+    "candidate_field": "coverage_gap_score",
+    "template_only_ids_in_summary": false
+  },
+  "metrics": {
+    "per_tract_median_absolute_deviation": "median(abs(four candidate scores - their per-tract median)); unscaled",
+    "per_tract_p90_minus_p10": "linear empirical quantile 0.90 minus linear empirical quantile 0.10 across the four candidate scores",
+    "quantile_method": "numpy linear",
+    "high_spread_definition": "p90_minus_p10 >= fixed threshold"
+  },
+  "high_spread_threshold": 0.1,
+  "summary_quantiles": [0.5, 0.9, 0.95, 0.99, 1.0],
+  "prohibitions": [
+    "labels or sample score placeholders",
+    "leaderboard probes or feedback",
+    "new candidate generation or candidate changes",
+    "region-specific weight changes",
+    "uploads",
+    "template-only IDs in scored summaries",
+    "removed/equivalent reference layers"
+  ],
+  "purpose": "Label-free disagreement diagnostic only; no accuracy, candidate-selection, or promotion claim."
+}
