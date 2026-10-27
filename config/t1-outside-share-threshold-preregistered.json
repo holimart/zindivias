@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "audit": "Nested county screen for the T1 outside-named-share threshold; no threshold is selected from outer counties.",
+  "thresholds": [0.5, 0.7, 0.9],
+  "outer_split": {
+    "method": "Within each official region, sort unique five-digit county FIPS by SHA-256 of 'bias60-t1-outside-share-outer-v1|<region>|<county_fips>'; select the first ceil(0.20 * county_count) counties as outer holdouts.",
+    "fraction": 0.2,
+    "split_seed_prefix": "bias60-t1-outside-share-outer-v1",
+    "counties_used_for_threshold_selection": false
+  },
+  "inner_selection": {
+    "method": "Within each region, leave one inner county out, fit on the other inner counties, and pool the paired held-county baseline/model SSE over all regions and inner folds.",
+    "minimum_inner_training_counties": 2,
+    "objective": "maximize pooled inner-county delta_R2 = (zero-correction baseline SSE - one-term correction SSE) / baseline SSE",
+    "tie_break": "on an exact objective tie prefer 0.7, then the threshold nearest 0.7, then the smaller threshold",
+    "region_specific_models": true
+  },
+  "outer_evaluation": {
+    "method": "After global threshold selection, fit one region-specific intercept-plus-standardized-T1-gap OLS correction on all inner counties in that region and evaluate once on its fixed outer counties.",
+    "baseline": "zero correction of frozen S1 residual on identical threshold-defined support",
+    "metric": "paired outer-county delta_R2, pooled and by official region",
+    "bootstrap": {"replicates": 2000, "seed": 20261104, "resampling": "paired outer-county baseline/model SSE blocks with counties resampled with replacement within each region"}
+  },
+  "acceptance": {
+    "pooled_outer_delta_r2_strictly_greater_than": 0.0,
+    "pooled_outer_county_bootstrap_ci_lower_strictly_greater_than": 0.0,
+    "minimum_regional_outer_delta_r2": -0.005
+  },
+  "forbidden": ["target labels", "removed reference layers", "external data", "outer-county threshold selection", "leaderboard probes", "uploads", "changing T1 identity rule", "candidate modifications"]
+}
