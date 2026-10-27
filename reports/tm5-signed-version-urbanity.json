@@ -1,0 +1,272 @@
+{
+  "schema_version": 1,
+  "screen": "Rural/urban contrast in signed within-region POI-minus-building p90 version midrank gaps; unregistered descriptive screen",
+  "definition": "Reuse frozen within-region POI and building p90-version midpercentiles. For each jointly defined official GEOID, signed gap = POI midpercentile − building midpercentile. Within each region and provided urbanity stratum calculate the mean signed gap; contrast = rural mean − urban mean. Primary statistic = maximum absolute regional contrast.",
+  "measure_before": {
+    "four_unconditional_regional_signed_means": {
+      "maricopa-az": 3.066529383773188e-17,
+      "northern-ca": 2.7051119381729703e-17,
+      "eastern-ok": 2.980464495638004e-18,
+      "south-central-tx": -1.18404055284136e-17
+    },
+    "four_unconditional_regional_ci95": {
+      "maricopa-az": [
+        -0.01481316855779207,
+        0.01543026356673513
+      ],
+      "northern-ca": [
+        -0.02640952565315894,
+        0.023863783016432903
+      ],
+      "eastern-ok": [
+        -0.016956249401270156,
+        0.017090822739336965
+      ],
+      "south-central-tx": [
+        -0.00787660806532245,
+        0.007884228323057256
+      ]
+    },
+    "source_signed_report_sha256": "d932b671f056947a27d3021e93d1197855988fed2cb326c023ad775705cef40d",
+    "source_rank_artifact_sha256": "8ed28f993f75f0fa7ed872341101b2bcd6c881f80d79245fb2184a2573bcf7fb",
+    "within_region_urbanity_contrast_measured": false
+  },
+  "method": {
+    "rank_reuse": "Use validated prior within-region midranks and exact joint-defined mask; no re-ranking, recomputation from raw Tm5, or imputation.",
+    "urbanity": "Read only provided GEOID and pct_urban; rural is pct_urban<0.5, urban is pct_urban>=0.5. Missing pct_urban excluded from both strata.",
+    "bootstrap": "2,000 deterministic percentile-bootstrap draws; independently resample tracts with replacement within each region×stratum. Report regional signed-contrast CIs and the bootstrap percentile CI for the maximum absolute regional contrast.",
+    "selection_ci": "For the observed maximum-contrast region, report its signed-contrast bootstrap CI; acceptance requires that interval exclude zero, in addition to the preregistered magnitude and support gates.",
+    "seed": 20261034,
+    "unregistered": true,
+    "interpretation_limit": "Descriptive provenance-rank heterogeneity only; no target-error, accuracy, causal or feature-promotion claim."
+  },
+  "scope": {
+    "official_ids": 9379,
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "joint_defined_ids": 9377,
+    "joint_undefined_ids": 2,
+    "urbanity_defined_joint_ids": 9353,
+    "joint_defined_without_urbanity": 24,
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "joint_defined_ids": 1593,
+        "urbanity_defined_joint_ids": 1582,
+        "rural_n": 163,
+        "urban_n": 1419,
+        "rural_mean_signed_gap": -0.20201852822394178,
+        "urban_mean_signed_gap": 0.025573161792046946,
+        "signed_rural_minus_urban_mean_contrast": -0.22759169001598872,
+        "absolute_contrast": 0.22759169001598872,
+        "both_groups_n_at_least_30": true
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "joint_defined_ids": 591,
+        "urbanity_defined_joint_ids": 591,
+        "rural_n": 147,
+        "urban_n": 444,
+        "rural_mean_signed_gap": -0.09563588147123253,
+        "urban_mean_signed_gap": 0.031663231027637836,
+        "signed_rural_minus_urban_mean_contrast": -0.12729911249887038,
+        "absolute_contrast": 0.12729911249887038,
+        "both_groups_n_at_least_30": true
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "joint_defined_ids": 1192,
+        "urbanity_defined_joint_ids": 1191,
+        "rural_n": 411,
+        "urban_n": 780,
+        "rural_mean_signed_gap": -0.09802737890218816,
+        "urban_mean_signed_gap": 0.05175245968696851,
+        "signed_rural_minus_urban_mean_contrast": -0.14977983858915667,
+        "absolute_contrast": 0.14977983858915667,
+        "both_groups_n_at_least_30": true
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "joint_defined_ids": 6001,
+        "urbanity_defined_joint_ids": 5989,
+        "rural_n": 991,
+        "urban_n": 4998,
+        "rural_mean_signed_gap": -0.15144744365960314,
+        "urban_mean_signed_gap": 0.02891479925303454,
+        "signed_rural_minus_urban_mean_contrast": -0.18036224291263767,
+        "absolute_contrast": 0.18036224291263767,
+        "both_groups_n_at_least_30": true
+      }
+    },
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_reference_data_read": false,
+    "external_data_read": false,
+    "leaderboard_feedback_used": false,
+    "registry_changes": false,
+    "feature_registration": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "maximum_absolute_rural_minus_urban_mean_signed_gap_contrast": 0.22759169001598872,
+    "maximum_contrast_region": "maricopa-az",
+    "maximum_contrast_signed_rural_minus_urban": -0.22759169001598872,
+    "max_contrast_ci95_percentile": [
+      0.18392654356989052,
+      0.2770923296035033
+    ],
+    "regional_signed_contrast_ci95_percentile": {
+      "maricopa-az": [
+        -0.27709232960350333,
+        -0.17935845021274288
+      ],
+      "northern-ca": [
+        -0.1730481519222439,
+        -0.07839587501285449
+      ],
+      "eastern-ok": [
+        -0.17980788932936886,
+        -0.11839266818893909
+      ],
+      "south-central-tx": [
+        -0.1973475950403707,
+        -0.16414462480291478
+      ]
+    },
+    "bootstrap_replicates": 2000,
+    "bootstrap_seed": 20261034
+  },
+  "thresholds": {
+    "minimum_group_support_inclusive": 30,
+    "minimum_regions_meeting_support_inclusive": 2,
+    "minimum_max_absolute_contrast_inclusive": 0.05,
+    "selected_region_signed_contrast_ci_excludes_zero": true
+  },
+  "acceptance": {
+    "exact_official_id_and_joint_null_alignment": true,
+    "joint_defined_ids": 9377,
+    "joint_coverage_fraction": 0.9997867576500693,
+    "regions_with_each_urbanity_group_n_at_least_30": [
+      "maricopa-az",
+      "northern-ca",
+      "eastern-ok",
+      "south-central-tx"
+    ],
+    "at_least_two_regions_meet_group_support": true,
+    "max_absolute_rural_minus_urban_mean_signed_gap_contrast": 0.22759169001598872,
+    "max_contrast_region": "maricopa-az",
+    "max_contrast_signed_direction": "urban_higher",
+    "maximum_absolute_contrast_at_least_0_05": true,
+    "diagnostic_remains_unregistered_and_registry_unchanged": true,
+    "max_absolute_contrast_bootstrap_ci95": [
+      0.18392654356989052,
+      0.2770923296035033
+    ],
+    "max_absolute_contrast_ci_excludes_zero": true,
+    "selected_region_signed_contrast_ci95": [
+      -0.27709232960350333,
+      -0.17935845021274288
+    ],
+    "selected_region_signed_contrast_ci_excludes_zero": true,
+    "heterogeneity_screen_pass": true
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "frozen_rank_report": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/tm5-poi-building-version-discordance.json",
+      "sha256": "996d343bfb49601e5c1a25a4dec217916251eb8c2177872de7f55d864c48a393"
+    },
+    "frozen_rank_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/tm5-poi-building-version-discordance/version-discordance.parquet",
+      "sha256": "8ed28f993f75f0fa7ed872341101b2bcd6c881f80d79245fb2184a2573bcf7fb",
+      "sha256_expected": "8ed28f993f75f0fa7ed872341101b2bcd6c881f80d79245fb2184a2573bcf7fb",
+      "columns_read": [
+        "GEOID",
+        "region",
+        "poi_version_defined",
+        "poi_within_region_midpercentile",
+        "building_version_defined",
+        "building_within_region_midpercentile",
+        "joint_defined"
+      ]
+    },
+    "frozen_signed_report": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/tm5-signed-poi-building-version-asymmetry.json",
+      "sha256": "d932b671f056947a27d3021e93d1197855988fed2cb326c023ad775705cef40d"
+    },
+    "frozen_signed_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/tm5-signed-poi-building-version-asymmetry/signed-rank-gap.parquet",
+      "sha256": "387e964b134021aa643786fc2d0157b4c48f4ef3d6b3e7ffd53b651111a4fc46",
+      "columns_read": [
+        "GEOID",
+        "region",
+        "joint_defined",
+        "signed_poi_minus_building_rank_gap"
+      ]
+    },
+    "strata_inputs": {
+      "maricopa-az": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+        "sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 1593,
+        "pct_urban_defined_ids": 1582
+      },
+      "northern-ca": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+        "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 591,
+        "pct_urban_defined_ids": 591
+      },
+      "eastern-ok": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+        "sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 1192,
+        "pct_urban_defined_ids": 1191
+      },
+      "south-central-tx": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+        "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 6003,
+        "pct_urban_defined_ids": 5989
+      }
+    },
+    "registry_sha256_before_after": {
+      "before": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+      "after": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6"
+    },
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/tm5-signed-version-urbanity/signed-version-urbanity.parquet",
+      "sha256": "4ada39775524fee1201b65fdca585432959429d45f239899f8ebf0b0922266a9",
+      "rows": 9379,
+      "columns": [
+        "GEOID",
+        "region",
+        "poi_within_region_midpercentile",
+        "building_within_region_midpercentile",
+        "joint_defined",
+        "signed_poi_minus_building_rank_gap",
+        "pct_urban",
+        "rural_indicator",
+        "urban_indicator"
+      ],
+      "deterministic_serialization": true
+    },
+    "script_sha256": "0272f01fd1abead11368daa5af679fe6221019d46877547902eb74473d0917e4"
+  },
+  "interpretation": "At least two regions have adequate support, and the maximum absolute rural/urban signed-gap contrast meets both the 0.05 magnitude gate and the selected-region CI criterion. Keep unregistered and descriptive only."
+}
