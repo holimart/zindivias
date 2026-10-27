@@ -96,16 +96,6 @@
     "remaining_total_account_capacity_verified": false,
     "queued_uploads": [
       {
-        "candidate_id": "A3_dawid_skene",
-        "scheduled_utc": "2026-10-27",
-        "purpose": "calibration"
-      },
-      {
-        "candidate_id": "V2_model",
-        "scheduled_utc": "2026-10-27",
-        "purpose": "calibration"
-      },
-      {
         "candidate_id": "B_from_A",
         "scheduled_utc": "2026-10-28",
         "purpose": "calibration; build only after A selection"
@@ -125,8 +115,23 @@
         "public_rmse": 0.146089513,
         "submitted_utc": "2026-10-26T14:21:49.291Z",
         "purpose": "calibration"
+      },
+      {
+        "candidate_id": "A3_dawid_skene",
+        "submission_id": "tGB6sGRx",
+        "public_rmse": 0.146089513,
+        "submitted_utc": "2026-10-27T00:18:37.452Z",
+        "purpose": "calibration"
+      },
+      {
+        "candidate_id": "V2_model",
+        "submission_id": "EbwLNkmt",
+        "public_rmse": 0.121644596,
+        "submitted_utc": "2026-10-27T00:18:41.897Z",
+        "purpose": "calibration"
       }
-    ]
+    ],
+    "2026-10-27_planned_slots_of_daily_cap": "2/2 completed"
   },
   "candidate_registrations": [
     {
@@ -802,24 +807,94 @@
     }
   ],
   "pending_fields": [
-    "actual public RMSE and submission IDs after successful processing of the four frozen cohort models",
-    "candidate A selection using the public-score noise guard and fixed tie-break",
-    "candidate B 50% model-mean shrink artifact, hash, validation, preregistration, and score",
     "final A/B slots and operator UI private-selection confirmation",
-    "methodology-form submission confirmation"
+    "methodology-form submission confirmation",
+    "candidate B 50% model-mean shrink artifact, hash, validation, preregistration, and successful score (scheduled 2026-10-28)"
   ],
   "operator_acknowledgement": "Steward 2026-10-26 14:15Z explicitly authorized calibration-purpose model evaluations and the C0-prior forecasts for A1/A2/A3; V2 retains its existing forecast. Local label holdout is unavailable by competition design; candidate artifact invariants/reproducibility are the local gate.",
   "registration_note": "Four frozen model cards are registered and authorized for calibration evaluation under the 2026-10-26 steward directive. The C0 value for A1/A2/A3 is a no-change forecast prior, not a local held-out score or accuracy claim. Only two uploads per UTC day; scheduled order is A1/A2 (Oct 26), A3/V2 (Oct 27), B after A selection (Oct 28). The final A/B slots remain null until successful scores and the protocol rule determine them.",
   "interim_public_ranking": {
     "scored_subset": [
+      "V2_model",
       "A1_physical_equal",
-      "A2_spectral"
+      "A2_spectral",
+      "A3_dawid_skene"
     ],
-    "lower_rmse_candidate": "A1_physical_equal",
-    "difference_a2_minus_a1": 0.019545965999999998,
-    "pairwise_public_noise_guard": 0.0036341384922481015,
-    "difference_exceeds_guard": true,
+    "successful_candidate_scores": [
+      {
+        "candidate_id": "V2_model",
+        "public_rmse": 0.121644596,
+        "submission_id": "EbwLNkmt",
+        "artifact_sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12",
+        "predicted_public_rmse": 0.09135719597637867,
+        "purpose": "calibration",
+        "successful": true,
+        "eligible_frozen_cohort_model": true,
+        "public_rmse_se_planning": 0.0016214956054763476
+      },
+      {
+        "candidate_id": "A1_physical_equal",
+        "public_rmse": 0.126543547,
+        "submission_id": "iQw8C6Q9",
+        "artifact_sha256": "6af088b83ff3481d420e11b14d903fc510c2b4be2cea285c762ca12d500862de",
+        "predicted_public_rmse": 0.107246299,
+        "purpose": "calibration",
+        "successful": true,
+        "eligible_frozen_cohort_model": true,
+        "public_rmse_se_planning": 0.0016867975406148717
+      },
+      {
+        "candidate_id": "A2_spectral",
+        "public_rmse": 0.146089513,
+        "submission_id": "W83LEghZ",
+        "artifact_sha256": "f88573996566a1975726845a49f42fb2cd3781d5f0e83d55944fc65647692997",
+        "predicted_public_rmse": 0.107246299,
+        "purpose": "calibration",
+        "successful": true,
+        "eligible_frozen_cohort_model": true,
+        "public_rmse_se_planning": 0.0019473409516332298
+      },
+      {
+        "candidate_id": "A3_dawid_skene",
+        "public_rmse": 0.146089513,
+        "submission_id": "tGB6sGRx",
+        "artifact_sha256": "6d588f2f7a45a58b128860a049ac19995b21902f7f98d3b2ab39d1d9fbb073b3",
+        "predicted_public_rmse": 0.107246299,
+        "purpose": "calibration",
+        "successful": true,
+        "eligible_frozen_cohort_model": true,
+        "public_rmse_se_planning": 0.0019473409516332298
+      }
+    ],
+    "lower_rmse_candidate": "V2_model",
+    "provisional_candidate_A": "V2_model",
+    "provisional_A_platform_submission_id": "EbwLNkmt",
+    "comparisons_to_provisional_A": [
+      {
+        "candidate_id": "A1_physical_equal",
+        "best_minus_competitor_rmse": -0.0048989510000000125,
+        "absolute_rmse_difference": 0.0048989510000000125,
+        "pairwise_public_noise_guard": 0.0033082931460912193,
+        "difference_exceeds_guard": true
+      },
+      {
+        "candidate_id": "A2_spectral",
+        "best_minus_competitor_rmse": -0.02444491700000001,
+        "absolute_rmse_difference": 0.02444491700000001,
+        "pairwise_public_noise_guard": 0.0035688365571095774,
+        "difference_exceeds_guard": true
+      },
+      {
+        "candidate_id": "A3_dawid_skene",
+        "best_minus_competitor_rmse": -0.02444491700000001,
+        "absolute_rmse_difference": 0.02444491700000001,
+        "pairwise_public_noise_guard": 0.0035688365571095774,
+        "difference_exceeds_guard": true
+      }
+    ],
+    "A_uniquely_below_all_cohort_candidates_outside_pairwise_guard": true,
     "final_two_selected": false,
-    "no_candidate_parameters_changed": true
+    "no_candidate_parameters_changed": true,
+    "selection_basis": "Apply frozen score-only cohort rule with pairwise public sampling-noise guard; no scorecard cells or parameters used. Final A/B fields remain pending until B is built, scored, and the final record is completed by the protocol deadline."
   }
 }
