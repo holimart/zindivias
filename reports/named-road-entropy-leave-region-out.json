@@ -1,0 +1,386 @@
+{
+  "schema_version": 1,
+  "screen": "Cross-region transportability of provided named-road class-share entropy; leave-one-region-out; unregistered",
+  "measure_before": {
+    "within_region_fivefold_residual_variance_ratio": 0.6607401765971582,
+    "jointly_eligible_ids": 9228,
+    "held_region_out_measurement_available": false,
+    "source_report_sha256": "120e06a143fd64d1f2f0fc843aa81b2f30ba40cbcfdd43ed2a235ec2ad373b25"
+  },
+  "outcome": "Normalized Shannon entropy of provided Overture motorway/trunk/primary/secondary named-road length shares; undefined where named-road length is zero.",
+  "method": {
+    "split": "Four folds; hold out one entire study region and train on the other three. No rows from the held region enter preprocessing or model fitting.",
+    "predictors": [
+      "log_total_named_road_km",
+      "pct_urban",
+      "Mx4_F",
+      "S1_lagged_Mx4_F"
+    ],
+    "preprocessing": "For each fold, fit column medians, then means and population standard deviations after imputation, using only defined-entropy training rows from the other three regions. Apply those training-only transformations to the held region. Zero-variance training features use scale 1.",
+    "model": "One global ordinary least-squares linear model with intercept, fitted to standardized predictors and entropy on the three training regions; no region indicator or tuning.",
+    "baseline": "For each held region, predict the mean entropy from the other three training regions only.",
+    "metric": "Regional R2=1-SSE_model/SSE_training-mean-baseline within the held region. Pooled R2=1-sum of held-region model SSE/sum of each fold's held-region training-mean baseline SSE.",
+    "support": "All official tracts with defined entropy are evaluated. Missing predictors are imputed from training-region medians; entropy is never imputed.",
+    "registry_integration": false
+  },
+  "scope": {
+    "official_ids": 9379,
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "entropy_defined_ids": 9247,
+    "entropy_null_ids": 132,
+    "heldout_prediction_ids": 9247,
+    "region_fold_count": 4,
+    "regions": [
+      "maricopa-az",
+      "northern-ca",
+      "eastern-ok",
+      "south-central-tx"
+    ],
+    "exact_entropy_null_mask_alignment": true,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_references_read": false,
+    "external_data_used": [],
+    "leaderboard_feedback_used": false,
+    "estimator_or_registry_changed": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "pooled_leave_region_out_heldout_r2": 0.33836779227482405,
+    "pooled_model_sse": 438.2933598258536,
+    "pooled_training_mean_baseline_sse": 662.4425998437923,
+    "pooled_entropy_defined_heldout_ids": 9247,
+    "positive_held_region_r2_count": 4,
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "entropy_defined_heldout_ids": 1560,
+        "training_entropy_defined_ids": 7687,
+        "training_regions": [
+          "northern-ca",
+          "eastern-ok",
+          "south-central-tx"
+        ],
+        "model_sse": 76.27962964512625,
+        "training_mean_baseline_sse": 109.61847419351486,
+        "r2_vs_training_mean": 0.30413527276008157,
+        "training_only_preprocessing_and_model": {
+          "training_rows": 7687,
+          "heldout_rows": 1560,
+          "predictor_names": [
+            "log_total_named_road_km",
+            "pct_urban",
+            "Mx4_F",
+            "S1_lagged_Mx4_F"
+          ],
+          "training_missing_by_predictor": {
+            "log_total_named_road_km": 0,
+            "pct_urban": 12,
+            "Mx4_F": 0,
+            "S1_lagged_Mx4_F": 0
+          },
+          "heldout_missing_by_predictor": {
+            "log_total_named_road_km": 0,
+            "pct_urban": 7,
+            "Mx4_F": 0,
+            "S1_lagged_Mx4_F": 0
+          },
+          "training_only_medians": {
+            "log_total_named_road_km": 2.142960350166692,
+            "pct_urban": 1.0,
+            "Mx4_F": 0.0,
+            "S1_lagged_Mx4_F": 0.0
+          },
+          "training_only_means_after_imputation": {
+            "log_total_named_road_km": 2.2060965127361003,
+            "pct_urban": 0.7909057456854894,
+            "Mx4_F": 0.0437550828094689,
+            "S1_lagged_Mx4_F": 0.04366359310001906
+          },
+          "training_only_scales_after_imputation": {
+            "log_total_named_road_km": 1.2862518779581893,
+            "pct_urban": 0.3746621068672543,
+            "Mx4_F": 0.12342892969673784,
+            "S1_lagged_Mx4_F": 0.1206579718701786
+          },
+          "constant_training_predictors": [],
+          "standardized_ols_coefficients_including_intercept": [
+            0.4033232343746486,
+            0.18361204739397013,
+            0.061547899170440304,
+            -0.0120277225877687,
+            0.00540231780755944
+          ],
+          "design_rank": 5,
+          "design_columns": 5,
+          "minimum_singular_value": 9.771081133749796,
+          "training_mean_entropy_baseline": 0.40332323437464757
+        }
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "entropy_defined_heldout_ids": 584,
+        "training_entropy_defined_ids": 8663,
+        "training_regions": [
+          "maricopa-az",
+          "eastern-ok",
+          "south-central-tx"
+        ],
+        "model_sse": 28.021546669742918,
+        "training_mean_baseline_sse": 40.75971294622857,
+        "r2_vs_training_mean": 0.3125185472549873,
+        "training_only_preprocessing_and_model": {
+          "training_rows": 8663,
+          "heldout_rows": 584,
+          "predictor_names": [
+            "log_total_named_road_km",
+            "pct_urban",
+            "Mx4_F",
+            "S1_lagged_Mx4_F"
+          ],
+          "training_missing_by_predictor": {
+            "log_total_named_road_km": 0,
+            "pct_urban": 19,
+            "Mx4_F": 0,
+            "S1_lagged_Mx4_F": 0
+          },
+          "heldout_missing_by_predictor": {
+            "log_total_named_road_km": 0,
+            "pct_urban": 0,
+            "Mx4_F": 0,
+            "S1_lagged_Mx4_F": 0
+          },
+          "training_only_medians": {
+            "log_total_named_road_km": 2.0723518752956624,
+            "pct_urban": 1.0,
+            "Mx4_F": 0.0,
+            "S1_lagged_Mx4_F": 0.0
+          },
+          "training_only_means_after_imputation": {
+            "log_total_named_road_km": 2.1354454427789187,
+            "pct_urban": 0.8119656310940188,
+            "Mx4_F": 0.04250959317340151,
+            "S1_lagged_Mx4_F": 0.04244917677640761
+          },
+          "training_only_scales_after_imputation": {
+            "log_total_named_road_km": 1.286981574002547,
+            "pct_urban": 0.359695670366287,
+            "Mx4_F": 0.12299051955094556,
+            "S1_lagged_Mx4_F": 0.12012128438644296
+          },
+          "constant_training_predictors": [],
+          "standardized_ols_coefficients_including_intercept": [
+            0.3957825904379457,
+            0.18029568094938955,
+            0.05828101800217257,
+            0.005170389448968901,
+            -0.012272274115213352
+          ],
+          "design_rank": 5,
+          "design_columns": 5,
+          "minimum_singular_value": 10.87647818002121,
+          "training_mean_entropy_baseline": 0.39578259043794434
+        }
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "entropy_defined_heldout_ids": 1164,
+        "training_entropy_defined_ids": 8083,
+        "training_regions": [
+          "maricopa-az",
+          "northern-ca",
+          "south-central-tx"
+        ],
+        "model_sse": 55.52353917578213,
+        "training_mean_baseline_sse": 84.06214469872056,
+        "r2_vs_training_mean": 0.339494140022492,
+        "training_only_preprocessing_and_model": {
+          "training_rows": 8083,
+          "heldout_rows": 1164,
+          "predictor_names": [
+            "log_total_named_road_km",
+            "pct_urban",
+            "Mx4_F",
+            "S1_lagged_Mx4_F"
+          ],
+          "training_missing_by_predictor": {
+            "log_total_named_road_km": 0,
+            "pct_urban": 18,
+            "Mx4_F": 0,
+            "S1_lagged_Mx4_F": 0
+          },
+          "heldout_missing_by_predictor": {
+            "log_total_named_road_km": 0,
+            "pct_urban": 1,
+            "Mx4_F": 0,
+            "S1_lagged_Mx4_F": 0
+          },
+          "training_only_medians": {
+            "log_total_named_road_km": 2.054578223035891,
+            "pct_urban": 1.0,
+            "Mx4_F": 0.0,
+            "S1_lagged_Mx4_F": 0.0
+          },
+          "training_only_means_after_imputation": {
+            "log_total_named_road_km": 2.113554204700057,
+            "pct_urban": 0.8321756137000615,
+            "Mx4_F": 0.02352362248309771,
+            "S1_lagged_Mx4_F": 0.023538387617210527
+          },
+          "training_only_scales_after_imputation": {
+            "log_total_named_road_km": 1.2625555861100137,
+            "pct_urban": 0.3419873186995363,
+            "Mx4_F": 0.0679625919668964,
+            "S1_lagged_Mx4_F": 0.06460270170706059
+          },
+          "constant_training_predictors": [],
+          "standardized_ols_coefficients_including_intercept": [
+            0.39562871086310986,
+            0.17833237559295806,
+            0.055559494966897154,
+            0.004280717178610782,
+            -0.009653920915104336
+          ],
+          "design_rank": 5,
+          "design_columns": 5,
+          "minimum_singular_value": 16.45061396890415,
+          "training_mean_entropy_baseline": 0.39562871086310997
+        }
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "entropy_defined_heldout_ids": 5939,
+        "training_entropy_defined_ids": 3308,
+        "training_regions": [
+          "maricopa-az",
+          "northern-ca",
+          "eastern-ok"
+        ],
+        "model_sse": 278.46864433520227,
+        "training_mean_baseline_sse": 428.00226800532835,
+        "r2_vs_training_mean": 0.3493757740280584,
+        "training_only_preprocessing_and_model": {
+          "training_rows": 3308,
+          "heldout_rows": 5939,
+          "predictor_names": [
+            "log_total_named_road_km",
+            "pct_urban",
+            "Mx4_F",
+            "S1_lagged_Mx4_F"
+          ],
+          "training_missing_by_predictor": {
+            "log_total_named_road_km": 0,
+            "pct_urban": 8,
+            "Mx4_F": 0,
+            "S1_lagged_Mx4_F": 0
+          },
+          "heldout_missing_by_predictor": {
+            "log_total_named_road_km": 0,
+            "pct_urban": 11,
+            "Mx4_F": 0,
+            "S1_lagged_Mx4_F": 0
+          },
+          "training_only_medians": {
+            "log_total_named_road_km": 1.9017553128239677,
+            "pct_urban": 1.0,
+            "Mx4_F": 0.0006884784625976591,
+            "S1_lagged_Mx4_F": 0.006465800800706727
+          },
+          "training_only_means_after_imputation": {
+            "log_total_named_road_km": 2.042875241867195,
+            "pct_urban": 0.7756453637797904,
+            "Mx4_F": 0.07733643557193653,
+            "S1_lagged_Mx4_F": 0.07732965624074213
+          },
+          "training_only_scales_after_imputation": {
+            "log_total_named_road_km": 1.3490527458899495,
+            "pct_urban": 0.38697431919885955,
+            "Mx4_F": 0.1839154865266372,
+            "S1_lagged_Mx4_F": 0.17958494355613108
+          },
+          "constant_training_predictors": [],
+          "standardized_ols_coefficients_including_intercept": [
+            0.36793602222275645,
+            0.18446449806880688,
+            0.08225835706264067,
+            -0.018660554140419464,
+            0.009575681845257422
+          ],
+          "design_rank": 5,
+          "design_columns": 5,
+          "minimum_singular_value": 6.93507634246344,
+          "training_mean_entropy_baseline": 0.3679360222227564
+        }
+      }
+    }
+  },
+  "acceptance": {
+    "pooled_r2_at_least_0_10": true,
+    "positive_held_region_r2_in_at_least_3_of_4": true,
+    "transportability_screen_pass": true
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "entropy_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/named-road-class-entropy/class-entropy-crossfit.parquet",
+      "sha256": "41610caca547f76604a8430f7cc0dfcdf628ea3f431632c5e5da11809da92f38",
+      "rows": 9379,
+      "columns_read": [
+        "GEOID",
+        "region",
+        "class_mix_entropy",
+        "entropy_defined",
+        "total_named_road_km",
+        "pct_urban",
+        "Mx4_F",
+        "Mx4_F_defined",
+        "S1_lagged_Mx4_F",
+        "S1_lagged_Mx4_F_defined"
+      ],
+      "entropy_defined_ids": 9247,
+      "complete_case_covariate_ids_from_source_screen": 9228
+    },
+    "frozen_predictors": {
+      "Mx4": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx4.parquet",
+        "sha256": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af"
+      },
+      "S1": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/S1.parquet",
+        "sha256": "632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03"
+      }
+    },
+    "entropy_report": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/named-road-class-entropy.json",
+      "sha256": "120e06a143fd64d1f2f0fc843aa81b2f30ba40cbcfdd43ed2a235ec2ad373b25",
+      "within_region_fivefold_residual_variance_ratio": 0.6607401765971582
+    },
+    "missing_predictor_counts_entropy_defined": {
+      "log_total_named_road_km": 0,
+      "pct_urban": 19,
+      "Mx4_F": 0,
+      "S1_lagged_Mx4_F": 0
+    },
+    "official_ids": 9379,
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/named-road-entropy-leave-region-out/leave-region-out-predictions.parquet",
+      "sha256": "b58e37ae07b5dc1b22559529bacc81f358db7380f708c015b80b80e0b29cb8bd",
+      "rows": 9379,
+      "columns": [
+        "GEOID",
+        "region",
+        "normalized_named_road_class_entropy",
+        "entropy_defined",
+        "log_total_named_road_km",
+        "pct_urban",
+        "Mx4_F",
+        "S1_lagged_Mx4_F",
+        "heldout_prediction",
+        "training_mean_baseline"
+      ],
+      "deterministic_serialization": true
+    },
+    "script_sha256": "62dcfed4d0429f0d898b6e2dbccc7ef6a085f450314d7567ac353a267b09df93"
+  },
+  "interpretation": "The feature passed both preregistered leave-region-out gates; this is a feature transportability diagnostic only and is not target accuracy or evidence for estimator promotion."
+}
