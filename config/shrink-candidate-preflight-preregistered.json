@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "analysis_id": "SHRINK_CANDIDATE_INTEGRITY_PREFLIGHT_V1",
+  "purpose": "Safety and submission-contract integrity only for the sole registered shrink candidate; not an accuracy, promotion, calibration, or upload decision.",
+  "scope": {
+    "candidate_id": "S_crossmethod_reliability_shrink_v1",
+    "candidate_artifact": "reports/candidates/S_crossmethod_reliability_shrink_v1.csv",
+    "recorded_artifact_sha256": "26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a",
+    "official_regions": ["maricopa-az", "northern-ca", "eastern-ok", "south-central-tx"],
+    "expected_region_rows": {"maricopa-az": 1593, "northern-ca": 591, "eastern-ok": 1192, "south-central-tx": 6003},
+    "expected_total_rows": 9379,
+    "submission_authority": false,
+    "only_candidate_to_preflight": true
+  },
+  "frozen_provenance": {
+    "candidate_registry": {"path": "reports/candidates.json", "sha256": "ea2f4aeb3afbf2f443d6c593dc5d34ea8cf7bbe963c6b7c407588879a4dfaa2d"},
+    "shrink_diagnosis_manifest": {"path": "reports/shrink-diagnosis.json", "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65"},
+    "shrink_diagnosis_preregistration": {"path": "config/shrink-diagnosis-preregistered.json", "sha256": "cc4c7a065b4384b315e272166330d1620f30ccbe652098dc107a3b38c016ef09"},
+    "registration_script": {"path": "scripts/register_shrink_diagnosis_candidate.py", "sha256": "03f5d869ee65a2b26db13629088f1ade24e603fc0651aa019fe3697e6652bd17"},
+    "candidate_manifest_record": "reports/shrink-diagnosis.json:H2.candidate_S plus candidate_registration; use only identity, artifact, digest, purpose, authorization, and registration status fields; do not read proxy-score values."
+  },
+  "official_sample_contract": {
+    "local_copy_directory": "$COMPETITION_WORKSPACE/samples",
+    "source_contract": "official reference/<region>/<region>-sample-submission.csv; local files are the frozen official copies documented in docs/competition.md",
+    "expected_header": ["GEOID", "transport_gap", "building_gap", "poi_gap", "coverage_gap_score"],
+    "expected_sample_sha256": {
+      "maricopa-az": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+      "northern-ca": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+      "eastern-ok": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+      "south-central-tx": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e"
+    },
+    "sample_columns_consumed": ["GEOID"],
+    "sample_score_placeholders_consumed": false,
+    "candidate_row_order_must_match_per_region": true
+  },
+  "acceptance": {
+    "artifact_sha256_matches_record_registry_and_manifest": true,
+    "official_ids": "exact ordered match in each region; 9,379 total; zero missing, extra, or duplicate IDs",
+    "prediction_values": "every included non-GEOID candidate field is numeric, non-null, finite, and in [0,1]",
+    "authorization": "registry and frozen candidate record upload_authorized=false",
+    "submission_side_effect": "no submission-log record references this candidate ID, path, or artifact digest",
+    "candidate_modification": "forbidden; verify artifact digest unchanged after preflight",
+    "uploads": 0
+  },
+  "forbidden": [
+    "leaderboard probing, leaderboard or scorecard use, public-score inference",
+    "removed references/equivalent copies, external data, labels or sample score placeholders",
+    "candidate modification, registration edits, submission, final-two protocol changes",
+    "using predictions to tune or score the model, or disclosing any prediction values; parsing candidate numeric fields in memory solely for non-null/finite/[0,1] contract validation is permitted, and no value/min/max/mean is emitted"
+  ],
+  "outputs": {
+    "script": "scripts/verify_shrink_candidate_preflight.py",
+    "tests": "tests/test_verify_shrink_candidate_preflight.py",
+    "report": "reports/shrink-candidate-preflight.json"
+  }
+}
