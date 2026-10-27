@@ -1,0 +1,200 @@
+{
+  "schema_version": 1,
+  "screen": "Signed within-region POI-minus-building p90-version midpercentile asymmetry; unregistered label-free diagnostic",
+  "definition": "For each GEOID, signed_gap = independently ranked within-region POI p90 midpercentile − independently ranked within-region building p90 midpercentile. Preserve the validated source ranks and exact joint mask; positive means POI rank is higher.",
+  "measure_before": {
+    "absolute_gap_p95": 0.7056666666666667,
+    "absolute_gap_p50": 0.24291666666666667,
+    "joint_coverage_fraction": 0.9997867576500693,
+    "direction_retained": false,
+    "rank_source_report_sha256": "996d343bfb49601e5c1a25a4dec217916251eb8c2177872de7f55d864c48a393",
+    "rank_source_artifact_sha256": "8ed28f993f75f0fa7ed872341101b2bcd6c881f80d79245fb2184a2573bcf7fb"
+  },
+  "method": {
+    "rank_reuse": "Read separately ranked POI/building midpercentiles from the frozen prior diagnostic artifact; no re-ranking or imputation.",
+    "confidence_interval": "Within-region, deterministic tract-resampled percentile bootstrap (2,000 draws); descriptive interval, not spatial-cluster inference.",
+    "seed_base": 20261030,
+    "unregistered": true
+  },
+  "scope": {
+    "official_ids": 9379,
+    "joint_defined_ids": 9377,
+    "joint_undefined_ids": 2,
+    "joint_coverage_fraction": 0.9997867576500693,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_reference_data_read": false,
+    "external_data_read": false,
+    "leaderboard_feedback_used": false,
+    "registry_integration": false,
+    "frozen_Tm5_modified": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "signed_poi_minus_building_rank_gap": {
+      "n": 9377,
+      "mean": -1.51550119603306e-18,
+      "p50": -0.1601694915254237,
+      "p95": 0.7056666666666667,
+      "min": -0.9824999999999999,
+      "max": 0.8954145728643217
+    },
+    "p95_absolute_gap": 0.7056666666666667,
+    "regional_signed_means_and_ci95": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "joint_defined_ids": 1593,
+        "joint_coverage_fraction": 1.0,
+        "mean_signed_gap_and_ci95": {
+          "mean": 3.066529383773188e-17,
+          "ci95_percentile": [
+            -0.01481316855779207,
+            0.01543026356673513
+          ],
+          "bootstrap_replicates": 2000,
+          "seed": 20261030,
+          "ci_method": "deterministic tract-resampled percentile bootstrap; descriptive, not spatial-cluster inference"
+        },
+        "signed_gap_distribution": {
+          "n": 1593,
+          "mean": 3.066529383773188e-17,
+          "p50": 0.07097989949748745,
+          "p95": 0.5471105527638191,
+          "min": -0.8385678391959799,
+          "max": 0.8954145728643217
+        },
+        "p95_absolute_gap": 0.5471105527638191
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "joint_defined_ids": 591,
+        "joint_coverage_fraction": 1.0,
+        "mean_signed_gap_and_ci95": {
+          "mean": 2.7051119381729703e-17,
+          "ci95_percentile": [
+            -0.02640952565315894,
+            0.023863783016432903
+          ],
+          "bootstrap_replicates": 2000,
+          "seed": 20261031,
+          "ci_method": "deterministic tract-resampled percentile bootstrap; descriptive, not spatial-cluster inference"
+        },
+        "signed_gap_distribution": {
+          "n": 591,
+          "mean": 2.7051119381729703e-17,
+          "p50": -0.1601694915254237,
+          "p95": 0.326271186440678,
+          "min": -0.5847457627118644,
+          "max": 0.8805084745762712
+        },
+        "p95_absolute_gap": 0.5830508474576271
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "joint_defined_ids": 1192,
+        "joint_coverage_fraction": 1.0,
+        "mean_signed_gap_and_ci95": {
+          "mean": 2.980464495638004e-18,
+          "ci95_percentile": [
+            -0.016956249401270156,
+            0.017090822739336965
+          ],
+          "bootstrap_replicates": 2000,
+          "seed": 20261032,
+          "ci_method": "deterministic tract-resampled percentile bootstrap; descriptive, not spatial-cluster inference"
+        },
+        "signed_gap_distribution": {
+          "n": 1192,
+          "mean": 2.980464495638004e-18,
+          "p50": -0.16792611251049538,
+          "p95": 0.31863979848866497,
+          "min": -0.9710327455919395,
+          "max": 0.8035264483627204
+        },
+        "p95_absolute_gap": 0.5764063811922754
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "joint_defined_ids": 6001,
+        "joint_coverage_fraction": 0.9996668332500417,
+        "mean_signed_gap_and_ci95": {
+          "mean": -1.18404055284136e-17,
+          "ci95_percentile": [
+            -0.00787660806532245,
+            0.007884228323057256
+          ],
+          "bootstrap_replicates": 2000,
+          "seed": 20261033,
+          "ci_method": "deterministic tract-resampled percentile bootstrap; descriptive, not spatial-cluster inference"
+        },
+        "signed_gap_distribution": {
+          "n": 6001,
+          "mean": -1.18404055284136e-17,
+          "p50": -0.24291666666666667,
+          "p95": 0.7056666666666667,
+          "min": -0.9824999999999999,
+          "max": 0.8806666666666666
+        },
+        "p95_absolute_gap": 0.7056666666666667
+      }
+    }
+  },
+  "thresholds": {
+    "minimum_joint_coverage_inclusive": 0.9859,
+    "minimum_regions_with_absolute_signed_mean_inclusive": 2,
+    "minimum_absolute_regional_signed_mean_inclusive": 0.05,
+    "signed_gap_bounds_inclusive": [
+      -1.0,
+      1.0
+    ]
+  },
+  "acceptance": {
+    "exact_9379_id_alignment": true,
+    "joint_defined_mask_exact_and_nulls_preserved": true,
+    "joint_coverage_fraction": 0.9997867576500693,
+    "coverage_at_least_98_59_percent": true,
+    "signed_gap_finite_bounded_minus1_to_1": true,
+    "regions_with_absolute_mean_signed_gap_at_least_0_05": [],
+    "at_least_two_regions_meet_signed_mean_gate": false,
+    "source_absolute_gap_p95_reproduced": true,
+    "frozen_Tm5_and_registry_unchanged": true,
+    "signed_direction_screen_pass": false
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "frozen_Tm5_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Tm5.parquet",
+      "sha256_before": "ae363dff82f4ee47546485f45cd71250150a402479718795b0247585efdfe45e",
+      "sha256_after": "ae363dff82f4ee47546485f45cd71250150a402479718795b0247585efdfe45e"
+    },
+    "source_rank_report": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/tm5-poi-building-version-discordance.json",
+      "sha256": "996d343bfb49601e5c1a25a4dec217916251eb8c2177872de7f55d864c48a393"
+    },
+    "source_rank_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/tm5-poi-building-version-discordance/version-discordance.parquet",
+      "sha256": "8ed28f993f75f0fa7ed872341101b2bcd6c881f80d79245fb2184a2573bcf7fb"
+    },
+    "registry_sha256_before": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "registry_sha256_after": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/tm5-signed-poi-building-version-asymmetry/signed-rank-gap.parquet",
+      "rows": 9379,
+      "sha256": "387e964b134021aa643786fc2d0157b4c48f4ef3d6b3e7ffd53b651111a4fc46",
+      "columns": [
+        "GEOID",
+        "region",
+        "poi_within_region_midpercentile",
+        "poi_version_defined",
+        "building_within_region_midpercentile",
+        "building_version_defined",
+        "joint_defined",
+        "signed_poi_minus_building_rank_gap",
+        "absolute_rank_gap"
+      ],
+      "deterministic_bytes": true
+    },
+    "script_sha256": "1fad7db846a5514f15b13c4e4f2c902d83cb008a41f20d44258ed221aa897f80"
+  },
+  "interpretation": "The regional signed-mean gate failed; retain only the established absolute-discordance diagnostic."
+}
