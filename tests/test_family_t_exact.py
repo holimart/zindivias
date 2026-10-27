@@ -94,6 +94,36 @@ def test_t1_exact_runs_end_to_end_on_a_synthetic_named_stroke(tmp_path):
     assert output.diagnostics["deflection_limit_degrees"] == 30.0
 
 
+def test_t2_exact_counts_orphan_link_and_measures_attached_roads(tmp_path):
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+    import shapely
+    from bias60.ideas.t_exact import t2_exact
+
+    rows = [
+        {"class": "tertiary", "subclass": None, "connectors": [{"connector_id": "a", "at": 0.0}, {"connector_id": "x", "at": 1.0}], "geometry": shapely.to_wkb(shapely.LineString([(-0.002, 0), (-0.001, 0)]))},
+        {"class": "motorway_link", "subclass": "link", "connectors": [{"connector_id": "a", "at": 0.0}, {"connector_id": "b", "at": 1.0}], "geometry": shapely.to_wkb(shapely.LineString([(-0.001, 0), (0.001, 0)]))},
+        {"class": "unclassified", "subclass": None, "connectors": [{"connector_id": "b", "at": 0.0}, {"connector_id": "y", "at": 1.0}], "geometry": shapely.to_wkb(shapely.LineString([(0.001, 0), (0.002, 0)]))},
+    ]
+    path = tmp_path / "roads.parquet"
+    pq.write_table(pa.Table.from_pylist(rows), path)
+
+    class Inputs:
+        region, geoids = "unit-test", ["00000000001"]
+        config = {"seeds": {"T2": {"named_classes": ["motorway", "trunk", "primary", "secondary"], "attached_length_limit_m": 2000.0, "unfiltered_layer": "roads-unfiltered"}}}
+        filesystem = __import__("pyarrow.fs", fromlist=["LocalFileSystem"]).LocalFileSystem()
+        accessed = {"layers": [], "parquet_columns": []}
+        def layer_path(self, layer):
+            assert layer == "roads-unfiltered"
+            return str(path)
+        def tract_geometries(self):
+            return __import__("numpy").asarray([shapely.box(-0.01, -0.01, 0.01, 0.01)], dtype=object)
+
+    emission = t2_exact(Inputs()).emissions
+    assert emission[0].values.tolist() == [1.0]
+    assert 0.25 < emission[1].values[0] < 0.27
+
+
 def test_recipe_preflight_requires_the_frozen_inputs_without_claiming_conformance():
     roads = {"class", "names", "routes", "connectors", "subclass", "road_flags",
              "rail_flags", "level_rules", "geometry"}

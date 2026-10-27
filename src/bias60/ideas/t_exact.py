@@ -235,3 +235,102 @@ def t1_exact(inputs):
         "deflection_comparison": "strictly less than 30 degrees", "outside_named_share_threshold": threshold,
         "rows_read": rows_read, "segments_with_identity_and_geometry": rows_kept,
         "length_crs": "EPSG:5070", "no_target_or_reference_data_read": True})
+
+
+def t2_exact(inputs):
+    """Compute orphan-link counts and attached non-named carriageway length within 2 km."""
+    import numpy as np
+    import shapely
+    from pyproj import Transformer
+    from bias60.contracts import Emission, IdeaOutput
+    from bias60.ideas.t import _road_layer
+
+    seed = inputs.config["seeds"]["T2"]
+    named = set(seed["named_classes"])
+    limit = float(seed["attached_length_limit_m"])
+    columns = ["class", "subclass", "connectors", "geometry"]
+    parquet = _road_layer(inputs, columns, seed["unfiltered_layer"])
+    incidence: dict[str, list[int]] = defaultdict(lambda: [0, 0])
+    links = []
+    rows_read = 0
+    for group in range(parquet.metadata.num_row_groups):
+        table = parquet.read_row_group(group, columns=columns)
+        classes, subclasses = table["class"].to_pylist(), table["subclass"].to_pylist()
+        conns, wkbs = table["connectors"].to_pylist(), table["geometry"].to_pylist()
+        rows_read += len(classes)
+        for cls, sub, row_conns, wkb in zip(classes, subclasses, conns, wkbs):
+            ordered_conns = sorted((item for item in (row_conns or [])
+                                    if isinstance(item, dict) and item.get("connector_id")),
+                                   key=lambda item: float(item.get("at", 0.0)))
+            ids = list(dict.fromkeys(str(item["connector_id"]) for item in ordered_conns))
+            for connector in ids:
+                incidence[connector][int(cls in named)] += 1
+            is_link = ((isinstance(sub, str) and "link" in sub.casefold()) or
+                       (isinstance(cls, str) and "_link" in cls.casefold()))
+            if is_link and len(ids) >= 2 and wkb is not None:
+                links.append((cls, ids[0], ids[-1], wkb))
+    orphan = []
+    target_connectors = set()
+    for cls, first, last, wkb in links:
+        endpoints_ok = True
+        for connector in (first, last):
+            named_n, total_n = incidence[connector][1], sum(incidence[connector])
+            named_neighbors = named_n - int(cls in named)
+            other_neighbors = total_n - 1
+            if named_neighbors > 0 or other_neighbors <= 0:
+                endpoints_ok = False
+                break
+        if endpoints_ok:
+            orphan.append((first, last, wkb))
+            target_connectors.update((first, last))
+
+    # Re-read only the allowed road columns needed to gather attached non-named carriageways.
+    attached: dict[str, dict[int, bytes]] = defaultdict(dict)
+    row_offset = 0
+    for group in range(parquet.metadata.num_row_groups):
+        table = parquet.read_row_group(group, columns=columns)
+        classes, subclasses = table["class"].to_pylist(), table["subclass"].to_pylist()
+        conns, wkbs = table["connectors"].to_pylist(), table["geometry"].to_pylist()
+        for local, (cls, sub, row_conns, wkb) in enumerate(zip(classes, subclasses, conns, wkbs)):
+            row_id = row_offset + local
+            is_link = ((isinstance(sub, str) and "link" in sub.casefold()) or
+                       (isinstance(cls, str) and "_link" in cls.casefold()))
+            if isinstance(cls, str) and cls not in named and not is_link and wkb is not None:
+                for item in row_conns or []:
+                    connector = str(item.get("connector_id")) if isinstance(item, dict) else ""
+                    if connector in target_connectors:
+                        attached[connector][row_id] = wkb
+
+        row_offset += len(classes)
+
+    transformer = Transformer.from_crs("EPSG:4326", "EPSG:5070", always_xy=True)
+    tracts = shapely.transform(inputs.tract_geometries(), transformer.transform, interleaved=False)
+    tree = shapely.STRtree(tracts)
+    counts = np.zeros(len(inputs.geoids), dtype=np.float64)
+    lengths = np.zeros(len(inputs.geoids), dtype=np.float64)
+    for first, last, link_wkb in orphan:
+        link = shapely.transform(shapely.from_wkb(link_wkb), transformer.transform, interleaved=False)
+        pairs = tree.query(link, predicate="intersects")
+        if pairs.size:
+            counts[pairs] += 1.0
+        nearby_ids = dict(attached[first])
+        nearby_ids.update(attached[last])
+        if not nearby_ids:
+            continue
+        road_geoms = shapely.transform(shapely.from_wkb(list(nearby_ids.values())),
+                                       transformer.transform, interleaved=False)
+        clipped = shapely.intersection(road_geoms, shapely.buffer(link, limit))
+        candidates = tree.query(clipped, predicate="intersects")
+        if candidates.size:
+            lengths += np.bincount(candidates[1],
+                weights=shapely.length(shapely.intersection(clipped[candidates[0]], tracts[candidates[1]])),
+                minlength=len(lengths))
+    defined = np.ones(len(inputs.geoids), dtype=np.bool_)
+    return IdeaOutput("T2-v2", inputs.region, list(inputs.geoids), [
+        Emission("R", "covariate:orphan_link_segments", counts, defined,
+                 {"quantity": "orphan link segments; both endpoint connectors attach only to non-named roads"}),
+        Emission("R", "covariate:attached_carriageway_length_km", lengths / 1000.0, defined,
+                 {"quantity": "attached non-named carriageway length clipped to the 2 km buffer of each orphan link"}),
+    ], {"rows_read": rows_read, "orphan_links": len(orphan),
+        "attached_length_limit_m": limit, "connector_rule": "both endpoint neighbors non-named; named neighbor disqualifies",
+        "no_target_or_reference_data_read": True})
