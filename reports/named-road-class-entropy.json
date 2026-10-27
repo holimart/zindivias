@@ -1,0 +1,913 @@
+{
+  "schema_version": 1,
+  "screen": "Provided Overture motorway/trunk/primary/secondary class-length-share Shannon entropy; five-fold cross-fit distinctness screen; unregistered",
+  "measure_before": {
+    "feature_inventory": "Frozen transport summaries contain total named-road length; no normalized four-class length-share entropy or distinctness report was present.",
+    "tract_entropy_or_crossfit_distinctness_previously_measured": false
+  },
+  "definition": "For each official tract, clip provided Overture motorway, trunk, primary, and secondary line geometries to provided official tract geometry after EPSG:5070 transform. Let p_c be each class's share of total named-road length; entropy is -sum(p_c log p_c)/log(4). It is null where total length is zero.",
+  "method": {
+    "road_inputs": "Only the provided Overture roads class and geometry columns are read; routes, names, topology, TIGER/equivalent references, and other road data are not read.",
+    "cross_fit": "Five deterministic GEOID folds within each region. Region-specific OLS with intercept uses log total named-road km, provided pct_urban, frozen Mx4 F, and frozen S1 lagged Mx4 F; each held-out fold is predicted by the other four folds. No labels, tuning, or imputation.",
+    "variance_ratio": "Pooled population variance (ddof=0) of held-out entropy residual divided by entropy variance on the same complete-case support.",
+    "correlations": "Pooled Pearson correlations of held-out residual with each of the four adjustment predictors; regional values are descriptive.",
+    "undefined": "Zero total named-road length remains null; missing predictor values are not imputed and are excluded only from joint cross-fit support.",
+    "unregistered": true
+  },
+  "scope": {
+    "official_ids": 9379,
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "positive_named_road_length_ids": 9247,
+    "positive_length_coverage_fraction": 0.985926004904574,
+    "entropy_undefined_ids": 132,
+    "joint_crossfit_ids": 9228,
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "positive_named_road_length_ids": 1560,
+        "eligible_joint_ids": 1553,
+        "positive_length_coverage": 0.9792843691148776,
+        "entropy_distribution": {
+          "n": 1560,
+          "min": -0.0,
+          "p05": -0.0,
+          "p50": 0.4366317909719727,
+          "p95": 0.7533512286795572,
+          "max": 0.972685763228986,
+          "mean": 0.35106248015117003,
+          "sd": 0.25987894538831696,
+          "variance": 0.06753706625614382
+        },
+        "crossfit_residual_distribution": {
+          "n": 1553,
+          "min": -0.5888383294069268,
+          "p05": -0.3725689962720082,
+          "p50": 0.037451433586381144,
+          "p95": 0.3179757011169679,
+          "max": 0.8546379623301424,
+          "mean": 0.0005851538492366018,
+          "sd": 0.21952136302424013,
+          "variance": 0.04818962882402022
+        },
+        "residual_variance_ratio": 0.7126785360667234,
+        "residual_pearson_correlations": {
+          "log_total_named_road_km": -0.003154022567465514,
+          "pct_urban": -0.0004081574563206706,
+          "Mx4_F": -0.000514254820609954,
+          "S1_lagged_Mx4_F": -0.001236471197799546
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "train_n": 1247,
+            "heldout_n": 306,
+            "coefficient_order": [
+              "region_intercept",
+              "log_total_named_road_km",
+              "pct_urban",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              -0.09148939379020583,
+              0.1286342945106252,
+              0.23430528551237473,
+              0.08189331094365644,
+              -0.09142816565785004
+            ],
+            "design_rank": 5,
+            "design_columns": 5,
+            "minimum_singular_value": 0.7113473041253895
+          },
+          {
+            "fold": 1,
+            "train_n": 1247,
+            "heldout_n": 306,
+            "coefficient_order": [
+              "region_intercept",
+              "log_total_named_road_km",
+              "pct_urban",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              -0.07186642094734588,
+              0.12817046404570262,
+              0.2179865428507386,
+              0.04914983823442144,
+              -0.06935422559640236
+            ],
+            "design_rank": 5,
+            "design_columns": 5,
+            "minimum_singular_value": 0.5901513441936352
+          },
+          {
+            "fold": 2,
+            "train_n": 1232,
+            "heldout_n": 321,
+            "coefficient_order": [
+              "region_intercept",
+              "log_total_named_road_km",
+              "pct_urban",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              -0.10174171885608362,
+              0.12798850812725113,
+              0.25474938067134284,
+              0.29887971314390854,
+              -0.3027845062535406
+            ],
+            "design_rank": 5,
+            "design_columns": 5,
+            "minimum_singular_value": 0.6960393887182479
+          },
+          {
+            "fold": 3,
+            "train_n": 1236,
+            "heldout_n": 317,
+            "coefficient_order": [
+              "region_intercept",
+              "log_total_named_road_km",
+              "pct_urban",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              -0.12056846181209388,
+              0.13446733517341497,
+              0.25279221292463194,
+              0.04645470152130661,
+              -0.07210744173165494
+            ],
+            "design_rank": 5,
+            "design_columns": 5,
+            "minimum_singular_value": 0.6832766347497174
+          },
+          {
+            "fold": 4,
+            "train_n": 1250,
+            "heldout_n": 303,
+            "coefficient_order": [
+              "region_intercept",
+              "log_total_named_road_km",
+              "pct_urban",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              -0.14243267916284963,
+              0.13882771847937025,
+              0.27569403881008014,
+              0.10397437919369042,
+              -0.14190662787131667
+            ],
+            "design_rank": 5,
+            "design_columns": 5,
+            "minimum_singular_value": 0.6557895051945709
+          }
+        ]
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "positive_named_road_length_ids": 584,
+        "eligible_joint_ids": 584,
+        "positive_length_coverage": 0.988155668358714,
+        "entropy_distribution": {
+          "n": 584,
+          "min": -0.0,
+          "p05": 0.0,
+          "p50": 0.45529776175102804,
+          "p95": 0.7661362985257151,
+          "max": 0.9383608756716694,
+          "mean": 0.37557977861272207,
+          "sd": 0.2634119879805574,
+          "variance": 0.06938587541186933
+        },
+        "crossfit_residual_distribution": {
+          "n": 584,
+          "min": -0.6066102713476137,
+          "p05": -0.37354192257304064,
+          "p50": 0.02435093178432593,
+          "p95": 0.32829304881736276,
+          "max": 0.750308572394476,
+          "mean": 0.00015652860487242246,
+          "sd": 0.21746334387626123,
+          "variance": 0.04729030592984504
+        },
+        "residual_variance_ratio": 0.6815552250243057,
+        "residual_pearson_correlations": {
+          "log_total_named_road_km": -0.00592024547698581,
+          "pct_urban": 0.004477296617049883,
+          "Mx4_F": 0.007895120353809881,
+          "S1_lagged_Mx4_F": 0.0036467495692279867
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "train_n": 467,
+            "heldout_n": 117,
+            "coefficient_order": [
+              "region_intercept",
+              "log_total_named_road_km",
+              "pct_urban",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              -0.1369299277210351,
+              0.14502320636937835,
+              0.25549693610234353,
+              -0.5186332855241755,
+              0.5871675694657765
+            ],
+            "design_rank": 5,
+            "design_columns": 5,
+            "minimum_singular_value": 0.3690223306193139
+          },
+          {
+            "fold": 1,
+            "train_n": 455,
+            "heldout_n": 129,
+            "coefficient_order": [
+              "region_intercept",
+              "log_total_named_road_km",
+              "pct_urban",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              -0.10204938121489684,
+              0.14129022860928497,
+              0.23624180777866388,
+              -0.6629744238367726,
+              0.7482265789523451
+            ],
+            "design_rank": 5,
+            "design_columns": 5,
+            "minimum_singular_value": 0.3721545384815541
+          },
+          {
+            "fold": 2,
+            "train_n": 454,
+            "heldout_n": 130,
+            "coefficient_order": [
+              "region_intercept",
+              "log_total_named_road_km",
+              "pct_urban",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              -0.1810517126578867,
+              0.15744482200917065,
+              0.27844773606178574,
+              -0.3801668979525021,
+              0.5040113399096688
+            ],
+            "design_rank": 5,
+            "design_columns": 5,
+            "minimum_singular_value": 0.45590462796827375
+          },
+          {
+            "fold": 3,
+            "train_n": 490,
+            "heldout_n": 94,
+            "coefficient_order": [
+              "region_intercept",
+              "log_total_named_road_km",
+              "pct_urban",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              -0.16280665886439327,
+              0.1505583825228204,
+              0.27866991137072117,
+              -0.5104589735309151,
+              0.530944519630555
+            ],
+            "design_rank": 5,
+            "design_columns": 5,
+            "minimum_singular_value": 0.46055069302748103
+          },
+          {
+            "fold": 4,
+            "train_n": 470,
+            "heldout_n": 114,
+            "coefficient_order": [
+              "region_intercept",
+              "log_total_named_road_km",
+              "pct_urban",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              -0.12566782937884038,
+              0.15053423737076838,
+              0.24065265993092905,
+              -0.3194851872310913,
+              0.39626245610369354
+            ],
+            "design_rank": 5,
+            "design_columns": 5,
+            "minimum_singular_value": 0.4598472272636555
+          }
+        ]
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "positive_named_road_length_ids": 1164,
+        "eligible_joint_ids": 1163,
+        "positive_length_coverage": 0.9765100671140939,
+        "entropy_distribution": {
+          "n": 1164,
+          "min": -0.0,
+          "p05": 0.0,
+          "p50": 0.4582536643043017,
+          "p95": 0.7810279048645331,
+          "max": 0.9976376437050514,
+          "mean": 0.38671503588249423,
+          "sd": 0.2685868272428393,
+          "variance": 0.0721388837683748
+        },
+        "crossfit_residual_distribution": {
+          "n": 1163,
+          "min": -0.58711023636938,
+          "p05": -0.36753474835991295,
+          "p50": 0.021709025933246695,
+          "p95": 0.33069208492551344,
+          "max": 0.9455479206681994,
+          "mean": -0.00017392465978339935,
+          "sd": 0.21827176112351634,
+          "variance": 0.047642561703961375
+        },
+        "residual_variance_ratio": 0.6599842188834417,
+        "residual_pearson_correlations": {
+          "log_total_named_road_km": -0.0021601267333033925,
+          "pct_urban": 0.00018780918714295846,
+          "Mx4_F": 0.0012597806959832245,
+          "S1_lagged_Mx4_F": 0.0010802927465984663
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "train_n": 937,
+            "heldout_n": 226,
+            "coefficient_order": [
+              "region_intercept",
+              "log_total_named_road_km",
+              "pct_urban",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              -0.044222565340259035,
+              0.13676389749794415,
+              0.2072797728163317,
+              -0.19498260848964016,
+              0.1228164459431877
+            ],
+            "design_rank": 5,
+            "design_columns": 5,
+            "minimum_singular_value": 0.8090243508673032
+          },
+          {
+            "fold": 1,
+            "train_n": 928,
+            "heldout_n": 235,
+            "coefficient_order": [
+              "region_intercept",
+              "log_total_named_road_km",
+              "pct_urban",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              -0.03458203163211851,
+              0.1364389883130872,
+              0.18878288484798234,
+              -0.04894828627147223,
+              -0.02242143580649819
+            ],
+            "design_rank": 5,
+            "design_columns": 5,
+            "minimum_singular_value": 0.7825680447378544
+          },
+          {
+            "fold": 2,
+            "train_n": 930,
+            "heldout_n": 233,
+            "coefficient_order": [
+              "region_intercept",
+              "log_total_named_road_km",
+              "pct_urban",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              -0.03783872035572265,
+              0.13189187760466056,
+              0.2084561581181302,
+              -0.13331354924004718,
+              0.047185206974931254
+            ],
+            "design_rank": 5,
+            "design_columns": 5,
+            "minimum_singular_value": 0.7830090885432985
+          },
+          {
+            "fold": 3,
+            "train_n": 912,
+            "heldout_n": 251,
+            "coefficient_order": [
+              "region_intercept",
+              "log_total_named_road_km",
+              "pct_urban",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              -0.0863516160805812,
+              0.14695071490487016,
+              0.23735677745067238,
+              -0.17191791951992585,
+              0.06029544332206496
+            ],
+            "design_rank": 5,
+            "design_columns": 5,
+            "minimum_singular_value": 0.7810543479650826
+          },
+          {
+            "fold": 4,
+            "train_n": 945,
+            "heldout_n": 218,
+            "coefficient_order": [
+              "region_intercept",
+              "log_total_named_road_km",
+              "pct_urban",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              -0.06085072917207954,
+              0.1404217422018392,
+              0.21477239997987935,
+              -0.2158343247440785,
+              0.12234047174063582
+            ],
+            "design_rank": 5,
+            "design_columns": 5,
+            "minimum_singular_value": 0.7898843126461906
+          }
+        ]
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "positive_named_road_length_ids": 5939,
+        "eligible_joint_ids": 5928,
+        "positive_length_coverage": 0.9893386640013326,
+        "entropy_distribution": {
+          "n": 5939,
+          "min": -0.0,
+          "p05": -0.0,
+          "p50": 0.47065882790798946,
+          "p95": 0.7816007079945145,
+          "max": 0.9939394620826609,
+          "mean": 0.4093064169322887,
+          "sd": 0.26524493718596753,
+          "variance": 0.07035487670278787
+        },
+        "crossfit_residual_distribution": {
+          "n": 5928,
+          "min": -0.6806192181188504,
+          "p05": -0.37061427043599315,
+          "p50": 0.01964971287361722,
+          "p95": 0.3287679572597648,
+          "max": 0.7711520667589259,
+          "mean": -7.407496993523964e-05,
+          "sd": 0.21425715111035484,
+          "variance": 0.045906126801925434
+        },
+        "residual_variance_ratio": 0.6529946367694556,
+        "residual_pearson_correlations": {
+          "log_total_named_road_km": -0.0009674351292397481,
+          "pct_urban": 0.0006756065879021206,
+          "Mx4_F": -0.00010621561147282978,
+          "S1_lagged_Mx4_F": 0.00017896453095697453
+        },
+        "folds": [
+          {
+            "fold": 0,
+            "train_n": 4766,
+            "heldout_n": 1162,
+            "coefficient_order": [
+              "region_intercept",
+              "log_total_named_road_km",
+              "pct_urban",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              -0.013283662207295247,
+              0.1429961715002517,
+              0.1349228367974976,
+              0.26096671228141577,
+              -0.3615052643697133
+            ],
+            "design_rank": 5,
+            "design_columns": 5,
+            "minimum_singular_value": 0.5825385283064093
+          },
+          {
+            "fold": 1,
+            "train_n": 4745,
+            "heldout_n": 1183,
+            "coefficient_order": [
+              "region_intercept",
+              "log_total_named_road_km",
+              "pct_urban",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              -0.01328788310779603,
+              0.1444388202856881,
+              0.13285674077985024,
+              0.43577778156711783,
+              -0.5655650645452857
+            ],
+            "design_rank": 5,
+            "design_columns": 5,
+            "minimum_singular_value": 0.5309058412545604
+          },
+          {
+            "fold": 2,
+            "train_n": 4783,
+            "heldout_n": 1145,
+            "coefficient_order": [
+              "region_intercept",
+              "log_total_named_road_km",
+              "pct_urban",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              -0.01909975072525032,
+              0.14249944827441544,
+              0.14321700845091023,
+              0.20963967341481374,
+              -0.34510039802048287
+            ],
+            "design_rank": 5,
+            "design_columns": 5,
+            "minimum_singular_value": 0.5659179191438343
+          },
+          {
+            "fold": 3,
+            "train_n": 4707,
+            "heldout_n": 1221,
+            "coefficient_order": [
+              "region_intercept",
+              "log_total_named_road_km",
+              "pct_urban",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              -0.016790366794103583,
+              0.1411428215215451,
+              0.1425337613849168,
+              0.282922580806097,
+              -0.4126714330351114
+            ],
+            "design_rank": 5,
+            "design_columns": 5,
+            "minimum_singular_value": 0.5567013942751953
+          },
+          {
+            "fold": 4,
+            "train_n": 4711,
+            "heldout_n": 1217,
+            "coefficient_order": [
+              "region_intercept",
+              "log_total_named_road_km",
+              "pct_urban",
+              "Mx4_F",
+              "S1_lagged_Mx4_F"
+            ],
+            "coefficients": [
+              -0.014404875113920345,
+              0.1440931451350034,
+              0.13664740829485472,
+              0.1841311938706967,
+              -0.3099699974350649
+            ],
+            "design_rank": 5,
+            "design_columns": 5,
+            "minimum_singular_value": 0.5589938323409687
+          }
+        ]
+      }
+    },
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "TIGER_or_equivalent_reference_read": false,
+    "external_road_data_read": false,
+    "route_or_topology_inputs_read": false,
+    "leaderboard_feedback_used": false,
+    "registry_integration": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "entropy_distribution": {
+      "n": 9247,
+      "min": -0.0,
+      "p05": 0.0,
+      "p50": 0.4618450508653949,
+      "p95": 0.7785605098437532,
+      "max": 0.9976376437050514,
+      "mean": 0.39450666937101125,
+      "sd": 0.26557903892487933,
+      "variance": 0.07053222591626256
+    },
+    "class_length_km_sum": {
+      "motorway": 34338.65843250467,
+      "trunk": 25572.347153012364,
+      "primary": 38727.07936045519,
+      "secondary": 81799.68509477282
+    },
+    "total_named_road_km_distribution": {
+      "n": 9247,
+      "min": 0.0011090692603696677,
+      "p05": 1.1966961192210905,
+      "p50": 7.943208187652489,
+      "p95": 79.39659227948171,
+      "max": 482.5343844146546,
+      "mean": 19.513114528035583,
+      "sd": 35.58653653720316,
+      "variance": 1266.4015827136955
+    },
+    "residual_variance_ratio": 0.6607401765971582,
+    "residual_pearson_correlations": {
+      "log_total_named_road_km": -0.0019527425704813832,
+      "pct_urban": 0.0008347066637392562,
+      "Mx4_F": 0.0004449133665875327,
+      "S1_lagged_Mx4_F": 0.00018300536083767587
+    },
+    "crossfit_residual_distribution": {
+      "n": 9228,
+      "min": -0.6806192181188504,
+      "p05": -0.37120750648723405,
+      "p50": 0.023748007835213247,
+      "p95": 0.32824709463719903,
+      "max": 0.9455479206681994,
+      "mean": 3.887796185584649e-05,
+      "sd": 0.21586321580124607,
+      "variance": 0.04659692793605533
+    }
+  },
+  "thresholds": {
+    "minimum_positive_length_coverage_inclusive": 0.5,
+    "minimum_residual_variance_ratio_inclusive": 0.1,
+    "maximum_absolute_residual_predictor_correlation_exclusive": 0.8,
+    "entropy_bounds_inclusive": [
+      0,
+      1
+    ]
+  },
+  "acceptance": {
+    "exact_official_9379_id_alignment": true,
+    "exact_entropy_null_mask_alignment": true,
+    "positive_named_road_length_coverage": 0.985926004904574,
+    "coverage_at_least_50_percent": true,
+    "entropy_finite_and_bounded_0_1": true,
+    "crossfit_residual_variance_ratio": 0.6607401765971582,
+    "residual_variance_at_least_10_percent": true,
+    "residual_pearson_correlations": {
+      "log_total_named_road_km": -0.0019527425704813832,
+      "pct_urban": 0.0008347066637392562,
+      "Mx4_F": 0.0004449133665875327,
+      "S1_lagged_Mx4_F": 0.00018300536083767587
+    },
+    "absolute_correlation_below_0_80_with_each_predictor": true,
+    "frozen_predictors_and_registry_unchanged": true,
+    "distinct_screen_pass": true
+  },
+  "provenance": {
+    "road_inputs": {
+      "maricopa-az": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-roads.parquet",
+        "object_bytes": 80052206,
+        "rows": 494492,
+        "row_groups": 17,
+        "selected_columns": [
+          "class",
+          "geometry"
+        ],
+        "selected_named_classes": [
+          "motorway",
+          "trunk",
+          "primary",
+          "secondary"
+        ],
+        "named_class_rows": 57516,
+        "null_named_road_geometries": 0,
+        "metric_crs": "EPSG:5070",
+        "length_unit": "kilometres",
+        "selected_named_class_rows_sha256": "501941c16260ae6d055c9893b753ecd13314205372e827fb57866ce99b92dcf9",
+        "tract_assignment": {
+          "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-census-acs-housing.parquet",
+          "object_bytes": 3457173,
+          "selected_columns": [
+            "GEOID",
+            "geometry"
+          ],
+          "selected_column_compressed_bytes": 3409661,
+          "row_groups": 1,
+          "rows": 1593
+        }
+      },
+      "northern-ca": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-roads.parquet",
+        "object_bytes": 43515963,
+        "rows": 191836,
+        "row_groups": 9,
+        "selected_columns": [
+          "class",
+          "geometry"
+        ],
+        "selected_named_classes": [
+          "motorway",
+          "trunk",
+          "primary",
+          "secondary"
+        ],
+        "named_class_rows": 26050,
+        "null_named_road_geometries": 0,
+        "metric_crs": "EPSG:5070",
+        "length_unit": "kilometres",
+        "selected_named_class_rows_sha256": "b4debc08bd9adf0cbf29ecb1ea1612f45e8b4df4a5efd39fa7e7a0a487a04374",
+        "tract_assignment": {
+          "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-census-acs-housing.parquet",
+          "object_bytes": 3037540,
+          "selected_columns": [
+            "GEOID",
+            "geometry"
+          ],
+          "selected_column_compressed_bytes": 3016786,
+          "row_groups": 1,
+          "rows": 591
+        }
+      },
+      "eastern-ok": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-roads.parquet",
+        "object_bytes": 82239229,
+        "rows": 520550,
+        "row_groups": 16,
+        "selected_columns": [
+          "class",
+          "geometry"
+        ],
+        "selected_named_classes": [
+          "motorway",
+          "trunk",
+          "primary",
+          "secondary"
+        ],
+        "named_class_rows": 59436,
+        "null_named_road_geometries": 0,
+        "metric_crs": "EPSG:5070",
+        "length_unit": "kilometres",
+        "selected_named_class_rows_sha256": "8fe0e97155d18d0cd4a4d47f88c07bce5045a7c760e33496d8f3341d74d34629",
+        "tract_assignment": {
+          "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-census-acs-housing.parquet",
+          "object_bytes": 3650879,
+          "selected_columns": [
+            "GEOID",
+            "geometry"
+          ],
+          "selected_column_compressed_bytes": 3612768,
+          "row_groups": 1,
+          "rows": 1192
+        }
+      },
+      "south-central-tx": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-roads.parquet",
+        "object_bytes": 299751270,
+        "rows": 1937009,
+        "row_groups": 60,
+        "selected_columns": [
+          "class",
+          "geometry"
+        ],
+        "selected_named_classes": [
+          "motorway",
+          "trunk",
+          "primary",
+          "secondary"
+        ],
+        "named_class_rows": 353790,
+        "null_named_road_geometries": 0,
+        "metric_crs": "EPSG:5070",
+        "length_unit": "kilometres",
+        "selected_named_class_rows_sha256": "3ae7142336bd85411aa7f55c511c3041bd4801151073d93483471e412c4553bf",
+        "tract_assignment": {
+          "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-census-acs-housing.parquet",
+          "object_bytes": 13758433,
+          "selected_columns": [
+            "GEOID",
+            "geometry"
+          ],
+          "selected_column_compressed_bytes": 13587215,
+          "row_groups": 1,
+          "rows": 6010
+        }
+      }
+    },
+    "pct_urban_inputs": {
+      "maricopa-az": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+        "sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 1593,
+        "defined_ids": 1582
+      },
+      "northern-ca": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+        "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 591,
+        "defined_ids": 591
+      },
+      "eastern-ok": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+        "sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 1192,
+        "defined_ids": 1191
+      },
+      "south-central-tx": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+        "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 6003,
+        "defined_ids": 5989
+      }
+    },
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "Mx4": {
+      "sha256": "8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Mx4.parquet"
+    },
+    "S1": {
+      "sha256": "632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03",
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/S1.parquet"
+    },
+    "registry_sha256_before_after": {
+      "before": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+      "after": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6"
+    },
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/named-road-class-entropy/class-entropy-crossfit.parquet",
+      "sha256": "41610caca547f76604a8430f7cc0dfcdf628ea3f431632c5e5da11809da92f38",
+      "rows": 9379,
+      "columns": [
+        "GEOID",
+        "region",
+        "motorway_km",
+        "trunk_km",
+        "primary_km",
+        "secondary_km",
+        "total_named_road_km",
+        "class_mix_entropy",
+        "entropy_defined",
+        "pct_urban",
+        "Mx4_F",
+        "Mx4_F_defined",
+        "S1_lagged_Mx4_F",
+        "S1_lagged_Mx4_F_defined",
+        "joint_defined",
+        "fold",
+        "crossfit_prediction",
+        "crossfit_residual"
+      ],
+      "deterministic_serialization": true
+    },
+    "script_sha256": "e34585c47a4091987fb3146876b74a9587c951bcf923141e24b8308703a91866"
+  },
+  "interpretation": "The feature passed all preregistered coverage, boundedness, residual-variance and correlation gates; retain as an unregistered diagnostic only."
+}
