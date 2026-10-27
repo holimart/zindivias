@@ -1,0 +1,459 @@
+{
+  "schema_version": 1,
+  "screen": "Five-fold held-out association of provided POI primary-category missing share with frozen S1 disagreement residual; unregistered",
+  "measure_before": {
+    "per_tract_missing_share_effect_measured": false,
+    "category_entropy_eligible_ids": 9327,
+    "category_entropy_report_sha256": "e001038d59b9f27d261c3fa9f029c881a56b47daf0a56a8b5628b897d66f16a5"
+  },
+  "method": {
+    "feature": "For each official tract, count unique nonnull provided POI IDs assigned by provided bbox center to official tract geometry; among these, count IDs with nonblank categories.primary. Missing share=(total unique assigned IDs - IDs with primary)/total. Defined only when total unique assigned IDs >=10. Only id, categories.primary and bbox are read from POI rows.",
+    "outcome": "Frozen cross-fitted orthogonalized S1 disagreement residual; source artifact and five GEOID folds are verified and not rebuilt.",
+    "baseline": "Region-intercept OLS with log1p unique assigned POI count, Mx4 F and S1 lag; continuous predictors are standardized on training rows only.",
+    "augmentation": "Add one globally training-standardized primary-category missing-share term; baseline model terms are unchanged.",
+    "cross_validation": "Exact frozen five deterministic GEOID folds within each official region; all fitting and feature scaling use four training folds only.",
+    "metric": "Held-out delta-R2 = augmented OOF R2 minus baseline OOF R2, equivalently (baseline SSE - augmented SSE)/shared target SST; positive favors missing share.",
+    "bootstrap": "Paired with-replacement tract bootstrap over exact pooled OOF support; percentile 95% interval with fixed seed and replicate count.",
+    "support": "Intersection of frozen residual, minimum-10-unique-place missing-share feature, Mx4 F and S1-lag masks; no imputation or post-result thresholds.",
+    "model_coefficients_disclosed": false,
+    "training_scaler_moments_recorded_by_fold": true,
+    "unregistered": true,
+    "interpretation_limit": "Provided-feature association only; not target accuracy, causal evidence, or estimator-promotion evidence."
+  },
+  "scope": {
+    "official_ids": 9379,
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "minimum_unique_places_inclusive": 10,
+    "missing_share_defined_ids": 9327,
+    "missing_share_undefined_ids": 52,
+    "frozen_residual_defined_ids": 9379,
+    "paired_screen_ids": 9327,
+    "paired_screen_undefined_ids": 52,
+    "missing_share_mask_sha256": "da10f86ae1f1c0942f5553a149d1b58e6bd990e0fecbe590d326ec4c42049bdd",
+    "residual_mask_sha256": "593459efd58441427b7c76d010f31880b0709ad2fe46b90bd254145da4ce27d6",
+    "paired_mask_sha256": "da10f86ae1f1c0942f5553a149d1b58e6bd990e0fecbe590d326ec4c42049bdd",
+    "fold_assignment_sha256": "c8b4f9875dbd127a1627458cba0d824bd743d5e5047b38ef243eb6608c3f5ce5",
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_references_read": false,
+    "categories_alternate_read": false,
+    "source_or_confidence_fields_read": false,
+    "external_data_used": [],
+    "leaderboard_feedback_used": false,
+    "post_result_thresholds": false,
+    "registry_changed": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "pooled": {
+      "baseline_r2": -0.011315114182193664,
+      "augmented_r2": -0.011331275214892411,
+      "delta_r2": -1.6161032698766566e-05,
+      "baseline_sse": 0.1509798228161409,
+      "augmented_sse": 0.15098223550613155,
+      "heldout_sst": 0.1492905828251481
+    },
+    "paired_pooled_delta_r2": -1.6161032698766566e-05,
+    "paired_pooled_delta_r2_ci_95": [
+      -9.639658675382439e-05,
+      5.253397763597536e-05
+    ],
+    "bootstrap": {
+      "replicates": 2000,
+      "seed": 20261031,
+      "resampling": "paired with-replacement tract resampling over pooled OOF complete-case support",
+      "ci_95_percentile": [
+        -9.639658675382439e-05,
+        5.253397763597536e-05
+      ],
+      "degenerate_replicates": 0
+    },
+    "regional": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "missing_share_defined_ids": 1574,
+        "heldout_n": 1574,
+        "missing_share_distribution": {
+          "n": 1574,
+          "min": 0.0,
+          "p05": 0.008449651046859422,
+          "p50": 0.04604851349187479,
+          "p95": 0.10526315789473684,
+          "max": 0.3333333333333333,
+          "mean": 0.05011962691893809,
+          "sd": 0.03131926688482034,
+          "variance": 0.0009808964782026038
+        },
+        "baseline_r2": -0.007916667229182606,
+        "augmented_r2": -0.0078395251400043,
+        "delta_r2": 7.714208917835627e-05,
+        "baseline_sse": 0.025041854656439877,
+        "augmented_sse": 0.025039938048601246,
+        "heldout_sst": 0.02484516376267622
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "missing_share_defined_ids": 586,
+        "heldout_n": 586,
+        "missing_share_distribution": {
+          "n": 586,
+          "min": 0.0,
+          "p05": 0.005494246368609696,
+          "p50": 0.035608622147083685,
+          "p95": 0.09545383938279915,
+          "max": 0.26666666666666666,
+          "mean": 0.04153899016619586,
+          "sd": 0.02990660517976427,
+          "variance": 0.0008944050333783031
+        },
+        "baseline_r2": 0.005717158695531688,
+        "augmented_r2": 0.005692611582008622,
+        "delta_r2": -2.4547113523098972e-05,
+        "baseline_sse": 0.016611894212821523,
+        "augmented_sse": 0.016612304331588675,
+        "heldout_sst": 0.01670741314516424
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "missing_share_defined_ids": 1189,
+        "heldout_n": 1189,
+        "missing_share_distribution": {
+          "n": 1189,
+          "min": 0.0,
+          "p05": 0.0,
+          "p50": 0.03636363636363636,
+          "p95": 0.08581504702194348,
+          "max": 0.26666666666666666,
+          "mean": 0.040354436547797384,
+          "sd": 0.025746886039067222,
+          "variance": 0.0006629021407087146
+        },
+        "baseline_r2": -0.021788713617143074,
+        "augmented_r2": -0.021832764719170727,
+        "delta_r2": -4.405110202780912e-05,
+        "baseline_sse": 0.07491549994790903,
+        "augmented_sse": 0.07491872968639379,
+        "heldout_sst": 0.0733179951486324
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "missing_share_defined_ids": 5978,
+        "heldout_n": 5978,
+        "missing_share_distribution": {
+          "n": 5978,
+          "min": 0.0,
+          "p05": 0.00784675953967293,
+          "p50": 0.04040404040404041,
+          "p95": 0.0967741935483871,
+          "max": 0.9237057220708447,
+          "mean": 0.04887668935546795,
+          "sd": 0.058055545996789845,
+          "variance": 0.003370446420985381
+        },
+        "baseline_r2": 0.00013324223500965626,
+        "augmented_r2": 0.00011320918601809282,
+        "delta_r2": -2.0033048991502837e-05,
+        "baseline_sse": 0.03441057399897048,
+        "augmented_sse": 0.03441126343954783,
+        "heldout_sst": 0.03441515955174737
+      }
+    },
+    "folds": [
+      {
+        "fold": 0,
+        "heldout_n": 1821,
+        "missing_share_defined_n": 1821,
+        "baseline_r2": -0.009545136707497237,
+        "augmented_r2": -0.009618278686231774,
+        "delta_r2": -7.314197873465742e-05,
+        "baseline_sse": 0.02043908896789519,
+        "augmented_sse": 0.020440569788669108,
+        "heldout_sst": 0.020245839660576914
+      },
+      {
+        "fold": 1,
+        "heldout_n": 1831,
+        "missing_share_defined_n": 1831,
+        "baseline_r2": -0.003958833355862668,
+        "augmented_r2": -0.003931877513207782,
+        "delta_r2": 2.69558426550347e-05,
+        "baseline_sse": 0.04722103782628494,
+        "augmented_sse": 0.047219769962680014,
+        "heldout_sst": 0.04703483475357499
+      },
+      {
+        "fold": 2,
+        "heldout_n": 1895,
+        "missing_share_defined_n": 1895,
+        "baseline_r2": -0.025409305813959282,
+        "augmented_r2": -0.025350255664148502,
+        "delta_r2": 5.9050149810762596e-05,
+        "baseline_sse": 0.023554904452556747,
+        "augmented_sse": 0.02355354799847659,
+        "heldout_sst": 0.022971221656564848
+      },
+      {
+        "fold": 3,
+        "heldout_n": 1924,
+        "missing_share_defined_n": 1924,
+        "baseline_r2": -0.029957717997850963,
+        "augmented_r2": -0.030014226484281092,
+        "delta_r2": -5.65084864301099e-05,
+        "baseline_sse": 0.020063636845677232,
+        "augmented_sse": 0.020064737634312164,
+        "heldout_sst": 0.019480058739381276
+      },
+      {
+        "fold": 4,
+        "heldout_n": 1856,
+        "missing_share_defined_n": 1856,
+        "baseline_r2": -0.006158400730351676,
+        "augmented_r2": -0.006220628633054837,
+        "delta_r2": -6.222790270311267e-05,
+        "baseline_sse": 0.03970115472372681,
+        "augmented_sse": 0.03970361012199368,
+        "heldout_sst": 0.039458155589525944
+      }
+    ],
+    "positive_regions": 1
+  },
+  "thresholds": {
+    "pooled_delta_r2_minimum_inclusive": 0.01,
+    "bootstrap_ci_lower_strictly_above": 0.0,
+    "minimum_positive_regions": 3
+  },
+  "acceptance": {
+    "pooled_delta_r2_at_least_0_01": false,
+    "bootstrap_ci_lower_above_zero": false,
+    "positive_delta_in_at_least_3_of_4_regions": false,
+    "missingness_screen_gate_pass": false
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "frozen_residual_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/s1-disagreement-orthogonalized/orthogonalized-disagreement.parquet",
+      "sha256": "437b8995e9aa97cc3cf0337cf4338c34e21ade2edaa6dc258700956695feab1e",
+      "rows": 9379,
+      "columns_read": [
+        "GEOID",
+        "region",
+        "fold",
+        "crossfit_residual",
+        "crossfit_joint_defined",
+        "Mx4_F",
+        "Mx4_F_defined",
+        "S1_lagged_Mx4_F",
+        "S1_lagged_Mx4_F_defined"
+      ],
+      "exact_official_pair_alignment": true
+    },
+    "provided_overture_assignment_by_region": {
+      "maricopa-az": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-overture-pois.parquet",
+        "object_bytes": 40987154,
+        "rows": 300046,
+        "row_groups": 9,
+        "selected_columns": [
+          "id",
+          "categories.primary",
+          "bbox"
+        ],
+        "official_tract_columns": [
+          "GEOID",
+          "geometry"
+        ],
+        "selected_fields_sha256": "a0cf246bee24ae2cd38cd11f0cbb3494b4248be4b39bc37bac146dc043f4e503",
+        "unique_nonnull_place_ids": 300046,
+        "duplicate_rows_deduplicated": 0,
+        "null_id_rows_excluded": 0,
+        "assigned_unique_place_ids": 300046,
+        "unmatched_unique_place_ids": 0,
+        "assigned_ids_with_null_primary": 14746,
+        "category_count_sum": 285300,
+        "tract_assignment": {
+          "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/maricopa-az/maricopa-az-census-acs-housing.parquet",
+          "object_bytes": 3457173,
+          "selected_columns": [
+            "GEOID",
+            "geometry"
+          ],
+          "selected_column_compressed_bytes": 3409661,
+          "row_groups": 1,
+          "rows": 1593
+        },
+        "observed_primary_category_support_count": 1618
+      },
+      "northern-ca": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-overture-pois.parquet",
+        "object_bytes": 16168720,
+        "rows": 116897,
+        "row_groups": 4,
+        "selected_columns": [
+          "id",
+          "categories.primary",
+          "bbox"
+        ],
+        "official_tract_columns": [
+          "GEOID",
+          "geometry"
+        ],
+        "selected_fields_sha256": "6f2a6a38089176bc4595856705d6d70a889d856c685d7cb9c288202e86825a8d",
+        "unique_nonnull_place_ids": 116897,
+        "duplicate_rows_deduplicated": 0,
+        "null_id_rows_excluded": 0,
+        "assigned_unique_place_ids": 116897,
+        "unmatched_unique_place_ids": 0,
+        "assigned_ids_with_null_primary": 4795,
+        "category_count_sum": 112102,
+        "tract_assignment": {
+          "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-census-acs-housing.parquet",
+          "object_bytes": 3037540,
+          "selected_columns": [
+            "GEOID",
+            "geometry"
+          ],
+          "selected_column_compressed_bytes": 3016786,
+          "row_groups": 1,
+          "rows": 591
+        },
+        "observed_primary_category_support_count": 1456
+      },
+      "eastern-ok": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-overture-pois.parquet",
+        "object_bytes": 28848614,
+        "rows": 207369,
+        "row_groups": 6,
+        "selected_columns": [
+          "id",
+          "categories.primary",
+          "bbox"
+        ],
+        "official_tract_columns": [
+          "GEOID",
+          "geometry"
+        ],
+        "selected_fields_sha256": "d7713debc916f156fbdbfa58c00c062db61aeb530d3188f80a4a794aaf931ddd",
+        "unique_nonnull_place_ids": 207369,
+        "duplicate_rows_deduplicated": 0,
+        "null_id_rows_excluded": 0,
+        "assigned_unique_place_ids": 207369,
+        "unmatched_unique_place_ids": 0,
+        "assigned_ids_with_null_primary": 8494,
+        "category_count_sum": 198875,
+        "tract_assignment": {
+          "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/eastern-ok/eastern-ok-census-acs-housing.parquet",
+          "object_bytes": 3650879,
+          "selected_columns": [
+            "GEOID",
+            "geometry"
+          ],
+          "selected_column_compressed_bytes": 3612768,
+          "row_groups": 1,
+          "rows": 1192
+        },
+        "observed_primary_category_support_count": 1500
+      },
+      "south-central-tx": {
+        "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-overture-pois.parquet",
+        "object_bytes": 179937096,
+        "rows": 1300334,
+        "row_groups": 36,
+        "selected_columns": [
+          "id",
+          "categories.primary",
+          "bbox"
+        ],
+        "official_tract_columns": [
+          "GEOID",
+          "geometry"
+        ],
+        "selected_fields_sha256": "a8b088a54f6c5222dc87fde8e617e866b8fbf7c040f7a34cbf3572af5d4bca20",
+        "unique_nonnull_place_ids": 1300334,
+        "duplicate_rows_deduplicated": 0,
+        "null_id_rows_excluded": 0,
+        "assigned_unique_place_ids": 1300331,
+        "unmatched_unique_place_ids": 3,
+        "assigned_ids_with_null_primary": 79103,
+        "category_count_sum": 1221228,
+        "tract_assignment": {
+          "source_uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/south-central-tx/south-central-tx-census-acs-housing.parquet",
+          "object_bytes": 13758433,
+          "selected_columns": [
+            "GEOID",
+            "geometry"
+          ],
+          "selected_column_compressed_bytes": 13587215,
+          "row_groups": 1,
+          "rows": 6010
+        },
+        "observed_primary_category_support_count": 1778
+      }
+    },
+    "category_entropy_report": {
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/poi-category-entropy.json",
+      "sha256": "e001038d59b9f27d261c3fa9f029c881a56b47daf0a56a8b5628b897d66f16a5"
+    },
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/poi-primary-category-missingness/paired-oof-predictions.parquet",
+      "sha256": "74c046c8f93997ae5883d39064b05a99d01a95885772cd381a12baccd61589fa",
+      "rows": 9379,
+      "columns": [
+        "GEOID",
+        "region",
+        "fold",
+        "unique_assigned_place_count",
+        "unique_places_with_primary_category",
+        "unique_places_missing_primary_category",
+        "primary_category_missing_share",
+        "primary_category_missing_share_defined",
+        "frozen_s1_crossfit_residual",
+        "s1_residual_defined",
+        "Mx4_F",
+        "S1_lagged_Mx4_F",
+        "paired_screen_defined",
+        "baseline_oof_prediction",
+        "augmented_oof_prediction"
+      ],
+      "deterministic_serialization": true
+    },
+    "missing_share_training_scalers_by_fold": {
+      "0": {
+        "training_mean": 0.04753052450571745,
+        "training_sd": 0.050264741118698684,
+        "applied_scale": 0.050264741118698684,
+        "training_n": 7506,
+        "heldout_n": 1821
+      },
+      "1": {
+        "training_mean": 0.047703693418263804,
+        "training_sd": 0.05085459889149924,
+        "applied_scale": 0.05085459889149924,
+        "training_n": 7496,
+        "heldout_n": 1831
+      },
+      "2": {
+        "training_mean": 0.047216659567711046,
+        "training_sd": 0.047466479159837455,
+        "applied_scale": 0.047466479159837455,
+        "training_n": 7432,
+        "heldout_n": 1895
+      },
+      "3": {
+        "training_mean": 0.04763770008811211,
+        "training_sd": 0.04919380268876497,
+        "applied_scale": 0.04919380268876497,
+        "training_n": 7403,
+        "heldout_n": 1924
+      },
+      "4": {
+        "training_mean": 0.047605213446356286,
+        "training_sd": 0.05098678915984802,
+        "applied_scale": 0.05098678915984802,
+        "training_n": 7471,
+        "heldout_n": 1856
+      }
+    },
+    "script_sha256": "f319ee27cfdea11265a80aef75b10c262b0ef57b47e7fd29b267b42f880d7562"
+  },
+  "interpretation": "The primary-category missing-share association failed one or more preregistered gates; keep it descriptive only and do not integrate it."
+}
