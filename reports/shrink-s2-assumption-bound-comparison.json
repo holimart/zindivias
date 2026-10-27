@@ -1,0 +1,434 @@
+{
+  "analysis": "S2 H1b assumption-bound candidate build and label-free comparison",
+  "assumptions": [
+    "A Microsoft-sourced Overture record is treated as an exact overlap with the removed Microsoft reference solely for this counterfactual; this is unverified and not accuracy evidence",
+    "Overture category count zero is treated as a zero reference count for this scenario only; USGS reference counts are absent and this premise is unverified",
+    "Feature-derived C2 component estimates and internal establishment proxy are not hidden reference values.",
+    "The 415 eastern-WA rows are deterministic formatting fills only and are outside the official 9,379 scored tracts.",
+    "The result is a label-free model construction; hidden-target accuracy and target RMSE are not identifiable."
+  ],
+  "candidate": {
+    "artifact": "reports/candidates/S2_h1b_assumption_bound_v1.csv",
+    "candidate_id": "S2_h1b_assumption_bound_v1",
+    "formatting_only_rows": 415,
+    "official_scored_rows": 9379,
+    "registered_artifact_sha256": "44ba76abcd9e1fb0aa7194e3c0fadf567debce40e29ed4bdf93ef02ae9514577",
+    "rows": 9794,
+    "sha256": "44ba76abcd9e1fb0aa7194e3c0fadf567debce40e29ed4bdf93ef02ae9514577",
+    "target_accuracy_identifiable": false,
+    "upload_authorized": false,
+    "upload_performed": false
+  },
+  "comparison_scope": {
+    "formatting_rows_excluded_from_comparison": true,
+    "official_sample_score_placeholders_read": false,
+    "official_tracts": 9379,
+    "region_counts": {
+      "eastern-ok": 1192,
+      "maricopa-az": 1593,
+      "northern-ca": 591,
+      "south-central-tx": 6003
+    }
+  },
+  "data_use": {
+    "A_family_component_decomposition_invented": false,
+    "C0_read_or_used": false,
+    "S_artifact_used_only_as_label_free_comparison_baseline": true,
+    "existing_S_artifact_modified": false,
+    "external_data_read": false,
+    "labels_or_target_values_read": false,
+    "official_sample_GEOID_only": true,
+    "provided_data_only": true,
+    "public_or_private_leaderboard_scores_or_scorecards_read_or_used": false,
+    "removed_references_or_equivalents_read": false,
+    "sample_score_placeholders_read": false,
+    "uploads": 0
+  },
+  "overall_interpretation": "S2 is a deterministic assumption-bound alternate construction, not evidence that its levels or masks match the organizer target. S is likewise supported only as a label-free construction-agreement hypothesis. The comparison is descriptive and does not select an upload candidate.",
+  "preregistration": {
+    "path": "config/shrink-s2-assumption-bound-preregistered.json",
+    "registered_before_s2_value_computation": true,
+    "sha256": "d0a85a584dd80990a9a81022f82b66f653250dac097832669676384ddae5d479"
+  },
+  "provenance": {
+    "C2_template_geoid_order_rows": 9794,
+    "C2_template_unique_geoids": 9794,
+    "build_script_sha256": "955ce0ae728cd1b859829cd225a408102b073c3a41b96f42d5ab7b9d3ee47193",
+    "frozen_inputs_sha256": {
+      "C2_components": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514",
+      "H1b_preregistration": "d2ca6ad5a6e7701a85068c355598490d9d2444e86e1f9490b0c6b15e39881c9e",
+      "H1b_stress_test_source": "a38e70b251f99e6a6121dec11fc6747b66c46271450a16adde1315e5bdcc01ca",
+      "S_comparison_artifact": "26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a",
+      "estimator_source": "4f59982e0349af048ba11efbd5dbc629076eef8d3c8dc08d5747da5833bfc4fe",
+      "gap_estimates": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852"
+    },
+    "official_samples_sha256": {
+      "eastern-ok": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+      "maricopa-az": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+      "northern-ca": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+      "south-central-tx": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e"
+    },
+    "region_input_sha256": {
+      "eastern-ok": {
+        "feature_columns_read": [
+          "GEOID",
+          "overture_road_km",
+          "overture_named_road_km_5070",
+          "overture_buildings",
+          "overture_building_microsoft_source_share",
+          "overture_poi_all",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "feature_summary_sha256": "e5a06316c316f61bf25b80b48e89c1e7f0b1461a0b8cec5831aae24e0cf83fa6",
+        "official_rows": 1192,
+        "strata_columns_read": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban"
+        ],
+        "strata_sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54"
+      },
+      "maricopa-az": {
+        "feature_columns_read": [
+          "GEOID",
+          "overture_road_km",
+          "overture_named_road_km_5070",
+          "overture_buildings",
+          "overture_building_microsoft_source_share",
+          "overture_poi_all",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "feature_summary_sha256": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22",
+        "official_rows": 1593,
+        "strata_columns_read": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban"
+        ],
+        "strata_sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd"
+      },
+      "northern-ca": {
+        "feature_columns_read": [
+          "GEOID",
+          "overture_road_km",
+          "overture_named_road_km_5070",
+          "overture_buildings",
+          "overture_building_microsoft_source_share",
+          "overture_poi_all",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "feature_summary_sha256": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c",
+        "official_rows": 591,
+        "strata_columns_read": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban"
+        ],
+        "strata_sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243"
+      },
+      "south-central-tx": {
+        "feature_columns_read": [
+          "GEOID",
+          "overture_road_km",
+          "overture_named_road_km_5070",
+          "overture_buildings",
+          "overture_building_microsoft_source_share",
+          "overture_poi_all",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "feature_summary_sha256": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746",
+        "official_rows": 6003,
+        "strata_columns_read": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban"
+        ],
+        "strata_sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354"
+      }
+    },
+    "registry_sha256_after_freeze": "3e91d1a0951ba726f7010613e9483ccafa329971156a5a537ff98c61217fce82"
+  },
+  "recipe": {
+    "base": "C2_component_estimator_v0 component outputs and reports/gap-estimates.csv per-component defined flags; this is the frozen feature-only component recipe audited by H1b. Do not use S as a base and do not apply S's cross-method reliability weights or region-mean shrink.",
+    "building": {
+      "assumption": "A Microsoft-sourced Overture record is treated as an exact overlap with the removed Microsoft reference solely for this counterfactual; this is unverified and not accuracy evidence",
+      "defined_mask": "preserve C2 building_defined",
+      "rule": "when share is finite and in [0,1], building_gap_S2 = building_gap_C2 * (1 - share); when share is missing, preserve building_gap_C2 unchanged",
+      "source_share": "provided per-tract overture_building_microsoft_source_share"
+    },
+    "coefficient_or_fit": "none; no fitted/estimated coefficients, target moments, or S-style shrink",
+    "input_construction_ambiguity": "H1b's exact component-level stress-test is defined on C2 and its frozen per-type recipe values. A1/A2/A3 expose aggregate component columns but no separate facility-type decompositions, so S2 uses the exact C2/H1b component path rather than inventing per-type splits for A-family candidates. S and C2 remain explicit comparison baselines.",
+    "overall_composite": "arithmetic mean of the defined transport, adjusted building, and adjusted POI component values; omit undefined components; deterministic 0.0 export fallback only if no component is defined",
+    "poi_composite": "mean of whichever facilities half and establishment half are defined; undefined if neither is defined; preserve no hidden-reference mask",
+    "poi_establishments": "preserve the frozen cbp_gap/cbp_defined establishment half without correction; this is an internal feature-only proxy, not a CBP reference count",
+    "poi_facilities": {
+      "assumption": "Overture category count zero is treated as a zero reference count for this scenario only; USGS reference counts are absent and this premise is unverified",
+      "inputs": "fire_gap/fire_defined, ems_gap/ems_defined, schools_gap/schools_defined from frozen reports/gap-estimates.csv plus raw Overture category counts from provided tract summaries",
+      "rule": "drop each facility type from the facilities half iff that tract's raw overture_poi_<type> count is exactly zero; retain other types only when their frozen per-type defined flag is true; facilities half is the arithmetic mean of retained defined type gaps, or undefined if no type remains"
+    },
+    "transport": "preserve C2 transport_gap and transport_defined unchanged"
+  },
+  "reproduction": {
+    "command": "uv run --with-requirements requirements.txt python scripts/build_shrink_s2_assumption_bound.py --workspace $COMPETITION_WORKSPACE",
+    "tests": "uv run --with-requirements requirements.txt --with pytest python -m pytest -q tests/test_shrink_s2_assumption_bound.py"
+  },
+  "schema_version": 1,
+  "side_by_side_by_region": {
+    "eastern-ok": {
+      "models": {
+        "C2_component_estimator_v0": {
+          "component_means": {
+            "building": {
+              "defined_mean": 0.01922086664562227,
+              "defined_rows": 1192,
+              "undefined_rows": 0
+            },
+            "poi": {
+              "defined_mean": 0.19934620484484325,
+              "defined_rows": 1192,
+              "undefined_rows": 0
+            },
+            "transport": {
+              "defined_mean": 0.11887418529296524,
+              "defined_rows": 707,
+              "undefined_rows": 485
+            }
+          },
+          "mean_composite_level": 0.11734124649737128,
+          "share_tracts_changed_vs_C2": 0.0,
+          "share_tracts_changed_vs_S": 1.0
+        },
+        "S2_h1b_assumption_bound_v1": {
+          "component_means": {
+            "building": {
+              "defined_mean": 0.003631413426920288,
+              "defined_rows": 1192,
+              "undefined_rows": 0
+            },
+            "poi": {
+              "defined_mean": 0.028724445083813437,
+              "defined_rows": 1192,
+              "undefined_rows": 0
+            },
+            "transport": {
+              "defined_mean": 0.11887418529296524,
+              "defined_rows": 707,
+              "undefined_rows": 485
+            }
+          },
+          "mean_composite_level": 0.0369918838306741,
+          "share_tracts_changed_vs_C2": 0.6199664429530202,
+          "share_tracts_changed_vs_S": 1.0
+        },
+        "S_crossmethod_reliability_shrink_v1": {
+          "component_means": null,
+          "component_means_note": "Not identifiable from S artifact; it contains only GEOID and composite coverage_gap_score.",
+          "mean_composite_level": 0.23206773881903695,
+          "share_tracts_changed_vs_C2": 1.0,
+          "share_tracts_changed_vs_S": 0.0
+        }
+      },
+      "official_tracts": 1192
+    },
+    "maricopa-az": {
+      "models": {
+        "C2_component_estimator_v0": {
+          "component_means": {
+            "building": {
+              "defined_mean": 0.0490498624372848,
+              "defined_rows": 1593,
+              "undefined_rows": 0
+            },
+            "poi": {
+              "defined_mean": 0.31285133939705145,
+              "defined_rows": 1593,
+              "undefined_rows": 0
+            },
+            "transport": {
+              "defined_mean": 0.2420187299197685,
+              "defined_rows": 1011,
+              "undefined_rows": 582
+            }
+          },
+          "mean_composite_level": 0.19668435231946868,
+          "share_tracts_changed_vs_C2": 0.0,
+          "share_tracts_changed_vs_S": 1.0
+        },
+        "S2_h1b_assumption_bound_v1": {
+          "component_means": {
+            "building": {
+              "defined_mean": 0.02895330088248774,
+              "defined_rows": 1593,
+              "undefined_rows": 0
+            },
+            "poi": {
+              "defined_mean": 0.08325883378379323,
+              "defined_rows": 1593,
+              "undefined_rows": 0
+            },
+            "transport": {
+              "defined_mean": 0.2420187299197685,
+              "defined_rows": 1011,
+              "undefined_rows": 582
+            }
+          },
+          "mean_composite_level": 0.0958754231784622,
+          "share_tracts_changed_vs_C2": 0.8524795982423101,
+          "share_tracts_changed_vs_S": 1.0
+        },
+        "S_crossmethod_reliability_shrink_v1": {
+          "component_means": null,
+          "component_means_note": "Not identifiable from S artifact; it contains only GEOID and composite coverage_gap_score.",
+          "mean_composite_level": 0.32433922723692776,
+          "share_tracts_changed_vs_C2": 1.0,
+          "share_tracts_changed_vs_S": 0.0
+        }
+      },
+      "official_tracts": 1593
+    },
+    "northern-ca": {
+      "models": {
+        "C2_component_estimator_v0": {
+          "component_means": {
+            "building": {
+              "defined_mean": 0.04656879862317408,
+              "defined_rows": 591,
+              "undefined_rows": 0
+            },
+            "poi": {
+              "defined_mean": 0.2336821598805405,
+              "defined_rows": 591,
+              "undefined_rows": 0
+            },
+            "transport": {
+              "defined_mean": 0.17136616336549176,
+              "defined_rows": 411,
+              "undefined_rows": 180
+            }
+          },
+          "mean_composite_level": 0.15383899870291118,
+          "share_tracts_changed_vs_C2": 0.0,
+          "share_tracts_changed_vs_S": 1.0
+        },
+        "S2_h1b_assumption_bound_v1": {
+          "component_means": {
+            "building": {
+              "defined_mean": 0.007164274693964768,
+              "defined_rows": 591,
+              "undefined_rows": 0
+            },
+            "poi": {
+              "defined_mean": 0.05745011495728833,
+              "defined_rows": 591,
+              "undefined_rows": 0
+            },
+            "transport": {
+              "defined_mean": 0.17136616336549176,
+              "defined_rows": 411,
+              "undefined_rows": 180
+            }
+          },
+          "mean_composite_level": 0.06655805905350598,
+          "share_tracts_changed_vs_C2": 0.6903553299492385,
+          "share_tracts_changed_vs_S": 1.0
+        },
+        "S_crossmethod_reliability_shrink_v1": {
+          "component_means": null,
+          "component_means_note": "Not identifiable from S artifact; it contains only GEOID and composite coverage_gap_score.",
+          "mean_composite_level": 0.2647911227656345,
+          "share_tracts_changed_vs_C2": 1.0,
+          "share_tracts_changed_vs_S": 0.0
+        }
+      },
+      "official_tracts": 591
+    },
+    "south-central-tx": {
+      "models": {
+        "C2_component_estimator_v0": {
+          "component_means": {
+            "building": {
+              "defined_mean": 0.09166800611826792,
+              "defined_rows": 6003,
+              "undefined_rows": 0
+            },
+            "poi": {
+              "defined_mean": 0.2559921043129724,
+              "defined_rows": 6001,
+              "undefined_rows": 2
+            },
+            "transport": {
+              "defined_mean": 0.13447451743939878,
+              "defined_rows": 3785,
+              "undefined_rows": 2218
+            }
+          },
+          "mean_composite_level": 0.1733665860728213,
+          "share_tracts_changed_vs_C2": 0.0,
+          "share_tracts_changed_vs_S": 1.0
+        },
+        "S2_h1b_assumption_bound_v1": {
+          "component_means": {
+            "building": {
+              "defined_mean": 0.03587641247319683,
+              "defined_rows": 6003,
+              "undefined_rows": 0
+            },
+            "poi": {
+              "defined_mean": 0.05113793260278818,
+              "defined_rows": 6001,
+              "undefined_rows": 2
+            },
+            "transport": {
+              "defined_mean": 0.13447451743939878,
+              "defined_rows": 3785,
+              "undefined_rows": 2218
+            }
+          },
+          "mean_composite_level": 0.06500196819624302,
+          "share_tracts_changed_vs_C2": 0.7674496085290688,
+          "share_tracts_changed_vs_S": 1.0
+        },
+        "S_crossmethod_reliability_shrink_v1": {
+          "component_means": null,
+          "component_means_note": "Not identifiable from S artifact; it contains only GEOID and composite coverage_gap_score.",
+          "mean_composite_level": 0.23988178532986043,
+          "share_tracts_changed_vs_C2": 1.0,
+          "share_tracts_changed_vs_S": 0.0
+        }
+      },
+      "official_tracts": 6003
+    }
+  }
+}

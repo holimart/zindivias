@@ -17,7 +17,6 @@ import json
 import math
 import os
 import sys
-from collections import Counter
 from pathlib import Path
 from typing import Any
 
@@ -118,13 +117,19 @@ def adjusted_components(c2: dict[str, float], estimates: dict[str, str], feature
     retained_facilities = []
     for kind in H1B.FACILITIES:
         raw_count = to_float(feature.get(f"overture_poi_{kind}"), f"overture_poi_{kind}")
+        if raw_count < 0:
+            raise ValueError(f"negative Overture count for {kind}")
         per_type_defined = binary_flag(estimates[f"{kind}_defined"], f"{kind}_defined")
         per_type_gap = to_float(estimates[f"{kind}_gap"], f"{kind}_gap")
+        if not 0.0 <= per_type_gap <= 1.0:
+            raise ValueError(f"per-type {kind} gap outside [0,1]")
         if raw_count != 0 and per_type_defined:
             retained_facilities.append((per_type_gap, 1))
         else:
             retained_facilities.append((per_type_gap, 0))
     cbp_gap = to_float(estimates["cbp_gap"], "cbp_gap")
+    if not 0.0 <= cbp_gap <= 1.0:
+        raise ValueError("CBP-proxy gap outside [0,1]")
     cbp_defined = binary_flag(estimates["cbp_defined"], "cbp_defined")
     poi, poi_defined = H1B.compose_poi(retained_facilities, cbp_gap, cbp_defined)
     components = {"transport": c2["transport"], "building": building, "poi": poi}
@@ -172,12 +177,48 @@ def registry_array_end(raw: str, marker: str = "candidate_set") -> int:
 
 
 def insert_candidate_card(raw: str, card: dict[str, Any]) -> str:
-    if CANDIDATE_ID in raw:
-        parsed = json.loads(raw)
-        matches = [item for item in parsed["candidate_set"] if item.get("candidate_id") == CANDIDATE_ID]
-        if len(matches) != 1 or matches[0] != card:
-            raise ValueError("existing S2 registry entry differs from deterministic card")
-        return raw
+    marker = f'"candidate_id": "{CANDIDATE_ID}"'
+    if marker in raw:
+        marker_at = raw.find(marker)
+        start = raw.rfind("{", 0, marker_at)
+        stack: list[str] = []
+        quoted = escaped = False
+        end = None
+        for index in range(start, len(raw)):
+            char = raw[index]
+            if quoted:
+                if escaped:
+                    escaped = False
+                elif char == "\\":
+                    escaped = True
+                elif char == '"':
+                    quoted = False
+                continue
+            if char == '"':
+                quoted = True
+            elif char in "[{":
+                stack.append(char)
+            elif char in "]}":
+                opener = stack.pop()
+                if (opener, char) not in (("[", "]"), ("{", "}")):
+                    raise ValueError("S2 registry entry JSON bracket mismatch")
+                if not stack:
+                    end = index
+                    break
+        if start < 0 or end is None:
+            raise ValueError("could not locate existing S2 registry card")
+        old_card = json.loads(raw[start:end + 1])
+        if (old_card.get("candidate_id") != CANDIDATE_ID
+                or old_card.get("artifact") != card.get("artifact")
+                or old_card.get("sha256") != card.get("sha256")
+                or old_card.get("purpose") != "improvement"
+                or old_card.get("upload_authorized") is not False):
+            raise ValueError("existing S2 registry entry does not match frozen artifact")
+        if old_card == card:
+            return raw
+        replacement = json.dumps(card, indent=2, ensure_ascii=False)
+        replacement = "\n".join("    " + line for line in replacement.splitlines())
+        return raw[:start] + replacement + raw[end + 1:]
     end = registry_array_end(raw)
     insertion = json.dumps(card, indent=2, ensure_ascii=False)
     insertion = "\n".join("    " + line for line in insertion.splitlines())
@@ -266,6 +307,8 @@ def run_build(workspace: Path) -> dict[str, Any]:
         c2row = c2_data[geoid]
         c2_components = {name: to_float(c2row[f"{name}_gap"], f"C2 {name}_gap")
                          for name in ("transport", "building", "poi")}
+        if any(not 0.0 <= value <= 1.0 for value in c2_components.values()):
+            raise ValueError(f"C2 component outside [0,1] for {geoid}")
         estimates = estimate_rows[geoid]
         original_flags = {name: binary_flag(estimates[f"{name}_defined"], f"{name}_defined")
                           for name in ("transport", "building", "poi")}
@@ -349,6 +392,7 @@ def run_build(workspace: Path) -> dict[str, Any]:
         "pre_registered": True,
         "preregistered_card_path": "config/shrink-s2-assumption-bound-preregistered.json",
         "preregistered_card_sha256": sha256_file(PREREG_PATH),
+        "build_script_sha256": sha256_file(Path(__file__).resolve()),
         "purpose": "improvement",
         "description": "Explicit H1b assumption-bound transformation of frozen C2 component estimates; not target-accuracy evidence and not an upload authorization.",
         "predicted_score": None,
@@ -379,7 +423,7 @@ def run_build(workspace: Path) -> dict[str, Any]:
                             "sha256": sha256_file(PREREG_PATH),
                             "registered_before_s2_value_computation": True},
         "candidate": {"candidate_id": CANDIDATE_ID, "artifact": CANDIDATE_REL,
-                      "sha256": artifact_sha, "registry_card_sha256": artifact_sha,
+                      "sha256": artifact_sha, "registered_artifact_sha256": artifact_sha,
                       "rows": len(template_order), "official_scored_rows": len(official_ids),
                       "formatting_only_rows": len(template_order) - len(official_ids),
                       "upload_authorized": False, "upload_performed": False,
@@ -392,7 +436,8 @@ def run_build(workspace: Path) -> dict[str, Any]:
                              "formatting_rows_excluded_from_comparison": True},
         "side_by_side_by_region": table,
         "overall_interpretation": "S2 is a deterministic assumption-bound alternate construction, not evidence that its levels or masks match the organizer target. S is likewise supported only as a label-free construction-agreement hypothesis. The comparison is descriptive and does not select an upload candidate.",
-        "provenance": {"frozen_inputs_sha256": input_hashes,
+        "provenance": {"build_script_sha256": sha256_file(Path(__file__).resolve()),
+                       "frozen_inputs_sha256": input_hashes,
                        "official_samples_sha256": sample_hashes,
                        "region_input_sha256": input_provenance,
                        "registry_sha256_after_freeze": hashlib.sha256(updated_registry.encode("utf-8")).hexdigest(),
@@ -411,13 +456,13 @@ def run_build(workspace: Path) -> dict[str, Any]:
                          "tests": "uv run --with-requirements requirements.txt --with pytest python -m pytest -q tests/test_shrink_s2_assumption_bound.py"},
     }
     COMPARE_PATH.write_text(json.dumps(report, indent=2, sort_keys=True, allow_nan=False) + "\n", encoding="utf-8")
-    writeup = make_writeup(table, artifact_sha, assumptions)
+    writeup = make_writeup(table, artifact_sha)
     WRITEUP_PATH.parent.mkdir(parents=True, exist_ok=True)
     WRITEUP_PATH.write_text(writeup, encoding="utf-8")
     return report
 
 
-def make_writeup(table: dict[str, Any], artifact_sha: str, assumptions: list[str]) -> str:
+def make_writeup(table: dict[str, Any], artifact_sha: str) -> str:
     lines = [
         "# S2: H1b assumption-bound rule counterfactual",
         "",

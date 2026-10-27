@@ -1627,6 +1627,56 @@
       },
       "upload_authorized": false,
       "registration_status": "frozen_no_upload"
+    },
+            {
+      "candidate_id": "S2_h1b_assumption_bound_v1",
+      "name": "S2 H1b assumption-bound rule counterfactual",
+      "artifact": "reports/candidates/S2_h1b_assumption_bound_v1.csv",
+      "sha256": "44ba76abcd9e1fb0aa7194e3c0fadf567debce40e29ed4bdf93ef02ae9514577",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "pre_registered": true,
+      "preregistered_card_path": "config/shrink-s2-assumption-bound-preregistered.json",
+      "preregistered_card_sha256": "d0a85a584dd80990a9a81022f82b66f653250dac097832669676384ddae5d479",
+      "build_script_sha256": "955ce0ae728cd1b859829cd225a408102b073c3a41b96f42d5ab7b9d3ee47193",
+      "purpose": "improvement",
+      "description": "Explicit H1b assumption-bound transformation of frozen C2 component estimates; not target-accuracy evidence and not an upload authorization.",
+      "predicted_score": null,
+      "predicted_score_scope": "Label-free tract-level candidate predictions only; organizer target score and target RMSE are not identifiable without labels/reference counts.",
+      "predicted_score_basis": "C2 feature-only component outputs transformed under the preregistered Microsoft-source-overlap and Overture-zero-facility assumptions; no fitted parameters.",
+      "target_RMSE_forecast": null,
+      "target_RMSE_forecast_limitation": "No labels or permitted organizer-reference counts are available; neither S2 nor S accuracy can be inferred from this comparison.",
+      "assumptions": [
+        "A Microsoft-sourced Overture record is treated as an exact overlap with the removed Microsoft reference solely for this counterfactual; this is unverified and not accuracy evidence",
+        "Overture category count zero is treated as a zero reference count for this scenario only; USGS reference counts are absent and this premise is unverified",
+        "Feature-derived C2 component estimates and internal establishment proxy are not hidden reference values.",
+        "The 415 eastern-WA rows are deterministic formatting fills only and are outside the official 9,379 scored tracts.",
+        "The result is a label-free model construction; hidden-target accuracy and target RMSE are not identifiable."
+      ],
+      "parameters": {
+        "fitted_coefficients": [],
+        "S_style_shrink_applied": false,
+        "official_composite_rule": "mean of defined transport, building, and POI components"
+      },
+      "eastern_wa_fill": {
+        "region": "eastern-wa",
+        "rows": 415,
+        "value": 0.0,
+        "scored_target_claim": false
+      },
+      "column_checks": {
+        "unique_columns": true,
+        "all_rows_have_columns": true,
+        "finite_bounded_scores": true
+      },
+      "upload_authorized": false,
+      "registration_status": "frozen_no_upload"
     }],
   "feature_source": "provided Overture buildings/roads/POIs plus provided ACS housing geometries and strata covariates",
   "estimator_version": "v0",
