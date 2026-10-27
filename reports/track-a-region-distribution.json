@@ -1,0 +1,1119 @@
+{
+  "acceptance": {
+    "all_four_regions_and_four_fields_summarized": true,
+    "all_nonfinite_and_out_of_bounds_values_explicit": true,
+    "all_three_candidate_manifest_hashes_verified": true,
+    "all_three_registered_candidates_hash_verified": true,
+    "all_values_finite_and_bounded": true,
+    "deterministic_hashes_recorded": true,
+    "exact_scored_id_alignment": true,
+    "no_labels_or_leaderboard_feedback_used": true,
+    "smd_threshold_applied_without_correction": true,
+    "template_only_rows_match_manifest": true
+  },
+  "audit": "Frozen Track A regional prediction distribution-shift screen; diagnostic only, not accuracy or bias evidence.",
+  "distributions": {
+    "A1_physical_equal": {
+      "building_gap": {
+        "flag_rule": "absolute standardized mean difference > 0.5; diagnostic only, no correction",
+        "flagged_regions": [],
+        "pooled_scored_distribution": {
+          "finite_ids": 9379,
+          "mean": 0.20152525610268684,
+          "standard_deviation": 0.14642314519494193,
+          "standard_deviation_ddof": 0
+        },
+        "quantile_definition": "linear/type-7 quantile of finite values only",
+        "regional_summary": {
+          "eastern-ok": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 1192,
+            "finite_share": 1.0,
+            "iqr": 0.1979298332316731,
+            "mean": 0.21967145190537712,
+            "median": 0.22297941404630334,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.0,
+            "p95": 0.4188914389370597,
+            "scored_ids": 1192,
+            "standardized_mean_difference_from_pooled": 0.1239298321213573
+          },
+          "maricopa-az": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 1593,
+            "finite_share": 1.0,
+            "iqr": 0.3366044995727076,
+            "mean": 0.22226633431148396,
+            "median": 0.21849095531268425,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.0,
+            "p95": 0.4739566331554771,
+            "scored_ids": 1593,
+            "standardized_mean_difference_from_pooled": 0.14165163698118402
+          },
+          "northern-ca": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 591,
+            "finite_share": 1.0,
+            "iqr": 0.15656835236077896,
+            "mean": 0.21438515913431866,
+            "median": 0.21082475469797143,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.028558293091848926,
+            "p95": 0.39418359518970014,
+            "scored_ids": 591,
+            "standardized_mean_difference_from_pooled": 0.08782698264342466
+          },
+          "south-central-tx": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 6003,
+            "finite_share": 1.0,
+            "iqr": 0.20714471877291188,
+            "mean": 0.19115194181397868,
+            "median": 0.17533817593738552,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.0,
+            "p95": 0.4168558612093588,
+            "scored_ids": 6003,
+            "standardized_mean_difference_from_pooled": -0.07084477167115585
+          }
+        },
+        "smd_definition": "(finite regional mean - finite pooled scored-tract mean) / population SD of all finite scored-tract values; ddof=0"
+      },
+      "coverage_gap_score": {
+        "flag_rule": "absolute standardized mean difference > 0.5; diagnostic only, no correction",
+        "flagged_regions": [
+          "maricopa-az",
+          "eastern-ok"
+        ],
+        "pooled_scored_distribution": {
+          "finite_ids": 9379,
+          "mean": 0.3196664071120907,
+          "standard_deviation": 0.13668144300159102,
+          "standard_deviation_ddof": 0
+        },
+        "quantile_definition": "linear/type-7 quantile of finite values only",
+        "regional_summary": {
+          "eastern-ok": {
+            "absolute_smd_exceeds_0_5": true,
+            "finite_ids": 1192,
+            "finite_share": 1.0,
+            "iqr": 0.10443185018972245,
+            "mean": 0.20790939654738688,
+            "median": 0.20935912031824497,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.07067739346138519,
+            "p95": 0.3333911141962027,
+            "scored_ids": 1192,
+            "standardized_mean_difference_from_pooled": -0.8176458201674308
+          },
+          "maricopa-az": {
+            "absolute_smd_exceeds_0_5": true,
+            "finite_ids": 1593,
+            "finite_share": 1.0,
+            "iqr": 0.10931065910476495,
+            "mean": 0.5419354875202849,
+            "median": 0.5464387429999595,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.4099868206235261,
+            "p95": 0.6608978778871033,
+            "scored_ids": 1593,
+            "standardized_mean_difference_from_pooled": 1.626183302773639
+          },
+          "northern-ca": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 591,
+            "finite_share": 1.0,
+            "iqr": 0.09406842858084274,
+            "mean": 0.3668697123519459,
+            "median": 0.3652786519576182,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.26294255631989194,
+            "p95": 0.4792868780712609,
+            "scored_ids": 591,
+            "standardized_mean_difference_from_pooled": 0.34535269897103515
+          },
+          "south-central-tx": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 6003,
+            "finite_share": 1.0,
+            "iqr": 0.11372909137703091,
+            "mean": 0.27822755289022155,
+            "median": 0.27677020838616434,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.14795998105192973,
+            "p95": 0.41354475684596637,
+            "scored_ids": 6003,
+            "standardized_mean_difference_from_pooled": -0.30317834895397466
+          }
+        },
+        "smd_definition": "(finite regional mean - finite pooled scored-tract mean) / population SD of all finite scored-tract values; ddof=0"
+      },
+      "poi_gap": {
+        "flag_rule": "absolute standardized mean difference > 0.5; diagnostic only, no correction",
+        "flagged_regions": [],
+        "pooled_scored_distribution": {
+          "finite_ids": 9379,
+          "mean": 0.5101913581216523,
+          "standard_deviation": 0.17100898719664587,
+          "standard_deviation_ddof": 0
+        },
+        "quantile_definition": "linear/type-7 quantile of finite values only",
+        "regional_summary": {
+          "eastern-ok": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 1192,
+            "finite_share": 1.0,
+            "iqr": 0.24914105071716502,
+            "mean": 0.5011779215275105,
+            "median": 0.5336969239622184,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.1960766354331743,
+            "p95": 0.7427412896390488,
+            "scored_ids": 1192,
+            "standardized_mean_difference_from_pooled": -0.05270738539476342
+          },
+          "maricopa-az": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 1593,
+            "finite_share": 1.0,
+            "iqr": 0.20310684103613696,
+            "mean": 0.5375619720287105,
+            "median": 0.5687776736715835,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.20797941966259076,
+            "p95": 0.7833317684154859,
+            "scored_ids": 1593,
+            "standardized_mean_difference_from_pooled": 0.16005365773896027
+          },
+          "northern-ca": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 591,
+            "finite_share": 1.0,
+            "iqr": 0.3009153359706192,
+            "mean": 0.4742944268817586,
+            "median": 0.5151639707998624,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.17714820690555688,
+            "p95": 0.7476688462641479,
+            "scored_ids": 591,
+            "standardized_mean_difference_from_pooled": -0.20991254219063496
+          },
+          "south-central-tx": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 6003,
+            "finite_share": 1.0,
+            "iqr": 0.23661746512451254,
+            "mean": 0.5082519469654054,
+            "median": 0.5416822708392696,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.19324857633688158,
+            "p95": 0.7490313863362505,
+            "scored_ids": 6003,
+            "standardized_mean_difference_from_pooled": -0.011340989663991706
+          }
+        },
+        "smd_definition": "(finite regional mean - finite pooled scored-tract mean) / population SD of all finite scored-tract values; ddof=0"
+      },
+      "transport_gap": {
+        "flag_rule": "absolute standardized mean difference > 0.5; diagnostic only, no correction",
+        "flagged_regions": [],
+        "pooled_scored_distribution": {
+          "finite_ids": 9379,
+          "mean": 0.13410432359416455,
+          "standard_deviation": 0.07015087831717537,
+          "standard_deviation_ddof": 0
+        },
+        "quantile_definition": "linear/type-7 quantile of finite values only",
+        "regional_summary": {
+          "eastern-ok": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 1192,
+            "finite_share": 1.0,
+            "iqr": 0.07815297793655912,
+            "mean": 0.15258334838389181,
+            "median": 0.12500000000000006,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.029254691105169678,
+            "p95": 0.34586907878731843,
+            "scored_ids": 1192,
+            "standardized_mean_difference_from_pooled": 0.2634182954371216
+          },
+          "maricopa-az": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 1593,
+            "finite_share": 1.0,
+            "iqr": 0.029104791289757195,
+            "mean": 0.11794199116730178,
+            "median": 0.125,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.034245844151730515,
+            "p95": 0.17768303071420866,
+            "scored_ids": 1593,
+            "standardized_mean_difference_from_pooled": -0.23039387124687888
+          },
+          "northern-ca": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 591,
+            "finite_share": 1.0,
+            "iqr": 0.053924012463948415,
+            "mean": 0.1254408186692941,
+            "median": 0.125,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.032671649137150184,
+            "p95": 0.23762450684619754,
+            "scored_ids": 591,
+            "standardized_mean_difference_from_pooled": -0.12349816755964009
+          },
+          "south-central-tx": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 6003,
+            "finite_share": 1.0,
+            "iqr": 0.04540827953585755,
+            "mean": 0.13557687555439044,
+            "median": 0.12598216278689456,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.05833857616548922,
+            "p95": 0.25367416171589446,
+            "scored_ids": 6003,
+            "standardized_mean_difference_from_pooled": 0.02099121202115235
+          }
+        },
+        "smd_definition": "(finite regional mean - finite pooled scored-tract mean) / population SD of all finite scored-tract values; ddof=0"
+      }
+    },
+    "A2_spectral": {
+      "building_gap": {
+        "flag_rule": "absolute standardized mean difference > 0.5; diagnostic only, no correction",
+        "flagged_regions": [],
+        "pooled_scored_distribution": {
+          "finite_ids": 9379,
+          "mean": 0.20152525610271782,
+          "standard_deviation": 0.14642314519496025,
+          "standard_deviation_ddof": 0
+        },
+        "quantile_definition": "linear/type-7 quantile of finite values only",
+        "regional_summary": {
+          "eastern-ok": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 1192,
+            "finite_share": 1.0,
+            "iqr": 0.1979298332317051,
+            "mean": 0.21967145190541193,
+            "median": 0.22297941404633936,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.0,
+            "p95": 0.41889143893712744,
+            "scored_ids": 1192,
+            "standardized_mean_difference_from_pooled": 0.12392983212136796
+          },
+          "maricopa-az": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 1593,
+            "finite_share": 1.0,
+            "iqr": 0.33660449957276206,
+            "mean": 0.22226633431151968,
+            "median": 0.21849095531271956,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.0,
+            "p95": 0.4739566331555537,
+            "scored_ids": 1593,
+            "standardized_mean_difference_from_pooled": 0.14165163698119873
+          },
+          "northern-ca": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 591,
+            "finite_share": 1.0,
+            "iqr": 0.1565683523608043,
+            "mean": 0.214385159134353,
+            "median": 0.21082475469800552,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.028558293091853544,
+            "p95": 0.39418359518976387,
+            "scored_ids": 591,
+            "standardized_mean_difference_from_pooled": 0.08782698264343661
+          },
+          "south-central-tx": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 6003,
+            "finite_share": 1.0,
+            "iqr": 0.20714471877294535,
+            "mean": 0.19115194181400733,
+            "median": 0.17533817593741385,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.0,
+            "p95": 0.4168558612094204,
+            "scored_ids": 6003,
+            "standardized_mean_difference_from_pooled": -0.07084477167116292
+          }
+        },
+        "smd_definition": "(finite regional mean - finite pooled scored-tract mean) / population SD of all finite scored-tract values; ddof=0"
+      },
+      "coverage_gap_score": {
+        "flag_rule": "absolute standardized mean difference > 0.5; diagnostic only, no correction",
+        "flagged_regions": [],
+        "pooled_scored_distribution": {
+          "finite_ids": 9379,
+          "mean": 0.2880142139710168,
+          "standard_deviation": 0.09805285917045195,
+          "standard_deviation_ddof": 0
+        },
+        "quantile_definition": "linear/type-7 quantile of finite values only",
+        "regional_summary": {
+          "eastern-ok": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 1192,
+            "finite_share": 1.0,
+            "iqr": 0.11837706566123324,
+            "mean": 0.30746413949708745,
+            "median": 0.3157635722631144,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.12320600392104603,
+            "p95": 0.46665366957495324,
+            "scored_ids": 1192,
+            "standardized_mean_difference_from_pooled": 0.19836163565877807
+          },
+          "maricopa-az": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 1593,
+            "finite_share": 1.0,
+            "iqr": 0.12384668904724888,
+            "mean": 0.289656304997894,
+            "median": 0.28322616345105744,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.11631273163405312,
+            "p95": 0.4327471052162712,
+            "scored_ids": 1593,
+            "standardized_mean_difference_from_pooled": 0.01674699790265857
+          },
+          "northern-ca": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 591,
+            "finite_share": 1.0,
+            "iqr": 0.12513412252992878,
+            "mean": 0.2752942070794629,
+            "median": 0.2826131788204816,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.11554379990574107,
+            "p95": 0.4210436892092225,
+            "scored_ids": 591,
+            "standardized_mean_difference_from_pooled": -0.12972601716225163
+          },
+          "south-central-tx": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 6003,
+            "finite_share": 1.0,
+            "iqr": 0.11943054500042766,
+            "mean": 0.28496863040280374,
+            "median": 0.2883775878385932,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.10813729071877656,
+            "p95": 0.43724920829493097,
+            "scored_ids": 6003,
+            "standardized_mean_difference_from_pooled": -0.031060629888606365
+          }
+        },
+        "smd_definition": "(finite regional mean - finite pooled scored-tract mean) / population SD of all finite scored-tract values; ddof=0"
+      },
+      "poi_gap": {
+        "flag_rule": "absolute standardized mean difference > 0.5; diagnostic only, no correction",
+        "flagged_regions": [],
+        "pooled_scored_distribution": {
+          "finite_ids": 9379,
+          "mean": 0.5610062387037557,
+          "standard_deviation": 0.23792561114355498,
+          "standard_deviation_ddof": 0
+        },
+        "quantile_definition": "linear/type-7 quantile of finite values only",
+        "regional_summary": {
+          "eastern-ok": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 1192,
+            "finite_share": 1.0,
+            "iqr": 0.3908439959063793,
+            "mean": 0.538955101037864,
+            "median": 0.6085881262700671,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.10338648472234999,
+            "p95": 0.8307675136516337,
+            "scored_ids": 1192,
+            "standardized_mean_difference_from_pooled": -0.09268080708044006
+          },
+          "maricopa-az": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 1593,
+            "finite_share": 1.0,
+            "iqr": 0.24340492251251922,
+            "mean": 0.6000848275009132,
+            "median": 0.6662893066053758,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.13117021253822803,
+            "p95": 0.8530349733301437,
+            "scored_ids": 1593,
+            "standardized_mean_difference_from_pooled": 0.16424708802609334
+          },
+          "northern-ca": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 591,
+            "finite_share": 1.0,
+            "iqr": 0.4684401467346235,
+            "mean": 0.5124559268269123,
+            "median": 0.6044308171909777,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.0900951318535854,
+            "p95": 0.8224808160064765,
+            "scored_ids": 591,
+            "standardized_mean_difference_from_pooled": -0.20405668664038853
+          },
+          "south-central-tx": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 6003,
+            "finite_share": 1.0,
+            "iqr": 0.3822962112107967,
+            "mean": 0.5597945109781326,
+            "median": 0.6237892784633857,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.10122442382064244,
+            "p95": 0.8378110708115764,
+            "scored_ids": 6003,
+            "standardized_mean_difference_from_pooled": -0.005092884787808524
+          }
+        },
+        "smd_definition": "(finite regional mean - finite pooled scored-tract mean) / population SD of all finite scored-tract values; ddof=0"
+      },
+      "transport_gap": {
+        "flag_rule": "absolute standardized mean difference > 0.5; diagnostic only, no correction",
+        "flagged_regions": [],
+        "pooled_scored_distribution": {
+          "finite_ids": 9379,
+          "mean": 0.09616967515231094,
+          "standard_deviation": 0.13412151943202208,
+          "standard_deviation_ddof": 0
+        },
+        "quantile_definition": "linear/type-7 quantile of finite values only",
+        "regional_summary": {
+          "eastern-ok": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 1192,
+            "finite_share": 1.0,
+            "iqr": 0.2501723704684795,
+            "mean": 0.15461066385277097,
+            "median": 0.07444769477016905,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.0,
+            "p95": 0.5367717687758202,
+            "scored_ids": 1192,
+            "standardized_mean_difference_from_pooled": 0.43573163313348956
+          },
+          "maricopa-az": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 1593,
+            "finite_share": 1.0,
+            "iqr": 0.049022885844213465,
+            "mean": 0.03710089583612088,
+            "median": 0.007896946952827917,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.0,
+            "p95": 0.16935910400310566,
+            "scored_ids": 1593,
+            "standardized_mean_difference_from_pooled": -0.440412392927955
+          },
+          "northern-ca": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 591,
+            "finite_share": 1.0,
+            "iqr": 0.13417140952719367,
+            "mean": 0.09413428282956264,
+            "median": 0.045889634878148886,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.0,
+            "p95": 0.345117043454314,
+            "scored_ids": 591,
+            "standardized_mean_difference_from_pooled": -0.015175732659216644
+          },
+          "south-central-tx": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 6003,
+            "finite_share": 1.0,
+            "iqr": 0.12154794147765302,
+            "mean": 0.10044051036511897,
+            "median": 0.053716345332681555,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.0,
+            "p95": 0.40739374083258556,
+            "scored_ids": 6003,
+            "standardized_mean_difference_from_pooled": 0.031843027359771736
+          }
+        },
+        "smd_definition": "(finite regional mean - finite pooled scored-tract mean) / population SD of all finite scored-tract values; ddof=0"
+      }
+    },
+    "A3_dawid_skene": {
+      "building_gap": {
+        "flag_rule": "absolute standardized mean difference > 0.5; diagnostic only, no correction",
+        "flagged_regions": [],
+        "pooled_scored_distribution": {
+          "finite_ids": 9379,
+          "mean": 0.20152525610271782,
+          "standard_deviation": 0.14642314519496025,
+          "standard_deviation_ddof": 0
+        },
+        "quantile_definition": "linear/type-7 quantile of finite values only",
+        "regional_summary": {
+          "eastern-ok": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 1192,
+            "finite_share": 1.0,
+            "iqr": 0.1979298332317051,
+            "mean": 0.21967145190541193,
+            "median": 0.22297941404633936,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.0,
+            "p95": 0.41889143893712744,
+            "scored_ids": 1192,
+            "standardized_mean_difference_from_pooled": 0.12392983212136796
+          },
+          "maricopa-az": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 1593,
+            "finite_share": 1.0,
+            "iqr": 0.33660449957276206,
+            "mean": 0.22226633431151968,
+            "median": 0.21849095531271956,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.0,
+            "p95": 0.4739566331555537,
+            "scored_ids": 1593,
+            "standardized_mean_difference_from_pooled": 0.14165163698119873
+          },
+          "northern-ca": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 591,
+            "finite_share": 1.0,
+            "iqr": 0.1565683523608043,
+            "mean": 0.214385159134353,
+            "median": 0.21082475469800552,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.028558293091853544,
+            "p95": 0.39418359518976387,
+            "scored_ids": 591,
+            "standardized_mean_difference_from_pooled": 0.08782698264343661
+          },
+          "south-central-tx": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 6003,
+            "finite_share": 1.0,
+            "iqr": 0.20714471877294535,
+            "mean": 0.19115194181400733,
+            "median": 0.17533817593741385,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.0,
+            "p95": 0.4168558612094204,
+            "scored_ids": 6003,
+            "standardized_mean_difference_from_pooled": -0.07084477167116292
+          }
+        },
+        "smd_definition": "(finite regional mean - finite pooled scored-tract mean) / population SD of all finite scored-tract values; ddof=0"
+      },
+      "coverage_gap_score": {
+        "flag_rule": "absolute standardized mean difference > 0.5; diagnostic only, no correction",
+        "flagged_regions": [],
+        "pooled_scored_distribution": {
+          "finite_ids": 9379,
+          "mean": 0.16696041412967058,
+          "standard_deviation": 0.07202398639012896,
+          "standard_deviation_ddof": 0
+        },
+        "quantile_definition": "linear/type-7 quantile of finite values only",
+        "regional_summary": {
+          "eastern-ok": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 1192,
+            "finite_share": 1.0,
+            "iqr": 0.11252202475877773,
+            "mean": 0.1908343743956401,
+            "median": 0.18527403339704296,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.07792803760204338,
+            "p95": 0.3292488680984502,
+            "scored_ids": 1192,
+            "standardized_mean_difference_from_pooled": 0.3314723533442395
+          },
+          "maricopa-az": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 1593,
+            "finite_share": 1.0,
+            "iqr": 0.10859990575173821,
+            "mean": 0.16129281352363484,
+            "median": 0.15941841540623605,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.05611088747460618,
+            "p95": 0.2733769198079145,
+            "scored_ids": 1593,
+            "standardized_mean_difference_from_pooled": -0.07869045980510322
+          },
+          "northern-ca": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 591,
+            "finite_share": 1.0,
+            "iqr": 0.08132891761475608,
+            "mean": 0.16638681560089377,
+            "median": 0.16027704830009182,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.07920347274360486,
+            "p95": 0.27492264501427927,
+            "scored_ids": 591,
+            "standardized_mean_difference_from_pooled": -0.007963993074054862
+          },
+          "south-central-tx": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 6003,
+            "finite_share": 1.0,
+            "iqr": 0.0970785184825001,
+            "mean": 0.16378029150079942,
+            "median": 0.15495588371277422,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.06583713151991315,
+            "p95": 0.28735673431012543,
+            "scored_ids": 6003,
+            "standardized_mean_difference_from_pooled": -0.04415366030485366
+          }
+        },
+        "smd_definition": "(finite regional mean - finite pooled scored-tract mean) / population SD of all finite scored-tract values; ddof=0"
+      },
+      "poi_gap": {
+        "flag_rule": "absolute standardized mean difference > 0.5; diagnostic only, no correction",
+        "flagged_regions": [],
+        "pooled_scored_distribution": {
+          "finite_ids": 9379,
+          "mean": 0.20050390829868361,
+          "standard_deviation": 0.09407972199968058,
+          "standard_deviation_ddof": 0
+        },
+        "quantile_definition": "linear/type-7 quantile of finite values only",
+        "regional_summary": {
+          "eastern-ok": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 1192,
+            "finite_share": 1.0,
+            "iqr": 0.15213738613482852,
+            "mean": 0.19395957898882177,
+            "median": 0.1807556736739231,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.07532046386882704,
+            "p95": 0.34453764780839885,
+            "scored_ids": 1192,
+            "standardized_mean_difference_from_pooled": -0.06956152899648306
+          },
+          "maricopa-az": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 1593,
+            "finite_share": 1.0,
+            "iqr": 0.1605114692535385,
+            "mean": 0.21971854938491112,
+            "median": 0.22793484904892744,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.07302248108672721,
+            "p95": 0.36559300139140793,
+            "scored_ids": 1593,
+            "standardized_mean_difference_from_pooled": 0.20423785995342056
+          },
+          "northern-ca": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 591,
+            "finite_share": 1.0,
+            "iqr": 0.14585046899758308,
+            "mean": 0.1883108337176696,
+            "median": 0.17388834315621723,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.06700663627143302,
+            "p95": 0.3403615881862908,
+            "scored_ids": 591,
+            "standardized_mean_difference_from_pooled": -0.12960364169714927
+          },
+          "south-central-tx": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 6003,
+            "finite_share": 1.0,
+            "iqr": 0.16490054996432116,
+            "mean": 0.1979048785409582,
+            "median": 0.1968685611935826,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.06554374324017152,
+            "p95": 0.3488516696425249,
+            "scored_ids": 6003,
+            "standardized_mean_difference_from_pooled": -0.027625823104943242
+          }
+        },
+        "smd_definition": "(finite regional mean - finite pooled scored-tract mean) / population SD of all finite scored-tract values; ddof=0"
+      },
+      "transport_gap": {
+        "flag_rule": "absolute standardized mean difference > 0.5; diagnostic only, no correction",
+        "flagged_regions": [],
+        "pooled_scored_distribution": {
+          "finite_ids": 9379,
+          "mean": 0.09616967515231094,
+          "standard_deviation": 0.13412151943202208,
+          "standard_deviation_ddof": 0
+        },
+        "quantile_definition": "linear/type-7 quantile of finite values only",
+        "regional_summary": {
+          "eastern-ok": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 1192,
+            "finite_share": 1.0,
+            "iqr": 0.2501723704684795,
+            "mean": 0.15461066385277097,
+            "median": 0.07444769477016905,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.0,
+            "p95": 0.5367717687758202,
+            "scored_ids": 1192,
+            "standardized_mean_difference_from_pooled": 0.43573163313348956
+          },
+          "maricopa-az": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 1593,
+            "finite_share": 1.0,
+            "iqr": 0.049022885844213465,
+            "mean": 0.03710089583612088,
+            "median": 0.007896946952827917,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.0,
+            "p95": 0.16935910400310566,
+            "scored_ids": 1593,
+            "standardized_mean_difference_from_pooled": -0.440412392927955
+          },
+          "northern-ca": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 591,
+            "finite_share": 1.0,
+            "iqr": 0.13417140952719367,
+            "mean": 0.09413428282956264,
+            "median": 0.045889634878148886,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.0,
+            "p95": 0.345117043454314,
+            "scored_ids": 591,
+            "standardized_mean_difference_from_pooled": -0.015175732659216644
+          },
+          "south-central-tx": {
+            "absolute_smd_exceeds_0_5": false,
+            "finite_ids": 6003,
+            "finite_share": 1.0,
+            "iqr": 0.12154794147765302,
+            "mean": 0.10044051036511897,
+            "median": 0.053716345332681555,
+            "non_numeric_ids": 0,
+            "nonfinite_ids": 0,
+            "out_of_bounds_ids": 0,
+            "p5": 0.0,
+            "p95": 0.40739374083258556,
+            "scored_ids": 6003,
+            "standardized_mean_difference_from_pooled": 0.031843027359771736
+          }
+        },
+        "smd_definition": "(finite regional mean - finite pooled scored-tract mean) / population SD of all finite scored-tract values; ddof=0"
+      }
+    }
+  },
+  "exact_scored_id_alignment": {
+    "candidate_artifact_rows": {
+      "A1_physical_equal": 9794,
+      "A2_spectral": 9794,
+      "A3_dawid_skene": 9794
+    },
+    "expected_scored_ids": 9379,
+    "missing_or_duplicate_scored_ids": {
+      "A1_physical_equal": 0,
+      "A2_spectral": 0,
+      "A3_dawid_skene": 0
+    },
+    "ordered_official_ids_sha256_by_region": {
+      "eastern-ok": "ed6fcf4a0c59a0ddc39f4e73ac0c1b61b90331ef66867ee100b10f2acba6fc73",
+      "maricopa-az": "c92fdf01a4275c0bb570b329d2f5490900e66d55f58c54797e12a94c5d88b860",
+      "northern-ca": "a3308f9233e85c8ab5d48eb35710ddecde5361cdaefe6b37d7a63dc5ac7fd360",
+      "south-central-tx": "92118a397b5848426614d8fed0e38a3bdba13cf314a9a1b352cd1a025e63ad45"
+    },
+    "ordered_scored_ids_match_official_order": {
+      "A1_physical_equal": true,
+      "A2_spectral": true,
+      "A3_dawid_skene": true
+    },
+    "ordered_scored_ids_match_official_order_by_region": {
+      "A1_physical_equal": {
+        "eastern-ok": true,
+        "maricopa-az": true,
+        "northern-ca": true,
+        "south-central-tx": true
+      },
+      "A2_spectral": {
+        "eastern-ok": true,
+        "maricopa-az": true,
+        "northern-ca": true,
+        "south-central-tx": true
+      },
+      "A3_dawid_skene": {
+        "eastern-ok": true,
+        "maricopa-az": true,
+        "northern-ca": true,
+        "south-central-tx": true
+      }
+    },
+    "template_only_rows_excluded_without_numeric_value_parsing": {
+      "A1_physical_equal": 415,
+      "A2_spectral": 415,
+      "A3_dawid_skene": 415
+    }
+  },
+  "inputs": {
+    "candidate_artifacts": {
+      "A1_physical_equal": {
+        "candidate_manifest": {
+          "manifest_template_only_rows": 415,
+          "observed_non_scored_rows": 415,
+          "path": "reports/candidates/A1_physical_equal_manifest.json",
+          "sha256": "89a666ae66b2428188dd1448053e57876b7bcc29d7ddbe8ba5b72bdf611ce2d4",
+          "template_only_row_count_matches": true
+        },
+        "columns": [
+          "GEOID",
+          "transport_gap",
+          "building_gap",
+          "poi_gap",
+          "coverage_gap_score"
+        ],
+        "duplicate_scored_ids": 0,
+        "missing_scored_ids": 0,
+        "non_scored_rows_excluded_without_numeric_value_parsing": 415,
+        "ordered_scored_ids_match_official_order": true,
+        "ordered_scored_ids_match_official_order_by_region": {
+          "eastern-ok": true,
+          "maricopa-az": true,
+          "northern-ca": true,
+          "south-central-tx": true
+        },
+        "path": "reports/candidates/A1_physical_equal.csv",
+        "registered_rows": 9794,
+        "scored_rows": 9379,
+        "sha256": "6af088b83ff3481d420e11b14d903fc510c2b4be2cea285c762ca12d500862de"
+      },
+      "A2_spectral": {
+        "candidate_manifest": {
+          "manifest_template_only_rows": 415,
+          "observed_non_scored_rows": 415,
+          "path": "reports/candidates/A2_spectral_manifest.json",
+          "sha256": "4193304de0e886810f9930b87dcbcdeaa01ccb16cd25ab4e2bd3cd53053b0d57",
+          "template_only_row_count_matches": true
+        },
+        "columns": [
+          "GEOID",
+          "transport_gap",
+          "building_gap",
+          "poi_gap",
+          "coverage_gap_score"
+        ],
+        "duplicate_scored_ids": 0,
+        "missing_scored_ids": 0,
+        "non_scored_rows_excluded_without_numeric_value_parsing": 415,
+        "ordered_scored_ids_match_official_order": true,
+        "ordered_scored_ids_match_official_order_by_region": {
+          "eastern-ok": true,
+          "maricopa-az": true,
+          "northern-ca": true,
+          "south-central-tx": true
+        },
+        "path": "reports/candidates/A2_spectral.csv",
+        "registered_rows": 9794,
+        "scored_rows": 9379,
+        "sha256": "f88573996566a1975726845a49f42fb2cd3781d5f0e83d55944fc65647692997"
+      },
+      "A3_dawid_skene": {
+        "candidate_manifest": {
+          "manifest_template_only_rows": 415,
+          "observed_non_scored_rows": 415,
+          "path": "reports/candidates/A3_dawid_skene_manifest.json",
+          "sha256": "3bb36fc7e0977886d2f73d4e5a05d52ca9eb1ca0f6693c2659d60a97c4b6873f",
+          "template_only_row_count_matches": true
+        },
+        "columns": [
+          "GEOID",
+          "transport_gap",
+          "building_gap",
+          "poi_gap",
+          "coverage_gap_score"
+        ],
+        "duplicate_scored_ids": 0,
+        "missing_scored_ids": 0,
+        "non_scored_rows_excluded_without_numeric_value_parsing": 415,
+        "ordered_scored_ids_match_official_order": true,
+        "ordered_scored_ids_match_official_order_by_region": {
+          "eastern-ok": true,
+          "maricopa-az": true,
+          "northern-ca": true,
+          "south-central-tx": true
+        },
+        "path": "reports/candidates/A3_dawid_skene.csv",
+        "registered_rows": 9794,
+        "scored_rows": 9379,
+        "sha256": "6d588f2f7a45a58b128860a049ac19995b21902f7f98d3b2ab39d1d9fbb073b3"
+      }
+    },
+    "final_two_metadata_sha256": "7f1fa3223539d5c3f2c2ecc7d52ee6cb2e8ee0982b561eb8dcab3fada63bfad6",
+    "official_id_projection_sha256_by_region": {
+      "eastern-ok": "ed6fcf4a0c59a0ddc39f4e73ac0c1b61b90331ef66867ee100b10f2acba6fc73",
+      "maricopa-az": "c92fdf01a4275c0bb570b329d2f5490900e66d55f58c54797e12a94c5d88b860",
+      "northern-ca": "a3308f9233e85c8ab5d48eb35710ddecde5361cdaefe6b37d7a63dc5ac7fd360",
+      "south-central-tx": "92118a397b5848426614d8fed0e38a3bdba13cf314a9a1b352cd1a025e63ad45"
+    },
+    "official_ids_source": "$COMPETITION_WORKSPACE/samples/<region>-sample-submission.csv; GEOID column only"
+  },
+  "limitations": [
+    "Regional prediction-distribution differences describe the frozen estimates only; without target labels they do not establish regional accuracy, bias, or causal differences.",
+    "SMD uses finite estimates only and standardizes by the population SD of the pooled finite scored-tract distribution.",
+    "The 415 template-only rows are excluded from numerical prediction parsing and statistics."
+  ],
+  "measure_before": {
+    "candidate_finite_and_bounded_order_checks_exist": true,
+    "unified_regional_distribution_shift_table_recorded": false
+  },
+  "method": {
+    "nonfinite_policy": "report in finite share; exclude only nonfinite values from quantiles, means and pooled SD; do not impute",
+    "pooled_reference": "all finite values across the 9,379 official scored GEOIDs",
+    "regional_summaries": [
+      "median",
+      "IQR (Q75-Q25)",
+      "p5",
+      "p95",
+      "finite share"
+    ],
+    "smd_threshold": {
+      "absolute_value_greater_than": 0.5,
+      "interpretation": "flag only; do not reweight, adjust, or select candidates"
+    }
+  },
+  "provenance": {
+    "analysis_script_sha256": "9cebc09e0c0ce2aad2f7d32da1885e5dae97ba96679d9eed2661f75ca1837133",
+    "safe_final_two_metadata_projector_sha256": "b5600f155f2d2ac1efd44644c9f8d7400bdf3c7dba57daf4f5731f35ff4ff420"
+  },
+  "schema_version": 1,
+  "scope": {
+    "candidate_values_reweighted_or_corrected": false,
+    "candidates": [
+      "A1_physical_equal",
+      "A2_spectral",
+      "A3_dawid_skene"
+    ],
+    "candidates_rebuilt_modified_or_uploaded": false,
+    "leaderboard_values_used": false,
+    "measures": [
+      "transport_gap",
+      "building_gap",
+      "poi_gap",
+      "coverage_gap_score"
+    ],
+    "official_scored_geoids": 9379,
+    "regions": [
+      "maricopa-az",
+      "northern-ca",
+      "eastern-ok",
+      "south-central-tx"
+    ],
+    "sample_score_placeholders_read": false,
+    "target_labels_read": false
+  }
+}
