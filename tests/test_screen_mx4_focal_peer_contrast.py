@@ -15,6 +15,9 @@ from screen_mx4_focal_peer_contrast import (  # noqa: E402
     output_table,
     parquet_bytes,
 )
+from screen_mx4_cross_county_neighbor_contrast import (  # noqa: E402
+    cross_county_neighbor_contrast,
+)
 
 
 def test_focal_peer_contrast_excludes_focal_and_uses_population_weighted_median():
@@ -48,6 +51,28 @@ def test_focal_peer_contrast_validates_alignment_and_population_weights():
     with pytest.raises(ValueError, match=r"\[0,1\]"):
         # Invalid input shares are rejected before contrast construction.
         focal_peer_contrast(official, ["a"], np.array([2.0]), np.array([True]), np.array([1.]))
+
+
+def test_cross_county_contrast_uses_only_same_region_queen_neighbors_in_other_counties():
+    official = [("001", "r1"), ("002", "r1"), ("003", "r1"), ("004", "r2")]
+    counties = ["A", "A", "B", "C"]
+    shares = np.array([.5, .2, .1, .9])
+    population = np.array([10., 100., 30., 90.])
+    neighbors = [np.array([1, 2, 3]), np.array([0]), np.array([0]), np.array([0])]
+    result = cross_county_neighbor_contrast(official, counties, shares,
+        np.ones(4, dtype=bool), population, neighbors)
+    assert result["defined"].tolist() == [True, False, True, False]
+    assert np.allclose(result["contrast"][[0, 2]], [.4, -.4])
+    assert result["peer_count"].tolist() == [1, 0, 1, 0]
+
+
+def test_cross_county_contrast_preserves_null_when_no_different_county_neighbor():
+    official = [("001", "r"), ("002", "r")]
+    result = cross_county_neighbor_contrast(official, ["a", "a"],
+        np.array([.2, .8]), np.ones(2, dtype=bool), np.array([10., 20.]),
+        [np.array([1]), np.array([0])])
+    assert not result["defined"].any()
+    assert np.isnan(result["contrast"]).all()
 
 
 def test_output_table_preserves_undefined_contrast_as_null_and_deterministic():
