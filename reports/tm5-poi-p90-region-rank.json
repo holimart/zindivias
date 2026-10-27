@@ -1,0 +1,281 @@
+{
+  "schema_version": 1,
+  "screen": "Tm5 POI p90 within-region empirical midpercentile rank; unregistered label-free scale sensitivity",
+  "definition": "Rank only defined provided POI p90 versions separately within each frozen region. Ties receive average rank; percentile=(average 1-based rank−1)/(n−1), with singleton groups at 0.5. Compare against clip(log1p(version)/log1p(13),0,1) using absolute difference.",
+  "measure_before": {
+    "source_version_range": [
+      1.0,
+      13.0
+    ],
+    "global_log_normalized_p50": 0.9086181061280519,
+    "global_log_normalized_p90": 0.9415887339401863,
+    "global_log_normalized_p95": 0.9415887339401863,
+    "global_transform_report_sha256": "b3bda1e4e76fef1447d0df9415d07676637559f0b21c1ca8761ab5178297814b"
+  },
+  "method": {
+    "region": "Use only the frozen official GEOID-region partition.",
+    "ranking": "Each region's defined POI version values are ranked using tied average ranks. Undefined rows remain null and do not enter ranks.",
+    "integration": "Unregistered diagnostic only; no estimator, candidate, or registry updates."
+  },
+  "scope": {
+    "official_ids": 9379,
+    "exact_official_geoid_region_partition": true,
+    "defined_ids": 9377,
+    "undefined_ids": 2,
+    "coverage_fraction": 0.9997867576500693,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "Mx4_or_other_inputs_read": false,
+    "removed_or_equivalent_reference_data_read": false,
+    "external_data_read": false,
+    "leaderboard_feedback_used": false,
+    "registry_integration": false,
+    "frozen_Tm5_modified": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "global_log_normalized_version": {
+      "n": 9377,
+      "min": 0.2626495350371935,
+      "p50": 0.9086181061280519,
+      "p90": 0.9415887339401863,
+      "p95": 0.9415887339401863,
+      "max": 1.0,
+      "mean": 0.9135705318379344
+    },
+    "within_region_midpercentile": {
+      "n": 9377,
+      "min": 0.0,
+      "p50": 0.41841666666666666,
+      "p90": 0.9025,
+      "p95": 0.9025,
+      "max": 1.0,
+      "mean": 0.4999999999999999
+    },
+    "absolute_change_from_global_log_normalized": {
+      "n": 9377,
+      "min": 0.0,
+      "p50": 0.4902014394613853,
+      "p90": 0.5005576527275482,
+      "p95": 0.5005576527275482,
+      "max": 0.8590687805483163,
+      "mean": 0.41364428706143813
+    },
+    "p95_absolute_change_from_global_log_normalized": 0.5005576527275482,
+    "regions": {
+      "maricopa-az": {
+        "official_ids": 1593,
+        "defined_ids": 1593,
+        "coverage_fraction": 1.0,
+        "source_version": {
+          "n": 1593,
+          "min": 3.0,
+          "p50": 10.0,
+          "p90": 11.0,
+          "p95": 11.0,
+          "max": 13.0,
+          "mean": 10.13998744507219
+        },
+        "global_log_normalized_version": {
+          "n": 1593,
+          "min": 0.525299070074387,
+          "p50": 0.9086181061280519,
+          "p90": 0.9415887339401863,
+          "p95": 0.9415887339401863,
+          "max": 1.0,
+          "mean": 0.9129237714967651
+        },
+        "within_region_midpercentile": {
+          "n": 1593,
+          "min": 0.0,
+          "p50": 0.4280778894472362,
+          "p90": 0.9042085427135679,
+          "p95": 0.9042085427135679,
+          "max": 1.0,
+          "mean": 0.5
+        },
+        "absolute_change_from_global_log_normalized": {
+          "n": 1593,
+          "min": 0.0,
+          "p50": 0.48054021668081576,
+          "p90": 0.48054021668081576,
+          "p95": 0.48054021668081576,
+          "max": 0.8492616635190051,
+          "mean": 0.4131484804239227
+        }
+      },
+      "northern-ca": {
+        "official_ids": 591,
+        "defined_ids": 591,
+        "coverage_fraction": 1.0,
+        "source_version": {
+          "n": 591,
+          "min": 7.0,
+          "p50": 10.0,
+          "p90": 11.0,
+          "p95": 11.0,
+          "max": 12.0,
+          "mean": 10.143824027072759
+        },
+        "global_log_normalized_version": {
+          "n": 591,
+          "min": 0.7879486051115805,
+          "p50": 0.9086181061280519,
+          "p90": 0.9415887339401863,
+          "p95": 0.9415887339401863,
+          "max": 0.9719187714029213,
+          "mean": 0.9132036852864007
+        },
+        "within_region_midpercentile": {
+          "n": 591,
+          "min": 0.0,
+          "p50": 0.4245762711864407,
+          "p90": 0.9110169491525424,
+          "p95": 0.9110169491525424,
+          "max": 1.0,
+          "mean": 0.4999999999999999
+        },
+        "absolute_change_from_global_log_normalized": {
+          "n": 591,
+          "min": 0.028081228597078733,
+          "p50": 0.48404183494161124,
+          "p90": 0.48404183494161124,
+          "p95": 0.48404183494161124,
+          "max": 0.8564011746339016,
+          "mean": 0.4132987148248005
+        }
+      },
+      "eastern-ok": {
+        "official_ids": 1192,
+        "defined_ids": 1192,
+        "coverage_fraction": 1.0,
+        "source_version": {
+          "n": 1192,
+          "min": 8.0,
+          "p50": 10.0,
+          "p90": 11.0,
+          "p95": 11.0,
+          "max": 13.0,
+          "mean": 10.184563758389261
+        },
+        "global_log_normalized_version": {
+          "n": 1192,
+          "min": 0.8325793277315984,
+          "p50": 0.9086181061280519,
+          "p90": 0.9415887339401863,
+          "p95": 0.9415887339401863,
+          "max": 1.0,
+          "mean": 0.9146067199993299
+        },
+        "within_region_midpercentile": {
+          "n": 1192,
+          "min": 0.0,
+          "p50": 0.4080604534005038,
+          "p90": 0.8946263643996641,
+          "p95": 0.8946263643996641,
+          "max": 1.0,
+          "mean": 0.5
+        },
+        "absolute_change_from_global_log_normalized": {
+          "n": 1192,
+          "min": 0.0,
+          "p50": 0.5005576527275482,
+          "p90": 0.5005576527275482,
+          "p95": 0.5005576527275482,
+          "max": 0.8590687805483163,
+          "mean": 0.4146067199993299
+        }
+      },
+      "south-central-tx": {
+        "official_ids": 6003,
+        "defined_ids": 6001,
+        "coverage_fraction": 0.9996668332500417,
+        "source_version": {
+          "n": 6001,
+          "min": 1.0,
+          "p50": 10.0,
+          "p90": 11.0,
+          "p95": 11.0,
+          "max": 12.0,
+          "mean": 10.1568071988002
+        },
+        "global_log_normalized_version": {
+          "n": 6001,
+          "min": 0.2626495350371935,
+          "p50": 0.9086181061280519,
+          "p90": 0.9415887339401863,
+          "p95": 0.9415887339401863,
+          "max": 0.9719187714029213,
+          "mean": 0.9135725247136312
+        },
+        "within_region_midpercentile": {
+          "n": 6001,
+          "min": 0.0,
+          "p50": 0.41841666666666666,
+          "p90": 0.9025,
+          "p95": 0.9025,
+          "max": 0.9996666666666667,
+          "mean": 0.49999999999999983
+        },
+        "absolute_change_from_global_log_normalized": {
+          "n": 6001,
+          "min": 0.027747895263745437,
+          "p50": 0.4902014394613853,
+          "p90": 0.4902014394613853,
+          "p95": 0.4902014394613853,
+          "max": 0.8548362028824892,
+          "mean": 0.4136187634992732
+        }
+      }
+    }
+  },
+  "thresholds": {
+    "minimum_coverage_inclusive": 0.9859,
+    "output_bounds_inclusive": [
+      0.0,
+      1.0
+    ],
+    "minimum_p95_absolute_change_inclusive": 0.05
+  },
+  "acceptance": {
+    "exact_9379_official_id_alignment": true,
+    "defined_ids": 9377,
+    "coverage_fraction": 0.9997867576500693,
+    "coverage_at_least_98_59_percent": true,
+    "defined_ranks_and_changes_finite_bounded_0_1": true,
+    "nulls_preserved": true,
+    "p95_absolute_change_from_global_log_normalized": 0.5005576527275482,
+    "p95_change_at_least_0_05": true,
+    "frozen_Tm5_and_registry_unchanged": true,
+    "screen_pass": true
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "Tm5_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/ideas/Tm5.parquet",
+      "sha256_before": "ae363dff82f4ee47546485f45cd71250150a402479718795b0247585efdfe45e",
+      "sha256_after": "ae363dff82f4ee47546485f45cd71250150a402479718795b0247585efdfe45e",
+      "poi_p90_version_emission_sha256": "fb120409c05b33cefe486745ec9f44e6e76760041e7f69b7a757800975f47d8c"
+    },
+    "baseline_report_sha256": "b3bda1e4e76fef1447d0df9415d07676637559f0b21c1ca8761ab5178297814b",
+    "registry_sha256_before": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "registry_sha256_after": "12783450f843000d1d15eb85e7a9d6a0687c613db193001117dbec29abd30ac6",
+    "script_sha256": "fb7b5c64517937b8ccc416a785be20686b2dfa492d560e8b3b40c6fafdcba0d0",
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/tm5-poi-p90-region-rank/poi-p90-region-rank.parquet",
+      "rows": 9379,
+      "sha256": "a6b00c04551a0c28df90c0799b8c05f55a38c910723f60c30ebdc8644880176d",
+      "columns": [
+        "GEOID",
+        "region",
+        "tm5_poi_p90_version",
+        "poi_p90_version_defined",
+        "global_log_normalized_version",
+        "within_region_midpercentile",
+        "absolute_change_from_global_log_normalized"
+      ],
+      "deterministic_bytes": true
+    }
+  },
+  "interpretation": "Region-local midpercentile scale differs materially from the existing global log-normalized scale; retain only as an unregistered sensitivity pending a separate distinctness review."
+}
