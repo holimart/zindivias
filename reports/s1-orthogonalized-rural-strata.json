@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "audit": "Provided rural/urban descriptive screen of frozen cross-fitted S1 Queen/Rook disagreement residual; unregistered and not a target-error claim",
+  "method": {
+    "residual_source": "Frozen orthogonalized Queen/Rook disagreement residual; consumed as emitted, not refit or recomputed.",
+    "rural_definition": "Provided pct_urban < 0.5 is rural; pct_urban >= 0.5 is urban. Missing/nonfinite pct_urban is excluded from both groups.",
+    "interaction": "crossfit_residual × 1[pct_urban < 0.5]; null unless both residual and rural/urban mapping are defined.",
+    "metric": "Absolute difference between rural and urban medians of absolute cross-fitted residuals; descriptive only, not target error.",
+    "nulls": "Preserve source residual nulls; do not impute missing pct_urban or residuals."
+  },
+  "measure_before": {
+    "maximum_within_region_residual_nmi": 0.4904168102022829,
+    "crossfit_residual_variance_ratio": 1.0244785067819135,
+    "residual_coverage_fraction": 1.0,
+    "rural_urban_contrast_measured": false,
+    "source_report_sha256": "b8bc5344339a1f4eb316484aea733c02d8fa37f1a7828583f13d01ffa58aa8fd",
+    "source_residual_artifact_sha256": "437b8995e9aa97cc3cf0337cf4338c34e21ade2edaa6dc258700956695feab1e"
+  },
+  "scope": {
+    "official_ids": 9379,
+    "exact_id_partition": true,
+    "residual_defined_ids": 9379,
+    "pct_urban_defined_ids": 9353,
+    "interaction_defined_ids": 9353,
+    "residual_defined_without_urbanity": 26,
+    "urbanity_defined_without_residual": 0,
+    "labels_read": false,
+    "sample_score_values_read": false,
+    "removed_or_equivalent_reference_data_read": false,
+    "external_inputs_read": false,
+    "leaderboard_feedback_used": false,
+    "registry_integration": false,
+    "uploads": 0
+  },
+  "measure_after": {
+    "groups": {
+      "rural": {
+        "n": 1712,
+        "median_absolute_residual": 0.00025733249343247206,
+        "absolute_residual_distribution": {
+          "n": 1712,
+          "min": 3.3935471854630367e-06,
+          "p05": 0.000124742907930026,
+          "p50": 0.00025733249343247206,
+          "p95": 0.004488947117786444,
+          "max": 0.09744190303407854,
+          "mean": 0.0014646585870669528
+        },
+        "interaction_nonzero_ids": 1712
+      },
+      "urban": {
+        "n": 7641,
+        "median_absolute_residual": 0.0002523986249382262,
+        "absolute_residual_distribution": {
+          "n": 7641,
+          "min": 1.1834249523336139e-05,
+          "p05": 0.00012254557637009596,
+          "p50": 0.0002523986249382262,
+          "p95": 0.0032621944801754484,
+          "max": 0.0829518527778763,
+          "mean": 0.0008245795472328473
+        },
+        "interaction_nonzero_ids": 0
+      }
+    },
+    "absolute_median_absolute_residual_gap": 4.933868494245855e-06,
+    "rural_minus_urban_median_absolute_residual": 4.933868494245855e-06,
+    "interaction_distribution": {
+      "n": 9353,
+      "min": -0.010467351600210069,
+      "p05": -0.0004990044089000272,
+      "p50": 0.0,
+      "p95": 0.0,
+      "max": 0.09744190303407854,
+      "mean": 0.00010858458991625906
+    },
+    "group_support_at_least_100_each": true,
+    "absolute_median_gap_at_least_0_001": false
+  },
+  "acceptance": {
+    "exact_id_and_stratum_alignment": true,
+    "both_groups_at_least_100": true,
+    "absolute_median_gap_at_least_0_001": false,
+    "descriptive_gate_pass": false
+  },
+  "provenance": {
+    "official_geoid_region_sha256": "1b68e3acfe1c75d512b497588207aa62118df9d4424112cfbd0c50a27cf9d7f6",
+    "source_report": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/s1-disagreement-orthogonalized.json",
+    "source_report_sha256": "b8bc5344339a1f4eb316484aea733c02d8fa37f1a7828583f13d01ffa58aa8fd",
+    "source_artifact": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/s1-disagreement-orthogonalized/orthogonalized-disagreement.parquet",
+    "source_artifact_sha256": "437b8995e9aa97cc3cf0337cf4338c34e21ade2edaa6dc258700956695feab1e",
+    "strata_inputs": {
+      "eastern-ok": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+        "sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 1192,
+        "pct_urban_defined_ids": 1191
+      },
+      "maricopa-az": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+        "sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 1593,
+        "pct_urban_defined_ids": 1582
+      },
+      "northern-ca": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+        "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 591,
+        "pct_urban_defined_ids": 591
+      },
+      "south-central-tx": {
+        "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+        "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354",
+        "columns_read": [
+          "GEOID",
+          "pct_urban"
+        ],
+        "official_ids": 6003,
+        "pct_urban_defined_ids": 5989
+      }
+    },
+    "output_artifact": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/s1-orthogonalized-rural-strata/rural-strata-interaction.parquet",
+      "rows": 9379,
+      "sha256": "0fcfb4b7b6a21fe6e681d05a5522b13ad686ccdda6089bcb0f74a39ed0e90aa9",
+      "columns": [
+        "GEOID",
+        "region",
+        "crossfit_residual",
+        "residual_defined",
+        "pct_urban",
+        "rural_indicator",
+        "urban_indicator",
+        "residual_x_rural",
+        "interaction_defined"
+      ]
+    },
+    "script_sha256": "9c761cfbe12ccdcc12829ec7f9fdc20a753634c796c0148f36971ba556eb74dd"
+  },
+  "interpretation": "Descriptive/inconclusive only: rural/urban group support or absolute median gap did not meet the preregistered threshold."
+}
