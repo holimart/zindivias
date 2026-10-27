@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "analysis_id": "SHRINK_S2_H1B_ASSUMPTION_BOUND_V1",
+  "registered_before_s2_value_computation": true,
+  "purpose": "Build and compare one explicitly assumption-bound alternative to S; no target-accuracy, promotion, or upload claim.",
+  "scope": {
+    "candidate_id": "S2_h1b_assumption_bound_v1",
+    "artifact": "reports/candidates/S2_h1b_assumption_bound_v1.csv",
+    "official_regions": ["maricopa-az", "northern-ca", "eastern-ok", "south-central-tx"],
+    "official_region_counts": {"maricopa-az": 1593, "northern-ca": 591, "eastern-ok": 1192, "south-central-tx": 6003},
+    "official_scored_rows": 9379,
+    "platform_format_only_rows": 415,
+    "platform_template_rows": 9794,
+    "format_only_fill": 0.0,
+    "comparison_scope": "official 9,379 GEOIDs only; the 415 eastern-WA rows have no scored-region feature inputs and are formatting-only, with no target claim",
+    "upload_authorized": false
+  },
+  "explicit_recipe": {
+    "base": "C2_component_estimator_v0 component outputs and reports/gap-estimates.csv per-component defined flags; this is the frozen feature-only component recipe audited by H1b. Do not use S as a base and do not apply S's cross-method reliability weights or region-mean shrink.",
+    "building": {
+      "source_share": "provided per-tract overture_building_microsoft_source_share",
+      "rule": "when share is finite and in [0,1], building_gap_S2 = building_gap_C2 * (1 - share); when share is missing, preserve building_gap_C2 unchanged",
+      "assumption": "A Microsoft-sourced Overture record is treated as an exact overlap with the removed Microsoft reference solely for this counterfactual; this is unverified and not accuracy evidence",
+      "defined_mask": "preserve C2 building_defined"
+    },
+    "poi_facilities": {
+      "inputs": "fire_gap/fire_defined, ems_gap/ems_defined, schools_gap/schools_defined from frozen reports/gap-estimates.csv plus raw Overture category counts from provided tract summaries",
+      "rule": "drop each facility type from the facilities half iff that tract's raw overture_poi_<type> count is exactly zero; retain other types only when their frozen per-type defined flag is true; facilities half is the arithmetic mean of retained defined type gaps, or undefined if no type remains",
+      "assumption": "Overture category count zero is treated as a zero reference count for this scenario only; USGS reference counts are absent and this premise is unverified"
+    },
+    "poi_establishments": "preserve the frozen cbp_gap/cbp_defined establishment half without correction; this is an internal feature-only proxy, not a CBP reference count",
+    "poi_composite": "mean of whichever facilities half and establishment half are defined; undefined if neither is defined; preserve no hidden-reference mask",
+    "transport": "preserve C2 transport_gap and transport_defined unchanged",
+    "overall_composite": "arithmetic mean of the defined transport, adjusted building, and adjusted POI component values; omit undefined components; deterministic 0.0 export fallback only if no component is defined",
+    "coefficient_or_fit": "none; no fitted/estimated coefficients, target moments, or S-style shrink",
+    "input_construction_ambiguity": "H1b's exact component-level stress-test is defined on C2 and its frozen per-type recipe values. A1/A2/A3 expose aggregate component columns but no separate facility-type decompositions, so S2 uses the exact C2/H1b component path rather than inventing per-type splits for A-family candidates. S and C2 remain explicit comparison baselines."
+  },
+  "comparison": {
+    "models": ["S_crossmethod_reliability_shrink_v1", "S2_h1b_assumption_bound_v1", "C2_component_estimator_v0"],
+    "statistics": ["per-region mean composite level", "per-region defined component means for transport/building/POI", "share of official-region tracts whose composite differs from S and from C2"],
+    "changed_definition": "absolute composite difference > 1e-12; computed on official GEOIDs only",
+    "S_component_means": "null/not identifiable from S artifact, which contains only GEOID and coverage_gap_score; do not infer component decomposition",
+    "target_accuracy": "not identifiable; no labels or organizer references"
+  },
+  "frozen_inputs": {
+    "C2_components": {"path": "reports/candidates/C2_component_estimator_v0.csv", "sha256": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514"},
+    "gap_estimates": {"path": "reports/gap-estimates.csv", "sha256": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852"},
+    "estimator_source": {"path": "scripts/estimate_gaps.py", "sha256": "4f59982e0349af048ba11efbd5dbc629076eef8d3c8dc08d5747da5833bfc4fe"},
+    "S_comparison_artifact": {"path": "reports/candidates/S_crossmethod_reliability_shrink_v1.csv", "sha256": "26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a"},
+    "H1b_stress_test_source": {"path": "scripts/audit_shrink_h1b_rule_levels.py", "sha256": "a38e70b251f99e6a6121dec11fc6747b66c46271450a16adde1315e5bdcc01ca"},
+    "H1b_preregistration": {"path": "config/shrink-h1b-rule-level-preregistered.json", "sha256": "d2ca6ad5a6e7701a85068c355598490d9d2444e86e1f9490b0c6b15e39881c9e"},
+    "official_samples": {
+      "maricopa-az": {"path": "$COMPETITION_WORKSPACE/samples/maricopa-az-sample-submission.csv", "sha256": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31", "rows": 1593},
+      "northern-ca": {"path": "$COMPETITION_WORKSPACE/samples/northern-ca-sample-submission.csv", "sha256": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902", "rows": 591},
+      "eastern-ok": {"path": "$COMPETITION_WORKSPACE/samples/eastern-ok-sample-submission.csv", "sha256": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4", "rows": 1192},
+      "south-central-tx": {"path": "$COMPETITION_WORKSPACE/samples/south-central-tx-sample-submission.csv", "sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e", "rows": 6003},
+      "columns_consumed": ["GEOID"],
+      "score_placeholders_consumed": false
+    },
+    "provided_feature_and_strata_hashes": "use hashes frozen in config/shrink-h1b-rule-level-preregistered.json for each region; consume only the listed Overture and population/land/urbanity columns"
+  },
+  "forbidden": [
+    "leaderboard/public/private scores or scorecards, including any algebra or comparison involving those values",
+    "C0/all-zero candidate or its values",
+    "labels, sample score placeholders, removed references or equivalent copies, external data",
+    "fitting, target-moment calibration, coefficient search, or using S/C2 agreement as accuracy evidence",
+    "modifying S, changing the final-two protocol, or uploading/submitting from this row"
+  ],
+  "acceptance": {
+    "freeze_S2_artifact_and_sha256_in_candidates_registry": true,
+    "purpose": "improvement",
+    "upload_authorized": false,
+    "assumptions_listed": true,
+    "predicted_target_score": "label-free; target RMSE/accuracy not identifiable",
+    "side_by_side_comparison": "S vs S2 vs C2 per region, including composite mean, component means or explicit non-identifiability, and changed-tract shares",
+    "writeup_paragraph": true,
+    "tests_and_determinism": true
+  },
+  "outputs": {
+    "script": "scripts/build_shrink_s2_assumption_bound.py",
+    "tests": "tests/test_shrink_s2_assumption_bound.py",
+    "artifact": "reports/candidates/S2_h1b_assumption_bound_v1.csv",
+    "registry": "reports/candidates.json",
+    "comparison": "reports/shrink-s2-assumption-bound-comparison.json",
+    "writeup": "docs/writeup/shrink-s2-assumption-bound.md"
+  }
+}
