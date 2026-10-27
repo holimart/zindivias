@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "analysis_id": "SHRINK_DIAGNOSIS_H2_CROSS_CONSTRUCTION_V1",
+  "registered_before_h2_measurement": true,
+  "purpose": "Estimate construction-agreement reliability from frozen, feature-only candidate predictions, then freeze at most one local-proxy shrink candidate. This is not target calibration.",
+  "input_constructions": [
+    {
+      "candidate_id": "C2",
+      "path": "reports/candidates/C2_component_estimator_v0.csv",
+      "sha256": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514"
+    },
+    {
+      "candidate_id": "A1_physical_equal",
+      "path": "reports/candidates/A1_physical_equal.csv",
+      "sha256": "6af088b83ff3481d420e11b14d903fc510c2b4be2cea285c762ca12d500862de"
+    },
+    {
+      "candidate_id": "A2_spectral",
+      "path": "reports/candidates/A2_spectral.csv",
+      "sha256": "f88573996566a1975726845a49f42fb2cd3781d5f0e83d55944fc65647692997"
+    },
+    {
+      "candidate_id": "A3_dawid_skene",
+      "path": "reports/candidates/A3_dawid_skene.csv",
+      "sha256": "6d588f2f7a45a58b128860a049ac19995b21902f7f98d3b2ab39d1d9fbb073b3"
+    }
+  ],
+  "explicitly_excluded": [
+    "P4 and any LB-calibrated candidate or parameter",
+    "V2 (its registry forecast contains a public-score anchor, even though the candidate itself is model-only)",
+    "leaderboard/submission scores, scorecards, labels, removed references, or external data"
+  ],
+  "scope": "Official 9,379 GEOIDs in the four region sample files; read GEOID only from sample files.",
+  "predictor": "Each frozen construction's coverage_gap_score, centered within region.",
+  "reliability_definition": {
+    "per_construction_signal_share": "clip(mean covariance of that construction with every other frozen construction / its own centered variance, 0, 1)",
+    "combined_candidate_weights": "Estimate each construction's signal share pooled across regions as total cross-covariance with the other constructions / total centered variance; normalize the nonnegative shares to sum to one globally. Use equal weights only if every share is zero.",
+    "signal_variance": "Weighted mean of pairwise centered cross-construction covariances, using products of normalized candidate weights and excluding diagonal terms.",
+    "total_variance": "Population variance across official tracts of the weighted combined predictor within the region.",
+    "shrink_factor": "c_r = clip(signal_variance / total_variance, 0, 1); c_r=0 if total_variance is zero.",
+    "candidate_transform": "S_i = regional_mean(weighted_consensus) + c_r * (weighted_consensus_i - regional_mean(weighted_consensus))."
+  },
+  "region_specificity_rule": "Use regional c_r only if max(c_r)-min(c_r) >= 0.10; otherwise use one pooled c from region-weighted centered covariance and total variance. Candidate weights remain global.",
+  "local_prediction_protocol": "Leave one construction out in turn. Estimate weights, c, and regional means from the remaining constructions only; score the held-out construction against the shrink predictor using tract-weighted RMSE. This is a cross-construction generalization proxy, not organizer-target RMSE.",
+  "candidate_gate": "Register S only if leave-one-construction-out pooled MSE improves on the unshrunk reliability-weighted training consensus and no more than one region has negative average MSE gain across held-out folds; otherwise report a negative/no-candidate result.",
+  "shrink_target_choice": "Region mean, because the reliability estimate concerns within-region deviations and no label-free evidence identifies the target's global intercept as zero. No region mean is claimed to equal the hidden reference mean.",
+  "interpretation_gate": "Cross-candidate covariance estimates shared construction signal only under uncorrelated construction errors. Shared source/model bias violates that assumption; report it as a reliability proxy and do not call it target accuracy.",
+  "candidate_id": "S_crossmethod_reliability_shrink_v1",
+  "candidate_artifact": "reports/candidates/S_crossmethod_reliability_shrink_v1.csv",
+  "upload_authorized": false
+}

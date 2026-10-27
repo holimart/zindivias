@@ -1561,8 +1561,73 @@
         },
         "manifest_sha256": "3bb36fc7e0977886d2f73d4e5a05d52ca9eb1ca0f6693c2659d60a97c4b6873f"
       }
-    }
-  ],
+    },
+    {
+      "candidate_id": "S_crossmethod_reliability_shrink_v1",
+      "name": "H2 cross-construction reliability shrink",
+      "artifact": "reports/candidates/S_crossmethod_reliability_shrink_v1.csv",
+      "sha256": "26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "coverage_gap_score"
+      ],
+      "pre_registered": true,
+      "preregistered_card_path": "config/shrink-diagnosis-preregistered.json",
+      "preregistered_card_sha256": "cc4c7a065b4384b315e272166330d1620f30ccbe652098dc107a3b38c016ef09",
+      "purpose": "improvement",
+      "description": "Reliability-weighted consensus of four frozen, feature-only constructions, with deviations shrunk toward each region's own consensus mean; this is an improvement hypothesis, not target-accuracy evidence.",
+      "predicted_score": 0.14938067665302132,
+      "predicted_score_scope": "cross-construction LOCO proxy only; not official RMSE forecast",
+      "predicted_score_basis": "Leave one construction out in turn. Estimate weights, c, and regional means from the remaining constructions only; score the held-out construction against the shrink predictor using tract-weighted RMSE. This is a cross-construction generalization proxy, not organizer-target RMSE.",
+      "target_RMSE_forecast": null,
+      "target_RMSE_forecast_limitation": "Organizer-reference labels are unavailable; no numeric target RMSE can be honestly inferred from candidate agreement alone.",
+      "parameters": {
+        "cross_construction_weights": {
+          "A1_physical_equal": 0.3145739805044629,
+          "A2_spectral": 0.3282749821159297,
+          "A3_dawid_skene": 0.32415982603399934,
+          "C2": 0.03299121134560802
+        },
+        "signal_share_by_construction": {
+          "A1_physical_equal": 0.4415365291423174,
+          "A2_spectral": 0.4607672763503323,
+          "A3_dawid_skene": 0.45499123686232185,
+          "C2": 0.046306515645001815
+        },
+        "raw_c_by_region": {
+          "eastern-ok": 0.8034817631372467,
+          "maricopa-az": 0.7485387483371441,
+          "northern-ca": 0.7691896362465734,
+          "south-central-tx": 0.8154325827060048
+        },
+        "pooled_c": 0.8016961191348315,
+        "c_applied_by_region": {
+          "eastern-ok": 0.8016961191348315,
+          "maricopa-az": 0.8016961191348315,
+          "northern-ca": 0.8016961191348315,
+          "south-central-tx": 0.8016961191348315
+        },
+        "region_specific_c_used": false,
+        "shrink_target": "the feature-only ensemble mean within each region; it is retained as an estimated intercept, while only less-reliable within-region deviations are attenuated",
+        "local_leave_one_construction_out_shrunk_rmse": 0.14938067665302132,
+        "local_leave_one_construction_out_unshrunk_rmse": 0.15087589315598743,
+        "no_public_scores_or_labels_used": true
+      },
+      "eastern_wa_fill": {
+        "region": "eastern-wa",
+        "rows": 415,
+        "value": 0.0,
+        "scored_target_claim": false
+      },
+      "column_checks": {
+        "unique_columns": true,
+        "all_rows_have_columns": true,
+        "finite_bounded_scores": true
+      },
+      "upload_authorized": false,
+      "registration_status": "frozen_no_upload"
+    }],
   "feature_source": "provided Overture buildings/roads/POIs plus provided ACS housing geometries and strata covariates",
   "estimator_version": "v0",
   "platform_template": {

@@ -568,8 +568,57 @@ reliability. A road-source membership decomposition was not available in this au
 **H1 verdict: mixed and inconclusive.** Aggregate definedness mismatches are substantial in two
 regions in opposite directions, and the Maricopa Overture route denominator is a proxy concern;
 neither establishes that a component was computed contrary to the official target definition or
-explains candidate error without per-component reference masks/scores. **H2 and candidate S are
-pending.** No reliability-based signal share or shrink factor `c` has been estimated, no additional candidate S
-has been frozen, and no public-score-derived value or regional split was used. The next phase must
-measure agreement/retest reliability from independent provided-feature constructions before any
-candidate registration; an unlabelled feature correlation is not target accuracy.
+explains candidate error without per-component reference masks/scores.
+
+### H2: cross-construction reliability shrink
+
+The preregistered H2 analysis is in `config/shrink-diagnosis-preregistered.json`; it uses only the
+frozen feature-derived C2, A1, A2 and A3 prediction artifacts. P4 and V2 were excluded (V2's
+registry forecast contains a public-score anchor). For each construction, its regional-centered
+covariance with the other constructions estimates shared signal; pooled nonnegative signal shares
+are normalized to construction weights. The consensus is then shrunk around its own regional mean
+by `c = estimated shared cross-covariance / total consensus variance`. This makes the intercept
+explicit and only attenuates within-region deviations. A zero target mean is not justified by
+label-free evidence, so shrinkage is toward the feature-only regional consensus mean, not zero.
+
+| Region | Raw regional c | Applied c | LOCO average MSE gain vs unshrunk consensus | S regional mean |
+|---|---:|---:|---:|---:|
+| Maricopa AZ | 0.7485 | 0.8017 pooled | 0.0004308 | 0.32434 |
+| Northern CA | 0.7692 | 0.8017 pooled | 0.0004259 | 0.26479 |
+| Eastern OK | 0.8035 | 0.8017 pooled | 0.0005637 | 0.23207 |
+| South-Central TX | 0.8154 | 0.8017 pooled | 0.0004333 | 0.23988 |
+
+Regional raw c spans only 0.0669, below the preregistered 0.10 cutoff; therefore a single pooled
+`c=0.8016961` is applied rather than estimating four shrink parameters. Pooled shared variance is
+`0.00415832`, total consensus variance `0.00518690`. Global construction weights are C2
+`0.03299`, A1 `0.31457`, A2 `0.32827`, and A3 `0.32416`; all three alternate constructions carry
+similar locally estimated agreement weights, while C2's agreement share is smaller. Leave-one-
+construction-out proxy RMSE is `0.149381` for the shrink estimator versus `0.150876` for the
+unshrunk reliability-weighted consensus. The shrink MSE gain is positive in all four regions, so
+the preregistered local-proxy gate passed. This held-out unit is another prediction method, not a
+tract reference label; the numeric `predicted_score` is a cross-construction generalization proxy,
+not a forecast of organizer-target RMSE. The actual target RMSE is not identifiable without labels.
+
+**H2 verdict: local cross-method agreement supports registering one shrink hypothesis, but does
+not establish accuracy.** S is frozen and registered as
+`S_crossmethod_reliability_shrink_v1` with purpose `improvement`; its score-only artifact is
+`reports/candidates/S_crossmethod_reliability_shrink_v1.csv` (SHA-256
+`26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a`). The registry's numeric
+predicted score is the local LOCO proxy above, explicitly not a target RMSE. The platform-only
+415 eastern-WA rows are zero formatting fills without target claims. No upload is authorized by
+this row.
+
+Reproduce H2 and finalize the registry entry with:
+
+```sh
+uv run --with-requirements requirements.txt python scripts/audit_shrink_diagnosis_h2.py \
+  --workspace "$COMPETITION_WORKSPACE"
+python scripts/register_shrink_diagnosis_candidate.py
+```
+
+The four constructions share underlying provided features, so their errors may be correlated;
+common systematic bias can inflate the apparent signal share. Four methods are a small method set,
+tracts are spatially dependent, and the region mean itself is unvalidated. Consequently, S is a
+scientifically motivated candidate for later authorized evaluation, not evidence that shrinkage
+improves hidden-target RMSE. No public scores, labels, removed references, external data, or
+leaderboard-derived parameters informed the reliability estimates, weights, region rule, or S.
