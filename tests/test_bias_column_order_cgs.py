@@ -93,7 +93,9 @@ def test_new_format_candidates_are_registered_and_final_slots_are_reset():
     assert preflight["result"] == "PASS"
     assert preflight["uploads_performed"] == 0
     assert {x["candidate_id"] for x in preflight["candidates"]} == set(CANDIDATES)
-    assert all(x["guarded_tool_dry_run"] == "dry_run_validated" and not x["live_upload"]
+    assert all(x["guarded_tool_status"] == "dry_run_validated" and not x["live_upload"]
+               for x in preflight["candidates"])
+    assert all(x["git_commit_at_dry_run"] == preflight["candidates"][0]["git_commit_at_dry_run"]
                for x in preflight["candidates"])
 
 
