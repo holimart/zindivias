@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "analysis_id": "S2_FACILITY_TYPE_POOLED_PRIOR_SCREEN_V1",
+  "registered_before_screen_outputs": true,
+  "purpose": "Reference-free partial-pooling sensitivity screen for uncertain zero-count facility types; not target-accuracy evidence, candidate promotion, or upload authorization.",
+  "scope": {
+    "official_regions": ["maricopa-az", "northern-ca", "eastern-ok", "south-central-tx"],
+    "official_rows": 9379,
+    "platform_template_rows": 9794,
+    "template_only_rows": 415,
+    "facilities": ["fire", "ems", "schools"],
+    "strengths_kappa": [0, 2, 5],
+    "support_bins_expected_count": {"low": "lambda < 0.5", "medium": "0.5 <= lambda < 1.0", "high": "lambda >= 1.0"}
+  },
+  "frozen_inputs": {
+    "S2": {"path": "reports/candidates/S2_h1b_assumption_bound_v1.csv", "sha256": "44ba76abcd9e1fb0aa7194e3c0fadf567debce40e29ed4bdf93ef02ae9514577"},
+    "S2b": {"path": "reports/candidates/S2b_c2_expected_facility_mask_v1.csv", "sha256": "5761e2c17f25f66bbc9e1d769a04b76545e4cc660a8ca9481c30b89739b7ae6f"},
+    "gap_estimates": {"path": "reports/gap-estimates.csv", "sha256": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35382badc6b142c9950e9e112"},
+    "support_model_preregistration": {"path": "config/shrink-h1b-rule-level-preregistered.json", "sha256": "d2ca6ad5a6e7701a85068c355598490d9d2444e86e1f9490b0c6b15e39881c9e"},
+    "official_ids": "The four official sample files; consume GEOID only, never score placeholders.",
+    "provided_inputs": "Use only pinned Overture tract summaries and strata inputs and the frozen C2 expected-count equations in the H1b registration. No removed reference layers, external data, labels, C0, or public/private scores."
+  },
+  "fixed_method": {
+    "facility_support_lambda": "C2/H1b frozen expected facility count from provided population/urban features for each tract and type.",
+    "pooled_rate": "Within each official region and facility type, min(1, sum of provided Overture raw type counts / sum of lambda); use all official tracts in that region.",
+    "zero_count_imputation": "For raw Overture count 0, and kappa > 0, estimate provided-data rate (raw_count + kappa * pooled_rate) / (lambda + kappa), then gap=clip(1-rate,0,1) and include this imputed type in the facilities-half arithmetic mean. For kappa=0, preserve the frozen S2 rule and drop all raw-zero types.",
+    "nonzero_type": "Keep frozen per-type gap estimate unchanged when raw count is positive and its frozen defined flag is true; otherwise omit it.",
+    "poi_composition": "Arithmetic mean of defined facility half and frozen CBP-proxy half when each is defined; omit undefined halves.",
+    "composite": "Arithmetic mean of defined frozen S2 transport/building and screen POI components; deterministic 0 only if all are undefined.",
+    "S2b_role": "Read and hash-check S2b as a frozen comparator/input; do not modify it or use it as a target proxy.",
+    "support_summaries": "Report total-screen composite changes by region and mean facility lambda bin; also single-type attribution by region and that type's lambda bin.",
+    "outputs": "Kappa 0/2/5 official-row predictions; max absolute change against frozen S2 by region/type/support bin; undefined/zero counts, bounds, deterministic file hashes.",
+    "accuracy_claim": "None; no target labels or valid local target holdout exist."
+  },
+  "acceptance": {
+    "all_official_ids": true,
+    "finite_bounded_scores_0_1": true,
+    "deterministic": true,
+    "report_full_strength_sensitivity": true,
+    "no_upload_or_accuracy_claim": true
+  }
+}
