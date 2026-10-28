@@ -3,7 +3,14 @@
   "task": "bias-cgs-uploads-final-two",
   "authorization_revision": "2026-10-28T12:20:00Z",
   "authority": "Operator authorization relayed verbatim by the steward at approximately 2026-10-28T12:20Z: 'bias yes let the lane upload as you write'.",
-
+  "revision_status": "void",
+  "void_record": {
+    "recorded_utc": "2026-10-28T12:37:46Z",
+    "steward_correction": "The zindi_submit.py refusal is right; the prior steer was wrong. Zindi counts 5 Bias uploads on 2026-10-28 UTC: S2b at 00:14Z and B at 00:23Z, then V2/A1/A2 _cgs at 07:15Z. No slots are left today.",
+    "reason": "The guarded daily cap was exhausted (5/5), so the 12:20Z authorization revision is void for same-day uploads.",
+    "remaining_slots_on_2026-10-28": 0,
+    "resume_not_before_utc": "2026-10-29T00:05:00Z"
+  },
   "supersedes": {
     "preregistration_config": "config/bias-column-order-rescore-preregistered.json",
     "superseded_upload_not_before_utc": "2026-10-29T00:00:00Z",
@@ -12,8 +19,8 @@
     "scope": "Upload timing only; moves A3, the frozen A rule, and B to 2026-10-28 after the three already successful _cgs uploads. The frozen candidate CSV values, hashes, cards, and column-order invariants are unchanged."
   },
   "daily_cap": 5,
-  "already_used_on_2026-10-28": 3,
-  "remaining_slots_on_2026-10-28": 2,
+  "already_used_on_2026-10-28": 5,
+  "remaining_slots_on_2026-10-28": 0,
   "today_authorized_candidates": [
     {
       "candidate_id": "V2_model_cgs",
@@ -41,13 +48,18 @@
       "artifact": "reports/candidates/A3_dawid_skene_cgs.csv",
       "sha256": "432ade8f1e46c6804cb34fb790612bb1befc9fe03b67a545e753be46b549237c",
       "purpose": "calibration",
-      "status": "authorized_next"
+      "status": "voided_daily_cap_used"
     }
   ],
-  "2026-10-28_remaining_authorized_sequence": [
+  "2026-10-28_sequence_voided_by_cap": [
     "upload A3_dawid_skene_cgs",
     "apply the frozen A rule to the four successful _cgs scores only; never use historical misordered scores",
     "if V2_model_cgs wins, upload B_from_A_cgs after its selection record is reconciled to corrected-order evidence; otherwise build B from the winner, pre-register its artifact/hash/forecast, and upload it"
+  ],
+  "2026-10-29T00:05Z_resumption_sequence": [
+    "upload A3_dawid_skene_cgs",
+    "apply the frozen A rule to the four successful _cgs scores only; never use historical misordered scores",
+    "upload B_from_A_cgs if V2_model_cgs wins; otherwise rebuild B from the winner, preregister, and upload"
   ],
   "selection_constraints": [
     "Never use historical scores from files whose second column was transport_gap.",
