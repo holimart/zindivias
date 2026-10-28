@@ -5,36 +5,49 @@ from datetime import datetime
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
+CGS_IDS = {
+    "V2_model_cgs", "A1_physical_equal_cgs", "A2_spectral_cgs",
+    "A3_dawid_skene_cgs", "B_from_A_cgs",
+}
 
 
 class FinalTwoProtocolTests(unittest.TestCase):
-    def test_pending_report_matches_frozen_protocol_and_deadlines(self):
+    def test_column_order_rescore_invalidates_old_selection_and_preserves_records(self):
         report_path = REPO / "reports/final-two.json"
         report = json.loads(report_path.read_text(encoding="utf-8"))
         protocol_path = REPO / report["protocol"]["path"]
         digest = hashlib.sha256(protocol_path.read_bytes()).hexdigest()
         self.assertEqual(report["protocol"]["sha256"], digest)
-        self.assertEqual(report["status"], "protocol_frozen_waiting_for_eligible_candidates")
-        self.assertEqual([item["slot"] for item in report["final_candidates"]], ["A", "B"])
-        for item in report["final_candidates"]:
-            self.assertIsNone(item["candidate_id"])
-            self.assertIsNone(item["sha256"])
-            self.assertIsNone(item["public_rmse"])
+        self.assertEqual(report["status"], "column_order_cgs_preregistered_pending_scheduled_uploads")
+        self.assertEqual([(x["slot"], x["candidate_id"]) for x in report["final_candidates"]],
+                         [("A", None), ("B", None)])
+        self.assertTrue(all(x["sha256"] is None and x["public_rmse"] is None
+                            for x in report["final_candidates"]))
         self.assertEqual(report["upload_budget"]["queued_uploads"], [])
-        for registration in report["candidate_registrations"]:
-            self.assertIs(registration["upload_authorized"], False)
-            self.assertIs(registration["upload_performed"], False)
-            self.assertIsNone(registration["submission_id"])
-            self.assertIsNone(registration["public_rmse"])
-            self.assertEqual(registration["rows"], 9794)
-            self.assertEqual(registration["parameter_provenance"]["lb_derived_constants_used"], [])
-            self.assertIs(registration["prediction_written_before_any_upload"], True)
-            self.assertTrue(registration["local_invariants"]["all_gates_passed"])
         self.assertEqual(report["upload_budget"]["reserved_final_uploads"], 2)
-        self.assertEqual(report["upload_budget"]["lane_capacity_estimate_oct25_to_oct30"], 12)
-        upload_by = datetime.fromisoformat(report["deadlines_utc"]["final_successful_uploads_by"].replace("Z", "+00:00"))
-        select_by = datetime.fromisoformat(report["deadlines_utc"]["operator_ui_selection_by"].replace("Z", "+00:00"))
-        self.assertEqual((select_by - upload_by).total_seconds(), 32 * 3600)
+        self.assertIn("invalidated_final_selection", report)
+        self.assertIn("invalidated_interim_public_ranking", report)
+        self.assertTrue(report["score_integrity"]["historical_score_records_preserved"])
+        self.assertFalse(report["score_integrity"]["historical_public_scores_valid_for_selection"])
+        self.assertTrue(report["score_integrity"]["no_old_score_used_for_model_selection_or_value_changes"])
+
+        registrations = report["candidate_registrations"]
+        by_id = {x["candidate_id"]: x for x in registrations}
+        self.assertTrue(CGS_IDS <= set(by_id))
+        for candidate_id in CGS_IDS:
+            item = by_id[candidate_id]
+            self.assertEqual(item["columns"], ["GEOID", "coverage_gap_score"])
+            self.assertEqual(item["rows"], 9794)
+            self.assertTrue(item["format_fix_only"])
+            self.assertEqual(item["purpose"], "calibration")
+            self.assertFalse(item["upload_performed"])
+            self.assertIsNone(item["public_rmse"])
+        for item in registrations:
+            if item.get("public_rmse") is not None:
+                self.assertIs(item.get("score_selection_eligible"), False)
+        self.assertEqual(report["format_fix_upload_plan"]["uploads_performed_this_turn"], 0)
+        self.assertEqual(report["format_fix_upload_plan"]["2026-10-29_from_00Z"],
+                         ["V2_model_cgs", "A1_physical_equal_cgs"])
 
     def test_protocol_forbids_probes_and_uses_model_only_shrink(self):
         text = (REPO / "docs/final-two-protocol.md").read_text(encoding="utf-8")

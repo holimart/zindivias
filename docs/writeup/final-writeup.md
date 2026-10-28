@@ -2,7 +2,7 @@
 
 - Competition: `bias-bounty-mapping-equity-challenge` (Zindi)
 - Lane: `comp-zindi-bias-bounty`
-- Writeup revision: git `eea003f06993dc27f91398264a0130d76f0a9c21` (tree clean: False)
+- Writeup revision: git `4cc2e2ac64bb56651d621f0e2a1447f6200f7024` (tree clean: False)
 - Zindi username or team name: **PENDING_OPERATOR_CONFIRMATION**
 - Operator confirmation of that identity recorded: NO — pending operator
 - Form submission status: **NOT SUBMITTED — staged for operator submission**
@@ -12,9 +12,15 @@
 
 Scored scope: 9379 official tracts across four regions (2814 public / 6565 private expected), uploaded on the platform template of 9794 rows including 415 template-only rows.
 
-Current model candidate presented in this writeup: `V2_model` at `reports/candidates/V2_model.csv` (SHA-256 `3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12`), 9794 rows. Not uploaded: the frozen final-two protocol queues zero uploads and requires operator authorization.
+Current model candidate presented in this writeup: `V2_model` at `reports/candidates/V2_model.csv` (SHA-256 `3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12`), 9794 rows. The original five-column V2 upload is void for selection because Zindi scored its transport_gap column; V2_model_cgs is registered but has not been uploaded. No corrected-format upload before 2026-10-29 00:00 UTC.
 
-The pre-existing quantitative statements are covered by the claim-to-evidence audit summarised in the reproducibility appendix. The T1 diagnostic addendum below has its own report-path evidence table and reproduction commands. Nothing here is an accuracy claim beyond the platform scorecard values quoted verbatim from our submission log.
+Correctly ordered format-only platform artifact: `V2_model_cgs` at `reports/candidates/V2_model_cgs.csv` (SHA-256 `5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7`). Its `coverage_gap_score` values are copied byte-for-byte from the frozen model candidate above; no prediction was changed.
+
+## Column-order correction and historical score eligibility
+
+The per-region sample files use `GEOID,transport_gap,building_gap,poi_gap,coverage_gap_score`, while the Data-page `SampleSubmission.csv` starts `GEOID,coverage_gap_score`. Zindi scores the second CSV column by position, so every earlier five-column public score measured `transport_gap`, not `coverage_gap_score`. Those historical scores and submission records are retained for auditability but are void for candidate selection and are not used to tune or change predictions. Each registered `_cgs.csv` copies the frozen `coverage_gap_score` text unchanged into the Data-page two-column order. No corrected-format upload occurs before 2026-10-29 00:00 UTC.
+
+Every quantitative statement in this writeup is covered by the claim-to-evidence audit summarised in the reproducibility appendix. No historical platform score quoted below is evidence about the intended composite target or an accuracy claim.
 
 > The saved official page text in the workspace RULES.md preserves the sentence but not the hyperlink target, so the operator must supply the form URL; this build never guesses one.
 
@@ -38,9 +44,11 @@ We request consideration for both Best Bias Discovery ($1,000) and Best Document
 - Prize: Best Documentation ($500).
 - Official note: No separate leaderboard submission is required for Best Bias Discovery or Best Documentation.
 
-## Leaderboard submissions associated with this methodology
+## Historical leaderboard submission records (scores void for selection)
 
-| Platform submission id | Candidate | Artifact | Artifact SHA-256 | Public RMSE | Split | Score source | Uploaded (UTC) |
+The following public values are retained solely as historical records of the column-order finding; for each listed five-column file, Zindi scored `transport_gap` because it occupied column 2. None is eligible for the A/B rule.
+
+| Platform submission id | Candidate | Artifact | Artifact SHA-256 | Historical column-2 score | Split | Score source | Uploaded (UTC) |
 |---|---|---|---|---:|---|---|---|
 | uRRw9KpB | C0 | `reports/candidates/C0_all_zero.csv` | `0edf8140123e2135489e5728fd71bce6f1e28a97f447ca411ba45fdbc02bc214` | 0.107246299 | n/a | zindi_api_status | n/a |
 | BvyKrR6v | C1 | `reports/candidates/C1_region_constants.csv` | `dc2e368194b31408cb5c313fa8ce3f3fa59a1b5965bc2df8e4217bbc9e0c82e0` | 0.146449112 | n/a | zindi_api_status | n/a |
@@ -49,16 +57,18 @@ We request consideration for both Best Bias Discovery ($1,000) and Best Document
 | ySXi73rd | P4 | `reports/candidates/P4_c1_shrink_alpha.csv` | `8b329802d882ea4bdff2bfd8c465c160d6ffd9269cfbe28dce8be9e702b07d37` | 0.091440198 | n/a | zindi_api_status | n/a |
 | iQw8C6Q9 | A1_physical_equal | `reports/candidates/A1_physical_equal.csv` | `6af088b83ff3481d420e11b14d903fc510c2b4be2cea285c762ca12d500862de` | 0.126543547 | n/a | zindi_api_status | n/a |
 | W83LEghZ | A2_spectral | `reports/candidates/A2_spectral.csv` | `f88573996566a1975726845a49f42fb2cd3781d5f0e83d55944fc65647692997` | 0.146089513 | n/a | zindi_api_status | n/a |
+| tGB6sGRx | A3_dawid_skene | `reports/candidates/A3_dawid_skene.csv` | `6d588f2f7a45a58b128860a049ac19995b21902f7f98d3b2ab39d1d9fbb073b3` | 0.146089513 | n/a | zindi_api_status | n/a |
+| EbwLNkmt | V2_model | `reports/candidates/V2_model.csv` | `3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12` | 0.121644596 | n/a | zindi_api_status | n/a |
 
-The scored methodology candidate in this writeup is `V2_model`, built from provided features only (commit `b45733aa31903c71ec4f3fb432c2bc9d519f3ff9`). Not uploaded: the frozen final-two protocol queues zero uploads and requires operator authorization. Its predicted public RMSE is 0.091357195976378675 on the stated model-side moments of the frozen artifact (mu_v, sd_v, E[v^2]) with the all-zero candidate C0 platform RMSE as the E[y^2] anchor, assumed target mean equal to the model's own mean and assumed centred correlation 0.3; no LB-derived model parameter basis, which is a model-side forecast, not a leaderboard observation.
+The scored methodology candidate in this writeup is `V2_model`, built from provided features only (commit `b45733aa31903c71ec4f3fb432c2bc9d519f3ff9`). The original five-column V2 upload is void for selection because Zindi scored its transport_gap column; V2_model_cgs is registered but has not been uploaded. No corrected-format upload before 2026-10-29 00:00 UTC. Its predicted public RMSE is 0.091357195976378675 on the stated model-side moments of the frozen artifact (mu_v, sd_v, E[v^2]) with the all-zero candidate C0 platform RMSE as the E[y^2] anchor, assumed target mean equal to the model's own mean and assumed centred correlation 0.3; no LB-derived model parameter basis, which is a model-side forecast, not a leaderboard observation.
 
-The C0-P4 uploads above are historical calibration and probe records kept for auditability. They are excluded from the frozen final-two cohort and none of their leaderboard values, fitted constants or probe outcomes is used as evidence for the model or for any discovery claim.
+All earlier uploads above are retained as historical calibration records for auditability. Their column-2 scores measured `transport_gap` and are void for selection; none of their score values, fitted constants or probe outcomes is used as evidence for the intended composite or for any discovery claim.
 
 ## Best Bias Discovery entry
 
 ## Best Bias Discovery: post-fire building-count disagreement may look like under-mapping
 
-**Status:** reproducible descriptive finding from challenge-provided inputs; not a claim about hidden organiser scores, the exact reference vintage, or measured emergency outcomes. The direction of the high-burn versus unburned disagreement is repeatable, but its quantitative size is exploratory once counties rather than tracts are resampled, as recorded below. No additional public dataset was used.
+**Status:** the post-fire disagreement and Overture source-provenance findings below use challenge-provided inputs; additional public context layers are screened in Section 4 under the discovery-prize data policy. None is a claim about hidden organiser scores, the exact reference vintage, or measured emergency outcomes. The high-burn versus unburned direction is repeatable, but its quantitative size is exploratory once counties rather than tracts are resampled, as recorded below.
 
 ### Impact
 
@@ -282,9 +292,34 @@ MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig \
   --figure reports/source-provenance.png
 ```
 
-A repeated cache-based run produced byte-identical JSON and PNG. The report records source-object URIs, object/selected-column byte sizes, local input/cache hashes, and per-region source counts. No external-source retrieval or licence record applies because no additional public data was used.
+A repeated cache-based run produced byte-identical JSON and PNG. The report records source-object URIs, object/selected-column byte sizes, local input/cache hashes, and per-region source counts. This source-provenance analysis used no additional public source; external datasets used in the separate follow-on screen are documented in Section 4.
 
-### T1 named-stroke class-drop diagnostic and implementation limit
+### Section 4 — External public context layers: one weak broadband lead, no robust incremental pattern
+
+**Scope and interpretation.** This is a follow-on discovery-only screen using four additional public federal data layers staged outside git at `$COMPETITION_WORKSPACE/external-discovery-2026-10-27/`: CDC/ATSDR SVI 2022, USDA ERS RUCA 2020, Census Planning Database 2026, and Census 2020 AIANNH tribal-area polygons. The acquisition manifest records URLs, retrieval UTC times, byte counts and SHA-256 values; the analysis verifies each listed raw-file hash. The publisher pages did not state dataset-specific licences; because these are U.S. federal agency-produced datasets, we record the public-domain basis under 17 U.S.C. §105, subject to third-party material exceptions. This is a statutory assessment, not a quoted dataset licence; confirm exceptions before redistribution. Raw data remain outside git in the authorized workspace. FEMA NRI and FCC broadband were not included because their acquisition failed. Four frozen, label-free candidates (A1/A2/A3/V2) provide proxy outcomes, not organiser scores or accuracy labels. The fixed 28-test family covers A1 composite and components plus A2/A3/V2 composites. Region-adjusted effect sizes are partial correlations; uncertainty is a 1,000-draw county-cluster bootstrap stratified within the four regions. The residual screen conditions on region and supplied `pct_urban`, SVI, RUCA and tribal-share controls. OOF ΔR² compares that baseline to adding one external layer, using five deterministic region-stratified folds that hold out whole state-county groups. BH-adjusted q-values cover all 28 conditional residual-screen tests. All estimates describe frozen proxies only; they do not validate hidden targets, imply causation, or alter any scored candidate.
+
+**CDC/ATSDR SVI 2022.** On the 9,294 complete cases (85 selected SVI values were missing), the region-adjusted correlation with A1 composite was −0.003 (county-bootstrap 95% CI [−0.045, +0.035]); county-grouped OOF ΔR² was effectively zero. Some proxy subcomponents differed: A1 POI had r=−0.122 [−0.181, −0.079], and V2 composite r=−0.130 [−0.174, −0.096], but the external SVI exposure had no residual variance after conditioning on the supplied `svi_overall` field, so an incremental effect was not estimable. This is a source/vintage cross-check, not evidence that SVI explains real-world or hidden coverage gaps; no independent predictive gain was observed.
+
+**USDA ERS RUCA 2020.** RUCA joined for all 9,379 official GEOIDs; complete analytic N was 9,294 after the shared provided-control screen. The region-adjusted association varied across the provided estimators and components: RUCA code with A1 transport r=+0.322 [+0.269, +0.374], A1 POI r=−0.156 [−0.210, −0.122], A1 composite r=+0.029 [−0.001, +0.074], and A3 composite r=+0.342 [+0.286, +0.404]. Because the external RUCA code was represented by the provided RUCA control, its conditional residual effect was not estimable and county-grouped OOF ΔR² was effectively zero. RUCA primary codes are ordinal, so these are screening associations rather than interval-scale changes; the sign disagreement across proxies and lack of incremental holdout signal preclude a common coverage-gap claim.
+
+**Census PDB 2026 broadband context.** The selected exposure was tract percentage of households with no internet; 9,297 exposure values were available, and 9,292 tracts entered the complete-case model. Its region-adjusted association with A1 building-gap proxy was r=−0.042 (95% CI [−0.075, −0.007]); after the supplied controls, partial r=−0.051 [−0.074, −0.030], with BH q=0.056 across the 28 residual tests. The region-adjusted direction matched in three of four regions, while whole-county OOF ΔR² was only +0.0033. Thus this is a small, borderline, diagnostic lead about a model proxy—not a robust multiplicity-controlled finding, not evidence that offline households have better mapped buildings, and not a basis for changing predictions. Other PDB composite and transport associations did not add consistent held-out signal.
+
+**Census AIANNH 2020 tribal-area polygons.** We dissolved overlapping AIANNH polygons, projected them with 2024 Census tract geometry to EPSG:5070, and calculated tract area-share overlap; exact geometry joins covered all 9,379 official GEOIDs, with 1,042 positive overlaps. The Maricopa-labeled sample includes `35023970000`, whose GEOID is New Mexico; we retained its official sample region label and used its matching New Mexico tract geometry rather than reassigning or dropping it. For A1 composite the region-adjusted r was +0.038 (95% CI [−0.020, +0.073]) and grouped OOF ΔR² was effectively zero. After provided `tribal_pct` and other controls, A1 composite partial r was −0.007 [−0.023, +0.005]; no conditional result survived BH correction. The layer's unique exposure variation after supplied controls was only 0.2% of raw exposure SD, demonstrating strong redundancy rather than an independent tribal-area signal. Polygon overlap does not establish any resident's identity or legal status, and no coverage-disparity claim is supported.
+
+Reproduce the analysis from the competition repository with the manifested raw files in the authorized workspace:
+
+```sh
+/home/martin/hddProjects/langywrap/uv run --quiet \
+  --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 \
+  --with pyproj==3.8.0 --with pyshp \
+  python scripts/analyze_discovery_external_layers.py \
+  --workspace "$COMPETITION_WORKSPACE" \
+  --out reports/discovery-external-layers.json
+```
+
+The config is `config/discovery-external-layers-preregistered.json`; the complete 28-test results, missingness, source URLs/licence status/hashes, and tract-geometry provenance are in `reports/discovery-external-layers.json`. External features were used only in this discovery audit, never in scored candidate construction or uploads. Census TIGER2024 tract boundaries were used only as geography for the AIANNH polygon overlay; no TIGER roads, Microsoft footprints, USGS facilities, CBP data, or equivalent copies were read or used to rebuild the scored target.
+
+### Section 5 — T1 named-stroke class-drop diagnostic and implementation limit
 
 **Status: diagnostic only; not a gap-accuracy result or a promoted estimator.** T1 computes a provided-road class-drop fraction for identities that have named-class length. In the frozen implementation, identities use case-folded `names.primary`, falling back to route network/reference; class-drop length is counted only when the identity's named length lies mostly outside the tract. The verified implementation does **not** apply geometric-angle stroke merging: continuity is exact identity only, a conservative proxy that can miss class changes on otherwise continuous roads. It uses the supplied unfiltered Overture road layer and does not use labels or removed reference layers. These limitations prevent interpreting a T1 association with the frozen S1 disagreement residual as evidence of hidden-score accuracy.
 
@@ -299,7 +334,7 @@ The fixed-threshold and nested screens use a one-term correction to the frozen S
 
 #### Reproduction commands
 
-[A] Synthetic aggregation hand-check:
+[A] Re-run the synthetic aggregation hand-check:
 
 ```sh
 /home/martin/hddProjects/langywrap/uv run --quiet \
@@ -308,7 +343,7 @@ The fixed-threshold and nested screens use a one-term correction to the frozen S
   --out reports/t1-class-drop-handcheck.json
 ```
 
-[B] Fixed-threshold county-held-out screen:
+[B] Re-run the fixed-threshold county-held-out screen:
 
 ```sh
 /home/martin/hddProjects/langywrap/uv run --quiet \
@@ -319,7 +354,7 @@ The fixed-threshold and nested screens use a one-term correction to the frozen S
   --manifest reports/t1-stroke-residual-county-folds.csv
 ```
 
-[C] Rebuild the nested screen by running one feature-build invocation for each of the three registered thresholds (`0.5`, `0.7`, `0.9`) in each official region (`maricopa-az`, `northern-ca`, `eastern-ok`, `south-central-tx`); execute these 12 calls separately so each remains a bounded run. Example invocation:
+[C] To rebuild the nested screen from raw provided inputs, run one feature-build invocation for each of the three registered thresholds (`0.5`, `0.7`, `0.9`) in each official region (`maricopa-az`, `northern-ca`, `eastern-ok`, `south-central-tx`); execute these 12 calls separately so each remains a bounded run. For example:
 
 ```sh
 /home/martin/hddProjects/langywrap/uv run --quiet \
@@ -329,7 +364,7 @@ The fixed-threshold and nested screens use a one-term correction to the frozen S
   --threshold 0.5 --region maricopa-az
 ```
 
-After all 12 feature caches exist, reproduce nested selection and outer evaluation:
+After all 12 feature caches exist, reproduce the nested selection and outer evaluation:
 
 ```sh
 /home/martin/hddProjects/langywrap/uv run --quiet \
@@ -339,7 +374,7 @@ After all 12 feature caches exist, reproduce nested selection and outer evaluati
   --out reports/t1-outside-share-threshold.json
 ```
 
-Every new numeric T1 statement in this addendum has a direct report pointer in the evidence table and a corresponding command above. No removed reference data, sample score placeholders, labels, leaderboard feedback, or candidate outputs were used.
+Every new numeric T1 statement in this section has a direct report pointer in the evidence table and a corresponding command above. No removed reference data, sample score placeholders, labels, leaderboard feedback, or candidate outputs were used.
 
 ## Methodology (Best Documentation entry)
 
@@ -477,8 +512,6 @@ Family S is a label-free collection of five registered spatial-context estimator
 | `S5` | Mean normalized local Geary contribution over existing defined gap channels on queen neighbours | 9,379 / 1 | Defined for 9,377 tracts; existing gap emissions are used as emitted, with no ratio reconstruction. |
 
 The label-free summary `reports/bias60-family-s-summary.json` verifies the exact 9,379 GEOID/region partition and each Parquet digest. Parquet SHA-256 values are S1 `632829cf29281aa16487707cb555f52b4579cb0edfc0dd3faae360fa8f1dda03`, S2 `5b5e45edd6cd0f0a14cdfb124d587136f0f059a1c80a0aa6131a6abac958980a`, S3 `ce01545f0e10cbffee64b50f5088608d6c67cb096f8769bca869af5fff5533d7`, S4 `5841cac5114f2c7571bd41f90914c076b2eb92e1fe7bd1c33d6fe95b47a2a71c`, and S5 `81d9153819dadf76a9d8666f6887300d412f8d5fc6acf15c1a8dfc924840725c`. The summary SHA-256 is `ea1bdb11e7c358eb5ffc4b75a0a1a3c19d7f2b7bb84dce6453fb400643f68581`; it binds the current passing harness report (`20279d9548fa126ec81b2df9dbbe67b363101303b1222e76caf985dc2c9e9c58`) and orthogonality report (`d5fcb1872c2899d40c949d51181f4c6da35309463d2e84a0af5cbd63e6b0e443`). The current orthogonality matrix measures 145 channels (135 included after declared coverage/degeneracy handling), and flags 12 pairs involving S above `|rho| > 0.8`; an example is the correlation of `0.999` between S1's lagged M2 and M4 all-place metadata channels. Five S channels have VIF above 10 (10.162–14.047), including the S1 lags of M2 facility Wikidata share and M3 facility address-mismatch share and S3 school-boundary leakage. These flags disclose redundancy; all outputs are retained, not silently removed. Complete pairwise correlations, coverage/distributions, VIF values and flagged pairs are in the summary and the full `reports/ideas-orthogonality.json`.
-
-**S2 name clarification and target-accuracy caveat.** The `S2` row above is a Family S feature channel (county-pooled Overture building and all-POI counts), not the separate `S2_h1b_assumption_bound_v1` composite candidate documented in [`shrink-s2-assumption-bound.md`](shrink-s2-assumption-bound.md). The Family S row's 18,758 outputs, two channels, and 9,379 defined rows per channel are documented in `reports/bias60-family-s-summary.json` (SHA-256 `ea1bdb11e7c358eb5ffc4b75a0a1a3c19d7f2b7bb84dce6453fb400643f68581`; `/outputs/S2/channels`). The distinct H1b candidate comparison and its preregistered recipe are sourced from `reports/shrink-s2-assumption-bound-comparison.json` (SHA-256 `2328a34cae77509691fdd3a24608b925fc2b3d07e9a4d9e155bba71f1e507162`; `/recipe`, `/side_by_side_by_region`, `/candidate`). Its fire/EMS/school-mask and building-share sensitivities are sourced from `reports/s2-poi-facility-mask-endpoints.json` (SHA-256 `2b17cec8db5b1289bb38e4c9aeac14dd7e466b7f897525b6262f8158fd45ec07`) and `reports/s2-building-overlap-sensitivity.json` (SHA-256 `6625dc305e8c29e70a0dcecca1efecda6ceb7d2deb36bcd015fb42fa327725f0`). Those counterfactuals and feature-only construction comparisons are descriptive sensitivity evidence only; neither sensitivity nor agreement among feature-only outputs establishes target accuracy, and hidden-target accuracy remains not identifiable.
 
 Reproduce the label-free summary against the committed Family S Parquets and current harness/orthogonality reports with:
 
@@ -872,6 +905,103 @@ closed if either ever changes. The rural/tribal/wildfire asymmetry is reported b
 encourage reflecting on the scorecard, and because it is consistent with the descriptive findings in
 `docs/writeup/bias-discovery.md`, which are evidence for follow-up investigation and not for any
 score-driven adjustment.
+
+### Shrink diagnosis — H1 rule-anchored phase (partial)
+
+This diagnostic uses the frozen feature-only C2 component table and the organizer's published
+aggregate definedness context. It reads no score placeholders, hidden/reference layers, external
+data, or leaderboard/submission scores. The score distributions, component masks, clipping mass,
+source-membership counts and input SHA-256s are in `reports/shrink-diagnosis.json`; reproduce with:
+
+```sh
+uv run --with-requirements requirements.txt python scripts/audit_shrink_diagnosis_h1.py \
+  --workspace "$COMPETITION_WORKSPACE" --out reports/shrink-diagnosis.json
+```
+
+| Region | Our any-top-level-component undefined | Published any-reference-component undefined | Difference (pp) | C2 transport / building / POI defined rates | Overture named/route proxy ratio |
+|---|---:|---:|---:|---:|---:|
+| Maricopa AZ | 36.53% | 55% | −18.47 | 63.47% / 100% / 100% | 1.929 |
+| Northern CA | 30.46% | 37% | −6.54 | 69.54% / 100% / 100% | 1.504 |
+| Eastern OK | 40.69% | 21% | +19.69 | 59.31% / 100% / 100% | 1.161 |
+| South-Central TX | 36.95% | 28% | +8.95 | 63.05% / 100% / 99.97% | 1.183 |
+
+The direction reverses by region: our estimator has fewer undefined rows than the published
+aggregate in Arizona/California, but more in Oklahoma/Texas. This flags region-specific H1 risk,
+not a single global definedness correction. The organizer publishes only the aggregate
+any-component rate, so these figures cannot validate individual component masks. The
+named/route ratios are internal Overture named-length / selected Overture route-network-length
+ratios; they are not regional Overture/TIGER ratios. Maricopa's 1.929 is outside the disclosed
+cross-region range 0.71–1.59, while the other three are inside, but that comparison is not a
+per-region target test.
+
+On defined rows, C2's mean transport/building/POI gaps are respectively AZ
+`0.15360/0.04905/0.31285`, Northern CA `0.11917/0.04657/0.23368`, Eastern OK
+`0.07051/0.01922/0.19935`, and South-Central TX `0.08479/0.09167/0.25591`. The audit also
+reports quantiles and exact 0/1 clipping mass for transport, building, the POI composite, fire,
+EMS, schools, establishments, and the composite. These are proxy distributions, not observed
+reference scores. The proxy recipes mix provided Overture road/building/place records with
+provided strata land/population/urbanity features. Building and POI Overture source memberships
+are multi-source and overlap (e.g. Microsoft/OSM/Esri for buildings and Meta/Microsoft/other
+providers for places); their percentages describe input provenance, not correctness or signal
+reliability. A road-source membership decomposition was not available in this audit.
+
+**H1 verdict: mixed and inconclusive.** Aggregate definedness mismatches are substantial in two
+regions in opposite directions, and the Maricopa Overture route denominator is a proxy concern;
+neither establishes that a component was computed contrary to the official target definition or
+explains candidate error without per-component reference masks/scores.
+
+#### H2: cross-construction reliability shrink
+
+The preregistered H2 analysis is in `config/shrink-diagnosis-preregistered.json`; it uses only the
+frozen feature-derived C2, A1, A2 and A3 prediction artifacts. P4 and V2 were excluded (V2's
+registry forecast contains a public-score anchor). For each construction, its regional-centered
+covariance with the other constructions estimates shared signal; pooled nonnegative signal shares
+are normalized to construction weights. The consensus is then shrunk around its own regional mean
+by `c = estimated shared cross-covariance / total consensus variance`. This makes the intercept
+explicit and only attenuates within-region deviations. A zero target mean is not justified by
+label-free evidence, so shrinkage is toward the feature-only regional consensus mean, not zero.
+
+| Region | Raw regional c | Applied c | LOCO average MSE gain vs unshrunk consensus | S regional mean |
+|---|---:|---:|---:|---:|
+| Maricopa AZ | 0.7485 | 0.8017 pooled | 0.0004308 | 0.32434 |
+| Northern CA | 0.7692 | 0.8017 pooled | 0.0004259 | 0.26479 |
+| Eastern OK | 0.8035 | 0.8017 pooled | 0.0005637 | 0.23207 |
+| South-Central TX | 0.8154 | 0.8017 pooled | 0.0004333 | 0.23988 |
+
+Regional raw c spans only 0.0669, below the preregistered 0.10 cutoff; therefore a single pooled
+`c=0.8016961` is applied rather than estimating four shrink parameters. Pooled shared variance is
+`0.00415832`, total consensus variance `0.00518690`. Global construction weights are C2
+`0.03299`, A1 `0.31457`, A2 `0.32827`, and A3 `0.32416`; all three alternate constructions carry
+similar locally estimated agreement weights, while C2's agreement share is smaller. Leave-one-
+construction-out proxy RMSE is `0.149381` for the shrink estimator versus `0.150876` for the
+unshrunk reliability-weighted consensus. The shrink MSE gain is positive in all four regions, so
+the preregistered local-proxy gate passed. This held-out unit is another prediction method, not a
+tract reference label; the numeric `predicted_score` is a cross-construction generalization proxy,
+not a forecast of organizer-target RMSE. The actual target RMSE is not identifiable without labels.
+
+**H2 verdict: local cross-method agreement supports registering one shrink hypothesis, but does
+not establish accuracy.** S is frozen and registered as
+`S_crossmethod_reliability_shrink_v1` with purpose `improvement`; its score-only artifact is
+`reports/candidates/S_crossmethod_reliability_shrink_v1.csv` (SHA-256
+`26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a`). The registry's numeric
+predicted score is the local LOCO proxy above, explicitly not a target RMSE. The platform-only
+415 eastern-WA rows are zero formatting fills without target claims. No upload is authorized by
+this row.
+
+Reproduce H2 and finalize the registry entry with:
+
+```sh
+uv run --with-requirements requirements.txt python scripts/audit_shrink_diagnosis_h2.py \
+  --workspace "$COMPETITION_WORKSPACE"
+python scripts/register_shrink_diagnosis_candidate.py
+```
+
+The four constructions share underlying provided features, so their errors may be correlated;
+common systematic bias can inflate the apparent signal share. Four methods are a small method set,
+tracts are spatially dependent, and the region mean itself is unvalidated. Consequently, S is a
+scientifically motivated candidate for later authorized evaluation, not evidence that shrinkage
+improves hidden-target RMSE. No public scores, labels, removed references, external data, or
+leaderboard-derived parameters informed the reliability estimates, weights, region rule, or S.
 
 ## Edge cases and documented limitations
 

@@ -57,9 +57,7 @@ class PacketPresenceTests(unittest.TestCase):
 
     def test_only_the_three_operator_owned_gates_are_open(self) -> None:
         open_gates = {key for key, value in RECORD["acceptance"].items() if value is not True}
-        self.assertEqual(open_gates, OPERATOR_GATES | {
-            "all_passed", "final_two_selection_declared_not_invented"
-        })
+        self.assertEqual(open_gates, OPERATOR_GATES | {"all_passed"})
 
 
 class RulesContentTests(unittest.TestCase):
@@ -87,6 +85,8 @@ class RulesContentTests(unittest.TestCase):
 
     def test_model_candidate_is_declared_not_uploaded(self) -> None:
         self.assertIn(CONFIG["model_evidence"]["upload_status_quote"], MARKDOWN)
+        self.assertIn(CONFIG["model_evidence"]["format_fix_candidate_id"], MARKDOWN)
+        self.assertIn(CONFIG["model_evidence"]["format_fix_sha256"], MARKDOWN)
         status = RECORD["model_candidate"]["upload_status"]
         self.assertFalse(status["uploaded"])
         self.assertFalse(status["live_upload_attempted"])

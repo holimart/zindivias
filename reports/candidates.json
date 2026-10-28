@@ -1746,6 +1746,822 @@
       "forecast_basis": "Steward-approved C0 public-RMSE prior; not a candidate-specific accuracy estimate or local held-out score.",
       "pre_registered_card": "reports/final-candidate-cards/B_from_A-2026-10-28.json",
       "pre_registered_card_sha256": "adae3c7b6e4a3423d5c1f77edb8804038fa59bb177bf57df53524b7abbbff143"
+    },
+    {
+      "candidate_id": "V2_model_cgs",
+      "name": "model-only v2 composite (provided features + documented priors) (CGS column-order format fix)",
+      "artifact": "reports/candidates/V2_model_cgs.csv",
+      "sha256": "5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "coverage_gap_score"
+      ],
+      "pre_registered": true,
+      "description": "Format-only copy of V2_model: frozen coverage_gap_score text is unchanged; only the file columns are reduced/reordered to GEOID,coverage_gap_score as required by the Data-page template. No new prediction or accuracy claim.",
+      "phase": "model-only-v2-evaluation",
+      "estimator_version": "v2-model-only",
+      "parameters": {
+        "composite": "mean of defined components (equal weights, undefined excluded)",
+        "building_gap_constant": "0.01 (fixed residual prior BUILDING_GAP_V2) when defined",
+        "establishments_cbp_k": 0.024,
+        "facility_presence_priors": {
+          "fire": {
+            "intercept": -2.8,
+            "log_density": 0.3,
+            "urban_fraction": 0.7
+          },
+          "ems": {
+            "intercept": -3.2,
+            "log_density": 0.25,
+            "urban_fraction": 0.6
+          },
+          "schools": {
+            "intercept": -1.0,
+            "log_density": 0.2,
+            "urban_fraction": 0.35
+          }
+        },
+        "transport": "ratio of provided Overture route and named-road lengths (no prior)",
+        "predicted_public_rmse": 0.09135719597637867,
+        "prediction_basis": "model-side moments of the frozen artifact (mu_v, sd_v, E[v^2]) with the all-zero candidate C0 platform RMSE as the E[y^2] anchor, assumed target mean equal to the model's own mean and assumed centred correlation 0.3; no LB-derived model parameter",
+        "predicted_by_centred_correlation": {
+          "0.000000": 0.10773157134004356,
+          "0.178585": 0.09831324045891689,
+          "0.250000": 0.09428394856913803,
+          "0.300000": 0.09135719597637867,
+          "0.350000": 0.08833352452803553,
+          "0.500000": 0.07856738796842387
+        },
+        "centred_correlation_breakevens": {
+          "tie_all_zero_C0": 0.009600393832113417,
+          "tie_region_constant_C1": -0.9056493114426245,
+          "beat_P4_alpha_c1": 0.29860373312164057,
+          "interpretation": "the candidate beats a benchmark when its actual centred correlation with the target exceeds the listed value; below it the candidate is worse than that benchmark"
+        }
+      },
+      "hypothesis": "The v0 detail failed because its component levels were uncentred proxies whose uncentred correlation with the target was 0.1786 and whose region-mean-removed detail was anti-informative (unconstrained beta -0.218). v2 replaces each proxy with a mechanism estimated from the provided Overture counts themselves - route/named-road ratio, fixed building residual prior calibrated against the Overture building presence rate, and the organiser's facility/establishments halves with fixed presence priors - so the composite should track the same completeness mechanism the organiser scored, giving centred correlation above the 0.30 forecast assumption and a public RMSE below the 0.091440198 P4 benchmark.",
+      "eastern_wa_fill": {
+        "region": "eastern-wa",
+        "rows": 415,
+        "policy": "uniform platform-only scalar 0.0 per b750a35; no eastern-WA features, regional-mean transfer, or target inference",
+        "values": {
+          "transport_gap": 0.0,
+          "building_gap": 0.0,
+          "poi_gap": 0.0,
+          "coverage_gap_score": 0.0
+        },
+        "scored_target_claim": false
+      },
+      "column_checks": {
+        "unique_columns": true,
+        "all_rows_have_columns": true,
+        "finite_bounded_scores": true,
+        "no_missing_official_ids": true,
+        "no_duplicate_ids": true
+      },
+      "per_region_means": {
+        "maricopa-az": 0.07521301371134201,
+        "northern-ca": 0.057067595693998864,
+        "eastern-ok": 0.038996906408728424,
+        "south-central-tx": 0.061204376849485355,
+        "eastern-wa": 0.0
+      },
+      "defined_rates": {
+        "transport_defined": 0.7180936133916196,
+        "building_defined": 0.9997867576500693,
+        "poi_defined": 1.0
+      },
+      "local_invariants": {
+        "report": "reports/bias-column-order-cgs-build.json",
+        "manifest": "reports/candidates/V2_model_cgs_manifest.json",
+        "manifest_sha256": "348c49643a58e3e362ea6e11f13ed3850e8e6870d4105b883ccd314056c5f9e5",
+        "exact_template_ids_and_order": true,
+        "rows": 9794,
+        "header": [
+          "GEOID",
+          "coverage_gap_score"
+        ],
+        "coverage_gap_score_byte_identical_to_source": true,
+        "source_values_recomputed": false,
+        "upload_performed": false
+      },
+      "registration_status": "preregistered_format_fix_waiting_scheduled_upload",
+      "purpose": "calibration",
+      "predicted_score": 0.09135719597637867,
+      "predicted_public_rmse_95pct_sampling_band": [
+        0.08897036432512714,
+        0.0937440276276302
+      ],
+      "forecast_status": "existing preregistered model-moment forecast; not a measured local held-out score",
+      "forecast_band_scope": "sampling-only; excludes model/prior uncertainty; not a target accuracy interval",
+      "preregistered_card_path": "reports/final-candidate-cards/track-a-cohort-2026-10-26.json",
+      "preregistered_card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb",
+      "preregistration_commit": "4cc2e2ac64bb56651d621f0e2a1447f6200f7024",
+      "upload_authorized": true,
+      "max_uploads": 1,
+      "uploads_used": 0,
+      "predicted_public_rmse": 0.09135719597637867,
+      "forecast_basis": "Existing V2 forecast: C0 public RMSE as E[y^2] anchor, target mean assumed equal to model mean, centered correlation assumed 0.30.",
+      "environment": {
+        "python": "3.12.3",
+        "numpy": "2.5.4",
+        "pyarrow": "26.0.0",
+        "pyproj": "3.8.0",
+        "shapely": "2.2.0",
+        "pin_source": "requirements.txt / explicit uv --with command"
+      },
+      "reproduction_command": "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v2_candidates.py --workspace \"$COMPETITION_WORKSPACE\"",
+      "component_formula_and_parameters": {
+        "composite": "mean of defined components (equal weights, undefined excluded)",
+        "building_gap_constant": "0.01 (fixed residual prior BUILDING_GAP_V2) when defined",
+        "establishments_cbp_k": 0.024,
+        "facility_presence_priors": {
+          "fire": {
+            "intercept": -2.8,
+            "log_density": 0.3,
+            "urban_fraction": 0.7
+          },
+          "ems": {
+            "intercept": -3.2,
+            "log_density": 0.25,
+            "urban_fraction": 0.6
+          },
+          "schools": {
+            "intercept": -1.0,
+            "log_density": 0.2,
+            "urban_fraction": 0.35
+          }
+        },
+        "transport": "ratio of provided Overture route and named-road lengths (no prior)",
+        "lb_derived_constants_used": []
+      },
+      "source_candidate_id": "V2_model",
+      "source_artifact": "reports/candidates/V2_model.csv",
+      "source_sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12",
+      "format_fix_only": true,
+      "format_fix_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records.",
+      "pre_registered_card": "reports/final-candidate-cards/track-a-cohort-2026-10-26.json",
+      "pre_registered_card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb",
+      "upload_not_before_utc": "2026-10-29T00:00:00Z",
+      "upload_performed": false,
+      "submission_id": null,
+      "public_rmse": null,
+      "score_source": null,
+      "submitted_utc": null
+    },
+    {
+      "candidate_id": "A1_physical_equal_cgs",
+      "name": "A1 physical equal (CGS column-order format fix)",
+      "artifact": "reports/candidates/A1_physical_equal_cgs.csv",
+      "sha256": "2da0051af221ddf26a8a73740746811dbd956854a1fc12846c99864d3abae8a1",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "coverage_gap_score"
+      ],
+      "pre_registered": true,
+      "description": "Format-only copy of A1_physical_equal: frozen coverage_gap_score text is unchanged; only the file columns are reduced/reordered to GEOID,coverage_gap_score as required by the Data-page template. No new prediction or accuracy claim.",
+      "purpose": "calibration",
+      "predicted_score": 0.107246299,
+      "predicted_public_rmse": 0.107246299,
+      "predicted_public_rmse_95pct_sampling_band": [
+        0.10444434280818593,
+        0.11004825519181408
+      ],
+      "forecast_status": "approved no-change C0 prior; not a measured local held-out score or candidate-specific accuracy estimate; no improvement claim",
+      "forecast_basis": "Steward-approved prior equal to the historical all-zero C0 public RMSE documented in docs/final-two-protocol.md; no candidate score evidence is available without labels.",
+      "forecast_band_scope": "sampling-only; excludes model/prior uncertainty; not a target accuracy interval",
+      "preregistered_card_path": "reports/final-candidate-cards/track-a-cohort-2026-10-26.json",
+      "preregistered_card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb",
+      "preregistration_commit": "4cc2e2ac64bb56651d621f0e2a1447f6200f7024",
+      "upload_authorized": true,
+      "registration_status": "preregistered_format_fix_waiting_scheduled_upload",
+      "local_invariants": {
+        "report": "reports/bias-column-order-cgs-build.json",
+        "manifest": "reports/candidates/A1_physical_equal_cgs_manifest.json",
+        "manifest_sha256": "29be81a47195ff010e3a6800826b41bf640e2b8173581cb34855d05ee675ed20",
+        "exact_template_ids_and_order": true,
+        "rows": 9794,
+        "header": [
+          "GEOID",
+          "coverage_gap_score"
+        ],
+        "coverage_gap_score_byte_identical_to_source": true,
+        "source_values_recomputed": false,
+        "upload_performed": false
+      },
+      "build_commit": "461e66baa38476a502af2a557d966c6fd3e3f89a",
+      "max_uploads": 1,
+      "uploads_used": 0,
+      "eastern_wa_fill": {
+        "rows": 415,
+        "value": 0.0,
+        "scored_target_claim": false
+      },
+      "environment": {
+        "python": "3.12.3",
+        "numpy": "2.5.4",
+        "pyarrow": "26.0.0",
+        "pyproj": "3.8.0",
+        "shapely": "2.2.0",
+        "pin_source": "requirements.txt / explicit uv --with command"
+      },
+      "reproduction_command": "At the pinned build revision only: COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_track_a.py --workspace \"$COMPETITION_WORKSPACE\"",
+      "component_formula_and_parameters": {
+        "selected_gap_ideas": {
+          "B": [
+            "G3",
+            "Dst3"
+          ],
+          "Est": [
+            "Dst1",
+            "Dst2",
+            "P1"
+          ],
+          "F": [
+            "Sc3",
+            "Sca1",
+            "P2"
+          ],
+          "R": [
+            "G1",
+            "G2",
+            "Sc1",
+            "Sc5",
+            "P4"
+          ]
+        },
+        "diagnostics": {
+          "a1_region_level_anchor": "region-wise Dst5 mean; additive offset to filtered Sca5 expected-definedness composite",
+          "family_weights": {
+            "B": {
+              "Dst": 0.5,
+              "G": 0.5
+            },
+            "Est": {
+              "Dst": 0.6666666666666666,
+              "P": 0.3333333333333333
+            },
+            "F": {
+              "P": 0.3333333333333333,
+              "Sc": 0.3333333333333333,
+              "Sca": 0.3333333333333333
+            },
+            "R": {
+              "G": 0.4,
+              "P": 0.2,
+              "Sc": 0.4
+            }
+          },
+          "filtered_published_anchors": {
+            "derived_parquets_consumed": false,
+            "regions": {
+              "eastern-ok": {
+                "accessed_inputs": {
+                  "caches": [
+                    "eastern-ok-overture-tract-summary.parquet",
+                    "eastern-ok-sca3-assignment-v1.npz",
+                    "eastern-ok-strata-tract-table.parquet"
+                  ],
+                  "csv_columns": [],
+                  "idea_artifacts": [
+                    "Dst1:cac4c507372353f5493b09b1ce6ec7c293500d185a1778fc73a68d25e5bc4281",
+                    "Dst2:fc01b4f1782b1830500f232fbc31d9b65f77f23a69985fcbdcc54d5a29fdda6b",
+                    "Dst3:bee2e5a578847aaace78ec1642a39e6068eea4fd8df6c03fca1f9a9f2ca234f8",
+                    "G1:6d870a5a32700934a79d4a4ebf1fd9e65d563a16478fff9dc788e13252621b9f",
+                    "G2:c2b03ab287ffe2033706eb3a6d51035ae5109e93c7b8c5be616b3d5e2517d5eb",
+                    "G3:95041b75f9d7758dff3065fe31906b2ae69d7cfd4147b843c9d859633e093953",
+                    "G4:65e380272552b0f8362acdbd73a9a7dcbc5eb544eaff38d744788d299e02317e",
+                    "G5:3df5cf68ea2bc952380d86bfecb3703dc1db2b15555c2943ceafbfaa11f34e0a",
+                    "Mx4:8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+                    "P1:5bda0f80ba8397abecb31731caa09dec6500248d1ab072fcfb9f95f1199a7d3e",
+                    "P2:887ac98d8c2699ef83c48850b7696baea08b5bffbec044d9d9dc825d74e801c6",
+                    "P3:2e9a063759f697d0b2419152c3c0907e68e41dd04b8d901a16425f3207776fa1",
+                    "P4:12b54003b38e3be1fbbcc149a385dc80a38c605a0a33b27eab811d382ff5f29c",
+                    "Sc1:8a73aa7cee295120db8a8f38e30fb4faca63588f49336a2f0f13fc825881a780",
+                    "Sc2:f9f91c2802826e004e4674972c5230e6fe8db4d20c0b4da4d7dc2f8d0b03571e",
+                    "Sc3:d212396db58a0ee82d5bcdbf83cea1c87b9d41124636a25edda29b75a41ea6f9",
+                    "Sc4:9aa62ada6e97d28d20f8e3b5d25b6d697ce0d40beea4e9fc4af9b136f36d5884",
+                    "Sc5:c8603a948b060344f23d2250da22b02a95254401c4a67d64d74a55d4cf4ee720",
+                    "Sca1:858eadae31c242954fbbd47ffb0151276018d987a994f57b24e84c19a8e6c294",
+                    "Sca2:76095bdd1699342886386958dc3515c8a7a7e372820e3fa6157b8404c930efd5",
+                    "Sca3:25bbb9d2c6dc08daebef712c1219f0f953172342f127db05c657beb553eb8426",
+                    "Sca4:6b9e8fc49b0af80dbb0c1a076520355e24aa43c65a5b12b90dfd073c3c259a16",
+                    "X1:3352248e0e2ea195691ec2f6cdddc50de45be8a73115055a869592f4d7a0f262",
+                    "X3:a9875575506caa832f4bad35b5bd52a7401c543e0481feec46c86e9f6c8e47fa",
+                    "X4:6f0c03139dfa07ad16d62c44c0cec23561ab36b76f6bee92799187a96fabb278",
+                    "X5:c5b864512c1f191f9db866190e3b7c3b2208c702b2ba7c125b1d41c851a718f0"
+                  ],
+                  "layers": [],
+                  "parquet_columns": [
+                    "eastern-ok-overture-tract-summary.parquet:GEOID",
+                    "eastern-ok-overture-tract-summary.parquet:overture_named_road_km_5070",
+                    "eastern-ok-strata-tract-table.parquet:ALAND",
+                    "eastern-ok-strata-tract-table.parquet:COUNTYFP",
+                    "eastern-ok-strata-tract-table.parquet:GEOID",
+                    "eastern-ok-strata-tract-table.parquet:STATEFP",
+                    "eastern-ok-strata-tract-table.parquet:pop_total",
+                    "eastern-ok-strata-tract-table.parquet:ruca_primary"
+                  ]
+                },
+                "dst4_defined": 1175,
+                "dst5_logit_offset": 4.898794669845099,
+                "dst5_published_undefined_share": 0.21,
+                "sca5_defined": 1175
+              },
+              "maricopa-az": {
+                "accessed_inputs": {
+                  "caches": [
+                    "maricopa-az-overture-tract-summary.parquet",
+                    "maricopa-az-sca3-assignment-v1.npz",
+                    "maricopa-az-strata-tract-table.parquet"
+                  ],
+                  "csv_columns": [],
+                  "idea_artifacts": [
+                    "Dst1:cac4c507372353f5493b09b1ce6ec7c293500d185a1778fc73a68d25e5bc4281",
+                    "Dst2:fc01b4f1782b1830500f232fbc31d9b65f77f23a69985fcbdcc54d5a29fdda6b",
+                    "Dst3:bee2e5a578847aaace78ec1642a39e6068eea4fd8df6c03fca1f9a9f2ca234f8",
+                    "G1:6d870a5a32700934a79d4a4ebf1fd9e65d563a16478fff9dc788e13252621b9f",
+                    "G2:c2b03ab287ffe2033706eb3a6d51035ae5109e93c7b8c5be616b3d5e2517d5eb",
+                    "G3:95041b75f9d7758dff3065fe31906b2ae69d7cfd4147b843c9d859633e093953",
+                    "G4:65e380272552b0f8362acdbd73a9a7dcbc5eb544eaff38d744788d299e02317e",
+                    "G5:3df5cf68ea2bc952380d86bfecb3703dc1db2b15555c2943ceafbfaa11f34e0a",
+                    "Mx4:8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+                    "P1:5bda0f80ba8397abecb31731caa09dec6500248d1ab072fcfb9f95f1199a7d3e",
+                    "P2:887ac98d8c2699ef83c48850b7696baea08b5bffbec044d9d9dc825d74e801c6",
+                    "P3:2e9a063759f697d0b2419152c3c0907e68e41dd04b8d901a16425f3207776fa1",
+                    "P4:12b54003b38e3be1fbbcc149a385dc80a38c605a0a33b27eab811d382ff5f29c",
+                    "Sc1:8a73aa7cee295120db8a8f38e30fb4faca63588f49336a2f0f13fc825881a780",
+                    "Sc2:f9f91c2802826e004e4674972c5230e6fe8db4d20c0b4da4d7dc2f8d0b03571e",
+                    "Sc3:d212396db58a0ee82d5bcdbf83cea1c87b9d41124636a25edda29b75a41ea6f9",
+                    "Sc4:9aa62ada6e97d28d20f8e3b5d25b6d697ce0d40beea4e9fc4af9b136f36d5884",
+                    "Sc5:c8603a948b060344f23d2250da22b02a95254401c4a67d64d74a55d4cf4ee720",
+                    "Sca1:858eadae31c242954fbbd47ffb0151276018d987a994f57b24e84c19a8e6c294",
+                    "Sca2:76095bdd1699342886386958dc3515c8a7a7e372820e3fa6157b8404c930efd5",
+                    "Sca3:25bbb9d2c6dc08daebef712c1219f0f953172342f127db05c657beb553eb8426",
+                    "Sca4:6b9e8fc49b0af80dbb0c1a076520355e24aa43c65a5b12b90dfd073c3c259a16",
+                    "X1:3352248e0e2ea195691ec2f6cdddc50de45be8a73115055a869592f4d7a0f262",
+                    "X3:a9875575506caa832f4bad35b5bd52a7401c543e0481feec46c86e9f6c8e47fa",
+                    "X4:6f0c03139dfa07ad16d62c44c0cec23561ab36b76f6bee92799187a96fabb278",
+                    "X5:c5b864512c1f191f9db866190e3b7c3b2208c702b2ba7c125b1d41c851a718f0"
+                  ],
+                  "layers": [],
+                  "parquet_columns": [
+                    "maricopa-az-overture-tract-summary.parquet:GEOID",
+                    "maricopa-az-overture-tract-summary.parquet:overture_named_road_km_5070",
+                    "maricopa-az-strata-tract-table.parquet:ALAND",
+                    "maricopa-az-strata-tract-table.parquet:COUNTYFP",
+                    "maricopa-az-strata-tract-table.parquet:GEOID",
+                    "maricopa-az-strata-tract-table.parquet:STATEFP",
+                    "maricopa-az-strata-tract-table.parquet:pop_total",
+                    "maricopa-az-strata-tract-table.parquet:ruca_primary"
+                  ]
+                },
+                "dst4_defined": 1570,
+                "dst5_logit_offset": 12.773721315851187,
+                "dst5_published_undefined_share": 0.55,
+                "sca5_defined": 1570
+              },
+              "northern-ca": {
+                "accessed_inputs": {
+                  "caches": [
+                    "northern-ca-overture-tract-summary.parquet",
+                    "northern-ca-sca3-assignment-v1.npz",
+                    "northern-ca-strata-tract-table.parquet"
+                  ],
+                  "csv_columns": [],
+                  "idea_artifacts": [
+                    "Dst1:cac4c507372353f5493b09b1ce6ec7c293500d185a1778fc73a68d25e5bc4281",
+                    "Dst2:fc01b4f1782b1830500f232fbc31d9b65f77f23a69985fcbdcc54d5a29fdda6b",
+                    "Dst3:bee2e5a578847aaace78ec1642a39e6068eea4fd8df6c03fca1f9a9f2ca234f8",
+                    "G1:6d870a5a32700934a79d4a4ebf1fd9e65d563a16478fff9dc788e13252621b9f",
+                    "G2:c2b03ab287ffe2033706eb3a6d51035ae5109e93c7b8c5be616b3d5e2517d5eb",
+                    "G3:95041b75f9d7758dff3065fe31906b2ae69d7cfd4147b843c9d859633e093953",
+                    "G4:65e380272552b0f8362acdbd73a9a7dcbc5eb544eaff38d744788d299e02317e",
+                    "G5:3df5cf68ea2bc952380d86bfecb3703dc1db2b15555c2943ceafbfaa11f34e0a",
+                    "Mx4:8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+                    "P1:5bda0f80ba8397abecb31731caa09dec6500248d1ab072fcfb9f95f1199a7d3e",
+                    "P2:887ac98d8c2699ef83c48850b7696baea08b5bffbec044d9d9dc825d74e801c6",
+                    "P3:2e9a063759f697d0b2419152c3c0907e68e41dd04b8d901a16425f3207776fa1",
+                    "P4:12b54003b38e3be1fbbcc149a385dc80a38c605a0a33b27eab811d382ff5f29c",
+                    "Sc1:8a73aa7cee295120db8a8f38e30fb4faca63588f49336a2f0f13fc825881a780",
+                    "Sc2:f9f91c2802826e004e4674972c5230e6fe8db4d20c0b4da4d7dc2f8d0b03571e",
+                    "Sc3:d212396db58a0ee82d5bcdbf83cea1c87b9d41124636a25edda29b75a41ea6f9",
+                    "Sc4:9aa62ada6e97d28d20f8e3b5d25b6d697ce0d40beea4e9fc4af9b136f36d5884",
+                    "Sc5:c8603a948b060344f23d2250da22b02a95254401c4a67d64d74a55d4cf4ee720",
+                    "Sca1:858eadae31c242954fbbd47ffb0151276018d987a994f57b24e84c19a8e6c294",
+                    "Sca2:76095bdd1699342886386958dc3515c8a7a7e372820e3fa6157b8404c930efd5",
+                    "Sca3:25bbb9d2c6dc08daebef712c1219f0f953172342f127db05c657beb553eb8426",
+                    "Sca4:6b9e8fc49b0af80dbb0c1a076520355e24aa43c65a5b12b90dfd073c3c259a16",
+                    "X1:3352248e0e2ea195691ec2f6cdddc50de45be8a73115055a869592f4d7a0f262",
+                    "X3:a9875575506caa832f4bad35b5bd52a7401c543e0481feec46c86e9f6c8e47fa",
+                    "X4:6f0c03139dfa07ad16d62c44c0cec23561ab36b76f6bee92799187a96fabb278",
+                    "X5:c5b864512c1f191f9db866190e3b7c3b2208c702b2ba7c125b1d41c851a718f0"
+                  ],
+                  "layers": [],
+                  "parquet_columns": [
+                    "northern-ca-overture-tract-summary.parquet:GEOID",
+                    "northern-ca-overture-tract-summary.parquet:overture_named_road_km_5070",
+                    "northern-ca-strata-tract-table.parquet:ALAND",
+                    "northern-ca-strata-tract-table.parquet:COUNTYFP",
+                    "northern-ca-strata-tract-table.parquet:GEOID",
+                    "northern-ca-strata-tract-table.parquet:STATEFP",
+                    "northern-ca-strata-tract-table.parquet:pop_total",
+                    "northern-ca-strata-tract-table.parquet:ruca_primary"
+                  ]
+                },
+                "dst4_defined": 586,
+                "dst5_logit_offset": 6.218325858624318,
+                "dst5_published_undefined_share": 0.37,
+                "sca5_defined": 586
+              },
+              "south-central-tx": {
+                "accessed_inputs": {
+                  "caches": [
+                    "south-central-tx-overture-tract-summary.parquet",
+                    "south-central-tx-sca3-assignment-v1.npz",
+                    "south-central-tx-strata-tract-table.parquet"
+                  ],
+                  "csv_columns": [],
+                  "idea_artifacts": [
+                    "Dst1:cac4c507372353f5493b09b1ce6ec7c293500d185a1778fc73a68d25e5bc4281",
+                    "Dst2:fc01b4f1782b1830500f232fbc31d9b65f77f23a69985fcbdcc54d5a29fdda6b",
+                    "Dst3:bee2e5a578847aaace78ec1642a39e6068eea4fd8df6c03fca1f9a9f2ca234f8",
+                    "G1:6d870a5a32700934a79d4a4ebf1fd9e65d563a16478fff9dc788e13252621b9f",
+                    "G2:c2b03ab287ffe2033706eb3a6d51035ae5109e93c7b8c5be616b3d5e2517d5eb",
+                    "G3:95041b75f9d7758dff3065fe31906b2ae69d7cfd4147b843c9d859633e093953",
+                    "G4:65e380272552b0f8362acdbd73a9a7dcbc5eb544eaff38d744788d299e02317e",
+                    "G5:3df5cf68ea2bc952380d86bfecb3703dc1db2b15555c2943ceafbfaa11f34e0a",
+                    "Mx4:8d556bab39b45da8d232e3070933e5272096cc611f4286a79e3eae7755ebb9af",
+                    "P1:5bda0f80ba8397abecb31731caa09dec6500248d1ab072fcfb9f95f1199a7d3e",
+                    "P2:887ac98d8c2699ef83c48850b7696baea08b5bffbec044d9d9dc825d74e801c6",
+                    "P3:2e9a063759f697d0b2419152c3c0907e68e41dd04b8d901a16425f3207776fa1",
+                    "P4:12b54003b38e3be1fbbcc149a385dc80a38c605a0a33b27eab811d382ff5f29c",
+                    "Sc1:8a73aa7cee295120db8a8f38e30fb4faca63588f49336a2f0f13fc825881a780",
+                    "Sc2:f9f91c2802826e004e4674972c5230e6fe8db4d20c0b4da4d7dc2f8d0b03571e",
+                    "Sc3:d212396db58a0ee82d5bcdbf83cea1c87b9d41124636a25edda29b75a41ea6f9",
+                    "Sc4:9aa62ada6e97d28d20f8e3b5d25b6d697ce0d40beea4e9fc4af9b136f36d5884",
+                    "Sc5:c8603a948b060344f23d2250da22b02a95254401c4a67d64d74a55d4cf4ee720",
+                    "Sca1:858eadae31c242954fbbd47ffb0151276018d987a994f57b24e84c19a8e6c294",
+                    "Sca2:76095bdd1699342886386958dc3515c8a7a7e372820e3fa6157b8404c930efd5",
+                    "Sca3:25bbb9d2c6dc08daebef712c1219f0f953172342f127db05c657beb553eb8426",
+                    "Sca4:6b9e8fc49b0af80dbb0c1a076520355e24aa43c65a5b12b90dfd073c3c259a16",
+                    "X1:3352248e0e2ea195691ec2f6cdddc50de45be8a73115055a869592f4d7a0f262",
+                    "X3:a9875575506caa832f4bad35b5bd52a7401c543e0481feec46c86e9f6c8e47fa",
+                    "X4:6f0c03139dfa07ad16d62c44c0cec23561ab36b76f6bee92799187a96fabb278",
+                    "X5:c5b864512c1f191f9db866190e3b7c3b2208c702b2ba7c125b1d41c851a718f0"
+                  ],
+                  "layers": [],
+                  "parquet_columns": [
+                    "south-central-tx-overture-tract-summary.parquet:GEOID",
+                    "south-central-tx-overture-tract-summary.parquet:overture_named_road_km_5070",
+                    "south-central-tx-strata-tract-table.parquet:ALAND",
+                    "south-central-tx-strata-tract-table.parquet:COUNTYFP",
+                    "south-central-tx-strata-tract-table.parquet:GEOID",
+                    "south-central-tx-strata-tract-table.parquet:STATEFP",
+                    "south-central-tx-strata-tract-table.parquet:pop_total",
+                    "south-central-tx-strata-tract-table.parquet:ruca_primary"
+                  ]
+                },
+                "dst4_defined": 5965,
+                "dst5_logit_offset": 7.08211286298425,
+                "dst5_published_undefined_share": 0.28,
+                "sca5_defined": 5965
+              }
+            },
+            "tm1_excluded": true
+          }
+        },
+        "manifest_sha256": "89a666ae66b2428188dd1448053e57876b7bcc29d7ddbe8ba5b72bdf611ce2d4"
+      },
+      "source_candidate_id": "A1_physical_equal",
+      "source_artifact": "reports/candidates/A1_physical_equal.csv",
+      "source_sha256": "6af088b83ff3481d420e11b14d903fc510c2b4be2cea285c762ca12d500862de",
+      "format_fix_only": true,
+      "format_fix_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records.",
+      "pre_registered_card": "reports/final-candidate-cards/track-a-cohort-2026-10-26.json",
+      "pre_registered_card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb",
+      "upload_not_before_utc": "2026-10-29T00:00:00Z",
+      "upload_performed": false,
+      "submission_id": null,
+      "public_rmse": null,
+      "score_source": null,
+      "submitted_utc": null
+    },
+    {
+      "candidate_id": "A2_spectral_cgs",
+      "name": "A2 spectral (CGS column-order format fix)",
+      "artifact": "reports/candidates/A2_spectral_cgs.csv",
+      "sha256": "584e086bb5df950f6079317afcdc7c5a0182b5263d170be2a10987d1ac4c6213",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "coverage_gap_score"
+      ],
+      "pre_registered": true,
+      "description": "Format-only copy of A2_spectral: frozen coverage_gap_score text is unchanged; only the file columns are reduced/reordered to GEOID,coverage_gap_score as required by the Data-page template. No new prediction or accuracy claim.",
+      "purpose": "calibration",
+      "predicted_score": 0.107246299,
+      "predicted_public_rmse": 0.107246299,
+      "predicted_public_rmse_95pct_sampling_band": [
+        0.10444434280818593,
+        0.11004825519181408
+      ],
+      "forecast_status": "approved no-change C0 prior; not a measured local held-out score or candidate-specific accuracy estimate; no improvement claim",
+      "forecast_basis": "Steward-approved prior equal to the historical all-zero C0 public RMSE documented in docs/final-two-protocol.md; no candidate score evidence is available without labels.",
+      "forecast_band_scope": "sampling-only; excludes model/prior uncertainty; not a target accuracy interval",
+      "preregistered_card_path": "reports/final-candidate-cards/track-a-cohort-2026-10-26.json",
+      "preregistered_card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb",
+      "preregistration_commit": "4cc2e2ac64bb56651d621f0e2a1447f6200f7024",
+      "upload_authorized": true,
+      "registration_status": "preregistered_format_fix_waiting_scheduled_upload",
+      "local_invariants": {
+        "report": "reports/bias-column-order-cgs-build.json",
+        "manifest": "reports/candidates/A2_spectral_cgs_manifest.json",
+        "manifest_sha256": "a80e6d3cedfcb33ca4a67acde74b419bf1d3d5175ba9e6e5064374034b93754c",
+        "exact_template_ids_and_order": true,
+        "rows": 9794,
+        "header": [
+          "GEOID",
+          "coverage_gap_score"
+        ],
+        "coverage_gap_score_byte_identical_to_source": true,
+        "source_values_recomputed": false,
+        "upload_performed": false
+      },
+      "build_commit": "461e66baa38476a502af2a557d966c6fd3e3f89a",
+      "max_uploads": 1,
+      "uploads_used": 0,
+      "eastern_wa_fill": {
+        "rows": 415,
+        "value": 0.0,
+        "scored_target_claim": false
+      },
+      "environment": {
+        "python": "3.12.3",
+        "numpy": "2.5.4",
+        "pyarrow": "26.0.0",
+        "pyproj": "3.8.0",
+        "shapely": "2.2.0",
+        "pin_source": "requirements.txt / explicit uv --with command"
+      },
+      "reproduction_command": "At the pinned build revision only: COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_track_a.py --workspace \"$COMPETITION_WORKSPACE\"",
+      "component_formula_and_parameters": {
+        "selected_gap_ideas": {
+          "B": [
+            "G3",
+            "Dst3"
+          ],
+          "Est": [
+            "Dst1",
+            "Dst2",
+            "P1"
+          ],
+          "F": [
+            "Sc3",
+            "Sca1",
+            "P2"
+          ],
+          "R": [
+            "G1",
+            "G2",
+            "Sc1",
+            "Sc5",
+            "P4"
+          ]
+        },
+        "diagnostics": {
+          "composite_rule": "equal mean over defined R, B, and POI estimates",
+          "family_weights": {
+            "B": {
+              "Dst": 0.49999999999991923,
+              "G": 0.5000000000000808
+            },
+            "Est": {
+              "Dst": 0.4999999999999755,
+              "P": 0.5000000000000245
+            },
+            "F": {
+              "P": 0.48350941578681694,
+              "Sc": 0.0,
+              "Sca": 0.516490584213183
+            },
+            "R": {
+              "G": 0.0,
+              "P": 0.4947367269943922,
+              "Sc": 0.5052632730056077
+            }
+          }
+        },
+        "manifest_sha256": "4193304de0e886810f9930b87dcbcdeaa01ccb16cd25ab4e2bd3cd53053b0d57"
+      },
+      "source_candidate_id": "A2_spectral",
+      "source_artifact": "reports/candidates/A2_spectral.csv",
+      "source_sha256": "f88573996566a1975726845a49f42fb2cd3781d5f0e83d55944fc65647692997",
+      "format_fix_only": true,
+      "format_fix_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records.",
+      "pre_registered_card": "reports/final-candidate-cards/track-a-cohort-2026-10-26.json",
+      "pre_registered_card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb",
+      "upload_not_before_utc": "2026-10-29T00:00:00Z",
+      "upload_performed": false,
+      "submission_id": null,
+      "public_rmse": null,
+      "score_source": null,
+      "submitted_utc": null
+    },
+    {
+      "candidate_id": "A3_dawid_skene_cgs",
+      "name": "A3 dawid skene (CGS column-order format fix)",
+      "artifact": "reports/candidates/A3_dawid_skene_cgs.csv",
+      "sha256": "432ade8f1e46c6804cb34fb790612bb1befc9fe03b67a545e753be46b549237c",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "coverage_gap_score"
+      ],
+      "pre_registered": true,
+      "description": "Format-only copy of A3_dawid_skene: frozen coverage_gap_score text is unchanged; only the file columns are reduced/reordered to GEOID,coverage_gap_score as required by the Data-page template. No new prediction or accuracy claim.",
+      "purpose": "calibration",
+      "predicted_score": 0.107246299,
+      "predicted_public_rmse": 0.107246299,
+      "predicted_public_rmse_95pct_sampling_band": [
+        0.10444434280818593,
+        0.11004825519181408
+      ],
+      "forecast_status": "approved no-change C0 prior; not a measured local held-out score or candidate-specific accuracy estimate; no improvement claim",
+      "forecast_basis": "Steward-approved prior equal to the historical all-zero C0 public RMSE documented in docs/final-two-protocol.md; no candidate score evidence is available without labels.",
+      "forecast_band_scope": "sampling-only; excludes model/prior uncertainty; not a target accuracy interval",
+      "preregistered_card_path": "reports/final-candidate-cards/track-a-cohort-2026-10-26.json",
+      "preregistered_card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb",
+      "preregistration_commit": "4cc2e2ac64bb56651d621f0e2a1447f6200f7024",
+      "upload_authorized": true,
+      "registration_status": "preregistered_format_fix_waiting_scheduled_upload",
+      "local_invariants": {
+        "report": "reports/bias-column-order-cgs-build.json",
+        "manifest": "reports/candidates/A3_dawid_skene_cgs_manifest.json",
+        "manifest_sha256": "a04f326d88e629fad5c1cf7adde446de339c64174a9baac2a8a164c14eddff2e",
+        "exact_template_ids_and_order": true,
+        "rows": 9794,
+        "header": [
+          "GEOID",
+          "coverage_gap_score"
+        ],
+        "coverage_gap_score_byte_identical_to_source": true,
+        "source_values_recomputed": false,
+        "upload_performed": false
+      },
+      "build_commit": "461e66baa38476a502af2a557d966c6fd3e3f89a",
+      "max_uploads": 1,
+      "uploads_used": 0,
+      "eastern_wa_fill": {
+        "rows": 415,
+        "value": 0.0,
+        "scored_target_claim": false
+      },
+      "environment": {
+        "python": "3.12.3",
+        "numpy": "2.5.4",
+        "pyarrow": "26.0.0",
+        "pyproj": "3.8.0",
+        "shapely": "2.2.0",
+        "pin_source": "requirements.txt / explicit uv --with command"
+      },
+      "reproduction_command": "At the pinned build revision only: COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_track_a.py --workspace \"$COMPETITION_WORKSPACE\"",
+      "component_formula_and_parameters": {
+        "selected_gap_ideas": {
+          "B": [
+            "G3",
+            "Dst3"
+          ],
+          "Est": [
+            "Dst1",
+            "Dst2",
+            "P1"
+          ],
+          "F": [
+            "Sc3",
+            "Sca1",
+            "P2"
+          ],
+          "R": [
+            "G1",
+            "G2",
+            "Sc1",
+            "Sc5",
+            "P4"
+          ]
+        },
+        "diagnostics": {
+          "composite_rule": "equal mean over defined R, B, and POI estimates",
+          "dawid_skene": {
+            "iterations": 500,
+            "prevalence": 0.0025040821854080317,
+            "sensitivity": [
+              0.39934971103521555,
+              0.1435579954678657,
+              0.6190103405106038,
+              0.15952943980960518
+            ],
+            "specificity": [
+              0.992924128549697,
+              0.9989865746394756,
+              0.9806764153672827,
+              0.8994398598559417
+            ],
+            "witnesses": [
+              "X1",
+              "Sc2",
+              "P3",
+              "X5"
+            ]
+          },
+          "family_weights": {
+            "B": {
+              "Dst": 0.49999999999991923,
+              "G": 0.5000000000000808
+            },
+            "Est": {
+              "Dst": 0.4999999999999755,
+              "P": 0.5000000000000245
+            },
+            "F": {
+              "P": 0.48350941578681694,
+              "Sc": 0.0,
+              "Sca": 0.516490584213183
+            },
+            "R": {
+              "G": 0.0,
+              "P": 0.4947367269943922,
+              "Sc": 0.5052632730056077
+            }
+          }
+        },
+        "manifest_sha256": "3bb36fc7e0977886d2f73d4e5a05d52ca9eb1ca0f6693c2659d60a97c4b6873f"
+      },
+      "source_candidate_id": "A3_dawid_skene",
+      "source_artifact": "reports/candidates/A3_dawid_skene.csv",
+      "source_sha256": "6d588f2f7a45a58b128860a049ac19995b21902f7f98d3b2ab39d1d9fbb073b3",
+      "format_fix_only": true,
+      "format_fix_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records.",
+      "pre_registered_card": "reports/final-candidate-cards/track-a-cohort-2026-10-26.json",
+      "pre_registered_card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb",
+      "upload_not_before_utc": "2026-10-29T00:00:00Z",
+      "upload_performed": false,
+      "submission_id": null,
+      "public_rmse": null,
+      "score_source": null,
+      "submitted_utc": null
+    },
+    {
+      "candidate_id": "B_from_A_cgs",
+      "name": "Frozen 50% regional-mean shrink of selected A (V2_model) (CGS column-order format fix)",
+      "artifact": "reports/candidates/B_from_A_cgs.csv",
+      "sha256": "38e17cf1ec99f4f3fc5d358d13ccd0edfabe947d81fd6b6e5ef61e6cea006607",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "coverage_gap_score"
+      ],
+      "pre_registered": true,
+      "purpose": "calibration",
+      "description": "Format-only copy of B_from_A: frozen coverage_gap_score text is unchanged; only the file columns are reduced/reordered to GEOID,coverage_gap_score as required by the Data-page template. No new prediction or accuracy claim.",
+      "predicted_public_rmse": 0.107246299,
+      "forecast_basis": "Steward-approved C0 public-RMSE prior; not a candidate-specific accuracy estimate or local held-out score.",
+      "pre_registered_card": "reports/final-candidate-cards/B_from_A-2026-10-28.json",
+      "pre_registered_card_sha256": "adae3c7b6e4a3423d5c1f77edb8804038fa59bb177bf57df53524b7abbbff143",
+      "source_candidate_id": "B_from_A",
+      "source_artifact": "reports/candidates/B_from_A.csv",
+      "source_sha256": "efd51badc5c9142263481086180fb5b89c720b8279237ae0edcdb0066d1ae303",
+      "format_fix_only": true,
+      "format_fix_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records.",
+      "preregistered_card_path": "reports/final-candidate-cards/B_from_A-2026-10-28.json",
+      "preregistered_card_sha256": "adae3c7b6e4a3423d5c1f77edb8804038fa59bb177bf57df53524b7abbbff143",
+      "preregistration_commit": "4cc2e2ac64bb56651d621f0e2a1447f6200f7024",
+      "upload_authorized": true,
+      "upload_not_before_utc": "2026-10-29T00:00:00Z",
+      "registration_status": "preregistered_format_fix_waiting_scheduled_upload",
+      "upload_performed": false,
+      "submission_id": null,
+      "public_rmse": null,
+      "score_source": null,
+      "submitted_utc": null,
+      "uploads_used": 0,
+      "max_uploads": 1,
+      "local_invariants": {
+        "report": "reports/bias-column-order-cgs-build.json",
+        "manifest": "reports/candidates/B_from_A_cgs_manifest.json",
+        "manifest_sha256": "1480405f18818ab57eb48a6178f71d0208312fadfaef92e5c7efa873283bccff",
+        "exact_template_ids_and_order": true,
+        "rows": 9794,
+        "header": [
+          "GEOID",
+          "coverage_gap_score"
+        ],
+        "coverage_gap_score_byte_identical_to_source": true,
+        "source_values_recomputed": false,
+        "upload_performed": false
+      }
     }
   ],
   "feature_source": "provided Overture buildings/roads/POIs plus provided ACS housing geometries and strata covariates",
@@ -2105,5 +2921,23 @@
     "max_uploads": 1,
     "upload_authorized": false,
     "protocol": "docs/final-two-protocol.md"
+  },
+  "column_order_score_integrity_notice": {
+    "historical_public_scores_valid_for_selection": false,
+    "historical_score_records_preserved": true,
+    "reason": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records.",
+    "corrected_column_order": [
+      "GEOID",
+      "coverage_gap_score"
+    ],
+    "format_fix_preregistration_config": "config/bias-column-order-rescore-preregistered.json",
+    "format_fix_preregistration_config_sha256": "3657c7e860f32cb32134571c83a294a2e299f54579d708fdad487f04c63e68ac",
+    "cgs_candidate_ids": [
+      "V2_model_cgs",
+      "A1_physical_equal_cgs",
+      "A2_spectral_cgs",
+      "A3_dawid_skene_cgs",
+      "B_from_A_cgs"
+    ]
   }
 }

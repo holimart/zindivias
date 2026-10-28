@@ -250,9 +250,26 @@ def front_matter(config: dict[str, Any], submissions: list[dict[str, Any]],
         f"`{candidate['artifact']}` (SHA-256 `{candidate['sha256']}`), {candidate['rows']} rows. "
         f"{config['model_evidence']['upload_status_quote']}",
         "",
+        f"Correctly ordered format-only platform artifact: `{config['model_evidence']['format_fix_candidate_id']}` "
+        f"at `{config['model_evidence']['format_fix_artifact']}` (SHA-256 "
+        f"`{config['model_evidence']['format_fix_sha256']}`). Its `coverage_gap_score` values are "
+        "copied byte-for-byte from the frozen model candidate above; no prediction was changed.",
+        "",
+        "## Column-order correction and historical score eligibility",
+        "",
+        "The per-region sample files use `GEOID,transport_gap,building_gap,poi_gap,coverage_gap_score`, "
+        "while the Data-page `SampleSubmission.csv` starts `GEOID,coverage_gap_score`. Zindi scores "
+        "the second CSV column by position, so every earlier five-column public score measured "
+        "`transport_gap`, not `coverage_gap_score`. Those historical scores and submission records "
+        "are retained for auditability but are void for candidate selection and are not used to tune "
+        "or change predictions. Each registered `_cgs.csv` copies the frozen `coverage_gap_score` "
+        "text unchanged into the Data-page two-column order. No corrected-format upload occurs before "
+        "2026-10-29 00:00 UTC.",
+        "",
         "Every quantitative statement in this writeup is covered by the claim-to-evidence audit "
-        "summarised in the reproducibility appendix; nothing here is an accuracy claim beyond the "
-        "platform scorecard values quoted verbatim from our submission log.",
+        "summarised in the reproducibility appendix. No historical platform score quoted below is "
+        "evidence about the intended composite target or an accuracy claim.",
+
         "",
     ]
     if not config["form"]["url"]:
@@ -298,8 +315,11 @@ def consideration(config: dict[str, Any]) -> list[str]:
 
 
 def leaderboard_table(submissions: list[dict[str, Any]], candidate: dict[str, Any]) -> list[str]:
-    lines = ["## Leaderboard submissions associated with this methodology", "",
-             "| Platform submission id | Candidate | Artifact | Artifact SHA-256 | Public RMSE "
+    lines = ["## Historical leaderboard submission records (scores void for selection)", "",
+             "The following public values are retained solely as historical records of the column-order finding; "
+             "for each listed five-column file, Zindi scored `transport_gap` because it occupied column 2. "
+             "None is eligible for the A/B rule.", "",
+             "| Platform submission id | Candidate | Artifact | Artifact SHA-256 | Historical column-2 score "
              "| Split | Score source | Uploaded (UTC) |",
              "|---|---|---|---|---:|---|---|---|"]
     for row in submissions:
@@ -319,10 +339,10 @@ def leaderboard_table(submissions: list[dict[str, Any]], candidate: dict[str, An
               f"{candidate['prediction_basis']} basis, which is a model-side forecast, not a "
               "leaderboard observation.",
               "",
-              "The C0-P4 uploads above are historical calibration and probe records kept for "
-              "auditability. They are excluded from the frozen final-two cohort and none of their "
-              "leaderboard values, fitted constants or probe outcomes is used as evidence for the "
-              "model or for any discovery claim.",
+              "All earlier uploads above are retained as historical calibration records for "
+              "auditability. Their column-2 scores measured `transport_gap` and are void for selection; "
+              "none of their score values, fitted constants or probe outcomes is used as evidence for "
+              "the intended composite or for any discovery claim.",
               ""]
     return lines
 

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "cohort_frozen_authorized_uploads_in_progress",
+  "status": "column_order_cgs_preregistered_pending_scheduled_uploads",
   "prepared_utc": "2026-10-26",
   "protocol": {
     "path": "docs/final-two-protocol.md",
@@ -25,8 +25,8 @@
   },
   "selection_policy": {
     "cohort": "Frozen cohort: A1_physical_equal, A2_spectral, A3_dawid_skene, and V2_model; each card and artifact hash predates its first upload. No candidate is grandfathered outside this cohort.",
-    "candidate_A": "Lowest successful public RMSE among eligible frozen-cohort model candidates; scores within the pairwise sampling guard are tied and use the predeclared simplicity/adjustment-count/candidate-ID tie-break.",
-    "candidate_B": "Deterministic 50% shrink of A's composite predictions toward A's own provided-feature prediction mean within each official region; no target means, leaderboard results, or cell adjustments.",
+    "candidate_A": "Lowest eligible public RMSE among the frozen model cohort using only the new _cgs artifacts; all earlier public scores are void for selection because column 2 was transport_gap.",
+    "candidate_B": "Rebuild the deterministic 50% shrink companion from the _cgs A-rule winner; no target means, historical scores, or cell adjustments.",
     "predicted_vs_actual_threshold": "The former 1e-3 target-error rule is superseded: target labels are unavailable and probing is forbidden; local correctness/reproducibility invariants are required instead.",
     "tie_break_order": [
       "fewer fitted/free parameters",
@@ -94,48 +94,57 @@
     "pre_final_lane_ceiling": 10,
     "reserved_final_uploads": 2,
     "remaining_total_account_capacity_verified": false,
-    "queued_uploads": [
-      {
-        "candidate_id": "B_from_A",
-        "scheduled_utc": "2026-10-28",
-        "purpose": "calibration; build only after A selection"
-      }
-    ],
+    "queued_uploads": [],
     "completed_uploads": [
       {
         "candidate_id": "A1_physical_equal",
         "submission_id": "iQw8C6Q9",
         "public_rmse": 0.126543547,
         "submitted_utc": "2026-10-26T14:21:03.275Z",
-        "purpose": "calibration"
+        "purpose": "calibration",
+        "score_selection_eligible": false,
+        "score_selection_status": "void_column_order_mismatch",
+        "score_selection_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records."
       },
       {
         "candidate_id": "A2_spectral",
         "submission_id": "W83LEghZ",
         "public_rmse": 0.146089513,
         "submitted_utc": "2026-10-26T14:21:49.291Z",
-        "purpose": "calibration"
+        "purpose": "calibration",
+        "score_selection_eligible": false,
+        "score_selection_status": "void_column_order_mismatch",
+        "score_selection_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records."
       },
       {
         "candidate_id": "A3_dawid_skene",
         "submission_id": "tGB6sGRx",
         "public_rmse": 0.146089513,
         "submitted_utc": "2026-10-27T00:18:37.452Z",
-        "purpose": "calibration"
+        "purpose": "calibration",
+        "score_selection_eligible": false,
+        "score_selection_status": "void_column_order_mismatch",
+        "score_selection_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records."
       },
       {
         "candidate_id": "V2_model",
         "submission_id": "EbwLNkmt",
         "public_rmse": 0.121644596,
         "submitted_utc": "2026-10-27T00:18:41.897Z",
-        "purpose": "calibration"
+        "purpose": "calibration",
+        "score_selection_eligible": false,
+        "score_selection_status": "void_column_order_mismatch",
+        "score_selection_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records."
       },
       {
         "candidate_id": "B_from_A",
         "submission_id": "9HjwNhyz",
         "public_rmse": 0.121644596,
         "submitted_utc": "2026-10-28T00:23:11.025Z",
-        "purpose": "calibration"
+        "purpose": "calibration",
+        "score_selection_eligible": false,
+        "score_selection_status": "void_column_order_mismatch",
+        "score_selection_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records."
       }
     ],
     "2026-10-27_planned_slots_of_daily_cap": "2/2 completed"
@@ -467,7 +476,10 @@
       "eligibility": "frozen model candidate; authorized for calibration evaluation; not yet uploaded/scored/selected",
       "score_source": "zindi_api_status",
       "upload_status": "successful",
-      "submitted_utc": "2026-10-26T14:21:03.275Z"
+      "submitted_utc": "2026-10-26T14:21:03.275Z",
+      "score_selection_eligible": false,
+      "score_selection_status": "void_column_order_mismatch",
+      "score_selection_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records."
     },
     {
       "candidate_id": "A2_spectral",
@@ -577,7 +589,10 @@
       "eligibility": "frozen model candidate; authorized for calibration evaluation; not yet uploaded/scored/selected",
       "score_source": "zindi_api_status",
       "upload_status": "successful",
-      "submitted_utc": "2026-10-26T14:21:49.291Z"
+      "submitted_utc": "2026-10-26T14:21:49.291Z",
+      "score_selection_eligible": false,
+      "score_selection_status": "void_column_order_mismatch",
+      "score_selection_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records."
     },
     {
       "candidate_id": "A3_dawid_skene",
@@ -824,31 +839,190 @@
       "submission_id": "9HjwNhyz",
       "public_rmse": 0.121644596,
       "score_source": "zindi_api_status",
-      "submitted_utc": "2026-10-28T00:23:11.025Z"
+      "submitted_utc": "2026-10-28T00:23:11.025Z",
+      "score_selection_eligible": false,
+      "score_selection_status": "void_column_order_mismatch",
+      "score_selection_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records."
+    },
+    {
+      "candidate_id": "V2_model_cgs",
+      "registered_utc": "2026-10-28",
+      "preregistration_commit": "4cc2e2ac64bb56651d621f0e2a1447f6200f7024",
+      "preregistered_card_path": "reports/final-candidate-cards/track-a-cohort-2026-10-26.json",
+      "preregistered_card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb",
+      "artifact": "reports/candidates/V2_model_cgs.csv",
+      "sha256": "5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "coverage_gap_score"
+      ],
+      "format_fix_only": true,
+      "format_fix_of": "V2_model",
+      "format_fix_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records.",
+      "purpose": "calibration",
+      "prediction_written_before_any_upload": true,
+      "prediction_basis": "No prediction was recalculated; this artifact copies the frozen source coverage_gap_score text unchanged.",
+      "local_invariants": {
+        "report": "reports/bias-column-order-cgs-build.json",
+        "all_gates_passed": true,
+        "exact_template_ids_and_order": true,
+        "coverage_gap_score_byte_identical_to_source": true
+      },
+      "upload_authorized": true,
+      "upload_not_before_utc": "2026-10-29T00:00:00Z",
+      "upload_performed": false,
+      "submission_id": null,
+      "public_rmse": null,
+      "eligibility": "format-corrected calibration candidate; awaiting scheduled upload"
+    },
+    {
+      "candidate_id": "A1_physical_equal_cgs",
+      "registered_utc": "2026-10-28",
+      "preregistration_commit": "4cc2e2ac64bb56651d621f0e2a1447f6200f7024",
+      "preregistered_card_path": "reports/final-candidate-cards/track-a-cohort-2026-10-26.json",
+      "preregistered_card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb",
+      "artifact": "reports/candidates/A1_physical_equal_cgs.csv",
+      "sha256": "2da0051af221ddf26a8a73740746811dbd956854a1fc12846c99864d3abae8a1",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "coverage_gap_score"
+      ],
+      "format_fix_only": true,
+      "format_fix_of": "A1_physical_equal",
+      "format_fix_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records.",
+      "purpose": "calibration",
+      "prediction_written_before_any_upload": true,
+      "prediction_basis": "No prediction was recalculated; this artifact copies the frozen source coverage_gap_score text unchanged.",
+      "local_invariants": {
+        "report": "reports/bias-column-order-cgs-build.json",
+        "all_gates_passed": true,
+        "exact_template_ids_and_order": true,
+        "coverage_gap_score_byte_identical_to_source": true
+      },
+      "upload_authorized": true,
+      "upload_not_before_utc": "2026-10-29T00:00:00Z",
+      "upload_performed": false,
+      "submission_id": null,
+      "public_rmse": null,
+      "eligibility": "format-corrected calibration candidate; awaiting scheduled upload"
+    },
+    {
+      "candidate_id": "A2_spectral_cgs",
+      "registered_utc": "2026-10-28",
+      "preregistration_commit": "4cc2e2ac64bb56651d621f0e2a1447f6200f7024",
+      "preregistered_card_path": "reports/final-candidate-cards/track-a-cohort-2026-10-26.json",
+      "preregistered_card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb",
+      "artifact": "reports/candidates/A2_spectral_cgs.csv",
+      "sha256": "584e086bb5df950f6079317afcdc7c5a0182b5263d170be2a10987d1ac4c6213",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "coverage_gap_score"
+      ],
+      "format_fix_only": true,
+      "format_fix_of": "A2_spectral",
+      "format_fix_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records.",
+      "purpose": "calibration",
+      "prediction_written_before_any_upload": true,
+      "prediction_basis": "No prediction was recalculated; this artifact copies the frozen source coverage_gap_score text unchanged.",
+      "local_invariants": {
+        "report": "reports/bias-column-order-cgs-build.json",
+        "all_gates_passed": true,
+        "exact_template_ids_and_order": true,
+        "coverage_gap_score_byte_identical_to_source": true
+      },
+      "upload_authorized": true,
+      "upload_not_before_utc": "2026-10-29T00:00:00Z",
+      "upload_performed": false,
+      "submission_id": null,
+      "public_rmse": null,
+      "eligibility": "format-corrected calibration candidate; awaiting scheduled upload"
+    },
+    {
+      "candidate_id": "A3_dawid_skene_cgs",
+      "registered_utc": "2026-10-28",
+      "preregistration_commit": "4cc2e2ac64bb56651d621f0e2a1447f6200f7024",
+      "preregistered_card_path": "reports/final-candidate-cards/track-a-cohort-2026-10-26.json",
+      "preregistered_card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb",
+      "artifact": "reports/candidates/A3_dawid_skene_cgs.csv",
+      "sha256": "432ade8f1e46c6804cb34fb790612bb1befc9fe03b67a545e753be46b549237c",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "coverage_gap_score"
+      ],
+      "format_fix_only": true,
+      "format_fix_of": "A3_dawid_skene",
+      "format_fix_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records.",
+      "purpose": "calibration",
+      "prediction_written_before_any_upload": true,
+      "prediction_basis": "No prediction was recalculated; this artifact copies the frozen source coverage_gap_score text unchanged.",
+      "local_invariants": {
+        "report": "reports/bias-column-order-cgs-build.json",
+        "all_gates_passed": true,
+        "exact_template_ids_and_order": true,
+        "coverage_gap_score_byte_identical_to_source": true
+      },
+      "upload_authorized": true,
+      "upload_not_before_utc": "2026-10-29T00:00:00Z",
+      "upload_performed": false,
+      "submission_id": null,
+      "public_rmse": null,
+      "eligibility": "format-corrected calibration candidate; awaiting scheduled upload"
+    },
+    {
+      "candidate_id": "B_from_A_cgs",
+      "registered_utc": "2026-10-28",
+      "preregistration_commit": "4cc2e2ac64bb56651d621f0e2a1447f6200f7024",
+      "preregistered_card_path": "reports/final-candidate-cards/B_from_A-2026-10-28.json",
+      "preregistered_card_sha256": "adae3c7b6e4a3423d5c1f77edb8804038fa59bb177bf57df53524b7abbbff143",
+      "artifact": "reports/candidates/B_from_A_cgs.csv",
+      "sha256": "38e17cf1ec99f4f3fc5d358d13ccd0edfabe947d81fd6b6e5ef61e6cea006607",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "coverage_gap_score"
+      ],
+      "format_fix_only": true,
+      "format_fix_of": "B_from_A",
+      "format_fix_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records.",
+      "purpose": "calibration",
+      "prediction_written_before_any_upload": true,
+      "prediction_basis": "No prediction was recalculated; this artifact copies the frozen source coverage_gap_score text unchanged.",
+      "local_invariants": {
+        "report": "reports/bias-column-order-cgs-build.json",
+        "all_gates_passed": true,
+        "exact_template_ids_and_order": true,
+        "coverage_gap_score_byte_identical_to_source": true
+      },
+      "upload_authorized": true,
+      "upload_not_before_utc": "2026-10-29T00:00:00Z",
+      "upload_performed": false,
+      "submission_id": null,
+      "public_rmse": null,
+      "eligibility": "format-corrected calibration candidate; awaiting scheduled upload"
     }
   ],
   "final_candidates": [
     {
       "slot": "A",
-      "candidate_id": "V2_model",
-      "preregistration_commit": "5926d7ad4d73553f79910eafafcf8f38559d8e33",
-      "preregistered_card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb",
-      "artifact": "reports/candidates/V2_model.csv",
-      "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12",
-      "submission_id": "EbwLNkmt",
-      "public_rmse": 0.121644596,
-      "rationale": "Lowest eligible frozen-cohort model public RMSE; it beats A1 by more than the frozen pairwise noise guard. Selected solely by the preregistered A rule."
+      "candidate_id": null,
+      "artifact": null,
+      "sha256": null,
+      "submission_id": null,
+      "public_rmse": null,
+      "selection_status": "awaiting_column_order_corrected_scores"
     },
     {
       "slot": "B",
-      "candidate_id": "B_from_A",
-      "preregistration_commit": "561111ee6f1f327f5d34cd74b2d60162ece4f6c9",
-      "preregistered_card_sha256": "adae3c7b6e4a3423d5c1f77edb8804038fa59bb177bf57df53524b7abbbff143",
-      "artifact": "reports/candidates/B_from_A.csv",
-      "sha256": "efd51badc5c9142263481086180fb5b89c720b8279237ae0edcdb0066d1ae303",
-      "submission_id": "9HjwNhyz",
-      "public_rmse": 0.121644596,
-      "rationale": "Protocol-defined 50% shrink companion to A; lower within-region prediction variance is a mechanism-based alternative, not an accuracy-improvement claim."
+      "candidate_id": null,
+      "artifact": null,
+      "sha256": null,
+      "submission_id": null,
+      "public_rmse": null,
+      "selection_status": "awaiting_column_order_corrected_A"
     }
   ],
   "pending_fields": [
@@ -876,7 +1050,10 @@
         "purpose": "calibration",
         "successful": true,
         "eligible_frozen_cohort_model": true,
-        "public_rmse_se_planning": 0.0016214956054763476
+        "public_rmse_se_planning": 0.0016214956054763476,
+        "score_selection_eligible": false,
+        "score_selection_status": "void_column_order_mismatch",
+        "score_selection_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records."
       },
       {
         "candidate_id": "A1_physical_equal",
@@ -887,7 +1064,10 @@
         "purpose": "calibration",
         "successful": true,
         "eligible_frozen_cohort_model": true,
-        "public_rmse_se_planning": 0.0016867975406148717
+        "public_rmse_se_planning": 0.0016867975406148717,
+        "score_selection_eligible": false,
+        "score_selection_status": "void_column_order_mismatch",
+        "score_selection_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records."
       },
       {
         "candidate_id": "A2_spectral",
@@ -898,7 +1078,10 @@
         "purpose": "calibration",
         "successful": true,
         "eligible_frozen_cohort_model": true,
-        "public_rmse_se_planning": 0.0019473409516332298
+        "public_rmse_se_planning": 0.0019473409516332298,
+        "score_selection_eligible": false,
+        "score_selection_status": "void_column_order_mismatch",
+        "score_selection_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records."
       },
       {
         "candidate_id": "A3_dawid_skene",
@@ -909,38 +1092,267 @@
         "purpose": "calibration",
         "successful": true,
         "eligible_frozen_cohort_model": true,
-        "public_rmse_se_planning": 0.0019473409516332298
+        "public_rmse_se_planning": 0.0019473409516332298,
+        "score_selection_eligible": false,
+        "score_selection_status": "void_column_order_mismatch",
+        "score_selection_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records."
       }
     ],
-    "lower_rmse_candidate": "V2_model",
-    "provisional_candidate_A": "V2_model",
-    "provisional_A_platform_submission_id": "EbwLNkmt",
-    "comparisons_to_provisional_A": [
-      {
-        "candidate_id": "A1_physical_equal",
-        "best_minus_competitor_rmse": -0.0048989510000000125,
-        "absolute_rmse_difference": 0.0048989510000000125,
-        "pairwise_public_noise_guard": 0.0033082931460912193,
-        "difference_exceeds_guard": true
-      },
-      {
-        "candidate_id": "A2_spectral",
-        "best_minus_competitor_rmse": -0.02444491700000001,
-        "absolute_rmse_difference": 0.02444491700000001,
-        "pairwise_public_noise_guard": 0.0035688365571095774,
-        "difference_exceeds_guard": true
-      },
-      {
-        "candidate_id": "A3_dawid_skene",
-        "best_minus_competitor_rmse": -0.02444491700000001,
-        "absolute_rmse_difference": 0.02444491700000001,
-        "pairwise_public_noise_guard": 0.0035688365571095774,
-        "difference_exceeds_guard": true
-      }
-    ],
-    "A_uniquely_below_all_cohort_candidates_outside_pairwise_guard": true,
+    "lower_rmse_candidate": null,
+    "provisional_candidate_A": null,
+    "provisional_A_platform_submission_id": null,
+    "comparisons_to_provisional_A": [],
+    "A_uniquely_below_all_cohort_candidates_outside_pairwise_guard": null,
     "final_two_selected": false,
-    "no_candidate_parameters_changed": true,
-    "selection_basis": "Apply frozen score-only cohort rule with pairwise public sampling-noise guard; no scorecard cells or parameters used. Final A/B fields remain pending until B is built, scored, and the final record is completed by the protocol deadline."
+    "selection_basis": "No earlier public score is valid for selection; await correctly ordered _cgs scores."
+  },
+  "invalidated_final_selection": {
+    "records": [
+      {
+        "slot": "A",
+        "candidate_id": "V2_model",
+        "preregistration_commit": "5926d7ad4d73553f79910eafafcf8f38559d8e33",
+        "preregistered_card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb",
+        "artifact": "reports/candidates/V2_model.csv",
+        "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12",
+        "submission_id": "EbwLNkmt",
+        "public_rmse": 0.121644596,
+        "rationale": "Lowest eligible frozen-cohort model public RMSE; it beats A1 by more than the frozen pairwise noise guard. Selected solely by the preregistered A rule.",
+        "score_selection_eligible": false,
+        "score_selection_status": "void_column_order_mismatch",
+        "score_selection_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records."
+      },
+      {
+        "slot": "B",
+        "candidate_id": "B_from_A",
+        "preregistration_commit": "561111ee6f1f327f5d34cd74b2d60162ece4f6c9",
+        "preregistered_card_sha256": "adae3c7b6e4a3423d5c1f77edb8804038fa59bb177bf57df53524b7abbbff143",
+        "artifact": "reports/candidates/B_from_A.csv",
+        "sha256": "efd51badc5c9142263481086180fb5b89c720b8279237ae0edcdb0066d1ae303",
+        "submission_id": "9HjwNhyz",
+        "public_rmse": 0.121644596,
+        "rationale": "Protocol-defined 50% shrink companion to A; lower within-region prediction variance is a mechanism-based alternative, not an accuracy-improvement claim.",
+        "score_selection_eligible": false,
+        "score_selection_status": "void_column_order_mismatch",
+        "score_selection_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records."
+      }
+    ],
+    "void_for_selection": true,
+    "reason": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records."
+  },
+  "invalidated_interim_public_ranking": {
+    "records": {
+      "scored_subset": [
+        "V2_model",
+        "A1_physical_equal",
+        "A2_spectral",
+        "A3_dawid_skene"
+      ],
+      "successful_candidate_scores": [
+        {
+          "candidate_id": "V2_model",
+          "public_rmse": 0.121644596,
+          "submission_id": "EbwLNkmt",
+          "artifact_sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12",
+          "predicted_public_rmse": 0.09135719597637867,
+          "purpose": "calibration",
+          "successful": true,
+          "eligible_frozen_cohort_model": true,
+          "public_rmse_se_planning": 0.0016214956054763476,
+          "score_selection_eligible": false,
+          "score_selection_status": "void_column_order_mismatch",
+          "score_selection_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records."
+        },
+        {
+          "candidate_id": "A1_physical_equal",
+          "public_rmse": 0.126543547,
+          "submission_id": "iQw8C6Q9",
+          "artifact_sha256": "6af088b83ff3481d420e11b14d903fc510c2b4be2cea285c762ca12d500862de",
+          "predicted_public_rmse": 0.107246299,
+          "purpose": "calibration",
+          "successful": true,
+          "eligible_frozen_cohort_model": true,
+          "public_rmse_se_planning": 0.0016867975406148717,
+          "score_selection_eligible": false,
+          "score_selection_status": "void_column_order_mismatch",
+          "score_selection_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records."
+        },
+        {
+          "candidate_id": "A2_spectral",
+          "public_rmse": 0.146089513,
+          "submission_id": "W83LEghZ",
+          "artifact_sha256": "f88573996566a1975726845a49f42fb2cd3781d5f0e83d55944fc65647692997",
+          "predicted_public_rmse": 0.107246299,
+          "purpose": "calibration",
+          "successful": true,
+          "eligible_frozen_cohort_model": true,
+          "public_rmse_se_planning": 0.0019473409516332298,
+          "score_selection_eligible": false,
+          "score_selection_status": "void_column_order_mismatch",
+          "score_selection_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records."
+        },
+        {
+          "candidate_id": "A3_dawid_skene",
+          "public_rmse": 0.146089513,
+          "submission_id": "tGB6sGRx",
+          "artifact_sha256": "6d588f2f7a45a58b128860a049ac19995b21902f7f98d3b2ab39d1d9fbb073b3",
+          "predicted_public_rmse": 0.107246299,
+          "purpose": "calibration",
+          "successful": true,
+          "eligible_frozen_cohort_model": true,
+          "public_rmse_se_planning": 0.0019473409516332298,
+          "score_selection_eligible": false,
+          "score_selection_status": "void_column_order_mismatch",
+          "score_selection_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records."
+        }
+      ],
+      "lower_rmse_candidate": "V2_model",
+      "provisional_candidate_A": "V2_model",
+      "provisional_A_platform_submission_id": "EbwLNkmt",
+      "comparisons_to_provisional_A": [
+        {
+          "candidate_id": "A1_physical_equal",
+          "best_minus_competitor_rmse": -0.0048989510000000125,
+          "absolute_rmse_difference": 0.0048989510000000125,
+          "pairwise_public_noise_guard": 0.0033082931460912193,
+          "difference_exceeds_guard": true
+        },
+        {
+          "candidate_id": "A2_spectral",
+          "best_minus_competitor_rmse": -0.02444491700000001,
+          "absolute_rmse_difference": 0.02444491700000001,
+          "pairwise_public_noise_guard": 0.0035688365571095774,
+          "difference_exceeds_guard": true
+        },
+        {
+          "candidate_id": "A3_dawid_skene",
+          "best_minus_competitor_rmse": -0.02444491700000001,
+          "absolute_rmse_difference": 0.02444491700000001,
+          "pairwise_public_noise_guard": 0.0035688365571095774,
+          "difference_exceeds_guard": true
+        }
+      ],
+      "A_uniquely_below_all_cohort_candidates_outside_pairwise_guard": true,
+      "final_two_selected": false,
+      "no_candidate_parameters_changed": true,
+      "selection_basis": "Apply frozen score-only cohort rule with pairwise public sampling-noise guard; no scorecard cells or parameters used. Final A/B fields remain pending until B is built, scored, and the final record is completed by the protocol deadline."
+    },
+    "void_for_selection": true,
+    "reason": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records."
+  },
+  "score_integrity": {
+    "finding": "Zindi scores the second CSV column by position; Data-page SampleSubmission.csv puts coverage_gap_score second, while previous five-column files put transport_gap second.",
+    "historical_public_scores_valid_for_selection": false,
+    "historical_score_records_preserved": true,
+    "historical_score_records_marked_or_covered_by_notice_in": [
+      "candidate_registrations",
+      "upload_budget.completed_uploads",
+      "interim_public_ranking",
+      "invalidated_interim_public_ranking",
+      "invalidated_final_selection",
+      "reports/submissions.jsonl",
+      "reports/lb-calibration.jsonl"
+    ],
+    "note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records.",
+    "corrected_column_order": [
+      "GEOID",
+      "coverage_gap_score"
+    ],
+    "cgs_candidates": [
+      "V2_model_cgs",
+      "A1_physical_equal_cgs",
+      "A2_spectral_cgs",
+      "A3_dawid_skene_cgs",
+      "B_from_A_cgs"
+    ],
+    "no_old_score_used_for_model_selection_or_value_changes": true
+  },
+  "format_fix_upload_plan": {
+    "uploads_permitted_before_utc": "2026-10-29T00:00:00Z",
+    "uploads_performed_this_turn": 0,
+    "daily_cap": 2,
+    "2026-10-29_before_00Z": [],
+    "2026-10-29_from_00Z": [
+      "V2_model_cgs",
+      "A1_physical_equal_cgs"
+    ],
+    "2026-10-30_before_12Z": [
+      "the better of A3_dawid_skene_cgs/A2_spectral_cgs under the A-rule after valid CGS scores",
+      "B rebuilt from the A-rule winner"
+    ],
+    "note": "Steward schedule; no live upload in this turn. If the A-rule winner is not V2_model, rebuild and register its B companion before the second-day plan."
+  },
+  "column_order_rescore_preregistration": {
+    "config": "config/bias-column-order-rescore-preregistered.json",
+    "config_sha256": "3657c7e860f32cb32134571c83a294a2e299f54579d708fdad487f04c63e68ac",
+    "preregistration_commit": "4cc2e2ac64bb56651d621f0e2a1447f6200f7024",
+    "registered_candidates": [
+      {
+        "candidate_id": "V2_model_cgs",
+        "source_candidate_id": "V2_model",
+        "artifact": "reports/candidates/V2_model_cgs.csv",
+        "sha256": "5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7",
+        "purpose": "calibration",
+        "card_path": "reports/final-candidate-cards/track-a-cohort-2026-10-26.json",
+        "card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb",
+        "format_fix_only": true,
+        "upload_performed": false
+      },
+      {
+        "candidate_id": "A1_physical_equal_cgs",
+        "source_candidate_id": "A1_physical_equal",
+        "artifact": "reports/candidates/A1_physical_equal_cgs.csv",
+        "sha256": "2da0051af221ddf26a8a73740746811dbd956854a1fc12846c99864d3abae8a1",
+        "purpose": "calibration",
+        "card_path": "reports/final-candidate-cards/track-a-cohort-2026-10-26.json",
+        "card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb",
+        "format_fix_only": true,
+        "upload_performed": false
+      },
+      {
+        "candidate_id": "A2_spectral_cgs",
+        "source_candidate_id": "A2_spectral",
+        "artifact": "reports/candidates/A2_spectral_cgs.csv",
+        "sha256": "584e086bb5df950f6079317afcdc7c5a0182b5263d170be2a10987d1ac4c6213",
+        "purpose": "calibration",
+        "card_path": "reports/final-candidate-cards/track-a-cohort-2026-10-26.json",
+        "card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb",
+        "format_fix_only": true,
+        "upload_performed": false
+      },
+      {
+        "candidate_id": "A3_dawid_skene_cgs",
+        "source_candidate_id": "A3_dawid_skene",
+        "artifact": "reports/candidates/A3_dawid_skene_cgs.csv",
+        "sha256": "432ade8f1e46c6804cb34fb790612bb1befc9fe03b67a545e753be46b549237c",
+        "purpose": "calibration",
+        "card_path": "reports/final-candidate-cards/track-a-cohort-2026-10-26.json",
+        "card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb",
+        "format_fix_only": true,
+        "upload_performed": false
+      },
+      {
+        "candidate_id": "B_from_A_cgs",
+        "source_candidate_id": "B_from_A",
+        "artifact": "reports/candidates/B_from_A_cgs.csv",
+        "sha256": "38e17cf1ec99f4f3fc5d358d13ccd0edfabe947d81fd6b6e5ef61e6cea006607",
+        "purpose": "calibration",
+        "card_path": "reports/final-candidate-cards/B_from_A-2026-10-28.json",
+        "card_sha256": "adae3c7b6e4a3423d5c1f77edb8804038fa59bb177bf57df53524b7abbbff143",
+        "format_fix_only": true,
+        "upload_performed": false
+      }
+    ]
+  },
+  "superseded_upload_queue": {
+    "records": [
+      {
+        "candidate_id": "B_from_A",
+        "scheduled_utc": "2026-10-28",
+        "purpose": "calibration; build only after A selection"
+      }
+    ],
+    "status": "void_column_order_rescore",
+    "reason": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records."
   }
 }
