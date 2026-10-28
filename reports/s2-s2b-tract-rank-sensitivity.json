@@ -1,0 +1,154 @@
+{
+  "analysis_id": "S2_S2B_TRACT_RANK_SENSITIVITY_V1",
+  "audit_script_sha256": "e9636806a10f62eef67729f142923fe35bf848c4672e165b9f7bfbf5ff7557ef",
+  "design": {
+    "delta": "S2b composite score minus S2 composite score",
+    "inputs": "read frozen S2 and S2b candidate outputs only, plus official GEOID cells; no component files or other candidates",
+    "quantiles": "linear interpolation at (n-1)*p",
+    "rank_correlation": "Spearman correlation using average ranks for tied scores",
+    "scope": "authoritative 9,379 official GEOIDs in the four scored regions only",
+    "top_decile_overlap": "exact ceil(0.10*n) scores; ties broken by ascending GEOID; overlap divided by k"
+  },
+  "forbidden_information_used": {
+    "C0_or_leaderboard_scores": false,
+    "external_data": false,
+    "labels": false,
+    "removed_or_equivalent_references": false,
+    "uploads": 0
+  },
+  "interpretation": {
+    "accuracy_claim": false,
+    "candidate_bytes_modified": false,
+    "candidate_selection": false,
+    "sensitivity_only": true,
+    "target_accuracy_identifiable": false,
+    "upload_performed": false
+  },
+  "measure_after": {
+    "S2_sha256": "44ba76abcd9e1fb0aa7194e3c0fadf567debce40e29ed4bdf93ef02ae9514577",
+    "S2b_sha256": "5761e2c17f25f66bbc9e1d769a04b76545e4cc660a8ca9481c30b89739b7ae6f",
+    "candidate_bytes_unchanged": true
+  },
+  "measure_before": {
+    "S2_candidate_rows": 9794,
+    "S2_sha256": "44ba76abcd9e1fb0aa7194e3c0fadf567debce40e29ed4bdf93ef02ae9514577",
+    "S2b_candidate_rows": 9794,
+    "S2b_sha256": "5761e2c17f25f66bbc9e1d769a04b76545e4cc660a8ca9481c30b89739b7ae6f",
+    "all_region_p95_absolute_score_delta": 0.16619197229901267,
+    "official_geoids": 9379,
+    "provided_sample_geoid_hashes": {
+      "eastern-ok": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+      "maricopa-az": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+      "northern-ca": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+      "south-central-tx": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e"
+    },
+    "region_counts": {
+      "eastern-ok": 1192,
+      "maricopa-az": 1593,
+      "northern-ca": 591,
+      "south-central-tx": 6003
+    },
+    "unique_official_geoids": 9379
+  },
+  "per_region": {
+    "eastern-ok": {
+      "absolute_delta_vector_sha256": "74518de743847d8f9d5388382338d33a9356e61b85ac3921219249f13fc8b8dd",
+      "all_scores_finite_bounded_0_1": true,
+      "frozen_S2_vector_sha256": "88b9e563a16f8e7c7273afd34fa9d6a9f8f03f550ba0b3f06ccf56149911ef95",
+      "frozen_S2b_vector_sha256": "83b8e4ffd78f4e7ba949d61c71569e66b118d9c9039f6ad3ccc236491d3cf6dc",
+      "maximum_absolute_score_delta": 0.25,
+      "mean_signed_score_delta_s2b_minus_s2": 0.07330674027113865,
+      "median_absolute_score_delta": 0.07345121177316544,
+      "official_rows": 1192,
+      "p95_absolute_score_delta": 0.16582803292357745,
+      "spearman_s2_vs_s2b": 0.6288420420686254,
+      "top_decile_definition": "exact ceil(0.10*n) highest composite scores; descending score, then ascending GEOID for ties",
+      "top_decile_jaccard": 0.7266187050359713,
+      "top_decile_overlap_count": 101,
+      "top_decile_overlap_fraction_of_k": 0.8416666666666667,
+      "top_decile_size_each": 120
+    },
+    "maricopa-az": {
+      "absolute_delta_vector_sha256": "8b5c995f333d2e1f3a71baaa39fd3d8a5af62d9007f6c0c19f114a38bee3f591",
+      "all_scores_finite_bounded_0_1": true,
+      "frozen_S2_vector_sha256": "2d11f3cb189a227ac479eb9cfadc57451e39c2a023542e5b08834b70ccf7a348",
+      "frozen_S2b_vector_sha256": "140b340f9a8826a50c42c5b93a92377ddc905c19a268457b778b3c889c3e5535",
+      "maximum_absolute_score_delta": 0.25,
+      "mean_signed_score_delta_s2b_minus_s2": 0.09261432361448957,
+      "median_absolute_score_delta": 0.10436051164909843,
+      "official_rows": 1593,
+      "p95_absolute_score_delta": 0.16624962356979625,
+      "spearman_s2_vs_s2b": 0.8065953959423204,
+      "top_decile_definition": "exact ceil(0.10*n) highest composite scores; descending score, then ascending GEOID for ties",
+      "top_decile_jaccard": 0.7112299465240641,
+      "top_decile_overlap_count": 133,
+      "top_decile_overlap_fraction_of_k": 0.83125,
+      "top_decile_size_each": 160
+    },
+    "northern-ca": {
+      "absolute_delta_vector_sha256": "05f72aeeded17fb60325d0b30c0e47d391354788cf464a3516f9234fca9ee502",
+      "all_scores_finite_bounded_0_1": true,
+      "frozen_S2_vector_sha256": "b066a6aeda37898d913a4ef9586460f69c61c68cccb2c10f86b51bb7d816a3c6",
+      "frozen_S2b_vector_sha256": "fd57aec290ae604d027060555109ca7c28fe23d359e449bb299443280b215409",
+      "maximum_absolute_score_delta": 0.25,
+      "mean_signed_score_delta_s2b_minus_s2": 0.07055728938216387,
+      "median_absolute_score_delta": 0.05542183007011346,
+      "official_rows": 591,
+      "p95_absolute_score_delta": 0.1652454929215339,
+      "spearman_s2_vs_s2b": 0.7934087185038257,
+      "top_decile_definition": "exact ceil(0.10*n) highest composite scores; descending score, then ascending GEOID for ties",
+      "top_decile_jaccard": 0.7910447761194029,
+      "top_decile_overlap_count": 53,
+      "top_decile_overlap_fraction_of_k": 0.8833333333333333,
+      "top_decile_size_each": 60
+    },
+    "south-central-tx": {
+      "absolute_delta_vector_sha256": "f55cf0ca0028edf0b21d641423601570dbf0400799916a628d108962d6507633",
+      "all_scores_finite_bounded_0_1": true,
+      "frozen_S2_vector_sha256": "4097ab8ef1bb30deacc780f652c7a9c5f295a8419dff22ee8ff218ffaafcda8c",
+      "frozen_S2b_vector_sha256": "8274a038a5136ecdd9ac37e321ff1bdaff7c1ad5e2c910e901c6f96b6a4f0dca",
+      "maximum_absolute_score_delta": 0.25000000000000006,
+      "mean_signed_score_delta_s2b_minus_s2": 0.08373381184298669,
+      "median_absolute_score_delta": 0.08648852475960674,
+      "official_rows": 6003,
+      "p95_absolute_score_delta": 0.16619201516233004,
+      "spearman_s2_vs_s2b": 0.7374879018476854,
+      "top_decile_definition": "exact ceil(0.10*n) highest composite scores; descending score, then ascending GEOID for ties",
+      "top_decile_jaccard": 0.7445573294629898,
+      "top_decile_overlap_count": 513,
+      "top_decile_overlap_fraction_of_k": 0.8535773710482529,
+      "top_decile_size_each": 601
+    }
+  },
+  "reproduction": {
+    "command": "uv run --with-requirements requirements.txt python scripts/audit_s2_s2b_tract_rank_sensitivity.py --workspace $COMPETITION_WORKSPACE",
+    "tests": "uv run --with-requirements requirements.txt --with pytest python -m pytest -q tests/test_s2_s2b_tract_rank_sensitivity.py"
+  },
+  "result": "PASS",
+  "schema_version": 1,
+  "scope_validation": {
+    "all_scores_finite_bounded_0_1": true,
+    "duplicate_ids": 0,
+    "extra_ids": 0,
+    "four_regions_reported": true,
+    "missing_ids": 0,
+    "official_rows": 9379,
+    "out_of_scope_candidate_score_values_parsed": false,
+    "sample_score_placeholders_used": false,
+    "unique_geoids": 9379
+  },
+  "scores_artifact": {
+    "columns": [
+      "GEOID",
+      "region",
+      "S2",
+      "S2b",
+      "S2b_minus_S2",
+      "S2_rank_desc_tie_geoid",
+      "S2b_rank_desc_tie_geoid"
+    ],
+    "path": "reports/s2-s2b-tract-rank-sensitivity-scores.csv",
+    "rows": 9379,
+    "sha256": "2b428c1df7681041725b50c0e06978634398733368021855d863be5ba2341954"
+  }
+}
