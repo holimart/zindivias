@@ -1,0 +1,324 @@
+{
+  "analysis_id": "S2_SCORE_INVARIANCE_V1",
+  "input_hashes": {
+    "S2_preregistration_sha256": "d0a85a584dd80990a9a81022f82b66f653250dac097832669676384ddae5d479",
+    "S2_recipe_source_sha256": "955ce0ae728cd1b859829cd225a408102b073c3a41b96f42d5ab7b9d3ee47193",
+    "audit_script_sha256": "115c25df70c73312d1a44e3d2be8866d33dc0ed326971c8d786fe57150520109",
+    "feature_strata_sha256_by_region": {
+      "eastern-ok": {
+        "feature_schema_columns": [
+          "GEOID",
+          "overture_road_km",
+          "overture_named_road_km_5070",
+          "overture_buildings",
+          "overture_building_microsoft_source_share",
+          "overture_poi_all",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "overture_sha256": "e5a06316c316f61bf25b80b48e89c1e7f0b1461a0b8cec5831aae24e0cf83fa6",
+        "strata_schema_columns": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban"
+        ],
+        "strata_sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54"
+      },
+      "maricopa-az": {
+        "feature_schema_columns": [
+          "GEOID",
+          "overture_road_km",
+          "overture_named_road_km_5070",
+          "overture_buildings",
+          "overture_building_microsoft_source_share",
+          "overture_poi_all",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "overture_sha256": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22",
+        "strata_schema_columns": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban"
+        ],
+        "strata_sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd"
+      },
+      "northern-ca": {
+        "feature_schema_columns": [
+          "GEOID",
+          "overture_road_km",
+          "overture_named_road_km_5070",
+          "overture_buildings",
+          "overture_building_microsoft_source_share",
+          "overture_poi_all",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "overture_sha256": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c",
+        "strata_schema_columns": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban"
+        ],
+        "strata_sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243"
+      },
+      "south-central-tx": {
+        "feature_schema_columns": [
+          "GEOID",
+          "overture_road_km",
+          "overture_named_road_km_5070",
+          "overture_buildings",
+          "overture_building_microsoft_source_share",
+          "overture_poi_all",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "overture_sha256": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746",
+        "strata_schema_columns": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban"
+        ],
+        "strata_sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354"
+      }
+    },
+    "official_samples_sha256": {
+      "eastern-ok": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+      "maricopa-az": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+      "northern-ca": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+      "south-central-tx": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e"
+    }
+  },
+  "interpretation": "This is a non-mutating implementation-invariance check, not target validation or accuracy evidence.",
+  "measure_before": {
+    "C2_sha256": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514",
+    "S2_recomputation_max_delta_vs_frozen": 0.0,
+    "feature_strata_sha256_by_region": {
+      "eastern-ok": {
+        "feature_schema_columns": [
+          "GEOID",
+          "overture_road_km",
+          "overture_named_road_km_5070",
+          "overture_buildings",
+          "overture_building_microsoft_source_share",
+          "overture_poi_all",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "overture_sha256": "e5a06316c316f61bf25b80b48e89c1e7f0b1461a0b8cec5831aae24e0cf83fa6",
+        "strata_schema_columns": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban"
+        ],
+        "strata_sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54"
+      },
+      "maricopa-az": {
+        "feature_schema_columns": [
+          "GEOID",
+          "overture_road_km",
+          "overture_named_road_km_5070",
+          "overture_buildings",
+          "overture_building_microsoft_source_share",
+          "overture_poi_all",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "overture_sha256": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22",
+        "strata_schema_columns": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban"
+        ],
+        "strata_sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd"
+      },
+      "northern-ca": {
+        "feature_schema_columns": [
+          "GEOID",
+          "overture_road_km",
+          "overture_named_road_km_5070",
+          "overture_buildings",
+          "overture_building_microsoft_source_share",
+          "overture_poi_all",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "overture_sha256": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c",
+        "strata_schema_columns": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban"
+        ],
+        "strata_sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243"
+      },
+      "south-central-tx": {
+        "feature_schema_columns": [
+          "GEOID",
+          "overture_road_km",
+          "overture_named_road_km_5070",
+          "overture_buildings",
+          "overture_building_microsoft_source_share",
+          "overture_poi_all",
+          "overture_poi_fire",
+          "overture_poi_ems",
+          "overture_poi_schools",
+          "overture_poi_unclassified",
+          "overture_unclassified_fire_share",
+          "overture_unclassified_ems_share",
+          "overture_unclassified_schools_share"
+        ],
+        "overture_sha256": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746",
+        "strata_schema_columns": [
+          "GEOID",
+          "ALAND",
+          "pop_total",
+          "pop_urban",
+          "pct_urban"
+        ],
+        "strata_sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354"
+      }
+    },
+    "frozen_S2_sha256": "44ba76abcd9e1fb0aa7194e3c0fadf567debce40e29ed4bdf93ef02ae9514577",
+    "frozen_S2b_sha256": "5761e2c17f25f66bbc9e1d769a04b76545e4cc660a8ca9481c30b89739b7ae6f",
+    "gap_estimates_sha256": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852",
+    "no_prior_row_column_serialization_invariance_report": true
+  },
+  "output_hashes": {
+    "frozen_S2_artifact_sha256": "44ba76abcd9e1fb0aa7194e3c0fadf567debce40e29ed4bdf93ef02ae9514577",
+    "recomputed_official_score_vector_sha256": "cdf13018ebedf09b82801b04a1e5008ff0105301773d67429922f0c0fcefcef3"
+  },
+  "preregistration": {
+    "path": "config/s2-score-invariance-preregistered.json",
+    "sha256": "1f6fe84b5a8f527ea5a61c367498b60ac59ca356765d9c314b1abdbc543864f3"
+  },
+  "reproduction": {
+    "command": "uv run --with-requirements requirements.txt python scripts/audit_s2_score_invariance.py --workspace $COMPETITION_WORKSPACE",
+    "tests": "uv run --with-requirements requirements.txt --with pytest python -m pytest -q tests/test_s2_score_invariance.py"
+  },
+  "result": "PASS",
+  "schema_version": 1,
+  "scope": {
+    "all_ids_exactly_once": true,
+    "four_region_coverage": {
+      "eastern-ok": {
+        "exact": true,
+        "expected": 1192,
+        "observed": 1192
+      },
+      "maricopa-az": {
+        "exact": true,
+        "expected": 1593,
+        "observed": 1593
+      },
+      "northern-ca": {
+        "exact": true,
+        "expected": 591,
+        "observed": 591
+      },
+      "south-central-tx": {
+        "exact": true,
+        "expected": 6003,
+        "observed": 6003
+      }
+    },
+    "official_rows": 9379,
+    "official_unique_ids": 9379,
+    "template_only_rows_excluded_from_measurement": 415,
+    "template_rows_in_frozen_outputs": 9794
+  },
+  "toy_hand_fixture": {
+    "components": {
+      "building": 0.6000000000000001,
+      "poi": 0.55,
+      "transport": 0.2
+    },
+    "defined": {
+      "building": 1,
+      "poi": 1,
+      "transport": 1
+    },
+    "hand_calculated_score": 0.45,
+    "matches": true,
+    "score": 0.45
+  },
+  "transformations": {
+    "column_order": {
+      "exact_id_coverage": true,
+      "input_column_order": "reversed named fields; score computation uses named fields",
+      "maximum_absolute_score_delta": 0.0,
+      "output_sha256": "cdf13018ebedf09b82801b04a1e5008ff0105301773d67429922f0c0fcefcef3"
+    },
+    "row_order": {
+      "exact_id_coverage": true,
+      "input_row_order": "reversed independently; indexed by GEOID",
+      "maximum_absolute_score_delta": 0.0,
+      "output_sha256": "cdf13018ebedf09b82801b04a1e5008ff0105301773d67429922f0c0fcefcef3"
+    },
+    "stable_serialization": {
+      "exact_id_coverage": true,
+      "maximum_absolute_score_delta": 0.0,
+      "output_sha256": "cdf13018ebedf09b82801b04a1e5008ff0105301773d67429922f0c0fcefcef3",
+      "serialization": "canonical JSON sort_keys=true, compact separators, allow_nan=false"
+    }
+  },
+  "validation": {
+    "all_transformations_pass": true,
+    "candidate_or_upload_selection": false,
+    "duplicate_ids": 0,
+    "labels_or_reference_layers_or_external_data_used": false,
+    "leaderboard_or_scorecard_values_used": false,
+    "max_transformation_delta": 0.0,
+    "missing_or_extra_ids": 0,
+    "required_max_delta": 1e-12,
+    "scores_finite_and_bounded_0_1": true
+  }
+}
