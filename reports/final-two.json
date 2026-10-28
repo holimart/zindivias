@@ -129,6 +129,13 @@
         "public_rmse": 0.121644596,
         "submitted_utc": "2026-10-27T00:18:41.897Z",
         "purpose": "calibration"
+      },
+      {
+        "candidate_id": "B_from_A",
+        "submission_id": "9HjwNhyz",
+        "public_rmse": 0.121644596,
+        "submitted_utc": "2026-10-28T00:23:11.025Z",
+        "purpose": "calibration"
       }
     ],
     "2026-10-27_planned_slots_of_daily_cap": "2/2 completed"
@@ -812,37 +819,43 @@
       },
       "reproduction_command": "python3 -I scripts/build_candidate_b_from_a.py --workspace \"$COMPETITION_WORKSPACE\" --repo \"$COMPETITION_REPO\"",
       "upload_authorized": true,
-      "upload_performed": false
+      "upload_performed": true,
+      "upload_status": "successful",
+      "submission_id": "9HjwNhyz",
+      "public_rmse": 0.121644596,
+      "score_source": "zindi_api_status",
+      "submitted_utc": "2026-10-28T00:23:11.025Z"
     }
   ],
   "final_candidates": [
     {
       "slot": "A",
-      "candidate_id": null,
-      "preregistration_commit": null,
-      "preregistered_card_sha256": null,
-      "artifact": null,
-      "sha256": null,
-      "submission_id": null,
-      "public_rmse": null,
-      "rationale": null
+      "candidate_id": "V2_model",
+      "preregistration_commit": "5926d7ad4d73553f79910eafafcf8f38559d8e33",
+      "preregistered_card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb",
+      "artifact": "reports/candidates/V2_model.csv",
+      "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12",
+      "submission_id": "EbwLNkmt",
+      "public_rmse": 0.121644596,
+      "rationale": "Lowest eligible frozen-cohort model public RMSE; it beats A1 by more than the frozen pairwise noise guard. Selected solely by the preregistered A rule."
     },
     {
       "slot": "B",
-      "candidate_id": null,
-      "preregistration_commit": null,
-      "preregistered_card_sha256": null,
-      "artifact": null,
-      "sha256": null,
-      "submission_id": null,
-      "public_rmse": null,
-      "rationale": null
+      "candidate_id": "B_from_A",
+      "preregistration_commit": "561111ee6f1f327f5d34cd74b2d60162ece4f6c9",
+      "preregistered_card_sha256": "adae3c7b6e4a3423d5c1f77edb8804038fa59bb177bf57df53524b7abbbff143",
+      "artifact": "reports/candidates/B_from_A.csv",
+      "sha256": "efd51badc5c9142263481086180fb5b89c720b8279237ae0edcdb0066d1ae303",
+      "submission_id": "9HjwNhyz",
+      "public_rmse": 0.121644596,
+      "rationale": "Protocol-defined 50% shrink companion to A; lower within-region prediction variance is a mechanism-based alternative, not an accuracy-improvement claim."
     }
   ],
   "pending_fields": [
     "final A/B slots and operator UI private-selection confirmation",
     "methodology-form submission confirmation",
-    "candidate B 50% model-mean shrink artifact, hash, validation, preregistration, and successful score (scheduled 2026-10-28)"
+    "operator UI selection of A and B by 2026-10-31T20:00Z",
+    "methodology-form submission confirmation"
   ],
   "operator_acknowledgement": "Steward 2026-10-26 14:15Z explicitly authorized calibration-purpose model evaluations and the C0-prior forecasts for A1/A2/A3; V2 retains its existing forecast. Local label holdout is unavailable by competition design; candidate artifact invariants/reproducibility are the local gate.",
   "registration_note": "Four frozen model cards are registered and authorized for calibration evaluation under the 2026-10-26 steward directive. The C0 value for A1/A2/A3 is a no-change forecast prior, not a local held-out score or accuracy claim. Only two uploads per UTC day; scheduled order is A1/A2 (Oct 26), A3/V2 (Oct 27), B after A selection (Oct 28). The final A/B slots remain null until successful scores and the protocol rule determine them.",
