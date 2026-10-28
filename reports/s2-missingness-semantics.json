@@ -1,0 +1,326 @@
+{
+  "analysis_id": "S2_MISSINGNESS_SEMANTICS_SCREEN_V1",
+  "code_sha256": {
+    "S2_recipe": "955ce0ae728cd1b859829cd225a408102b073c3a41b96f42d5ab7b9d3ee47193",
+    "audit_script": "9caea61833e5a9091d80c9de665dc6418c668eed4d484783b1a36952145ea920",
+    "feature_input_loader": "a38e70b251f99e6a6121dec11fc6747b66c46271450a16adde1315e5bdcc01ca"
+  },
+  "input_hashes": {
+    "candidate_artifacts": {
+      "C2": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514",
+      "S2": "44ba76abcd9e1fb0aa7194e3c0fadf567debce40e29ed4bdf93ef02ae9514577",
+      "S2b": "5761e2c17f25f66bbc9e1d769a04b76545e4cc660a8ca9481c30b89739b7ae6f",
+      "gap_estimates": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852"
+    },
+    "feature_and_strata_by_region": {
+      "eastern-ok": {
+        "overture_sha256": "e5a06316c316f61bf25b80b48e89c1e7f0b1461a0b8cec5831aae24e0cf83fa6",
+        "strata_sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54"
+      },
+      "maricopa-az": {
+        "overture_sha256": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22",
+        "strata_sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd"
+      },
+      "northern-ca": {
+        "overture_sha256": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c",
+        "strata_sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243"
+      },
+      "south-central-tx": {
+        "overture_sha256": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746",
+        "strata_sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354"
+      }
+    },
+    "official_sample_geoid_sha256": {
+      "eastern-ok": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+      "maricopa-az": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+      "northern-ca": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+      "south-central-tx": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e"
+    }
+  },
+  "interpretation": "Sensitivity only. No target accuracy is inferred; if all count fields are numeric, the experiment cannot establish whether a numeric zero means no facility or an unobserved source record.",
+  "measure_before": {
+    "S2_S2b_all_region_p95_abs_difference": 0.16619197229901267,
+    "S2_S2b_p95_abs_difference_by_region": {
+      "eastern-ok": {
+        "max_abs_difference": 0.25,
+        "n": 1192,
+        "p95_abs_difference": 0.16582803292357748
+      },
+      "maricopa-az": {
+        "max_abs_difference": 0.25,
+        "n": 1593,
+        "p95_abs_difference": 0.16624962356979625
+      },
+      "northern-ca": {
+        "max_abs_difference": 0.25,
+        "n": 591,
+        "p95_abs_difference": 0.1652454929215339
+      },
+      "south-central-tx": {
+        "max_abs_difference": 0.25000000000000006,
+        "n": 6003,
+        "p95_abs_difference": 0.16619201516233006
+      }
+    },
+    "S2_sha256": "44ba76abcd9e1fb0aa7194e3c0fadf567debce40e29ed4bdf93ef02ae9514577",
+    "S2b_sha256": "5761e2c17f25f66bbc9e1d769a04b76545e4cc660a8ca9481c30b89739b7ae6f"
+  },
+  "missing_indicator_prevalence_by_facility_type": {
+    "ems": 0,
+    "fire": 0,
+    "schools": 0
+  },
+  "provided_input_states_by_region_and_facility_type": {
+    "eastern-ok": {
+      "ems": {
+        "null_or_nonfinite_count": 0,
+        "positive_numeric_count": 328,
+        "total_official_rows": 1192,
+        "zero_numeric_count": 864
+      },
+      "fire": {
+        "null_or_nonfinite_count": 0,
+        "positive_numeric_count": 546,
+        "total_official_rows": 1192,
+        "zero_numeric_count": 646
+      },
+      "schools": {
+        "null_or_nonfinite_count": 0,
+        "positive_numeric_count": 1062,
+        "total_official_rows": 1192,
+        "zero_numeric_count": 130
+      }
+    },
+    "maricopa-az": {
+      "ems": {
+        "null_or_nonfinite_count": 0,
+        "positive_numeric_count": 247,
+        "total_official_rows": 1593,
+        "zero_numeric_count": 1346
+      },
+      "fire": {
+        "null_or_nonfinite_count": 0,
+        "positive_numeric_count": 488,
+        "total_official_rows": 1593,
+        "zero_numeric_count": 1105
+      },
+      "schools": {
+        "null_or_nonfinite_count": 0,
+        "positive_numeric_count": 1339,
+        "total_official_rows": 1593,
+        "zero_numeric_count": 254
+      }
+    },
+    "northern-ca": {
+      "ems": {
+        "null_or_nonfinite_count": 0,
+        "positive_numeric_count": 140,
+        "total_official_rows": 591,
+        "zero_numeric_count": 451
+      },
+      "fire": {
+        "null_or_nonfinite_count": 0,
+        "positive_numeric_count": 275,
+        "total_official_rows": 591,
+        "zero_numeric_count": 316
+      },
+      "schools": {
+        "null_or_nonfinite_count": 0,
+        "positive_numeric_count": 542,
+        "total_official_rows": 591,
+        "zero_numeric_count": 49
+      }
+    },
+    "south-central-tx": {
+      "ems": {
+        "null_or_nonfinite_count": 0,
+        "positive_numeric_count": 1382,
+        "total_official_rows": 6003,
+        "zero_numeric_count": 4621
+      },
+      "fire": {
+        "null_or_nonfinite_count": 0,
+        "positive_numeric_count": 2178,
+        "total_official_rows": 6003,
+        "zero_numeric_count": 3825
+      },
+      "schools": {
+        "null_or_nonfinite_count": 0,
+        "positive_numeric_count": 5348,
+        "total_official_rows": 6003,
+        "zero_numeric_count": 655
+      }
+    }
+  },
+  "reproduction": {
+    "command": "uv run --with-requirements requirements.txt python scripts/audit_s2_missingness_semantics.py --workspace $COMPETITION_WORKSPACE",
+    "tests": "uv run --with-requirements requirements.txt --with pytest python -m pytest -q tests/test_s2_missingness_semantics.py"
+  },
+  "result": "PASS",
+  "schema_version": 1,
+  "scope": {
+    "four_region_summaries": {
+      "eastern-ok": {
+        "explicit_missing_indicator": {
+          "coverage": 1192,
+          "finite_bounded_0_1": true,
+          "max_abs_score_delta_vs_S2": 0.0,
+          "mean_signed_score_delta_vs_S2": 0.0,
+          "prediction_vector_sha256": "88b9e563a16f8e7c7273afd34fa9d6a9f8f03f550ba0b3f06ccf56149911ef95",
+          "spearman_rank_vs_S2": 1.0
+        },
+        "original": {
+          "coverage": 1192,
+          "finite_bounded_0_1": true,
+          "max_abs_score_delta_vs_S2": 0.0,
+          "mean_signed_score_delta_vs_S2": 0.0,
+          "prediction_vector_sha256": "88b9e563a16f8e7c7273afd34fa9d6a9f8f03f550ba0b3f06ccf56149911ef95",
+          "spearman_rank_vs_S2": 1.0
+        },
+        "zero_filled": {
+          "coverage": 1192,
+          "finite_bounded_0_1": true,
+          "max_abs_score_delta_vs_S2": 0.0,
+          "mean_signed_score_delta_vs_S2": 0.0,
+          "prediction_vector_sha256": "88b9e563a16f8e7c7273afd34fa9d6a9f8f03f550ba0b3f06ccf56149911ef95",
+          "spearman_rank_vs_S2": 1.0
+        }
+      },
+      "maricopa-az": {
+        "explicit_missing_indicator": {
+          "coverage": 1593,
+          "finite_bounded_0_1": true,
+          "max_abs_score_delta_vs_S2": 0.0,
+          "mean_signed_score_delta_vs_S2": 0.0,
+          "prediction_vector_sha256": "2d11f3cb189a227ac479eb9cfadc57451e39c2a023542e5b08834b70ccf7a348",
+          "spearman_rank_vs_S2": 1.0
+        },
+        "original": {
+          "coverage": 1593,
+          "finite_bounded_0_1": true,
+          "max_abs_score_delta_vs_S2": 0.0,
+          "mean_signed_score_delta_vs_S2": 0.0,
+          "prediction_vector_sha256": "2d11f3cb189a227ac479eb9cfadc57451e39c2a023542e5b08834b70ccf7a348",
+          "spearman_rank_vs_S2": 1.0
+        },
+        "zero_filled": {
+          "coverage": 1593,
+          "finite_bounded_0_1": true,
+          "max_abs_score_delta_vs_S2": 0.0,
+          "mean_signed_score_delta_vs_S2": 0.0,
+          "prediction_vector_sha256": "2d11f3cb189a227ac479eb9cfadc57451e39c2a023542e5b08834b70ccf7a348",
+          "spearman_rank_vs_S2": 1.0
+        }
+      },
+      "northern-ca": {
+        "explicit_missing_indicator": {
+          "coverage": 591,
+          "finite_bounded_0_1": true,
+          "max_abs_score_delta_vs_S2": 0.0,
+          "mean_signed_score_delta_vs_S2": 0.0,
+          "prediction_vector_sha256": "b066a6aeda37898d913a4ef9586460f69c61c68cccb2c10f86b51bb7d816a3c6",
+          "spearman_rank_vs_S2": 1.0
+        },
+        "original": {
+          "coverage": 591,
+          "finite_bounded_0_1": true,
+          "max_abs_score_delta_vs_S2": 0.0,
+          "mean_signed_score_delta_vs_S2": 0.0,
+          "prediction_vector_sha256": "b066a6aeda37898d913a4ef9586460f69c61c68cccb2c10f86b51bb7d816a3c6",
+          "spearman_rank_vs_S2": 1.0
+        },
+        "zero_filled": {
+          "coverage": 591,
+          "finite_bounded_0_1": true,
+          "max_abs_score_delta_vs_S2": 0.0,
+          "mean_signed_score_delta_vs_S2": 0.0,
+          "prediction_vector_sha256": "b066a6aeda37898d913a4ef9586460f69c61c68cccb2c10f86b51bb7d816a3c6",
+          "spearman_rank_vs_S2": 1.0
+        }
+      },
+      "south-central-tx": {
+        "explicit_missing_indicator": {
+          "coverage": 6003,
+          "finite_bounded_0_1": true,
+          "max_abs_score_delta_vs_S2": 0.0,
+          "mean_signed_score_delta_vs_S2": 0.0,
+          "prediction_vector_sha256": "4097ab8ef1bb30deacc780f652c7a9c5f295a8419dff22ee8ff218ffaafcda8c",
+          "spearman_rank_vs_S2": 1.0
+        },
+        "original": {
+          "coverage": 6003,
+          "finite_bounded_0_1": true,
+          "max_abs_score_delta_vs_S2": 0.0,
+          "mean_signed_score_delta_vs_S2": 0.0,
+          "prediction_vector_sha256": "4097ab8ef1bb30deacc780f652c7a9c5f295a8419dff22ee8ff218ffaafcda8c",
+          "spearman_rank_vs_S2": 1.0
+        },
+        "zero_filled": {
+          "coverage": 6003,
+          "finite_bounded_0_1": true,
+          "max_abs_score_delta_vs_S2": 0.0,
+          "mean_signed_score_delta_vs_S2": 0.0,
+          "prediction_vector_sha256": "4097ab8ef1bb30deacc780f652c7a9c5f295a8419dff22ee8ff218ffaafcda8c",
+          "spearman_rank_vs_S2": 1.0
+        }
+      }
+    },
+    "official_rows": 9379,
+    "official_unique_ids": 9379,
+    "region_coverage": {
+      "eastern-ok": {
+        "absent_feature_rows": 0,
+        "expected": 1192,
+        "observed": 1192
+      },
+      "maricopa-az": {
+        "absent_feature_rows": 0,
+        "expected": 1593,
+        "observed": 1593
+      },
+      "northern-ca": {
+        "absent_feature_rows": 0,
+        "expected": 591,
+        "observed": 591
+      },
+      "south-central-tx": {
+        "absent_feature_rows": 0,
+        "expected": 6003,
+        "observed": 6003
+      }
+    },
+    "template_only_rows_excluded": 415,
+    "template_rows": 9794
+  },
+  "scores_artifact": {
+    "columns": [
+      "GEOID",
+      "region",
+      "S2_frozen",
+      "original",
+      "zero_filled",
+      "explicit_missing_indicator",
+      "fire_missing",
+      "ems_missing",
+      "schools_missing"
+    ],
+    "path": "reports/s2-missingness-semantics-scores.csv",
+    "rows": 9379,
+    "sha256": "31dc97bab00f12e3aa3b1dce6e20389e8d7f2795a6b803063c25305ebfb7e12b"
+  },
+  "validation": {
+    "all_variant_scores_finite_bounded_0_1": true,
+    "all_variants_exact_official_ids": true,
+    "duplicate_ids": 0,
+    "missing_ids": 0,
+    "no_labels_removed_references_external_data_or_scores": true,
+    "no_upload_or_candidate_choice": true,
+    "original_reproduces_frozen_S2_max_delta": 0.0
+  },
+  "variants": {
+    "explicit_missing_indicator": "Keep a per-type is_missing sidecar mask; unknown count cells are excluded from facilities rather than interpreted as measured zeros. Numeric zero cells remain numeric zero and follow the frozen drop rule.",
+    "observed_input_note": "A numeric zero is a zero in the supplied tract aggregate; it does not prove the removed reference count is zero. The supplied summary has no row-level raw-feature observation indicator beyond nullness; source-tag missing-share is not interpreted as an absent facility observation.",
+    "original": "Run frozen S2 implementation on the provided raw per-tract count fields; nonnumeric/missing values are rejected by that implementation.",
+    "zero_filled": "Replace only null/nonfinite facility count cells by 0, then apply frozen S2's raw-zero drop rule."
+  }
+}
