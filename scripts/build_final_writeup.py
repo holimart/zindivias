@@ -106,8 +106,14 @@ def successful_submissions() -> list[dict[str, Any]]:
                      "registry_sha256": card.get("sha256"),
                      "public_score": record.get("our_score"),
                      "score_source": record.get("score_source"),
-                     "score_split": record.get("score_split"),
-                     "uploaded_at_utc": record.get("timestamp_utc"),
+                     "score_split": record.get("score_split", record.get("split")),
+                     "uploaded_at_utc": record.get("timestamp_utc", record.get("upload_event_ts", record.get("ts"))),
+                     "score_selection_status": (
+                         "eligible corrected-order _cgs evaluation (A rule pending cohort completion)"
+                         if record.get("score_selection_eligible") is True
+                         or str(record.get("candidate_id", "")).endswith("_cgs")
+                         else "void for selection: five-column file had transport_gap in column 2"
+                     ),
                      "card_phase": card.get("phase"),
                      "pre_registered": card.get("pre_registered")})
     rows.sort(key=lambda row: str(row["uploaded_at_utc"] or ""))
@@ -315,21 +321,23 @@ def consideration(config: dict[str, Any]) -> list[str]:
 
 
 def leaderboard_table(submissions: list[dict[str, Any]], candidate: dict[str, Any]) -> list[str]:
-    lines = ["## Historical leaderboard submission records (scores void for selection)", "",
-             "The following public values are retained solely as historical records of the column-order finding; "
-             "for each listed five-column file, Zindi scored `transport_gap` because it occupied column 2. "
-             "None is eligible for the A/B rule.", "",
-             "| Platform submission id | Candidate | Artifact | Artifact SHA-256 | Historical column-2 score "
-             "| Split | Score source | Uploaded (UTC) |",
-             "|---|---|---|---|---:|---|---|---|"]
+    lines = ["## Leaderboard submission records and score eligibility", "",
+             "Historical five-column uploads placed `transport_gap` second, so their returned public values are "
+             "preserved as records but void for A/B selection. The `_cgs` rows use `GEOID,coverage_gap_score`; "
+             "their scores are eligible only for the frozen A rule after all four cohort results are recorded. "
+             "No public score is used to alter a candidate value.", "",
+             "| Platform submission id | Candidate | Artifact | Artifact SHA-256 | Public RMSE "
+             "| Split | Score source | Selection eligibility | Uploaded (UTC) |",
+             "|---|---|---|---|---:|---|---|---|---|"]
     for row in submissions:
         lines.append("| {platform_submission_id} | {candidate_id} | `{artifact}` | "
-                     "`{artifact_sha256}` | {score} | {split} | {source} | {when} |".format(
+                     "`{artifact_sha256}` | {score} | {split} | {source} | {eligibility} | {when} |".format(
                          **{**row,
                             "score": "n/a" if row["public_score"] is None
                             else f"{row['public_score']:.9g}",
                             "split": row["score_split"] or "n/a",
                             "source": row["score_source"] or "n/a",
+                            "eligibility": row["score_selection_status"],
                             "when": row["uploaded_at_utc"] or "n/a"}))
     lines += ["",
               f"The scored methodology candidate in this writeup is `{candidate['candidate_id']}`, "
@@ -339,10 +347,10 @@ def leaderboard_table(submissions: list[dict[str, Any]], candidate: dict[str, An
               f"{candidate['prediction_basis']} basis, which is a model-side forecast, not a "
               "leaderboard observation.",
               "",
-              "All earlier uploads above are retained as historical calibration records for "
+              "The earlier five-column uploads above are retained as historical calibration records for "
               "auditability. Their column-2 scores measured `transport_gap` and are void for selection; "
-              "none of their score values, fitted constants or probe outcomes is used as evidence for "
-              "the intended composite or for any discovery claim.",
+              "the correctly ordered `_cgs` evaluations are separately labeled, and no score value, fitted "
+              "constant or probe outcome is used to change any candidate prediction or discovery claim.",
               ""]
     return lines
 

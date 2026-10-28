@@ -18,7 +18,7 @@ class FinalTwoProtocolTests(unittest.TestCase):
         protocol_path = REPO / report["protocol"]["path"]
         digest = hashlib.sha256(protocol_path.read_bytes()).hexdigest()
         self.assertEqual(report["protocol"]["sha256"], digest)
-        self.assertEqual(report["status"], "column_order_cgs_authorized_pending_10_28_uploads")
+        self.assertEqual(report["status"], "column_order_cgs_three_of_four_scored_pending_10_29_A3_B")
         self.assertEqual([(x["slot"], x["candidate_id"]) for x in report["final_candidates"]],
                          [("A", None), ("B", None)])
         self.assertTrue(all(x["sha256"] is None and x["public_rmse"] is None
@@ -30,6 +30,7 @@ class FinalTwoProtocolTests(unittest.TestCase):
         self.assertTrue(report["score_integrity"]["historical_score_records_preserved"])
         self.assertFalse(report["score_integrity"]["historical_public_scores_valid_for_selection"])
         self.assertTrue(report["score_integrity"]["no_old_score_used_for_model_selection_or_value_changes"])
+        self.assertTrue(report["score_integrity"]["corrected_format_scores_selection_eligible"])
 
         registrations = report["candidate_registrations"]
         by_id = {x["candidate_id"]: x for x in registrations}
@@ -40,17 +41,25 @@ class FinalTwoProtocolTests(unittest.TestCase):
             self.assertEqual(item["rows"], 9794)
             self.assertTrue(item["format_fix_only"])
             self.assertEqual(item["purpose"], "calibration")
-            self.assertFalse(item["upload_performed"])
-            self.assertIsNone(item["public_rmse"])
+            if candidate_id in {"V2_model_cgs", "A1_physical_equal_cgs", "A2_spectral_cgs"}:
+                self.assertTrue(item["upload_performed"])
+                self.assertEqual(item["upload_status"], "successful")
+                self.assertIsInstance(item["public_rmse"], (int, float))
+                self.assertTrue(item["score_selection_eligible"])
+            else:
+                self.assertFalse(item["upload_performed"])
+                self.assertIsNone(item["public_rmse"])
         for item in registrations:
-            if item.get("public_rmse") is not None:
+            if item.get("public_rmse") is not None and item.get("candidate_id") not in CGS_IDS:
                 self.assertIs(item.get("score_selection_eligible"), False)
-        self.assertEqual(report["format_fix_upload_plan"]["uploads_performed_this_turn"], 0)
+        self.assertEqual(report["format_fix_upload_plan"]["uploads_performed_this_turn"], 3)
         self.assertEqual(report["format_fix_upload_plan"]["daily_cap"], 5)
         self.assertEqual(report["format_fix_upload_plan"]["2026-10-28_authorized_sequence"],
                          ["V2_model_cgs", "A1_physical_equal_cgs", "A2_spectral_cgs"])
         self.assertEqual(report["format_fix_upload_plan"]["authorization_addendum"],
                          "config/bias-cgs-upload-authorization-2026-10-28.json")
+        self.assertEqual(report["corrected_cgs_partial_results"]["scored_count"], 3)
+        self.assertFalse(report["corrected_cgs_partial_results"]["a_rule_applied"])
 
     def test_protocol_forbids_probes_and_uses_model_only_shrink(self):
         text = (REPO / "docs/final-two-protocol.md").read_text(encoding="utf-8")

@@ -2,7 +2,7 @@
 
 - Competition: `bias-bounty-mapping-equity-challenge` (Zindi)
 - Lane: `comp-zindi-bias-bounty`
-- Writeup revision: git `4cc2e2ac64bb56651d621f0e2a1447f6200f7024` (tree clean: False)
+- Writeup revision: git `c25ac41323206751d94f6a39257a5d7fdf4450f0` (tree clean: False)
 - Zindi username or team name: **PENDING_OPERATOR_CONFIRMATION**
 - Operator confirmation of that identity recorded: NO — pending operator
 - Form submission status: **NOT SUBMITTED — staged for operator submission**
@@ -12,7 +12,7 @@
 
 Scored scope: 9379 official tracts across four regions (2814 public / 6565 private expected), uploaded on the platform template of 9794 rows including 415 template-only rows.
 
-Current model candidate presented in this writeup: `V2_model` at `reports/candidates/V2_model.csv` (SHA-256 `3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12`), 9794 rows. The original five-column V2 upload is void for selection because Zindi scored its transport_gap column; V2_model_cgs is registered but has not been uploaded. No corrected-format upload before 2026-10-29 00:00 UTC.
+Current model candidate presented in this writeup: `V2_model` at `reports/candidates/V2_model.csv` (SHA-256 `3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12`), 9794 rows. The original five-column V2 upload is void for selection because Zindi scored its transport_gap column. V2_model_cgs, A1_physical_equal_cgs and A2_spectral_cgs were successfully scored in corrected column order on 2026-10-28; A/B selection waits for A3_dawid_skene_cgs on 2026-10-29.
 
 Correctly ordered format-only platform artifact: `V2_model_cgs` at `reports/candidates/V2_model_cgs.csv` (SHA-256 `5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7`). Its `coverage_gap_score` values are copied byte-for-byte from the frozen model candidate above; no prediction was changed.
 
@@ -44,25 +44,28 @@ We request consideration for both Best Bias Discovery ($1,000) and Best Document
 - Prize: Best Documentation ($500).
 - Official note: No separate leaderboard submission is required for Best Bias Discovery or Best Documentation.
 
-## Historical leaderboard submission records (scores void for selection)
+## Leaderboard submission records and score eligibility
 
-The following public values are retained solely as historical records of the column-order finding; for each listed five-column file, Zindi scored `transport_gap` because it occupied column 2. None is eligible for the A/B rule.
+Historical five-column uploads placed `transport_gap` second, so their returned public values are preserved as records but void for A/B selection. The `_cgs` rows use `GEOID,coverage_gap_score`; their scores are eligible only for the frozen A rule after all four cohort results are recorded. No public score is used to alter a candidate value.
 
-| Platform submission id | Candidate | Artifact | Artifact SHA-256 | Historical column-2 score | Split | Score source | Uploaded (UTC) |
-|---|---|---|---|---:|---|---|---|
-| uRRw9KpB | C0 | `reports/candidates/C0_all_zero.csv` | `0edf8140123e2135489e5728fd71bce6f1e28a97f447ca411ba45fdbc02bc214` | 0.107246299 | n/a | zindi_api_status | n/a |
-| BvyKrR6v | C1 | `reports/candidates/C1_region_constants.csv` | `dc2e368194b31408cb5c313fa8ce3f3fa59a1b5965bc2df8e4217bbc9e0c82e0` | 0.146449112 | n/a | zindi_api_status | n/a |
-| rTARuUaG | C2 | `reports/candidates/C2_component_estimator_v0.csv` | `5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514` | 0.235358712 | n/a | zindi_api_status | n/a |
-| TM83xxU6 | C3 | `reports/candidates/C3_denominator_x125.csv` | `e5ee50f5c2cca149550f3408638d2b77431f6ed62cf104dfe8c07d8c8416f9e4` | 0.349409867 | n/a | zindi_api_status | n/a |
-| ySXi73rd | P4 | `reports/candidates/P4_c1_shrink_alpha.csv` | `8b329802d882ea4bdff2bfd8c465c160d6ffd9269cfbe28dce8be9e702b07d37` | 0.091440198 | n/a | zindi_api_status | n/a |
-| iQw8C6Q9 | A1_physical_equal | `reports/candidates/A1_physical_equal.csv` | `6af088b83ff3481d420e11b14d903fc510c2b4be2cea285c762ca12d500862de` | 0.126543547 | n/a | zindi_api_status | n/a |
-| W83LEghZ | A2_spectral | `reports/candidates/A2_spectral.csv` | `f88573996566a1975726845a49f42fb2cd3781d5f0e83d55944fc65647692997` | 0.146089513 | n/a | zindi_api_status | n/a |
-| tGB6sGRx | A3_dawid_skene | `reports/candidates/A3_dawid_skene.csv` | `6d588f2f7a45a58b128860a049ac19995b21902f7f98d3b2ab39d1d9fbb073b3` | 0.146089513 | n/a | zindi_api_status | n/a |
-| EbwLNkmt | V2_model | `reports/candidates/V2_model.csv` | `3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12` | 0.121644596 | n/a | zindi_api_status | n/a |
+| Platform submission id | Candidate | Artifact | Artifact SHA-256 | Public RMSE | Split | Score source | Selection eligibility | Uploaded (UTC) |
+|---|---|---|---|---:|---|---|---|---|
+| uRRw9KpB | C0 | `reports/candidates/C0_all_zero.csv` | `0edf8140123e2135489e5728fd71bce6f1e28a97f447ca411ba45fdbc02bc214` | 0.107246299 | public | zindi_api_status | void for selection: five-column file had transport_gap in column 2 | 2026-10-24T09:18:02+00:00 |
+| BvyKrR6v | C1 | `reports/candidates/C1_region_constants.csv` | `dc2e368194b31408cb5c313fa8ce3f3fa59a1b5965bc2df8e4217bbc9e0c82e0` | 0.146449112 | public | zindi_api_status | void for selection: five-column file had transport_gap in column 2 | 2026-10-24T09:18:25+00:00 |
+| rTARuUaG | C2 | `reports/candidates/C2_component_estimator_v0.csv` | `5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514` | 0.235358712 | public | zindi_api_status | void for selection: five-column file had transport_gap in column 2 | 2026-10-24T09:19:08+00:00 |
+| TM83xxU6 | C3 | `reports/candidates/C3_denominator_x125.csv` | `e5ee50f5c2cca149550f3408638d2b77431f6ed62cf104dfe8c07d8c8416f9e4` | 0.349409867 | public | zindi_api_status | void for selection: five-column file had transport_gap in column 2 | 2026-10-24T09:19:54+00:00 |
+| ySXi73rd | P4 | `reports/candidates/P4_c1_shrink_alpha.csv` | `8b329802d882ea4bdff2bfd8c465c160d6ffd9269cfbe28dce8be9e702b07d37` | 0.091440198 | public | zindi_api_status | void for selection: five-column file had transport_gap in column 2 | 2026-10-24T09:38:39+00:00 |
+| iQw8C6Q9 | A1_physical_equal | `reports/candidates/A1_physical_equal.csv` | `6af088b83ff3481d420e11b14d903fc510c2b4be2cea285c762ca12d500862de` | 0.126543547 | public | zindi_api_status | void for selection: five-column file had transport_gap in column 2 | 2026-10-26T14:23:12+00:00 |
+| W83LEghZ | A2_spectral | `reports/candidates/A2_spectral.csv` | `f88573996566a1975726845a49f42fb2cd3781d5f0e83d55944fc65647692997` | 0.146089513 | public | zindi_api_status | void for selection: five-column file had transport_gap in column 2 | 2026-10-26T14:23:12+00:00 |
+| tGB6sGRx | A3_dawid_skene | `reports/candidates/A3_dawid_skene.csv` | `6d588f2f7a45a58b128860a049ac19995b21902f7f98d3b2ab39d1d9fbb073b3` | 0.146089513 | public | zindi_api_status | void for selection: five-column file had transport_gap in column 2 | 2026-10-27T00:19:00+00:00 |
+| EbwLNkmt | V2_model | `reports/candidates/V2_model.csv` | `3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12` | 0.121644596 | public | zindi_api_status | void for selection: five-column file had transport_gap in column 2 | 2026-10-27T00:19:00+00:00 |
+| hvLtPVmr | V2_model_cgs | `reports/candidates/V2_model_cgs.csv` | `5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7` | 0.11102814 | public | zindi_api_status | eligible corrected-order _cgs evaluation (A rule pending cohort completion) | 2026-10-28T07:15:46.098Z |
+| 4R4vkHSd | A1_physical_equal_cgs | `reports/candidates/A1_physical_equal_cgs.csv` | `2da0051af221ddf26a8a73740746811dbd956854a1fc12846c99864d3abae8a1` | 0.309628459 | public | zindi_api_status | eligible corrected-order _cgs evaluation (A rule pending cohort completion) | 2026-10-28T07:15:51.544Z |
+| s7mXS43p | A2_spectral_cgs | `reports/candidates/A2_spectral_cgs.csv` | `584e086bb5df950f6079317afcdc7c5a0182b5263d170be2a10987d1ac4c6213` | 0.262578881 | public | zindi_api_status | eligible corrected-order _cgs evaluation (A rule pending cohort completion) | 2026-10-28T07:16:00.493Z |
 
-The scored methodology candidate in this writeup is `V2_model`, built from provided features only (commit `b45733aa31903c71ec4f3fb432c2bc9d519f3ff9`). The original five-column V2 upload is void for selection because Zindi scored its transport_gap column; V2_model_cgs is registered but has not been uploaded. No corrected-format upload before 2026-10-29 00:00 UTC. Its predicted public RMSE is 0.091357195976378675 on the stated model-side moments of the frozen artifact (mu_v, sd_v, E[v^2]) with the all-zero candidate C0 platform RMSE as the E[y^2] anchor, assumed target mean equal to the model's own mean and assumed centred correlation 0.3; no LB-derived model parameter basis, which is a model-side forecast, not a leaderboard observation.
+The scored methodology candidate in this writeup is `V2_model`, built from provided features only (commit `b45733aa31903c71ec4f3fb432c2bc9d519f3ff9`). The original five-column V2 upload is void for selection because Zindi scored its transport_gap column. V2_model_cgs, A1_physical_equal_cgs and A2_spectral_cgs were successfully scored in corrected column order on 2026-10-28; A/B selection waits for A3_dawid_skene_cgs on 2026-10-29. Its predicted public RMSE is 0.091357195976378675 on the stated model-side moments of the frozen artifact (mu_v, sd_v, E[v^2]) with the all-zero candidate C0 platform RMSE as the E[y^2] anchor, assumed target mean equal to the model's own mean and assumed centred correlation 0.3; no LB-derived model parameter basis, which is a model-side forecast, not a leaderboard observation.
 
-All earlier uploads above are retained as historical calibration records for auditability. Their column-2 scores measured `transport_gap` and are void for selection; none of their score values, fitted constants or probe outcomes is used as evidence for the intended composite or for any discovery claim.
+The earlier five-column uploads above are retained as historical calibration records for auditability. Their column-2 scores measured `transport_gap` and are void for selection; the correctly ordered `_cgs` evaluations are separately labeled, and no score value, fitted constant or probe outcome is used to change any candidate prediction or discovery claim.
 
 ## Best Bias Discovery entry
 

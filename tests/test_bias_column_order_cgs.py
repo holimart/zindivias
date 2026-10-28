@@ -76,18 +76,19 @@ def test_new_format_candidates_are_registered_and_final_slots_are_reset():
     assert final_two["score_integrity"]["historical_score_records_preserved"] is True
     assert final_two["score_integrity"]["no_old_score_used_for_model_selection_or_value_changes"] is True
 
-    unmarked = []
-    def check_score_flags(node, path="root"):
+    def check_score_flags(node):
         if isinstance(node, dict):
-            if node.get("public_rmse") is not None and node.get("score_selection_eligible") is not False:
-                unmarked.append(path)
-            for key, value in node.items():
-                check_score_flags(value, f"{path}.{key}")
+            if node.get("public_rmse") is not None:
+                if node.get("candidate_id") in CANDIDATES:
+                    assert node.get("score_selection_eligible") is True
+                else:
+                    assert node.get("score_selection_eligible") is False
+            for value in node.values():
+                check_score_flags(value)
         elif isinstance(node, list):
-            for index, value in enumerate(node):
-                check_score_flags(value, f"{path}[{index}]")
+            for value in node:
+                check_score_flags(value)
     check_score_flags(final_two)
-    assert not unmarked
 
     preflight = json.loads((ROOT / "reports/bias-column-order-cgs-preflight.json").read_text(encoding="utf-8"))
     assert preflight["result"] == "PASS"
