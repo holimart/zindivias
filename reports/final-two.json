@@ -780,6 +780,39 @@
       "submission_id": null,
       "public_rmse": null,
       "eligibility": "frozen model candidate; authorized for calibration evaluation; not yet uploaded/scored/selected"
+    },
+    {
+      "candidate_id": "B_from_A",
+      "registered_utc": "2026-10-28",
+      "preregistration_commit": "561111ee6f1f327f5d34cd74b2d60162ece4f6c9",
+      "preregistered_card_path": "reports/final-candidate-cards/B_from_A-2026-10-28.json",
+      "preregistered_card_sha256": "adae3c7b6e4a3423d5c1f77edb8804038fa59bb177bf57df53524b7abbbff143",
+      "artifact": "reports/candidates/B_from_A.csv",
+      "sha256": "efd51badc5c9142263481086180fb5b89c720b8279237ae0edcdb0066d1ae303",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "hypothesis": "Frozen 50% regional mean shrink of selected A composite is a lower-within-region-variance robustness companion; no claim it improves accuracy.",
+      "purpose": "calibration",
+      "predicted_public_rmse_prior": 0.107246299,
+      "forecast_basis": "Steward-approved C0 public-RMSE prior; not a candidate-specific accuracy estimate or local held-out score.",
+      "local_invariants": {
+        "official_ids": 9379,
+        "template_rows": 9794,
+        "order_exact": true,
+        "unique_ids": true,
+        "finite_bounded": true,
+        "deterministic_rebuild": true,
+        "clipped_values": 0
+      },
+      "reproduction_command": "python3 -I scripts/build_candidate_b_from_a.py --workspace \"$COMPETITION_WORKSPACE\" --repo \"$COMPETITION_REPO\"",
+      "upload_authorized": true,
+      "upload_performed": false
     }
   ],
   "final_candidates": [
