@@ -1,0 +1,348 @@
+{
+  "audit_id": "BIAS_RULES_CORRECTED_COMBINER_2026_10_28_V1",
+  "candidate": {
+    "artifact": "reports/candidates/A1_rules_composite_20261028.csv",
+    "candidate_id": "A1_rules_composite_20261028",
+    "columns": [
+      "GEOID",
+      "coverage_gap_score"
+    ],
+    "forecast": {
+      "predicted_public_score": null,
+      "reason": "no permitted per-tract target labels or holdout; corrected-combiner score metrics are diagnostic only",
+      "status": "not_claimed_no_labels"
+    },
+    "official_rows": 9379,
+    "rows": 9794,
+    "sha256": "04d05d47565b63fb1b3a3f47669bfa1b6a89aff54c9da59c54bafff06503223a",
+    "template_only_rows": 415,
+    "upload_eligible": false,
+    "upload_status": "blocked: hard component-definedness shares fail"
+  },
+  "local_candidate_levels_by_region": {
+    "eastern-ok": {
+      "components": {
+        "building_gap": {
+          "max": 0.9062304168320832,
+          "mean": 0.21967145190537712,
+          "min": 0.0,
+          "n": 1192,
+          "p50": 0.22297941404630334,
+          "p90": 0.38612642986127865
+        },
+        "poi_gap": {
+          "max": 0.905356481942646,
+          "mean": 0.5011779215275105,
+          "min": 0.11855324543656728,
+          "n": 1192,
+          "p50": 0.5336969239622184,
+          "p90": 0.6895786210940772
+        },
+        "transport_gap": {
+          "max": 1.0,
+          "mean": 0.15258334838389181,
+          "min": 0.0,
+          "n": 1192,
+          "p50": 0.12500000000000006,
+          "p90": 0.28561835932044466
+        }
+      },
+      "composite": {
+        "max": 0.5981354109647078,
+        "mean": 0.2930456083544773,
+        "min": 0.10047993761333518,
+        "n": 1192,
+        "p50": 0.29617492578806615,
+        "p90": 0.3765171947201073
+      }
+    },
+    "maricopa-az": {
+      "components": {
+        "building_gap": {
+          "max": 1.0,
+          "mean": 0.22226633431148396,
+          "min": 0.0,
+          "n": 1593,
+          "p50": 0.21849095531268425,
+          "p90": 0.4611918889814278
+        },
+        "poi_gap": {
+          "max": 0.8880176756092821,
+          "mean": 0.5375619720287105,
+          "min": 0.09227845302958299,
+          "n": 1593,
+          "p50": 0.5687776736715835,
+          "p90": 0.7281896427299932
+        },
+        "transport_gap": {
+          "max": 0.5,
+          "mean": 0.11794199116730178,
+          "min": 0.0,
+          "n": 1593,
+          "p50": 0.125,
+          "p90": 0.15027979167696512
+        }
+      },
+      "composite": {
+        "max": 0.8316571501078877,
+        "mean": 0.29485040819826264,
+        "min": 0.08940478606157369,
+        "n": 1593,
+        "p50": 0.28670167922661316,
+        "p90": 0.39614096457014863
+      }
+    },
+    "northern-ca": {
+      "components": {
+        "building_gap": {
+          "max": 0.45704818081728704,
+          "mean": 0.21438515913431866,
+          "min": 0.0,
+          "n": 591,
+          "p50": 0.21082475469797143,
+          "p90": 0.35840201159108215
+        },
+        "poi_gap": {
+          "max": 0.8308653168535791,
+          "mean": 0.4742944268817586,
+          "min": 0.10420265682481156,
+          "n": 591,
+          "p50": 0.5151639707998624,
+          "p90": 0.6865666079672099
+        },
+        "transport_gap": {
+          "max": 0.5,
+          "mean": 0.1254408186692941,
+          "min": 0.0,
+          "n": 591,
+          "p50": 0.125,
+          "p90": 0.19215438589033385
+        }
+      },
+      "composite": {
+        "max": 0.5404890034015368,
+        "mean": 0.27243587012819637,
+        "min": 0.11634723989283396,
+        "n": 591,
+        "p50": 0.2725876679111408,
+        "p90": 0.36369308081293356
+      }
+    },
+    "south-central-tx": {
+      "components": {
+        "building_gap": {
+          "max": 1.0,
+          "mean": 0.19115194181397868,
+          "min": 0.0,
+          "n": 6003,
+          "p50": 0.17533817593738552,
+          "p90": 0.37475254108661255
+        },
+        "poi_gap": {
+          "max": 0.8912590673473849,
+          "mean": 0.5082519469654054,
+          "min": 0.0,
+          "n": 6003,
+          "p50": 0.5416822708392696,
+          "p90": 0.7036197509176363
+        },
+        "transport_gap": {
+          "max": 1.0,
+          "mean": 0.13557687555439044,
+          "min": 0.0,
+          "n": 6003,
+          "p50": 0.12598216278689456,
+          "p90": 0.2050013479526122
+        }
+      },
+      "composite": {
+        "max": 0.8609031450279452,
+        "mean": 0.279208277505937,
+        "min": 0.07907426438215007,
+        "n": 6001,
+        "p50": 0.27771107195794603,
+        "p90": 0.3694354487464067
+      }
+    }
+  },
+  "method": {
+    "bounded_gap_interface": "component estimates are finite and in [0,1]; the combiner changes no component value",
+    "component_predictors": "frozen A1 physical-equal transport/building/POI gap columns; component values unchanged",
+    "composite": "arithmetic mean of defined transport, building and POI gap predictions; undefined components omitted from denominator",
+    "corrected_public_score_context_only": {
+      "A1_physical_equal_cgs": 0.309628459,
+      "A2_spectral_cgs": 0.262578881,
+      "V2_model_cgs": 0.11102814,
+      "use": "methodology-error signal only; not a selection, threshold, weight, or tuning target"
+    },
+    "deficit_only_scope": "the standalone one-sided O/E toy primitive is tested; the frozen A1 component artifact has no raw observed/reference pairs, so deficit-only semantics of every upstream predictor cannot be independently rederived here",
+    "level_fix": "removed A1's region-specific additive Sca5/Dst5 level offset; no component or composite intercept/normalization added",
+    "max_composite_recipe_residual": 0.0,
+    "old_A1_composite_minus_corrected_by_region": {
+      "eastern-ok": {
+        "max": 0.2834422443280624,
+        "mean": -0.08513621180709037,
+        "min": -0.5286057507760231,
+        "n": 1192,
+        "p50": -0.07831271783727303,
+        "p90": -0.028433593499200993
+      },
+      "maricopa-az": {
+        "max": 0.6785817740497686,
+        "mean": 0.2470850793220222,
+        "min": -0.5596457876160024,
+        "n": 1593,
+        "p50": 0.2538735334209017,
+        "p90": 0.32493554013884085
+      },
+      "northern-ca": {
+        "max": 0.23236731709673605,
+        "mean": 0.09443384222374952,
+        "min": -0.41333208252912146,
+        "n": 591,
+        "p50": 0.10607951753389241,
+        "p90": 0.1454209323207062
+      },
+      "south-central-tx": {
+        "max": 0.42089364379174177,
+        "mean": -0.0008958368968817856,
+        "min": -0.8373811924982083,
+        "n": 6001,
+        "p50": 0.004814911037326647,
+        "p90": 0.06661311719213411
+      }
+    },
+    "poi": "frozen POI gap/definedness; audit verifies POI defined iff F or Est is defined",
+    "poi_mask_equals_F_or_Est_union": true,
+    "zero_defined_geoid_examples": [
+      "48039990000",
+      "48057990000"
+    ],
+    "zero_defined_rows": 2
+  },
+  "preregistration": {
+    "path": "config/bias-rules-corrected-combiner-preregistered.json",
+    "sha256": "780eebc4a70e26a1c6b1a0f1929a808522d621979a1bbf454fd39ef584f4568e"
+  },
+  "prohibitions": {
+    "labels_used": false,
+    "leaderboard_values_used_by_builder": false,
+    "public_score_tuning": false,
+    "removed_or_equivalent_references_used": false,
+    "score_placeholders_read": false,
+    "upload_attempted": false
+  },
+  "published_undefined_share_validation": {
+    "all_hard_masks_match": false,
+    "by_region": {
+      "eastern-ok": {
+        "absolute_difference": 0.19573825503355705,
+        "hard_mask_share": 0.014261744966442953,
+        "passes": false,
+        "published_target": 0.21,
+        "rounding_tolerance": 0.005,
+        "rows": 1192,
+        "undefined_rows": 17
+      },
+      "maricopa-az": {
+        "absolute_difference": 0.5355618330194601,
+        "hard_mask_share": 0.014438166980539862,
+        "passes": false,
+        "published_target": 0.55,
+        "rounding_tolerance": 0.005,
+        "rows": 1593,
+        "undefined_rows": 23
+      },
+      "northern-ca": {
+        "absolute_difference": 0.36153976311336716,
+        "hard_mask_share": 0.008460236886632826,
+        "passes": false,
+        "published_target": 0.37,
+        "rounding_tolerance": 0.005,
+        "rows": 591,
+        "undefined_rows": 5
+      },
+      "south-central-tx": {
+        "absolute_difference": 0.2736698317507913,
+        "hard_mask_share": 0.006330168249208729,
+        "passes": false,
+        "published_target": 0.28,
+        "rounding_tolerance": 0.005,
+        "rows": 6003,
+        "undefined_rows": 38
+      }
+    },
+    "calibrated_probability_caveat": "A Dst5 probability mean calibrated to these shares is not a validation of any candidate's hard component-definedness flags and is not substituted here.",
+    "comparison_masks_not_used_to_build_candidate": {
+      "C2_estimator": {
+        "eastern-ok": {
+          "rows": 1192,
+          "share": 0.40687919463087246,
+          "undefined_rows": 485
+        },
+        "maricopa-az": {
+          "rows": 1593,
+          "share": 0.3653483992467043,
+          "undefined_rows": 582
+        },
+        "northern-ca": {
+          "rows": 591,
+          "share": 0.30456852791878175,
+          "undefined_rows": 180
+        },
+        "south-central-tx": {
+          "rows": 6003,
+          "share": 0.3694819257038148,
+          "undefined_rows": 2218
+        }
+      },
+      "V2_model": {
+        "eastern-ok": {
+          "rows": 1192,
+          "share": 0.23993288590604026,
+          "undefined_rows": 286
+        },
+        "maricopa-az": {
+          "rows": 1593,
+          "share": 0.5655994978028877,
+          "undefined_rows": 901
+        },
+        "northern-ca": {
+          "rows": 591,
+          "share": 0.3079526226734349,
+          "undefined_rows": 182
+        },
+        "south-central-tx": {
+          "rows": 6003,
+          "share": 0.21239380309845077,
+          "undefined_rows": 1275
+        }
+      }
+    },
+    "rounding_tolerance": 0.005,
+    "targets_source": "pre-registered organizer-published whole-percent shares"
+  },
+  "schema_version": 1,
+  "source_artifacts": {
+    "A1_components": {
+      "path": "reports/candidates/A1_physical_equal.csv",
+      "sha256": "6af088b83ff3481d420e11b14d903fc510c2b4be2cea285c762ca12d500862de"
+    },
+    "A1_definedness_masks": {
+      "path": "reports/track-a-family-ablation-masks.csv",
+      "sha256": "62c1cf7f36ec4ef417b7757a5d296590bd98810808929d01df16f447ca66eac4"
+    },
+    "mask_source_note": "baseline masks for A1_physical_equal from the frozen per-GEOID Track-A family-ablation mask audit"
+  },
+  "validation": {
+    "all_scores_finite_bounded": true,
+    "composite_matches_recipe": true,
+    "deterministic_rerun": "rerun command and compare artifact SHA before any upload",
+    "official_ids_exact_once": true,
+    "poi_mask_consistent": true,
+    "published_undefined_share_gate": false,
+    "undefined_placeholders_excluded": true,
+    "zero_defined_gate": false,
+    "zero_defined_rows": 2
+  }
+}

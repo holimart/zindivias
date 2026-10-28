@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "preregistration_id": "bias-rules-corrected-combiner-2026-10-28-v1",
+  "registered_before_build": true,
+  "candidate_id": "A1_rules_composite_20261028",
+  "purpose": "diagnostic corrected-combiner candidate; do not submit unless every registered local gate passes",
+  "source_predictors": {
+    "model": "frozen Track-A A1 physical-equal per-component predictions",
+    "component_predictions": "reports/candidates/A1_physical_equal.csv (transport_gap, building_gap, poi_gap)",
+    "definedness_masks": "reports/track-a-family-ablation-masks.csv (A1_physical_equal baseline R/B/POI flags; F/Est union checked)",
+    "official_ids": "$COMPETITION_WORKSPACE/samples/<region>-sample-submission.csv (GEOID only)",
+    "platform_order": "$COMPETITION_WORKSPACE/SampleSubmission.csv (GEOID and region only)",
+    "prohibitions": ["score placeholders", "labels", "removed/equivalent references", "leaderboard values", "external layers", "public-score tuning"]
+  },
+  "fixed_recipe": {
+    "input_channel": "existing finite frozen A1 gap-column predictions, each required in [0,1]; component values are held fixed",
+    "one_sided_gap_toy_formula": "clip(1 - observed/expected, 0, 1); if a component is undefined emit placeholder 0 and omit it from every mean",
+    "poi": "mean defined facility types for the facility half; equal-weight mean of the defined facility and establishment halves; undefined if neither half exists",
+    "top_level": "equal arithmetic mean of defined transport, building, and POI predictions; undefined is excluded from the divisor; zero-defined rows are a hard failure",
+    "level": "no Sca5/Dst5 additive region offset, normalization, rescaling, intercept, or leaderboard-derived value",
+    "component_weights": "fixed A1 equal-vote-per-gap-idea weights, exactly as preregistered in config/track-a-preregistered.json"
+  },
+  "published_undefined_share_check": {
+    "targets": {"maricopa-az": 0.55, "northern-ca": 0.37, "eastern-ok": 0.21, "south-central-tx": 0.28},
+    "acceptance": "candidate's hard component-definedness flags must put the share of rows with at least one undefined top-level component within 0.005 of each published whole-percent target; report any calibrated probability mean separately and never call it an observed binary-mask match",
+    "tolerance": 0.005
+  },
+  "candidate_forecast": {
+    "status": "not_claimed_no_labels",
+    "predicted_public_score": null,
+    "reason": "no permitted per-tract target labels or holdout; corrected-combiner score metrics are diagnostic only"
+  },
+  "upload": {
+    "authorized_by_steward": "up to three corrected candidates may use 2026-10-29 spare slots only after local validation and pre-registration",
+    "upload_not_before_utc": "2026-10-29T00:00:00Z",
+    "eligible_only_if_all_local_gates_pass": true,
+    "uploads_performed_by_this_build": 0
+  }
+}
