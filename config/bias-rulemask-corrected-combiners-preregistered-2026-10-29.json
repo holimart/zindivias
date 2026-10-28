@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "preregistration_id": "bias-rulemask-corrected-combiners-2026-10-29-v1",
+  "registered_utc": "2026-10-28T09:15:20Z",
+  "registered_before_candidate_build": true,
+  "candidates": [
+    "V2_rulemask_provided_presence_20261029",
+    "V2_rulemask_share_selected_20261029"
+  ],
+  "input_predictions": {
+    "candidate_id": "V2_model",
+    "artifact": "reports/candidates/V2_model.csv",
+    "read_columns": ["GEOID", "transport_gap", "building_gap", "poi_gap"],
+    "frozen_values": true
+  },
+  "input_sha256": {
+    "V2_model.csv": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12",
+    "V2_model_cgs.csv": "5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7",
+    "road_topology_candidate.csv": "612c2080c3d470fbcdc0cd752cd26847da05a35bf5d245c0b1599134cc82fda7",
+    "building_morphology.csv": "ed0928651e1ddc0de89e6fd6544c30bd510456f6e9b72eea9d09277919194b75",
+    "poi_confidence_weighted.csv": "28558424db768222ec7639986970af7a37b74228ef8f4e3190e5e58b6e19071c",
+    "gap-estimates.csv": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852",
+    "v2-defined-mask-audit.json": "fea33ef7daeeeac2fd187803481e050085698afd6f44ed182e9c5af5028054d2"
+  },
+  "fixed_recipe": {
+    "gap_bounds": [0.0, 1.0],
+    "composite": "arithmetic mean of the defined transport, building, and POI component predictions; undefined components are excluded entirely",
+    "poi": "use the frozen V2 POI component estimate as supplied; its internal facility/establishment half arithmetic is not modified",
+    "no_score_level_adjustment": true,
+    "zero_defined_rule": "for each candidate and region, use the median of that candidate's composite predictions among rows in the same region with at least one defined top-level component; fail if a region has no defined rows",
+    "template_only_rows": "zero fill for 415 eastern-WA formatting rows; not part of the 9,379 scored region rows"
+  },
+  "candidate_a_rule_grounded_mask": {
+    "transport_defined": "overture_named_road_km_5070 > 0 in reports/candidates/road_topology_candidate.csv; this is the provided-data indicator for a named-highway-class road object",
+    "building_defined": "overture_building_count > 0 in reports/candidates/building_morphology.csv",
+    "poi_defined": "any raw_fire_count, raw_ems_count, raw_schools_count > 0 OR all_overture_poi_count > 0 in reports/candidates/poi_confidence_weighted.csv; no facility/establishment object means POI undefined",
+    "mask_rule": "mask a top-level component undefined when its corresponding provided-data object-presence condition above is false"
+  },
+  "candidate_b_existing_mask_selection": {
+    "eligible_mask_sources": {
+      "V2": "reports/v2-defined-mask-audit.json component masks; source components are road_topology_candidate.route_reference_transport_defined, building_morphology.building_defined, and poi_confidence_weighted.v2_raw_poi_defined",
+      "C2": "reports/gap-estimates.csv transport_defined, building_defined, and poi_defined flags"
+    },
+    "selection_rule": "for each source, compute mean absolute difference (percentage points) between its regional share with at least one undefined top-level component and the organizer-published regional share; select the complete source mask family with lower mean absolute difference; exact tie resolves to V2; this rule is frozen before candidate B is measured",
+    "baseline_only_measurements": {
+      "published_shares": {"maricopa-az": 0.55, "northern-ca": 0.37, "eastern-ok": 0.21, "south-central-tx": 0.28},
+      "V2_hard_shares": {"maricopa-az": 0.5655994978028877, "northern-ca": 0.3079526226734349, "eastern-ok": 0.23993288590604026, "south-central-tx": 0.21239380309845077},
+      "C2_hard_shares": {"maricopa-az": 0.3653483992467043, "northern-ca": 0.30456852791878175, "eastern-ok": 0.40687919463087246, "south-central-tx": 0.3694819257038148},
+      "V2_mean_absolute_error_pp": 4.3796,
+      "C2_mean_absolute_error_pp": 13.4111,
+      "selected_source": "V2"
+    }
+  },
+  "common_undefined_share_gate": {
+    "principle": "tolerance equals the mean absolute regional share disagreement between the two pre-existing independent hard-mask systems V2 and C2; this is a predictor-disagreement tolerance, not a rounding tolerance",
+    "regional_disagreements_pp": {"maricopa-az": 20.025109855618332, "northern-ca": 0.3384094754653122, "eastern-ok": 16.69463087248322, "south-central-tx": 15.708812260536401},
+    "single_global_tolerance_pp": 13.191642116025066,
+    "acceptance": "for every new candidate and every region, absolute difference between hard any-undefined share and the published share must be <= the one global tolerance above",
+    "same_tolerance_for_all_candidates": true,
+    "prior_candidate_exclusion": "the previously measured A1_rules_composite_20261028 is not retroactively evaluated/admitted under this new tolerance; it remains blocked with two zero-defined rows"
+  },
+  "local_gates": {
+    "exact_9379_official_ids_once": true,
+    "exact_9794_template_order_and_columns": true,
+    "finite_bounded_component_and_composite_values": true,
+    "zero_defined_rows_receive_registered_region_median": true,
+    "all_regions_pass_common_undefined_share_tolerance": true,
+    "candidate_must_not_be_value_identical_to_an_already_scored_submission": true
+  },
+  "forecast": {
+    "status": "no-label score forecast unavailable; no numeric RMSE forecast is claimed",
+    "reason": "there are no permitted per-tract target labels or holdout; this registration forecasts no accuracy gain and uses no public score to set any prediction value"
+  },
+  "upload_plan": {
+    "not_before_utc": "2026-10-29T00:00:00Z",
+    "only_after": ["A3_dawid_skene_cgs", "authorized B candidate"],
+    "maximum_new_uploads": 2,
+    "daily_cap": 5,
+    "duplicates_or_failed_local_gates": "do not upload"
+  },
+  "forbidden": ["leaderboard or historical-score tuning", "removed/equivalent reference data", "sample score placeholders", "changing any frozen V2 component value", "uploads before A3 and B", "uploading candidates that fail a local gate"]
+}
