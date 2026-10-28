@@ -1,39 +1,53 @@
 {
   "schema_version": 1,
   "task": "bias-cgs-uploads-final-two",
-  "authorization_revision": "2026-10-28T06:25:00Z",
-  "authority": "Steward-directed P0 backlog revision; operator raised the Bias daily cap to 5/day.",
+  "authorization_revision": "2026-10-28T12:20:00Z",
+  "authority": "Operator authorization relayed verbatim by the steward at approximately 2026-10-28T12:20Z: 'bias yes let the lane upload as you write'.",
+
   "supersedes": {
     "preregistration_config": "config/bias-column-order-rescore-preregistered.json",
     "superseded_upload_not_before_utc": "2026-10-29T00:00:00Z",
-    "scope": "Upload timing only; the frozen candidate CSV values, hashes, cards, and column-order invariants are unchanged."
+    "supersedes_schedule": "2026-10-28T06:25:00Z",
+    "effective_authorized_from_utc": "2026-10-28T12:20:00Z",
+    "scope": "Upload timing only; moves A3, the frozen A rule, and B to 2026-10-28 after the three already successful _cgs uploads. The frozen candidate CSV values, hashes, cards, and column-order invariants are unchanged."
   },
   "daily_cap": 5,
-  "already_used_on_2026-10-28": 2,
+  "already_used_on_2026-10-28": 3,
+  "remaining_slots_on_2026-10-28": 2,
   "today_authorized_candidates": [
     {
       "candidate_id": "V2_model_cgs",
       "artifact": "reports/candidates/V2_model_cgs.csv",
       "sha256": "5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7",
-      "purpose": "calibration"
+      "purpose": "calibration",
+      "status": "already_successful"
     },
     {
       "candidate_id": "A1_physical_equal_cgs",
       "artifact": "reports/candidates/A1_physical_equal_cgs.csv",
       "sha256": "2da0051af221ddf26a8a73740746811dbd956854a1fc12846c99864d3abae8a1",
-      "purpose": "calibration"
+      "purpose": "calibration",
+      "status": "already_successful"
     },
     {
       "candidate_id": "A2_spectral_cgs",
       "artifact": "reports/candidates/A2_spectral_cgs.csv",
       "sha256": "584e086bb5df950f6079317afcdc7c5a0182b5263d170be2a10987d1ac4c6213",
-      "purpose": "calibration"
+      "purpose": "calibration",
+      "status": "already_successful"
+    },
+    {
+      "candidate_id": "A3_dawid_skene_cgs",
+      "artifact": "reports/candidates/A3_dawid_skene_cgs.csv",
+      "sha256": "432ade8f1e46c6804cb34fb790612bb1befc9fe03b67a545e753be46b549237c",
+      "purpose": "calibration",
+      "status": "authorized_next"
     }
   ],
-  "2026-10-29_authorized_sequence": [
-    "A3_dawid_skene_cgs",
-    "apply the frozen A rule to the four _cgs scores only",
-    "upload B_from_A_cgs if V2_model_cgs wins; otherwise build, preregister, and upload B from the winner"
+  "2026-10-28_remaining_authorized_sequence": [
+    "upload A3_dawid_skene_cgs",
+    "apply the frozen A rule to the four successful _cgs scores only; never use historical misordered scores",
+    "if V2_model_cgs wins, upload B_from_A_cgs after its selection record is reconciled to corrected-order evidence; otherwise build B from the winner, pre-register its artifact/hash/forecast, and upload it"
   ],
   "selection_constraints": [
     "Never use historical scores from files whose second column was transport_gap.",
