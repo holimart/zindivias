@@ -1,0 +1,255 @@
+{
+  "audit_id": "BIAS_RULEMASK_CORRECTED_COMBINERS_2026_10_29_V1",
+  "candidates": {
+    "V2_rulemask_provided_presence_20261029": {
+      "artifact": "reports/candidates/V2_rulemask_provided_presence_20261029.csv",
+      "candidate_id": "V2_rulemask_provided_presence_20261029",
+      "columns": [
+        "GEOID",
+        "coverage_gap_score"
+      ],
+      "components_unchanged_from_V2": true,
+      "duplicate_of_existing_V2_cgs_values": false,
+      "forecast": {
+        "reason": "there are no permitted per-tract target labels or holdout; this registration forecasts no accuracy gain and uses no public score to set any prediction value",
+        "status": "no-label score forecast unavailable; no numeric RMSE forecast is claimed"
+      },
+      "local_prediction_distribution": {
+        "eastern-ok": {
+          "max": 0.2904351835365,
+          "mean": 0.0337086969660812,
+          "min": 0.005753644695706667,
+          "n": 1192,
+          "p50": 0.022995218398863333,
+          "p90": 0.07859610297833333
+        },
+        "maricopa-az": {
+          "max": 0.314667718754,
+          "mean": 0.05763334623825204,
+          "min": 0.0054655960389700005,
+          "n": 1593,
+          "p50": 0.03192342752703333,
+          "p90": 0.13992114609366665
+        },
+        "northern-ca": {
+          "max": 0.23518118992450002,
+          "mean": 0.04745524817678363,
+          "min": 0.005472553198733333,
+          "n": 591,
+          "p50": 0.02715943358223333,
+          "p90": 0.12722422067133335
+        },
+        "south-central-tx": {
+          "max": 0.384330337498,
+          "mean": 0.054030015635420654,
+          "min": 0.005262915381296667,
+          "n": 6003,
+          "p50": 0.0302211422102,
+          "p90": 0.131655721768
+        }
+      },
+      "local_validation_pass": false,
+      "mask_kind": "provided_presence",
+      "mask_source": "provided object presence",
+      "official_rows": 9379,
+      "regional_fallback_medians": {
+        "eastern-ok": 0.022995218398863333,
+        "maricopa-az": 0.03192342752703333,
+        "northern-ca": 0.02715943358223333,
+        "south-central-tx": 0.0302211422102
+      },
+      "rows": 9794,
+      "sha256": "f609f671b1f7bff2f6ba19c92798119c616b9de3c6d2417870118c85cc15d41e",
+      "template_only_rows": 415,
+      "undefined_share_by_region": {
+        "eastern-ok": {
+          "actual": 0.02348993288590604,
+          "difference_pp": 18.651006711409394,
+          "passes": false,
+          "target": 0.21,
+          "tolerance_pp": 13.191740616025816
+        },
+        "maricopa-az": {
+          "actual": 0.02071563088512241,
+          "difference_pp": 52.928436911487765,
+          "passes": false,
+          "target": 0.55,
+          "tolerance_pp": 13.191740616025816
+        },
+        "northern-ca": {
+          "actual": 0.011844331641285956,
+          "difference_pp": 35.8155668358714,
+          "passes": false,
+          "target": 0.37,
+          "tolerance_pp": 13.191740616025816
+        },
+        "south-central-tx": {
+          "actual": 0.010661335998667334,
+          "difference_pp": 26.933866400133272,
+          "passes": false,
+          "target": 0.28,
+          "tolerance_pp": 13.191740616025816
+        }
+      },
+      "upload_eligible": false,
+      "uploads_performed": 0,
+      "zero_defined_fallback": "same-region median of defined candidate composites",
+      "zero_defined_rows": 2
+    },
+    "V2_rulemask_share_selected_20261029": {
+      "artifact": "reports/candidates/V2_rulemask_share_selected_20261029.csv",
+      "candidate_id": "V2_rulemask_share_selected_20261029",
+      "columns": [
+        "GEOID",
+        "coverage_gap_score"
+      ],
+      "components_unchanged_from_V2": true,
+      "duplicate_of_existing_V2_cgs_values": true,
+      "forecast": {
+        "reason": "there are no permitted per-tract target labels or holdout; this registration forecasts no accuracy gain and uses no public score to set any prediction value",
+        "status": "no-label score forecast unavailable; no numeric RMSE forecast is claimed"
+      },
+      "local_prediction_distribution": {
+        "eastern-ok": {
+          "max": 0.3547722150183,
+          "mean": 0.038996906408728424,
+          "min": 0.005753644695706667,
+          "n": 1192,
+          "p50": 0.02426737466123333,
+          "p90": 0.0895008757455
+        },
+        "maricopa-az": {
+          "max": 0.314667718754,
+          "mean": 0.07521301371134201,
+          "min": 0.0054655960389700005,
+          "n": 1593,
+          "p50": 0.0427680010266,
+          "p90": 0.18788604101666664
+        },
+        "northern-ca": {
+          "max": 0.3069248640665,
+          "mean": 0.057067595693998864,
+          "min": 0.005472553198733333,
+          "n": 591,
+          "p50": 0.03129746610036666,
+          "p90": 0.14908592421566666
+        },
+        "south-central-tx": {
+          "max": 0.528216780099,
+          "mean": 0.061204376849485355,
+          "min": 0.005262915381296667,
+          "n": 6003,
+          "p50": 0.034719296312549996,
+          "p90": 0.1490135361417
+        }
+      },
+      "local_validation_pass": false,
+      "mask_kind": "share_selected",
+      "mask_source": "V2",
+      "official_rows": 9379,
+      "regional_fallback_medians": {
+        "eastern-ok": 0.02426737466123333,
+        "maricopa-az": 0.0427680010266,
+        "northern-ca": 0.03129746610036666,
+        "south-central-tx": 0.034719296312549996
+      },
+      "rows": 9794,
+      "sha256": "5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7",
+      "template_only_rows": 415,
+      "undefined_share_by_region": {
+        "eastern-ok": {
+          "actual": 0.23993288590604026,
+          "difference_pp": 2.9932885906040263,
+          "passes": true,
+          "target": 0.21,
+          "tolerance_pp": 13.191740616025816
+        },
+        "maricopa-az": {
+          "actual": 0.5655994978028877,
+          "difference_pp": 1.5599497802887607,
+          "passes": true,
+          "target": 0.55,
+          "tolerance_pp": 13.191740616025816
+        },
+        "northern-ca": {
+          "actual": 0.3079526226734349,
+          "difference_pp": 6.204737732656512,
+          "passes": true,
+          "target": 0.37,
+          "tolerance_pp": 13.191740616025816
+        },
+        "south-central-tx": {
+          "actual": 0.21239380309845077,
+          "difference_pp": 6.760619690154926,
+          "passes": true,
+          "target": 0.28,
+          "tolerance_pp": 13.191740616025816
+        }
+      },
+      "upload_eligible": false,
+      "uploads_performed": 0,
+      "zero_defined_fallback": "same-region median of defined candidate composites",
+      "zero_defined_rows": 0
+    }
+  },
+  "inputs": {
+    "V2_component_artifact": {
+      "coverage_gap_score_read": false,
+      "path": "reports/candidates/V2_model.csv",
+      "read_columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap"
+      ],
+      "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12"
+    },
+    "common_tolerance_pp": 13.191740616025816,
+    "existing_masks": {
+      "C2": {
+        "mean_abs_error_pp": 13.41110482923003,
+        "share_by_region": {
+          "eastern-ok": 0.40687919463087246,
+          "maricopa-az": 0.3653483992467043,
+          "northern-ca": 0.30456852791878175,
+          "south-central-tx": 0.3694819257038148
+        }
+      },
+      "V2": {
+        "mean_abs_error_pp": 4.379648948426056,
+        "share_by_region": {
+          "eastern-ok": 0.23993288590604026,
+          "maricopa-az": 0.5655994978028877,
+          "northern-ca": 0.3079526226734349,
+          "south-central-tx": 0.21239380309845077
+        }
+      }
+    },
+    "mask_selected_by_preregistered_rule": "V2",
+    "rule_mask_inputs": {
+      "building_morphology.csv": "ed0928651e1ddc0de89e6fd6544c30bd510456f6e9b72eea9d09277919194b75",
+      "poi_confidence_weighted.csv": "28558424db768222ec7639986970af7a37b74228ef8f4e3190e5e58b6e19071c",
+      "road_topology_candidate.csv": "612c2080c3d470fbcdc0cd752cd26847da05a35bf5d245c0b1599134cc82fda7"
+    },
+    "share_disagreement_pp": {
+      "eastern-ok": 16.69463087248322,
+      "maricopa-az": 20.025109855618332,
+      "northern-ca": 0.3384094754653122,
+      "south-central-tx": 15.708812260536401
+    }
+  },
+  "preregistration": {
+    "path": "config/bias-rulemask-corrected-combiners-preregistered-2026-10-29.json",
+    "sha256": "a6a41984bd3d57cee7a00d2d393c9c45298db52c695d0d6bc49a004d6ff58730"
+  },
+  "prohibitions": {
+    "frozen_V2_component_values_changed": false,
+    "labels_used": false,
+    "public_scores_used_for_mask_selection": false,
+    "public_scores_used_for_values": false,
+    "removed_or_equivalent_references_used": false,
+    "sample_score_placeholders_read": false,
+    "uploads_attempted": false
+  },
+  "schema_version": 1
+}
