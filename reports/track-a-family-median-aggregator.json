@@ -1,0 +1,402 @@
+{
+  "acceptance": {
+    "all_9379_authoritative_geoids_once_in_exact_order": true,
+    "all_candidate_hashes_match_frozen_registered_report": true,
+    "all_median_output_values_finite_and_bounded": true,
+    "all_official_candidate_composites_finite_and_bounded": true,
+    "leave_one_candidate_out_stability_pass": false,
+    "screen_execution_passed": true,
+    "stability_screen_label": "unstable_retain_current_candidates"
+  },
+  "analysis_id": "TRACK_A_FAMILY_MEDIAN_AGGREGATOR_SCREEN_V1",
+  "intent": "Label-free robustness sensitivity of a tract-wise median of four frozen Track A candidate composites; not a candidate evaluation against truth.",
+  "measure_after": {
+    "candidate_artifact": {
+      "columns": [
+        "GEOID",
+        "coverage_gap_score"
+      ],
+      "path": "reports/track-a-family-median-nonsubmission.csv",
+      "registered_for_submission": false,
+      "rows": 9379,
+      "sha256": "096adab77f2839dd87d8dca36b07c63167a7482272536b25136adc8f8d8249ba"
+    },
+    "official_id_count": 9379,
+    "official_id_order_sha256": "706a3a3e53f3752ca1165bb8bb11aba95ef84f843017d6007401c99a9dd6ccc0",
+    "official_id_order_sha256_by_region": {
+      "eastern-ok": "eec4a24e0721655322012b2709bb9ab50426342f43861cdd1cb415308f2944f0",
+      "maricopa-az": "2054c66c98a27e2166122e6bbb1c16997d029a9faa178bc3c1e901b053082c60",
+      "northern-ca": "324f2cb00cf3ae6eb8d69ad682df5888d731c21440f0af64af66ec88c415106f",
+      "south-central-tx": "6d24c49d84ba6fd6747c8db48cfced063b90c961641c8558b1c1ef705bbd2f92"
+    },
+    "overall_changed_tract_omission_pairs": 37516,
+    "overall_maximum_absolute_delta": 0.15987701691930079,
+    "overall_p95_absolute_delta": 0.08329396629360492,
+    "region_stability": {
+      "eastern-ok": {
+        "all_four_omissions_maximum_absolute_delta": 0.12821877799061923,
+        "all_four_omissions_p95_absolute_delta": 0.07056200167963267,
+        "maximum_absolute_delta_by_omitted_candidate": {
+          "A1_physical_equal": 0.12821877799061923,
+          "A2_spectral": 0.12821877799061923,
+          "A3_dawid_skene": 0.12821877799061923,
+          "V2_model": 0.12821877799061923
+        },
+        "median_vs_frozen_candidate_composites": {
+          "A1_physical_equal": {
+            "changed_tracts": 1192,
+            "maximum_absolute_difference": 0.37058105032093674,
+            "median_absolute_difference": 0.02780194789782539,
+            "p95_absolute_difference": 0.08087792172072336
+          },
+          "A2_spectral": {
+            "changed_tracts": 1192,
+            "maximum_absolute_difference": 0.3688414623049524,
+            "median_absolute_difference": 0.11964220663033043,
+            "p95_absolute_difference": 0.1813203408071032
+          },
+          "A3_dawid_skene": {
+            "changed_tracts": 1192,
+            "maximum_absolute_difference": 0.15033880683022108,
+            "median_absolute_difference": 0.026681759312796788,
+            "p95_absolute_difference": 0.07243805063011985
+          },
+          "V2_model": {
+            "changed_tracts": 1192,
+            "maximum_absolute_difference": 0.5287936201651389,
+            "median_absolute_difference": 0.1659320953771659,
+            "p95_absolute_difference": 0.28865995278729006
+          }
+        },
+        "official_ids": 1192,
+        "p95_absolute_delta_by_omitted_candidate": {
+          "A1_physical_equal": 0.07042804111232184,
+          "A2_spectral": 0.07042804111232184,
+          "A3_dawid_skene": 0.07042804111232184,
+          "V2_model": 0.07042804111232184
+        },
+        "per_omitted_candidate": {
+          "A1_physical_equal": {
+            "changed_tracts": 1192,
+            "maximum_absolute_delta": 0.12821877799061923,
+            "p95_absolute_delta": 0.07042804111232184
+          },
+          "A2_spectral": {
+            "changed_tracts": 1192,
+            "maximum_absolute_delta": 0.12821877799061923,
+            "p95_absolute_delta": 0.07042804111232184
+          },
+          "A3_dawid_skene": {
+            "changed_tracts": 1192,
+            "maximum_absolute_delta": 0.12821877799061923,
+            "p95_absolute_delta": 0.07042804111232184
+          },
+          "V2_model": {
+            "changed_tracts": 1192,
+            "maximum_absolute_delta": 0.12821877799061923,
+            "p95_absolute_delta": 0.07042804111232184
+          }
+        }
+      },
+      "maricopa-az": {
+        "all_four_omissions_maximum_absolute_delta": 0.15987701691930079,
+        "all_four_omissions_p95_absolute_delta": 0.08329396629360494,
+        "maximum_absolute_delta_by_omitted_candidate": {
+          "A1_physical_equal": 0.15987701691930079,
+          "A2_spectral": 0.15987701691930073,
+          "A3_dawid_skene": 0.15987701691930073,
+          "V2_model": 0.15987701691930079
+        },
+        "median_vs_frozen_candidate_composites": {
+          "A1_physical_equal": {
+            "changed_tracts": 1593,
+            "maximum_absolute_difference": 0.7085149996207072,
+            "median_absolute_difference": 0.31393491063479434,
+            "p95_absolute_difference": 0.4215974397799081
+          },
+          "A2_spectral": {
+            "changed_tracts": 1593,
+            "maximum_absolute_difference": 0.44413272901936607,
+            "median_absolute_difference": 0.08329396629360486,
+            "p95_absolute_difference": 0.08329396629360492
+          },
+          "A3_dawid_skene": {
+            "changed_tracts": 1593,
+            "maximum_absolute_difference": 0.18154543556546424,
+            "median_absolute_difference": 0.08329396629360489,
+            "p95_absolute_difference": 0.12367386293985916
+          },
+          "V2_model": {
+            "changed_tracts": 1593,
+            "maximum_absolute_difference": 0.501131790317453,
+            "median_absolute_difference": 0.151418467867288,
+            "p95_absolute_difference": 0.29259902579253017
+          }
+        },
+        "official_ids": 1593,
+        "p95_absolute_delta_by_omitted_candidate": {
+          "A1_physical_equal": 0.08329396629360494,
+          "A2_spectral": 0.08329396629360494,
+          "A3_dawid_skene": 0.08329396629360492,
+          "V2_model": 0.08329396629360492
+        },
+        "per_omitted_candidate": {
+          "A1_physical_equal": {
+            "changed_tracts": 1593,
+            "maximum_absolute_delta": 0.15987701691930079,
+            "p95_absolute_delta": 0.08329396629360494
+          },
+          "A2_spectral": {
+            "changed_tracts": 1593,
+            "maximum_absolute_delta": 0.15987701691930073,
+            "p95_absolute_delta": 0.08329396629360494
+          },
+          "A3_dawid_skene": {
+            "changed_tracts": 1593,
+            "maximum_absolute_delta": 0.15987701691930073,
+            "p95_absolute_delta": 0.08329396629360492
+          },
+          "V2_model": {
+            "changed_tracts": 1593,
+            "maximum_absolute_delta": 0.15987701691930079,
+            "p95_absolute_delta": 0.08329396629360492
+          }
+        }
+      },
+      "northern-ca": {
+        "all_four_omissions_maximum_absolute_delta": 0.08608737866748536,
+        "all_four_omissions_p95_absolute_delta": 0.08329396629360494,
+        "maximum_absolute_delta_by_omitted_candidate": {
+          "A1_physical_equal": 0.08608737866748536,
+          "A2_spectral": 0.08608737866748536,
+          "A3_dawid_skene": 0.08608737866748534,
+          "V2_model": 0.08608737866748534
+        },
+        "median_vs_frozen_candidate_composites": {
+          "A1_physical_equal": {
+            "changed_tracts": 591,
+            "maximum_absolute_difference": 0.2973184867192502,
+            "median_absolute_difference": 0.151084663396703,
+            "p95_absolute_difference": 0.2147426775276442
+          },
+          "A2_spectral": {
+            "changed_tracts": 591,
+            "maximum_absolute_difference": 0.29392544590160385,
+            "median_absolute_difference": 0.07705883816817569,
+            "p95_absolute_difference": 0.08329396629360494
+          },
+          "A3_dawid_skene": {
+            "changed_tracts": 591,
+            "maximum_absolute_difference": 0.17422134210156182,
+            "median_absolute_difference": 0.08076836967716251,
+            "p95_absolute_difference": 0.1093789042642351
+          },
+          "V2_model": {
+            "changed_tracts": 591,
+            "maximum_absolute_difference": 0.4425333711117521,
+            "median_absolute_difference": 0.167001781406224,
+            "p95_absolute_difference": 0.30461678953696736
+          }
+        },
+        "official_ids": 591,
+        "p95_absolute_delta_by_omitted_candidate": {
+          "A1_physical_equal": 0.08329396629360494,
+          "A2_spectral": 0.08329396629360494,
+          "A3_dawid_skene": 0.08329396629360492,
+          "V2_model": 0.08329396629360492
+        },
+        "per_omitted_candidate": {
+          "A1_physical_equal": {
+            "changed_tracts": 591,
+            "maximum_absolute_delta": 0.08608737866748536,
+            "p95_absolute_delta": 0.08329396629360494
+          },
+          "A2_spectral": {
+            "changed_tracts": 591,
+            "maximum_absolute_delta": 0.08608737866748536,
+            "p95_absolute_delta": 0.08329396629360494
+          },
+          "A3_dawid_skene": {
+            "changed_tracts": 591,
+            "maximum_absolute_delta": 0.08608737866748534,
+            "p95_absolute_delta": 0.08329396629360492
+          },
+          "V2_model": {
+            "changed_tracts": 591,
+            "maximum_absolute_delta": 0.08608737866748534,
+            "p95_absolute_delta": 0.08329396629360492
+          }
+        }
+      },
+      "south-central-tx": {
+        "all_four_omissions_maximum_absolute_delta": 0.15727054662282908,
+        "all_four_omissions_p95_absolute_delta": 0.08329396629360492,
+        "maximum_absolute_delta_by_omitted_candidate": {
+          "A1_physical_equal": 0.15727054662282908,
+          "A2_spectral": 0.15727054662282908,
+          "A3_dawid_skene": 0.15727054662282908,
+          "V2_model": 0.15727054662282908
+        },
+        "median_vs_frozen_candidate_composites": {
+          "A1_physical_equal": {
+            "changed_tracts": 6003,
+            "maximum_absolute_difference": 0.4501236814894328,
+            "median_absolute_difference": 0.06428330969065665,
+            "p95_absolute_difference": 0.16436211978303888
+          },
+          "A2_spectral": {
+            "changed_tracts": 6003,
+            "maximum_absolute_difference": 0.4071524455036438,
+            "median_absolute_difference": 0.08329396629360492,
+            "p95_absolute_difference": 0.13952449036972023
+          },
+          "A3_dawid_skene": {
+            "changed_tracts": 6003,
+            "maximum_absolute_difference": 0.2554038795026029,
+            "median_absolute_difference": 0.05553185723843926,
+            "p95_absolute_difference": 0.0855218038333995
+          },
+          "V2_model": {
+            "changed_tracts": 6003,
+            "maximum_absolute_difference": 0.5588379196250649,
+            "median_absolute_difference": 0.15247201972839383,
+            "p95_absolute_difference": 0.28684302057083916
+          }
+        },
+        "official_ids": 6003,
+        "p95_absolute_delta_by_omitted_candidate": {
+          "A1_physical_equal": 0.08329396629360493,
+          "A2_spectral": 0.08329396629360493,
+          "A3_dawid_skene": 0.08329396629360492,
+          "V2_model": 0.08329396629360492
+        },
+        "per_omitted_candidate": {
+          "A1_physical_equal": {
+            "changed_tracts": 6003,
+            "maximum_absolute_delta": 0.15727054662282908,
+            "p95_absolute_delta": 0.08329396629360493
+          },
+          "A2_spectral": {
+            "changed_tracts": 6003,
+            "maximum_absolute_delta": 0.15727054662282908,
+            "p95_absolute_delta": 0.08329396629360493
+          },
+          "A3_dawid_skene": {
+            "changed_tracts": 6003,
+            "maximum_absolute_delta": 0.15727054662282908,
+            "p95_absolute_delta": 0.08329396629360492
+          },
+          "V2_model": {
+            "changed_tracts": 6003,
+            "maximum_absolute_delta": 0.15727054662282908,
+            "p95_absolute_delta": 0.08329396629360492
+          }
+        }
+      }
+    }
+  },
+  "measure_before": {
+    "four_candidate_disagreement_by_region": {
+      "eastern-ok": {
+        "four_candidate_mad_median": 0.07422634152005361,
+        "four_candidate_p90_p10_spread_median": 0.2170438356173759,
+        "high_spread_threshold": 0.1,
+        "official_tracts": 1192,
+        "tracts_at_or_above_preregistered_0_10_spread": 1089
+      },
+      "maricopa-az": {
+        "four_candidate_mad_median": 0.10834245900912748,
+        "four_candidate_p90_p10_spread_median": 0.3779981961411487,
+        "high_spread_threshold": 0.1,
+        "official_tracts": 1593,
+        "tracts_at_or_above_preregistered_0_10_spread": 1592
+      },
+      "northern-ca": {
+        "four_candidate_mad_median": 0.08815997932879524,
+        "four_candidate_p90_p10_spread_median": 0.2545824466199788,
+        "high_spread_threshold": 0.1,
+        "official_tracts": 591,
+        "tracts_at_or_above_preregistered_0_10_spread": 589
+      },
+      "south-central-tx": {
+        "four_candidate_mad_median": 0.08039069729834243,
+        "four_candidate_p90_p10_spread_median": 0.21070529515537087,
+        "high_spread_threshold": 0.1,
+        "official_tracts": 6003,
+        "tracts_at_or_above_preregistered_0_10_spread": 5609
+      }
+    },
+    "source_candidate_artifacts": {
+      "A1_physical_equal": {
+        "official_id_set_sha256": "f66cb8b900362d122a42c7a50ae609d4a697c41cea8ab6f57e7755a25d43b584",
+        "official_scores_read": 9379,
+        "path": "reports/candidates/A1_physical_equal.csv",
+        "registered_rows": 9794,
+        "sha256": "6af088b83ff3481d420e11b14d903fc510c2b4be2cea285c762ca12d500862de"
+      },
+      "A2_spectral": {
+        "official_id_set_sha256": "f66cb8b900362d122a42c7a50ae609d4a697c41cea8ab6f57e7755a25d43b584",
+        "official_scores_read": 9379,
+        "path": "reports/candidates/A2_spectral.csv",
+        "registered_rows": 9794,
+        "sha256": "f88573996566a1975726845a49f42fb2cd3781d5f0e83d55944fc65647692997"
+      },
+      "A3_dawid_skene": {
+        "official_id_set_sha256": "f66cb8b900362d122a42c7a50ae609d4a697c41cea8ab6f57e7755a25d43b584",
+        "official_scores_read": 9379,
+        "path": "reports/candidates/A3_dawid_skene.csv",
+        "registered_rows": 9794,
+        "sha256": "6d588f2f7a45a58b128860a049ac19995b21902f7f98d3b2ab39d1d9fbb073b3"
+      },
+      "V2_model": {
+        "official_id_set_sha256": "f66cb8b900362d122a42c7a50ae609d4a697c41cea8ab6f57e7755a25d43b584",
+        "official_scores_read": 9379,
+        "path": "reports/candidates/V2_model.csv",
+        "registered_rows": 9794,
+        "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12"
+      }
+    },
+    "source_report_scope": {
+      "candidate_ids_in_fixed_order": [
+        "A1_physical_equal",
+        "A2_spectral",
+        "A3_dawid_skene",
+        "V2_model"
+      ],
+      "official_scored_ids": 9379
+    },
+    "source_report_sha256": "87298385d476294208619fb5b920909d712d1494f73aec96681425d98e6080f5",
+    "source_scope_diagnostic_only": "Frozen Track A ensemble disagreement; diagnostic-only, no accuracy or selection claim."
+  },
+  "method": {
+    "candidate_order": [
+      "A1_physical_equal",
+      "A2_spectral",
+      "A3_dawid_skene",
+      "V2_model"
+    ],
+    "full_aggregator": "median of four finite [0,1] coverage_gap_score values; with four values this is the arithmetic mean of the two middle sorted values",
+    "leave_one_candidate_out": "for each candidate omission, take the median of the remaining three candidate composites and compute its absolute difference from the full four-candidate median",
+    "regional_quantile": "linear interpolation at position (n-1)*0.95; pooled over all four omission deltas for each official tract in that region",
+    "stability_interpretation": "A pass is aggregation sensitivity only, not evidence of target accuracy or candidate promotion eligibility.",
+    "stability_threshold_max_abs_change_inclusive": 0.05
+  },
+  "result": "PASS",
+  "safety": {
+    "candidate_sources_modified": false,
+    "existing_candidate_registry_modified": false,
+    "external_scored_features_used": false,
+    "labels_or_removed_or_equivalent_references_read": false,
+    "leaderboard_or_public_scores_used": false,
+    "new_candidate_is_submission": false,
+    "new_candidate_registered": false,
+    "sample_values_or_placeholders_read": false,
+    "uploads": 0
+  },
+  "schema_version": 1,
+  "source_report": {
+    "expected_sha256": "87298385d476294208619fb5b920909d712d1494f73aec96681425d98e6080f5",
+    "path": "reports/track-a-ensemble-disagreement.json",
+    "sha256": "87298385d476294208619fb5b920909d712d1494f73aec96681425d98e6080f5"
+  }
+}
