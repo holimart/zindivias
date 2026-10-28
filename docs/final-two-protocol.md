@@ -1,6 +1,10 @@
 # Final-two private-leaderboard selection protocol
 
-**Frozen:** 2026-10-24 UTC, before any final-cohort candidate upload or private-score release. **Status:** protocol committed; candidate slots are intentionally pending. This replaces the historical C0-anchor recommendation and any selection based on region/cell information probes. No upload is queued or authorized by this document.
+**Frozen:** 2026-10-24 UTC, before any final-cohort candidate upload or private-score release. **Status:** protocol committed; candidate slots are intentionally pending. This replaces the historical C0-anchor recommendation and any selection based on region/cell information probes. The original document did not authorize uploads; see the dated steward amendment immediately below for the current schedule.
+
+## Steward schedule amendment — 2026-10-28 06:25Z
+
+The steward's latest P0 revision authorizes the already frozen column-corrected cohort now and raises the Bias cap to five/day **for this schedule only**. On 2026-10-28 upload `V2_model_cgs`, `A1_physical_equal_cgs`, then `A2_spectral_cgs` (three slots remain after the two earlier uploads). On 2026-10-29 upload `A3_dawid_skene_cgs`, apply the frozen A rule to the four `_cgs` scores only, then upload `B_from_A_cgs` if V2 wins; otherwise rebuild B from the winner, register it, and upload it. No other candidates, score-based value changes, or historical-score selection are authorized. This amendment supersedes the earlier timing/cap only; all model-selection and no-probe constraints below remain. Machine-readable authorization: `config/bias-cgs-upload-authorization-2026-10-28.json`.
 
 ## Scope and governing constraints
 

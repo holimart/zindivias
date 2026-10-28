@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "status": "column_order_cgs_preregistered_pending_scheduled_uploads",
+  "status": "column_order_cgs_authorized_pending_10_28_uploads",
   "prepared_utc": "2026-10-26",
   "protocol": {
     "path": "docs/final-two-protocol.md",
-    "sha256": "f21f085218071e733a09fd92015e702a2a6be19b7fbdbffcf4d465961a12a5ef",
+    "sha256": "574b497d54d998015fa4f0e7ae2b3fd7af8dcfa99e7c39f0c9f31adb8cabaf40",
     "policy": "model candidates only; no information probes; no LB-derived coefficients"
   },
   "scope": {
@@ -147,7 +147,8 @@
         "score_selection_note": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records."
       }
     ],
-    "2026-10-27_planned_slots_of_daily_cap": "2/2 completed"
+    "2026-10-27_planned_slots_of_daily_cap": "2/2 completed",
+    "daily_cap": 5
   },
   "candidate_registrations": [
     {
@@ -870,11 +871,13 @@
         "coverage_gap_score_byte_identical_to_source": true
       },
       "upload_authorized": true,
-      "upload_not_before_utc": "2026-10-29T00:00:00Z",
+      "upload_not_before_utc": "2026-10-28T06:25:00Z",
       "upload_performed": false,
       "submission_id": null,
       "public_rmse": null,
-      "eligibility": "format-corrected calibration candidate; awaiting scheduled upload"
+      "eligibility": "authorized for today's scheduled upload",
+      "upload_authorization_addendum": "config/bias-cgs-upload-authorization-2026-10-28.json",
+      "upload_authorization_addendum_sha256": "1b972be9d18ef008da0975bdf1b78ce70c4e924a6e884d8b8e1fdaa1e20fdac8"
     },
     {
       "candidate_id": "A1_physical_equal_cgs",
@@ -902,11 +905,13 @@
         "coverage_gap_score_byte_identical_to_source": true
       },
       "upload_authorized": true,
-      "upload_not_before_utc": "2026-10-29T00:00:00Z",
+      "upload_not_before_utc": "2026-10-28T06:25:00Z",
       "upload_performed": false,
       "submission_id": null,
       "public_rmse": null,
-      "eligibility": "format-corrected calibration candidate; awaiting scheduled upload"
+      "eligibility": "authorized for today's scheduled upload",
+      "upload_authorization_addendum": "config/bias-cgs-upload-authorization-2026-10-28.json",
+      "upload_authorization_addendum_sha256": "1b972be9d18ef008da0975bdf1b78ce70c4e924a6e884d8b8e1fdaa1e20fdac8"
     },
     {
       "candidate_id": "A2_spectral_cgs",
@@ -934,11 +939,13 @@
         "coverage_gap_score_byte_identical_to_source": true
       },
       "upload_authorized": true,
-      "upload_not_before_utc": "2026-10-29T00:00:00Z",
+      "upload_not_before_utc": "2026-10-28T06:25:00Z",
       "upload_performed": false,
       "submission_id": null,
       "public_rmse": null,
-      "eligibility": "format-corrected calibration candidate; awaiting scheduled upload"
+      "eligibility": "authorized for today's scheduled upload",
+      "upload_authorization_addendum": "config/bias-cgs-upload-authorization-2026-10-28.json",
+      "upload_authorization_addendum_sha256": "1b972be9d18ef008da0975bdf1b78ce70c4e924a6e884d8b8e1fdaa1e20fdac8"
     },
     {
       "candidate_id": "A3_dawid_skene_cgs",
@@ -970,7 +977,9 @@
       "upload_performed": false,
       "submission_id": null,
       "public_rmse": null,
-      "eligibility": "format-corrected calibration candidate; awaiting scheduled upload"
+      "eligibility": "authorized for scheduled 2026-10-29 upload; pending A rule for B",
+      "upload_authorization_addendum": "config/bias-cgs-upload-authorization-2026-10-28.json",
+      "upload_authorization_addendum_sha256": "1b972be9d18ef008da0975bdf1b78ce70c4e924a6e884d8b8e1fdaa1e20fdac8"
     },
     {
       "candidate_id": "B_from_A_cgs",
@@ -1002,7 +1011,9 @@
       "upload_performed": false,
       "submission_id": null,
       "public_rmse": null,
-      "eligibility": "format-corrected calibration candidate; awaiting scheduled upload"
+      "eligibility": "authorized for scheduled 2026-10-29 upload; pending A rule for B",
+      "upload_authorization_addendum": "config/bias-cgs-upload-authorization-2026-10-28.json",
+      "upload_authorization_addendum_sha256": "1b972be9d18ef008da0975bdf1b78ce70c4e924a6e884d8b8e1fdaa1e20fdac8"
     }
   ],
   "final_candidates": [
@@ -1268,19 +1279,24 @@
     "no_old_score_used_for_model_selection_or_value_changes": true
   },
   "format_fix_upload_plan": {
-    "uploads_permitted_before_utc": "2026-10-29T00:00:00Z",
+    "authorization_revision_utc": "2026-10-28T06:25:00Z",
+    "authorization_addendum": "config/bias-cgs-upload-authorization-2026-10-28.json",
+    "authorization_addendum_sha256": "1b972be9d18ef008da0975bdf1b78ce70c4e924a6e884d8b8e1fdaa1e20fdac8",
+    "uploads_permitted_before_utc": "2026-10-28T06:25:00Z",
     "uploads_performed_this_turn": 0,
-    "daily_cap": 2,
-    "2026-10-29_before_00Z": [],
-    "2026-10-29_from_00Z": [
+    "daily_cap": 5,
+    "already_used_today_before_this_turn": 2,
+    "2026-10-28_authorized_sequence": [
       "V2_model_cgs",
-      "A1_physical_equal_cgs"
+      "A1_physical_equal_cgs",
+      "A2_spectral_cgs"
     ],
-    "2026-10-30_before_12Z": [
-      "the better of A3_dawid_skene_cgs/A2_spectral_cgs under the A-rule after valid CGS scores",
-      "B rebuilt from the A-rule winner"
+    "2026-10-29_authorized_sequence": [
+      "A3_dawid_skene_cgs",
+      "apply the frozen A rule to the four _cgs scores only",
+      "upload B_from_A_cgs if V2 wins; otherwise rebuild, preregister, and upload B from the winner"
     ],
-    "note": "Steward schedule; no live upload in this turn. If the A-rule winner is not V2_model, rebuild and register its B companion before the second-day plan."
+    "note": "Steward revision supersedes previous upload timing only. No non-_cgs score may be used for the A rule; no frozen value may change; no other candidate is authorized."
   },
   "column_order_rescore_preregistration": {
     "config": "config/bias-column-order-rescore-preregistered.json",
@@ -1354,5 +1370,12 @@
     ],
     "status": "void_column_order_rescore",
     "reason": "Historical public scores from five-column submissions are void for candidate selection: Zindi scores column 2 by position, which was transport_gap in the per-region sample order. The underlying records and score values are retained only as historical records."
+  },
+  "column_order_upload_authorization": {
+    "path": "config/bias-cgs-upload-authorization-2026-10-28.json",
+    "sha256": "1b972be9d18ef008da0975bdf1b78ce70c4e924a6e884d8b8e1fdaa1e20fdac8",
+    "revision_utc": "2026-10-28T06:25:00Z",
+    "daily_cap": 5,
+    "scope": "specific steward schedule; frozen scores/values unchanged"
   }
 }

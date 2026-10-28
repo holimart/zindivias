@@ -18,7 +18,7 @@ class FinalTwoProtocolTests(unittest.TestCase):
         protocol_path = REPO / report["protocol"]["path"]
         digest = hashlib.sha256(protocol_path.read_bytes()).hexdigest()
         self.assertEqual(report["protocol"]["sha256"], digest)
-        self.assertEqual(report["status"], "column_order_cgs_preregistered_pending_scheduled_uploads")
+        self.assertEqual(report["status"], "column_order_cgs_authorized_pending_10_28_uploads")
         self.assertEqual([(x["slot"], x["candidate_id"]) for x in report["final_candidates"]],
                          [("A", None), ("B", None)])
         self.assertTrue(all(x["sha256"] is None and x["public_rmse"] is None
@@ -46,8 +46,11 @@ class FinalTwoProtocolTests(unittest.TestCase):
             if item.get("public_rmse") is not None:
                 self.assertIs(item.get("score_selection_eligible"), False)
         self.assertEqual(report["format_fix_upload_plan"]["uploads_performed_this_turn"], 0)
-        self.assertEqual(report["format_fix_upload_plan"]["2026-10-29_from_00Z"],
-                         ["V2_model_cgs", "A1_physical_equal_cgs"])
+        self.assertEqual(report["format_fix_upload_plan"]["daily_cap"], 5)
+        self.assertEqual(report["format_fix_upload_plan"]["2026-10-28_authorized_sequence"],
+                         ["V2_model_cgs", "A1_physical_equal_cgs", "A2_spectral_cgs"])
+        self.assertEqual(report["format_fix_upload_plan"]["authorization_addendum"],
+                         "config/bias-cgs-upload-authorization-2026-10-28.json")
 
     def test_protocol_forbids_probes_and_uses_model_only_shrink(self):
         text = (REPO / "docs/final-two-protocol.md").read_text(encoding="utf-8")

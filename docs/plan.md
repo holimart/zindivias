@@ -19,7 +19,10 @@ of a fabricated holdout score.
    selection applies only to finished model candidates under
    [`final-two-protocol.md`](final-two-protocol.md).
 
-Any permitted live evaluation requires a written hypothesis against the current
-best scored candidate (P4 public RMSE 0.091440198), passing invariants, operator
-authorization, and the shared two-per-day submission gate. No upload is queued
-by this plan.
+At the time this plan was written, a permitted live evaluation required a
+written hypothesis, passing invariants, operator authorization and a two-per-day
+gate. The steward's specific 2026-10-28 06:25Z amendment now authorizes only the
+pre-registered column-corrected cohort under a five-per-day gate; see
+[`submission-policy.md`](submission-policy.md) and
+`config/bias-cgs-upload-authorization-2026-10-28.json`. No other upload is
+authorized by this plan.

@@ -7,6 +7,19 @@ use only challenge-provided datasets in scored predictions. There are no
 training labels, and removed reference layers or equivalent copies must never
 be used to reconstruct the target.
 
+### Steward-authorized column-order rescore exception (2026-10-28 06:25Z)
+
+The steward revised `bias-cgs-uploads-final-two` to start immediately, overriding
+only the earlier upload date and the general two-per-day lane ceiling for this
+specific pre-registered cohort. The guarded tool now enforces five/day. The
+only authorized 2026-10-28 uploads are `V2_model_cgs`, `A1_physical_equal_cgs`,
+and `A2_spectral_cgs` (three slots remained after two earlier uploads); on
+2026-10-29 the authorized sequence is `A3_dawid_skene_cgs`, then the frozen A
+rule, then B as specified by the row. This is model evaluation in the corrected
+`GEOID,coverage_gap_score` format, not a probe. It does not authorize other
+candidates, score tuning, or changes to frozen values. Full authorization is
+recorded in `config/bias-cgs-upload-authorization-2026-10-28.json`.
+
 ## 1. No leaderboard information probes
 
 Do not upload a candidate whose purpose is to infer target moments, public
