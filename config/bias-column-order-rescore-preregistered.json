@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "task": "bias-column-order-rescore",
+  "purpose": "calibration",
+  "registered_before_artifact_build": true,
+  "note": "Format-only correction. Copy the frozen coverage_gap_score field unchanged from each registered source candidate into a two-column file in the Data-page SampleSubmission.csv field order. No candidate values are recalculated or edited.",
+  "score_semantics": {
+    "required_columns": ["GEOID", "coverage_gap_score"],
+    "platform_scores_second_column_by_position": true,
+    "old_per_region_second_column": "transport_gap",
+    "old_public_scores_valid_for_selection": false,
+    "old_score_records_preserved": true
+  },
+  "scope": {
+    "source_rows": 9794,
+    "source_id_order": "Data-page SampleSubmission.csv GEOID order; read GEOID only",
+    "output_columns": ["GEOID", "coverage_gap_score"],
+    "upload_not_before_utc": "2026-10-29T00:00:00Z",
+    "uploads_authorized_in_this_turn": false,
+    "uploads_permitted_in_plan": 2
+  },
+  "sources": [
+    {
+      "candidate_id": "V2_model_cgs",
+      "source_candidate_id": "V2_model",
+      "source_artifact": "reports/candidates/V2_model.csv",
+      "source_sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12",
+      "output_artifact": "reports/candidates/V2_model_cgs.csv",
+      "pre_registered_card_path": "reports/final-candidate-cards/track-a-cohort-2026-10-26.json",
+      "pre_registered_card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb"
+    },
+    {
+      "candidate_id": "A1_physical_equal_cgs",
+      "source_candidate_id": "A1_physical_equal",
+      "source_artifact": "reports/candidates/A1_physical_equal.csv",
+      "source_sha256": "6af088b83ff3481d420e11b14d903fc510c2b4be2cea285c762ca12d500862de",
+      "output_artifact": "reports/candidates/A1_physical_equal_cgs.csv",
+      "pre_registered_card_path": "reports/final-candidate-cards/track-a-cohort-2026-10-26.json",
+      "pre_registered_card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb"
+    },
+    {
+      "candidate_id": "A2_spectral_cgs",
+      "source_candidate_id": "A2_spectral",
+      "source_artifact": "reports/candidates/A2_spectral.csv",
+      "source_sha256": "f88573996566a1975726845a49f42fb2cd3781d5f0e83d55944fc65647692997",
+      "output_artifact": "reports/candidates/A2_spectral_cgs.csv",
+      "pre_registered_card_path": "reports/final-candidate-cards/track-a-cohort-2026-10-26.json",
+      "pre_registered_card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb"
+    },
+    {
+      "candidate_id": "A3_dawid_skene_cgs",
+      "source_candidate_id": "A3_dawid_skene",
+      "source_artifact": "reports/candidates/A3_dawid_skene.csv",
+      "source_sha256": "6d588f2f7a45a58b128860a049ac19995b21902f7f98d3b2ab39d1d9fbb073b3",
+      "output_artifact": "reports/candidates/A3_dawid_skene_cgs.csv",
+      "pre_registered_card_path": "reports/final-candidate-cards/track-a-cohort-2026-10-26.json",
+      "pre_registered_card_sha256": "8f90b25e5c83fa92b3959fdeaf5a953a977e5025f1f17afd148159e6010ffafb"
+    },
+    {
+      "candidate_id": "B_from_A_cgs",
+      "source_candidate_id": "B_from_A",
+      "source_artifact": "reports/candidates/B_from_A.csv",
+      "source_sha256": "efd51badc5c9142263481086180fb5b89c720b8279237ae0edcdb0066d1ae303",
+      "output_artifact": "reports/candidates/B_from_A_cgs.csv",
+      "pre_registered_card_path": "reports/final-candidate-cards/B_from_A-2026-10-28.json",
+      "pre_registered_card_sha256": "adae3c7b6e4a3423d5c1f77edb8804038fa59bb177bf57df53524b7abbbff143"
+    }
+  ],
+  "forbidden": [
+    "change any coverage_gap_score value",
+    "use old column-2 public scores for candidate selection or tuning",
+    "upload before 2026-10-29T00:00:00Z",
+    "read placeholder score values from Data-page SampleSubmission.csv"
+  ]
+}
