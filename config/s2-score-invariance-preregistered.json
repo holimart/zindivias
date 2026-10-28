@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "analysis_id": "S2_SCORE_INVARIANCE_V1",
+  "registered_before_audit_output": true,
+  "purpose": "Non-mutating harness validation that frozen S2 recomputation is invariant to semantics-preserving row order, feature-column order, and canonical lossless serialization.",
+  "forbidden": ["labels", "sample score placeholders", "removed or equivalent reference layers", "external data", "leaderboard/scorecard values", "uploads", "candidate selection"],
+  "frozen_outputs": {
+    "S2": {"path": "reports/candidates/S2_h1b_assumption_bound_v1.csv", "sha256": "44ba76abcd9e1fb0aa7194e3c0fadf567debce40e29ed4bdf93ef02ae9514577"},
+    "S2b": {"path": "reports/candidates/S2b_c2_expected_facility_mask_v1.csv", "sha256": "5761e2c17f25f66bbc9e1d769a04b76545e4cc660a8ca9481c30b89739b7ae6f"}
+  },
+  "frozen_inputs": {
+    "C2_components": {"path": "reports/candidates/C2_component_estimator_v0.csv", "sha256": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514"},
+    "gap_estimates": {"path": "reports/gap-estimates.csv", "sha256": "0e2b94210fbd3e262c847dc4d2af364eeb4186f35361982bad51dd2e780c8852"},
+    "S2_preregistration": {"path": "config/shrink-s2-assumption-bound-preregistered.json", "sha256": "d0a85a584dd80990a9a81022f82b66f653250dac097832669676384ddae5d479"},
+    "S2_recipe_source": {"path": "scripts/build_shrink_s2_assumption_bound.py", "sha256": "955ce0ae728cd1b859829cd225a408102b073c3a41b96f42d5ab7b9d3ee47193"},
+    "provided_inputs": "Feature/strata paths and hashes frozen in config/shrink-h1b-rule-level-preregistered.json; official sample hashes frozen in config/shrink-s2-assumption-bound-preregistered.json. Read GEOID only from official samples."
+  },
+  "contract": {"official_rows": 9379, "regions": {"maricopa-az": 1593, "northern-ca": 591, "eastern-ok": 1192, "south-central-tx": 6003}, "score_bounds": [0, 1]},
+  "transformations": {
+    "row_order": "Reverse official-row order independently for C2, gap estimates, feature summaries, and strata maps; recompute scores keyed by GEOID.",
+    "column_order": "Reverse insertion order of every input record's named feature/component columns; estimator continues to access named fields.",
+    "stable_serialization": "Canonical JSON sort_keys=true, compact separators, UTF-8, allow_nan=false; decode and recompute. This round-trips official input maps and IEEE-754 values losslessly."
+  },
+  "acceptance": {"all_ids_exact_once": true, "max_abs_delta_each_transformation_at_most": 1e-12, "toy_fixture_matches_hand_calculation": true, "frozen_S2_recompute_max_abs_delta_at_most": 1e-10, "no_score_or_model_mutation": true}
+}
