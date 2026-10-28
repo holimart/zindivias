@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "candidate_id": "B_from_A",
+  "registered_utc": "2026-10-28",
+  "purpose": "calibration",
+  "hypothesis": "A deterministic 50% shrink of selected A's composite toward its own provided-feature prediction mean within each official region is a predeclared lower-within-region-variance robustness companion; no claim that it will score better.",
+  "selection_of_A": {
+    "candidate_id": "V2_model",
+    "artifact": "reports/candidates/V2_model.csv",
+    "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12",
+    "submission_id": "EbwLNkmt",
+    "successful_public_rmse": 0.121644596,
+    "rule": "Frozen final-two protocol's lowest eligible frozen-cohort public RMSE outside pairwise-noise ties; V2 beats A1 by 0.004898951, beyond the frozen 0.003308293 pairwise guard. Public results determine A only as authorized; no coefficients are fitted from scores."
+  },
+  "source_inputs": {
+    "template": "$COMPETITION_WORKSPACE/SampleSubmission.csv (GEOID and region metadata only)",
+    "official_samples": "$COMPETITION_WORKSPACE/samples/{maricopa-az,northern-ca,eastern-ok,south-central-tx}-sample-submission.csv (GEOID only)",
+    "source_candidate_artifact": "reports/candidates/V2_model.csv",
+    "source_candidate_sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12"
+  },
+  "fixed_recipe": {
+    "composite_formula": "B_i = 0.5 * A_i + 0.5 * mean(A_j for official tracts j in i's region)",
+    "A_i": "V2_model.coverage_gap_score for that official tract",
+    "regional_mean": "arithmetic mean of V2_model.coverage_gap_score over the 9,379 official tracts in that region only",
+    "other_component_columns": "copy V2_model transport_gap, building_gap, and poi_gap unchanged; the frozen B rule applies to the composite score only",
+    "clipping": "clip only coverage_gap_score to [0,1]; observed 0 clipped values",
+    "template_only_rows": "set every score field to established deterministic zero fill for 415 eastern-wa format-only rows",
+    "immutable_after_registration": true
+  },
+  "artifact": "reports/candidates/B_from_A.csv",
+  "sha256": "efd51badc5c9142263481086180fb5b89c720b8279237ae0edcdb0066d1ae303",
+  "rows": 9794,
+  "columns": ["GEOID", "transport_gap", "building_gap", "poi_gap", "coverage_gap_score"],
+  "reproduction_command": "python3 -I scripts/build_candidate_b_from_a.py --workspace \"$COMPETITION_WORKSPACE\" --repo \"$COMPETITION_REPO\"",
+  "forecast": {
+    "predicted_public_rmse_prior": 0.107246299,
+    "basis": "Steward-approved C0 historical public-RMSE prior retained by final-two calibration protocol; this is not a candidate-specific accuracy estimate or local held-out score.",
+    "local_target_labels_available": false
+  },
+  "prohibited_inputs_not_used": ["target labels", "removed reference layers or equivalents", "leaderboard coefficients or score algebra", "scorecard cells", "public-score tuning"],
+  "local_checks": {
+    "official_ids": 9379,
+    "template_rows": 9794,
+    "exact_template_order": true,
+    "unique_ids": true,
+    "finite_bounded_scores": true,
+    "deterministic_rebuild": true,
+    "clipped_values": 0
+  }
+}

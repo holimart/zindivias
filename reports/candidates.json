@@ -1725,6 +1725,27 @@
       },
       "upload_authorized": false,
       "registration_status": "frozen_no_upload"
+    },
+    {
+      "candidate_id": "B_from_A",
+      "name": "Frozen 50% regional-mean shrink of selected A (V2_model)",
+      "artifact": "reports/candidates/B_from_A.csv",
+      "sha256": "efd51badc5c9142263481086180fb5b89c720b8279237ae0edcdb0066d1ae303",
+      "rows": 9794,
+      "columns": [
+        "GEOID",
+        "transport_gap",
+        "building_gap",
+        "poi_gap",
+        "coverage_gap_score"
+      ],
+      "pre_registered": true,
+      "purpose": "calibration",
+      "description": "Final-two protocol B: shrink only V2_model composite predictions 50% toward their own provided-feature mean within each official region; component estimates copied unchanged; 415 template-only rows zero-filled. Not an accuracy claim.",
+      "predicted_public_rmse": 0.107246299,
+      "forecast_basis": "Steward-approved C0 public-RMSE prior; not a candidate-specific accuracy estimate or local held-out score.",
+      "pre_registered_card": "reports/final-candidate-cards/B_from_A-2026-10-28.json",
+      "pre_registered_card_sha256": "adae3c7b6e4a3423d5c1f77edb8804038fa59bb177bf57df53524b7abbbff143"
     }
   ],
   "feature_source": "provided Overture buildings/roads/POIs plus provided ACS housing geometries and strata covariates",

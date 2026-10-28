@@ -1,0 +1,23 @@
+{
+  "candidate_id": "B_from_A",
+  "clipped_values": 0,
+  "component_columns": "copied unchanged from A; fixed protocol shrinks composite only",
+  "deterministic": true,
+  "formula": "B_i = 0.5 * V2_model.coverage_gap_score_i + 0.5 * mean(V2_model.coverage_gap_score over official GEOIDs in the same region)",
+  "labels_or_leaderboard_inputs_used": false,
+  "official_rows": 9379,
+  "output_artifact": "reports/candidates/B_from_A.csv",
+  "output_sha256": "efd51badc5c9142263481086180fb5b89c720b8279237ae0edcdb0066d1ae303",
+  "region_means_from_provided_feature_predictions": {
+    "eastern-ok": 0.038996906408728424,
+    "maricopa-az": 0.07521301371134201,
+    "northern-ca": 0.057067595693998864,
+    "south-central-tx": 0.061204376849485355
+  },
+  "source_artifact": "reports/candidates/V2_model.csv",
+  "source_candidate_id": "V2_model",
+  "source_sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12",
+  "template_only_policy": "zero fill in all score columns for eastern-wa format-only rows; no score claim",
+  "template_only_rows": 415,
+  "template_rows": 9794
+}
