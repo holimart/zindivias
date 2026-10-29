@@ -63,8 +63,8 @@
     ]
   },
   "revision": {
-    "git_commit": "4488de6f1163101d09034d2fc31b8058bf5271d2",
-    "tree_clean": true,
+    "git_commit": "0285df24caee9e6f0fa35b9df68aecfd3ce9d650",
+    "tree_clean": false,
     "pdf_engine": "ReportLab 4.4.10 (BSD), Pillow 13.0.0 (MIT-CMU), charset-normalizer 3.5.2 (MIT); SHA-256 locked in requirements-writeup-pdf.txt; canvas invariant=1",
     "pdf_toolchain": {
       "python": "CPython 3.12; Linux x86_64 manylinux_2_27+ wheels",
@@ -93,11 +93,11 @@
     }
   },
   "pdf_validation": {
-    "bytes": 528907,
-    "page_count": 11,
-    "link_annotations": 142,
+    "bytes": 558724,
+    "page_count": 15,
+    "link_annotations": 186,
     "embedded_images": 2,
-    "sha256": "07f233ee9337734fa81197839b5be78dccd019906000dc552c4f9ebe7f5a7885",
+    "sha256": "9bd47c71d746aa69956ad0470adff1953ea238a902faf85b329287e68212852e",
     "max_bytes_exclusive": 10000000,
     "reportlab_version": "4.4.10"
   },
@@ -625,6 +625,13 @@
       "official": false
     },
     {
+      "url": "https://overturemaps-us-west-2.s3.us-west-2.amazonaws.com/release/2026-09-23.1/theme=buildings/type=building/",
+      "label": "This supporting transfer test uses Overture Maps Foundation buildings release 2026-09-23.1, the same release used by the",
+      "accessed_on": "2026-10-24",
+      "role": "prior art and methodology know-how; not a dataset and never joined to scored predictions",
+      "official": false
+    },
+    {
       "url": "https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/POSTFIRE_MASTER_DATA_SHARE/FeatureServer/0",
       "label": "CAL FIRE DINS public point-feature service; filtered to Camp incident and non-address fields",
       "accessed_on": "2026-10-29",
@@ -670,14 +677,14 @@
       "url": "https://www2.census.gov/adrm/PDB/2026/2026_PDB_Documentation.pdf",
       "label": "Census Planning Database 2026 documentation",
       "accessed_on": "2026-10-27",
-      "role": "discovery-only external context; never used in scored predictions",
+      "role": "discovery-only external context; County_name used solely for naming preselected high-SVI tract examples; never used in scored predictions",
       "official": false
     },
     {
       "url": "https://www2.census.gov/adrm/PDB/2026/pdb2026tr.csv",
       "label": "Census Planning Database 2026",
       "accessed_on": "2026-10-27",
-      "role": "discovery-only external context; never used in scored predictions",
+      "role": "discovery-only external context; County_name used solely for naming preselected high-SVI tract examples; never used in scored predictions",
       "official": false
     },
     {
@@ -685,6 +692,69 @@
       "label": "Census TIGER/Line 2020 AIANNH polygons",
       "accessed_on": "2026-10-27",
       "role": "discovery-only external context; never used in scored predictions",
+      "official": false
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/PLACE/tl_2024_04_place.zip",
+      "label": "U.S. Census Bureau TIGER/Line 2024 place polygons, Arizona",
+      "accessed_on": "2026-10-29",
+      "role": "public domain Census geography used only to label preselected example tracts; no finding metric recomputed",
+      "official": false
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/PLACE/tl_2024_06_place.zip",
+      "label": "U.S. Census Bureau TIGER/Line 2024 place polygons, California",
+      "accessed_on": "2026-10-29",
+      "role": "public domain Census geography used only to label preselected example tracts; no finding metric recomputed",
+      "official": false
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/PLACE/tl_2024_40_place.zip",
+      "label": "U.S. Census Bureau TIGER/Line 2024 place polygons, Oklahoma",
+      "accessed_on": "2026-10-29",
+      "role": "public domain Census geography used only to label preselected example tracts; no finding metric recomputed",
+      "official": false
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/PLACE/tl_2024_48_place.zip",
+      "label": "U.S. Census Bureau TIGER/Line 2024 place polygons, Texas",
+      "accessed_on": "2026-10-29",
+      "role": "public domain Census geography used only to label preselected example tracts; no finding metric recomputed",
+      "official": false
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_04_tract.zip",
+      "label": "U.S. Census Bureau TIGER/Line 2024 tract polygons, Arizona",
+      "accessed_on": "2026-10-25",
+      "role": "public domain Census geography used only to match preselected GEOIDs to Census places; no finding metric recomputed",
+      "official": false
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_06_tract.zip",
+      "label": "U.S. Census Bureau TIGER/Line 2024 tract polygons, California",
+      "accessed_on": "2026-10-25",
+      "role": "public-domain geography for outside-region footprint-to-tract assignment and matching preselected GEOIDs to Census places; not target reference data",
+      "official": false
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_35_tract.zip",
+      "label": "U.S. Census Bureau TIGER/Line 2024 tract polygons, New Mexico",
+      "accessed_on": "2026-10-25",
+      "role": "public-domain geography used only for outside-region footprint-to-tract assignment; not target reference data",
+      "official": false
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_40_tract.zip",
+      "label": "U.S. Census Bureau TIGER/Line 2024 tract polygons, Oklahoma",
+      "accessed_on": "2026-10-25",
+      "role": "public domain Census geography used only to match preselected GEOIDs to Census places; no finding metric recomputed",
+      "official": false
+    },
+    {
+      "url": "https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_48_tract.zip",
+      "label": "U.S. Census Bureau TIGER/Line 2024 tract polygons, Texas",
+      "accessed_on": "2026-10-25",
+      "role": "public-domain geography for outside-region footprint-to-tract assignment and matching preselected GEOIDs to Census places; not target reference data",
       "official": false
     }
   ],
@@ -706,35 +776,35 @@
   },
   "claim_evidence_audit": {
     "report": "reports/writeup-claim-evidence-audit.json",
-    "claims_total": 72,
-    "claims_fully_traceable": 72,
+    "claims_total": 83,
+    "claims_fully_traceable": 83,
     "fraction_quantitative_claims_traceable": 1.0,
-    "numeric_tokens_total": 862,
-    "numeric_tokens_covered": 862,
+    "numeric_tokens_total": 961,
+    "numeric_tokens_covered": 961,
     "fraction_numeric_tokens_covered": 1.0,
-    "distinct_verify_commands": 72,
-    "distinct_reproduce_commands": 19,
-    "derived_aggregates_verified": 27,
-    "claims_asserting_accuracy": 1,
-    "claims_with_prohibited_data_language": 2
+    "distinct_verify_commands": 83,
+    "distinct_reproduce_commands": 20,
+    "derived_aggregates_verified": 39,
+    "claims_asserting_accuracy": 0,
+    "claims_with_prohibited_data_language": 0
   },
   "writeup_files": [
     {
       "path": "docs/writeup/final-writeup.md",
       "role": "writeup_markdown",
-      "sha256": "598c43b9db03a2e370ff19f7d26a9b2d06075ed34ca7b850c2b32e5886a906ab",
-      "bytes": 33463
+      "sha256": "afd498b48c3b6ebb525fbd8939a7186946c91ada6a53802d669729cad2982509",
+      "bytes": 52317
     },
     {
       "path": "docs/writeup/final-writeup.pdf",
       "role": "writeup_pdf",
-      "sha256": "07f233ee9337734fa81197839b5be78dccd019906000dc552c4f9ebe7f5a7885",
-      "bytes": 528907
+      "sha256": "9bd47c71d746aa69956ad0470adff1953ea238a902faf85b329287e68212852e",
+      "bytes": 558724
     },
     {
       "path": "reports/writeup/submission-bundle.json",
       "role": "submission_bundle",
-      "sha256": "871a4a883c4a6a8dd74369c0588113879713b85ba10349e39bfe922993020690",
+      "sha256": "135a882b912c824f9e9444e08e120931c104167f1c3eaccfc058fcc65b730156",
       "bytes": 2979
     }
   ],
@@ -747,7 +817,7 @@
   },
   "submission_bundle": {
     "path": "reports/writeup/submission-bundle.json",
-    "sha256": "871a4a883c4a6a8dd74369c0588113879713b85ba10349e39bfe922993020690",
+    "sha256": "135a882b912c824f9e9444e08e120931c104167f1c3eaccfc058fcc65b730156",
     "bytes": 2979,
     "bundle": {
       "schema_version": 1,
@@ -765,14 +835,14 @@
         {
           "path": "docs/writeup/final-writeup.md",
           "role": "writeup_markdown",
-          "sha256": "598c43b9db03a2e370ff19f7d26a9b2d06075ed34ca7b850c2b32e5886a906ab",
-          "bytes": 33463
+          "sha256": "afd498b48c3b6ebb525fbd8939a7186946c91ada6a53802d669729cad2982509",
+          "bytes": 52317
         },
         {
           "path": "docs/writeup/final-writeup.pdf",
           "role": "writeup_pdf",
-          "sha256": "07f233ee9337734fa81197839b5be78dccd019906000dc552c4f9ebe7f5a7885",
-          "bytes": 528907
+          "sha256": "9bd47c71d746aa69956ad0470adff1953ea238a902faf85b329287e68212852e",
+          "bytes": 558724
         }
       ],
       "paste_blocks": {
@@ -780,7 +850,7 @@
         "prize_request_line": "We request consideration for both Best Bias Discovery ($1,000) and Best Documentation ($500).",
         "submission_ids_block": "C0 | uRRw9KpB | 0edf8140123e2135489e5728fd71bce6f1e28a97f447ca411ba45fdbc02bc214\nC1 | BvyKrR6v | dc2e368194b31408cb5c313fa8ce3f3fa59a1b5965bc2df8e4217bbc9e0c82e0\nC2 | rTARuUaG | 5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514\nC3 | TM83xxU6 | e5ee50f5c2cca149550f3408638d2b77431f6ed62cf104dfe8c07d8c8416f9e4\nP4 | ySXi73rd | 8b329802d882ea4bdff2bfd8c465c160d6ffd9269cfbe28dce8be9e702b07d37\nA1_physical_equal | iQw8C6Q9 | 6af088b83ff3481d420e11b14d903fc510c2b4be2cea285c762ca12d500862de\nA2_spectral | W83LEghZ | f88573996566a1975726845a49f42fb2cd3781d5f0e83d55944fc65647692997\nA3_dawid_skene | tGB6sGRx | 6d588f2f7a45a58b128860a049ac19995b21902f7f98d3b2ab39d1d9fbb073b3\nV2_model | EbwLNkmt | 3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12\nV2_model_cgs | hvLtPVmr | 5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7\nA1_physical_equal_cgs | 4R4vkHSd | 2da0051af221ddf26a8a73740746811dbd956854a1fc12846c99864d3abae8a1\nA2_spectral_cgs | s7mXS43p | 584e086bb5df950f6079317afcdc7c5a0182b5263d170be2a10987d1ac4c6213\nA3_dawid_skene_cgs | B8de77WD | 432ade8f1e46c6804cb34fb790612bb1befc9fe03b67a545e753be46b549237c\nB_from_A_cgs | eAaWXWxM | 38e17cf1ec99f4f3fc5d358d13ccd0edfabe947d81fd6b6e5ef61e6cea006607",
         "model_candidate_block": "V2_model | artifact reports/candidates/V2_model.csv | sha256 3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12 | uploaded false | uploads used 0",
-        "writeup_hashes_block": "docs/writeup/final-writeup.md | sha256 598c43b9db03a2e370ff19f7d26a9b2d06075ed34ca7b850c2b32e5886a906ab | 33463 bytes\ndocs/writeup/final-writeup.pdf | sha256 07f233ee9337734fa81197839b5be78dccd019906000dc552c4f9ebe7f5a7885 | 528907 bytes",
+        "writeup_hashes_block": "docs/writeup/final-writeup.md | sha256 afd498b48c3b6ebb525fbd8939a7186946c91ada6a53802d669729cad2982509 | 52317 bytes\ndocs/writeup/final-writeup.pdf | sha256 9bd47c71d746aa69956ad0470adff1953ea238a902faf85b329287e68212852e | 558724 bytes",
         "form_status_line": "Form URL: to be supplied by the operator (not recoverable from the saved rules text or the client-rendered organiser page)"
       }
     }
@@ -825,8 +895,8 @@
         "Best Documentation"
       ],
       "writeup_pdf_path": "docs/writeup/final-writeup.pdf",
-      "writeup_pdf_sha256": "07f233ee9337734fa81197839b5be78dccd019906000dc552c4f9ebe7f5a7885",
-      "finding_1_abstract": "Across 460 South Texas border tracts, mean OSM-touched building share is 9.18% versus 61.48% elsewhere; 290 tracts containing 1,183,693 residents have under 5% OSM share. Source-count reconciliation associates 254,346 border other-source footprints with Google Open Buildings spill-over, while the challenge compares Overture counts with Microsoft. This is descriptive evidence, not a measured dispatch failure or a score estimate.",
+      "writeup_pdf_sha256": "9bd47c71d746aa69956ad0470adff1953ea238a902faf85b329287e68212852e",
+      "finding_1_abstract": "Across all four regions, rural tracts have lower mean OSM-attributed shares of Overture buildings than urban tracts. This is a provided-data source pattern, not an organizer-score comparison or evidence of missing or incorrect buildings.",
       "final_two_confirmation_text_draft": "Draft—use only after operator review/approval: Final two are A: V2_model_cgs (submission hvLtPVmr) and B: B_from_A_cgs (submission eAaWXWxM).",
       "ui_selection_instruction": "After review/approval, select exactly hvLtPVmr and eAaWXWxM in the Zindi UI and verify those two IDs are selected. Do not rely on the platform fallback: it would choose the historical P4, whose score is void for selection because of the column-order mismatch.",
       "deadline_table": [

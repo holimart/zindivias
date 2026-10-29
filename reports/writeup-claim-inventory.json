@@ -89,28 +89,309 @@
    "line_start": 30,
    "line_end": 30,
    "kind": "paragraph",
-   "text": "Ten South Texas counties include 1.77 million residents and colonias; prioritise partner-led checks, with dispatch impact unmeasured.",
-   "provenance_class": "measured_provided_data",
+   "text": "Lead: border metros have machine-only footprints with an Overture third provider, beyond low OSM. Ector has lower OSM than El Paso (6.7% vs 9.3%), 47.7% Esri, and zero border-provider share; source, not accuracy, is measured.",
+   "provenance_class": "measured_external_discovery_data",
    "evidence": [
     {
-     "path": "reports/discovery-postfire.json",
-     "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a",
+     "path": "reports/discovery-border-transfer.json",
+     "sha256": "64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795",
      "primary": true,
      "pointer": "/"
     },
     {
-     "path": "reports/discovery-dins-mechanism.json",
-     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd",
+     "path": "reports/discovery-border-metros.json",
+     "sha256": "27779986d787594abdadf741c983db13dedf25fb476cc4ff2ae096a1a4260244",
      "primary": false,
      "pointer": "/"
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-003",
-   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/border_metros.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-metros.json && /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/transfer_outside_regions.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-transfer.json",
+   "reproduce_products": [
+    {
+     "path": "reports/discovery-border-metros.json",
+     "sha256": "27779986d787594abdadf741c983db13dedf25fb476cc4ff2ae096a1a4260244"
+    },
+    {
+     "path": "reports/discovery-border-transfer.json",
+     "sha256": "64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795"
+    }
+   ],
+   "tokens_exempt": [],
+   "derived_tokens": [],
+   "hedge_context": [
+    "Lead: border metros have machine-only footprints with an Overture third provider, beyond low OSM. Ector has lower OSM than El Paso (6.7% vs 9.3%), 47.7% Esri, and zero border-provider share; source, not accuracy, is measured.",
+    "Ten border counties, 1.77M residents; impacts unmeasured.",
+    "Regional composition can explain the pooled tribal/non-tribal contrast; this is not evidence of a general tribal disparity or causation."
+   ],
+   "notes": ""
+  },
+  {
+   "claim_id": "bias-discovery-004",
+   "doc": "docs/writeup/bias-discovery.md",
+   "section": "Impact and novelty",
+   "line_start": 32,
+   "line_end": 32,
+   "kind": "paragraph",
+   "text": "Ten border counties, 1.77M residents; impacts unmeasured.",
+   "provenance_class": "measured_external_discovery_data",
+   "evidence": [
+    {
+     "path": "reports/discovery-border-metros.json",
+     "sha256": "27779986d787594abdadf741c983db13dedf25fb476cc4ff2ae096a1a4260244",
+     "primary": true,
+     "pointer": "/"
+    }
+   ],
+   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-004",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/border_metros.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-metros.json && /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/transfer_outside_regions.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-transfer.json",
+   "reproduce_products": [
+    {
+     "path": "reports/discovery-border-metros.json",
+     "sha256": "27779986d787594abdadf741c983db13dedf25fb476cc4ff2ae096a1a4260244"
+    },
+    {
+     "path": "reports/discovery-border-transfer.json",
+     "sha256": "64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795"
+    }
+   ],
+   "tokens_exempt": [],
+   "derived_tokens": [],
+   "hedge_context": [
+    "Lead: border metros have machine-only footprints with an Overture third provider, beyond low OSM. Ector has lower OSM than El Paso (6.7% vs 9.3%), 47.7% Esri, and zero border-provider share; source, not accuracy, is measured.",
+    "Ten border counties, 1.77M residents; impacts unmeasured.",
+    "Regional composition can explain the pooled tribal/non-tribal contrast; this is not evidence of a general tribal disparity or causation."
+   ],
+   "notes": ""
+  },
+  {
+   "claim_id": "bias-discovery-005",
+   "doc": "docs/writeup/bias-discovery.md",
+   "section": "Evidence and mechanism",
+   "line_start": 36,
+   "line_end": 36,
+   "kind": "paragraph",
+   "text": "Across 460 border tracts, OSM mean is 9.18% vs 61.48% elsewhere (68.66% urban); difference −52.30 pp (95% county-cluster CI −61.24 to −36.99), adjusted β=−0.446 (SE 0.070; n=5,958, 185 counties), descriptive; full counts in Appendix J.",
+   "provenance_class": "measured_external_discovery_data",
+   "evidence": [
+    {
+     "path": "reports/discovery-border-metros.json",
+     "sha256": "27779986d787594abdadf741c983db13dedf25fb476cc4ff2ae096a1a4260244",
+     "primary": true,
+     "pointer": "/results/adjusted_border_association_plus_svi_hispanic/border_coefficient"
+    }
+   ],
+   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-005",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/border_metros.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-metros.json && /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/transfer_outside_regions.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-transfer.json",
+   "reproduce_products": [
+    {
+     "path": "reports/discovery-border-metros.json",
+     "sha256": "27779986d787594abdadf741c983db13dedf25fb476cc4ff2ae096a1a4260244"
+    },
+    {
+     "path": "reports/discovery-border-transfer.json",
+     "sha256": "64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795"
+    }
+   ],
+   "tokens_exempt": [
+    {
+     "value": 95,
+     "decimals": 0,
+     "class": "methodological_constant",
+     "reason": "nominal confidence level of the reported county-cluster interval"
+    }
+   ],
+   "derived_tokens": [],
+   "hedge_context": [
+    "Across 460 border tracts, OSM mean is 9.18% vs 61.48% elsewhere (68.66% urban); difference −52.30 pp (95% county-cluster CI −61.24 to −36.99), adjusted β=−0.446 (SE 0.070; n=5,958, 185 counties), descriptive; full counts in Appendix J.",
+    "`Other` is an Overture `sources` label, not removed Google Open Buildings or USGS reference data. The border label matches the first provider; non-border Texas, the second (Bexar cache share 0.336; ±526 count matches). This provider-label inference is not proof (Appendix J)."
+   ],
+   "notes": ""
+  },
+  {
+   "claim_id": "bias-discovery-006",
+   "doc": "docs/writeup/bias-discovery.md",
+   "section": "Evidence and mechanism",
+   "line_start": 38,
+   "line_end": 38,
+   "kind": "paragraph",
+   "text": "`Other` is an Overture `sources` label, not removed Google Open Buildings or USGS reference data. The border label matches the first provider; non-border Texas, the second (Bexar cache share 0.336; ±526 count matches). This provider-label inference is not proof (Appendix J).",
+   "provenance_class": "measured_external_discovery_data",
+   "evidence": [
+    {
+     "path": "reports/discovery-border-transfer.json",
+     "sha256": "64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795",
+     "primary": true,
+     "pointer": "/other_source_context/bexar_cache/footprint_weighted_other_source_share"
+    },
+    {
+     "path": "reports/discovery-border-metros.json",
+     "sha256": "27779986d787594abdadf741c983db13dedf25fb476cc4ff2ae096a1a4260244",
+     "primary": false,
+     "pointer": "/"
+    }
+   ],
+   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-006",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/border_metros.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-metros.json && /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/transfer_outside_regions.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-transfer.json",
+   "reproduce_products": [
+    {
+     "path": "reports/discovery-border-metros.json",
+     "sha256": "27779986d787594abdadf741c983db13dedf25fb476cc4ff2ae096a1a4260244"
+    },
+    {
+     "path": "reports/discovery-border-transfer.json",
+     "sha256": "64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795"
+    }
+   ],
+   "tokens_exempt": [],
+   "derived_tokens": [],
+   "hedge_context": [
+    "Across 460 border tracts, OSM mean is 9.18% vs 61.48% elsewhere (68.66% urban); difference −52.30 pp (95% county-cluster CI −61.24 to −36.99), adjusted β=−0.446 (SE 0.070; n=5,958, 185 counties), descriptive; full counts in Appendix J.",
+    "`Other` is an Overture `sources` label, not removed Google Open Buildings or USGS reference data. The border label matches the first provider; non-border Texas, the second (Bexar cache share 0.336; ±526 count matches). This provider-label inference is not proof (Appendix J)."
+   ],
+   "notes": ""
+  },
+  {
+   "claim_id": "bias-discovery-007",
+   "doc": "docs/writeup/bias-discovery.md",
+   "section": "Does it transfer?",
+   "line_start": 42,
+   "line_end": 42,
+   "kind": "paragraph",
+   "text": "“Google-only” denotes an Overture provider tag, not a removed reference layer: 10.8–33.0% in three unscored border counties and zero in both controls. El Paso OSM/provider (9.3%/33.0%) matches the scored Rio Grande OSM range (4.2–12.0%); Doña Ana has 10.8% provider and 26.1% Esri. No interval.",
+   "provenance_class": "measured_external_discovery_data",
+   "evidence": [
+    {
+     "path": "reports/source-provenance.json",
+     "sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565",
+     "primary": true,
+     "pointer": "/"
+    },
+    {
+     "path": "reports/discovery-border-transfer.json",
+     "sha256": "64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795",
+     "primary": false,
+     "pointer": "/results"
+    },
+    {
+     "path": "reports/discovery-border-metros.json",
+     "sha256": "27779986d787594abdadf741c983db13dedf25fb476cc4ff2ae096a1a4260244",
+     "primary": false,
+     "pointer": "/"
+    }
+   ],
+   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-007",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/transfer_outside_regions.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-transfer.json",
+   "reproduce_products": [
+    {
+     "path": "reports/discovery-border-transfer.json",
+     "sha256": "64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795"
+    }
+   ],
+   "tokens_exempt": [],
+   "derived_tokens": [],
+   "hedge_context": [
+    "“Google-only” denotes an Overture provider tag, not a removed reference layer: 10.8–33.0% in three unscored border counties and zero in both controls. El Paso OSM/provider (9.3%/33.0%) matches the scored Rio Grande OSM range (4.2–12.0%); Doña Ana has 10.8% provider and 26.1% Esri. No interval.",
+    "| County | OSM | Third-provider tag | Esri |\n|---|---:|---:|---:|\n| **El Paso TX** | 0.093 | **0.330** | 0.000 |\n| **Imperial CA** | 0.200 | **0.292** | 0.000 |\n| **Doña Ana NM** | 0.179 | **0.108** | 0.261 |\n| Ector TX (control) | 0.067 | **0.000** | 0.477 |\n| Bernalillo NM (control) | 0.809 | **0.000** | 0.000 |",
+    "Full results and reproduction: [Appendix J](#appendix-j-supporting-discovery-tables).",
+    "Manifest: `$COMPETITION_WORKSPACE/external-discovery-2026-10-29-fable/MANIFEST.json`; rerun report `reports/discovery-border-transfer.json` (SHA-256 `64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795`); command in Appendix J. No scores or removed references."
+   ],
+   "notes": ""
+  },
+  {
+   "claim_id": "bias-discovery-008",
+   "doc": "docs/writeup/bias-discovery.md",
+   "section": "Does it transfer?",
+   "line_start": 44,
+   "line_end": 50,
+   "kind": "table",
+   "text": "| County | OSM | Third-provider tag | Esri |\n|---|---:|---:|---:|\n| **El Paso TX** | 0.093 | **0.330** | 0.000 |\n| **Imperial CA** | 0.200 | **0.292** | 0.000 |\n| **Doña Ana NM** | 0.179 | **0.108** | 0.261 |\n| Ector TX (control) | 0.067 | **0.000** | 0.477 |\n| Bernalillo NM (control) | 0.809 | **0.000** | 0.000 |",
+   "provenance_class": "measured_external_discovery_data",
+   "evidence": [
+    {
+     "path": "reports/discovery-border-transfer.json",
+     "sha256": "64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795",
+     "primary": true,
+     "pointer": "/results"
+    }
+   ],
+   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-008",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/transfer_outside_regions.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-transfer.json",
+   "reproduce_products": [
+    {
+     "path": "reports/discovery-border-transfer.json",
+     "sha256": "64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795"
+    }
+   ],
+   "tokens_exempt": [],
+   "derived_tokens": [],
+   "hedge_context": [
+    "“Google-only” denotes an Overture provider tag, not a removed reference layer: 10.8–33.0% in three unscored border counties and zero in both controls. El Paso OSM/provider (9.3%/33.0%) matches the scored Rio Grande OSM range (4.2–12.0%); Doña Ana has 10.8% provider and 26.1% Esri. No interval.",
+    "| County | OSM | Third-provider tag | Esri |\n|---|---:|---:|---:|\n| **El Paso TX** | 0.093 | **0.330** | 0.000 |\n| **Imperial CA** | 0.200 | **0.292** | 0.000 |\n| **Doña Ana NM** | 0.179 | **0.108** | 0.261 |\n| Ector TX (control) | 0.067 | **0.000** | 0.477 |\n| Bernalillo NM (control) | 0.809 | **0.000** | 0.000 |",
+    "Full results and reproduction: [Appendix J](#appendix-j-supporting-discovery-tables).",
+    "Manifest: `$COMPETITION_WORKSPACE/external-discovery-2026-10-29-fable/MANIFEST.json`; rerun report `reports/discovery-border-transfer.json` (SHA-256 `64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795`); command in Appendix J. No scores or removed references."
+   ],
+   "notes": ""
+  },
+  {
+   "claim_id": "bias-discovery-009",
+   "doc": "docs/writeup/bias-discovery.md",
+   "section": "Impact and evidence",
+   "line_start": 62,
+   "line_end": 62,
+   "kind": "paragraph",
+   "text": "In six Paradise/Magalia Butte County tracts, provided Wildfire Risk to Communities counts exceed Overture (ratios 0.620–0.747); the geographic/vintage discrepancy does not establish fire damage as its cause. Treating larger counts as current could misdirect field checks. Provided MTBS last-burn year is 2018; public CAL FIRE DINS is a discovery-only mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified). Tract-level rows are in [Appendix J](#appendix-j-supporting-discovery-tables).",
+   "provenance_class": "measured_external_discovery_data",
+   "evidence": [
+    {
+     "path": "reports/discovery-postfire.json",
+     "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a",
+     "primary": true,
+     "pointer": "/focal_butte_2018_burn_geoids"
+    },
+    {
+     "path": "reports/postfire-lineage-recheck.json",
+     "sha256": "52c16e28258e3b3ca73a3135a81643725a9230372078f5f40c5827d75c1642ca",
+     "primary": false,
+     "pointer": "/focal_paradise_magalia"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.json",
+     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd",
+     "primary": false,
+     "pointer": "/spearman/cohort"
+    }
+   ],
+   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-009",
+   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png && /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/audit_discovery_postfire_county_bootstrap.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire-county-bootstrap.json && MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_dins_mechanism.py --workspace \"$COMPETITION_WORKSPACE\" --dins-file \"$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson\" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png && /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_postfire_lineage.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/postfire-lineage-recheck.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-postfire.json",
      "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
+    },
+    {
+     "path": "reports/discovery-postfire-map.png",
+     "sha256": "916589e0d3dc765a77c133dbcfe454740906dabb26ab74fcc0db92f9ffa43da1"
+    },
+    {
+     "path": "reports/discovery-postfire-county-bootstrap.json",
+     "sha256": "0bd5dedf9fbfda5f590262290119f433737283fddda79793f87e573da736bc74"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.json",
+     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.md",
+     "sha256": "f66d97f7bb82d77cc11928a01699f976455fe349063316624883a464a90b245d"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.png",
+     "sha256": "2b2948bd8f330f7c958b5c8deb48306b2b0809a1101947ca620c989e6dae6f8f"
+    },
+    {
+     "path": "reports/postfire-lineage-recheck.json",
+     "sha256": "52c16e28258e3b3ca73a3135a81643725a9230372078f5f40c5827d75c1642ca"
     }
    ],
    "tokens_exempt": [
@@ -123,430 +404,86 @@
    ],
    "derived_tokens": [],
    "hedge_context": [
-    "Ten South Texas counties include 1.77 million residents and colonias; prioritise partner-led checks, with dispatch impact unmeasured.",
-    "Regional composition can explain the pooled tribal/non-tribal contrast; this is not evidence of a general tribal disparity or causation."
-   ],
-   "notes": ""
-  },
-  {
-   "claim_id": "bias-discovery-004",
-   "doc": "docs/writeup/bias-discovery.md",
-   "section": "Evidence and mechanism",
-   "line_start": 34,
-   "line_end": 34,
-   "kind": "paragraph",
-   "text": "Across 460 border tracts, mean OSM-touched share was 9.18%, versus 61.48% in 5,541 others (68.66% in 4,600 urban others); Microsoft-only share averaged 67.48%. “Other” tags cover 254,346/886,361 footprints (28.70%); 290 tracts (1,183,693 people) are below 5% OSM. Difference: −52.30 pp (county-cluster 95% CI [−61.24, −36.99]); adjusted association −0.446 (SE 0.070; n=5,958, 185 counties), descriptive—not causal.",
-   "provenance_class": "measured_provided_data",
-   "evidence": [
-    {
-     "path": "reports/discovery-dins-mechanism.json",
-     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd",
-     "primary": true,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-postfire.json",
-     "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a",
-     "primary": false,
-     "pointer": "/"
-    }
-   ],
-   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-004",
-   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
-   "reproduce_products": [
-    {
-     "path": "reports/discovery-postfire.json",
-     "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
-    }
-   ],
-   "tokens_exempt": [],
-   "derived_tokens": [],
-   "hedge_context": [
-    "Across 460 border tracts, mean OSM-touched share was 9.18%, versus 61.48% in 5,541 others (68.66% in 4,600 urban others); Microsoft-only share averaged 67.48%. “Other” tags cover 254,346/886,361 footprints (28.70%); 290 tracts (1,183,693 people) are below 5% OSM. Difference: −52.30 pp (county-cluster 95% CI [−61.24, −36.99]); adjusted association −0.446 (SE 0.070; n=5,958, 185 counties), descriptive—not causal.",
-    "Border “Other” (254,346) nearly matches Google Open Buildings (254,872); non-border “Other” (977,049) nearly matches USGS lidar (976,523), a ±526 reconciliation supporting—but not proving—spill-over. County details are in [Appendix J](#appendix-j-supporting-discovery-tables). Webb/Starr/Maverick Overture/USFS medians (1.56/1.75/1.71) are context, not a Microsoft target proxy.",
-    "Small-county CIs unstable; attribution is regional only.",
-    "Hidalgo `48215021906`, `48215023525`, and `48215024404` have zero OSM share and 1,727, 1,765, and 2,212 footprints; Cameron `48061012002` has 3,084 and 0.03% OSM. Heat averages 53.5 vs 7.3 WBGT>30°C days/year (218 vs 3,654 covered tracts). Prioritise local verification; dispatch effects are unmeasured.",
-    "Related road/colonias entries and differentiation are in [the board note](related-entries.md); this is a qualified building-source comparison. Reports/hashes: `reports/discovery-border-metros.json` (`27779986d787594abdadf741c983db13dedf25fb476cc4ff2ae096a1a4260244`) and `reports/source-provenance.json` (`e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565`). Rebuild with `uv run --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/discovery/border_metros.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-metros.json`; SVI is defined in Appendix F."
-   ],
-   "notes": ""
-  },
-  {
-   "claim_id": "bias-discovery-005",
-   "doc": "docs/writeup/bias-discovery.md",
-   "section": "Evidence and mechanism",
-   "line_start": 36,
-   "line_end": 36,
-   "kind": "paragraph",
-   "text": "Border “Other” (254,346) nearly matches Google Open Buildings (254,872); non-border “Other” (977,049) nearly matches USGS lidar (976,523), a ±526 reconciliation supporting—but not proving—spill-over. County details are in [Appendix J](#appendix-j-supporting-discovery-tables). Webb/Starr/Maverick Overture/USFS medians (1.56/1.75/1.71) are context, not a Microsoft target proxy.",
-   "provenance_class": "measured_provided_data",
-   "evidence": [
-    {
-     "path": "reports/source-provenance.json",
-     "sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565",
-     "primary": true,
-     "pointer": "/regions/south-central-tx/source_inputs/buildings/dataset_membership_counts/google open buildings"
-    },
-    {
-     "path": "reports/discovery-postfire.json",
-     "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a",
-     "primary": false,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-dins-mechanism.json",
-     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd",
-     "primary": false,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-strata-confound.json",
-     "sha256": "ce0f1307793d1c658754cb7f9dd6fee7ea9cabf2a8a0e7ccb8e9888c2bad9ecb",
-     "primary": false,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-rural-svi-minority.json",
-     "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0",
-     "primary": false,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-postfire-county-bootstrap.json",
-     "sha256": "f55774557f0461875cc5c4a56063ef7cf9f7056f11828ea368c85e6eb5b96348",
-     "primary": false,
-     "pointer": "/"
-    }
-   ],
-   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-005",
-   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
-   "reproduce_products": [
-    {
-     "path": "reports/discovery-postfire.json",
-     "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
-    }
-   ],
-   "tokens_exempt": [],
-   "derived_tokens": [],
-   "hedge_context": [
-    "Across 460 border tracts, mean OSM-touched share was 9.18%, versus 61.48% in 5,541 others (68.66% in 4,600 urban others); Microsoft-only share averaged 67.48%. “Other” tags cover 254,346/886,361 footprints (28.70%); 290 tracts (1,183,693 people) are below 5% OSM. Difference: −52.30 pp (county-cluster 95% CI [−61.24, −36.99]); adjusted association −0.446 (SE 0.070; n=5,958, 185 counties), descriptive—not causal.",
-    "Border “Other” (254,346) nearly matches Google Open Buildings (254,872); non-border “Other” (977,049) nearly matches USGS lidar (976,523), a ±526 reconciliation supporting—but not proving—spill-over. County details are in [Appendix J](#appendix-j-supporting-discovery-tables). Webb/Starr/Maverick Overture/USFS medians (1.56/1.75/1.71) are context, not a Microsoft target proxy.",
-    "Small-county CIs unstable; attribution is regional only.",
-    "Hidalgo `48215021906`, `48215023525`, and `48215024404` have zero OSM share and 1,727, 1,765, and 2,212 footprints; Cameron `48061012002` has 3,084 and 0.03% OSM. Heat averages 53.5 vs 7.3 WBGT>30°C days/year (218 vs 3,654 covered tracts). Prioritise local verification; dispatch effects are unmeasured.",
-    "Related road/colonias entries and differentiation are in [the board note](related-entries.md); this is a qualified building-source comparison. Reports/hashes: `reports/discovery-border-metros.json` (`27779986d787594abdadf741c983db13dedf25fb476cc4ff2ae096a1a4260244`) and `reports/source-provenance.json` (`e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565`). Rebuild with `uv run --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/discovery/border_metros.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-metros.json`; SVI is defined in Appendix F."
-   ],
-   "notes": ""
-  },
-  {
-   "claim_id": "bias-discovery-006",
-   "doc": "docs/writeup/bias-discovery.md",
-   "section": "Evidence and mechanism",
-   "line_start": 40,
-   "line_end": 40,
-   "kind": "paragraph",
-   "text": "Hidalgo `48215021906`, `48215023525`, and `48215024404` have zero OSM share and 1,727, 1,765, and 2,212 footprints; Cameron `48061012002` has 3,084 and 0.03% OSM. Heat averages 53.5 vs 7.3 WBGT>30°C days/year (218 vs 3,654 covered tracts). Prioritise local verification; dispatch effects are unmeasured.",
-   "provenance_class": "measured_provided_data",
-   "evidence": [
-    {
-     "path": "reports/source-provenance.json",
-     "sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565",
-     "primary": true,
-     "pointer": "/regions/south-central-tx/named_lowest_osm_high_svi"
-    },
-    {
-     "path": "reports/discovery-dins-mechanism.json",
-     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd",
-     "primary": false,
-     "pointer": "/opposite_direction/tracts"
-    },
-    {
-     "path": "reports/discovery-postfire.json",
-     "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a",
-     "primary": false,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-strata-confound.json",
-     "sha256": "ce0f1307793d1c658754cb7f9dd6fee7ea9cabf2a8a0e7ccb8e9888c2bad9ecb",
-     "primary": false,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-rural-svi-minority.json",
-     "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0",
-     "primary": false,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-postfire-county-bootstrap.json",
-     "sha256": "f55774557f0461875cc5c4a56063ef7cf9f7056f11828ea368c85e6eb5b96348",
-     "primary": false,
-     "pointer": "/"
-    }
-   ],
-   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-006",
-   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
-   "reproduce_products": [
-    {
-     "path": "reports/discovery-postfire.json",
-     "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
-    }
-   ],
-   "tokens_exempt": [],
-   "derived_tokens": [],
-   "hedge_context": [
-    "Across 460 border tracts, mean OSM-touched share was 9.18%, versus 61.48% in 5,541 others (68.66% in 4,600 urban others); Microsoft-only share averaged 67.48%. “Other” tags cover 254,346/886,361 footprints (28.70%); 290 tracts (1,183,693 people) are below 5% OSM. Difference: −52.30 pp (county-cluster 95% CI [−61.24, −36.99]); adjusted association −0.446 (SE 0.070; n=5,958, 185 counties), descriptive—not causal.",
-    "Border “Other” (254,346) nearly matches Google Open Buildings (254,872); non-border “Other” (977,049) nearly matches USGS lidar (976,523), a ±526 reconciliation supporting—but not proving—spill-over. County details are in [Appendix J](#appendix-j-supporting-discovery-tables). Webb/Starr/Maverick Overture/USFS medians (1.56/1.75/1.71) are context, not a Microsoft target proxy.",
-    "Small-county CIs unstable; attribution is regional only.",
-    "Hidalgo `48215021906`, `48215023525`, and `48215024404` have zero OSM share and 1,727, 1,765, and 2,212 footprints; Cameron `48061012002` has 3,084 and 0.03% OSM. Heat averages 53.5 vs 7.3 WBGT>30°C days/year (218 vs 3,654 covered tracts). Prioritise local verification; dispatch effects are unmeasured.",
-    "Related road/colonias entries and differentiation are in [the board note](related-entries.md); this is a qualified building-source comparison. Reports/hashes: `reports/discovery-border-metros.json` (`27779986d787594abdadf741c983db13dedf25fb476cc4ff2ae096a1a4260244`) and `reports/source-provenance.json` (`e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565`). Rebuild with `uv run --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/discovery/border_metros.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-metros.json`; SVI is defined in Appendix F."
-   ],
-   "notes": ""
-  },
-  {
-   "claim_id": "bias-discovery-007",
-   "doc": "docs/writeup/bias-discovery.md",
-   "section": "Impact and evidence",
-   "line_start": 48,
-   "line_end": 48,
-   "kind": "paragraph",
-   "text": "In six Paradise/Magalia Butte County tracts, provided Wildfire Risk to Communities counts exceed Overture (ratios 0.620–0.747); the geographic/vintage discrepancy does not establish fire damage as its cause. Treating larger counts as current could misdirect field checks. Provided MTBS last-burn year is 2018; public CAL FIRE DINS is a discovery-only mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified). Tract-level rows are in [Appendix J](#appendix-j-supporting-discovery-tables).",
-   "provenance_class": "measured_provided_data",
-   "evidence": [
-    {
-     "path": "reports/discovery-postfire.json",
-     "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a",
-     "primary": true,
-     "pointer": "/focal_butte_2018_burn_geoids"
-    },
-    {
-     "path": "reports/discovery-dins-mechanism.json",
-     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd",
-     "primary": false,
-     "pointer": "/spearman/cohort"
-    },
-    {
-     "path": "reports/source-provenance.json",
-     "sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565",
-     "primary": false,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-strata-confound.json",
-     "sha256": "ce0f1307793d1c658754cb7f9dd6fee7ea9cabf2a8a0e7ccb8e9888c2bad9ecb",
-     "primary": false,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-rural-svi-minority.json",
-     "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0",
-     "primary": false,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-postfire-county-bootstrap.json",
-     "sha256": "f55774557f0461875cc5c4a56063ef7cf9f7056f11828ea368c85e6eb5b96348",
-     "primary": false,
-     "pointer": "/"
-    }
-   ],
-   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-007",
-   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
-   "reproduce_products": [
-    {
-     "path": "reports/discovery-postfire.json",
-     "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
-    }
-   ],
-   "tokens_exempt": [
-    {
-     "value": 95,
-     "decimals": 0,
-     "class": "methodological_constant",
-     "reason": "the 95% level of the preregistered tract-bootstrap percentile interval, declared in the discovery script"
-    }
-   ],
-   "derived_tokens": [],
-   "hedge_context": [
     "In six Paradise/Magalia Butte County tracts, provided Wildfire Risk to Communities counts exceed Overture (ratios 0.620–0.747); the geographic/vintage discrepancy does not establish fire damage as its cause. Treating larger counts as current could misdirect field checks. Provided MTBS last-burn year is 2018; public CAL FIRE DINS is a discovery-only mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified). Tract-level rows are in [Appendix J](#appendix-j-supporting-discovery-tables).",
-    "Focal GEOIDs and DINS rows appear in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); county-cluster CI [−1.65, +16.67] includes zero, so magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
+    "Focal GEOIDs and DINS rows appear in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
     "![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)",
     "**Negative mechanism check.** DINS supports neither the proposed fire-damage nor rebuilding mechanism: 0/6 tracts met the ≤0.30 relative-error rule (required ≥4/6); Spearman was 0.463 across 28 2018-burn tracts, below 0.60. Among 591 NorCal tracts, 576 positive-count tracts have no DINS record (1,139,778 buildings); missing records do not establish absence or rebuilding. MTBS percentages are cumulative (64.4–153.8%); reference-count vintage is unverified. The border finding's SVI control is documented in Appendix F.",
     "Focal shares show Microsoft-only 0.430–0.990 versus OSM-only 0.001–0.089; Overture/WRC ratios 0.620–0.747 against the provided Microsoft-derived USFS WRC count support a within-provider vintage gap, not OSM conflation (`reports/postfire-lineage-recheck.json#/focal_share_ranges`; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`). Pooled OLS gives β(OSM-only)=−0.016 (county-clustered SE 0.041; n=9,337; controls: urbanity, log density, region FE); seven unburned NorCal tracts have ratio <0.8, all urban—six Sacramento, one Placer (0.711–0.775)—so not all Sacramento (`reports/postfire-lineage-recheck.json#/pooled_ols`, `#/unburned_northern_ca_ratio_below_0_8`).",
-    "Title-indexed wildfire entries: #34910, #35520, #35527, #35479, #35345, #35081 and #35157; ours is a bounded provider-vintage check and negative mechanism audit, not a novelty claim ([related entries](related-entries.md)).",
-    "Reproduce with `scripts/discovery_postfire_stale_reference.py`, `scripts/audit_discovery_postfire_county_bootstrap.py`, and `scripts/discovery_dins_mechanism.py`; inputs, filters and hashes are recorded in reports/manifests."
-   ],
-   "notes": "DINS negative-gate counts and missing-record limits are checked against reports/discovery-dins-mechanism.json; county-cluster interval against reports/discovery-postfire-county-bootstrap.json; MTBS burn range against reports/discovery-postfire.json"
-  },
-  {
-   "claim_id": "bias-discovery-008",
-   "doc": "docs/writeup/bias-discovery.md",
-   "section": "Impact and evidence",
-   "line_start": 50,
-   "line_end": 50,
-   "kind": "paragraph",
-   "text": "Focal GEOIDs and DINS rows appear in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); county-cluster CI [−1.65, +16.67] includes zero, so magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
-   "provenance_class": "measured_provided_data",
-   "evidence": [
-    {
-     "path": "reports/source-provenance.json",
-     "sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565",
-     "primary": true,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-postfire.json",
-     "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a",
-     "primary": false,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-dins-mechanism.json",
-     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd",
-     "primary": false,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-strata-confound.json",
-     "sha256": "ce0f1307793d1c658754cb7f9dd6fee7ea9cabf2a8a0e7ccb8e9888c2bad9ecb",
-     "primary": false,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-rural-svi-minority.json",
-     "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0",
-     "primary": false,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-postfire-county-bootstrap.json",
-     "sha256": "f55774557f0461875cc5c4a56063ef7cf9f7056f11828ea368c85e6eb5b96348",
-     "primary": false,
-     "pointer": "/"
-    }
-   ],
-   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-008",
-   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
-   "reproduce_products": [
-    {
-     "path": "reports/discovery-postfire.json",
-     "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
-    }
-   ],
-   "tokens_exempt": [],
-   "derived_tokens": [],
-   "hedge_context": [
-    "In six Paradise/Magalia Butte County tracts, provided Wildfire Risk to Communities counts exceed Overture (ratios 0.620–0.747); the geographic/vintage discrepancy does not establish fire damage as its cause. Treating larger counts as current could misdirect field checks. Provided MTBS last-burn year is 2018; public CAL FIRE DINS is a discovery-only mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified). Tract-level rows are in [Appendix J](#appendix-j-supporting-discovery-tables).",
-    "Focal GEOIDs and DINS rows appear in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); county-cluster CI [−1.65, +16.67] includes zero, so magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
-    "![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)",
-    "**Negative mechanism check.** DINS supports neither the proposed fire-damage nor rebuilding mechanism: 0/6 tracts met the ≤0.30 relative-error rule (required ≥4/6); Spearman was 0.463 across 28 2018-burn tracts, below 0.60. Among 591 NorCal tracts, 576 positive-count tracts have no DINS record (1,139,778 buildings); missing records do not establish absence or rebuilding. MTBS percentages are cumulative (64.4–153.8%); reference-count vintage is unverified. The border finding's SVI control is documented in Appendix F.",
-    "Focal shares show Microsoft-only 0.430–0.990 versus OSM-only 0.001–0.089; Overture/WRC ratios 0.620–0.747 against the provided Microsoft-derived USFS WRC count support a within-provider vintage gap, not OSM conflation (`reports/postfire-lineage-recheck.json#/focal_share_ranges`; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`). Pooled OLS gives β(OSM-only)=−0.016 (county-clustered SE 0.041; n=9,337; controls: urbanity, log density, region FE); seven unburned NorCal tracts have ratio <0.8, all urban—six Sacramento, one Placer (0.711–0.775)—so not all Sacramento (`reports/postfire-lineage-recheck.json#/pooled_ols`, `#/unburned_northern_ca_ratio_below_0_8`).",
-    "Title-indexed wildfire entries: #34910, #35520, #35527, #35479, #35345, #35081 and #35157; ours is a bounded provider-vintage check and negative mechanism audit, not a novelty claim ([related entries](related-entries.md)).",
+    "Entries #35520 and #35527 (23 Oct) provide stronger DINS-matched wildfire evidence; we acknowledge that work and limit Finding 3 here to the separate provider-lineage result and negative mechanism check ([related-entry omissions ledger](related-entries.md)).",
     "Reproduce with `scripts/discovery_postfire_stale_reference.py`, `scripts/audit_discovery_postfire_county_bootstrap.py`, and `scripts/discovery_dins_mechanism.py`; inputs, filters and hashes are recorded in reports/manifests."
    ],
    "notes": ""
-  },
-  {
-   "claim_id": "bias-discovery-009",
-   "doc": "docs/writeup/bias-discovery.md",
-   "section": "Impact and evidence",
-   "line_start": 54,
-   "line_end": 54,
-   "kind": "paragraph",
-   "text": "**Negative mechanism check.** DINS supports neither the proposed fire-damage nor rebuilding mechanism: 0/6 tracts met the ≤0.30 relative-error rule (required ≥4/6); Spearman was 0.463 across 28 2018-burn tracts, below 0.60. Among 591 NorCal tracts, 576 positive-count tracts have no DINS record (1,139,778 buildings); missing records do not establish absence or rebuilding. MTBS percentages are cumulative (64.4–153.8%); reference-count vintage is unverified. The border finding's SVI control is documented in Appendix F.",
-   "provenance_class": "measured_provided_data",
-   "evidence": [
-    {
-     "path": "reports/discovery-strata-confound.json",
-     "sha256": "ce0f1307793d1c658754cb7f9dd6fee7ea9cabf2a8a0e7ccb8e9888c2bad9ecb",
-     "primary": true,
-     "pointer": "/"
-    }
-   ],
-   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-009",
-   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
-   "reproduce_products": [
-    {
-     "path": "reports/discovery-postfire.json",
-     "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
-    }
-   ],
-   "tokens_exempt": [],
-   "derived_tokens": [],
-   "hedge_context": [
-    "In six Paradise/Magalia Butte County tracts, provided Wildfire Risk to Communities counts exceed Overture (ratios 0.620–0.747); the geographic/vintage discrepancy does not establish fire damage as its cause. Treating larger counts as current could misdirect field checks. Provided MTBS last-burn year is 2018; public CAL FIRE DINS is a discovery-only mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified). Tract-level rows are in [Appendix J](#appendix-j-supporting-discovery-tables).",
-    "Focal GEOIDs and DINS rows appear in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); county-cluster CI [−1.65, +16.67] includes zero, so magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
-    "![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)",
-    "**Negative mechanism check.** DINS supports neither the proposed fire-damage nor rebuilding mechanism: 0/6 tracts met the ≤0.30 relative-error rule (required ≥4/6); Spearman was 0.463 across 28 2018-burn tracts, below 0.60. Among 591 NorCal tracts, 576 positive-count tracts have no DINS record (1,139,778 buildings); missing records do not establish absence or rebuilding. MTBS percentages are cumulative (64.4–153.8%); reference-count vintage is unverified. The border finding's SVI control is documented in Appendix F.",
-    "Focal shares show Microsoft-only 0.430–0.990 versus OSM-only 0.001–0.089; Overture/WRC ratios 0.620–0.747 against the provided Microsoft-derived USFS WRC count support a within-provider vintage gap, not OSM conflation (`reports/postfire-lineage-recheck.json#/focal_share_ranges`; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`). Pooled OLS gives β(OSM-only)=−0.016 (county-clustered SE 0.041; n=9,337; controls: urbanity, log density, region FE); seven unburned NorCal tracts have ratio <0.8, all urban—six Sacramento, one Placer (0.711–0.775)—so not all Sacramento (`reports/postfire-lineage-recheck.json#/pooled_ols`, `#/unburned_northern_ca_ratio_below_0_8`).",
-    "Title-indexed wildfire entries: #34910, #35520, #35527, #35479, #35345, #35081 and #35157; ours is a bounded provider-vintage check and negative mechanism audit, not a novelty claim ([related entries](related-entries.md)).",
-    "Reproduce with `scripts/discovery_postfire_stale_reference.py`, `scripts/audit_discovery_postfire_county_bootstrap.py`, and `scripts/discovery_dins_mechanism.py`; inputs, filters and hashes are recorded in reports/manifests."
-   ],
-   "notes": "tribal stratum counts and regional shares are from the report stratum_composition and regional_counts_and_prevalence records"
   },
   {
    "claim_id": "bias-discovery-010",
    "doc": "docs/writeup/bias-discovery.md",
    "section": "Impact and evidence",
-   "line_start": 56,
-   "line_end": 56,
+   "line_start": 64,
+   "line_end": 64,
    "kind": "paragraph",
-   "text": "Focal shares show Microsoft-only 0.430–0.990 versus OSM-only 0.001–0.089; Overture/WRC ratios 0.620–0.747 against the provided Microsoft-derived USFS WRC count support a within-provider vintage gap, not OSM conflation (`reports/postfire-lineage-recheck.json#/focal_share_ranges`; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`). Pooled OLS gives β(OSM-only)=−0.016 (county-clustered SE 0.041; n=9,337; controls: urbanity, log density, region FE); seven unburned NorCal tracts have ratio <0.8, all urban—six Sacramento, one Placer (0.711–0.775)—so not all Sacramento (`reports/postfire-lineage-recheck.json#/pooled_ols`, `#/unburned_northern_ca_ratio_below_0_8`).",
-   "provenance_class": "measured_provided_data",
+   "text": "Focal GEOIDs and DINS rows appear in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
+   "provenance_class": "measured_external_discovery_data",
    "evidence": [
-    {
-     "path": "reports/source-provenance.json",
-     "sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565",
-     "primary": true,
-     "pointer": "/regions/south-central-tx/stratum_means/summer_heat_upper_quartile/upper_quartile/source_share_means/building_osm_share/tract_cluster_bootstrap_95_ci"
-    },
     {
      "path": "reports/discovery-postfire.json",
      "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a",
-     "primary": false,
-     "pointer": "/focal_butte_2018_burn_geoids"
-    },
-    {
-     "path": "reports/discovery-rural-svi-minority.json",
-     "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0",
-     "primary": false,
-     "pointer": "/C2_component_results_defined_only/transport/bootstrap_95_percentile_ci_defined_only"
-    },
-    {
-     "path": "reports/discovery-postfire-county-bootstrap.json",
-     "sha256": "f55774557f0461875cc5c4a56063ef7cf9f7056f11828ea368c85e6eb5b96348",
-     "primary": false,
-     "pointer": "/point_estimate/unburned_share"
-    },
-    {
-     "path": "reports/discovery-strata-confound.json",
-     "sha256": "ce0f1307793d1c658754cb7f9dd6fee7ea9cabf2a8a0e7ccb8e9888c2bad9ecb",
-     "primary": false,
-     "pointer": "/stratum_composition/tribal_any/by_region/south-central-tx/share_of_stratum"
+     "primary": true,
+     "pointer": "/"
     },
     {
      "path": "reports/discovery-dins-mechanism.json",
      "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd",
      "primary": false,
      "pointer": "/"
+    },
+    {
+     "path": "reports/discovery-postfire-county-bootstrap.json",
+     "sha256": "0bd5dedf9fbfda5f590262290119f433737283fddda79793f87e573da736bc74",
+     "primary": false,
+     "pointer": "/"
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-010",
-   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
+   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png && /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/audit_discovery_postfire_county_bootstrap.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire-county-bootstrap.json && MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_dins_mechanism.py --workspace \"$COMPETITION_WORKSPACE\" --dins-file \"$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson\" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png && /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_postfire_lineage.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/postfire-lineage-recheck.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-postfire.json",
      "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
+    },
+    {
+     "path": "reports/discovery-postfire-map.png",
+     "sha256": "916589e0d3dc765a77c133dbcfe454740906dabb26ab74fcc0db92f9ffa43da1"
+    },
+    {
+     "path": "reports/discovery-postfire-county-bootstrap.json",
+     "sha256": "0bd5dedf9fbfda5f590262290119f433737283fddda79793f87e573da736bc74"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.json",
+     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.md",
+     "sha256": "f66d97f7bb82d77cc11928a01699f976455fe349063316624883a464a90b245d"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.png",
+     "sha256": "2b2948bd8f330f7c958b5c8deb48306b2b0809a1101947ca620c989e6dae6f8f"
+    },
+    {
+     "path": "reports/postfire-lineage-recheck.json",
+     "sha256": "52c16e28258e3b3ca73a3135a81643725a9230372078f5f40c5827d75c1642ca"
     }
    ],
    "tokens_exempt": [],
    "derived_tokens": [],
    "hedge_context": [
     "In six Paradise/Magalia Butte County tracts, provided Wildfire Risk to Communities counts exceed Overture (ratios 0.620–0.747); the geographic/vintage discrepancy does not establish fire damage as its cause. Treating larger counts as current could misdirect field checks. Provided MTBS last-burn year is 2018; public CAL FIRE DINS is a discovery-only mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified). Tract-level rows are in [Appendix J](#appendix-j-supporting-discovery-tables).",
-    "Focal GEOIDs and DINS rows appear in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); county-cluster CI [−1.65, +16.67] includes zero, so magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
+    "Focal GEOIDs and DINS rows appear in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
     "![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)",
     "**Negative mechanism check.** DINS supports neither the proposed fire-damage nor rebuilding mechanism: 0/6 tracts met the ≤0.30 relative-error rule (required ≥4/6); Spearman was 0.463 across 28 2018-burn tracts, below 0.60. Among 591 NorCal tracts, 576 positive-count tracts have no DINS record (1,139,778 buildings); missing records do not establish absence or rebuilding. MTBS percentages are cumulative (64.4–153.8%); reference-count vintage is unverified. The border finding's SVI control is documented in Appendix F.",
     "Focal shares show Microsoft-only 0.430–0.990 versus OSM-only 0.001–0.089; Overture/WRC ratios 0.620–0.747 against the provided Microsoft-derived USFS WRC count support a within-provider vintage gap, not OSM conflation (`reports/postfire-lineage-recheck.json#/focal_share_ranges`; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`). Pooled OLS gives β(OSM-only)=−0.016 (county-clustered SE 0.041; n=9,337; controls: urbanity, log density, region FE); seven unburned NorCal tracts have ratio <0.8, all urban—six Sacramento, one Placer (0.711–0.775)—so not all Sacramento (`reports/postfire-lineage-recheck.json#/pooled_ols`, `#/unburned_northern_ca_ratio_below_0_8`).",
-    "Title-indexed wildfire entries: #34910, #35520, #35527, #35479, #35345, #35081 and #35157; ours is a bounded provider-vintage check and negative mechanism audit, not a novelty claim ([related entries](related-entries.md)).",
+    "Entries #35520 and #35527 (23 Oct) provide stronger DINS-matched wildfire evidence; we acknowledge that work and limit Finding 3 here to the separate provider-lineage result and negative mechanism check ([related-entry omissions ledger](related-entries.md)).",
     "Reproduce with `scripts/discovery_postfire_stale_reference.py`, `scripts/audit_discovery_postfire_county_bootstrap.py`, and `scripts/discovery_dins_mechanism.py`; inputs, filters and hashes are recorded in reports/manifests."
    ],
    "notes": ""
@@ -555,66 +492,72 @@
    "claim_id": "bias-discovery-011",
    "doc": "docs/writeup/bias-discovery.md",
    "section": "Impact and evidence",
-   "line_start": 58,
-   "line_end": 58,
+   "line_start": 68,
+   "line_end": 68,
    "kind": "paragraph",
-   "text": "Title-indexed wildfire entries: #34910, #35520, #35527, #35479, #35345, #35081 and #35157; ours is a bounded provider-vintage check and negative mechanism audit, not a novelty claim ([related entries](related-entries.md)).",
-   "provenance_class": "measured_provided_data",
+   "text": "**Negative mechanism check.** DINS supports neither the proposed fire-damage nor rebuilding mechanism: 0/6 tracts met the ≤0.30 relative-error rule (required ≥4/6); Spearman was 0.463 across 28 2018-burn tracts, below 0.60. Among 591 NorCal tracts, 576 positive-count tracts have no DINS record (1,139,778 buildings); missing records do not establish absence or rebuilding. MTBS percentages are cumulative (64.4–153.8%); reference-count vintage is unverified. The border finding's SVI control is documented in Appendix F.",
+   "provenance_class": "measured_external_discovery_data",
    "evidence": [
     {
-     "path": "reports/source-provenance.json",
-     "sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565",
+     "path": "reports/discovery-dins-mechanism.json",
+     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd",
      "primary": true,
-     "pointer": "/"
+     "pointer": "/spearman/statistic"
     },
     {
      "path": "reports/discovery-postfire.json",
      "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a",
      "primary": false,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-dins-mechanism.json",
-     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd",
-     "primary": false,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-strata-confound.json",
-     "sha256": "ce0f1307793d1c658754cb7f9dd6fee7ea9cabf2a8a0e7ccb8e9888c2bad9ecb",
-     "primary": false,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-rural-svi-minority.json",
-     "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0",
-     "primary": false,
-     "pointer": "/"
+     "pointer": "/interpretation"
     },
     {
      "path": "reports/discovery-postfire-county-bootstrap.json",
-     "sha256": "f55774557f0461875cc5c4a56063ef7cf9f7056f11828ea368c85e6eb5b96348",
+     "sha256": "0bd5dedf9fbfda5f590262290119f433737283fddda79793f87e573da736bc74",
      "primary": false,
      "pointer": "/"
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-011",
-   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
+   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png && /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/audit_discovery_postfire_county_bootstrap.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire-county-bootstrap.json && MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_dins_mechanism.py --workspace \"$COMPETITION_WORKSPACE\" --dins-file \"$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson\" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png && /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_postfire_lineage.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/postfire-lineage-recheck.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-postfire.json",
      "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
+    },
+    {
+     "path": "reports/discovery-postfire-map.png",
+     "sha256": "916589e0d3dc765a77c133dbcfe454740906dabb26ab74fcc0db92f9ffa43da1"
+    },
+    {
+     "path": "reports/discovery-postfire-county-bootstrap.json",
+     "sha256": "0bd5dedf9fbfda5f590262290119f433737283fddda79793f87e573da736bc74"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.json",
+     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.md",
+     "sha256": "f66d97f7bb82d77cc11928a01699f976455fe349063316624883a464a90b245d"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.png",
+     "sha256": "2b2948bd8f330f7c958b5c8deb48306b2b0809a1101947ca620c989e6dae6f8f"
+    },
+    {
+     "path": "reports/postfire-lineage-recheck.json",
+     "sha256": "52c16e28258e3b3ca73a3135a81643725a9230372078f5f40c5827d75c1642ca"
     }
    ],
    "tokens_exempt": [],
    "derived_tokens": [],
    "hedge_context": [
     "In six Paradise/Magalia Butte County tracts, provided Wildfire Risk to Communities counts exceed Overture (ratios 0.620–0.747); the geographic/vintage discrepancy does not establish fire damage as its cause. Treating larger counts as current could misdirect field checks. Provided MTBS last-burn year is 2018; public CAL FIRE DINS is a discovery-only mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified). Tract-level rows are in [Appendix J](#appendix-j-supporting-discovery-tables).",
-    "Focal GEOIDs and DINS rows appear in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); county-cluster CI [−1.65, +16.67] includes zero, so magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
+    "Focal GEOIDs and DINS rows appear in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
     "![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)",
     "**Negative mechanism check.** DINS supports neither the proposed fire-damage nor rebuilding mechanism: 0/6 tracts met the ≤0.30 relative-error rule (required ≥4/6); Spearman was 0.463 across 28 2018-burn tracts, below 0.60. Among 591 NorCal tracts, 576 positive-count tracts have no DINS record (1,139,778 buildings); missing records do not establish absence or rebuilding. MTBS percentages are cumulative (64.4–153.8%); reference-count vintage is unverified. The border finding's SVI control is documented in Appendix F.",
     "Focal shares show Microsoft-only 0.430–0.990 versus OSM-only 0.001–0.089; Overture/WRC ratios 0.620–0.747 against the provided Microsoft-derived USFS WRC count support a within-provider vintage gap, not OSM conflation (`reports/postfire-lineage-recheck.json#/focal_share_ranges`; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`). Pooled OLS gives β(OSM-only)=−0.016 (county-clustered SE 0.041; n=9,337; controls: urbanity, log density, region FE); seven unburned NorCal tracts have ratio <0.8, all urban—six Sacramento, one Placer (0.711–0.775)—so not all Sacramento (`reports/postfire-lineage-recheck.json#/pooled_ols`, `#/unburned_northern_ca_ratio_below_0_8`).",
-    "Title-indexed wildfire entries: #34910, #35520, #35527, #35479, #35345, #35081 and #35157; ours is a bounded provider-vintage check and negative mechanism audit, not a novelty claim ([related entries](related-entries.md)).",
+    "Entries #35520 and #35527 (23 Oct) provide stronger DINS-matched wildfire evidence; we acknowledge that work and limit Finding 3 here to the separate provider-lineage result and negative mechanism check ([related-entry omissions ledger](related-entries.md)).",
     "Reproduce with `scripts/discovery_postfire_stale_reference.py`, `scripts/audit_discovery_postfire_county_bootstrap.py`, and `scripts/discovery_dins_mechanism.py`; inputs, filters and hashes are recorded in reports/manifests."
    ],
    "notes": ""
@@ -622,9 +565,139 @@
   {
    "claim_id": "bias-discovery-012",
    "doc": "docs/writeup/bias-discovery.md",
-   "section": "Evidence",
+   "section": "Impact and evidence",
    "line_start": 70,
    "line_end": 70,
+   "kind": "paragraph",
+   "text": "Focal shares show Microsoft-only 0.430–0.990 versus OSM-only 0.001–0.089; Overture/WRC ratios 0.620–0.747 against the provided Microsoft-derived USFS WRC count support a within-provider vintage gap, not OSM conflation (`reports/postfire-lineage-recheck.json#/focal_share_ranges`; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`). Pooled OLS gives β(OSM-only)=−0.016 (county-clustered SE 0.041; n=9,337; controls: urbanity, log density, region FE); seven unburned NorCal tracts have ratio <0.8, all urban—six Sacramento, one Placer (0.711–0.775)—so not all Sacramento (`reports/postfire-lineage-recheck.json#/pooled_ols`, `#/unburned_northern_ca_ratio_below_0_8`).",
+   "provenance_class": "measured_external_discovery_data",
+   "evidence": [
+    {
+     "path": "reports/postfire-lineage-recheck.json",
+     "sha256": "52c16e28258e3b3ca73a3135a81643725a9230372078f5f40c5827d75c1642ca",
+     "primary": true,
+     "pointer": "/focal_share_ranges/microsoft_only_min"
+    },
+    {
+     "path": "reports/discovery-postfire.json",
+     "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a",
+     "primary": false,
+     "pointer": "/focal_butte_2018_burn_geoids"
+    }
+   ],
+   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-012",
+   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png && /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/audit_discovery_postfire_county_bootstrap.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire-county-bootstrap.json && MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_dins_mechanism.py --workspace \"$COMPETITION_WORKSPACE\" --dins-file \"$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson\" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png && /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_postfire_lineage.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/postfire-lineage-recheck.json",
+   "reproduce_products": [
+    {
+     "path": "reports/discovery-postfire.json",
+     "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
+    },
+    {
+     "path": "reports/discovery-postfire-map.png",
+     "sha256": "916589e0d3dc765a77c133dbcfe454740906dabb26ab74fcc0db92f9ffa43da1"
+    },
+    {
+     "path": "reports/discovery-postfire-county-bootstrap.json",
+     "sha256": "0bd5dedf9fbfda5f590262290119f433737283fddda79793f87e573da736bc74"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.json",
+     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.md",
+     "sha256": "f66d97f7bb82d77cc11928a01699f976455fe349063316624883a464a90b245d"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.png",
+     "sha256": "2b2948bd8f330f7c958b5c8deb48306b2b0809a1101947ca620c989e6dae6f8f"
+    },
+    {
+     "path": "reports/postfire-lineage-recheck.json",
+     "sha256": "52c16e28258e3b3ca73a3135a81643725a9230372078f5f40c5827d75c1642ca"
+    }
+   ],
+   "tokens_exempt": [],
+   "derived_tokens": [],
+   "hedge_context": [
+    "In six Paradise/Magalia Butte County tracts, provided Wildfire Risk to Communities counts exceed Overture (ratios 0.620–0.747); the geographic/vintage discrepancy does not establish fire damage as its cause. Treating larger counts as current could misdirect field checks. Provided MTBS last-burn year is 2018; public CAL FIRE DINS is a discovery-only mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified). Tract-level rows are in [Appendix J](#appendix-j-supporting-discovery-tables).",
+    "Focal GEOIDs and DINS rows appear in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
+    "![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)",
+    "**Negative mechanism check.** DINS supports neither the proposed fire-damage nor rebuilding mechanism: 0/6 tracts met the ≤0.30 relative-error rule (required ≥4/6); Spearman was 0.463 across 28 2018-burn tracts, below 0.60. Among 591 NorCal tracts, 576 positive-count tracts have no DINS record (1,139,778 buildings); missing records do not establish absence or rebuilding. MTBS percentages are cumulative (64.4–153.8%); reference-count vintage is unverified. The border finding's SVI control is documented in Appendix F.",
+    "Focal shares show Microsoft-only 0.430–0.990 versus OSM-only 0.001–0.089; Overture/WRC ratios 0.620–0.747 against the provided Microsoft-derived USFS WRC count support a within-provider vintage gap, not OSM conflation (`reports/postfire-lineage-recheck.json#/focal_share_ranges`; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`). Pooled OLS gives β(OSM-only)=−0.016 (county-clustered SE 0.041; n=9,337; controls: urbanity, log density, region FE); seven unburned NorCal tracts have ratio <0.8, all urban—six Sacramento, one Placer (0.711–0.775)—so not all Sacramento (`reports/postfire-lineage-recheck.json#/pooled_ols`, `#/unburned_northern_ca_ratio_below_0_8`).",
+    "Entries #35520 and #35527 (23 Oct) provide stronger DINS-matched wildfire evidence; we acknowledge that work and limit Finding 3 here to the separate provider-lineage result and negative mechanism check ([related-entry omissions ledger](related-entries.md)).",
+    "Reproduce with `scripts/discovery_postfire_stale_reference.py`, `scripts/audit_discovery_postfire_county_bootstrap.py`, and `scripts/discovery_dins_mechanism.py`; inputs, filters and hashes are recorded in reports/manifests."
+   ],
+   "notes": ""
+  },
+  {
+   "claim_id": "bias-discovery-013",
+   "doc": "docs/writeup/bias-discovery.md",
+   "section": "Impact and evidence",
+   "line_start": 72,
+   "line_end": 72,
+   "kind": "paragraph",
+   "text": "Entries #35520 and #35527 (23 Oct) provide stronger DINS-matched wildfire evidence; we acknowledge that work and limit Finding 3 here to the separate provider-lineage result and negative mechanism check ([related-entry omissions ledger](related-entries.md)).",
+   "provenance_class": "measured_external_discovery_data",
+   "evidence": [
+    {
+     "path": "docs/writeup/related-entries.md",
+     "sha256": "a4547537f23be97e86e96631704daacc8d59a50c9f81400d28726712240043a6",
+     "primary": true,
+     "pointer": "document"
+    }
+   ],
+   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-013",
+   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png && /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/audit_discovery_postfire_county_bootstrap.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire-county-bootstrap.json && MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_dins_mechanism.py --workspace \"$COMPETITION_WORKSPACE\" --dins-file \"$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson\" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png && /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_postfire_lineage.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/postfire-lineage-recheck.json",
+   "reproduce_products": [
+    {
+     "path": "reports/discovery-postfire.json",
+     "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
+    },
+    {
+     "path": "reports/discovery-postfire-map.png",
+     "sha256": "916589e0d3dc765a77c133dbcfe454740906dabb26ab74fcc0db92f9ffa43da1"
+    },
+    {
+     "path": "reports/discovery-postfire-county-bootstrap.json",
+     "sha256": "0bd5dedf9fbfda5f590262290119f433737283fddda79793f87e573da736bc74"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.json",
+     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.md",
+     "sha256": "f66d97f7bb82d77cc11928a01699f976455fe349063316624883a464a90b245d"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.png",
+     "sha256": "2b2948bd8f330f7c958b5c8deb48306b2b0809a1101947ca620c989e6dae6f8f"
+    },
+    {
+     "path": "reports/postfire-lineage-recheck.json",
+     "sha256": "52c16e28258e3b3ca73a3135a81643725a9230372078f5f40c5827d75c1642ca"
+    }
+   ],
+   "tokens_exempt": [],
+   "derived_tokens": [],
+   "hedge_context": [
+    "In six Paradise/Magalia Butte County tracts, provided Wildfire Risk to Communities counts exceed Overture (ratios 0.620–0.747); the geographic/vintage discrepancy does not establish fire damage as its cause. Treating larger counts as current could misdirect field checks. Provided MTBS last-burn year is 2018; public CAL FIRE DINS is a discovery-only mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified). Tract-level rows are in [Appendix J](#appendix-j-supporting-discovery-tables).",
+    "Focal GEOIDs and DINS rows appear in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
+    "![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)",
+    "**Negative mechanism check.** DINS supports neither the proposed fire-damage nor rebuilding mechanism: 0/6 tracts met the ≤0.30 relative-error rule (required ≥4/6); Spearman was 0.463 across 28 2018-burn tracts, below 0.60. Among 591 NorCal tracts, 576 positive-count tracts have no DINS record (1,139,778 buildings); missing records do not establish absence or rebuilding. MTBS percentages are cumulative (64.4–153.8%); reference-count vintage is unverified. The border finding's SVI control is documented in Appendix F.",
+    "Focal shares show Microsoft-only 0.430–0.990 versus OSM-only 0.001–0.089; Overture/WRC ratios 0.620–0.747 against the provided Microsoft-derived USFS WRC count support a within-provider vintage gap, not OSM conflation (`reports/postfire-lineage-recheck.json#/focal_share_ranges`; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`). Pooled OLS gives β(OSM-only)=−0.016 (county-clustered SE 0.041; n=9,337; controls: urbanity, log density, region FE); seven unburned NorCal tracts have ratio <0.8, all urban—six Sacramento, one Placer (0.711–0.775)—so not all Sacramento (`reports/postfire-lineage-recheck.json#/pooled_ols`, `#/unburned_northern_ca_ratio_below_0_8`).",
+    "Entries #35520 and #35527 (23 Oct) provide stronger DINS-matched wildfire evidence; we acknowledge that work and limit Finding 3 here to the separate provider-lineage result and negative mechanism check ([related-entry omissions ledger](related-entries.md)).",
+    "Reproduce with `scripts/discovery_postfire_stale_reference.py`, `scripts/audit_discovery_postfire_county_bootstrap.py`, and `scripts/discovery_dins_mechanism.py`; inputs, filters and hashes are recorded in reports/manifests."
+   ],
+   "notes": ""
+  },
+  {
+   "claim_id": "bias-discovery-014",
+   "doc": "docs/writeup/bias-discovery.md",
+   "section": "Evidence",
+   "line_start": 84,
+   "line_end": 84,
    "kind": "paragraph",
    "text": "Of 858 `tribal_any` tracts, 805 (93.82%) are in Eastern Oklahoma; 6,002 of 8,521 non-tribal tracts (70.44%) are in South-Central Texas (`reports/discovery-strata-confound.json#/stratum_composition`).",
    "provenance_class": "measured_provided_data",
@@ -634,27 +707,9 @@
      "sha256": "ce0f1307793d1c658754cb7f9dd6fee7ea9cabf2a8a0e7ccb8e9888c2bad9ecb",
      "primary": true,
      "pointer": "/stratum_composition/non_tribal/by_region/south-central-tx/tracts"
-    },
-    {
-     "path": "reports/discovery-postfire.json",
-     "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a",
-     "primary": false,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-dins-mechanism.json",
-     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd",
-     "primary": false,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-postfire-county-bootstrap.json",
-     "sha256": "f55774557f0461875cc5c4a56063ef7cf9f7056f11828ea368c85e6eb5b96348",
-     "primary": false,
-     "pointer": "/"
     }
    ],
-   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-012",
+   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-014",
    "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png && /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/audit_discovery_postfire_county_bootstrap.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire-county-bootstrap.json && MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_dins_mechanism.py --workspace \"$COMPETITION_WORKSPACE\" --dins-file \"$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson\" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png",
    "reproduce_products": [
     {
@@ -667,7 +722,7 @@
     },
     {
      "path": "reports/discovery-postfire-county-bootstrap.json",
-     "sha256": "f55774557f0461875cc5c4a56063ef7cf9f7056f11828ea368c85e6eb5b96348"
+     "sha256": "0bd5dedf9fbfda5f590262290119f433737283fddda79793f87e573da736bc74"
     },
     {
      "path": "reports/discovery-dins-mechanism.json",
@@ -996,7 +1051,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-005",
-   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with pytest python -m pytest -q",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt --with pytest python -m pytest -q",
    "reproduce_products": [],
    "tokens_exempt": [],
    "derived_tokens": [],
@@ -1532,7 +1587,16 @@
     }
    ],
    "tokens_exempt": [],
-   "derived_tokens": [],
+   "derived_tokens": [
+    {
+     "value": 132,
+     "decimals": 0,
+     "operation": "sum",
+     "evidence": "reports/edge-cases.json",
+     "path": "/regions",
+     "key": "zero_overture_named_roads"
+    }
+   ],
    "hedge_context": [
     "The full edge-case table and calculation policy are in [`edge-cases.md`](edge-cases.md), backed by `reports/edge-cases.json`. The audit finds 26 zero-population tracts, 2 zero-`ALAND` tracts, 43 tracts with a >50% water proxy, 132 with no selected named roads, 2,644 with no selected route-network km, 2 with no Overture buildings, 2 with no Overture places, and 26 missing `pct_urban` values. These are covariate/coverage characteristics, not hidden-score outcomes. The audit also reports fixed-prior v2 component distributions for zero-population, water-proxy, and other edge groups. The expected facility gap is `P(reference present) × conditional gap`, so low prior presence yields proportionally small expected gaps; missing `pct_urban` falls back to `pop_urban/pop_total`, or neutral 0.5 at zero population. These are component diagnostics; the establishments half is not part of the submitted score. The water statistic is only `max(0,min(1,1−ALAND/geometry_area))` after projecting provided tract geometry to EPSG:5070; it is not an external water mask or a scoring correction.",
     "Exploratory SVI/rural comparisons below are strata of C2/C3 **predictions** only. Their bootstrap intervals quantify tract-resampling variation in those proxies; they are not confidence intervals for the hidden organiser score. The analysis does not establish a causal mechanism, actual service access, or measured equity disparity. Avoid naming a high predicted gap as a confirmed underserved tract. For any future disparity assessment, compare within region or use common region weights: region composition confounds pooled comparisons, as documented in `reports/discovery-strata-confound.json`."
@@ -1694,10 +1758,10 @@
    "provenance_class": "measured_provided_data",
    "evidence": [
     {
-     "path": "reports/transport-route-variants.json",
-     "sha256": "2a1acc760aadd2fce3a1df2afae6bfd9aaaef2a2ce510df8b674bccb9eb11aa2",
+     "path": "reports/road-topology-candidate.json",
+     "sha256": "4a8b630e865609ae23e8825c864c771ed319d63e5c27eb86158e1dac6dcfc6ce",
      "primary": true,
-     "pointer": "/rows"
+     "pointer": "/candidate_rows"
     },
     {
      "path": "reports/transport-route-ref-audit.json",
@@ -1736,10 +1800,10 @@
    "provenance_class": "measured_provided_data",
    "evidence": [
     {
-     "path": "reports/transport-route-variants.json",
-     "sha256": "2a1acc760aadd2fce3a1df2afae6bfd9aaaef2a2ce510df8b674bccb9eb11aa2",
+     "path": "reports/road-topology-candidate.json",
+     "sha256": "4a8b630e865609ae23e8825c864c771ed319d63e5c27eb86158e1dac6dcfc6ce",
      "primary": true,
-     "pointer": "/rows"
+     "pointer": "/measure_after/diagnostics_and_candidate_by_region_and_urban_rural/all/topology_defined_rows"
     },
     {
      "path": "reports/transport-route-ref-audit.json",
@@ -1778,22 +1842,10 @@
    "provenance_class": "measured_provided_data",
    "evidence": [
     {
-     "path": "docs/data-inventory.md",
-     "sha256": "88fe309bd2a577d544081fd95ddc7980e77a4e4751d175eab7d5752e7f4ce950",
+     "path": "reports/road-topology-candidate.json",
+     "sha256": "4a8b630e865609ae23e8825c864c771ed319d63e5c27eb86158e1dac6dcfc6ce",
      "primary": true,
-     "pointer": "document"
-    },
-    {
-     "path": "reports/poi-category-audit.json",
-     "sha256": "cd48fa40d0fb1b3cdd1e431734acb646791916df02ee021a60243020b17d9de8",
-     "primary": false,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/v2-input-provenance.json",
-     "sha256": "b52c3b1bcfee452e8d04c2af28a8c9abd1a0fb609b50c1ed9a9d56b9ec7f5d6a",
-     "primary": false,
-     "pointer": "/"
+     "pointer": "/measure_after/diagnostics_and_candidate_by_region_and_urban_rural/south-central-tx:Urban/topology_graph/dead_end_nodes_per_tract/variance_population"
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-021",
@@ -1807,12 +1859,44 @@
    "tokens_exempt": [],
    "derived_tokens": [
     {
-     "value": 132133741,
+     "value": 3143887,
      "decimals": 0,
      "operation": "sum",
-     "evidence": "reports/poi-category-audit.json",
-     "path": "/regions",
-     "key": "selected_column_compressed_bytes_total"
+     "evidence": "reports/road-topology-candidate.json",
+     "path": "/input_metadata_by_region",
+     "key": "segments_seen"
+    },
+    {
+     "value": 8491546,
+     "decimals": 0,
+     "operation": "sum",
+     "evidence": "reports/road-topology-candidate.json",
+     "path": "/input_metadata_by_region",
+     "key": "connector_occurrences"
+    },
+    {
+     "value": 1087,
+     "decimals": 0,
+     "operation": "sum",
+     "evidence": "reports/road-topology-candidate.json",
+     "path": "/input_metadata_by_region",
+     "key": "segments_skipped_invalid_or_non_linestring_geometry"
+    },
+    {
+     "value": 1591,
+     "decimals": 0,
+     "operation": "sum",
+     "evidence": "reports/road-topology-candidate.json",
+     "path": "/input_metadata_by_region",
+     "key": "connector_points_outside_official_sample"
+    },
+    {
+     "value": 245818,
+     "decimals": 0,
+     "operation": "sum",
+     "evidence": "reports/road-topology-candidate.json",
+     "path": "/input_metadata_by_region",
+     "key": "cross_tract_adjacencies"
     }
    ],
    "hedge_context": [
@@ -2028,9 +2112,15 @@
    "provenance_class": "measured_provided_data",
    "evidence": [
     {
+     "path": "reports/sample-contract-audit.json",
+     "sha256": "e9a56f30ea7c5a09bf94ebc95d2bf6b1e7559456ee8cf1c16304d9137175dbd0",
+     "primary": true,
+     "pointer": "/authoritative_rows"
+    },
+    {
      "path": "reports/poi-category-audit.json",
      "sha256": "cd48fa40d0fb1b3cdd1e431734acb646791916df02ee021a60243020b17d9de8",
-     "primary": true,
+     "primary": false,
      "pointer": "/"
     }
    ],
@@ -2043,7 +2133,24 @@
     }
    ],
    "tokens_exempt": [],
-   "derived_tokens": [],
+   "derived_tokens": [
+    {
+     "value": 9379,
+     "decimals": 0,
+     "operation": "sum",
+     "evidence": "reports/poi-category-audit.json",
+     "path": "/regions",
+     "key": "official_tracts"
+    },
+    {
+     "value": 132133741,
+     "decimals": 0,
+     "operation": "sum",
+     "evidence": "reports/poi-category-audit.json",
+     "path": "/regions",
+     "key": "selected_column_compressed_bytes_total"
+    }
+   ],
    "hedge_context": [
     "The provided-data POI audit is reproducible with\n`scripts/audit_poi_categories.py`; its full per-region frequency table for all\nmatching `categories.primary` and `categories.alternate` values is\n`reports/poi-category-audit.json`. The report includes explicit zero rows for\ncategories absent from a region, primary/alternate counts, name-regex hits,\nsource-dataset mix, confidence quantiles, and tract-zero sensitivity. Counts\nin the category-frequency table overlap: a single POI can have more than one\nprimary/alternate category, so those rows are not additive.",
     "The audit read only official `GEOID` cells from the per-region sample files;\nsample score placeholders were not used. For each provided Overture POI file,\nParquet projection included `categories`, `sources`, `confidence`, and `names`,\nplus `bbox` solely to assign POI centers to tracts for the required zero-tract\nsensitivity. It did **not** read the Overture `geometry` column, other POI\nproperties, external facility lists, or removed reference layers. Provided ACS\n`GEOID` and tract `geometry` columns were used only as the tract spatial index;\nPOIs outside the 9,379 official sample IDs were excluded. Three Texas POI\ncenters did not intersect an official sample tract. The output records exact\nselected-column compressed-byte counts, object sizes, and the ordered GEOID\nsequence hashes; there was no full-object download. The selected POI column\nchunks total 132,133,741 compressed bytes across the four regions.",
@@ -2175,7 +2282,74 @@
     }
    ],
    "tokens_exempt": [],
-   "derived_tokens": [],
+   "derived_tokens": [
+    {
+     "value": 12.37,
+     "decimals": 2,
+     "operation": "difference",
+     "evidence": "reports/poi-category-audit.json",
+     "pointer_a": "/regions/maricopa-az/tract_zero_sensitivity/core_v0/fire/zero_share",
+     "pointer_b": "/regions/maricopa-az/tract_zero_sensitivity/fire_all_fire_or_rescue_categories/fire/zero_share",
+     "scale": 100.0,
+     "absolute": true,
+     "tolerance": 0.005
+    },
+    {
+     "value": 6.97,
+     "decimals": 2,
+     "operation": "difference",
+     "evidence": "reports/poi-category-audit.json",
+     "pointer_a": "/regions/maricopa-az/tract_zero_sensitivity/core_v0/schools/zero_share",
+     "pointer_b": "/regions/maricopa-az/tract_zero_sensitivity/schools_all_school_or_education_categories/schools/zero_share",
+     "scale": 100.0,
+     "absolute": true,
+     "tolerance": 0.005
+    },
+    {
+     "value": 8.12,
+     "decimals": 2,
+     "operation": "difference",
+     "evidence": "reports/poi-category-audit.json",
+     "pointer_a": "/regions/northern-ca/tract_zero_sensitivity/core_v0/fire/zero_share",
+     "pointer_b": "/regions/northern-ca/tract_zero_sensitivity/fire_all_fire_or_rescue_categories/fire/zero_share",
+     "scale": 100.0,
+     "absolute": true,
+     "tolerance": 0.005
+    },
+    {
+     "value": 12.67,
+     "decimals": 2,
+     "operation": "difference",
+     "evidence": "reports/poi-category-audit.json",
+     "pointer_a": "/regions/eastern-ok/tract_zero_sensitivity/core_v0/fire/zero_share",
+     "pointer_b": "/regions/eastern-ok/tract_zero_sensitivity/fire_all_fire_or_rescue_categories/fire/zero_share",
+     "scale": 100.0,
+     "absolute": true,
+     "tolerance": 0.005
+    },
+    {
+     "value": 5.29,
+     "decimals": 2,
+     "operation": "difference",
+     "evidence": "reports/poi-category-audit.json",
+     "pointer_a": "/regions/eastern-ok/tract_zero_sensitivity/core_v0/schools/zero_share",
+     "pointer_b": "/regions/eastern-ok/tract_zero_sensitivity/schools_all_school_or_education_categories/schools/zero_share",
+     "scale": 100.0,
+     "absolute": true,
+     "tolerance": 0.005
+    },
+    {
+     "value": 11.58,
+     "decimals": 2,
+     "operation": "difference",
+     "evidence": "reports/poi-category-audit.json",
+     "pointer_a": "/regions/south-central-tx/tract_zero_sensitivity/core_v0/fire/zero_share",
+     "pointer_b": "/regions/south-central-tx/tract_zero_sensitivity/fire_all_fire_or_rescue_categories/fire/zero_share",
+     "scale": 100.0,
+     "absolute": true,
+     "tolerance": 0.005
+    }
+   ],
    "hedge_context": [
     "The provided-data POI audit is reproducible with\n`scripts/audit_poi_categories.py`; its full per-region frequency table for all\nmatching `categories.primary` and `categories.alternate` values is\n`reports/poi-category-audit.json`. The report includes explicit zero rows for\ncategories absent from a region, primary/alternate counts, name-regex hits,\nsource-dataset mix, confidence quantiles, and tract-zero sensitivity. Counts\nin the category-frequency table overlap: a single POI can have more than one\nprimary/alternate category, so those rows are not additive.",
     "The audit read only official `GEOID` cells from the per-region sample files;\nsample score placeholders were not used. For each provided Overture POI file,\nParquet projection included `categories`, `sources`, `confidence`, and `names`,\nplus `bbox` solely to assign POI centers to tracts for the required zero-tract\nsensitivity. It did **not** read the Overture `geometry` column, other POI\nproperties, external facility lists, or removed reference layers. Provided ACS\n`GEOID` and tract `geometry` columns were used only as the tract spatial index;\nPOIs outside the 9,379 official sample IDs were excluded. Three Texas POI\ncenters did not intersect an official sample tract. The output records exact\nselected-column compressed-byte counts, object sizes, and the ordered GEOID\nsequence hashes; there was no full-object download. The selected POI column\nchunks total 132,133,741 compressed bytes across the four regions.",
@@ -2456,6 +2630,18 @@
      "sha256": "23c49c00105c5936baa094a3ce0f5a23e41589939c6fea972870f1fde794370e",
      "primary": true,
      "pointer": "/measure_before/source_and_confidence_coverage/fire/selected_rows"
+    },
+    {
+     "path": "reports/poi-facility-miss-audit.json",
+     "sha256": "b559c8d3d85709d0e5f2d2102bb39da4d8255a3c62f728cf736da522025a289c",
+     "primary": false,
+     "pointer": "/summaries/all/observed_overture_zero_counts/fire0"
+    },
+    {
+     "path": "reports/v2-component-contribution-audit.json",
+     "sha256": "dd1fb9696932cec9006f0ea487516418b49004317005f7368ea89cbcb6db597d",
+     "primary": false,
+     "pointer": "/component_summaries/poi/overall/n"
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-035",
@@ -2467,44 +2653,7 @@
     }
    ],
    "tokens_exempt": [],
-   "derived_tokens": [
-    {
-     "value": 9.95,
-     "decimals": 2,
-     "operation": "percentage",
-     "evidence": "reports/confidence-by-stratum.json",
-     "pointer_a": "/regions/maricopa-az/poi_rows_confidence_below_0_5",
-     "pointer_b": "/regions/maricopa-az/poi_rows_with_valid_confidence",
-     "tolerance": 0.005
-    },
-    {
-     "value": 10.26,
-     "decimals": 2,
-     "operation": "percentage",
-     "evidence": "reports/confidence-by-stratum.json",
-     "pointer_a": "/regions/northern-ca/poi_rows_confidence_below_0_5",
-     "pointer_b": "/regions/northern-ca/poi_rows_with_valid_confidence",
-     "tolerance": 0.005
-    },
-    {
-     "value": 9.91,
-     "decimals": 2,
-     "operation": "percentage",
-     "evidence": "reports/confidence-by-stratum.json",
-     "pointer_a": "/regions/eastern-ok/poi_rows_confidence_below_0_5",
-     "pointer_b": "/regions/eastern-ok/poi_rows_with_valid_confidence",
-     "tolerance": 0.005
-    },
-    {
-     "value": 12.38,
-     "decimals": 2,
-     "operation": "percentage",
-     "evidence": "reports/confidence-by-stratum.json",
-     "pointer_a": "/regions/south-central-tx/poi_rows_confidence_below_0_5",
-     "pointer_b": "/regions/south-central-tx/poi_rows_with_valid_confidence",
-     "tolerance": 0.005
-    }
-   ],
+   "derived_tokens": [],
    "hedge_context": [
     "The frozen, analysis-only builder is `scripts/build_poi_confidence_candidate.py`; its thresholds, category sets, v2 formula, and source-use rules are preregistered in `config/poi-confidence-weighting-preregistered.json`. It reads the four official sample GEOID columns, the provided tract geometry for bbox-center assignment, `ALAND`/population/urbanity strata, and only Overture `bbox`, `categories`, `confidence`, and `sources` columns. Exact fire/EMS/school category sets come from `config/poi-category-definitions.json`. A matched POI contributes once per selected family. At threshold τ, its selected-family count contribution is `confidence` when valid confidence is at least τ, and zero otherwise; raw counts remain separately reported. The existing v2 region-share allocation for no-category POIs and the establishments half are held fixed to isolate the confidence sensitivity. The fixed facility priors and `k_pop=0.024` are held constant in this sensitivity (they are also used by the submitted V2); source dataset membership is reported as provenance and receives no weight. Hospitals remain excluded.",
     "Before weighting, raw core counts are 5,242 fire, 2,739 EMS, and 39,438 school POI-family rows (overlap between families is possible). Zero-tract counts are 5,892, 7,282, and 1,088 respectively. V0 POI score mean is `0.25699` over all official rows (`0.25704` among its 9,377 defined rows); the raw-count v2 POI mean is `0.12148` over all 9,379. The re-created raw v2 candidate matches the frozen v2 audit's means, variances, and defined counts overall and in each region. Every selected core POI has valid confidence and a dataset source in this input; source identity is descriptive, not a truth or completeness assessment.",
@@ -2654,7 +2803,44 @@
     }
    ],
    "tokens_exempt": [],
-   "derived_tokens": [],
+   "derived_tokens": [
+    {
+     "value": 9.95,
+     "decimals": 2,
+     "operation": "percentage",
+     "evidence": "reports/confidence-by-stratum.json",
+     "pointer_a": "/regions/maricopa-az/poi_rows_confidence_below_0_5",
+     "pointer_b": "/regions/maricopa-az/poi_rows_with_valid_confidence",
+     "tolerance": 0.005
+    },
+    {
+     "value": 10.26,
+     "decimals": 2,
+     "operation": "percentage",
+     "evidence": "reports/confidence-by-stratum.json",
+     "pointer_a": "/regions/northern-ca/poi_rows_confidence_below_0_5",
+     "pointer_b": "/regions/northern-ca/poi_rows_with_valid_confidence",
+     "tolerance": 0.005
+    },
+    {
+     "value": 9.91,
+     "decimals": 2,
+     "operation": "percentage",
+     "evidence": "reports/confidence-by-stratum.json",
+     "pointer_a": "/regions/eastern-ok/poi_rows_confidence_below_0_5",
+     "pointer_b": "/regions/eastern-ok/poi_rows_with_valid_confidence",
+     "tolerance": 0.005
+    },
+    {
+     "value": 12.38,
+     "decimals": 2,
+     "operation": "percentage",
+     "evidence": "reports/confidence-by-stratum.json",
+     "pointer_a": "/regions/south-central-tx/poi_rows_confidence_below_0_5",
+     "pointer_b": "/regions/south-central-tx/poi_rows_with_valid_confidence",
+     "tolerance": 0.005
+    }
+   ],
    "hedge_context": [
     "The deterministic diagnostic in `scripts/discovery_confidence_by_stratum.py`\ncomputes per-tract Overture confidence quantiles in the authorized workspace\ncache `gap-estimator/features/poi-confidence-by-tract.parquet`; stratum results\nand 95% confidence intervals are in `reports/confidence-by-stratum.json`.\nOnly official sample GEOIDs, provided `svi_overall`/`pct_urban`/`svi_covered`,\nOverture `bbox`/`confidence`, and provided ACS tract geometry for spatial\nassignment were read. Overture geometry, scores, removed reference layers, and\nexternal data were not used. The metric is the place-weighted share with the\nprovided confidence value `<0.5`; it is not a count of stale pages or an\naccuracy measure. No source attribution was read, so the Facebook/staleness\nexplanation remains untested.",
     "Quartiles are region-specific over official scored tracts with finite\n`svi_overall`; equal values at cut points stay together in the higher quartile.\n`pct_urban <0.5` is rural and `>=0.5` urban; missing values are excluded from\nthe cross-tab but remain in the per-tract cache. Intervals resample tracts\nwithin each region × urbanity × SVI-quartile cell (10,000 seeded replicates)\nand recompute the pooled low/valid-place ratio. They reflect tract resampling\nonly, not spatial dependence; the Q4−Q1 contrasts below are unadjusted\nexploratory comparisons.",
@@ -2675,15 +2861,9 @@
    "provenance_class": "measured_provided_data",
    "evidence": [
     {
-     "path": "reports/candidates.json",
-     "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815",
+     "path": "reports/confidence-by-stratum.json",
+     "sha256": "ac759312e2b3e1384078c2d46dc386a9c2a2905ae5c6366d1247c13ee6916053",
      "primary": true,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-rural-svi-minority.json",
-     "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0",
-     "primary": false,
      "pointer": "/"
     }
    ],
@@ -2834,9 +3014,15 @@
    "provenance_class": "measured_provided_proxy",
    "evidence": [
     {
+     "path": "scripts/estimate_gaps.py",
+     "sha256": "4f59982e0349af048ba11efbd5dbc629076eef8d3c8dc08d5747da5833bfc4fe",
+     "primary": true,
+     "pointer": "def:sha256"
+    },
+    {
      "path": "reports/discovery-rural-svi-minority.json",
      "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0",
-     "primary": true,
+     "primary": false,
      "pointer": "/"
     }
    ],

@@ -21,7 +21,11 @@ We request consideration for both Best Bias Discovery ($1,000) and Best Document
 
 ## Related entries on the challenge board
 
-Title-based overlaps on the challenge board include rural/source entries #34839 (Sep 16), #35011 (Sep 25), #35264 (Oct 8), #35031 (Sep 26), and #35000 (Sep 25); Rio Grande/colonias entries #34744 (Sep 13), #35071 (Sep 28), #34972 (Sep 23), and #35333 (Oct 14); Paradise/wildfire/provider entries #34910 (Sep 20), #35520 and #35527 (Oct 23), #35479 (Oct 22), #35081 (Sep 28), #35157 (Oct 2), #35345 (Oct 15), #35249 (Oct 8), and #35493 (Oct 22); and San Antonio entries #34839 (Sep 16), #34744, #35071, and #34972. The corresponding analyses add the measured rural OSM-attribution contrast, qualified Google/building-source reconciliation, negative Paradise mechanism check, and named within-city OSM/SVI gradient; the gradient is documented separately from the four current lead findings. Title overlap does not establish same evidence or conclusions. See [the related-entries note](related-entries.md) for titles and differentiation. Before submission, review procedural threads #35334 (Oct 14), #34678 (Sep 4), #34695 (Sep 7), #35079 (Sep 28), #35250 (Oct 8), #35221 (Oct 6), #35241 and #35240 (Oct 7); thread titles and dates are in the note. Thread bodies were not reviewed here.
+The author of #34744 (13 Sep) withdrew the colonia-gap claim on 7 Oct because it relied on removed reference layers; its replacement concerns “dispatchable roads” but gives no county, interval, or mechanism, while #35071 (28 Sep) uses a reconstructed target for its “colonias vacuum” and acknowledges tract labels do not verify colonia boundaries. #34972 (23 Sep) and #35333 (14 Oct) describe rural road-vintage/phantom-road findings affecting roughly 33,000–400,000 people, not metropolitan building coverage, while #35011 (25 Sep) frames Hidalgo as a high-CVI tract set without a headline interval or Google-source analysis; our border-metro result instead covers 460 tracts and 1.77 million residents (89% urban) and reports an OSM-share association net of Hispanic share and urbanity (β=−0.446, SE=0.070, county-clustered). #35031 (26 Sep) and #35474 (21 Oct) identify county data-sharing as a mechanism in Oklahoma but do not report Google Open Buildings or an out-of-region test; we add Google as a third provider in the border-building source mix and find Google-only footprints in all three out-of-region border counties (El Paso 33.0%, Imperial 29.2%, Doña Ana 10.8%) and in neither non-border control (Ector or Bernalillo, 0.0%). #35264 (8 Oct) reports a pooled OSM-by-SVI gradient with leaderboard-calibrated gap magnitudes and regional-composition sensitivity, while #35030 (26 Sep) reports tribal-fire-station gaps in a sample where 805 of 858 tribal tracts are in Eastern Oklahoma; our San Antonio SVI contrast is within one city (Q4−Q1 −19.6 pp [−31.4, −7.9]) and our tribal comparison is explicitly region-confounded, not a general tribal effect. #34995 (25 Sep) reuses the reconstructed-gap approach withdrawn in #34744 for its mobile-home result, #34962 (23 Sep) owns the address-layer finding (we make no address claim), and #35520/#35527 (23 Oct) provide stronger DINS-matched wildfire evidence; we cite that work and limit Finding 3 to the provider-lineage result (OSM-only 0.1–8.9%) and its negative mechanism check. For who is affected, the public-domain CDC PLACES 2025 tract join (retrieved 29 Oct) describes the border population rather than low-OSM tracts: the ten border counties' uninsured prevalence for adults aged 18–64 is 36.9% versus 18.1% elsewhere in the region (county-clustered 95% CI for the difference +16.6 to +22.1 pp).
+
+| What ours adds |
+|---|
+| Border **metros + buildings**; Google as a third provider and cross-border spill-over; an adjusted place association net of Hispanic share; a San Antonio within-city gradient; an out-of-region transfer test; and a CDC PLACES health join about the border population. |
 
 ## Best Bias Discovery entry
 
@@ -50,23 +54,37 @@ Rural, higher-vulnerability residents may rely on building context for heat, dro
 
 **Limits and reproduction.** OSM attribution is provenance, not accuracy, completeness, age, or local mapping activity; provider memberships may overlap. Only provided Overture source fields and strata were used; no removed reference layers, scores, or candidate outputs (`reports/source-provenance.json`, cited SHA). Rebuild with `uv run --python 3.12 --no-project --isolated --with-requirements requirements.txt python scripts/discovery_source_provenance.py --workspace "$COMPETITION_WORKSPACE" --out reports/source-provenance.json --figure reports/source-provenance.png`.
 
-### Finding 2 — Rio Grande border metros: Google-sourced footprints mask a community-source gap
+### Finding 2 — Rio Grande border metros: Overture's machine-only source mix
 
 #### Impact and novelty
 
-Ten South Texas counties include 1.77 million residents and colonias; prioritise partner-led checks, with dispatch impact unmeasured.
+Lead: border metros have machine-only footprints with an Overture third provider, beyond low OSM. Ector has lower OSM than El Paso (6.7% vs 9.3%), 47.7% Esri, and zero border-provider share; source, not accuracy, is measured.
+
+Ten border counties, 1.77M residents; impacts unmeasured.
 
 #### Evidence and mechanism
 
-Across 460 border tracts, mean OSM-touched share was 9.18%, versus 61.48% in 5,541 others (68.66% in 4,600 urban others); Microsoft-only share averaged 67.48%. “Other” tags cover 254,346/886,361 footprints (28.70%); 290 tracts (1,183,693 people) are below 5% OSM. Difference: −52.30 pp (county-cluster 95% CI [−61.24, −36.99]); adjusted association −0.446 (SE 0.070; n=5,958, 185 counties), descriptive—not causal.
+Across 460 border tracts, OSM mean is 9.18% vs 61.48% elsewhere (68.66% urban); difference −52.30 pp (95% county-cluster CI −61.24 to −36.99), adjusted β=−0.446 (SE 0.070; n=5,958, 185 counties), descriptive; full counts in Appendix J.
 
-Border “Other” (254,346) nearly matches Google Open Buildings (254,872); non-border “Other” (977,049) nearly matches USGS lidar (976,523), a ±526 reconciliation supporting—but not proving—spill-over. County details are in [Appendix J](#appendix-j-supporting-discovery-tables). Webb/Starr/Maverick Overture/USFS medians (1.56/1.75/1.71) are context, not a Microsoft target proxy.
+`Other` is an Overture `sources` label, not removed Google Open Buildings or USGS reference data. The border label matches the first provider; non-border Texas, the second (Bexar cache share 0.336; ±526 count matches). This provider-label inference is not proof (Appendix J).
 
-Small-county CIs unstable; attribution is regional only.
+#### Does it transfer?
 
-Hidalgo `48215021906`, `48215023525`, and `48215024404` have zero OSM share and 1,727, 1,765, and 2,212 footprints; Cameron `48061012002` has 3,084 and 0.03% OSM. Heat averages 53.5 vs 7.3 WBGT>30°C days/year (218 vs 3,654 covered tracts). Prioritise local verification; dispatch effects are unmeasured.
+“Google-only” denotes an Overture provider tag, not a removed reference layer: 10.8–33.0% in three unscored border counties and zero in both controls. El Paso OSM/provider (9.3%/33.0%) matches the scored Rio Grande OSM range (4.2–12.0%); Doña Ana has 10.8% provider and 26.1% Esri. No interval.
 
-Related road/colonias entries and differentiation are in [the board note](related-entries.md); this is a qualified building-source comparison. Reports/hashes: `reports/discovery-border-metros.json` (`27779986d787594abdadf741c983db13dedf25fb476cc4ff2ae096a1a4260244`) and `reports/source-provenance.json` (`e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565`). Rebuild with `uv run --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/discovery/border_metros.py --workspace "$COMPETITION_WORKSPACE" --out reports/discovery-border-metros.json`; SVI is defined in Appendix F.
+| County | OSM | Third-provider tag | Esri |
+|---|---:|---:|---:|
+| **El Paso TX** | 0.093 | **0.330** | 0.000 |
+| **Imperial CA** | 0.200 | **0.292** | 0.000 |
+| **Doña Ana NM** | 0.179 | **0.108** | 0.261 |
+| Ector TX (control) | 0.067 | **0.000** | 0.477 |
+| Bernalillo NM (control) | 0.809 | **0.000** | 0.000 |
+
+Full results and reproduction: [Appendix J](#appendix-j-supporting-discovery-tables).
+
+#35031/#35474's Oklahoma Esri county-sharing mechanism coexists: Esri is 47.7% in Ector and 26.1% in Doña Ana.
+
+Manifest: `$COMPETITION_WORKSPACE/external-discovery-2026-10-29-fable/MANIFEST.json`; rerun report `reports/discovery-border-transfer.json` (SHA-256 `64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795`); command in Appendix J. No scores or removed references.
 
 ### Finding 3 — Paradise/Magalia building-count discrepancy
 
@@ -74,7 +92,7 @@ Related road/colonias entries and differentiation are in [the board note](relate
 
 In six Paradise/Magalia Butte County tracts, provided Wildfire Risk to Communities counts exceed Overture (ratios 0.620–0.747); the geographic/vintage discrepancy does not establish fire damage as its cause. Treating larger counts as current could misdirect field checks. Provided MTBS last-burn year is 2018; public CAL FIRE DINS is a discovery-only mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified). Tract-level rows are in [Appendix J](#appendix-j-supporting-discovery-tables).
 
-Focal GEOIDs and DINS rows appear in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); county-cluster CI [−1.65, +16.67] includes zero, so magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:
+Focal GEOIDs and DINS rows appear in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:
 
 ![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)
 
@@ -82,7 +100,7 @@ Focal GEOIDs and DINS rows appear in [Appendix J](#appendix-j-supporting-discove
 
 Focal shares show Microsoft-only 0.430–0.990 versus OSM-only 0.001–0.089; Overture/WRC ratios 0.620–0.747 against the provided Microsoft-derived USFS WRC count support a within-provider vintage gap, not OSM conflation (`reports/postfire-lineage-recheck.json#/focal_share_ranges`; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`). Pooled OLS gives β(OSM-only)=−0.016 (county-clustered SE 0.041; n=9,337; controls: urbanity, log density, region FE); seven unburned NorCal tracts have ratio <0.8, all urban—six Sacramento, one Placer (0.711–0.775)—so not all Sacramento (`reports/postfire-lineage-recheck.json#/pooled_ols`, `#/unburned_northern_ca_ratio_below_0_8`).
 
-Title-indexed wildfire entries: #34910, #35520, #35527, #35479, #35345, #35081 and #35157; ours is a bounded provider-vintage check and negative mechanism audit, not a novelty claim ([related entries](related-entries.md)).
+Entries #35520 and #35527 (23 Oct) provide stronger DINS-matched wildfire evidence; we acknowledge that work and limit Finding 3 here to the separate provider-lineage result and negative mechanism check ([related-entry omissions ledger](related-entries.md)).
 
 Reproduce with `scripts/discovery_postfire_stale_reference.py`, `scripts/audit_discovery_postfire_county_bootstrap.py`, and `scripts/discovery_dins_mechanism.py`; inputs, filters and hashes are recorded in reports/manifests.
 
@@ -225,6 +243,7 @@ The general register below lists prior-art sources, organiser-hosted challenge f
 | https://doi.org/10.3390/ijgi2041066 | Citation: Robert Hecht, Christian Kunze, and Stefan Hahmann, “Measuring Completeness of Building Footprints in OpenStree | 2026-10-24 | prior art and methodology know-how; not a dataset and never joined to scored predictions |
 | https://doi.org/10.3390/ijgi7080289 | Citation: Maria Antonia Brovelli and Giacomo Zamboni (2018), ISPRS International Journal of Geo-Information 7(8), articl | 2026-10-24 | prior art and methodology know-how; not a dataset and never joined to scored predictions |
 | https://github.com/microsoft/USBuildingFootprints | Citation/documentation: microsoft/USBuildingFootprints README. URL check: resolved; GitHub README fetched (repository is | 2026-10-24 | prior art and methodology know-how; not a dataset and never joined to scored predictions |
+| https://overturemaps-us-west-2.s3.us-west-2.amazonaws.com/release/2026-09-23.1/theme=buildings/type=building/ | This supporting transfer test uses Overture Maps Foundation buildings release 2026-09-23.1, the same release used by the | 2026-10-24 | prior art and methodology know-how; not a dataset and never joined to scored predictions |
 | https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/POSTFIRE_MASTER_DATA_SHARE/FeatureServer/0 | CAL FIRE DINS public point-feature service; filtered to Camp incident and non-address fields | 2026-10-29 | public external discovery data endpoint; not used in scored candidate construction |
 | https://svi.cdc.gov/Documents/Data/2022/csv/states/SVI_2022_US.csv | CDC/ATSDR SVI 2022 | 2026-10-27 | discovery-only external context; used for EP_HISP control in the border-metro descriptive regression; never used in scored predictions |
 | https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title17-section105&num=0&edition=prelim | 17 U.S.C. Section 105, statutory U.S. federal-work public-domain basis (subject to third-party exceptions) | 2026-10-27 | discovery-only external context; used for EP_HISP control in the border-metro descriptive regression; never used in scored predictions |
@@ -239,9 +258,10 @@ The general register below lists prior-art sources, organiser-hosted challenge f
 | https://www2.census.gov/geo/tiger/TIGER2024/PLACE/tl_2024_40_place.zip | U.S. Census Bureau TIGER/Line 2024 place polygons, Oklahoma | 2026-10-29 | public domain Census geography used only to label preselected example tracts; no finding metric recomputed |
 | https://www2.census.gov/geo/tiger/TIGER2024/PLACE/tl_2024_48_place.zip | U.S. Census Bureau TIGER/Line 2024 place polygons, Texas | 2026-10-29 | public domain Census geography used only to label preselected example tracts; no finding metric recomputed |
 | https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_04_tract.zip | U.S. Census Bureau TIGER/Line 2024 tract polygons, Arizona | 2026-10-25 | public domain Census geography used only to match preselected GEOIDs to Census places; no finding metric recomputed |
-| https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_06_tract.zip | U.S. Census Bureau TIGER/Line 2024 tract polygons, California | 2026-10-25 | public domain Census geography used only to match preselected GEOIDs to Census places; no finding metric recomputed |
+| https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_06_tract.zip | U.S. Census Bureau TIGER/Line 2024 tract polygons, California | 2026-10-25 | public-domain geography for outside-region footprint-to-tract assignment and matching preselected GEOIDs to Census places; not target reference data |
+| https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_35_tract.zip | U.S. Census Bureau TIGER/Line 2024 tract polygons, New Mexico | 2026-10-25 | public-domain geography used only for outside-region footprint-to-tract assignment; not target reference data |
 | https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_40_tract.zip | U.S. Census Bureau TIGER/Line 2024 tract polygons, Oklahoma | 2026-10-25 | public domain Census geography used only to match preselected GEOIDs to Census places; no finding metric recomputed |
-| https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_48_tract.zip | U.S. Census Bureau TIGER/Line 2024 tract polygons, Texas | 2026-10-25 | public domain Census geography used only to match preselected GEOIDs to Census places; no finding metric recomputed |
+| https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_48_tract.zip | U.S. Census Bureau TIGER/Line 2024 tract polygons, Texas | 2026-10-25 | public-domain geography for outside-region footprint-to-tract assignment and matching preselected GEOIDs to Census places; not target reference data |
 
 Provided-data-only check for the scored predictions (`reports/v2-input-provenance.json`): field-lineage fraction 1.0, 0 prohibited source dependencies, 0 unclassified inputs, external data added to scored predictions: False.
 
@@ -249,18 +269,18 @@ Provided-data-only check for the scored predictions (`reports/v2-input-provenanc
 
 A machine-checked claim-to-evidence audit backs every number in this writeup.
 
-- `claims_total`: 72
-- `claims_fully_traceable`: 72
+- `claims_total`: 83
+- `claims_fully_traceable`: 83
 - `fraction_quantitative_claims_traceable`: 1.0
-- `numeric_tokens_total`: 862
-- `numeric_tokens_covered`: 862
+- `numeric_tokens_total`: 961
+- `numeric_tokens_covered`: 961
 - `fraction_numeric_tokens_covered`: 1.0
-- `distinct_verify_commands`: 72
-- `distinct_reproduce_commands`: 19
-- `derived_aggregates_verified`: 27
-- `claims_asserting_accuracy`: 1
+- `distinct_verify_commands`: 83
+- `distinct_reproduce_commands`: 20
+- `derived_aggregates_verified`: 39
+- `claims_asserting_accuracy`: 0
 
-Current audit status: 72 of 72 quantitative claims are fully traceable (1.0); 862 of 862 numeric tokens are covered (1.0). There are 0 unresolved claim-evidence items. The full claim audit does not pass overall acceptance because three registered report-product differences remain outside accepted disclosure paths (`reports/writeup-claim-evidence-audit.json#/commands/undisclosed_product_changes`). This is a reproduction limitation, not an accuracy claim. The final-two result is separately traced to `reports/final-two.json` and machine-compared by the packet verifier.
+Current audit status: 83 of 83 quantitative claims are fully traceable (1.0); 961 of 961 numeric tokens are covered (1.0). There are 0 unresolved claim-evidence items. The full claim audit does not pass overall acceptance because three registered report-product differences remain outside accepted disclosure paths (`reports/writeup-claim-evidence-audit.json#/commands/undisclosed_product_changes`). This is a reproduction limitation, not an accuracy claim. The final-two result is separately traced to `reports/final-two.json` and machine-compared by the packet verifier.
 
 The claim inventory, audit configuration, and execution details are available in [`claim-evidence-audit.md`](claim-evidence-audit.md) and the linked JSON reports: `reports/writeup-claim-evidence-audit.json`, `reports/writeup-claim-inventory.json`, and `reports/writeup-claim-evidence-execution.json`.
 
@@ -367,6 +387,24 @@ The focal tract values are from `reports/discovery-postfire.json#/focal_butte_20
 | `06007001900` | 0.677 | 390.2 | 1,887 | 3 | 0.793 |
 | `06007002300` | 0.720 | 668.9 | 2,386 | 2 | 0.720 |
 | `06007002200` | 0.747 | 766.1 | 2,472 | 6 | 0.690 |
+
+#### Out-of-region border transfer
+
+This supporting transfer test uses Overture Maps Foundation buildings release 2026-09-23.1, the same release used by the lane cache. Dataset URL: `https://overturemaps-us-west-2.s3.us-west-2.amazonaws.com/release/2026-09-23.1/theme=buildings/type=building/`; retrieved 2026-10-29T20:36:09Z; Overture buildings ODbL 1.0 (Google Open Buildings CC BY 4.0/ODbL per Overture attribution). Downloaded by the STAC-pruned `overturemaps` CLI; the workspace manifest records exact bounding boxes, row counts and file hashes. The five counties are outside the four scored regions. Footprints are assigned by bbox centre to Census TIGER/Line 2024 county tracts solely for geography, not target reconstruction; these public-domain polygons are not the removed reference layer. Source classes use `scripts/estimate_gaps.py::classify_building_sources`. Shares are footprint-weighted; tract median OSM is unweighted; “tracts <5%” is a strict tract OSM-share threshold. Google-only means the single source name contains `google`.
+
+| County | Role | Footprints | OSM-touched | Microsoft-only | Google-only | Esri-touched | Tract-median OSM | Tracts <5% OSM / all |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| **El Paso TX** | Border, unscored | 392,897 | 0.093 | 0.475 | **0.330** | 0.000 | 0.043 | 101 / 188 |
+| **Imperial CA** | Border, unscored | 80,116 | 0.200 | 0.437 | **0.292** | 0.000 | 0.073 | 17 / 40 |
+| **Doña Ana NM** | Border, unscored | 118,361 | 0.179 | 0.419 | **0.108** | 0.261 | 0.053 | 29 / 61 |
+| Ector TX (Odessa) | Non-border, Hispanic-majority control | 78,050 | 0.067 | 0.456 | **0.000** | 0.477 | 0.036 | 18 / 33 |
+| Bernalillo NM (Albuquerque) | Non-border control | 282,316 | 0.809 | 0.191 | **0.000** | 0.000 | 0.942 | 2 / 176 |
+
+The lane `other` class is a mixed-provenance bin, not one provider: the border `other` count (254,346) is within 526 of Google Open Buildings memberships (254,872), while non-border South-Central Texas `other` (977,049) is within 526 of USGS lidar memberships (976,523). The Bexar provided-cache `other` share is 0.336. These count reconciliations support, but do not prove, the provider attribution; do not read `other` as Google statewide. Original source counts are in `reports/discovery-border-metros.json`; Bexar cache inputs and hash are recorded in `reports/discovery-border-transfer.json`.
+
+Named impact context: Hidalgo tracts `48215021906`, `48215023525`, and `48215024404` have zero OSM-touched buildings and 1,727, 1,765, and 2,212 footprints; Cameron tract `48061012002` has 3,084 footprints and 0.03% OSM. Annual WBGT>30°C averages 53.5 days across 218 covered border tracts vs 7.3 across 3,654 covered non-border tracts; dispatch outcomes were not measured.
+
+The source manifest at `$COMPETITION_WORKSPACE/external-discovery-2026-10-29-fable/MANIFEST.json` records the Overture public URL, CLI retrieval UTC, ODbL/attribution terms, bbox row counts and SHA-256 hashes. Reproduce the analysis with `uv run --python 3.12 --no-project --isolated --with-requirements requirements.txt python scripts/discovery/transfer_outside_regions.py --workspace "$COMPETITION_WORKSPACE" --out reports/discovery-border-transfer.json` (report SHA-256 `64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795`). External Census TIGER/Line 2024 tract files for CA, NM and TX were retrieved 2026-10-25 and are public-domain geography, not target reference data: https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_06_tract.zip, https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_35_tract.zip, https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_48_tract.zip. Archive SHA-256 values are in the report. The supporting test is `python -m unittest discover -s tests -p 'test_discovery_transfer_outside_regions.py' -v`. This discovery used public source provenance only; no candidate predictions or score values.
 
 ## Appendix K: San Antonio-area SVI gradient
 

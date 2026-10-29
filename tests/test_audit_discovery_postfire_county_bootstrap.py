@@ -312,8 +312,8 @@ class ProhibitionTests(unittest.TestCase):
 class WriteupQualificationTests(unittest.TestCase):
     def setUp(self) -> None:
         document = (ROOT / "docs/writeup/bias-discovery.md").read_text(encoding="utf-8")
-        start = document.find("### Evidence")
-        end = document.find("## Finding 2", start + 1)
+        start = document.find("### Impact and evidence")
+        end = document.find("## Finding 4", start + 1)
         self.block = document[start:end]
 
     def test_the_finding_is_qualified_in_the_evidence_block(self) -> None:
@@ -327,16 +327,14 @@ class WriteupQualificationTests(unittest.TestCase):
         self.assertTrue(REPORT["gates"]["writeup_qualification_matches_verdict"])
 
     def test_the_qualification_keeps_the_published_result_rather_than_deleting_it(self) -> None:
-        self.assertIn("+9.55 percentage points", self.block)
+        self.assertIn("+9.55 pp", self.block)
         self.assertIn("[+0.55, +20.89]", self.block)
-        self.assertIn("50,000", self.block)
-        self.assertIn("valid-replicate fraction 1.0", self.block)
+        self.assertIn("[-1.65, +16.67]", self.block)
+        self.assertIn("exploratory", self.block)
 
     def test_the_reproduction_command_is_recorded_in_the_writeup(self) -> None:
-        document = (ROOT / "docs/writeup/bias-discovery.md").read_text(encoding="utf-8")
-        repro_block = document[document.find("## Reproducibility"):]
-        self.assertIn("python scripts/audit_discovery_postfire_county_bootstrap.py", repro_block)
-        self.assertIn("reports/discovery-postfire-county-bootstrap.json", repro_block)
+        self.assertIn("scripts/audit_discovery_postfire_county_bootstrap.py", self.block)
+        self.assertIn("reports/discovery-postfire-county-bootstrap.json", self.block)
 
 
 class DeterminismTests(unittest.TestCase):

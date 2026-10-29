@@ -2,7 +2,7 @@
  "commands": [
   {
    "command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with pytest python -m pytest -q",
-   "exit_code": 0,
+   "exit_code": 2,
    "self_referential_deselect": [
     "tests/test_audit_writeup_claim_evidence.py::InventoryTests::test_report_is_deterministic_and_carries_no_wall_clock_key"
    ],
@@ -169,18 +169,6 @@
    ]
   },
   {
-   "command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_strata_confound.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-strata-confound.json",
-   "exit_code": 0,
-   "self_referential_deselect": [],
-   "undisclosed_product_changes": [],
-   "products": [
-    {
-     "path": "reports/discovery-strata-confound.json",
-     "sha256": "ce0f1307793d1c658754cb7f9dd6fee7ea9cabf2a8a0e7ccb8e9888c2bad9ecb"
-    }
-   ]
-  },
-  {
    "command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/estimate_gaps.py --workspace \"$COMPETITION_WORKSPACE\" --poi-model facility-miss",
    "exit_code": 0,
    "self_referential_deselect": [],
@@ -205,18 +193,42 @@
    ]
   },
   {
-   "command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
+   "command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_san_antonio_svi_gradient.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/san-antonio-svi-gradient.json",
    "exit_code": 0,
    "self_referential_deselect": [],
    "undisclosed_product_changes": [],
    "products": [
     {
-     "path": "reports/discovery-postfire-map.png",
-     "sha256": "916589e0d3dc765a77c133dbcfe454740906dabb26ab74fcc0db92f9ffa43da1"
+     "path": "reports/san-antonio-svi-gradient.json",
+     "sha256": "d040d3c857103fa890c061291259d798cab136570874386f0bc9e2465b86d70f"
+    }
+   ]
+  },
+  {
+   "command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/border_metros.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-metros.json && /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/transfer_outside_regions.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-transfer.json",
+   "exit_code": 0,
+   "self_referential_deselect": [],
+   "undisclosed_product_changes": [],
+   "products": [
+    {
+     "path": "reports/discovery-border-metros.json",
+     "sha256": "27779986d787594abdadf741c983db13dedf25fb476cc4ff2ae096a1a4260244"
     },
     {
-     "path": "reports/discovery-postfire.json",
-     "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
+     "path": "reports/discovery-border-transfer.json",
+     "sha256": "64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795"
+    }
+   ]
+  },
+  {
+   "command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/transfer_outside_regions.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-transfer.json",
+   "exit_code": 0,
+   "self_referential_deselect": [],
+   "undisclosed_product_changes": [],
+   "products": [
+    {
+     "path": "reports/discovery-border-transfer.json",
+     "sha256": "64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795"
     }
    ]
   },
@@ -224,9 +236,7 @@
    "command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png && /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/audit_discovery_postfire_county_bootstrap.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire-county-bootstrap.json && MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_dins_mechanism.py --workspace \"$COMPETITION_WORKSPACE\" --dins-file \"$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson\" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png",
    "exit_code": 0,
    "self_referential_deselect": [],
-   "undisclosed_product_changes": [
-    "reports/discovery-postfire-county-bootstrap.json:/summary/report_sha256"
-   ],
+   "undisclosed_product_changes": [],
    "products": [
     {
      "path": "reports/discovery-dins-mechanism.json",
@@ -242,7 +252,7 @@
     },
     {
      "path": "reports/discovery-postfire-county-bootstrap.json",
-     "sha256": "f55774557f0461875cc5c4a56063ef7cf9f7056f11828ea368c85e6eb5b96348"
+     "sha256": "0bd5dedf9fbfda5f590262290119f433737283fddda79793f87e573da736bc74"
     },
     {
      "path": "reports/discovery-postfire-map.png",
@@ -251,6 +261,42 @@
     {
      "path": "reports/discovery-postfire.json",
      "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
+    }
+   ]
+  },
+  {
+   "command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png && /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/audit_discovery_postfire_county_bootstrap.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire-county-bootstrap.json && MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_dins_mechanism.py --workspace \"$COMPETITION_WORKSPACE\" --dins-file \"$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson\" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png && /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_postfire_lineage.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/postfire-lineage-recheck.json",
+   "exit_code": 1,
+   "self_referential_deselect": [],
+   "undisclosed_product_changes": [],
+   "products": [
+    {
+     "path": "reports/discovery-dins-mechanism.json",
+     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.md",
+     "sha256": "f66d97f7bb82d77cc11928a01699f976455fe349063316624883a464a90b245d"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.png",
+     "sha256": "2b2948bd8f330f7c958b5c8deb48306b2b0809a1101947ca620c989e6dae6f8f"
+    },
+    {
+     "path": "reports/discovery-postfire-county-bootstrap.json",
+     "sha256": "0bd5dedf9fbfda5f590262290119f433737283fddda79793f87e573da736bc74"
+    },
+    {
+     "path": "reports/discovery-postfire-map.png",
+     "sha256": "916589e0d3dc765a77c133dbcfe454740906dabb26ab74fcc0db92f9ffa43da1"
+    },
+    {
+     "path": "reports/discovery-postfire.json",
+     "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
+    },
+    {
+     "path": "reports/postfire-lineage-recheck.json",
+     "sha256": "52c16e28258e3b3ca73a3135a81643725a9230372078f5f40c5827d75c1642ca"
     }
    ]
   },
@@ -278,18 +324,11 @@
      "sha256": "2d45a9d06baa5e0ab917f1c2b432a885209d833edb7957ad9c8da2a9439ffa4d"
     }
    ]
-  },
-  {
-   "command": "python scripts/verify_writeup_claim.py --claim methodology-summary-002",
-   "exit_code": 0,
-   "self_referential_deselect": [],
-   "undisclosed_product_changes": [],
-   "products": []
   }
  ],
  "working_tree_clean_before": false,
  "working_tree_clean_after": false,
  "present": true,
- "executed_in_this_pass": 1,
- "commands_total": 19
+ "executed_in_this_pass": 20,
+ "commands_total": 20
 }
