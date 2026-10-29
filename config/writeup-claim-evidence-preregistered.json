@@ -7,7 +7,8 @@
     "docs/writeup/methodology-summary.md",
     "docs/writeup/methodology.md",
     "docs/writeup/edge-cases.md",
-    "docs/writeup/appendices/screens-that-did-not-produce-a-finding.md"
+    "docs/writeup/appendices/screens-that-did-not-produce-a-finding.md",
+    "docs/writeup/appendices/san-antonio-svi-gradient.md"
   ],
   "workspace_rules": "RULES.md",
   "evidence_allowlist": [
@@ -103,6 +104,7 @@
     "reports/scorecards/ySXi73rd.json",
     "reports/source-freshness-candidate.json",
     "reports/source-provenance.json",
+    "reports/san-antonio-svi-gradient.json",
     "reports/t1-class-drop-handcheck.json",
     "reports/t1-outside-share-threshold.json",
     "reports/transport-route-ref-audit.json",
@@ -149,6 +151,7 @@
     "scripts/discovery_postfire_stale_reference.py",
     "scripts/discovery_rural_svi_minority.py",
     "scripts/discovery_source_provenance.py",
+    "scripts/audit_san_antonio_svi_gradient.py",
     "scripts/discovery_strata_confound.py",
     "scripts/estimate_defined_flags.py",
     "scripts/estimate_gaps.py",
@@ -1102,6 +1105,24 @@
         "reports/discovery-external-layers.json",
         "reports/t1-stroke-residual-screen.json"
       ],
+      "provenance_class": "measured_provided_data"
+    },
+    {
+      "doc": "docs/writeup/appendices/san-antonio-svi-gradient.md",
+      "section": "Evidence and method",
+      "occurrence": 1,
+      "evidence": ["reports/san-antonio-svi-gradient.json"],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_san_antonio_svi_gradient.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/san-antonio-svi-gradient.json",
+      "products": ["reports/san-antonio-svi-gradient.json"],
+      "provenance_class": "measured_provided_data"
+    },
+    {
+      "doc": "docs/writeup/appendices/san-antonio-svi-gradient.md",
+      "section": "*",
+      "occurrence": "any",
+      "evidence": ["reports/san-antonio-svi-gradient.json"],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_san_antonio_svi_gradient.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/san-antonio-svi-gradient.json",
+      "products": ["reports/san-antonio-svi-gradient.json"],
       "provenance_class": "measured_provided_data"
     }
   ],

@@ -13,15 +13,15 @@ Across all four regions, rural tracts have lower mean OSM-attributed shares of O
 | Northern California | 24.70% | 61.57% | −36.87 | [−41.94, −32.01] | 591 (147, 444) |
 | South-Central Texas | 25.15% | 63.83% | −38.68 | [−40.74, −36.56] | 5,989 (991, 4,998) |
 
-Values are copied from `reports/source-provenance.json` (SHA-256 `e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565`). Rural means `pct_urban < 0.5`, urban means `>= 0.5`; missing urbanity is excluded. Each group mean is the unweighted mean of tract OSM-attributed shares; the 95% intervals are 2,000 independent tract-bootstrap resamples of the rural-minus-urban contrast. All CIs are below zero; no spatial adjustment.
+Values are copied from `reports/source-provenance.json` (SHA-256 `e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565`). Rural/urban use `pct_urban < 0.5`/`>= 0.5`; missing is excluded. Means are unweighted across tracts; intervals use 2,000 tract-bootstrap resamples. All CIs are below zero; no spatial adjustment.
 
 ### Named high-SVI examples
 
-The report's `named_lowest_osm_high_svi` lists contain the ten lowest non-null OSM-attributed shares among finite-SVI Q4 tracts in each region; Q4 is region-specific and examples are not all rural. The full GEOID, county, Census place, and report-derived share list is in [Appendix I](#appendix-i-named-high-svi-tracts-with-lowest-osm-attribution). Its metric values come from the source report cited above; county and place labels are geographic names only and do not change selection or metrics.
+The report's `named_lowest_osm_high_svi` lists contain the ten lowest non-null OSM-attributed shares among finite-SVI Q4 tracts in each region; examples are not all rural. Full GEOIDs, county/place labels, and shares are in [Appendix I](#appendix-i-named-high-svi-tracts-with-lowest-osm-attribution); labels do not change selection or metrics. The provided-SVI gradient is detailed in [Appendix K](#appendix-k-san-antonio-area-svi-gradient).
 
 Rural, higher-vulnerability residents may rely on building context for heat, drought, wildfire, and evacuation planning; missing buildings, inaccurate maps, service harm, and dispatch/evacuation outcomes were not measured. Mappers should treat the named tracts as partner-led review priorities and verify proposed edits with local and tribal knowledge.
 
-**Limits and reproduction.** OSM attribution is provenance, not accuracy, completeness, age, or proof of local mapping activity; provider memberships may overlap. Metric inputs are the provided Overture source fields and provided strata; no removed reference layers, public scores, or scored-candidate inputs were used (`reports/source-provenance.json`, cited SHA above). Rebuild the source report with `uv run --python 3.12 --no-project --isolated --with-requirements requirements.txt python scripts/discovery_source_provenance.py --workspace "$COMPETITION_WORKSPACE" --out reports/source-provenance.json --figure reports/source-provenance.png`.
+**Limits and reproduction.** OSM attribution is provenance, not accuracy, completeness, age, or local mapping activity; provider memberships may overlap. Only provided Overture source fields and strata were used; no removed reference layers, scores, or candidate outputs (`reports/source-provenance.json`, cited SHA). Rebuild with `uv run --python 3.12 --no-project --isolated --with-requirements requirements.txt python scripts/discovery_source_provenance.py --workspace "$COMPETITION_WORKSPACE" --out reports/source-provenance.json --figure reports/source-provenance.png`.
 
 ## Finding 2 — Rio Grande border metros: Google-sourced footprints mask a community-source gap
 

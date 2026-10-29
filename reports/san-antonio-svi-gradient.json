@@ -1,0 +1,380 @@
+{
+  "analysis": "Descriptive OSM-attributed building share by provided SVI quartile",
+  "bexar_county": {
+    "q4_below_5_percent_osm": {
+      "population_sum": 142547,
+      "q1_tracts_below_5_percent": 9,
+      "q1_tracts_with_source_denominator": 55,
+      "tracts": 33
+    },
+    "q4_lowest_12_geoid_share": [
+      {
+        "GEOID": "48029140600",
+        "osm_share": 0.0030211480362537764,
+        "svi_overall": 0.8673
+      },
+      {
+        "GEOID": "48029160400",
+        "osm_share": 0.005911330049261084,
+        "svi_overall": 0.9333
+      },
+      {
+        "GEOID": "48029121506",
+        "osm_share": 0.0072158749248346366,
+        "svi_overall": 0.8811
+      },
+      {
+        "GEOID": "48029160600",
+        "osm_share": 0.007532956685499058,
+        "svi_overall": 0.975
+      },
+      {
+        "GEOID": "48029170700",
+        "osm_share": 0.008004574042309892,
+        "svi_overall": 0.9666
+      },
+      {
+        "GEOID": "48029140500",
+        "osm_share": 0.008970976253298154,
+        "svi_overall": 0.8725
+      },
+      {
+        "GEOID": "48029130300",
+        "osm_share": 0.0121765601217656,
+        "svi_overall": 0.8787
+      },
+      {
+        "GEOID": "48029151302",
+        "osm_share": 0.014960629921259842,
+        "svi_overall": 0.9588
+      },
+      {
+        "GEOID": "48029160502",
+        "osm_share": 0.015130674002751032,
+        "svi_overall": 0.9905
+      },
+      {
+        "GEOID": "48029171000",
+        "osm_share": 0.015317286652078774,
+        "svi_overall": 0.9621
+      },
+      {
+        "GEOID": "48029171301",
+        "osm_share": 0.016052880075542966,
+        "svi_overall": 0.9889
+      },
+      {
+        "GEOID": "48029150700",
+        "osm_share": 0.017005391953546247,
+        "svi_overall": 0.9377
+      }
+    ],
+    "q4_minus_q1": {
+      "bootstrap_ci_95": [
+        -0.3126222911349591,
+        -0.07612402456116968
+      ],
+      "bootstrap_replicates": 10000,
+      "bootstrap_seed": 2694606000,
+      "difference": -0.19617411481060276,
+      "n_q1": 55,
+      "n_q4": 139
+    },
+    "quartiles": {
+      "q1": {
+        "mean_osm_share": 0.5608940161337458,
+        "n_tracts": 55,
+        "population_sum": 334879
+      },
+      "q2": {
+        "mean_osm_share": 0.6591843445160366,
+        "n_tracts": 88,
+        "population_sum": 536748
+      },
+      "q3": {
+        "mean_osm_share": 0.486329320892906,
+        "n_tracts": 90,
+        "population_sum": 484401
+      },
+      "q4": {
+        "mean_osm_share": 0.364719901323143,
+        "n_tracts": 139,
+        "population_sum": 653292
+      }
+    },
+    "scope": "Bexar County (San Antonio area)",
+    "scope_n_tracts_with_svi": 372,
+    "svi_quartile_cutpoints": [
+      0.32615,
+      0.63465,
+      0.8465
+    ],
+    "svi_slope": {
+      "county_clusters": null,
+      "method": "HC1 heteroskedasticity-robust OLS; one-county Bexar scope",
+      "n_tracts": 372,
+      "slope_per_1_svi_unit": -0.3599987673450502,
+      "standard_error": 0.07150530779441319
+    }
+  },
+  "data_scope": {
+    "external_data_used": [],
+    "hidden_targets_or_leaderboard_values_read": false,
+    "input_sha256": {
+      "eastern-ok:features": "e5a06316c316f61bf25b80b48e89c1e7f0b1461a0b8cec5831aae24e0cf83fa6",
+      "eastern-ok:sample": "56cb40fba4008d646bc63c62c91e211871459224b3de8b3a886ff813803fd0d4",
+      "eastern-ok:strata": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54",
+      "maricopa-az:features": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22",
+      "maricopa-az:sample": "1640b801d56ab308e68c65583b88cfb9e1555b05a6d0b922eaba22ac09960a31",
+      "maricopa-az:strata": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd",
+      "northern-ca:features": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c",
+      "northern-ca:sample": "f38017b5284667b80b451685fd146388c108e1b30308301289c7a96ecfe60902",
+      "northern-ca:strata": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+      "south-central-tx:features": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746",
+      "south-central-tx:sample": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e",
+      "south-central-tx:strata": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354"
+    },
+    "official_sample_ids_only": true,
+    "provided_overture_source_share_only": true,
+    "provided_population_and_urbanity_only": true,
+    "provided_svi_only": true,
+    "removed_reference_layers_read": false,
+    "sample_score_values_read": false,
+    "tract_geometry_read": false
+  },
+  "definitions": {
+    "bexar": "county FIPS 48029 among official South-Central Texas sample IDs; uses the same South-Central Texas SVI quartile cutpoints for comparability",
+    "bootstrap": "independent tract-with-replacement resampling within Q1 and Q4; percentile 95% interval",
+    "outcome": "provided Overture building OSM source share; unweighted tract mean; source attribution is not an accuracy or completeness measure",
+    "q4_minus_q1": "mean Q4 OSM share minus mean Q1 OSM share",
+    "svi": "provided `svi_overall` where `svi_covered` is true; quartiles computed within scope by empirical 25/50/75% quantiles, ties assigned upward with searchsorted(side=right)",
+    "urban": "provided pct_urban >= 0.5; retains South-Central Texas region-wide SVI cutpoints"
+  },
+  "limitations": [
+    "Descriptive source-provenance association only; not accuracy, completeness, causal, or organizer-score evidence.",
+    "The tract bootstrap does not account for spatial or county dependence; the South-Central Texas slope reports county-clustered CR1 uncertainty.",
+    "Bexar County is used as a San Antonio-area referent; no city-boundary or directional-geography claim is made.",
+    "Names of the lowest-share tracts are identifiers for partner-led review, not evidence of service failures."
+  ],
+  "regional_svi_quartiles": {
+    "eastern-ok": {
+      "q4_minus_q1": {
+        "bootstrap_ci_95": [
+          -0.11510687409812628,
+          -0.038716207839685414
+        ],
+        "bootstrap_replicates": 10000,
+        "bootstrap_seed": 4291909844,
+        "difference": -0.07709660455643266,
+        "n_q1": 295,
+        "n_q4": 296
+      },
+      "quartiles": {
+        "q1": {
+          "mean_osm_share": 0.26795704574996987,
+          "n_tracts": 295,
+          "population_sum": 1042308
+        },
+        "q2": {
+          "mean_osm_share": 0.18622023196055681,
+          "n_tracts": 295,
+          "population_sum": 948993
+        },
+        "q3": {
+          "mean_osm_share": 0.18181240292460743,
+          "n_tracts": 295,
+          "population_sum": 983696
+        },
+        "q4": {
+          "mean_osm_share": 0.1908604411935372,
+          "n_tracts": 296,
+          "population_sum": 947563
+        }
+      },
+      "scope": "eastern-ok",
+      "svi_quartile_cutpoints": [
+        0.3837,
+        0.6151,
+        0.8055
+      ]
+    },
+    "maricopa-az": {
+      "q4_minus_q1": {
+        "bootstrap_ci_95": [
+          -0.06435640415045839,
+          0.006246148398957958
+        ],
+        "bootstrap_replicates": 10000,
+        "bootstrap_seed": 3234466142,
+        "difference": -0.02921020291201082,
+        "n_q1": 391,
+        "n_q4": 391
+      },
+      "quartiles": {
+        "q1": {
+          "mean_osm_share": 0.8477609897681587,
+          "n_tracts": 391,
+          "population_sum": 1591683
+        },
+        "q2": {
+          "mean_osm_share": 0.865495464576223,
+          "n_tracts": 391,
+          "population_sum": 1695393
+        },
+        "q3": {
+          "mean_osm_share": 0.8076954922222986,
+          "n_tracts": 391,
+          "population_sum": 1650575
+        },
+        "q4": {
+          "mean_osm_share": 0.8185507868561479,
+          "n_tracts": 391,
+          "population_sum": 1642643
+        }
+      },
+      "scope": "maricopa-az",
+      "svi_quartile_cutpoints": [
+        0.23105,
+        0.5186999999999999,
+        0.78015
+      ]
+    },
+    "northern-ca": {
+      "q4_minus_q1": {
+        "bootstrap_ci_95": [
+          -0.1564768685008865,
+          0.00018261768027458608
+        ],
+        "bootstrap_replicates": 10000,
+        "bootstrap_seed": 1796662917,
+        "difference": -0.07813255893900994,
+        "n_q1": 148,
+        "n_q4": 148
+      },
+      "quartiles": {
+        "q1": {
+          "mean_osm_share": 0.5563673634387938,
+          "n_tracts": 148,
+          "population_sum": 643790
+        },
+        "q2": {
+          "mean_osm_share": 0.55573090142071,
+          "n_tracts": 147,
+          "population_sum": 582714
+        },
+        "q3": {
+          "mean_osm_share": 0.5058330641698813,
+          "n_tracts": 148,
+          "population_sum": 583449
+        },
+        "q4": {
+          "mean_osm_share": 0.47823480449978384,
+          "n_tracts": 148,
+          "population_sum": 648938
+        }
+      },
+      "scope": "northern-ca",
+      "svi_quartile_cutpoints": [
+        0.32805,
+        0.5852,
+        0.79975
+      ]
+    },
+    "south-central-tx": {
+      "q4_minus_q1": {
+        "bootstrap_ci_95": [
+          -0.21399546755659213,
+          -0.1609549147855605
+        ],
+        "bootstrap_replicates": 10000,
+        "bootstrap_seed": 973064654,
+        "difference": -0.1875293074313592,
+        "n_q1": 1490,
+        "n_q4": 1490
+      },
+      "quartiles": {
+        "q1": {
+          "mean_osm_share": 0.6901778359537916,
+          "n_tracts": 1490,
+          "population_sum": 6764632
+        },
+        "q2": {
+          "mean_osm_share": 0.5702966630689644,
+          "n_tracts": 1489,
+          "population_sum": 6527332
+        },
+        "q3": {
+          "mean_osm_share": 0.5314454360596806,
+          "n_tracts": 1489,
+          "population_sum": 6357610
+        },
+        "q4": {
+          "mean_osm_share": 0.5026485285224324,
+          "n_tracts": 1490,
+          "population_sum": 6056706
+        }
+      },
+      "scope": "south-central-tx",
+      "svi_quartile_cutpoints": [
+        0.32615,
+        0.63465,
+        0.8465
+      ]
+    }
+  },
+  "south_central_texas_slope": {
+    "county_clusters": 185,
+    "method": "county-clustered CR1 OLS",
+    "n_tracts": 5958,
+    "slope_per_1_svi_unit": -0.24677813698071546,
+    "standard_error": 0.10286665688684668
+  },
+  "south_central_texas_urban": {
+    "q4_minus_q1": {
+      "bootstrap_ci_95": [
+        -0.2323594382790959,
+        -0.17819787408495996
+      ],
+      "bootstrap_replicates": 10000,
+      "bootstrap_seed": 1781727058,
+      "difference": -0.204908631173085,
+      "n_q1": 1327,
+      "n_q4": 1362
+    },
+    "quartiles": {
+      "q1": {
+        "mean_osm_share": 0.7346391143720492,
+        "n_tracts": 1327,
+        "population_sum": 6156627
+      },
+      "q2": {
+        "mean_osm_share": 0.6701352047877489,
+        "n_tracts": 1141,
+        "population_sum": 5295098
+      },
+      "q3": {
+        "mean_osm_share": 0.6211692300665592,
+        "n_tracts": 1148,
+        "population_sum": 5058128
+      },
+      "q4": {
+        "mean_osm_share": 0.5297304831989642,
+        "n_tracts": 1362,
+        "population_sum": 5594839
+      }
+    },
+    "scope": "South-Central Texas urban (`pct_urban >= 0.5`)",
+    "svi_quartile_cutpoints": [
+      0.32615,
+      0.63465,
+      0.8465
+    ]
+  },
+  "south_central_texas_urban_slope": {
+    "county_clusters": 109,
+    "method": "county-clustered CR1 OLS",
+    "n_tracts": 4978,
+    "slope_per_1_svi_unit": -0.2573954046765993,
+    "standard_error": 0.10864407800037884
+  }
+}

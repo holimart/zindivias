@@ -40,15 +40,15 @@ Across all four regions, rural tracts have lower mean OSM-attributed shares of O
 | Northern California | 24.70% | 61.57% | −36.87 | [−41.94, −32.01] | 591 (147, 444) |
 | South-Central Texas | 25.15% | 63.83% | −38.68 | [−40.74, −36.56] | 5,989 (991, 4,998) |
 
-Values are copied from `reports/source-provenance.json` (SHA-256 `e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565`). Rural means `pct_urban < 0.5`, urban means `>= 0.5`; missing urbanity is excluded. Each group mean is the unweighted mean of tract OSM-attributed shares; the 95% intervals are 2,000 independent tract-bootstrap resamples of the rural-minus-urban contrast. All CIs are below zero; no spatial adjustment.
+Values are copied from `reports/source-provenance.json` (SHA-256 `e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565`). Rural/urban use `pct_urban < 0.5`/`>= 0.5`; missing is excluded. Means are unweighted across tracts; intervals use 2,000 tract-bootstrap resamples. All CIs are below zero; no spatial adjustment.
 
 #### Named high-SVI examples
 
-The report's `named_lowest_osm_high_svi` lists contain the ten lowest non-null OSM-attributed shares among finite-SVI Q4 tracts in each region; Q4 is region-specific and examples are not all rural. The full GEOID, county, Census place, and report-derived share list is in [Appendix I](#appendix-i-named-high-svi-tracts-with-lowest-osm-attribution). Its metric values come from the source report cited above; county and place labels are geographic names only and do not change selection or metrics.
+The report's `named_lowest_osm_high_svi` lists contain the ten lowest non-null OSM-attributed shares among finite-SVI Q4 tracts in each region; examples are not all rural. Full GEOIDs, county/place labels, and shares are in [Appendix I](#appendix-i-named-high-svi-tracts-with-lowest-osm-attribution); labels do not change selection or metrics. The provided-SVI gradient is detailed in [Appendix K](#appendix-k-san-antonio-area-svi-gradient).
 
 Rural, higher-vulnerability residents may rely on building context for heat, drought, wildfire, and evacuation planning; missing buildings, inaccurate maps, service harm, and dispatch/evacuation outcomes were not measured. Mappers should treat the named tracts as partner-led review priorities and verify proposed edits with local and tribal knowledge.
 
-**Limits and reproduction.** OSM attribution is provenance, not accuracy, completeness, age, or proof of local mapping activity; provider memberships may overlap. Metric inputs are the provided Overture source fields and provided strata; no removed reference layers, public scores, or scored-candidate inputs were used (`reports/source-provenance.json`, cited SHA above). Rebuild the source report with `uv run --python 3.12 --no-project --isolated --with-requirements requirements.txt python scripts/discovery_source_provenance.py --workspace "$COMPETITION_WORKSPACE" --out reports/source-provenance.json --figure reports/source-provenance.png`.
+**Limits and reproduction.** OSM attribution is provenance, not accuracy, completeness, age, or local mapping activity; provider memberships may overlap. Only provided Overture source fields and strata were used; no removed reference layers, scores, or candidate outputs (`reports/source-provenance.json`, cited SHA). Rebuild with `uv run --python 3.12 --no-project --isolated --with-requirements requirements.txt python scripts/discovery_source_provenance.py --workspace "$COMPETITION_WORKSPACE" --out reports/source-provenance.json --figure reports/source-provenance.png`.
 
 ### Finding 2 — Rio Grande border metros: Google-sourced footprints mask a community-source gap
 
@@ -367,3 +367,24 @@ The focal tract values are from `reports/discovery-postfire.json#/focal_butte_20
 | `06007001900` | 0.677 | 390.2 | 1,887 | 3 | 0.793 |
 | `06007002300` | 0.720 | 668.9 | 2,386 | 2 | 0.720 |
 | `06007002200` | 0.747 | 766.1 | 2,472 | 6 | 0.690 |
+
+## Appendix K: San Antonio-area SVI gradient
+
+### Evidence and method
+
+This descriptive check uses only official sample GEOIDs, provided Overture building OSM-source share, and provided `svi_overall`, `svi_covered`, `pct_urban`, and population. Quartiles are computed within each region; the Bexar and urban-Texas subsets retain South-Central Texas cutpoints. Table values are equal-weight tract means. Q4−Q1 intervals are 10,000 independent tract-bootstrap resamples. The measure is source attribution, not building accuracy or completeness.
+
+| Scope | Q1 | Q2 | Q3 | Q4 | Q4−Q1, pp (95% CI) | n (Q1/Q4) |
+|---|---:|---:|---:|---:|---:|---:|
+| Eastern Oklahoma | 26.8% | 18.6% | 18.2% | 19.1% | −7.7 [−11.5, −3.9] | 295/296 |
+| Arizona | 84.8% | 86.5% | 80.8% | 81.9% | −2.9 [−6.4, +0.6] | 391/391 |
+| Northern California | 55.6% | 55.6% | 50.6% | 47.8% | −7.8 [−15.6, +0.02] | 148/148 |
+| South-Central Texas | 69.0% | 57.0% | 53.1% | 50.3% | −18.8 [−21.4, −16.1] | 1,490/1,490 |
+| Texas, urban (`pct_urban >= 0.5`) | 73.5% | 67.0% | 62.1% | 53.0% | −20.5 [−23.2, −17.8] | 1,327/1,362 |
+| Bexar County, Texas | 56.1% | 65.9% | 48.6% | 36.5% | −19.6 [−31.3, −7.6] | 55/139 |
+
+Bexar County's 372 tracts show a higher-vulnerability tail: Q4 has 139 tracts and 653,292 residents; 33 Q4 tracts (142,547 residents) have <5% OSM-attributed share, versus 9 of 55 Q1 tracts. The 12 lowest-share Q4 GEOIDs, with shares from 0.30% to 1.70%, are `48029140600`, `48029160400`, `48029121506`, `48029160600`, `48029170700`, `48029140500`, `48029130300`, `48029151302`, `48029160502`, `48029171000`, `48029171301`, and `48029150700`. The Bexar SVI slope is −0.360 (HC1 SE 0.072); one county cannot support county-clustered uncertainty. The unadjusted Texas slope is −0.247 (county-clustered SE 0.103; 185 counties).
+
+The Texas contrast is comparable in magnitude to the rural OSM-share contrast in Oklahoma, while Arizona's SVI interval crosses zero. This is a San Antonio-area pattern, not a cross-region rule. Source attribution does not establish map completeness, errors, causation, or effects on service delivery. No dispatch, evacuation, or relief outcomes were observed; use named tracts only as partner-led review priorities.
+
+Reproduce: `uv run --python 3.12 --no-project --with-requirements requirements.txt python scripts/audit_san_antonio_svi_gradient.py --workspace "$COMPETITION_WORKSPACE" --out reports/san-antonio-svi-gradient.json`. The JSON report records exact estimates, bootstrap seeds, input SHA-256 values, scopes, and limitations.
