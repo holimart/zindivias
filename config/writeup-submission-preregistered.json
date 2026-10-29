@@ -54,9 +54,19 @@
   },
   "assembly": {
     "output_markdown": "docs/writeup/final-writeup.md",
-    "output_pdf": "reports/writeup/final-writeup.pdf",
+    "output_pdf": "docs/writeup/final-writeup.pdf",
     "output_record": "reports/writeup-submission.json",
-    "pdf_engine": "reportlab==4.4.10 with canvas invariant=1 (no wall-clock in the file identity)",
+    "pdf_engine": "ReportLab 4.4.10 (BSD), Pillow 13.0.0 (MIT-CMU), charset-normalizer 3.5.2 (MIT); SHA-256 locked in requirements-writeup-pdf.txt; canvas invariant=1",
+    "pdf_toolchain": {
+      "python": "CPython 3.12; Linux x86_64 manylinux_2_27+ wheels",
+      "requirements_file": "requirements-writeup-pdf.txt",
+      "max_bytes_exclusive": 10000000,
+      "packages": [
+        {"name": "reportlab", "version": "4.4.10", "license": "BSD", "wheel_sha256": "5abc815746ae2bc44e7ff25db96814f921349ca814c992c7eac3c26029bf7c24"},
+        {"name": "Pillow", "version": "13.0.0", "license": "MIT-CMU", "wheel_sha256": "42d63be3af4f9b951b199b0a9d23365d37ab14687e6d77b74940432c8515c4ca"},
+        {"name": "charset-normalizer", "version": "3.5.2", "license": "MIT", "wheel_sha256": "3d31298449090ab8d47b7b1b2a555ff73cac7ed438a08b7ac160980c7ebed649"}
+      ]
+    },
     "sections": [
       {
         "kind": "front_matter"
@@ -117,6 +127,12 @@
     "scored_predictions_use_only_provided_data": true,
     "provided_data_evidence": "reports/v2-input-provenance.json",
     "additional_public_sources": [
+      {
+        "url": "https://api.zindi.world/v1/discussions/35334",
+        "label": "Zindi discussion 35334 (2026-10-14): methodology form requires PDF, maximum 10 MB",
+        "accessed_on": "2026-10-29",
+        "role": "organiser form upload-format instruction; this project exports a PDF under the stated size cap"
+      },
       {
         "url": "https://api.zindi.world/v1/discussions/35250",
         "label": "Organiser Challenge Update on supporting comparison evidence and target-reconstruction limits (discussion 35250)",
@@ -251,9 +267,9 @@
     ]
   },
   "commands": {
-    "build": "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --quiet --with reportlab==4.4.10 python scripts/build_final_writeup.py",
-    "verify": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_submission.py",
-    "tests": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with pytest python -m pytest -q"
+    "build": "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --python 3.12 --no-project --isolated --with-requirements requirements-writeup-pdf.txt python scripts/build_final_writeup.py",
+    "verify": "/home/martin/hddProjects/langywrap/uv run --python 3.12 --no-project --isolated --with-requirements requirements-writeup-pdf.txt python scripts/verify_writeup_submission.py",
+    "tests": "/home/martin/hddProjects/langywrap/uv run --python 3.12 --no-project --isolated --with-requirements requirements-writeup-pdf.txt --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with pytest python -m pytest -q"
   },
   "organiser_page": {
     "url": "https://zindi.africa/competitions/bias-bounty-mapping-equity-challenge",
@@ -315,8 +331,8 @@
       "artifact_sha256": "38e17cf1ec99f4f3fc5d358d13ccd0edfabe947d81fd6b6e5ef61e6cea006607"
     },
     "prizes_answer": ["Best Bias Discovery", "Best Documentation"],
-    "writeup_pdf_path": "reports/writeup/final-writeup.pdf",
-    "writeup_pdf_sha256": "05c02b94c560ba95d3f12f941b1eaaaad679615d6cfbe935a8d14bb6ce1e3e09",
+    "writeup_pdf_path": "docs/writeup/final-writeup.pdf",
+    "writeup_pdf_sha256": "07f233ee9337734fa81197839b5be78dccd019906000dc552c4f9ebe7f5a7885",
     "finding_1_abstract": "Across 460 South Texas border tracts, mean OSM-touched building share is 9.18% versus 61.48% elsewhere; 290 tracts containing 1,183,693 residents have under 5% OSM share. Source-count reconciliation associates 254,346 border other-source footprints with Google Open Buildings spill-over, while the challenge compares Overture counts with Microsoft. This is descriptive evidence, not a measured dispatch failure or a score estimate.",
     "final_two_confirmation_text_draft": "Draft—use only after operator review/approval: Final two are A: V2_model_cgs (submission hvLtPVmr) and B: B_from_A_cgs (submission eAaWXWxM).",
     "ui_selection_instruction": "After review/approval, select exactly hvLtPVmr and eAaWXWxM in the Zindi UI and verify those two IDs are selected. Do not rely on the platform fallback: it would choose the historical P4, whose score is void for selection because of the column-order mismatch.",

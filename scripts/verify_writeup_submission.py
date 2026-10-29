@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import re
 import sys
@@ -47,6 +48,20 @@ def leaves(node: Any, prefix: str = "") -> dict[str, Any]:
     return out
 
 
+def _pdf_builder():
+    name = "_bias_writeup_pdf_builder"
+    if name in sys.modules:
+        return sys.modules[name]
+    path = ROOT / "scripts/build_writeup_pdf.py"
+    spec = importlib.util.spec_from_file_location(name, path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"cannot load PDF builder: {path}")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
 def check(record: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
     failures: list[str] = []
     notes: dict[str, Any] = {}
@@ -59,6 +74,15 @@ def check(record: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
     pdf_path = ROOT / config["assembly"]["output_pdf"]
     require(markdown_path.is_file(), "final writeup markdown missing")
     require(pdf_path.is_file() and pdf_path.read_bytes()[:5] == b"%PDF-", "final writeup pdf missing")
+    pdf_entry = next((item for item in record.get("writeup_files", [])
+                      if item.get("role") == "writeup_pdf"), None)
+    recorded_pdf_path = ROOT / pdf_entry["path"] if pdf_entry else pdf_path
+    pdf_stats = _pdf_builder().inspect_pdf(recorded_pdf_path) if recorded_pdf_path.is_file() else {}
+    canonical_pdf_stats = _pdf_builder().inspect_pdf(pdf_path) if pdf_path.is_file() else {}
+    pdf_validation = record.get("pdf_validation", {})
+    pdf_toolchain = config["assembly"]["pdf_toolchain"]
+    lock_path = ROOT / pdf_toolchain["requirements_file"]
+    lock_text = lock_path.read_text(encoding="utf-8") if lock_path.is_file() else ""
     text = markdown_path.read_text(encoding="utf-8") if markdown_path.is_file() else ""
 
     # -- recorded hashes must match the bytes on disk -----------------------------------------
@@ -83,6 +107,35 @@ def check(record: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
                     f"{role} recorded path does not match the configured artefact path")
     require(markdown_path.is_file() and pdf_path.is_file(),
             "canonical writeup markdown or pdf missing")
+    require(pdf_path.is_file() and pdf_path.stat().st_size < _pdf_builder().MAX_BYTES,
+            "canonical writeup PDF must be under 10 MB")
+    require(_pdf_builder().MIN_PAGES <= canonical_pdf_stats.get("page_count", 0)
+            <= _pdf_builder().MAX_PAGES, "canonical writeup PDF page count is not sane")
+    require(canonical_pdf_stats.get("link_annotations", 0) > 0,
+            "canonical writeup PDF has no clickable links")
+    require(canonical_pdf_stats.get("embedded_images", 0) > 0,
+            "canonical writeup PDF has no embedded figures")
+    require(record.get("revision", {}).get("pdf_toolchain") == pdf_toolchain,
+            "recorded PDF toolchain differs from the preregistered toolchain")
+    require(lock_path.is_file() and all(
+        package["version"] in lock_text and package["license"] in lock_text
+        and f"sha256:{package['wheel_sha256']}" in lock_text
+        for package in pdf_toolchain["packages"]),
+        "PDF dependency license/version/hash lock is incomplete")
+    if pdf_entry and recorded_pdf_path.is_file():
+        require(pdf_validation.get("sha256") == sha256_file(recorded_pdf_path)
+                == pdf_entry.get("sha256"), "PDF validation SHA-256 does not match recorded file")
+        require(all(pdf_validation.get(key) == pdf_stats.get(key) for key in
+                    ("bytes", "page_count", "link_annotations", "embedded_images")),
+                "PDF validation metadata does not match recorded PDF bytes")
+        require(pdf_stats.get("bytes", _pdf_builder().MAX_BYTES)
+                < _pdf_builder().MAX_BYTES, "recorded PDF exceeds 10 MB")
+        require(_pdf_builder().MIN_PAGES <= pdf_stats.get("page_count", 0)
+                <= _pdf_builder().MAX_PAGES, "recorded PDF page count is not sane")
+        require(pdf_stats.get("link_annotations", 0) > 0,
+                "recorded PDF has no clickable links")
+        require(pdf_stats.get("embedded_images", 0) > 0,
+                "recorded PDF has no embedded figures")
     recorded_markdown = next((item for item in record["writeup_files"]
                               if item["role"] == "writeup_markdown"), None)
     if recorded_markdown and (ROOT / recorded_markdown["path"]).is_file():
@@ -386,7 +439,12 @@ def check(record: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
              "markdown_sha256": next(item["sha256"] for item in record["writeup_files"]
                                      if item["role"] == "writeup_markdown")[:16],
              "pdf_sha256": next(item["sha256"] for item in record["writeup_files"]
-                                if item["role"] == "writeup_pdf")[:16]}
+                                if item["role"] == "writeup_pdf")[:16],
+             "pdf_bytes": canonical_pdf_stats.get("bytes"),
+             "pdf_page_count": canonical_pdf_stats.get("page_count"),
+             "pdf_clickable_links": canonical_pdf_stats.get("link_annotations"),
+             "pdf_embedded_images": canonical_pdf_stats.get("embedded_images"),
+             "pdf_toolchain": pdf_toolchain}
     return {"ok": not failures, "failures": sorted(failures), "notes": notes}
 
 

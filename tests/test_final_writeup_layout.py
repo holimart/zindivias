@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MARKDOWN = ROOT / "docs/writeup/final-writeup.md"
-PDF = ROOT / "reports/writeup/final-writeup.pdf"
+PDF = ROOT / "docs/writeup/final-writeup.pdf"
 
 
 def word_count(text: str) -> int:

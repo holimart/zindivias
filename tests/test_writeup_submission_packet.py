@@ -55,7 +55,7 @@ class PacketPresenceTests(unittest.TestCase):
 
     def test_markdown_and_pdf_exist_and_are_hash_recorded(self) -> None:
         self.assertTrue((ROOT / "docs/writeup/final-writeup.md").is_file())
-        pdf = ROOT / "reports/writeup/final-writeup.pdf"
+        pdf = ROOT / CONFIG["assembly"]["output_pdf"]
         self.assertTrue(pdf.is_file())
         self.assertEqual(pdf.read_bytes()[:5], b"%PDF-")
         self.assertGreater((ROOT / "docs/writeup/final-writeup.md").stat().st_size, 30000)
@@ -299,7 +299,7 @@ class OperatorFillTests(unittest.TestCase):
         markdown_path = tmp / "final-writeup.md"
         pdf_path = tmp / "final-writeup.pdf"
         markdown_path.write_text(markdown, encoding="utf-8")
-        pdf_path.write_bytes(b"%PDF-1.4\nunit-test stub\n%%EOF\n")
+        builder.markdown_to_pdf(markdown, pdf_path, markdown_path)
         preliminary = builder.build_record(merged, facts, markdown_path, pdf_path)
         bundle = builder.build_bundle(merged, preliminary, markdown_path, pdf_path)
         bundle_path = tmp / "submission-bundle.json"

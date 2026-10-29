@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import os
 import re
@@ -206,8 +207,9 @@ def external_register(document_text: str) -> list[dict[str, Any]]:
     add(page["url"], "official challenge page (quoted rules and membership note)",
         page["role"], page["documented_on"], True)
     for source in CONFIG["external_sources"].get("additional_public_sources", []):
-        add(normalize_url(source["url"]), source["label"], source["role"],
-            source["accessed_on"], False)
+        url = normalize_url(source["url"])
+        add(url, source["label"], source["role"], source["accessed_on"],
+            url.startswith(OFFICIAL_HOSTS))
     for source in CONFIG["external_sources"].get("required_external_layers", []):
         add(normalize_url(source["url"]), source["name"], source["role"],
             source["accessed_on"], False)
@@ -521,7 +523,31 @@ def assemble(config: dict[str, Any]) -> tuple[str, dict[str, Any]]:
 
 
 # --------------------------------------------------------------------------- pdf
-def markdown_to_pdf(markdown: str, out_path: Path) -> None:
+def _writeup_pdf_module():
+    name = "_bias_writeup_pdf_builder"
+    if name in sys.modules:
+        return sys.modules[name]
+    path = ROOT / "scripts/build_writeup_pdf.py"
+    spec = importlib.util.spec_from_file_location(name, path)
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"cannot load PDF builder: {path}")
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+def markdown_to_pdf(markdown: str, out_path: Path,
+                    markdown_path: Path | None = None) -> dict[str, Any]:
+    source_path = markdown_path or ROOT / CONFIG["assembly"]["output_markdown"]
+    return _writeup_pdf_module().build_pdf(source_path, out_path)
+
+
+def inspect_writeup_pdf(path: Path) -> dict[str, int]:
+    return _writeup_pdf_module().inspect_pdf(path)
+
+
+def _legacy_markdown_to_pdf(markdown: str, out_path: Path) -> None:
     from reportlab.lib import colors
     from reportlab.lib.enums import TA_LEFT
     from reportlab.lib.pagesizes import A4
@@ -666,7 +692,13 @@ def build_record(config: dict[str, Any], facts: dict[str, Any], markdown_path: P
         "operator_input_schema": config["operator_input_schema"],
         "revision": {"git_commit": git("rev-parse", "HEAD"),
                      "tree_clean": git("status", "--porcelain") == "",
-                     "pdf_engine": CONFIG["assembly"]["pdf_engine"]},
+                     "pdf_engine": CONFIG["assembly"]["pdf_engine"],
+                     "pdf_toolchain": CONFIG["assembly"]["pdf_toolchain"]},
+        "pdf_validation": (inspect_writeup_pdf(pdf_path) | {
+            "sha256": sha256_file(pdf_path),
+            "max_bytes_exclusive": 10_000_000,
+            "reportlab_version": "4.4.10"
+        }) if pdf_path.suffix.lower() == ".pdf" and pdf_path.is_file() else {},
         "identity": dict(config["identity"]),
         "form": dict(config["form"]),
         "prizes": config["prizes"],
@@ -898,6 +930,12 @@ def template_matches_whitelist(record: dict[str, Any]) -> bool:
 def acceptance(record: dict[str, Any], authored_text: str = "") -> dict[str, Any]:
     """Measured packet-integrity gates. Operator-owned inputs are reported, never assumed."""
     submitted = record["status"] == "submitted_confirmed_by_operator"
+    pdf_path = ROOT / CONFIG["assembly"]["output_pdf"]
+    pdf_entry = next((item for item in record["writeup_files"]
+                      if item.get("role") == "writeup_pdf"), None)
+    recorded_pdf_path = ROOT / pdf_entry["path"] if pdf_entry else pdf_path
+    pdf_meta = record.get("pdf_validation", {})
+    pdf_actual = inspect_writeup_pdf(recorded_pdf_path) if recorded_pdf_path.is_file() else {}
     files = {item["path"]: item for item in record["writeup_files"]}
     markdown = ROOT / "docs/writeup/final-writeup.md"
     text = markdown.read_text(encoding="utf-8") if markdown.is_file() else ""
@@ -920,8 +958,19 @@ def acceptance(record: dict[str, Any], authored_text: str = "") -> dict[str, Any
     return {
         "final_writeup_markdown_present": bool(markdown.is_file() and len(text) > 20000)
         and "docs/writeup/final-writeup.md" in files,
-        "writeup_pdf_present": (ROOT / files["reports/writeup/final-writeup.pdf"]["path"]).is_file()
-        if "reports/writeup/final-writeup.pdf" in files else False,
+        "writeup_pdf_present": pdf_path.is_file() and pdf_actual.get("bytes", 0) > 0,
+        "writeup_pdf_under_10_mb": recorded_pdf_path.is_file()
+        and recorded_pdf_path.stat().st_size < 10_000_000,
+        "writeup_pdf_page_count_sane": 5 <= pdf_actual.get("page_count", 0) <= 80,
+        "writeup_pdf_clickable_links_present": pdf_actual.get("link_annotations", 0) > 0,
+        "writeup_pdf_figures_embedded": pdf_actual.get("embedded_images", 0) > 0,
+        "writeup_pdf_validation_hash_matches": (
+            pdf_entry is not None and recorded_pdf_path.is_file()
+            and pdf_meta.get("sha256") == sha256_file(recorded_pdf_path)
+            == pdf_entry.get("sha256")),
+        "writeup_pdf_validation_counts_match": all(
+            pdf_meta.get(key) == pdf_actual.get(key) for key in
+            ("bytes", "page_count", "link_annotations", "embedded_images")),
         "recorded_hashes_match_bytes": all(
             (ROOT / item["path"]).is_file() and sha256_file(ROOT / item["path"]) == item["sha256"]
             for item in record["writeup_files"]),
@@ -1077,11 +1126,13 @@ def submission_state(config: dict[str, Any]) -> tuple[str, bool, list[str]]:
 
 
 def main() -> int:
+    global CONFIG
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=CONFIG_PATH)
     parser.add_argument("--markdown", type=Path,
                         default=ROOT / "docs/writeup/final-writeup.md")
-    parser.add_argument("--pdf", type=Path, default=ROOT / "reports/writeup/final-writeup.pdf")
+    parser.add_argument("--pdf", type=Path,
+                        default=ROOT / CONFIG["assembly"]["output_pdf"])
     parser.add_argument("--record", type=Path, default=ROOT / "reports/writeup-submission.json")
     parser.add_argument("--skip-pdf", action="store_true")
     parser.add_argument("--check-only", action="store_true")
@@ -1092,7 +1143,6 @@ def main() -> int:
                         help="(re)write the all-null operator input template and exit")
     args = parser.parse_args()
 
-    global CONFIG
     CONFIG = load_config(args.config)
     if args.operator_inputs:
         CONFIG = apply_operator_inputs(CONFIG, json.loads(
@@ -1107,7 +1157,7 @@ def main() -> int:
     args.markdown.parent.mkdir(parents=True, exist_ok=True)
     args.markdown.write_text(markdown, encoding="utf-8")
     if not args.skip_pdf:
-        markdown_to_pdf(markdown, args.pdf)
+        markdown_to_pdf(markdown, args.pdf, args.markdown)
     pdf_for_record = args.pdf if not args.skip_pdf else args.markdown
     template_path = ROOT / CONFIG["assembly"]["operator_inputs_template"]
     template_path.parent.mkdir(parents=True, exist_ok=True)
