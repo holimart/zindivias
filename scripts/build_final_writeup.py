@@ -81,6 +81,10 @@ def json_leaves(node: Any, prefix: str = "") -> dict[str, Any]:
 
 
 # --------------------------------------------------------------------------- sources
+def final_two_report() -> dict[str, Any]:
+    return load_json(ROOT / CONFIG["numeric_provenance"]["final_two"])
+
+
 def successful_submissions() -> list[dict[str, Any]]:
     """Latest successful upload record per platform submission id, oldest id first."""
     latest: dict[str, dict[str, Any]] = {}
@@ -96,6 +100,8 @@ def successful_submissions() -> list[dict[str, Any]]:
     cards = {card["candidate_id"]: card
              for card in load_json(ROOT / CONFIG["numeric_provenance"]["candidates_registry"])
              ["candidate_set"]}
+    final = {item["slot"]: item for item in final_two_report()["final_candidates"]}
+    winner = final_two_report()["corrected_cgs_selection"]["winner"]
     rows = []
     for platform_id, record in latest.items():
         card = cards.get(record["candidate_id"], {})
@@ -109,9 +115,13 @@ def successful_submissions() -> list[dict[str, Any]]:
                      "score_split": record.get("score_split", record.get("split")),
                      "uploaded_at_utc": record.get("timestamp_utc", record.get("upload_event_ts", record.get("ts"))),
                      "score_selection_status": (
-                         "eligible corrected-order _cgs evaluation (A rule pending cohort completion)"
-                         if record.get("score_selection_eligible") is True
-                         or str(record.get("candidate_id", "")).endswith("_cgs")
+                         "selected A by frozen corrected-order _cgs rule"
+                         if record.get("candidate_id") == winner
+                         else "pre-registered B companion; score excluded from A selection"
+                         if record.get("candidate_id") == final["B"]["candidate_id"]
+                         else "corrected-order _cgs A-rule cohort; not selected as A"
+                         if str(record.get("candidate_id", "")).endswith("_cgs")
+                         and record.get("candidate_id") != final["B"]["candidate_id"]
                          else "void for selection: five-column file had transport_gap in column 2"
                      ),
                      "card_phase": card.get("phase"),
@@ -227,7 +237,10 @@ def shift_headings(text: str) -> str:
 def front_matter(config: dict[str, Any], submissions: list[dict[str, Any]],
                  candidate: dict[str, Any]) -> list[str]:
     identity = config["identity"]
-    scope = load_json(ROOT / CONFIG["numeric_provenance"]["final_two"])["scope"]
+    final = final_two_report()
+    protocol_candidates = {item["slot"]: item for item in final["final_candidates"]}
+    rule = final["corrected_cgs_selection"]
+    scope = final["scope"]
     username = identity["zindi_username_or_team"] or identity["pending_placeholder"]
     lines = [
         "# Bias Bounty Mapping Equity Challenge — final methodology and discovery writeup",
@@ -240,8 +253,9 @@ def front_matter(config: dict[str, Any], submissions: list[dict[str, Any]],
         f"- Operator confirmation of that identity recorded: "
         f"{'yes' if identity['operator_confirmation_recorded'] else 'NO — pending operator'}",
         f"- Form submission status: **{submission_status_line(config)}**",
-        f"- Frozen final-two candidate IDs named for the form: "
+        f"- Protocol final-two candidates (operator confirmation pending): "
         f"{final_two_names(config)}",
+        "- Zindi UI selection: **NOT CONFIRMED by the operator; no UI selection was made**.",
         f"- Official requirement: {identity['rules_requirement_quote']}",
         f"- Packaged for the organiser writeup form; form URL status: "
         f"{'recorded' if config['form']['url'] else 'NOT AVAILABLE in the saved rules text'}",
@@ -261,6 +275,19 @@ def front_matter(config: dict[str, Any], submissions: list[dict[str, Any]],
         f"`{config['model_evidence']['format_fix_sha256']}`). Its `coverage_gap_score` values are "
         "copied byte-for-byte from the frozen model candidate above; no prediction was changed.",
         "",
+        f"Protocol result: A is `{protocol_candidates['A']['candidate_id']}` "
+        f"(submission `{protocol_candidates['A']['submission_id']}`, public RMSE "
+        f"{protocol_candidates['A']['public_rmse']:.9g}, SHA-256 "
+        f"`{protocol_candidates['A']['sha256']}`); B is "
+        f"`{protocol_candidates['B']['candidate_id']}` (submission "
+        f"`{protocol_candidates['B']['submission_id']}`, public RMSE "
+        f"{protocol_candidates['B']['public_rmse']:.9g}, SHA-256 "
+        f"`{protocol_candidates['B']['sha256']}`). The frozen A rule used only the four "
+        f"successful corrected-order `_cgs` cohort scores; `{rule['winner']}` won outside "
+        "each pairwise noise guard. B is the pre-registered fixed companion and its score "
+        "was not used to select A. The operator must review the discovery narrative and "
+        "confirm the final-two/UI choice before any form submission.",
+        "",
         "## Column-order correction and historical score eligibility",
         "",
         "The per-region sample files use `GEOID,transport_gap,building_gap,poi_gap,coverage_gap_score`, "
@@ -272,9 +299,10 @@ def front_matter(config: dict[str, Any], submissions: list[dict[str, Any]],
         "text unchanged into the Data-page two-column order. No corrected-format upload occurs before "
         "2026-10-29 00:00 UTC.",
         "",
-        "Every quantitative statement in this writeup is covered by the claim-to-evidence audit "
-        "summarised in the reproducibility appendix. No historical platform score quoted below is "
-        "evidence about the intended composite target or an accuracy claim.",
+        "Final A/B IDs, hashes and public scores below are sourced from `reports/final-two.json` "
+        "and are checked against the submission records. The broader claim-to-evidence audit has "
+        "unresolved items, disclosed in the reproducibility appendix; this draft is not yet approved "
+        "for submission. No historical platform score is evidence about the intended composite target.",
 
         "",
     ]
@@ -299,6 +327,10 @@ def final_two_names(config: dict[str, Any]) -> str:
     first, second = selected.get("candidate_A"), selected.get("candidate_B")
     if first and second:
         return f"`{first}` and `{second}`"
+    protocol = {item["slot"]: item["candidate_id"]
+                for item in final_two_report()["final_candidates"]}
+    if protocol.get("A") and protocol.get("B"):
+        return f"`{protocol['A']}` and `{protocol['B']}` (protocol outcome; operator confirmation pending)"
     return "not selected yet (recorded as null rather than invented)"
 
 
@@ -324,8 +356,9 @@ def leaderboard_table(submissions: list[dict[str, Any]], candidate: dict[str, An
     lines = ["## Leaderboard submission records and score eligibility", "",
              "Historical five-column uploads placed `transport_gap` second, so their returned public values are "
              "preserved as records but void for A/B selection. The `_cgs` rows use `GEOID,coverage_gap_score`; "
-             "their scores are eligible only for the frozen A rule after all four cohort results are recorded. "
-             "No public score is used to alter a candidate value.", "",
+             "the four cohort scores were used only by the frozen A rule, which selected the final A shown "
+             "below; the B companion score was excluded from A selection. No public score is used to alter "
+             "a candidate value.", "",
              "| Platform submission id | Candidate | Artifact | Artifact SHA-256 | Public RMSE "
              "| Split | Score source | Selection eligibility | Uploaded (UTC) |",
              "|---|---|---|---|---:|---|---|---|---|"]
@@ -352,6 +385,16 @@ def leaderboard_table(submissions: list[dict[str, Any]], candidate: dict[str, An
               "the correctly ordered `_cgs` evaluations are separately labeled, and no score value, fitted "
               "constant or probe outcome is used to change any candidate prediction or discovery claim.",
               ""]
+    final = final_two_report()
+    a = next(item for item in final["final_candidates"] if item["slot"] == "A")
+    b = next(item for item in final["final_candidates"] if item["slot"] == "B")
+    rule = final["corrected_cgs_selection"]
+    lines += [f"Final-two protocol outcome: A=`{a['candidate_id']}` / `{a['submission_id']}` "
+              f"({a['public_rmse']:.9g}); B=`{b['candidate_id']}` / `{b['submission_id']}` "
+              f"({b['public_rmse']:.9g}). A was selected from exactly four corrected-order `_cgs` "
+              f"scores; unique winner `{rule['winner']}` exceeded all pairwise noise guards. "
+              "B is the pre-registered companion, not an A-rule competitor. Operator UI/form "
+              "confirmation remains pending.", ""]
     return lines
 
 
@@ -392,12 +435,17 @@ def reproducibility_section(audit: dict[str, Any]) -> list[str]:
                 "claims_asserting_accuracy", "claims_with_prohibited_data_language"):
         if key in measured:
             lines.append(f"- `{key}`: {measured[key]}")
-    lines += ["", "The claim inventory and per-claim verifier gates pass. The full audit "
-              "exited nonzero because this refresh did not use `--execute-reproduce` and a "
-              "historical candidate product hash remains stale; rebuilding that candidate is "
-              "prohibited. The family-S summary command was run separately, but is not recorded "
-              "in the audit execution log. These reproducibility-only gates remain open; they "
-              "do not change the 100% claim/token coverage or claim-verifier results.", "",
+    unresolved = len(audit.get("unresolved", []))
+    lines += ["", f"Current audit status: {measured.get('claims_fully_traceable')} of "
+              f"{measured.get('claims_total')} quantitative claims are fully traceable "
+              f"({measured.get('fraction_quantitative_claims_traceable')}); "
+              f"{measured.get('numeric_tokens_covered')} of {measured.get('numeric_tokens_total')} "
+              f"numeric tokens are covered ({measured.get('fraction_numeric_tokens_covered')}). "
+              f"The full claim audit does not pass; {unresolved} unresolved claims remain, "
+              "including claims in the discovery/methodology source drafts. This is explicitly an "
+              "open narrative-review/reproducibility gate, not an accuracy claim. The final-two "
+              "result is separately traced to `reports/final-two.json` and machine-compared by the "
+              "submission packet verifier.", "",
               "Commands run for this refresh:", "", "```bash",
               'COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" '
               "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 "
@@ -627,6 +675,11 @@ def build_record(config: dict[str, Any], facts: dict[str, Any], markdown_path: P
         "status": status,
         "ready_for_submission": ready,
         "pending_operator_inputs": missing,
+        "operator_decision_inputs_pending": [
+            "review and approve the Best Bias Discovery narrative",
+            "confirm the Zindi username or team name",
+            "supply the organiser's methodology-form URL",
+            "confirm protocol final-two IDs V2_model_cgs (A) and B_from_A_cgs (B) for UI/form use"],
         "organiser_page": config["organiser_page"],
         "operator_input_schema": config["operator_input_schema"],
         "revision": {"git_commit": git("rev-parse", "HEAD"),
@@ -641,9 +694,16 @@ def build_record(config: dict[str, Any], facts: dict[str, Any], markdown_path: P
         "final_two": {"status": final_two["status"],
                       "protocol": final_two["protocol"],
                       "selected": dict(config["final_two"]["selected"]),
-                      "selection_note": "Selections come only from operator input; until then both "
-                                        "slots are null and the writeup names the registered model "
-                                        "candidate with its non-uploaded status."},
+                      "protocol_selected": [
+                          {key: item[key] for key in ("slot", "candidate_id", "artifact", "sha256",
+                                                       "submission_id", "public_rmse", "selection_status")}
+                          for item in final_two["final_candidates"]],
+                      "selection_trace": final_two["corrected_cgs_selection"],
+                      "operator_confirmation_pending": not all(
+                          config["final_two"]["selected"].values()),
+                      "selection_note": "Protocol A/B results are recorded from reports/final-two.json. "
+                                        "Operator confirmation and Zindi UI selection remain pending; "
+                                        "the operator-owned confirmation fields stay empty."},
         "external_source_register": facts["external_register"],
         "external_data_policy": {
             "scored_predictions_use_only_provided_data":
@@ -905,9 +965,23 @@ def acceptance(record: dict[str, Any], authored_text: str = "") -> dict[str, Any
         "submission_candidate_ids_registered": named_candidates <= registry_ids
         and candidate_id in registry_ids,
         "final_two_selection_ids_registered": (
-            not submitted
-            or all(record["final_two"]["selected"][slot] in registry_ids
-                   for slot in ("candidate_A", "candidate_B"))),
+            all(item["candidate_id"] in registry_ids
+                for item in record["final_two"].get("protocol_selected", []))
+            and (not submitted or all(record["final_two"]["selected"][slot] in registry_ids
+                                      for slot in ("candidate_A", "candidate_B")))),
+        "final_two_protocol_trace_matches_source": (
+            record["final_two"].get("status") == final_two_report().get("status")
+            and record["final_two"].get("protocol_selected") == [
+                {key: item[key] for key in ("slot", "candidate_id", "artifact", "sha256",
+                                             "submission_id", "public_rmse", "selection_status")}
+                for item in final_two_report()["final_candidates"]]
+            and record["final_two"].get("selection_trace")
+                == final_two_report().get("corrected_cgs_selection")),
+        "operator_confirmation_and_ui_selection_stay_pending": (
+            record["final_two"].get("operator_confirmation_pending") is True
+            and not record["final_two"]["selected"]["candidate_A"]
+            and not record["final_two"]["selected"]["candidate_B"]
+            and not submitted),
         "submission_bundle_hash_tied": bundle_matches(record, files),
         "submission_bundle_paste_blocks_verbatim": bundle_blocks_present(record, text),
         "operator_inputs_template_matches_whitelist": template_matches_whitelist(record),

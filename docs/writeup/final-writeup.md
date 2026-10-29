@@ -2,25 +2,28 @@
 
 - Competition: `bias-bounty-mapping-equity-challenge` (Zindi)
 - Lane: `comp-zindi-bias-bounty`
-- Writeup revision: git `c25ac41323206751d94f6a39257a5d7fdf4450f0` (tree clean: False)
+- Writeup revision: git `68ff66dcce48a47f096211504866c9b5434f57e1` (tree clean: False)
 - Zindi username or team name: **PENDING_OPERATOR_CONFIRMATION**
 - Operator confirmation of that identity recorded: NO — pending operator
 - Form submission status: **NOT SUBMITTED — staged for operator submission**
-- Frozen final-two candidate IDs named for the form: not selected yet (recorded as null rather than invented)
+- Protocol final-two candidates (operator confirmation pending): `V2_model_cgs` and `B_from_A_cgs` (protocol outcome; operator confirmation pending)
+- Zindi UI selection: **NOT CONFIRMED by the operator; no UI selection was made**.
 - Official requirement: Your writeup should identify your Zindi username or team name and the leaderboard submission(s) associated with the methodology.
 - Packaged for the organiser writeup form; form URL status: NOT AVAILABLE in the saved rules text
 
 Scored scope: 9379 official tracts across four regions (2814 public / 6565 private expected), uploaded on the platform template of 9794 rows including 415 template-only rows.
 
-Current model candidate presented in this writeup: `V2_model` at `reports/candidates/V2_model.csv` (SHA-256 `3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12`), 9794 rows. The original five-column V2 upload is void for selection because Zindi scored its transport_gap column. V2_model_cgs, A1_physical_equal_cgs and A2_spectral_cgs were successfully scored in corrected column order on 2026-10-28; A/B selection waits for A3_dawid_skene_cgs on 2026-10-29.
+Current model candidate presented in this writeup: `V2_model` at `reports/candidates/V2_model.csv` (SHA-256 `3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12`), 9794 rows. The original five-column V2 upload is void for selection because Zindi scored its transport_gap column. The frozen A rule selected V2_model_cgs from the four successful corrected-order _cgs scores (public RMSE 0.11102814; submission hvLtPVmr). B_from_A_cgs is its pre-registered 50% shrink companion (public RMSE 0.097535343; submission eAaWXWxM); B's score was not used to select A. Operator confirmation of the final-two choice and Zindi UI selection remain pending; no form was submitted.
 
 Correctly ordered format-only platform artifact: `V2_model_cgs` at `reports/candidates/V2_model_cgs.csv` (SHA-256 `5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7`). Its `coverage_gap_score` values are copied byte-for-byte from the frozen model candidate above; no prediction was changed.
+
+Protocol result: A is `V2_model_cgs` (submission `hvLtPVmr`, public RMSE 0.11102814, SHA-256 `5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7`); B is `B_from_A_cgs` (submission `eAaWXWxM`, public RMSE 0.097535343, SHA-256 `38e17cf1ec99f4f3fc5d358d13ccd0edfabe947d81fd6b6e5ef61e6cea006607`). The frozen A rule used only the four successful corrected-order `_cgs` cohort scores; `V2_model_cgs` won outside each pairwise noise guard. B is the pre-registered fixed companion and its score was not used to select A. The operator must review the discovery narrative and confirm the final-two/UI choice before any form submission.
 
 ## Column-order correction and historical score eligibility
 
 The per-region sample files use `GEOID,transport_gap,building_gap,poi_gap,coverage_gap_score`, while the Data-page `SampleSubmission.csv` starts `GEOID,coverage_gap_score`. Zindi scores the second CSV column by position, so every earlier five-column public score measured `transport_gap`, not `coverage_gap_score`. Those historical scores and submission records are retained for auditability but are void for candidate selection and are not used to tune or change predictions. Each registered `_cgs.csv` copies the frozen `coverage_gap_score` text unchanged into the Data-page two-column order. No corrected-format upload occurs before 2026-10-29 00:00 UTC.
 
-Every quantitative statement in this writeup is covered by the claim-to-evidence audit summarised in the reproducibility appendix. No historical platform score quoted below is evidence about the intended composite target or an accuracy claim.
+Final A/B IDs, hashes and public scores below are sourced from `reports/final-two.json` and are checked against the submission records. The broader claim-to-evidence audit has unresolved items, disclosed in the reproducibility appendix; this draft is not yet approved for submission. No historical platform score is evidence about the intended composite target.
 
 > The saved official page text in the workspace RULES.md preserves the sentence but not the hyperlink target, so the operator must supply the form URL; this build never guesses one.
 
@@ -46,7 +49,7 @@ We request consideration for both Best Bias Discovery ($1,000) and Best Document
 
 ## Leaderboard submission records and score eligibility
 
-Historical five-column uploads placed `transport_gap` second, so their returned public values are preserved as records but void for A/B selection. The `_cgs` rows use `GEOID,coverage_gap_score`; their scores are eligible only for the frozen A rule after all four cohort results are recorded. No public score is used to alter a candidate value.
+Historical five-column uploads placed `transport_gap` second, so their returned public values are preserved as records but void for A/B selection. The `_cgs` rows use `GEOID,coverage_gap_score`; the four cohort scores were used only by the frozen A rule, which selected the final A shown below; the B companion score was excluded from A selection. No public score is used to alter a candidate value.
 
 | Platform submission id | Candidate | Artifact | Artifact SHA-256 | Public RMSE | Split | Score source | Selection eligibility | Uploaded (UTC) |
 |---|---|---|---|---:|---|---|---|---|
@@ -59,13 +62,17 @@ Historical five-column uploads placed `transport_gap` second, so their returned 
 | W83LEghZ | A2_spectral | `reports/candidates/A2_spectral.csv` | `f88573996566a1975726845a49f42fb2cd3781d5f0e83d55944fc65647692997` | 0.146089513 | public | zindi_api_status | void for selection: five-column file had transport_gap in column 2 | 2026-10-26T14:23:12+00:00 |
 | tGB6sGRx | A3_dawid_skene | `reports/candidates/A3_dawid_skene.csv` | `6d588f2f7a45a58b128860a049ac19995b21902f7f98d3b2ab39d1d9fbb073b3` | 0.146089513 | public | zindi_api_status | void for selection: five-column file had transport_gap in column 2 | 2026-10-27T00:19:00+00:00 |
 | EbwLNkmt | V2_model | `reports/candidates/V2_model.csv` | `3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12` | 0.121644596 | public | zindi_api_status | void for selection: five-column file had transport_gap in column 2 | 2026-10-27T00:19:00+00:00 |
-| hvLtPVmr | V2_model_cgs | `reports/candidates/V2_model_cgs.csv` | `5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7` | 0.11102814 | public | zindi_api_status | eligible corrected-order _cgs evaluation (A rule pending cohort completion) | 2026-10-28T07:15:46.098Z |
-| 4R4vkHSd | A1_physical_equal_cgs | `reports/candidates/A1_physical_equal_cgs.csv` | `2da0051af221ddf26a8a73740746811dbd956854a1fc12846c99864d3abae8a1` | 0.309628459 | public | zindi_api_status | eligible corrected-order _cgs evaluation (A rule pending cohort completion) | 2026-10-28T07:15:51.544Z |
-| s7mXS43p | A2_spectral_cgs | `reports/candidates/A2_spectral_cgs.csv` | `584e086bb5df950f6079317afcdc7c5a0182b5263d170be2a10987d1ac4c6213` | 0.262578881 | public | zindi_api_status | eligible corrected-order _cgs evaluation (A rule pending cohort completion) | 2026-10-28T07:16:00.493Z |
+| hvLtPVmr | V2_model_cgs | `reports/candidates/V2_model_cgs.csv` | `5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7` | 0.11102814 | public | zindi_api_status | selected A by frozen corrected-order _cgs rule | 2026-10-28T07:15:46.098Z |
+| 4R4vkHSd | A1_physical_equal_cgs | `reports/candidates/A1_physical_equal_cgs.csv` | `2da0051af221ddf26a8a73740746811dbd956854a1fc12846c99864d3abae8a1` | 0.309628459 | public | zindi_api_status | corrected-order _cgs A-rule cohort; not selected as A | 2026-10-28T07:15:51.544Z |
+| s7mXS43p | A2_spectral_cgs | `reports/candidates/A2_spectral_cgs.csv` | `584e086bb5df950f6079317afcdc7c5a0182b5263d170be2a10987d1ac4c6213` | 0.262578881 | public | zindi_api_status | corrected-order _cgs A-rule cohort; not selected as A | 2026-10-28T07:16:00.493Z |
+| B8de77WD | A3_dawid_skene_cgs | `reports/candidates/A3_dawid_skene_cgs.csv` | `432ade8f1e46c6804cb34fb790612bb1befc9fe03b67a545e753be46b549237c` | 0.15224784 | public | zindi_api_status | corrected-order _cgs A-rule cohort; not selected as A | 2026-10-29T00:10:29.255Z |
+| eAaWXWxM | B_from_A_cgs | `reports/candidates/B_from_A_cgs.csv` | `38e17cf1ec99f4f3fc5d358d13ccd0edfabe947d81fd6b6e5ef61e6cea006607` | 0.097535343 | public | zindi_api_status | pre-registered B companion; score excluded from A selection | 2026-10-29T00:12:18.199Z |
 
-The scored methodology candidate in this writeup is `V2_model`, built from provided features only (commit `b45733aa31903c71ec4f3fb432c2bc9d519f3ff9`). The original five-column V2 upload is void for selection because Zindi scored its transport_gap column. V2_model_cgs, A1_physical_equal_cgs and A2_spectral_cgs were successfully scored in corrected column order on 2026-10-28; A/B selection waits for A3_dawid_skene_cgs on 2026-10-29. Its predicted public RMSE is 0.091357195976378675 on the stated model-side moments of the frozen artifact (mu_v, sd_v, E[v^2]) with the all-zero candidate C0 platform RMSE as the E[y^2] anchor, assumed target mean equal to the model's own mean and assumed centred correlation 0.3; no LB-derived model parameter basis, which is a model-side forecast, not a leaderboard observation.
+The scored methodology candidate in this writeup is `V2_model`, built from provided features only (commit `b45733aa31903c71ec4f3fb432c2bc9d519f3ff9`). The original five-column V2 upload is void for selection because Zindi scored its transport_gap column. The frozen A rule selected V2_model_cgs from the four successful corrected-order _cgs scores (public RMSE 0.11102814; submission hvLtPVmr). B_from_A_cgs is its pre-registered 50% shrink companion (public RMSE 0.097535343; submission eAaWXWxM); B's score was not used to select A. Operator confirmation of the final-two choice and Zindi UI selection remain pending; no form was submitted. Its predicted public RMSE is 0.091357195976378675 on the stated model-side moments of the frozen artifact (mu_v, sd_v, E[v^2]) with the all-zero candidate C0 platform RMSE as the E[y^2] anchor, assumed target mean equal to the model's own mean and assumed centred correlation 0.3; no LB-derived model parameter basis, which is a model-side forecast, not a leaderboard observation.
 
 The earlier five-column uploads above are retained as historical calibration records for auditability. Their column-2 scores measured `transport_gap` and are void for selection; the correctly ordered `_cgs` evaluations are separately labeled, and no score value, fitted constant or probe outcome is used to change any candidate prediction or discovery claim.
+
+Final-two protocol outcome: A=`V2_model_cgs` / `hvLtPVmr` (0.11102814); B=`B_from_A_cgs` / `eAaWXWxM` (0.097535343). A was selected from exactly four corrected-order `_cgs` scores; unique winner `V2_model_cgs` exceeded all pairwise noise guards. B is the pre-registered companion, not an A-rule competitor. Operator UI/form confirmation remains pending.
 
 ## Best Bias Discovery entry
 
@@ -1106,19 +1113,19 @@ Provided-data-only check for the scored predictions (`reports/v2-input-provenanc
 
 A machine-checked claim-to-evidence audit backs every number in this writeup.
 
-- `claims_total`: 90
-- `claims_fully_traceable`: 90
-- `fraction_quantitative_claims_traceable`: 1.0
-- `numeric_tokens_total`: 1062
-- `numeric_tokens_covered`: 1062
-- `fraction_numeric_tokens_covered`: 1.0
-- `distinct_verify_commands`: 90
+- `claims_total`: 107
+- `claims_fully_traceable`: 96
+- `fraction_quantitative_claims_traceable`: 0.897196
+- `numeric_tokens_total`: 1198
+- `numeric_tokens_covered`: 1148
+- `fraction_numeric_tokens_covered`: 0.958264
+- `distinct_verify_commands`: 107
 - `distinct_reproduce_commands`: 18
 - `derived_aggregates_verified`: 31
-- `claims_asserting_accuracy`: 2
+- `claims_asserting_accuracy`: 3
 - `claims_with_prohibited_data_language`: 0
 
-The claim inventory and per-claim verifier gates pass. The full audit exited nonzero because this refresh did not use `--execute-reproduce` and a historical candidate product hash remains stale; rebuilding that candidate is prohibited. The family-S summary command was run separately, but is not recorded in the audit execution log. These reproducibility-only gates remain open; they do not change the 100% claim/token coverage or claim-verifier results.
+Current audit status: 96 of 107 quantitative claims are fully traceable (0.897196); 1148 of 1198 numeric tokens are covered (0.958264). The full claim audit does not pass; 11 unresolved claims remain, including claims in the discovery/methodology source drafts. This is explicitly an open narrative-review/reproducibility gate, not an accuracy claim. The final-two result is separately traced to `reports/final-two.json` and machine-compared by the submission packet verifier.
 
 Commands run for this refresh:
 

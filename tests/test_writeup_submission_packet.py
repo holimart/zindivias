@@ -34,6 +34,25 @@ OPERATOR_GATES = {"operator_identity_confirmation_recorded", "form_url_available
 
 
 class PacketPresenceTests(unittest.TestCase):
+    def test_protocol_final_two_matches_report_and_ui_confirmation_stays_pending(self) -> None:
+        final = json.loads((ROOT / "reports/final-two.json").read_text())
+        slots = {item["slot"]: item for item in RECORD["final_two"]["protocol_selected"]}
+        self.assertEqual(slots["A"]["candidate_id"], "V2_model_cgs")
+        self.assertEqual(slots["A"]["submission_id"], "hvLtPVmr")
+        self.assertEqual(slots["A"]["public_rmse"], 0.11102814)
+        self.assertEqual(slots["B"]["candidate_id"], "B_from_A_cgs")
+        self.assertEqual(slots["B"]["submission_id"], "eAaWXWxM")
+        self.assertEqual(slots["B"]["public_rmse"], 0.097535343)
+        self.assertEqual(RECORD["final_two"]["selection_trace"],
+                         final["corrected_cgs_selection"])
+        self.assertTrue(RECORD["final_two"]["operator_confirmation_pending"])
+        self.assertEqual(RECORD["final_two"]["selected"],
+                         {"candidate_A": None, "candidate_B": None})
+        self.assertEqual(len(RECORD["operator_decision_inputs_pending"]), 4)
+        for item in slots.values():
+            self.assertIn(item["submission_id"], MARKDOWN)
+            self.assertIn(item["sha256"], MARKDOWN)
+
     def test_markdown_and_pdf_exist_and_are_hash_recorded(self) -> None:
         self.assertTrue((ROOT / "docs/writeup/final-writeup.md").is_file())
         pdf = ROOT / "reports/writeup/final-writeup.pdf"
@@ -55,9 +74,11 @@ class PacketPresenceTests(unittest.TestCase):
         self.assertEqual(RECORD["submission_record"]["operator_review"], "not recorded")
         self.assertNotIn("form submitted", MARKDOWN.lower())
 
-    def test_only_the_three_operator_owned_gates_are_open(self) -> None:
+    def test_operator_and_disclosed_claim_audit_gates_are_open(self) -> None:
         open_gates = {key for key, value in RECORD["acceptance"].items() if value is not True}
-        self.assertEqual(open_gates, OPERATOR_GATES | {"all_passed"})
+        self.assertEqual(open_gates, OPERATOR_GATES | {
+            "claim_audit_covers_writeup_numbers", "all_passed"})
+        self.assertIn("full claim audit does not pass", MARKDOWN.lower())
 
 
 class RulesContentTests(unittest.TestCase):
@@ -168,7 +189,10 @@ class BuildTests(unittest.TestCase):
                     "fraction_quantitative_claims_traceable", "numeric_tokens_total",
                     "numeric_tokens_covered"):
             self.assertEqual(recorded[key], summary[key])
-        self.assertEqual(summary["fraction_quantitative_claims_traceable"], 1.0)
+        self.assertLess(summary["fraction_quantitative_claims_traceable"], 1.0)
+        self.assertLess(summary["numeric_tokens_covered"], summary["numeric_tokens_total"])
+        self.assertGreater(len(json.loads((ROOT / "reports/writeup-claim-evidence-audit.json")
+                                          .read_text())["unresolved"]), 0)
 
 
 class NegativeControlTests(unittest.TestCase):
@@ -239,7 +263,8 @@ class OperatorFillTests(unittest.TestCase):
                               "submitted_by": "operator-handle",
                               "form_url_used": "https://forms.example.org/bias-bounty-writeup",
                               "operator_review": "discovery narrative reviewed and approved"},
-        "final_two": {"selected": {"candidate_A": "V2_model", "candidate_B": "C0"}},
+        "final_two": {"selected": {"candidate_A": "V2_model_cgs",
+                                     "candidate_B": "B_from_A_cgs"}},
     }
 
     def packet(self, inputs: dict, tmp: Path):
@@ -268,7 +293,7 @@ class OperatorFillTests(unittest.TestCase):
             self.assertEqual(record["blocking_prerequisites"], [])
             self.assertIn("operator-supplied-team", markdown)
             self.assertIn("submitted at 2026-10-26T14:05:00Z", markdown)
-            self.assertIn("`V2_model` and `C0`", markdown)
+            self.assertIn("`V2_model_cgs` and `B_from_A_cgs`", markdown)
             result = verify.check(copy.deepcopy(record), CONFIG)
             self.assertEqual(result["failures"], [])
 

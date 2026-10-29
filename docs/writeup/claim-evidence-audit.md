@@ -4,10 +4,10 @@ Row: `bias-writeup-claim-evidence-audit`. Documentation screen: every quantitati
 
 ## Verdict
 
-- **90 of 90 quantitative claims fully traceable** (100.0%).
-- **1062 of 1062 numeric tokens (100.0%) are present in the evidence named by the claim that states them.**
-- 90 per-claim verify commands and 18 reproduce commands; 17/17 recorded reproduce-command exits are 0; 1 command(s) lack an execution record in this no-`--execute-reproduce` audit pass; a historical reproduce-command product hash no longer matches its current file; details are recorded in the audit JSON's tier_b_reproduce entries.
-- Accuracy language outside the allowed classes: none. Prohibited reference/label/leaderboard sources used as scored-model evidence: none.
+- **96 of 107 quantitative claims fully traceable** (89.7%).
+- **1148 of 1198 numeric tokens (95.8%) are present in the evidence named by the claim that states them.**
+- 107 per-claim verify commands and 18 reproduce commands; 17/17 recorded reproduce-command exits are 0; 1 command(s) lack an execution record in this no-`--execute-reproduce` audit pass; a historical reproduce-command product hash no longer matches its current file; details are recorded in the audit JSON's tier_b_reproduce entries.
+- Accuracy language outside the allowed classes: PRESENT. Prohibited reference/label/leaderboard sources used as scored-model evidence: none.
 - All acceptance gates: **FAIL**.
 
 ## Method
@@ -18,8 +18,8 @@ Each of the three writeup documents is split into quantitative claim blocks (a b
 
 | Document | Claims | Fully traceable | Numeric tokens | Covered |
 |---|---:|---:|---:|---:|
-| `docs/writeup/bias-discovery.md` | 29 | 29 | 263 | 263 |
-| `docs/writeup/methodology.md` | 54 | 54 | 668 | 668 |
+| `docs/writeup/bias-discovery.md` | 40 | 33 | 341 | 314 |
+| `docs/writeup/methodology.md` | 60 | 56 | 726 | 703 |
 | `docs/writeup/edge-cases.md` | 7 | 7 | 131 | 131 |
 
 ## Claim inventory
@@ -28,35 +28,46 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 
 | Claim | Document | Section | Lines | Class | Primary evidence | Pointer | Tokens | Verify | Reproduce |
 |---|---|---|---|---|---|---|---:|---|---|
-| `bias-discovery-001` In a set of six Butte County tracts in the Paradise/Magalia Camp Fire … | `bias-discovery.md` | Impact | 7-7 | `measured_provided_data` | `reports/discovery-postfire.json` | `/focal_butte_2018_burn_geoids` | 4/4 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
-| `bias-discovery-002` The comparison is exactly `Overture overture_buildings / provided stra… | `bias-discovery.md` | Evidence | 17-17 | `measured_provided_data` | `reports/discovery-postfire.json` | `/` | 1/1 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
-| `bias-discovery-003` \| Butte County GEOID \| Overture / provided USFS count \| Provided MTBS … | `bias-discovery.md` | Evidence | 19-26 | `measured_provided_data` | `reports/discovery-postfire.json` | `/focal_butte_2018_burn_geoids` | 24/24 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
-| `bias-discovery-004` Two additional supplied examples are `06089010603` (ratio 0.691; MTBS … | `bias-discovery.md` | Evidence | 28-28 | `measured_provided_data` | `reports/discovery-postfire.json` | `/additional_named_examples` | 8/8 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
-| `bias-discovery-005` \| Provided NorCal burn class \| Tracts \| Ratio <0.8 \| Share below 0.8 \|… | `bias-discovery.md` | Evidence | 30-36 | `measured_provided_data` | `reports/discovery-postfire.json` | `/` | 26/26 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
-| `bias-discovery-006` Fourteen of 591 tracts have provided burned percentages above 100 and … | `bias-discovery.md` | Evidence | 38-38 | `measured_provided_data` | `reports/discovery-postfire.json` | `/high_burn_vs_unburned_below_0_8/replicates` | 7/7 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
-| `bias-discovery-007` That published interval resamples tracts independently. Tracts inside … | `bias-discovery.md` | Evidence | 40-40 | `measured_provided_data` | `reports/discovery-postfire-county-bootstrap.json` | `/summary/replicates` | 9/9 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
-| `bias-discovery-008` ![NorCal and Butte tract map: fill is provided MTBS burn percentage; p… | `bias-discovery.md` | Evidence | 42-42 | `measured_provided_data` | `reports/discovery-postfire.json` | `/` | 1/1 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
-| `bias-discovery-009` **Source/vintage caution:** the compared count is the provided strata … | `bias-discovery.md` | Evidence | 44-44 | `measured_provided_data` | `reports/discovery-postfire.json` | `/interpretation` | 2/2 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
-| `bias-discovery-010` The automated scorecard reports marginal tribal and rural comparisons … | `bias-discovery.md` | Novelty | 83-83 | `measured_provided_data` | `WORKSPACE:RULES.md` | `section:Official challenge page text (zindi-bias-bounty)` | 2/2 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `bias-discovery-011` The script joins only official sample GEOIDs to the provided `tribal_a… | `bias-discovery.md` | Evidence | 87-87 | `measured_provided_data` | `reports/discovery-strata-confound.json` | `/total_tracts` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `bias-discovery-012` \| Stratum \| Total \| Eastern OK \| Maricopa AZ \| Northern CA \| South-Cen… | `bias-discovery.md` | Evidence | 89-95 | `measured_provided_data` | `reports/discovery-strata-confound.json` | `/total_tracts` | 45/45 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `bias-discovery-013` Within-region tribal prevalence is 67.53% in Eastern Oklahoma, 2.32% i… | `bias-discovery.md` | Evidence | 97-97 | `measured_provided_data` | `reports/discovery-strata-confound.json` | `/stratum_composition/tribal_any/by_region/northern-ca/share_of_stratum` | 12/12 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `bias-discovery-014` The earlier backlog measurement listed rural counts of 412/174/147/1,0… | `bias-discovery.md` | Evidence | 99-99 | `measured_provided_data` | `reports/discovery-strata-confound.json` | `/rural_measure_before_reconciliation/counts_listed_in_backlog/south-central-tx` | 8/8 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `bias-discovery-015` The rules disclose a 0.71–1.59 cross-region Overture/TIGER named-road … | `bias-discovery.md` | Evidence | 101-101 | `measured_provided_data` | `reports/transport-route-ref-audit.json` | `/regions/maricopa-az/sum_L_named_over_sum_L_route` | 8/8 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `bias-discovery-016` The script asserts 9,379 unique official IDs and deterministic cohort … | `bias-discovery.md` | Reproducibility | 114-114 | `reproduction_statement` | `reports/discovery-strata-confound.json` | `/total_tracts` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `bias-discovery-017` The analytic group is defined using only provided strata fields: `pct_… | `bias-discovery.md` | Proposed pattern outside the published | 124-124 | `measured_provided_proxy` | `reports/discovery-rural-svi-minority.json` | `/` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `bias-discovery-018` \| Group \| Tracts \| Mean C2 predicted composite \| \|---\|---:\|---:\| \| Rur… | `bias-discovery.md` | Quantified proxy evidence | 128-132 | `measured_provided_proxy` | `reports/discovery-rural-svi-minority.json` | `/composite_results/c2/high_group_mean` | 4/4 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `bias-discovery-019` A 50,000-resample tract bootstrap gives a 95% percentile interval of *… | `bias-discovery.md` | Quantified proxy evidence | 134-134 | `measured_provided_proxy` | `reports/discovery-rural-svi-minority.json` | `/composite_results/c2/bootstrap_replicates` | 5/5 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `bias-discovery-020` \| Component \| Upper quartile (n; mean) \| Other rural (n; mean) \| Diffe… | `bias-discovery.md` | Quantified proxy evidence | 138-142 | `measured_provided_proxy` | `reports/discovery-rural-svi-minority.json` | `/C2_component_results_defined_only/transport/high_group_defined_mean` | 19/19 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `bias-discovery-021` \| South-Central TX GEOID \| `svi_minority` \| C2 composite \| C2 transpor… | `bias-discovery.md` | Quantified proxy evidence | 148-154 | `measured_provided_proxy` | `reports/discovery-rural-svi-minority.json` | `/named_high_group_tracts_sorted_by_C2_estimate` | 25/25 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `bias-discovery-022` The 50,000-draw bootstrap uses fixed seeds; a second run generated byt… | `bias-discovery.md` | Reproduction | 173-173 | `reproduction_statement` | `reports/discovery-rural-svi-minority.json` | `/composite_results/c2/bootstrap_replicates` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `bias-discovery-023` The analysis covers all 9,379 authoritative sample GEOIDs in Maricopa,… | `bias-discovery.md` | Method and source definitions | 181-181 | `measured_provided_data` | `docs/data-inventory.md` | `document` | 1/1 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
-| `bias-discovery-024` Quartiles are calculated within each region. Reported means weight tra… | `bias-discovery.md` | Method and source definitions | 185-185 | `measured_provided_data` | `reports/source-provenance.json` | `/statistics/stratum_means` | 4/4 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
-| `bias-discovery-025` \| Region \| Building OSM share, Q4−Q1 (95% CI) \| Non-Meta place share, … | `bias-discovery.md` | Findings | 191-196 | `measured_provided_data` | `reports/source-provenance.json` | `/` | 24/24 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
-| `bias-discovery-026` The within-region Spearman correlations with `svi_overall` were negati… | `bias-discovery.md` | Findings | 198-198 | `measured_provided_data` | `reports/source-provenance.json` | `/regions/maricopa-az/spearman_correlations/building_osm_share/svi_overall/rho` | 8/8 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
-| `bias-discovery-027` Tribal-overlap contrasts were also negative in the three regions with … | `bias-discovery.md` | Findings | 200-200 | `measured_provided_data` | `docs/data-inventory.md` | `section:Bias Bounty public GeoParquet inventory` | 3/3 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
-| `bias-discovery-028` The ten lowest-OSM-share tracts within each region's high-SVI quartile… | `bias-discovery.md` | Findings | 204-204 | `measured_provided_data` | `reports/source-provenance.json` | `/regions/eastern-ok/named_lowest_osm_high_svi` | 8/8 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
-| `bias-discovery-029` ![Overture source-provider shares across region-specific SVI quartiles… | `bias-discovery.md` | Findings | 206-206 | `measured_provided_data` | `docs/data-inventory.md` | `section:Bias Bounty public GeoParquet inventory` | 1/1 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-001` **Status:** the post-fire disagreement and Overture source-provenance … | `bias-discovery.md` | Best Bias Discovery: post-fire buildin | 3-3 | `measured_provided_data` | `docs/data-inventory.md` | `section:Bias Bounty public GeoParquet inventory` | 1/1 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-002` In a set of six Butte County tracts in the Paradise/Magalia Camp Fire … | `bias-discovery.md` | Impact | 7-7 | `measured_provided_data` | `reports/discovery-postfire.json` | `/focal_butte_2018_burn_geoids` | 4/4 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-003` The comparison is exactly `Overture overture_buildings / provided stra… | `bias-discovery.md` | Evidence | 17-17 | `measured_provided_data` | `reports/discovery-postfire.json` | `/` | 1/1 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-004` \| Butte County GEOID \| Overture / provided USFS count \| Provided MTBS … | `bias-discovery.md` | Evidence | 19-26 | `measured_provided_data` | `reports/discovery-postfire.json` | `/focal_butte_2018_burn_geoids` | 24/24 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-005` Two additional supplied examples are `06089010603` (ratio 0.691; MTBS … | `bias-discovery.md` | Evidence | 28-28 | `measured_provided_data` | `reports/discovery-postfire.json` | `/additional_named_examples` | 8/8 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-006` \| Provided NorCal burn class \| Tracts \| Ratio <0.8 \| Share below 0.8 \|… | `bias-discovery.md` | Evidence | 30-36 | `measured_provided_data` | `reports/discovery-postfire.json` | `/` | 26/26 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-007` Fourteen of 591 tracts have provided burned percentages above 100 and … | `bias-discovery.md` | Evidence | 38-38 | `measured_provided_data` | `reports/discovery-postfire.json` | `/high_burn_vs_unburned_below_0_8/replicates` | 7/7 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-008` That published interval resamples tracts independently. Tracts inside … | `bias-discovery.md` | Evidence | 40-40 | `measured_provided_data` | `reports/discovery-postfire-county-bootstrap.json` | `/summary/replicates` | 9/9 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-009` ![NorCal and Butte tract map: fill is provided MTBS burn percentage; p… | `bias-discovery.md` | Evidence | 42-42 | `measured_provided_data` | `reports/discovery-postfire.json` | `/` | 1/1 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-010` **Source/vintage caution:** the compared count is the provided strata … | `bias-discovery.md` | Evidence | 44-44 | `measured_provided_data` | `reports/discovery-postfire.json` | `/interpretation` | 2/2 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-011` The automated scorecard reports marginal tribal and rural comparisons … | `bias-discovery.md` | Novelty | 83-83 | `measured_provided_data` | `WORKSPACE:RULES.md` | `section:Official challenge page text (zindi-bias-bounty)` | 2/2 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `bias-discovery-012` The script joins only official sample GEOIDs to the provided `tribal_a… | `bias-discovery.md` | Evidence | 87-87 | `measured_provided_data` | `reports/discovery-strata-confound.json` | `/total_tracts` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `bias-discovery-013` \| Stratum \| Total \| Eastern OK \| Maricopa AZ \| Northern CA \| South-Cen… | `bias-discovery.md` | Evidence | 89-95 | `measured_provided_data` | `reports/discovery-strata-confound.json` | `/total_tracts` | 45/45 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `bias-discovery-014` Within-region tribal prevalence is 67.53% in Eastern Oklahoma, 2.32% i… | `bias-discovery.md` | Evidence | 97-97 | `measured_provided_data` | `reports/discovery-strata-confound.json` | `/stratum_composition/tribal_any/by_region/northern-ca/share_of_stratum` | 12/12 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `bias-discovery-015` The earlier backlog measurement listed rural counts of 412/174/147/1,0… | `bias-discovery.md` | Evidence | 99-99 | `measured_provided_data` | `reports/discovery-strata-confound.json` | `/rural_measure_before_reconciliation/counts_listed_in_backlog/south-central-tx` | 8/8 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `bias-discovery-016` The rules disclose a 0.71–1.59 cross-region Overture/TIGER named-road … | `bias-discovery.md` | Evidence | 101-101 | `measured_provided_data` | `reports/transport-route-ref-audit.json` | `/regions/maricopa-az/sum_L_named_over_sum_L_route` | 8/8 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `bias-discovery-017` The script asserts 9,379 unique official IDs and deterministic cohort … | `bias-discovery.md` | Reproducibility | 114-114 | `reproduction_statement` | `reports/discovery-strata-confound.json` | `/total_tracts` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `bias-discovery-018` The analytic group is defined using only provided strata fields: `pct_… | `bias-discovery.md` | Proposed pattern outside the published | 124-124 | `measured_provided_proxy` | `reports/discovery-rural-svi-minority.json` | `/` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `bias-discovery-019` \| Group \| Tracts \| Mean C2 predicted composite \| \|---\|---:\|---:\| \| Rur… | `bias-discovery.md` | Quantified proxy evidence | 128-132 | `measured_provided_proxy` | `reports/discovery-rural-svi-minority.json` | `/composite_results/c2/high_group_mean` | 4/4 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `bias-discovery-020` A 50,000-resample tract bootstrap gives a 95% percentile interval of *… | `bias-discovery.md` | Quantified proxy evidence | 134-134 | `measured_provided_proxy` | `reports/discovery-rural-svi-minority.json` | `/composite_results/c2/bootstrap_replicates` | 4/5 | FAILED | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `bias-discovery-021` \| Component \| Upper quartile (n; mean) \| Other rural (n; mean) \| Diffe… | `bias-discovery.md` | Quantified proxy evidence | 138-142 | `measured_provided_proxy` | `reports/discovery-rural-svi-minority.json` | `/C2_component_results_defined_only/transport/high_group_defined_mean` | 19/19 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `bias-discovery-022` \| South-Central TX GEOID \| `svi_minority` \| C2 composite \| C2 transpor… | `bias-discovery.md` | Quantified proxy evidence | 148-154 | `measured_provided_proxy` | `reports/discovery-rural-svi-minority.json` | `/named_high_group_tracts_sorted_by_C2_estimate` | 25/25 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `bias-discovery-023` The 50,000-draw bootstrap uses fixed seeds; a second run generated byt… | `bias-discovery.md` | Reproduction | 173-173 | `reproduction_statement` | `reports/discovery-rural-svi-minority.json` | `/composite_results/c2/bootstrap_replicates` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `bias-discovery-024` The analysis covers all 9,379 authoritative sample GEOIDs in Maricopa,… | `bias-discovery.md` | Method and source definitions | 181-181 | `measured_provided_data` | `docs/data-inventory.md` | `document` | 1/1 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-025` Quartiles are calculated within each region. Reported means weight tra… | `bias-discovery.md` | Method and source definitions | 185-185 | `measured_provided_data` | `reports/source-provenance.json` | `/statistics/stratum_means` | 4/4 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-026` \| Region \| Building OSM share, Q4−Q1 (95% CI) \| Non-Meta place share, … | `bias-discovery.md` | Findings | 191-196 | `measured_provided_data` | `reports/source-provenance.json` | `/` | 24/24 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-027` The within-region Spearman correlations with `svi_overall` were negati… | `bias-discovery.md` | Findings | 198-198 | `measured_provided_data` | `reports/source-provenance.json` | `/regions/maricopa-az/spearman_correlations/building_osm_share/svi_overall/rho` | 8/8 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-028` Tribal-overlap contrasts were also negative in the three regions with … | `bias-discovery.md` | Findings | 200-200 | `measured_provided_data` | `docs/data-inventory.md` | `section:Bias Bounty public GeoParquet inventory` | 3/3 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-029` The ten lowest-OSM-share tracts within each region's high-SVI quartile… | `bias-discovery.md` | Findings | 204-204 | `measured_provided_data` | `reports/source-provenance.json` | `/regions/eastern-ok/named_lowest_osm_high_svi` | 8/8 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-030` ![Overture source-provider shares across region-specific SVI quartiles… | `bias-discovery.md` | Findings | 206-206 | `measured_provided_data` | `docs/data-inventory.md` | `section:Bias Bounty public GeoParquet inventory` | 1/1 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-031` A repeated cache-based run produced byte-identical JSON and PNG. The r… | `bias-discovery.md` | Reproduction | 227-227 | `measured_provided_data` | `docs/data-inventory.md` | `section:Bias Bounty public GeoParquet inventory` | 1/1 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-032` **Scope and interpretation.** This is a follow-on discovery-only scree… | `bias-discovery.md` | Section 4 — External public context la | 231-231 | `measured_provided_data` | `docs/data-inventory.md` | `document` | 5/9 | FAILED | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-033` **CDC/ATSDR SVI 2022.** On the 9,294 complete cases (85 selected SVI v… | `bias-discovery.md` | Section 4 — External public context la | 233-233 | `measured_provided_data` | `reports/source-provenance.json` | `/regions/eastern-ok/named_lowest_osm_high_svi` | 10/12 | FAILED | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-034` **USDA ERS RUCA 2020.** RUCA joined for all 9,379 official GEOIDs; com… | `bias-discovery.md` | Section 4 — External public context la | 235-235 | `measured_provided_data` | `reports/source-provenance.json` | `/regions/eastern-ok/stratum_means/svi_overall_quartile/q2/source_share_means/poi_other_upstream_share/tract_cluster_bootstrap_95_ci` | 5/7 | FAILED | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-035` **Census PDB 2026 broadband context.** The selected exposure was tract… | `bias-discovery.md` | Section 4 — External public context la | 237-237 | `measured_provided_data` | `reports/source-provenance.json` | `/regions/northern-ca/stratum_contrasts/svi_q4_minus_q1/poi_non_meta_share/ci_95` | 9/12 | FAILED | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-036` **Census AIANNH 2020 tribal-area polygons.** We dissolved overlapping … | `bias-discovery.md` | Section 4 — External public context la | 239-239 | `measured_provided_data` | `reports/discovery-strata-confound.json` | `/total_tracts` | 6/10 | FAILED | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-037` The config is `config/discovery-external-layers-preregistered.json`; t… | `bias-discovery.md` | Section 4 — External public context la | 252-252 | `measured_provided_data` | `docs/data-inventory.md` | `section:Bias Bounty public GeoParquet inventory` | 1/1 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-038` \| Check \| Evidence/result \| Direct report source (JSON pointer) \| Repr… | `bias-discovery.md` | Section 5 — T1 named-stroke class-drop | 258-263 | `measured_provided_data` | `docs/data-inventory.md` | `document` | 9/20 | FAILED | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-039` [C] To rebuild the nested screen from raw provided inputs, run one fea… | `bias-discovery.md` | Reproduction commands | 289-289 | `measured_provided_data` | `docs/data-inventory.md` | `section:Bias Bounty public GeoParquet inventory` | 4/4 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-040` After all 12 feature caches exist, reproduce the nested selection and … | `bias-discovery.md` | Reproduction commands | 299-299 | `measured_provided_data` | `docs/data-inventory.md` | `section:Bias Bounty public GeoParquet inventory` | 1/1 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
 | `methodology-001` **Coverage: 100% of the documentation items listed below.** Completion… | `methodology.md` | Rubric checklist and reading guide | 7-7 | `scope_statement` | `reports/candidates.json` | `/` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
 | `methodology-002` The official scoring domain is the union of four published per-region … | `methodology.md` | Data sources, scope, and provenance | 21-21 | `input_inventory` | `docs/competition.md` | `document` | 3/3 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
 | `methodology-003` \| Region \| Official sample \| ACS geometry parquet bytes / rows \| Overt… | `methodology.md` | Data sources, scope, and provenance | 34-39 | `input_inventory` | `docs/data-inventory.md` | `document` | 44/44 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
@@ -76,7 +87,7 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 | `methodology-017` - **Candidate stability envelope:** `config/candidate-stability-envelo… | `methodology.md` | Model-only v2 components and approval  | 92-92 | `measured_model_only` | `reports/candidate-stability-envelope.json` | `/measure_after/official_rows` | 10/10 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
 | `methodology-018` The full edge-case table and calculation policy are in [`edge-cases.md… | `methodology.md` | Edge cases, bias discovery, and interp | 114-114 | `measured_provided_data` | `reports/edge-cases.json` | `/geometry_method` | 11/11 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
 | `methodology-019` \| Idea \| Spatial signal and outputs \| Output rows / channels \| Defined… | `methodology.md` | Family S spatial-context estimator dia | 126-132 | `measured_provided_data` | `reports/ideas-harness.json` | `/per_idea/S1/rows` | 18/18 | exit 0 | `COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" /home/martin/…` |
-| `methodology-020` The label-free summary `reports/bias60-family-s-summary.json` verifies… | `methodology.md` | Family S spatial-context estimator dia | 134-134 | `measured_provided_data` | `reports/ideas-orthogonality.json` | `/scope/study_tracts` | 8/8 | exit 0 | `COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" /home/martin/…` |
+| `methodology-020` The label-free summary `reports/bias60-family-s-summary.json` verifies… | `methodology.md` | Family S spatial-context estimator dia | 134-134 | `measured_provided_data` | `reports/bias60-family-s-summary.json` | `/outputs/S5/rows` | 8/8 | exit 0 | `COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" /home/martin/…` |
 | `methodology-021` The opt-in route audit is `scripts/estimate_gaps.py --route-audit-only… | `methodology.md` | Route-reference transport v2 (provided | 167-167 | `measured_provided_data` | `scripts/estimate_gaps.py` | `document` | 3/3 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
 | `methodology-022` \| Region \| `sum(L_named)/sum(L_route)` \| `L_named` / `L_route` km \| `L… | `methodology.md` | Route-reference transport v2 (provided | 171-176 | `measured_provided_data` | `reports/transport-route-ref-audit.json` | `/regions/maricopa-az/sum_L_named_over_sum_L_route` | 28/28 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
 | `methodology-023` All four route-v2 transport + v0 building/POI any-undefined shares are… | `methodology.md` | Route-reference transport v2 (provided | 178-178 | `measured_provided_data` | `reports/transport-route-ref-audit.json` | `/regions/maricopa-az/sum_L_named_over_sum_L_route` | 10/10 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
@@ -111,6 +122,12 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 | `methodology-052` In that snapshot 1,441 participants had produced 390 ranked teams. Quo… | `methodology.md` | Scorecard reflection | 499-504 | `historical_disclosure` | `reports/lb-scorecard-snapshot.json` | `/summary/participants` | 11/11 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet python scr…` |
 | `methodology-053` The scorecard is more informative than the single number. The all-zero… | `methodology.md` | Scorecard reflection | 506-518 | `historical_disclosure` | `reports/scorecards/index.json` | `/scorecards` | 16/16 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet python scr…` |
 | `methodology-054` Per the operator amendment of `2026-10-24` this paragraph is reflectio… | `methodology.md` | Scorecard reflection | 520-527 | `historical_disclosure` | `reports/scorecards/index.json` | `/preregistration/intent` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet python scr…` |
+| `methodology-055` \| Region \| Our any-top-level-component undefined \| Published any-refer… | `methodology.md` | Shrink diagnosis — H1 rule-anchored ph | 541-546 | `measured_model_only` | `reports/candidates.json` | `/` | 16/26 | FAILED | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-056` The direction reverses by region: our estimator has fewer undefined ro… | `methodology.md` | Shrink diagnosis — H1 rule-anchored ph | 548-555 | `measured_model_only` | `docs/data-inventory.md` | `document` | 1/3 | FAILED | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-057` On defined rows, C2's mean transport/building/POI gaps are respectivel… | `methodology.md` | Shrink diagnosis — H1 rule-anchored ph | 557-566 | `measured_model_only` | `docs/data-inventory.md` | `section:Bias Bounty public GeoParquet inventory` | 2/2 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-058` \| Region \| Raw regional c \| Applied c \| LOCO average MSE gain vs unshr… | `methodology.md` | H2: cross-construction reliability shr | 584-589 | `measured_model_only` | `reports/candidates.json` | `/candidate_set` | 8/16 | FAILED | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-059` Regional raw c spans only 0.0669, below the preregistered 0.10 cutoff;… | `methodology.md` | H2: cross-construction reliability shr | 591-600 | `measured_model_only` | `reports/candidates.json` | `/candidate_set` | 7/10 | FAILED | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-060` **H2 verdict: local cross-method agreement supports registering one sh… | `methodology.md` | H2: cross-construction reliability shr | 602-609 | `measured_model_only` | `docs/data-inventory.md` | `section:Bias Bounty public GeoParquet inventory` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
 | `edge-cases-001` This table makes the handling explicit for low-information and structu… | `edge-cases.md` | Edge-case register for the coverage-ga | 3-3 | `scope_statement` | `docs/data-inventory.md` | `document` | 2/2 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
 | `edge-cases-002` \| Region \| Official n \| Population 0 \| `ALAND` 0 \| Water proxy >50% \| … | `edge-cases.md` | Observed edge cases | 7-13 | `measured_provided_data` | `reports/v2-defined-mask-audit.json` | `/scope/region_rows/maricopa-az` | 55/55 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
 | `edge-cases-003` Water is an approximation, not an independently observed water mask: f… | `edge-cases.md` | Observed edge cases | 15-15 | `measured_provided_data` | `reports/edge-cases.json` | `/geometry_method` | 8/8 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
@@ -134,15 +151,15 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 | `config/poi-confidence-weighting-preregistered.json` | `f93ffa0153c6e2207dc99ae1a0d44753371a2ce173f71eb64feb5d17e0e46296` | 1 |
 | `config/reproduction-inputs.json` | `0172220d2a463be4cd9ca014439363bb490994a59709b576bc6474d7546454bd` | 3 |
 | `config/schema-presence-preregistered.json` | `4f715f96e48e4de60a47d69e270f53b92908813c89bf35aeee142e1887e2edc7` | 1 |
-| `docs/competition.md` | `fc8141d3b9624f100b455dbded97ebf1754e96f87e91d25c4f151cb291097e65` | 1 |
-| `docs/data-inventory.md` | `88fe309bd2a577d544081fd95ddc7980e77a4e4751d175eab7d5752e7f4ce950` | 20 |
+| `docs/competition.md` | `381e8389194f278adc808ec023a688d727cab94bb539335049191261d2fa1d28` | 1 |
+| `docs/data-inventory.md` | `88fe309bd2a577d544081fd95ddc7980e77a4e4751d175eab7d5752e7f4ce950` | 37 |
 | `docs/decisions/building-component.md` | `cc63abcf8a1128ee35e2a3a8b5cc4938cb333f3b30caea81a239374fc9855974` | 1 |
 | `reports/bias60-family-s-summary.json` | `ea1bdb11e7c358eb5ffc4b75a0a1a3c19d7f2b7bb84dce6453fb400643f68581` | 2 |
 | `reports/building-morphology-candidate.json` | `e7f6f50d0b00fd2675f47878d524d78544f021f8bfa9bd2766722fff621cccdd` | 1 |
 | `reports/building-source-prior.json` | `4066d3a86223dca5cdd2cf63e6660afbc6577915172a48f265c4f70da08f51d4` | 1 |
 | `reports/building-v2-audit.json` | `4815735bbefcd155a8bd566fc92403e378d436aa97dc062344f36fcc9f7936d9` | 1 |
 | `reports/candidate-stability-envelope.json` | `258cb9647e72ea3f8d225c18efed7de41bc9c1beb70218684fa332d7ea1d2622` | 1 |
-| `reports/candidates.json` | `7fda4aff8e63d0c2854c261798abc073ab01c465d999d7c25732e152a9d4d396` | 4 |
+| `reports/candidates.json` | `799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815` | 10 |
 | `reports/candidates/facility_catchment_candidate_manifest.json` | `180da02422e5b3045580dd642288c5fcb6aa18f01382c732b10946a20a99605e` | 1 |
 | `reports/candidates/road_topology_candidate_manifest.json` | `b269e4487905937d48418822aeb11a92e76f0371236d99e175e920d82852705f` | 3 |
 | `reports/candidates/schema_presence_candidate_manifest.json` | `f4450ee825de7a41b3c5c5df1f5aefb1808904aaf028837ad414296667d1c700` | 1 |
@@ -150,16 +167,16 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 | `reports/cross-theme-support.json` | `77c010a8c74f62487816b142e489b651f38dfcc93793c87fbe9c91711d1d352d` | 1 |
 | `reports/density-context-candidate.json` | `8da97e44bb3af4a06fb98f83065c8719fc746b5c1596cb11ef8bd611c72dd7b7` | 1 |
 | `reports/discovery-postfire-county-bootstrap.json` | `942c39504dbcf3b2fd0fbc19c3cb3194bd9a49693fdd3688a044c3211d637d24` | 8 |
-| `reports/discovery-postfire.json` | `cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a` | 16 |
-| `reports/discovery-rural-svi-minority.json` | `da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0` | 19 |
-| `reports/discovery-strata-confound.json` | `ce0f1307793d1c658754cb7f9dd6fee7ea9cabf2a8a0e7ccb8e9888c2bad9ecb` | 14 |
+| `reports/discovery-postfire.json` | `cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a` | 27 |
+| `reports/discovery-rural-svi-minority.json` | `da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0` | 30 |
+| `reports/discovery-strata-confound.json` | `ce0f1307793d1c658754cb7f9dd6fee7ea9cabf2a8a0e7ccb8e9888c2bad9ecb` | 25 |
 | `reports/edge-cases.json` | `53626e3ad297c4609e541a7570146b732677275d2d371f17eac6606361911237` | 8 |
 | `reports/estimator-v1-audit.json` | `1d72712e63f9b8f9682cd82a3cebc888be8bf0301cfc82cda05a2012a417ef5a` | 3 |
-| `reports/estimator-v2-audit.json` | `131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0` | 8 |
+| `reports/estimator-v2-audit.json` | `131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0` | 14 |
 | `reports/facility-catchment-candidate.json` | `53cdbfa4450223d84db7647dc4fb16d058d6bd239740e9153f51000e884e6794` | 1 |
 | `reports/gap-estimator-audit.json` | `a872e2dd62a5333037bc8e663278134c5b0a08493c7ec41768962e33859187f9` | 2 |
-| `reports/ideas-harness.json` | `20279d9548fa126ec81b2df9dbbe67b363101303b1222e76caf985dc2c9e9c58` | 2 |
-| `reports/ideas-orthogonality.json` | `d5fcb1872c2899d40c949d51181f4c6da35309463d2e84a0af5cbd63e6b0e443` | 2 |
+| `reports/ideas-harness.json` | `1203d2acf10fa9682852abba3382d55f53c42b6fa7c03071c44cbe915d3f7a85` | 2 |
+| `reports/ideas-orthogonality.json` | `07f34f9296a0c7e453eb5ae215d671beac556cf8731b9f1037eb2874ac5fe3e4` | 2 |
 | `reports/lb-score-algebra.json` | `ae2066c228e13dcc2f0e174ed6ccb8491d5ac343286f914dd75d3213ebeeeeff` | 3 |
 | `reports/lb-scorecard-snapshot.json` | `82e9515d5d4462fb057f3c2780dc1895f8c625caab4dc4c86ea6f7a9a5906d56` | 3 |
 | `reports/leaderboard/2026-10-25T051219+0000.json` | `7f699892f4f38d8ce55deec8ae4ddbc03e33098bb4f053305ea67fd6d7b5686c` | 3 |
@@ -177,7 +194,7 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 | `reports/scorecards/rTARuUaG.json` | `e977b4440c47f3b06afe45548145eabb1675852dd2d4d8b3052afb1759141550` | 3 |
 | `reports/scorecards/uRRw9KpB.json` | `bfa4c458866ba17b588696fd9a4453cfae872f9935aebcaf8314ba3bf876ba7d` | 3 |
 | `reports/scorecards/ySXi73rd.json` | `0927d4b704da35c06cb7dce6884210be90e91b9c510aa4408d2c3a8d87c19584` | 3 |
-| `reports/source-provenance.json` | `e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565` | 7 |
+| `reports/source-provenance.json` | `e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565` | 18 |
 | `reports/transport-route-ref-audit.json` | `bf904336963f553cc7442c5996a4d8d504fe30aad5c4f1a2e44da8fa773b1927` | 12 |
 | `reports/transport-route-variants.json` | `2a1acc760aadd2fce3a1df2afae6bfd9aaaef2a2ce510df8b674bccb9eb11aa2` | 3 |
 | `reports/v2-defined-mask-audit.json` | `fea33ef7daeeeac2fd187803481e050085698afd6f44ed182e9c5af5028054d2` | 8 |
@@ -233,7 +250,7 @@ Per-claim verify commands (executed by the audit; each must exit 0):
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-018
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-019
-# exit 0
+# exit 1
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-020
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-021
@@ -253,6 +270,28 @@ Per-claim verify commands (executed by the audit; each must exit 0):
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-028
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-029
+# exit 0
+/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-030
+# exit 0
+/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-031
+# exit 1
+/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-032
+# exit 1
+/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-033
+# exit 1
+/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-034
+# exit 1
+/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-035
+# exit 1
+/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-036
+# exit 0
+/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-037
+# exit 1
+/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-038
+# exit 0
+/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-039
+# exit 0
+/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-040
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim edge-cases-001
 # exit 0
@@ -375,6 +414,18 @@ Per-claim verify commands (executed by the audit; each must exit 0):
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-053
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-054
+# exit 1
+/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-055
+# exit 1
+/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-056
+# exit 0
+/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-057
+# exit 1
+/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-058
+# exit 1
+/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-059
+# exit 0
+/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-060
 ```
 
 Reproduce commands (executed once with the authorised workspace and recorded in the committed execution log; products are hash-verified by every audit run):
@@ -420,7 +471,17 @@ MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap
 
 ## Unresolved claims
 
-None. Every quantitative claim in the three writeup documents carries a verified evidence pointer, a passing verify command and a hash-verified reproduction path.
+- `bias-discovery-020`: uncovered tokens ['1.25']; pointer '/composite_results/c2/bootstrap_replicates' hit=True; accuracy ok=True; prohibited [].
+- `bias-discovery-032`: uncovered tokens ['2022,', '2020,', '2020', '105,']; pointer 'document' hit=True; accuracy ok=True; prohibited [].
+- `bias-discovery-033`: uncovered tokens ['2022', '9,294']; pointer '/regions/eastern-ok/named_lowest_osm_high_svi' hit=True; accuracy ok=True; prohibited [].
+- `bias-discovery-034`: uncovered tokens ['2020', '9,294']; pointer '/regions/eastern-ok/stratum_means/svi_overall_quartile/q2/source_share_means/poi_other_upstream_share/tract_cluster_bootstrap_95_ci' hit=True; accuracy ok=True; prohibited [].
+- `bias-discovery-035`: uncovered tokens ['9,297', '9,292', '0.075']; pointer '/regions/northern-ca/stratum_contrasts/svi_q4_minus_q1/poi_non_meta_share/ci_95' hit=True; accuracy ok=True; prohibited [].
+- `bias-discovery-036`: uncovered tokens ['2020', '2024', '5070,', '1,042']; pointer '/total_tracts' hit=True; accuracy ok=True; prohibited [].
+- `bias-discovery-038`: uncovered tokens ['9,347', '0.0070216', '0.0180717', '0.0022856', '0.0144431', '0.0130530', '0.0045437', '0.0040128', '0.0023880', '0.0154058', '0.2697082']; pointer 'document' hit=True; accuracy ok=True; prohibited [].
+- `methodology-055`: uncovered tokens ['36.53', '18.47', '1.929', '30.46', '6.54', '1.504', '40.69', '1.161', '36.95', '1.183']; pointer '/' hit=True; accuracy ok=True; prohibited [].
+- `methodology-056`: uncovered tokens ['1.929', '1.59']; pointer 'document' hit=True; accuracy ok=True; prohibited [].
+- `methodology-058`: uncovered tokens ['0.0004308', '0.32434', '0.0004259', '0.26479', '0.0005637', '0.23207', '0.0004333', '0.23988']; pointer '/candidate_set' hit=True; accuracy ok=True; prohibited [].
+- `methodology-059`: uncovered tokens ['0.0669', '0.00415832', '0.00518690']; pointer '/candidate_set' hit=True; accuracy ok=False; prohibited [].
 
 ## Limits of this screen
 

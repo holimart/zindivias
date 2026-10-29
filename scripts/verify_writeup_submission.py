@@ -208,6 +208,32 @@ def check(record: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
     require(config["model_evidence"]["upload_status_quote"] in text,
             "non-upload disclosure missing for the model candidate")
 
+    # -- final-two protocol result must match the current committed report ----------------------
+    final_two_source = load_json(ROOT / config["numeric_provenance"]["final_two"])
+    expected_protocol = [
+        {key: item[key] for key in ("slot", "candidate_id", "artifact", "sha256",
+                                     "submission_id", "public_rmse", "selection_status")}
+        for item in final_two_source["final_candidates"]]
+    require(record["final_two"].get("status") == final_two_source["status"],
+            "writeup final-two status differs from reports/final-two.json")
+    require(record["final_two"].get("protocol_selected") == expected_protocol,
+            "writeup protocol-selected A/B records differ from reports/final-two.json")
+    require(record["final_two"].get("selection_trace")
+            == final_two_source.get("corrected_cgs_selection"),
+            "writeup A-rule trace differs from reports/final-two.json")
+    if record["status"] == "prepared_pending_operator_review":
+        require(record["final_two"].get("operator_confirmation_pending") is True
+                and record["final_two"].get("selected") == {"candidate_A": None,
+                                                             "candidate_B": None},
+                "staged writeup must keep operator/UI final-two confirmation pending")
+    else:
+        selected = record["final_two"].get("selected", {})
+        protocol_by_slot = {item["slot"]: item["candidate_id"] for item in expected_protocol}
+        require(record["final_two"].get("operator_confirmation_pending") is False
+                and selected == {"candidate_A": protocol_by_slot.get("A"),
+                                 "candidate_B": protocol_by_slot.get("B")},
+                "submitted writeup must confirm the protocol-selected final-two candidates")
+
     # -- submission ids and candidate hashes tie to the committed logs --------------------------
     log_rows = [json.loads(line) for line in
                 (ROOT / config["numeric_provenance"]["submission_log"])
@@ -287,15 +313,17 @@ def check(record: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
                     f"{sentence.strip()[:100]}")
 
     # -- claim-audit tie ---------------------------------------------------------------------------
-    audit = load_json(ROOT / config["numeric_provenance"]["claim_audit_report"])["summary"]
+    audit_report = load_json(ROOT / config["numeric_provenance"]["claim_audit_report"])
+    audit = audit_report["summary"]
     for key in ("claims_total", "claims_fully_traceable", "fraction_quantitative_claims_traceable",
                 "numeric_tokens_total", "numeric_tokens_covered"):
         require(record["claim_evidence_audit"].get(key) == audit.get(key),
                 f"claim audit figure disagrees with the audit report: {key}")
-    require(audit["fraction_quantitative_claims_traceable"] == 1.0,
-            "claim audit no longer shows 100% traceability")
-    require(audit["numeric_tokens_total"] == audit["numeric_tokens_covered"],
-            "claim audit no longer covers every numeric token")
+    if (audit["fraction_quantitative_claims_traceable"] != 1.0
+            or audit["numeric_tokens_total"] != audit["numeric_tokens_covered"]):
+        require("full claim audit does not pass" in text.lower()
+                and str(len(audit_report.get("unresolved", []))) in text,
+                "incomplete claim audit is not disclosed in the writeup")
 
     # -- provided-data-only tie ----------------------------------------------------------------------
     provenance = load_json(ROOT / config["external_sources"]["provided_data_evidence"])

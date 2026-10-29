@@ -11,6 +11,12 @@
     "submission_record.submitted_at_utc",
     "submission_record.confirmation_reference"
   ],
+  "operator_decision_inputs_pending": [
+    "review and approve the Best Bias Discovery narrative",
+    "confirm the Zindi username or team name",
+    "supply the organiser's methodology-form URL",
+    "confirm protocol final-two IDs V2_model_cgs (A) and B_from_A_cgs (B) for UI/form use"
+  ],
   "organiser_page": {
     "url": "https://zindi.africa/competitions/bias-bounty-mapping-equity-challenge",
     "documented_on": "2026-10-25",
@@ -57,7 +63,7 @@
     ]
   },
   "revision": {
-    "git_commit": "c25ac41323206751d94f6a39257a5d7fdf4450f0",
+    "git_commit": "68ff66dcce48a47f096211504866c9b5434f57e1",
     "tree_clean": false,
     "pdf_engine": "reportlab==4.4.10 with canvas invariant=1 (no wall-clock in the file identity)"
   },
@@ -237,7 +243,7 @@
       "score_source": "zindi_api_status",
       "score_split": "public",
       "uploaded_at_utc": "2026-10-28T07:15:46.098Z",
-      "score_selection_status": "eligible corrected-order _cgs evaluation (A rule pending cohort completion)",
+      "score_selection_status": "selected A by frozen corrected-order _cgs rule",
       "card_phase": "model-only-v2-evaluation",
       "pre_registered": true
     },
@@ -251,7 +257,7 @@
       "score_source": "zindi_api_status",
       "score_split": "public",
       "uploaded_at_utc": "2026-10-28T07:15:51.544Z",
-      "score_selection_status": "eligible corrected-order _cgs evaluation (A rule pending cohort completion)",
+      "score_selection_status": "corrected-order _cgs A-rule cohort; not selected as A",
       "card_phase": null,
       "pre_registered": true
     },
@@ -265,7 +271,35 @@
       "score_source": "zindi_api_status",
       "score_split": "public",
       "uploaded_at_utc": "2026-10-28T07:16:00.493Z",
-      "score_selection_status": "eligible corrected-order _cgs evaluation (A rule pending cohort completion)",
+      "score_selection_status": "corrected-order _cgs A-rule cohort; not selected as A",
+      "card_phase": null,
+      "pre_registered": true
+    },
+    {
+      "platform_submission_id": "B8de77WD",
+      "candidate_id": "A3_dawid_skene_cgs",
+      "artifact": "reports/candidates/A3_dawid_skene_cgs.csv",
+      "artifact_sha256": "432ade8f1e46c6804cb34fb790612bb1befc9fe03b67a545e753be46b549237c",
+      "registry_sha256": "432ade8f1e46c6804cb34fb790612bb1befc9fe03b67a545e753be46b549237c",
+      "public_score": 0.15224784,
+      "score_source": "zindi_api_status",
+      "score_split": "public",
+      "uploaded_at_utc": "2026-10-29T00:10:29.255Z",
+      "score_selection_status": "corrected-order _cgs A-rule cohort; not selected as A",
+      "card_phase": null,
+      "pre_registered": true
+    },
+    {
+      "platform_submission_id": "eAaWXWxM",
+      "candidate_id": "B_from_A_cgs",
+      "artifact": "reports/candidates/B_from_A_cgs.csv",
+      "artifact_sha256": "38e17cf1ec99f4f3fc5d358d13ccd0edfabe947d81fd6b6e5ef61e6cea006607",
+      "registry_sha256": "38e17cf1ec99f4f3fc5d358d13ccd0edfabe947d81fd6b6e5ef61e6cea006607",
+      "public_score": 0.097535343,
+      "score_source": "zindi_api_status",
+      "score_split": "public",
+      "uploaded_at_utc": "2026-10-29T00:12:18.199Z",
+      "score_selection_status": "pre-registered B companion; score excluded from A selection",
       "card_phase": null,
       "pre_registered": true
     }
@@ -291,17 +325,115 @@
     "artifact_sha256_in_build_audit": true
   },
   "final_two": {
-    "status": "column_order_cgs_three_of_four_scored_pending_10_29_A3_B",
+    "status": "corrected_order_cgs_cohort_complete_final_A_B_uploaded",
     "protocol": {
       "path": "docs/final-two-protocol.md",
-      "sha256": "574b497d54d998015fa4f0e7ae2b3fd7af8dcfa99e7c39f0c9f31adb8cabaf40",
+      "sha256": "8b9d68bf798ec86aedda29ca7309d94503e02918142740f66673377db2f0268e",
       "policy": "model candidates only; no information probes; no LB-derived coefficients"
     },
     "selected": {
       "candidate_A": null,
       "candidate_B": null
     },
-    "selection_note": "Selections come only from operator input; until then both slots are null and the writeup names the registered model candidate with its non-uploaded status."
+    "protocol_selected": [
+      {
+        "slot": "A",
+        "candidate_id": "V2_model_cgs",
+        "artifact": "reports/candidates/V2_model_cgs.csv",
+        "sha256": "5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7",
+        "submission_id": "hvLtPVmr",
+        "public_rmse": 0.11102814,
+        "selection_status": "selected_by_frozen_A_rule_correct_order_cgs"
+      },
+      {
+        "slot": "B",
+        "candidate_id": "B_from_A_cgs",
+        "artifact": "reports/candidates/B_from_A_cgs.csv",
+        "sha256": "38e17cf1ec99f4f3fc5d358d13ccd0edfabe947d81fd6b6e5ef61e6cea006607",
+        "submission_id": "eAaWXWxM",
+        "public_rmse": 0.097535343,
+        "selection_status": "successful_pre_registered_50pct_shrink_companion"
+      }
+    ],
+    "selection_trace": {
+      "rule": "Frozen final-two A rule, applied only to successful corrected-order _cgs cohort scores; lower public RMSE wins outside the pairwise noise guard tau=SE1+SE2, with SE=RMSE/sqrt(2*2814). Historical misordered scores and B score excluded.",
+      "applied_utc": "2026-10-29T00:10:29.255Z",
+      "scores": [
+        {
+          "candidate_id": "V2_model_cgs",
+          "artifact": "reports/candidates/V2_model_cgs.csv",
+          "sha256": "5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7",
+          "submission_id": "hvLtPVmr",
+          "status": "successful",
+          "public_rmse": 0.11102814,
+          "score_source": "zindi_api_status",
+          "score_selection_eligible": true
+        },
+        {
+          "candidate_id": "A1_physical_equal_cgs",
+          "artifact": "reports/candidates/A1_physical_equal_cgs.csv",
+          "sha256": "2da0051af221ddf26a8a73740746811dbd956854a1fc12846c99864d3abae8a1",
+          "submission_id": "4R4vkHSd",
+          "status": "successful",
+          "public_rmse": 0.309628459,
+          "score_source": "zindi_api_status",
+          "score_selection_eligible": true
+        },
+        {
+          "candidate_id": "A2_spectral_cgs",
+          "artifact": "reports/candidates/A2_spectral_cgs.csv",
+          "sha256": "584e086bb5df950f6079317afcdc7c5a0182b5263d170be2a10987d1ac4c6213",
+          "submission_id": "s7mXS43p",
+          "status": "successful",
+          "public_rmse": 0.262578881,
+          "score_source": "zindi_api_status",
+          "score_selection_eligible": true
+        },
+        {
+          "candidate_id": "A3_dawid_skene_cgs",
+          "artifact": "reports/candidates/A3_dawid_skene_cgs.csv",
+          "sha256": "432ade8f1e46c6804cb34fb790612bb1befc9fe03b67a545e753be46b549237c",
+          "submission_id": "B8de77WD",
+          "status": "successful",
+          "public_rmse": 0.15224784,
+          "score_source": "zindi_api_status",
+          "score_selection_eligible": true
+        }
+      ],
+      "planning_standard_errors": {
+        "V2_model_cgs": 0.00147998059111654,
+        "A1_physical_equal_cgs": 0.0041272789923106285,
+        "A2_spectral_cgs": 0.0035001185061471767,
+        "A3_dawid_skene_cgs": 0.002029430090780737
+      },
+      "comparisons_to_winner": [
+        {
+          "candidate_id": "A1_physical_equal_cgs",
+          "absolute_rmse_difference": 0.19860031900000003,
+          "pairwise_guard": 0.005607259583427168,
+          "difference_exceeds_guard": true
+        },
+        {
+          "candidate_id": "A2_spectral_cgs",
+          "absolute_rmse_difference": 0.151550741,
+          "pairwise_guard": 0.004980099097263716,
+          "difference_exceeds_guard": true
+        },
+        {
+          "candidate_id": "A3_dawid_skene_cgs",
+          "absolute_rmse_difference": 0.0412197,
+          "pairwise_guard": 0.003509410681897277,
+          "difference_exceeds_guard": true
+        }
+      ],
+      "winner": "V2_model_cgs",
+      "winner_submission_id": "hvLtPVmr",
+      "unique_outside_guard": true,
+      "tie_break_used": false,
+      "model_values_changed": false
+    },
+    "operator_confirmation_pending": true,
+    "selection_note": "Protocol A/B results are recorded from reports/final-two.json. Operator confirmation and Zindi UI selection remain pending; the operator-owned confirmation fields stay empty."
   },
   "external_source_register": [
     {
@@ -470,36 +602,36 @@
   },
   "claim_evidence_audit": {
     "report": "reports/writeup-claim-evidence-audit.json",
-    "claims_total": 90,
-    "claims_fully_traceable": 90,
-    "fraction_quantitative_claims_traceable": 1.0,
-    "numeric_tokens_total": 1062,
-    "numeric_tokens_covered": 1062,
-    "fraction_numeric_tokens_covered": 1.0,
-    "distinct_verify_commands": 90,
+    "claims_total": 107,
+    "claims_fully_traceable": 96,
+    "fraction_quantitative_claims_traceable": 0.897196,
+    "numeric_tokens_total": 1198,
+    "numeric_tokens_covered": 1148,
+    "fraction_numeric_tokens_covered": 0.958264,
+    "distinct_verify_commands": 107,
     "distinct_reproduce_commands": 18,
     "derived_aggregates_verified": 31,
-    "claims_asserting_accuracy": 2,
+    "claims_asserting_accuracy": 3,
     "claims_with_prohibited_data_language": 0
   },
   "writeup_files": [
     {
       "path": "docs/writeup/final-writeup.md",
       "role": "writeup_markdown",
-      "sha256": "8a62730b625ce82831752fcbf870d129e8d9e29824992f9b672508e0429a684d",
-      "bytes": 149789
+      "sha256": "8e8c5e298fdd7dfee2a30cf28d1bfc0adff0a6a27ea70bb15114a9afe8a58164",
+      "bytes": 152001
     },
     {
       "path": "reports/writeup/final-writeup.pdf",
       "role": "writeup_pdf",
-      "sha256": "6ebf5afd1e621bcce1536bd201a8c3a926f28e6bab73ccdfe0efb081d96a9f20",
-      "bytes": 138073
+      "sha256": "d3845b3e0460a001676d1d5b817aab38519d15853434331a9ede2e9cba9d6570",
+      "bytes": 138878
     },
     {
       "path": "reports/writeup/submission-bundle.json",
       "role": "submission_bundle",
-      "sha256": "7ddf14255e3663850afe5512cd89e98e65d7a5de2432c134c47ac71fb85d1a80",
-      "bytes": 2797
+      "sha256": "3abf453fa78108368ec06ec992d6b9701f1f17decfad74125c159f59b644ed9b",
+      "bytes": 2987
     }
   ],
   "submission_record": {
@@ -511,8 +643,8 @@
   },
   "submission_bundle": {
     "path": "reports/writeup/submission-bundle.json",
-    "sha256": "7ddf14255e3663850afe5512cd89e98e65d7a5de2432c134c47ac71fb85d1a80",
-    "bytes": 2797,
+    "sha256": "3abf453fa78108368ec06ec992d6b9701f1f17decfad74125c159f59b644ed9b",
+    "bytes": 2987,
     "bundle": {
       "schema_version": 1,
       "purpose": "single copy-paste sheet for the organiser writeup form, hash-tied to the committed writeup artefacts",
@@ -529,22 +661,22 @@
         {
           "path": "docs/writeup/final-writeup.md",
           "role": "writeup_markdown",
-          "sha256": "8a62730b625ce82831752fcbf870d129e8d9e29824992f9b672508e0429a684d",
-          "bytes": 149789
+          "sha256": "8e8c5e298fdd7dfee2a30cf28d1bfc0adff0a6a27ea70bb15114a9afe8a58164",
+          "bytes": 152001
         },
         {
           "path": "reports/writeup/final-writeup.pdf",
           "role": "writeup_pdf",
-          "sha256": "6ebf5afd1e621bcce1536bd201a8c3a926f28e6bab73ccdfe0efb081d96a9f20",
-          "bytes": 138073
+          "sha256": "d3845b3e0460a001676d1d5b817aab38519d15853434331a9ede2e9cba9d6570",
+          "bytes": 138878
         }
       ],
       "paste_blocks": {
         "zindi_identity_line": "Zindi username or team name: PENDING_OPERATOR_CONFIRMATION",
         "prize_request_line": "We request consideration for both Best Bias Discovery ($1,000) and Best Documentation ($500).",
-        "submission_ids_block": "C0 | uRRw9KpB | 0edf8140123e2135489e5728fd71bce6f1e28a97f447ca411ba45fdbc02bc214\nC1 | BvyKrR6v | dc2e368194b31408cb5c313fa8ce3f3fa59a1b5965bc2df8e4217bbc9e0c82e0\nC2 | rTARuUaG | 5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514\nC3 | TM83xxU6 | e5ee50f5c2cca149550f3408638d2b77431f6ed62cf104dfe8c07d8c8416f9e4\nP4 | ySXi73rd | 8b329802d882ea4bdff2bfd8c465c160d6ffd9269cfbe28dce8be9e702b07d37\nA1_physical_equal | iQw8C6Q9 | 6af088b83ff3481d420e11b14d903fc510c2b4be2cea285c762ca12d500862de\nA2_spectral | W83LEghZ | f88573996566a1975726845a49f42fb2cd3781d5f0e83d55944fc65647692997\nA3_dawid_skene | tGB6sGRx | 6d588f2f7a45a58b128860a049ac19995b21902f7f98d3b2ab39d1d9fbb073b3\nV2_model | EbwLNkmt | 3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12\nV2_model_cgs | hvLtPVmr | 5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7\nA1_physical_equal_cgs | 4R4vkHSd | 2da0051af221ddf26a8a73740746811dbd956854a1fc12846c99864d3abae8a1\nA2_spectral_cgs | s7mXS43p | 584e086bb5df950f6079317afcdc7c5a0182b5263d170be2a10987d1ac4c6213",
+        "submission_ids_block": "C0 | uRRw9KpB | 0edf8140123e2135489e5728fd71bce6f1e28a97f447ca411ba45fdbc02bc214\nC1 | BvyKrR6v | dc2e368194b31408cb5c313fa8ce3f3fa59a1b5965bc2df8e4217bbc9e0c82e0\nC2 | rTARuUaG | 5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514\nC3 | TM83xxU6 | e5ee50f5c2cca149550f3408638d2b77431f6ed62cf104dfe8c07d8c8416f9e4\nP4 | ySXi73rd | 8b329802d882ea4bdff2bfd8c465c160d6ffd9269cfbe28dce8be9e702b07d37\nA1_physical_equal | iQw8C6Q9 | 6af088b83ff3481d420e11b14d903fc510c2b4be2cea285c762ca12d500862de\nA2_spectral | W83LEghZ | f88573996566a1975726845a49f42fb2cd3781d5f0e83d55944fc65647692997\nA3_dawid_skene | tGB6sGRx | 6d588f2f7a45a58b128860a049ac19995b21902f7f98d3b2ab39d1d9fbb073b3\nV2_model | EbwLNkmt | 3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12\nV2_model_cgs | hvLtPVmr | 5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7\nA1_physical_equal_cgs | 4R4vkHSd | 2da0051af221ddf26a8a73740746811dbd956854a1fc12846c99864d3abae8a1\nA2_spectral_cgs | s7mXS43p | 584e086bb5df950f6079317afcdc7c5a0182b5263d170be2a10987d1ac4c6213\nA3_dawid_skene_cgs | B8de77WD | 432ade8f1e46c6804cb34fb790612bb1befc9fe03b67a545e753be46b549237c\nB_from_A_cgs | eAaWXWxM | 38e17cf1ec99f4f3fc5d358d13ccd0edfabe947d81fd6b6e5ef61e6cea006607",
         "model_candidate_block": "V2_model | artifact reports/candidates/V2_model.csv | sha256 3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12 | uploaded false | uploads used 0",
-        "writeup_hashes_block": "docs/writeup/final-writeup.md | sha256 8a62730b625ce82831752fcbf870d129e8d9e29824992f9b672508e0429a684d | 149789 bytes\nreports/writeup/final-writeup.pdf | sha256 6ebf5afd1e621bcce1536bd201a8c3a926f28e6bab73ccdfe0efb081d96a9f20 | 138073 bytes",
+        "writeup_hashes_block": "docs/writeup/final-writeup.md | sha256 8e8c5e298fdd7dfee2a30cf28d1bfc0adff0a6a27ea70bb15114a9afe8a58164 | 152001 bytes\nreports/writeup/final-writeup.pdf | sha256 d3845b3e0460a001676d1d5b817aab38519d15853434331a9ede2e9cba9d6570 | 138878 bytes",
         "form_status_line": "Form URL: to be supplied by the operator (not recoverable from the saved rules text or the client-rendered organiser page)"
       }
     }
@@ -576,7 +708,7 @@
     "operator confirmation flag for that identity (identity.operator_confirmation_recorded)",
     "organiser writeup form URL: the saved rules text keeps the sentence but not the hyperlink target, and the live page is client-rendered, so the operator must supply it (form.url)",
     "operator review of the Best Bias Discovery narrative (submission_record.operator_review)",
-    "final-two selection of the two candidates whose submission IDs the form must name (reports/final-two.json status column_order_cgs_three_of_four_scored_pending_10_29_A3_B)",
+    "final-two selection of the two candidates whose submission IDs the form must name (reports/final-two.json status corrected_order_cgs_cohort_complete_final_A_B_uploaded)",
     "form submission evidence: UTC time, organiser confirmation reference and submitter (submission_record.*)"
   ],
   "commands": {
@@ -600,6 +732,8 @@
     "submission_ids_tie_to_successful_upload_log": true,
     "submission_candidate_ids_registered": true,
     "final_two_selection_ids_registered": true,
+    "final_two_protocol_trace_matches_source": true,
+    "operator_confirmation_and_ui_selection_stay_pending": true,
     "submission_bundle_hash_tied": true,
     "submission_bundle_paste_blocks_verbatim": true,
     "operator_inputs_template_matches_whitelist": true,
@@ -611,7 +745,7 @@
     "external_claims_carry_url_and_access_date": true,
     "prior_art_literature_fully_registered": true,
     "no_retired_leaderboard_constant_named_or_valued": true,
-    "claim_audit_covers_writeup_numbers": true,
+    "claim_audit_covers_writeup_numbers": false,
     "provided_data_only_for_scored_predictions": true,
     "no_unilateral_submission_claimed": true,
     "all_passed": false
