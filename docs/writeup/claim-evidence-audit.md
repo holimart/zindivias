@@ -4,9 +4,9 @@ Row: `bias-writeup-claim-evidence-audit`. Documentation screen: every quantitati
 
 ## Verdict
 
-- **86 of 91 quantitative claims fully traceable** (94.5%).
-- **1046 of 1077 numeric tokens (97.1%) are present in the evidence named by the claim that states them.**
-- 91 per-claim verify commands and 20 reproduce commands; 17/17 recorded reproduce-command exits are 0; 3 command(s) lack an execution record in this no-`--execute-reproduce` audit pass; a historical reproduce-command product hash no longer matches its current file; details are recorded in the audit JSON's tier_b_reproduce entries.
+- **87 of 92 quantitative claims fully traceable** (94.6%).
+- **1054 of 1080 numeric tokens (97.6%) are present in the evidence named by the claim that states them.**
+- 92 per-claim verify commands and 21 reproduce commands; 17/17 recorded reproduce-command exits are 0; 4 command(s) lack an execution record in this no-`--execute-reproduce` audit pass; a historical reproduce-command product hash no longer matches its current file; details are recorded in the audit JSON's tier_b_reproduce entries.
 - Accuracy language outside the allowed classes: PRESENT. Prohibited reference/label/leaderboard sources used as scored-model evidence: none.
 - All acceptance gates: **FAIL**.
 
@@ -18,11 +18,11 @@ Each of the three writeup documents is split into quantitative claim blocks (a b
 
 | Document | Claims | Fully traceable | Numeric tokens | Covered |
 |---|---:|---:|---:|---:|
-| `docs/writeup/bias-discovery.md` | 8 | 8 | 87 | 87 |
+| `docs/writeup/bias-discovery.md` | 9 | 9 | 90 | 90 |
 | `docs/writeup/methodology-summary.md` | 1 | 1 | 2 | 2 |
 | `docs/writeup/methodology.md` | 60 | 56 | 726 | 703 |
 | `docs/writeup/edge-cases.md` | 7 | 7 | 131 | 131 |
-| `docs/writeup/appendices/screens-that-did-not-produce-a-finding.md` | 15 | 14 | 131 | 123 |
+| `docs/writeup/appendices/screens-that-did-not-produce-a-finding.md` | 15 | 14 | 131 | 128 |
 
 ## Claim inventory
 
@@ -30,14 +30,15 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 
 | Claim | Document | Section | Lines | Class | Primary evidence | Pointer | Tokens | Verify | Reproduce |
 |---|---|---|---|---|---|---|---:|---|---|
-| `bias-discovery-001` After the 2018 Camp Fire, six focal Butte County tracts in the Paradis… | `bias-discovery.md` | Impact and novelty | 5-5 | `measured_provided_data` | `reports/discovery-postfire.json` | `/interpretation` | 3/3 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-001` In six focal Camp Fire-area Butte County tracts, the provided USFS Wil… | `bias-discovery.md` | Impact and novelty | 5-5 | `measured_provided_data` | `reports/discovery-postfire.json` | `/focal_butte_2018_burn_geoids` | 2/2 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
 | `bias-discovery-002` All six GEOIDs have a provided MTBS last-wildfire year of 2018. The ta… | `bias-discovery.md` | Evidence | 9-9 | `measured_provided_data` | `reports/discovery-dins-mechanism.json` | `/spearman/cohort` | 2/2 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
 | `bias-discovery-003` \| GEOID \| Overture / USFS \| USFS − Overture \| DINS destroyed \| DINS ma… | `bias-discovery.md` | Evidence | 11-18 | `measured_provided_data` | `reports/discovery-dins-mechanism.json` | `/focal_butte_tracts` | 30/30 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
 | `bias-discovery-004` Burn classes follow the report's 0–100% bins; tracts reported above 10… | `bias-discovery.md` | Evidence | 22-22 | `measured_provided_data` | `reports/discovery-postfire.json` | `/` | 3/3 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
 | `bias-discovery-005` \| Provided NorCal burn class \| Tracts \| Overture / USFS < 0.8 \| Share … | `bias-discovery.md` | Evidence | 24-30 | `measured_provided_data` | `reports/discovery-postfire.json` | `/` | 26/26 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
-| `bias-discovery-006` The mechanism test is negative: 0/6 DINS relative errors meet 0.30, an… | `bias-discovery.md` | What this does and does not show | 38-38 | `measured_provided_data` | `reports/discovery-dins-mechanism.json` | `/spearman/statistic` | 13/13 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
-| `bias-discovery-007` Across Maricopa, Northern California, Eastern Oklahoma, and South-Cent… | `bias-discovery.md` | Evidence | 52-52 | `measured_provided_data` | `reports/source-provenance.json` | `/` | 2/2 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
-| `bias-discovery-008` In the official sample, 805 of 858 tracts marked `tribal_any` (93.82%,… | `bias-discovery.md` | Evidence | 70-70 | `measured_provided_data` | `reports/discovery-strata-confound.json` | `/stratum_composition/non_tribal/by_region/south-central-tx/tracts` | 8/8 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-006` The tract-bootstrap difference is +9.55 percentage points (95% CI [+0.… | `bias-discovery.md` | Evidence | 36-36 | `measured_provided_data` | `reports/discovery-postfire.json` | `/high_burn_vs_unburned_below_0_8/replicates` | 4/4 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-007` The preregistered DINS mechanism test is **negative**: 0/6 focal tract… | `bias-discovery.md` | What this does and does not show | 40-40 | `measured_provided_data` | `reports/discovery-dins-mechanism.json` | `/spearman/statistic` | 13/13 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-008` Across Maricopa, Northern California, Eastern Oklahoma, and South-Cent… | `bias-discovery.md` | Evidence | 54-54 | `measured_provided_data` | `reports/source-provenance.json` | `/` | 2/2 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `bias-discovery-009` In the official sample, 805 of 858 tracts marked `tribal_any` (93.82%,… | `bias-discovery.md` | Evidence | 72-72 | `measured_provided_data` | `reports/discovery-strata-confound.json` | `/stratum_composition/non_tribal/by_region/south-central-tx/tracts` | 8/8 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
 | `methodology-summary-001` The organisers provide no training labels. The four official sample fi… | `methodology-summary.md` | Scope and safeguards | 5-5 | `scope_statement` | `reports/final-two.json` | `/scope/official_scored_tracts` | 2/2 | exit 0 | `python scripts/build_estimator_v2_candidates.py…` |
 | `methodology-001` **Coverage: 100% of the documentation items listed below.** Completion… | `methodology.md` | Rubric checklist and reading guide | 7-7 | `scope_statement` | `reports/candidates.json` | `/` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
 | `methodology-002` The official scoring domain is the union of four published per-region … | `methodology.md` | Data sources, scope, and provenance | 21-21 | `input_inventory` | `docs/competition.md` | `document` | 3/3 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
@@ -118,7 +119,7 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 | `screens-that-did-not-produce-a-finding-010` **Census PDB 2026 broadband context.** The selected exposure was tract… | `screens-that-did-not-produce-a-finding.md` | Section 4 — External public context la | 72-72 | `measured_provided_data` | `reports/discovery-external-layers.json` | `/external_sources` | 12/12 | exit 0 | `python scripts/discovery_rural_svi_minority.py…` |
 | `screens-that-did-not-produce-a-finding-011` **Census AIANNH 2020 tribal-area polygons.** We dissolved overlapping … | `screens-that-did-not-produce-a-finding.md` | Section 4 — External public context la | 74-74 | `measured_provided_data` | `reports/discovery-external-layers.json` | `/external_sources` | 10/10 | exit 0 | `python scripts/discovery_rural_svi_minority.py…` |
 | `screens-that-did-not-produce-a-finding-012` The config is `config/discovery-external-layers-preregistered.json`; t… | `screens-that-did-not-produce-a-finding.md` | Section 4 — External public context la | 87-87 | `measured_provided_data` | `docs/data-inventory.md` | `section:Bias Bounty public GeoParquet inventory` | 1/1 | exit 0 | `python scripts/discovery_rural_svi_minority.py…` |
-| `screens-that-did-not-produce-a-finding-013` \| Check \| Evidence/result \| Direct report source (JSON pointer) \| Repr… | `screens-that-did-not-produce-a-finding.md` | Section 5 — T1 named-stroke class-drop | 93-98 | `measured_provided_data` | `reports/t1-stroke-residual-screen.json` | `/scope/T1_defined_ids` | 12/20 | FAILED | `python scripts/discovery_rural_svi_minority.py…` |
+| `screens-that-did-not-produce-a-finding-013` \| Check \| Evidence/result \| Direct report source (JSON pointer) \| Repr… | `screens-that-did-not-produce-a-finding.md` | Section 5 — T1 named-stroke class-drop | 93-98 | `measured_provided_data` | `reports/t1-stroke-residual-screen.json` | `/scope/T1_defined_ids` | 17/20 | FAILED | `python scripts/discovery_rural_svi_minority.py…` |
 | `screens-that-did-not-produce-a-finding-014` [C] To rebuild the nested screen from raw provided inputs, run one fea… | `screens-that-did-not-produce-a-finding.md` | Reproduction commands | 124-124 | `measured_provided_data` | `docs/data-inventory.md` | `section:Bias Bounty public GeoParquet inventory` | 4/4 | exit 0 | `python scripts/discovery_rural_svi_minority.py…` |
 | `screens-that-did-not-produce-a-finding-015` After all 12 feature caches exist, reproduce the nested selection and … | `screens-that-did-not-produce-a-finding.md` | Reproduction commands | 134-134 | `measured_provided_data` | `docs/data-inventory.md` | `section:Bias Bounty public GeoParquet inventory` | 1/1 | exit 0 | `python scripts/discovery_rural_svi_minority.py…` |
 
@@ -151,12 +152,12 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 | `reports/confidence-by-stratum.json` | `ac759312e2b3e1384078c2d46dc386a9c2a2905ae5c6366d1247c13ee6916053` | 4 |
 | `reports/cross-theme-support.json` | `77c010a8c74f62487816b142e489b651f38dfcc93793c87fbe9c91711d1d352d` | 1 |
 | `reports/density-context-candidate.json` | `8da97e44bb3af4a06fb98f83065c8719fc746b5c1596cb11ef8bd611c72dd7b7` | 1 |
-| `reports/discovery-dins-mechanism.json` | `8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd` | 5 |
+| `reports/discovery-dins-mechanism.json` | `8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd` | 8 |
 | `reports/discovery-external-layers.json` | `6d5c68655af215fcea7f1eb01e05d5065e48ec2f2c8a7786317d8d2ad9a24998` | 15 |
-| `reports/discovery-postfire-county-bootstrap.json` | `942c39504dbcf3b2fd0fbc19c3cb3194bd9a49693fdd3688a044c3211d637d24` | 4 |
-| `reports/discovery-postfire.json` | `cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a` | 6 |
-| `reports/discovery-rural-svi-minority.json` | `da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0` | 23 |
-| `reports/discovery-strata-confound.json` | `ce0f1307793d1c658754cb7f9dd6fee7ea9cabf2a8a0e7ccb8e9888c2bad9ecb` | 3 |
+| `reports/discovery-postfire-county-bootstrap.json` | `f55774557f0461875cc5c4a56063ef7cf9f7056f11828ea368c85e6eb5b96348` | 5 |
+| `reports/discovery-postfire.json` | `cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a` | 7 |
+| `reports/discovery-rural-svi-minority.json` | `da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0` | 22 |
+| `reports/discovery-strata-confound.json` | `ce0f1307793d1c658754cb7f9dd6fee7ea9cabf2a8a0e7ccb8e9888c2bad9ecb` | 2 |
 | `reports/edge-cases.json` | `53626e3ad297c4609e541a7570146b732677275d2d371f17eac6606361911237` | 8 |
 | `reports/estimator-v1-audit.json` | `1d72712e63f9b8f9682cd82a3cebc888be8bf0301cfc82cda05a2012a417ef5a` | 3 |
 | `reports/estimator-v2-audit.json` | `131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0` | 14 |
@@ -182,7 +183,7 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 | `reports/scorecards/rTARuUaG.json` | `e977b4440c47f3b06afe45548145eabb1675852dd2d4d8b3052afb1759141550` | 3 |
 | `reports/scorecards/uRRw9KpB.json` | `bfa4c458866ba17b588696fd9a4453cfae872f9935aebcaf8314ba3bf876ba7d` | 3 |
 | `reports/scorecards/ySXi73rd.json` | `0927d4b704da35c06cb7dce6884210be90e91b9c510aa4408d2c3a8d87c19584` | 3 |
-| `reports/source-provenance.json` | `e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565` | 2 |
+| `reports/source-provenance.json` | `e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565` | 1 |
 | `reports/t1-stroke-residual-screen.json` | `d717571b5a5dcc6e7bddf84398082ca44118b4b39b22c905d92cd7bee250e3b9` | 15 |
 | `reports/transport-route-ref-audit.json` | `bf904336963f553cc7442c5996a4d8d504fe30aad5c4f1a2e44da8fa773b1927` | 7 |
 | `reports/transport-route-variants.json` | `2a1acc760aadd2fce3a1df2afae6bfd9aaaef2a2ce510df8b674bccb9eb11aa2` | 3 |
@@ -217,6 +218,8 @@ Per-claim verify commands (executed by the audit; each must exit 0):
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-007
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-008
+# exit 0
+/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-009
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim edge-cases-001
 # exit 0
@@ -425,6 +428,8 @@ COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" /home/martin/hddProjects/langywra
 # exit 0
 MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace "$COMPETITION_WORKSPACE" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png
 # exit None
+MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace "$COMPETITION_WORKSPACE" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png && /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/audit_discovery_postfire_county_bootstrap.py --workspace "$COMPETITION_WORKSPACE" --out reports/discovery-postfire-county-bootstrap.json && MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_dins_mechanism.py --workspace "$COMPETITION_WORKSPACE" --dins-file "$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png
+# exit None
 python scripts/build_estimator_v2_candidates.py
 # exit None
 python scripts/discovery_rural_svi_minority.py
@@ -436,7 +441,7 @@ python scripts/discovery_rural_svi_minority.py
 - `methodology-056`: uncovered tokens ['1.929', '1.59']; pointer 'document' hit=True; accuracy ok=True; prohibited [].
 - `methodology-058`: uncovered tokens ['0.0004308', '0.32434', '0.0004259', '0.26479', '0.0005637', '0.23207', '0.0004333', '0.23988']; pointer '/candidate_set' hit=True; accuracy ok=True; prohibited [].
 - `methodology-059`: uncovered tokens ['0.0669', '0.00415832', '0.00518690']; pointer '/candidate_set' hit=True; accuracy ok=False; prohibited [].
-- `screens-that-did-not-produce-a-finding-013`: uncovered tokens ['0.0070216', '0.0180717', '0.0022856', '0.0144431', '0.0045437', '0.0040128', '0.0154058', '0.2697082']; pointer '/scope/T1_defined_ids' hit=True; accuracy ok=True; prohibited [].
+- `screens-that-did-not-produce-a-finding-013`: uncovered tokens ['0.0023880', '0.0154058', '0.2697082']; pointer '/scope/T1_defined_ids' hit=True; accuracy ok=True; prohibited [].
 
 ## Limits of this screen
 

@@ -171,7 +171,8 @@
   "reproduce_command_aliases": {
     "SEE_DISCOVERY_RURAL_SVI": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
     "SEE_EDGE_CASES": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/audit_edge_cases.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/edge-cases.json",
-    "SUMMARIZE_BIAS60_FAMILY_S": "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json"
+    "SUMMARIZE_BIAS60_FAMILY_S": "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json",
+    "DINS_POSTFIRE_COMPOSITE": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png && /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/audit_discovery_postfire_county_bootstrap.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire-county-bootstrap.json && MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_dins_mechanism.py --workspace \"$COMPETITION_WORKSPACE\" --dins-file \"$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson\" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png"
   },
   "tokenizer": {
     "pattern": "(?<![A-Za-z0-9_.+-])\\d[\\d,]*(?:\\.\\d+)?(?![A-Za-z0-9_])",
@@ -186,7 +187,7 @@
       1.0,
       100.0
     ],
-    "maximum_decimals": 6
+    "maximum_decimals": 7
   },
   "provenance_classes": {
     "measured_provided_data": "recomputed from organiser-provided inputs by a committed script",
@@ -341,12 +342,37 @@
       "occurrence": 1,
       "evidence": [
         "reports/discovery-postfire.json",
-        "reports/discovery-postfire-county-bootstrap.json"
+        "reports/discovery-postfire-county-bootstrap.json",
+        "reports/discovery-dins-mechanism.json"
       ],
-      "reproduce": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
+      "reproduce": "DINS_POSTFIRE_COMPOSITE",
       "products": [
         "reports/discovery-postfire.json",
-        "reports/discovery-postfire-map.png"
+        "reports/discovery-postfire-map.png",
+        "reports/discovery-postfire-county-bootstrap.json",
+        "reports/discovery-dins-mechanism.json",
+        "reports/discovery-dins-mechanism.md",
+        "reports/discovery-dins-mechanism.png"
+      ],
+      "provenance_class": "measured_provided_data"
+    },
+    {
+      "doc": "docs/writeup/bias-discovery.md",
+      "section": "What this does and does not show",
+      "occurrence": 1,
+      "evidence": [
+        "reports/discovery-dins-mechanism.json",
+        "reports/discovery-postfire.json",
+        "reports/discovery-postfire-county-bootstrap.json"
+      ],
+      "reproduce": "DINS_POSTFIRE_COMPOSITE",
+      "products": [
+        "reports/discovery-dins-mechanism.json",
+        "reports/discovery-dins-mechanism.md",
+        "reports/discovery-dins-mechanism.png",
+        "reports/discovery-postfire.json",
+        "reports/discovery-postfire-map.png",
+        "reports/discovery-postfire-county-bootstrap.json"
       ],
       "provenance_class": "measured_provided_data"
     },
@@ -355,11 +381,18 @@
       "section": "Reproducibility",
       "occurrence": 1,
       "evidence": [
-        "reports/discovery-postfire.json"
+        "reports/discovery-postfire.json",
+        "reports/discovery-postfire-county-bootstrap.json",
+        "reports/discovery-dins-mechanism.json"
       ],
-      "reproduce": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
+      "reproduce": "DINS_POSTFIRE_COMPOSITE",
       "products": [
-        "reports/discovery-postfire.json"
+        "reports/discovery-postfire.json",
+        "reports/discovery-postfire-map.png",
+        "reports/discovery-postfire-county-bootstrap.json",
+        "reports/discovery-dins-mechanism.json",
+        "reports/discovery-dins-mechanism.md",
+        "reports/discovery-dins-mechanism.png"
       ],
       "provenance_class": "reproduction_statement"
     },
@@ -1068,7 +1101,7 @@
           "reason": "the 95% level of the preregistered tract-bootstrap percentile interval, declared in the discovery script"
         }
       ],
-      "notes": "only the interval level is exempt; every count and share is checked against reports/discovery-postfire.json"
+      "notes": "DINS negative-gate counts and missing-record limits are checked against reports/discovery-dins-mechanism.json; county-cluster interval against reports/discovery-postfire-county-bootstrap.json; MTBS burn range against reports/discovery-postfire.json"
     },
     "bias-discovery-013": {
       "derived_tokens": [
@@ -1468,7 +1501,7 @@
       ],
       "notes": "platform-recorded scores and organiser scorecard values; lb-score-algebra.json is included because it is the committed record of each public score quoted here"
     },
-    "bias-discovery-007": {
+    "bias-discovery-008": {
       "evidence": [
         "reports/source-provenance.json"
       ],
@@ -1481,28 +1514,7 @@
       "primary_pointer": "/",
       "notes": "all focal and all-2018 DINS comparison figures are explicitly linked to report root; the writeup itself names the narrower JSON pointers for each output"
     },
-    "bias-discovery-001": {
-      "derived_tokens": [
-        {
-          "value": 38.0,
-          "decimals": 1,
-          "operation": "percentage",
-          "evidence": "reports/discovery-dins-mechanism.json",
-          "pointer_a": "/focal_butte_tracts/0/usfs_minus_overture",
-          "pointer_b": "/focal_butte_tracts/0/provided_usfs_building_count",
-          "tolerance": 0.05
-        },
-        {
-          "value": 25.3,
-          "decimals": 1,
-          "operation": "percentage",
-          "evidence": "reports/discovery-dins-mechanism.json",
-          "pointer_a": "/focal_butte_tracts/5/usfs_minus_overture",
-          "pointer_b": "/focal_butte_tracts/5/provided_usfs_building_count",
-          "tolerance": 0.05
-        }
-      ]
-    },
+    "bias-discovery-001": {},
     "bias-discovery-002": {
       "evidence": [
         "reports/discovery-dins-mechanism.json",
@@ -1523,7 +1535,7 @@
         "reports/discovery-dins-mechanism.json"
       ]
     },
-    "bias-discovery-008": {
+    "bias-discovery-009": {
       "evidence": [
         "reports/discovery-strata-confound.json"
       ],

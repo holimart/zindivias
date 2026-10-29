@@ -75,7 +75,7 @@
   "ratio_definition": "overture_buildings / usfs_BuildingCount_sum, both provided",
   "region": "northern-ca"
  },
- "code_commit_at_run": "e5a42998f3f994c7788a1314d6bf145d4c238432",
+ "code_commit_at_run": "47b0babd60ea63a7795d86a83e8d2ffc17ab6290",
  "county_cluster_bootstrap": {
   "analysis_population_covered_by_clusters": 577,
   "cluster_95_percentile_interval": [
@@ -542,7 +542,7 @@
  "preregistration": {
   "audit_id": "discovery-postfire-county-bootstrap",
   "backlog_item": "bias-discovery-postfire-county-bootstrap",
-  "config_sha256": "43ba983db726e6e251ec7cbfd8804c74bc1acf2b45a58cb3498bbffb726fd66d",
+  "config_sha256": "c22ff32449bf8a298bbe6935c6ea2d60c24ca60dd3c1164b6fd615a359affb53",
   "design_substitution_after_results_forbidden": true,
   "intent": "Robustness screen for one documented Best Bias Discovery finding: the difference between high-burn and unburned Northern California tracts in the share whose provided Overture-to-USFS building-count ratio falls below the preregistered disagreement cutoff. The published finding was bootstrapped by resampling tracts independently, which understates county-level dependence because tracts in one county share Overture provider mix, terrain and reference vintage. This audit rechecks that difference by resampling whole counties. It is a robustness screen, not model promotion, not an accuracy assessment, and not an estimate of any organiser target.",
   "lane": "comp-zindi-bias-bounty",
@@ -863,17 +863,17 @@
   "point_estimate": 0.0955209106656768,
   "positive_difference_fraction_of_valid": 0.95988,
   "replicates": 50000,
-  "report_sha256": "90f7de6ab4768a5c04cabd8b5f517af286eaa3bf1a4a3c130a713509e8718334",
+  "report_sha256": "485e3a10af9ca61afa37037c51fa88c4c049e13057ffe7cc06ea5a28abbbe9b9",
   "seed": 20261025,
   "valid_replicate_fraction": 1.0,
   "verdict": "exploratory"
  },
  "writeup_qualification": {
-  "block_heading": "## Evidence",
+  "block_heading": "### Evidence",
   "doc": "docs/writeup/bias-discovery.md",
   "marker": "exploratory",
   "missing_fragments": [],
-  "note": "the qualification must live in the Evidence block that carries the published +9.55 pp claim, not anywhere in the document",
+  "note": "the qualification must live in the first finding's Evidence block that carries the published +9.55 percentage-point claim, not anywhere in the document",
   "required_fragments": [
    "county-cluster bootstrap",
    "exploratory",

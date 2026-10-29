@@ -24,11 +24,11 @@ This is a staged draft for operator review. It is not submission-ready; review o
 
 ## Best Bias Discovery entry
 
-### Finding 1 — Post-fire building-count disagreement in the Paradise–Magalia area
+### Finding 1 — Camp Fire-area building-count mismatch; DINS mechanism check negative
 
 #### Impact and novelty
 
-After the 2018 Camp Fire, six focal Butte County tracts in the Paradise–Magalia area have a provided USFS Wildfire Risk to Communities building count—a Microsoft-footprint derivative—above the provided Overture count: Overture is 25.3–38.0% lower when the deficit is expressed as a share of USFS (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `docs/decisions/building-component.md`). If a recovery or dispatch team treats that larger count as current, it could send field-verification effort toward structures no longer present while overlooking later rebuilding; that could distort address checks, evacuation planning, or relief-resource estimates. This is a plausible decision risk, not an observed dispatch failure. The temporal interaction between fire history and provider-count disagreement is not a marginal rural, SVI, tribal, or hazard-exposure scorecard cell.
+In six focal Camp Fire-area Butte County tracts, the provided USFS Wildfire Risk to Communities building count—a Microsoft-footprint derivative—is above the provided Overture count: the Overture/USFS ratios range from 0.620 to 0.747 (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `docs/decisions/building-component.md`). This is a geographic and temporal association, not evidence that fire damage caused a stale-reference discrepancy: the external DINS mechanism check below is negative. If a recovery or dispatch team treats the larger count as current, it could misdirect field-verification effort; that is a plausible decision risk, not an observed dispatch failure. This temporal mismatch is not a restatement of any marginal rural, SVI, tribal, or hazard-exposure scorecard cell.
 
 #### Evidence
 
@@ -59,9 +59,11 @@ These provided-data class counts and proportions are at `reports/discovery-postf
 
 ![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)
 
+The tract-bootstrap difference is +9.55 percentage points (95% CI [+0.55, +20.89]; 50,000 replicates; valid-replicate fraction 1.0). The county-cluster bootstrap 95% interval [-1.65, +16.67] includes zero, so the magnitude remains exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`).
+
 #### What this does and does not show
 
-The mechanism test is negative: 0/6 DINS relative errors meet 0.30, and Spearman across 28 last-burn-2018 tracts is 0.463, below 0.60 (`reports/discovery-dins-mechanism.json#/decision`, `#/spearman`). Across 591 NorCal tracts, 576 have positive Overture counts but no Camp Fire DINS record, totaling 1,139,778 buildings; this inspection-limited source cannot establish rebuilding or absence (`#/opposite_direction`). The tract-bootstrap difference is +9.55 points [95% CI +0.55,+20.89], but the county-cluster interval [−1.65,+16.67] includes zero, leaving magnitude exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). Focal MTBS percentages are cumulative (64.4–153.8%), and the count field's exact vintage is unverified. DINS is discovery-only; no removed reference was accessed. No external public data was used outside this DINS check; source-mix and strata checks use provided data only.
+The preregistered DINS mechanism test is **negative**: 0/6 focal tracts met the relative-error threshold of ≤0.30 (the rule required at least 4/6), and Spearman was 0.4626068 across all 28 last-burn-2018 tracts, below the 0.60 threshold (`reports/discovery-dins-mechanism.json#/decision`, `#/spearman`). DINS therefore does not substantiate the hypothesised fire-damage/rebuilding mechanism. Across 591 NorCal tracts, 576 have positive Overture counts but no Camp Fire DINS record, totaling 1,139,778 buildings; because this is an inspection-limited, incident-specific source, a missing record cannot establish absence or rebuilding (`reports/discovery-dins-mechanism.json#/opposite_direction`). Focal MTBS percentages are cumulative (64.4–153.8%), and the count field's exact vintage is unverified. DINS is discovery-only; no removed reference was accessed. No external public data was used outside this DINS check; source-mix and strata checks use provided data only.
 
 #### Reproducibility
 
@@ -1045,19 +1047,19 @@ Provided-data-only check for the scored predictions (`reports/v2-input-provenanc
 
 A machine-checked claim-to-evidence audit backs every number in this writeup.
 
-- `claims_total`: 91
-- `claims_fully_traceable`: 86
-- `fraction_quantitative_claims_traceable`: 0.945055
-- `numeric_tokens_total`: 1077
-- `numeric_tokens_covered`: 1046
-- `fraction_numeric_tokens_covered`: 0.971216
-- `distinct_verify_commands`: 91
-- `distinct_reproduce_commands`: 20
-- `derived_aggregates_verified`: 32
+- `claims_total`: 92
+- `claims_fully_traceable`: 87
+- `fraction_quantitative_claims_traceable`: 0.945652
+- `numeric_tokens_total`: 1080
+- `numeric_tokens_covered`: 1054
+- `fraction_numeric_tokens_covered`: 0.975926
+- `distinct_verify_commands`: 92
+- `distinct_reproduce_commands`: 21
+- `derived_aggregates_verified`: 30
 - `claims_asserting_accuracy`: 3
-- `claims_with_prohibited_data_language`: 2
+- `claims_with_prohibited_data_language`: 1
 
-Current audit status: 86 of 91 quantitative claims are fully traceable (0.945055); 1046 of 1077 numeric tokens are covered (0.971216). The full claim audit does not pass; 5 unresolved claims remain, including claims in the discovery/methodology source drafts. This is explicitly an open narrative-review/reproducibility gate, not an accuracy claim. The final-two result is separately traced to `reports/final-two.json` and machine-compared by the submission packet verifier.
+Current audit status: 87 of 92 quantitative claims are fully traceable (0.945652); 1054 of 1080 numeric tokens are covered (0.975926). The full claim audit does not pass; 5 unresolved claims remain, including claims in the discovery/methodology source drafts. This is explicitly an open narrative-review/reproducibility gate, not an accuracy claim. The final-two result is separately traced to `reports/final-two.json` and machine-compared by the submission packet verifier.
 
 Commands run for this refresh:
 

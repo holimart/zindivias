@@ -2,8 +2,8 @@
 
 Row: `backlog:.langywrap/backlogs/competitions.jsonl:bias-discovery-prize-criteria-audit`. Lane: `comp-zindi-bias-bounty`. documentation screen of the Best Bias Discovery narrative; not a submission, not a model promotion, not a leaderboard probe.
 
-Audited document: `docs/writeup/bias-discovery.md` (SHA-256 `012af88696320b0ae9cf4e028386af9d6a701e1acf3a47da62b18f9388bbf2b2`).
-Preregistration: `config/discovery-prize-criteria-preregistered.json` (SHA-256 `5ea75fbed0c42fc296ad31174fcb3682a0144882f06d86de4df7876b3150a0a9`).
+Audited document: `docs/writeup/bias-discovery.md` (SHA-256 `166180573228ddf7a78adea1d6cd40b8ab3ba514991e8f4b0b2d017d981ed216`).
+Preregistration: `config/discovery-prize-criteria-preregistered.json` (SHA-256 `1c67e7adda7c86ff644c8e5cd66ec407f3cc9c6151cbae07b17b4eee5f7e9466`).
 
 This is a documentation screen. It makes no submission, changes no scored candidate, reads no leaderboard feedback, and asserts nothing about the organisers' hidden target. The DINS comparison does not establish rebuilding, absence, or a hidden-target result.
 
@@ -24,7 +24,7 @@ Verdicts are `pass` or `needs revision`. Each retained finding is supported only
 
 | Section | Declared status | Resolution | Impact | Novelty | Evidence | Reproducibility |
 |---|---|---|---|---|---|---|
-| Finding 1 — Post-fire building-count disagreement in the Paradise–Magalia area | supported | supported | pass | pass | pass | pass |
+| Finding 1 — Camp Fire-area building-count mismatch; DINS mechanism check negative | supported | supported | pass | pass | pass | pass |
 | Finding 2 — Rural Overture buildings are less often OSM-sourced | supported | supported | pass | pass | pass | pass |
 | Finding 3 — The tribal/non-tribal pooled comparison is region-confounded | supported | supported | pass | pass | pass | pass |
 
@@ -33,7 +33,7 @@ Verdicts are `pass` or `needs revision`. Each retained finding is supported only
 - sections configured / covered: 3 / 3; unresolved: 0
 - criteria evaluated / passed: 12 / 12
 - evidence pointers verified: 15 of 15
-- quantitative claims traceable: 8 of 8 (claim audit fraction 0.945055)
+- quantitative claims traceable: 9 of 9 (claim audit fraction 0.945652)
 - unlisted external URLs in the discovery document: 0
 - hidden-target claim patterns: 0; unqualified operational patterns: 0
 - prohibited-token hits needing disclosure: prose 0, scripts 0
@@ -41,9 +41,9 @@ Verdicts are `pass` or `needs revision`. Each retained finding is supported only
 
 ## Section detail
 
-### Finding 1 — Post-fire building-count disagreement in the Paradise–Magalia area
+### Finding 1 — Camp Fire-area building-count mismatch; DINS mechanism check negative
 
-Declared `supported`, resolved `supported`, lines 1-43, 4799 characters. Claims: `bias-discovery-001`, `bias-discovery-002`, `bias-discovery-003`, `bias-discovery-004`, `bias-discovery-005`, `bias-discovery-006`.
+Declared `supported`, resolved `supported`, lines 1-45, 5079 characters. Claims: `bias-discovery-001`, `bias-discovery-002`, `bias-discovery-003`, `bias-discovery-004`, `bias-discovery-005`, `bias-discovery-006`, `bias-discovery-007`.
 
 - **impact**: `pass` (headings: Impact and novelty)
 - **novelty**: `pass` (headings: Impact and novelty)
@@ -56,7 +56,7 @@ Declared `supported`, resolved `supported`, lines 1-43, 4799 characters. Claims:
   |---|---|---|---|
   | `reports/discovery-postfire.json` | `/focal_butte_2018_burn_geoids` | `cbf100bc833bf09c` | True |
   | `reports/discovery-postfire.json` | `/northern_ca_burn_class_table` | `cbf100bc833bf09c` | True |
-  | `reports/discovery-postfire-county-bootstrap.json` | `/county_cluster_bootstrap/cluster_95_percentile_interval` | `942c39504dbcf3b2` | True |
+  | `reports/discovery-postfire-county-bootstrap.json` | `/county_cluster_bootstrap/cluster_95_percentile_interval` | `f55774557f046187` | True |
   | `reports/discovery-dins-mechanism.json` | `/external_source` | `8af173a124f59ef7` | True |
   | `reports/discovery-dins-mechanism.json` | `/decision` | `8af173a124f59ef7` | True |
   | `reports/discovery-dins-mechanism.json` | `/spearman` | `8af173a124f59ef7` | True |
@@ -68,7 +68,7 @@ Declared `supported`, resolved `supported`, lines 1-43, 4799 characters. Claims:
 
 ### Finding 2 — Rural Overture buildings are less often OSM-sourced
 
-Declared `supported`, resolved `supported`, lines 44-61, 1643 characters. Claims: `bias-discovery-007`.
+Declared `supported`, resolved `supported`, lines 46-63, 1643 characters. Claims: `bias-discovery-008`.
 
 - **impact**: `pass` (headings: Impact and novelty)
 - **novelty**: `pass` (headings: Impact and novelty)
@@ -87,7 +87,7 @@ Declared `supported`, resolved `supported`, lines 44-61, 1643 characters. Claims
 
 ### Finding 3 — The tribal/non-tribal pooled comparison is region-confounded
 
-Declared `supported`, resolved `supported`, lines 62-78, 1502 characters. Claims: `bias-discovery-008`.
+Declared `supported`, resolved `supported`, lines 64-80, 1502 characters. Claims: `bias-discovery-009`.
 
 - **impact**: `pass` (headings: Impact and novelty)
 - **novelty**: `pass` (headings: Impact and novelty)

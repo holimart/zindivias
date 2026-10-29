@@ -312,8 +312,8 @@ class ProhibitionTests(unittest.TestCase):
 class WriteupQualificationTests(unittest.TestCase):
     def setUp(self) -> None:
         document = (ROOT / "docs/writeup/bias-discovery.md").read_text(encoding="utf-8")
-        start = document.find("## Evidence")
-        end = document.find("## Section 2", start + 1)
+        start = document.find("### Evidence")
+        end = document.find("## Finding 2", start + 1)
         self.block = document[start:end]
 
     def test_the_finding_is_qualified_in_the_evidence_block(self) -> None:

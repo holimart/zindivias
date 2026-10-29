@@ -7,26 +7,26 @@
    "line_start": 5,
    "line_end": 5,
    "kind": "paragraph",
-   "text": "After the 2018 Camp Fire, six focal Butte County tracts in the Paradise–Magalia area have a provided USFS Wildfire Risk to Communities building count—a Microsoft-footprint derivative—above the provided Overture count: Overture is 25.3–38.0% lower when the deficit is expressed as a share of USFS (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `docs/decisions/building-component.md`). If a recovery or dispatch team treats that larger count as current, it could send field-verification effort toward structures no longer present while overlooking later rebuilding; that could distort address checks, evacuation planning, or relief-resource estimates. This is a plausible decision risk, not an observed dispatch failure. The temporal interaction between fire history and provider-count disagreement is not a marginal rural, SVI, tribal, or hazard-exposure scorecard cell.",
+   "text": "In six focal Camp Fire-area Butte County tracts, the provided USFS Wildfire Risk to Communities building count—a Microsoft-footprint derivative—is above the provided Overture count: the Overture/USFS ratios range from 0.620 to 0.747 (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `docs/decisions/building-component.md`). This is a geographic and temporal association, not evidence that fire damage caused a stale-reference discrepancy: the external DINS mechanism check below is negative. If a recovery or dispatch team treats the larger count as current, it could misdirect field-verification effort; that is a plausible decision risk, not an observed dispatch failure. This temporal mismatch is not a restatement of any marginal rural, SVI, tribal, or hazard-exposure scorecard cell.",
    "provenance_class": "measured_provided_data",
    "evidence": [
     {
      "path": "reports/discovery-postfire.json",
      "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a",
      "primary": true,
-     "pointer": "/interpretation"
-    },
-    {
-     "path": "reports/discovery-dins-mechanism.json",
-     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd",
-     "primary": false,
-     "pointer": "/spearman/cohort"
+     "pointer": "/focal_butte_2018_burn_geoids"
     },
     {
      "path": "docs/decisions/building-component.md",
      "sha256": "cc63abcf8a1128ee35e2a3a8b5cc4938cb333f3b30caea81a239374fc9855974",
      "primary": false,
      "pointer": "document"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.json",
+     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd",
+     "primary": false,
+     "pointer": "/"
     },
     {
      "path": "reports/discovery-strata-confound.json",
@@ -42,7 +42,7 @@
     },
     {
      "path": "reports/discovery-postfire-county-bootstrap.json",
-     "sha256": "942c39504dbcf3b2fd0fbc19c3cb3194bd9a49693fdd3688a044c3211d637d24",
+     "sha256": "f55774557f0461875cc5c4a56063ef7cf9f7056f11828ea368c85e6eb5b96348",
      "primary": false,
      "pointer": "/"
     }
@@ -56,28 +56,9 @@
     }
    ],
    "tokens_exempt": [],
-   "derived_tokens": [
-    {
-     "value": 38.0,
-     "decimals": 1,
-     "operation": "percentage",
-     "evidence": "reports/discovery-dins-mechanism.json",
-     "pointer_a": "/focal_butte_tracts/0/usfs_minus_overture",
-     "pointer_b": "/focal_butte_tracts/0/provided_usfs_building_count",
-     "tolerance": 0.05
-    },
-    {
-     "value": 25.3,
-     "decimals": 1,
-     "operation": "percentage",
-     "evidence": "reports/discovery-dins-mechanism.json",
-     "pointer_a": "/focal_butte_tracts/5/usfs_minus_overture",
-     "pointer_b": "/focal_butte_tracts/5/provided_usfs_building_count",
-     "tolerance": 0.05
-    }
-   ],
+   "derived_tokens": [],
    "hedge_context": [
-    "After the 2018 Camp Fire, six focal Butte County tracts in the Paradise–Magalia area have a provided USFS Wildfire Risk to Communities building count—a Microsoft-footprint derivative—above the provided Overture count: Overture is 25.3–38.0% lower when the deficit is expressed as a share of USFS (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `docs/decisions/building-component.md`). If a recovery or dispatch team treats that larger count as current, it could send field-verification effort toward structures no longer present while overlooking later rebuilding; that could distort address checks, evacuation planning, or relief-resource estimates. This is a plausible decision risk, not an observed dispatch failure. The temporal interaction between fire history and provider-count disagreement is not a marginal rural, SVI, tribal, or hazard-exposure scorecard cell.",
+    "In six focal Camp Fire-area Butte County tracts, the provided USFS Wildfire Risk to Communities building count—a Microsoft-footprint derivative—is above the provided Overture count: the Overture/USFS ratios range from 0.620 to 0.747 (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `docs/decisions/building-component.md`). This is a geographic and temporal association, not evidence that fire damage caused a stale-reference discrepancy: the external DINS mechanism check below is negative. If a recovery or dispatch team treats the larger count as current, it could misdirect field-verification effort; that is a plausible decision risk, not an observed dispatch failure. This temporal mismatch is not a restatement of any marginal rural, SVI, tribal, or hazard-exposure scorecard cell.",
     "In Maricopa, Northern California, Eastern Oklahoma, and South-Central Texas, a footprint that contains only geometry and lacks a reliable address, name, or use cannot by itself geocode an emergency dispatch. Lower community-sourced representation could therefore justify prioritising local address/attribute verification; that is a plausible audit risk, not an observed service failure. This is not a restatement of a marginal rurality/SVI scorecard cell.",
     "In Eastern Oklahoma and South-Central Texas, a pooled tribal/non-tribal scorecard contrast can misdirect a mapping audit if treated as a general tribal pattern when the groups have different regional mixes. This is a plausible audit risk, not an observed tribal disparity or causal effect. It is not a restatement of a marginal tribal scorecard cell."
    ],
@@ -107,7 +88,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-002",
-   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
+   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png && /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/audit_discovery_postfire_county_bootstrap.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire-county-bootstrap.json && MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_dins_mechanism.py --workspace \"$COMPETITION_WORKSPACE\" --dins-file \"$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson\" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png",
    "reproduce_products": [
     {
      "path": "reports/discovery-postfire.json",
@@ -116,6 +97,22 @@
     {
      "path": "reports/discovery-postfire-map.png",
      "sha256": "916589e0d3dc765a77c133dbcfe454740906dabb26ab74fcc0db92f9ffa43da1"
+    },
+    {
+     "path": "reports/discovery-postfire-county-bootstrap.json",
+     "sha256": "f55774557f0461875cc5c4a56063ef7cf9f7056f11828ea368c85e6eb5b96348"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.json",
+     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.md",
+     "sha256": "f66d97f7bb82d77cc11928a01699f976455fe349063316624883a464a90b245d"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.png",
+     "sha256": "2b2948bd8f330f7c958b5c8deb48306b2b0809a1101947ca620c989e6dae6f8f"
     }
    ],
    "tokens_exempt": [
@@ -135,6 +132,7 @@
     "| Provided NorCal burn class | Tracts | Overture / USFS < 0.8 | Share below 0.8 |\n|---|---:|---:|---:|\n| 0% (unburned) | 449 | 7 | 1.6% |\n| >0–5% | 28 | 0 | 0.0% |\n| >5–20% | 32 | 0 | 0.0% |\n| >20–<50% | 32 | 0 | 0.0% |\n| 50–100% | 36 | 4 | 11.1% |",
     "These provided-data class counts and proportions are at `reports/discovery-postfire.json#/northern_ca_burn_class_table`. The one map shows the burn geography and the six focal tracts:",
     "![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)",
+    "The tract-bootstrap difference is +9.55 percentage points (95% CI [+0.55, +20.89]; 50,000 replicates; valid-replicate fraction 1.0). The county-cluster bootstrap 95% interval [-1.65, +16.67] includes zero, so the magnitude remains exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`).",
     "Across Maricopa, Northern California, Eastern Oklahoma, and South-Central Texas, rural tracts have 16.83–38.68 percentage points lower OSM-touched building shares; all four tract-bootstrap intervals are below zero (`reports/source-provenance.json#/statistics`). SVI-quartile contrasts were smaller and less consistent (`#/uncertainty_and_limitations`).",
     "In the official sample, 805 of 858 tracts marked `tribal_any` (93.82%, approximately 94%) are in Eastern Oklahoma, while 6,002 of 8,521 non-tribal tracts (70.44%, approximately 70%) are in South-Central Texas (`reports/discovery-strata-confound.json#/stratum_composition`). The breakdown is reproducible from `reports/discovery-strata-confound.json#/regional_counts_and_prevalence`."
    ],
@@ -164,7 +162,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-003",
-   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
+   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png && /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/audit_discovery_postfire_county_bootstrap.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire-county-bootstrap.json && MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_dins_mechanism.py --workspace \"$COMPETITION_WORKSPACE\" --dins-file \"$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson\" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png",
    "reproduce_products": [
     {
      "path": "reports/discovery-postfire.json",
@@ -173,6 +171,22 @@
     {
      "path": "reports/discovery-postfire-map.png",
      "sha256": "916589e0d3dc765a77c133dbcfe454740906dabb26ab74fcc0db92f9ffa43da1"
+    },
+    {
+     "path": "reports/discovery-postfire-county-bootstrap.json",
+     "sha256": "f55774557f0461875cc5c4a56063ef7cf9f7056f11828ea368c85e6eb5b96348"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.json",
+     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.md",
+     "sha256": "f66d97f7bb82d77cc11928a01699f976455fe349063316624883a464a90b245d"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.png",
+     "sha256": "2b2948bd8f330f7c958b5c8deb48306b2b0809a1101947ca620c989e6dae6f8f"
     }
    ],
    "tokens_exempt": [],
@@ -185,6 +199,7 @@
     "| Provided NorCal burn class | Tracts | Overture / USFS < 0.8 | Share below 0.8 |\n|---|---:|---:|---:|\n| 0% (unburned) | 449 | 7 | 1.6% |\n| >0–5% | 28 | 0 | 0.0% |\n| >5–20% | 32 | 0 | 0.0% |\n| >20–<50% | 32 | 0 | 0.0% |\n| 50–100% | 36 | 4 | 11.1% |",
     "These provided-data class counts and proportions are at `reports/discovery-postfire.json#/northern_ca_burn_class_table`. The one map shows the burn geography and the six focal tracts:",
     "![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)",
+    "The tract-bootstrap difference is +9.55 percentage points (95% CI [+0.55, +20.89]; 50,000 replicates; valid-replicate fraction 1.0). The county-cluster bootstrap 95% interval [-1.65, +16.67] includes zero, so the magnitude remains exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`).",
     "Across Maricopa, Northern California, Eastern Oklahoma, and South-Central Texas, rural tracts have 16.83–38.68 percentage points lower OSM-touched building shares; all four tract-bootstrap intervals are below zero (`reports/source-provenance.json#/statistics`). SVI-quartile contrasts were smaller and less consistent (`#/uncertainty_and_limitations`).",
     "In the official sample, 805 of 858 tracts marked `tribal_any` (93.82%, approximately 94%) are in Eastern Oklahoma, while 6,002 of 8,521 non-tribal tracts (70.44%, approximately 70%) are in South-Central Texas (`reports/discovery-strata-confound.json#/stratum_composition`). The breakdown is reproducible from `reports/discovery-strata-confound.json#/regional_counts_and_prevalence`."
    ],
@@ -207,14 +222,20 @@
      "pointer": "/"
     },
     {
+     "path": "reports/discovery-dins-mechanism.json",
+     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd",
+     "primary": false,
+     "pointer": "/"
+    },
+    {
      "path": "reports/discovery-postfire-county-bootstrap.json",
-     "sha256": "942c39504dbcf3b2fd0fbc19c3cb3194bd9a49693fdd3688a044c3211d637d24",
+     "sha256": "f55774557f0461875cc5c4a56063ef7cf9f7056f11828ea368c85e6eb5b96348",
      "primary": false,
      "pointer": "/"
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-004",
-   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
+   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png && /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/audit_discovery_postfire_county_bootstrap.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire-county-bootstrap.json && MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_dins_mechanism.py --workspace \"$COMPETITION_WORKSPACE\" --dins-file \"$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson\" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png",
    "reproduce_products": [
     {
      "path": "reports/discovery-postfire.json",
@@ -223,6 +244,22 @@
     {
      "path": "reports/discovery-postfire-map.png",
      "sha256": "916589e0d3dc765a77c133dbcfe454740906dabb26ab74fcc0db92f9ffa43da1"
+    },
+    {
+     "path": "reports/discovery-postfire-county-bootstrap.json",
+     "sha256": "f55774557f0461875cc5c4a56063ef7cf9f7056f11828ea368c85e6eb5b96348"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.json",
+     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.md",
+     "sha256": "f66d97f7bb82d77cc11928a01699f976455fe349063316624883a464a90b245d"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.png",
+     "sha256": "2b2948bd8f330f7c958b5c8deb48306b2b0809a1101947ca620c989e6dae6f8f"
     }
    ],
    "tokens_exempt": [],
@@ -235,6 +272,7 @@
     "| Provided NorCal burn class | Tracts | Overture / USFS < 0.8 | Share below 0.8 |\n|---|---:|---:|---:|\n| 0% (unburned) | 449 | 7 | 1.6% |\n| >0–5% | 28 | 0 | 0.0% |\n| >5–20% | 32 | 0 | 0.0% |\n| >20–<50% | 32 | 0 | 0.0% |\n| 50–100% | 36 | 4 | 11.1% |",
     "These provided-data class counts and proportions are at `reports/discovery-postfire.json#/northern_ca_burn_class_table`. The one map shows the burn geography and the six focal tracts:",
     "![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)",
+    "The tract-bootstrap difference is +9.55 percentage points (95% CI [+0.55, +20.89]; 50,000 replicates; valid-replicate fraction 1.0). The county-cluster bootstrap 95% interval [-1.65, +16.67] includes zero, so the magnitude remains exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`).",
     "Across Maricopa, Northern California, Eastern Oklahoma, and South-Central Texas, rural tracts have 16.83–38.68 percentage points lower OSM-touched building shares; all four tract-bootstrap intervals are below zero (`reports/source-provenance.json#/statistics`). SVI-quartile contrasts were smaller and less consistent (`#/uncertainty_and_limitations`).",
     "In the official sample, 805 of 858 tracts marked `tribal_any` (93.82%, approximately 94%) are in Eastern Oklahoma, while 6,002 of 8,521 non-tribal tracts (70.44%, approximately 70%) are in South-Central Texas (`reports/discovery-strata-confound.json#/stratum_composition`). The breakdown is reproducible from `reports/discovery-strata-confound.json#/regional_counts_and_prevalence`."
    ],
@@ -258,13 +296,19 @@
     },
     {
      "path": "reports/discovery-postfire-county-bootstrap.json",
-     "sha256": "942c39504dbcf3b2fd0fbc19c3cb3194bd9a49693fdd3688a044c3211d637d24",
+     "sha256": "f55774557f0461875cc5c4a56063ef7cf9f7056f11828ea368c85e6eb5b96348",
+     "primary": false,
+     "pointer": "/"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.json",
+     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd",
      "primary": false,
      "pointer": "/"
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-005",
-   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
+   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png && /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/audit_discovery_postfire_county_bootstrap.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire-county-bootstrap.json && MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_dins_mechanism.py --workspace \"$COMPETITION_WORKSPACE\" --dins-file \"$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson\" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png",
    "reproduce_products": [
     {
      "path": "reports/discovery-postfire.json",
@@ -273,6 +317,22 @@
     {
      "path": "reports/discovery-postfire-map.png",
      "sha256": "916589e0d3dc765a77c133dbcfe454740906dabb26ab74fcc0db92f9ffa43da1"
+    },
+    {
+     "path": "reports/discovery-postfire-county-bootstrap.json",
+     "sha256": "f55774557f0461875cc5c4a56063ef7cf9f7056f11828ea368c85e6eb5b96348"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.json",
+     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.md",
+     "sha256": "f66d97f7bb82d77cc11928a01699f976455fe349063316624883a464a90b245d"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.png",
+     "sha256": "2b2948bd8f330f7c958b5c8deb48306b2b0809a1101947ca620c989e6dae6f8f"
     }
    ],
    "tokens_exempt": [],
@@ -285,6 +345,7 @@
     "| Provided NorCal burn class | Tracts | Overture / USFS < 0.8 | Share below 0.8 |\n|---|---:|---:|---:|\n| 0% (unburned) | 449 | 7 | 1.6% |\n| >0–5% | 28 | 0 | 0.0% |\n| >5–20% | 32 | 0 | 0.0% |\n| >20–<50% | 32 | 0 | 0.0% |\n| 50–100% | 36 | 4 | 11.1% |",
     "These provided-data class counts and proportions are at `reports/discovery-postfire.json#/northern_ca_burn_class_table`. The one map shows the burn geography and the six focal tracts:",
     "![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)",
+    "The tract-bootstrap difference is +9.55 percentage points (95% CI [+0.55, +20.89]; 50,000 replicates; valid-replicate fraction 1.0). The county-cluster bootstrap 95% interval [-1.65, +16.67] includes zero, so the magnitude remains exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`).",
     "Across Maricopa, Northern California, Eastern Oklahoma, and South-Central Texas, rural tracts have 16.83–38.68 percentage points lower OSM-touched building shares; all four tract-bootstrap intervals are below zero (`reports/source-provenance.json#/statistics`). SVI-quartile contrasts were smaller and less consistent (`#/uncertainty_and_limitations`).",
     "In the official sample, 805 of 858 tracts marked `tribal_any` (93.82%, approximately 94%) are in Eastern Oklahoma, while 6,002 of 8,521 non-tribal tracts (70.44%, approximately 70%) are in South-Central Texas (`reports/discovery-strata-confound.json#/stratum_composition`). The breakdown is reproducible from `reports/discovery-strata-confound.json#/regional_counts_and_prevalence`."
    ],
@@ -293,11 +354,91 @@
   {
    "claim_id": "bias-discovery-006",
    "doc": "docs/writeup/bias-discovery.md",
-   "section": "What this does and does not show",
-   "line_start": 38,
-   "line_end": 38,
+   "section": "Evidence",
+   "line_start": 36,
+   "line_end": 36,
    "kind": "paragraph",
-   "text": "The mechanism test is negative: 0/6 DINS relative errors meet 0.30, and Spearman across 28 last-burn-2018 tracts is 0.463, below 0.60 (`reports/discovery-dins-mechanism.json#/decision`, `#/spearman`). Across 591 NorCal tracts, 576 have positive Overture counts but no Camp Fire DINS record, totaling 1,139,778 buildings; this inspection-limited source cannot establish rebuilding or absence (`#/opposite_direction`). The tract-bootstrap difference is +9.55 points [95% CI +0.55,+20.89], but the county-cluster interval [−1.65,+16.67] includes zero, leaving magnitude exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). Focal MTBS percentages are cumulative (64.4–153.8%), and the count field's exact vintage is unverified. DINS is discovery-only; no removed reference was accessed. No external public data was used outside this DINS check; source-mix and strata checks use provided data only.",
+   "text": "The tract-bootstrap difference is +9.55 percentage points (95% CI [+0.55, +20.89]; 50,000 replicates; valid-replicate fraction 1.0). The county-cluster bootstrap 95% interval [-1.65, +16.67] includes zero, so the magnitude remains exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`).",
+   "provenance_class": "measured_provided_data",
+   "evidence": [
+    {
+     "path": "reports/discovery-postfire.json",
+     "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a",
+     "primary": true,
+     "pointer": "/high_burn_vs_unburned_below_0_8/replicates"
+    },
+    {
+     "path": "reports/discovery-postfire-county-bootstrap.json",
+     "sha256": "f55774557f0461875cc5c4a56063ef7cf9f7056f11828ea368c85e6eb5b96348",
+     "primary": false,
+     "pointer": "/summary/replicates"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.json",
+     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd",
+     "primary": false,
+     "pointer": "/"
+    }
+   ],
+   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-006",
+   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png && /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/audit_discovery_postfire_county_bootstrap.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire-county-bootstrap.json && MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_dins_mechanism.py --workspace \"$COMPETITION_WORKSPACE\" --dins-file \"$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson\" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png",
+   "reproduce_products": [
+    {
+     "path": "reports/discovery-postfire.json",
+     "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
+    },
+    {
+     "path": "reports/discovery-postfire-map.png",
+     "sha256": "916589e0d3dc765a77c133dbcfe454740906dabb26ab74fcc0db92f9ffa43da1"
+    },
+    {
+     "path": "reports/discovery-postfire-county-bootstrap.json",
+     "sha256": "f55774557f0461875cc5c4a56063ef7cf9f7056f11828ea368c85e6eb5b96348"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.json",
+     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.md",
+     "sha256": "f66d97f7bb82d77cc11928a01699f976455fe349063316624883a464a90b245d"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.png",
+     "sha256": "2b2948bd8f330f7c958b5c8deb48306b2b0809a1101947ca620c989e6dae6f8f"
+    }
+   ],
+   "tokens_exempt": [
+    {
+     "value": 95,
+     "decimals": 0,
+     "class": "methodological_constant",
+     "reason": "the 95% level of the preregistered tract-bootstrap percentile interval, declared in the discovery script"
+    }
+   ],
+   "derived_tokens": [],
+   "hedge_context": [
+    "All six GEOIDs have a provided MTBS last-wildfire year of 2018. The table compares challenge summaries with incident-filtered public CAL FIRE Camp Fire DINS inspection points. The California catalogue records CC BY (version unspecified); retrieved 2026-10-29 from [the source page](https://data.ca.gov/dataset/cal-fire-damage-inspection-dins-data). Only incident, damage class, county, object ID, and point geometry were requested; raw data and manifest remain outside git.",
+    "| GEOID | Overture / USFS | USFS − Overture | DINS destroyed | DINS major | Relative error |\n|---|---:|---:|---:|---:|---:|\n| `06007001800` | 0.620 | 666.4 | 3,314 | 3 | 0.799 |\n| `06007002100` | 0.643 | 588.3 | 2,337 | 4 | 0.748 |\n| `06007002000` | 0.662 | 579.5 | 2,870 | 4 | 0.798 |\n| `06007001900` | 0.677 | 390.2 | 1,887 | 3 | 0.793 |\n| `06007002300` | 0.720 | 668.9 | 2,386 | 2 | 0.720 |\n| `06007002200` | 0.747 | 766.1 | 2,472 | 6 | 0.690 |",
+    "Ratio is Overture / `usfs_BuildingCount_sum`; relative error is `abs((USFS − Overture) − DINS destroyed) / DINS destroyed`. Values are in `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids` and `reports/discovery-dins-mechanism.json#/focal_butte_tracts`; the workspace manifest pins the raw file.",
+    "Burn classes follow the report's 0–100% bins; tracts reported above 100% are omitted rather than clipped (`reports/discovery-postfire.json#/burn_definition`).",
+    "| Provided NorCal burn class | Tracts | Overture / USFS < 0.8 | Share below 0.8 |\n|---|---:|---:|---:|\n| 0% (unburned) | 449 | 7 | 1.6% |\n| >0–5% | 28 | 0 | 0.0% |\n| >5–20% | 32 | 0 | 0.0% |\n| >20–<50% | 32 | 0 | 0.0% |\n| 50–100% | 36 | 4 | 11.1% |",
+    "These provided-data class counts and proportions are at `reports/discovery-postfire.json#/northern_ca_burn_class_table`. The one map shows the burn geography and the six focal tracts:",
+    "![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)",
+    "The tract-bootstrap difference is +9.55 percentage points (95% CI [+0.55, +20.89]; 50,000 replicates; valid-replicate fraction 1.0). The county-cluster bootstrap 95% interval [-1.65, +16.67] includes zero, so the magnitude remains exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`).",
+    "Across Maricopa, Northern California, Eastern Oklahoma, and South-Central Texas, rural tracts have 16.83–38.68 percentage points lower OSM-touched building shares; all four tract-bootstrap intervals are below zero (`reports/source-provenance.json#/statistics`). SVI-quartile contrasts were smaller and less consistent (`#/uncertainty_and_limitations`).",
+    "In the official sample, 805 of 858 tracts marked `tribal_any` (93.82%, approximately 94%) are in Eastern Oklahoma, while 6,002 of 8,521 non-tribal tracts (70.44%, approximately 70%) are in South-Central Texas (`reports/discovery-strata-confound.json#/stratum_composition`). The breakdown is reproducible from `reports/discovery-strata-confound.json#/regional_counts_and_prevalence`."
+   ],
+   "notes": "DINS negative-gate counts and missing-record limits are checked against reports/discovery-dins-mechanism.json; county-cluster interval against reports/discovery-postfire-county-bootstrap.json; MTBS burn range against reports/discovery-postfire.json"
+  },
+  {
+   "claim_id": "bias-discovery-007",
+   "doc": "docs/writeup/bias-discovery.md",
+   "section": "What this does and does not show",
+   "line_start": 40,
+   "line_end": 40,
+   "kind": "paragraph",
+   "text": "The preregistered DINS mechanism test is **negative**: 0/6 focal tracts met the relative-error threshold of ≤0.30 (the rule required at least 4/6), and Spearman was 0.4626068 across all 28 last-burn-2018 tracts, below the 0.60 threshold (`reports/discovery-dins-mechanism.json#/decision`, `#/spearman`). DINS therefore does not substantiate the hypothesised fire-damage/rebuilding mechanism. Across 591 NorCal tracts, 576 have positive Overture counts but no Camp Fire DINS record, totaling 1,139,778 buildings; because this is an inspection-limited, incident-specific source, a missing record cannot establish absence or rebuilding (`reports/discovery-dins-mechanism.json#/opposite_direction`). Focal MTBS percentages are cumulative (64.4–153.8%), and the count field's exact vintage is unverified. DINS is discovery-only; no removed reference was accessed. No external public data was used outside this DINS check; source-mix and strata checks use provided data only.",
    "provenance_class": "measured_provided_data",
    "evidence": [
     {
@@ -313,60 +454,55 @@
      "pointer": "/focal_butte_2018_burn_geoids"
     },
     {
-     "path": "reports/source-provenance.json",
-     "sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565",
-     "primary": false,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-strata-confound.json",
-     "sha256": "ce0f1307793d1c658754cb7f9dd6fee7ea9cabf2a8a0e7ccb8e9888c2bad9ecb",
-     "primary": false,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-rural-svi-minority.json",
-     "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0",
-     "primary": false,
-     "pointer": "/"
-    },
-    {
      "path": "reports/discovery-postfire-county-bootstrap.json",
-     "sha256": "942c39504dbcf3b2fd0fbc19c3cb3194bd9a49693fdd3688a044c3211d637d24",
+     "sha256": "f55774557f0461875cc5c4a56063ef7cf9f7056f11828ea368c85e6eb5b96348",
      "primary": false,
      "pointer": "/"
     }
    ],
-   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-006",
-   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
+   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-007",
+   "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png && /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/audit_discovery_postfire_county_bootstrap.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire-county-bootstrap.json && MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_dins_mechanism.py --workspace \"$COMPETITION_WORKSPACE\" --dins-file \"$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson\" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png",
    "reproduce_products": [
+    {
+     "path": "reports/discovery-dins-mechanism.json",
+     "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.md",
+     "sha256": "f66d97f7bb82d77cc11928a01699f976455fe349063316624883a464a90b245d"
+    },
+    {
+     "path": "reports/discovery-dins-mechanism.png",
+     "sha256": "2b2948bd8f330f7c958b5c8deb48306b2b0809a1101947ca620c989e6dae6f8f"
+    },
     {
      "path": "reports/discovery-postfire.json",
      "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
-    }
-   ],
-   "tokens_exempt": [
+    },
     {
-     "value": 95,
-     "decimals": 0,
-     "class": "methodological_constant",
-     "reason": "the 95% level of the preregistered tract-bootstrap percentile interval, declared in the discovery script"
+     "path": "reports/discovery-postfire-map.png",
+     "sha256": "916589e0d3dc765a77c133dbcfe454740906dabb26ab74fcc0db92f9ffa43da1"
+    },
+    {
+     "path": "reports/discovery-postfire-county-bootstrap.json",
+     "sha256": "f55774557f0461875cc5c4a56063ef7cf9f7056f11828ea368c85e6eb5b96348"
     }
    ],
+   "tokens_exempt": [],
    "derived_tokens": [],
    "hedge_context": [
-    "The mechanism test is negative: 0/6 DINS relative errors meet 0.30, and Spearman across 28 last-burn-2018 tracts is 0.463, below 0.60 (`reports/discovery-dins-mechanism.json#/decision`, `#/spearman`). Across 591 NorCal tracts, 576 have positive Overture counts but no Camp Fire DINS record, totaling 1,139,778 buildings; this inspection-limited source cannot establish rebuilding or absence (`#/opposite_direction`). The tract-bootstrap difference is +9.55 points [95% CI +0.55,+20.89], but the county-cluster interval [−1.65,+16.67] includes zero, leaving magnitude exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). Focal MTBS percentages are cumulative (64.4–153.8%), and the count field's exact vintage is unverified. DINS is discovery-only; no removed reference was accessed. No external public data was used outside this DINS check; source-mix and strata checks use provided data only.",
+    "The preregistered DINS mechanism test is **negative**: 0/6 focal tracts met the relative-error threshold of ≤0.30 (the rule required at least 4/6), and Spearman was 0.4626068 across all 28 last-burn-2018 tracts, below the 0.60 threshold (`reports/discovery-dins-mechanism.json#/decision`, `#/spearman`). DINS therefore does not substantiate the hypothesised fire-damage/rebuilding mechanism. Across 591 NorCal tracts, 576 have positive Overture counts but no Camp Fire DINS record, totaling 1,139,778 buildings; because this is an inspection-limited, incident-specific source, a missing record cannot establish absence or rebuilding (`reports/discovery-dins-mechanism.json#/opposite_direction`). Focal MTBS percentages are cumulative (64.4–153.8%), and the count field's exact vintage is unverified. DINS is discovery-only; no removed reference was accessed. No external public data was used outside this DINS check; source-mix and strata checks use provided data only.",
     "The source tags describe provenance, not correctness, completeness, or age. Rurality is not an independently estimated cause; SVI gradients vary and may be confounded. The report uses supplied Overture `sources`/`bbox` and provided tract geometry only, with no public external data or candidate changes (`reports/source-provenance.json#/source_definitions`, `#/data_and_restrictions`, `#/uncertainty_and_limitations`).",
     "These counts establish sample composition, not an equity disparity, causal effect, or difference in hidden target scores. The `tribal_any` field is a provided overlap indicator, not a legal-status classification. The comparison should be region-stratified before operational conclusions (`reports/discovery-strata-confound.json#/regional_counts_and_prevalence`, `#/missing`)."
    ],
-   "notes": "only the interval level is exempt; every count and share is checked against reports/discovery-postfire.json"
+   "notes": ""
   },
   {
-   "claim_id": "bias-discovery-007",
+   "claim_id": "bias-discovery-008",
    "doc": "docs/writeup/bias-discovery.md",
    "section": "Evidence",
-   "line_start": 52,
-   "line_end": 52,
+   "line_start": 54,
+   "line_end": 54,
    "kind": "paragraph",
    "text": "Across Maricopa, Northern California, Eastern Oklahoma, and South-Central Texas, rural tracts have 16.83–38.68 percentage points lower OSM-touched building shares; all four tract-bootstrap intervals are below zero (`reports/source-provenance.json#/statistics`). SVI-quartile contrasts were smaller and less consistent (`#/uncertainty_and_limitations`).",
    "provenance_class": "measured_provided_data",
@@ -378,7 +514,7 @@
      "pointer": "/"
     }
    ],
-   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-007",
+   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-008",
    "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_strata_confound.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-strata-confound.json",
    "reproduce_products": [
     {
@@ -396,17 +532,18 @@
     "| Provided NorCal burn class | Tracts | Overture / USFS < 0.8 | Share below 0.8 |\n|---|---:|---:|---:|\n| 0% (unburned) | 449 | 7 | 1.6% |\n| >0–5% | 28 | 0 | 0.0% |\n| >5–20% | 32 | 0 | 0.0% |\n| >20–<50% | 32 | 0 | 0.0% |\n| 50–100% | 36 | 4 | 11.1% |",
     "These provided-data class counts and proportions are at `reports/discovery-postfire.json#/northern_ca_burn_class_table`. The one map shows the burn geography and the six focal tracts:",
     "![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)",
+    "The tract-bootstrap difference is +9.55 percentage points (95% CI [+0.55, +20.89]; 50,000 replicates; valid-replicate fraction 1.0). The county-cluster bootstrap 95% interval [-1.65, +16.67] includes zero, so the magnitude remains exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`).",
     "Across Maricopa, Northern California, Eastern Oklahoma, and South-Central Texas, rural tracts have 16.83–38.68 percentage points lower OSM-touched building shares; all four tract-bootstrap intervals are below zero (`reports/source-provenance.json#/statistics`). SVI-quartile contrasts were smaller and less consistent (`#/uncertainty_and_limitations`).",
     "In the official sample, 805 of 858 tracts marked `tribal_any` (93.82%, approximately 94%) are in Eastern Oklahoma, while 6,002 of 8,521 non-tribal tracts (70.44%, approximately 70%) are in South-Central Texas (`reports/discovery-strata-confound.json#/stratum_composition`). The breakdown is reproducible from `reports/discovery-strata-confound.json#/regional_counts_and_prevalence`."
    ],
    "notes": "rural versus urban OSM-touched source-share differences and intervals are reported in the source-provenance regional statistics"
   },
   {
-   "claim_id": "bias-discovery-008",
+   "claim_id": "bias-discovery-009",
    "doc": "docs/writeup/bias-discovery.md",
    "section": "Evidence",
-   "line_start": 70,
-   "line_end": 70,
+   "line_start": 72,
+   "line_end": 72,
    "kind": "paragraph",
    "text": "In the official sample, 805 of 858 tracts marked `tribal_any` (93.82%, approximately 94%) are in Eastern Oklahoma, while 6,002 of 8,521 non-tribal tracts (70.44%, approximately 70%) are in South-Central Texas (`reports/discovery-strata-confound.json#/stratum_composition`). The breakdown is reproducible from `reports/discovery-strata-confound.json#/regional_counts_and_prevalence`.",
    "provenance_class": "measured_provided_data",
@@ -418,7 +555,7 @@
      "pointer": "/stratum_composition/non_tribal/by_region/south-central-tx/tracts"
     }
    ],
-   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-008",
+   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-009",
    "reproduce_command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
    "reproduce_products": [
     {
@@ -436,6 +573,7 @@
     "| Provided NorCal burn class | Tracts | Overture / USFS < 0.8 | Share below 0.8 |\n|---|---:|---:|---:|\n| 0% (unburned) | 449 | 7 | 1.6% |\n| >0–5% | 28 | 0 | 0.0% |\n| >5–20% | 32 | 0 | 0.0% |\n| >20–<50% | 32 | 0 | 0.0% |\n| 50–100% | 36 | 4 | 11.1% |",
     "These provided-data class counts and proportions are at `reports/discovery-postfire.json#/northern_ca_burn_class_table`. The one map shows the burn geography and the six focal tracts:",
     "![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)",
+    "The tract-bootstrap difference is +9.55 percentage points (95% CI [+0.55, +20.89]; 50,000 replicates; valid-replicate fraction 1.0). The county-cluster bootstrap 95% interval [-1.65, +16.67] includes zero, so the magnitude remains exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`).",
     "Across Maricopa, Northern California, Eastern Oklahoma, and South-Central Texas, rural tracts have 16.83–38.68 percentage points lower OSM-touched building shares; all four tract-bootstrap intervals are below zero (`reports/source-provenance.json#/statistics`). SVI-quartile contrasts were smaller and less consistent (`#/uncertainty_and_limitations`).",
     "In the official sample, 805 of 858 tracts marked `tribal_any` (93.82%, approximately 94%) are in Eastern Oklahoma, while 6,002 of 8,521 non-tribal tracts (70.44%, approximately 70%) are in South-Central Texas (`reports/discovery-strata-confound.json#/stratum_composition`). The breakdown is reproducible from `reports/discovery-strata-confound.json#/regional_counts_and_prevalence`."
    ],

@@ -134,6 +134,30 @@ class SectionRuleTests(unittest.TestCase):
                                 for rule in CONFIG["sections"]))
 
 
+class DinsMechanismQualificationTests(unittest.TestCase):
+    def test_dins_claims_are_traceable_and_negative_gate_is_explicit(self) -> None:
+        discovery_claims = [claim for claim in CLAIMS.values()
+                            if claim["doc"] == "docs/writeup/bias-discovery.md"]
+        dins_table = next(claim for claim in discovery_claims
+                          if claim["kind"] == "table" and "DINS destroyed" in claim["text"])
+        dins_metadata = next(claim for claim in discovery_claims
+                             if "inspection points" in claim["text"])
+        negative_claim = next(claim for claim in discovery_claims
+                              if "relative-error threshold" in claim["text"])
+        for claim in (dins_metadata, dins_table, negative_claim):
+            self.assertTrue(audit.verify_claim(copy.deepcopy(claim), POOL)["passed"],
+                            claim["claim_id"])
+        negative = negative_claim["text"]
+        for required in ("negative", "0/6", "≤0.30", "4/6", "0.4626068", "28", "0.60",
+                         "reports/discovery-dins-mechanism.json#/decision",
+                         "reports/discovery-dins-mechanism.json#/opposite_direction"):
+            self.assertIn(required, negative)
+        impact = next(claim for claim in discovery_claims
+                      if "provided USFS Wildfire Risk" in claim["text"])
+        self.assertFalse(any(entry["evidence"] == "reports/discovery-dins-mechanism.json"
+                             for entry in impact["derived_tokens"]))
+
+
 class InventoryTests(unittest.TestCase):
     def test_every_claim_has_evidence_pointer_and_both_commands(self) -> None:
         for claim in CLAIMS.values():
