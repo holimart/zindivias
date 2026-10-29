@@ -266,7 +266,7 @@ def front_matter(config: dict[str, Any], submissions: list[dict[str, Any]],
         "4. Appendix B: [edge cases](edge-cases.md).",
         "5. Appendix C: [supporting discovery screens](appendices/screens-that-did-not-produce-a-finding.md).",
         "6. [Supporting diagnostic archive](appendix-diagnostics.md).",
-        "7. Appendices D–H: upload records, official criteria, external-layer compliance, reproducibility, and provenance.",
+        "7. Appendices D–J: upload records, external-source compliance, reproducibility, provenance, named high-SVI OSM examples, and supporting discovery tables.",
         "",
     ]
     if identity.get("zindi_username_or_team") and identity.get("operator_confirmation_recorded"):

@@ -1,3 +1,4 @@
+import json
 import re
 import shutil
 import subprocess
@@ -28,8 +29,8 @@ class FinalWriteupLayoutTests(unittest.TestCase):
         self.assertLessEqual(word_count(self.methodology), 3000)
         self.assertLessEqual(word_count(self.text[self.discovery_start:self.appendix_start]), 1600)
 
-    def test_discovery_has_two_tables_and_one_map(self) -> None:
-        self.assertEqual(sum(line.startswith("|---") for line in self.discovery.splitlines()), 2)
+    def test_discovery_has_one_table_and_one_map(self) -> None:
+        self.assertEqual(sum(line.startswith("|---") for line in self.discovery.splitlines()), 1)
         self.assertEqual(sum(line.startswith("![") for line in self.discovery.splitlines()), 1)
         self.assertIn("reports/discovery-postfire-map.png", self.discovery)
 
@@ -37,6 +38,8 @@ class FinalWriteupLayoutTests(unittest.TestCase):
         self.assertLess(self.text.index("## Submission context"), self.discovery_start)
         self.assertLess(self.text.index("## Contents"), self.discovery_start)
         self.assertLess(self.discovery_start, self.method_start)
+        self.assertIn("### Finding 1 — Rural tracts have lower OSM-attributed shares", self.discovery)
+        self.assertIn("### Finding 2 — Rio Grande border metros", self.discovery)
         self.assertLessEqual(word_count(self.text[:self.appendix_start]), 6000)
         for phrase in ("PENDING_OPERATOR_CONFIRMATION", "NOT SUBMITTED",
                        "staged draft", "not submission-ready", "no UI selection was made"):
@@ -44,6 +47,33 @@ class FinalWriteupLayoutTests(unittest.TestCase):
         self.assertIn("appendix-diagnostics.md", self.text)
         self.assertIn("methodology.md", self.text)
         self.assertIn("edge-cases.md", self.text)
+
+    def test_rural_finding_numbers_and_named_tracts_trace_to_report(self) -> None:
+        report = json.loads((ROOT / "reports/source-provenance.json").read_text(encoding="utf-8"))
+        rural = self.discovery.split("### Finding 1", 1)[1].split("### Finding 2", 1)[0]
+        appendix = self.text.split("## Appendix I: Named high-SVI tracts with lowest OSM attribution", 1)[1].split(
+            "## Appendix J: Supporting discovery tables", 1)[0]
+        self.assertIn("e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565", rural)
+        named_rows = re.findall(
+            r"^\| ([^|]+) \| `(\d{11})` \| ([^|]+) \| ([^|]+) \| ([0-9.]+)% \|$",
+            appendix, re.MULTILINE)
+        named_shares = {geoid: share for _, geoid, _, _, share in named_rows}
+        expected_shares = {}
+        for region, content in report["regions"].items():
+            contrast = content["stratum_contrasts"]["rural_minus_urban"]["building_osm_share"]
+            self.assertIn(f"{100 * contrast['group1_mean']:.2f}%", rural)
+            self.assertIn(f"{100 * contrast['group0_mean']:.2f}%", rural)
+            self.assertIn(f"{100 * contrast['difference']:.2f}".replace("-", "−"), rural)
+            for bound in contrast["ci_95"]:
+                self.assertIn(f"{100 * bound:.2f}".replace("-", "−"), rural)
+            nr = contrast["group1_tracts_with_source_denominator"]
+            nu = contrast["group0_tracts_with_source_denominator"]
+            self.assertIn(f"{nr + nu:,} ({nr:,}, {nu:,})", rural)
+            expected_shares.update({item["GEOID"]: f"{100 * item['building_osm_source_share']:.3f}"
+                                    for item in content["named_lowest_osm_high_svi"]})
+        self.assertEqual(named_shares, expected_shares)
+        self.assertIn("Mappers should treat the named tracts as partner-led review priorities", rural)
+        self.assertIn("dispatch/evacuation outcomes were not measured", rural.lower())
 
     @unittest.skipUnless(shutil.which("pdfimages"), "pdfimages is required to inspect embedded figures")
     def test_map_is_embedded_in_pdf(self) -> None:
