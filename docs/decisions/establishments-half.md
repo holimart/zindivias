@@ -1,6 +1,6 @@
 # Establishments-half sensitivity for estimator v2
 
-**Status:** isolated, CBP-data-free sensitivity analysis; no v2 candidate or scored file was created. This component is not integrated into `estimate_gaps.py` or any candidate builder. No leaderboard probe or calibration was performed.
+**Status at memo date:** this was an isolated, CBP-data-free sensitivity analysis; it did not itself create or modify a v2 candidate or scored file. **Subsequent disposition:** the frozen `cbp_k=0.024` component is used in the assembled and submitted `V2_model_cgs` candidate (submission `hvLtPVmr`), as documented in `docs/writeup/methodology.md`. No leaderboard probe or calibration was performed for this analysis.
 
 ## Rule and model block
 
@@ -12,13 +12,13 @@ The analysis-only v2 block in `scripts/estimator_v2_establishments.py` computes:
 establishments_gap = clip(1 - overture_poi_all / (cbp_k * pop_total), 0, 1)
 ```
 
-Only the provided Overture all-place count, provided `pop_total`, and the explicit scalar `cbp_k` enter the component. Positive population marks the component defined. At zero population, a positive observed POI count yields a clipped gap of zero; if both population and POI count are zero, the component is undefined (numeric placeholder zero, excluded by the flag). The POI gap averages whichever halves are defined, with equal weight when both exist, matching the published organizer method. The audit holds the existing v0 facility, transport, and building estimates fixed and replaces only the establishments half, so the table isolates the parameter's effect; it is not a finished v2 composite candidate.
+Only the provided Overture all-place count, provided `pop_total`, and the explicit scalar `cbp_k` enter the establishments component. Positive population marks the component defined. At zero population, a positive observed POI count yields a clipped gap of zero; if both population and POI count are zero, the component is undefined (numeric placeholder zero, excluded by the flag). The POI gap averages whichever halves are defined, with equal weight when both exist, matching the published organizer method. This audit holds the v0 facility, transport, and building estimates fixed and replaces only the establishments half, so its table isolates the parameter's effect; it is not itself the assembled v2 composite.
 
 ### Default and constraint
 
 The CLI `--cbp-k` default is **0.024 for sensitivity analysis only**. This is the rounded task-specified planning anchor `8,000,000 / 330,000,000 ≈ 0.02424`; it was not independently verified from a CBP file, and no CBP table or external numeric file was read. The analysis always reports `k ∈ {0.015, 0.024, 0.04}` and includes a user-supplied `--cbp-k` in the table if it is outside that set.
 
-The operator amendment prohibits CBP or external numeric data in scored files and requires any scored establishments prior to be derived from challenge-provided features plus the organizer method/public methodological research. Accordingly, the planning ratio is explicitly **not authorized as a scored coefficient by this report**. The component function requires `cbp_k` explicitly; integration into a future scored candidate needs a separately documented, amendment-compliant prior and the other v2 gates. This report uses only provided features and existing model estimates; it does not create or modify a scored file.
+The operator amendment prohibits CBP or external numeric data in scored files and requires any scored establishments prior to be derived from challenge-provided features plus the organizer method/public methodological research. This report documents the planning ratio as a sensitivity assumption; the separately frozen model specification later set `cbp_k=0.024` using that allowed rationale and uses only provided Overture counts and population in the scored component. The report itself uses provided features and existing model estimates and produces no candidate predictions.
 
 ## Sensitivity results
 

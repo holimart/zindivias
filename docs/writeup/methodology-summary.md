@@ -1,17 +1,28 @@
+## What the submitted score is
+
+Final-two: `V2_model_cgs` (`hvLtPVmr`; SHA-256 `5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7`) and `B_from_A_cgs` (`eAaWXWxM`; SHA-256 `38e17cf1ec99f4f3fc5d358d13ccd0edfabe947d81fd6b6e5ef61e6cea006607`). Each is a 9,794-row `GEOID,coverage_gap_score` file copied byte-for-byte from its frozen source. 9,379 GEOIDs are official; the other 415 eastern-WA template rows use registered zero fill, not target estimates.
+
+V2 components:
+
+- **Transport:** `T_i=clip(1−named_road_km_5070_i/route_km_i,0,1)`, defined iff `route_km_i>0`; uses provided Overture named-road and eligible route lengths.
+- **Buildings:** `G_i=0.01` iff the provided Overture building count is positive; otherwise undefined (placeholder zero excluded).
+- **POI:** For fire/EMS/schools, `p_t=sigmoid(a_t+b_t·log1p((pop_total/max(ALAND_km²,.01))/100)+c_t·u)`, with fixed `(a,b,c)` respectively `(-2.8,.30,.70)`, `(-3.2,.25,.60)`, `(-1,.20,.35)`. `u=pct_urban` if finite, else `pop_urban/pop_total` if population positive, else `.5`. `n_t` is provided Overture category count plus its registered unclassified-place share. Type gap=`p_t×clip(1−n_t/(n_t+1),0,1)`, defined iff `p_t>0`; facility half averages defined types. Establishments half=`clip(1−all_overture_poi_count/(.024×pop_total),0,1)`, defined iff population or all-place count is positive (positive count at zero population gives zero). POI is the equal mean of defined halves, or undefined if neither is. Inputs: provided Overture category/all-place counts and `pop_total`, `pop_urban`, `pct_urban`, `ALAND`; priors and `.024` are fixed, not fitted to scores/labels.
+
+V2 is the arithmetic mean of defined `T_i`, `G_i`, and `POI_i`; undefined terms are omitted. B changes only the composite: `B_i=.5×V_i+.5×mean(V_j)` over official tracts *j* in the same region. Its component columns are unchanged; its regional mean uses V2 predictions, not targets.
+
+**Fresh-clone rebuild:** committed V2 source/components plus a workspace containing `samples/<region>-sample-submission.csv` (four official files) and `SampleSubmission.csv` (GEOID/region metadata) suffice; no private feature cache is needed. From the repository root:
+
+```sh
+uv run python scripts/build_candidate_b_from_a.py --workspace "$COMPETITION_WORKSPACE" && \
+uv run python scripts/build_bias_column_order_cgs.py --workspace "$COMPETITION_WORKSPACE"
+```
+
+Verified in a scratch clone; both hashes matched.
+
 ## Scope and safeguards
 
-The organisers provide no labels. Four official samples define 9,379 scored GEOIDs (`reports/sample-contract-audit.json#/authoritative_unique_geoids`). `V2_model` uses challenge features only; placeholders, public scores, hidden targets and removed references do not enter predictions. The protocol comparison identifies `V2_model_cgs` and its pre-registered 50% within-region-shrink companion `B_from_A_cgs` (`reports/final-two.json#/final_candidates`, `#/corrected_cgs_selection`). Neither candidate claims hidden-score accuracy.
-
-## Components and definedness
-
-The composite averages defined transport/building/POI terms; undefined terms are omitted, not zero-filled. Transport uses the frozen named-road gap and provided route denominator; building/POI use fixed provided-Overture specifications and priors. ACS housing units are not a building denominator. Equal weights are transparent, not accuracy-fitted. Appendix A links to detailed formulas, provenance, and reproduction notes; Appendix B covers zero/missingness cases.
-
-## Provenance and reproduction
-
-Scored predictions use organiser-provided data only. Public CAL FIRE Camp Fire DINS is discovery-only, joined to provided NorCal geometry and never used in scored candidates (`reports/discovery-dins-mechanism.json#/external_source`, `#/scored_candidates`). Its catalogue states CC BY, version unspecified, and retrieval date; the manifest preserves URL, query, licence, limits, and hash. No removed reference layer was accessed.
-
-Rebuild components with the pinned workflow and discovery reports using their documented commands. Appendix A and the reports record scripts, fixed parameters, hashes, and outputs. These checks do not validate against labels: no labelled holdout exists, and public leaderboard scores do not establish hidden-target accuracy.
+No labels, targets, placeholders, or removed references enter predictions; see Appendices A/B.
 
 ## Public-score transparency (descriptive only)
 
-Public-split RMSEs: all-zero C0 (`uRRw9KpB`) `0.1072`; corrected-order `V2_model_cgs` (`hvLtPVmr`) `0.1110`; its pre-registered 50% within-region-mean shrink, `B_from_A_cgs` (`eAaWXWxM`), `0.0975`. This is consistent with regional means doing more work; V2's within-region variation is not shown to carry target signal. These public results are not private-split evidence and do not establish hidden-target accuracy. They are reported for transparency only; candidate predictions are based on the frozen provided-feature methodology. Sources: `reports/final-two.json`; shared `data/ledger/submissions.jsonl` (mirror `reports/submissions.jsonl`); `reports/lb-scorecard-snapshot.json`; `docs/final-two-protocol.md`.
+Public RMSE: V2 0.1110/B 0.0975 (`reports/final-two.json`); not private evidence.

@@ -1,6 +1,6 @@
 # Building component decision for estimator v2
 
-**Status:** proposed operator decision; fixed model rule implemented as a standalone v2 component, not yet assembled into or written to a scored candidate. The component level is set before evaluation. No leaderboard calibration or information probe was used.
+**Status at memo date:** proposed operator decision; the fixed rule was then implemented as a standalone component. **Subsequent disposition:** the `0.01` rule and Overture-positive definedness were included in the assembled and submitted `V2_model_cgs` candidate (submission `hvLtPVmr`), as documented in `docs/writeup/methodology.md`. The component level was set before evaluation; no leaderboard calibration or information probe was used.
 
 ## Official rule text
 
@@ -62,4 +62,4 @@ The `0.01` value is a conservative residual allowance for source-vintage, attrib
 - No ACS housing-unit count is used as a denominator floor.
 - Validation: `python scripts/audit_building_source_mix.py --out reports/building-source-mix.json`; `python scripts/audit_building_v2.py --workspace "$COMPETITION_WORKSPACE" --out reports/building-v2-audit.json`; `pytest -q`.
 
-**Operator sign-off requested:** approve (or reject) the fixed `0.01` prior and the Overture-count-positive definedness proxy for integration into a future v2 candidate. The block is not a scored artifact; no upload is proposed by this decision memo.
+**Historical request:** approve (or reject) the fixed `0.01` prior and the Overture-count-positive definedness proxy for integration into a future v2 candidate. This request was superseded by the documented V2 integration and submission; the memo itself remains a rationale/audit record, not a current approval request.
