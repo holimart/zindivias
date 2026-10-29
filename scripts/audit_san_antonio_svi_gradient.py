@@ -21,8 +21,8 @@ import pyarrow.parquet as pq
 
 REGIONS = ("eastern-ok", "maricopa-az", "northern-ca", "south-central-tx")
 SOURCE_COLUMN = "overture_building_osm_source_share"
-REPLICATES = 10_000
-BASE_SEED = 20261030
+REPLICATES = 5_000
+BASE_SEED = 20261024
 
 
 def sha256(path: Path) -> str:
@@ -101,7 +101,7 @@ def ols_slope(rows: list[dict[str, Any]], cluster: bool) -> dict[str, Any]:
             "n_tracts": int(len(y)), "county_clusters": clusters, "method": method}
 
 
-def summarize_scope(rows: list[dict[str, Any]], scope: str, seed_label: str,
+def summarize_scope(rows: list[dict[str, Any]], scope: str,
                     cuts: list[float] | None = None) -> dict[str, Any]:
     if cuts is None:
         labels, cuts = quartile_labels(rows)
@@ -121,7 +121,7 @@ def summarize_scope(rows: list[dict[str, Any]], scope: str, seed_label: str,
                             "population_sum": int(population),
                             "mean_osm_share": float(arr.mean()) if len(arr) else None}
     q4, q1 = values[4], values[1]
-    seed = BASE_SEED + int.from_bytes(hashlib.sha256(seed_label.encode()).digest()[:4], "big")
+    seed = BASE_SEED
     delta = float(q4.mean() - q1.mean()) if len(q4) and len(q1) else None
     return {"scope": scope, "svi_quartile_cutpoints": cuts, "quartiles": groups,
             "q4_minus_q1": {"difference": delta,
@@ -167,19 +167,19 @@ def main() -> int:
         data_by_region[region], current = load_scope(workspace, region)
         hashes.update({f"{region}:{k}": v for k, v in current.items()})
 
-    regional = {region: summarize_scope(rows, region, f"region:{region}:q4-q1")
+    regional = {region: summarize_scope(rows, region)
                 for region, rows in data_by_region.items()}
     tx = data_by_region["south-central-tx"]
     urban = [r.copy() for r in tx if number(r.get("pct_urban")) is not None and number(r["pct_urban"]) >= 0.5]
     tx_cuts = regional["south-central-tx"]["svi_quartile_cutpoints"]
     urban_summary = summarize_scope(urban, "South-Central Texas urban (`pct_urban >= 0.5`)",
-                                    "south-central-tx:urban:q4-q1", cuts=tx_cuts)
+                                    cuts=tx_cuts)
     tx_slope = ols_slope(tx, cluster=True)
     tx_urban_slope = ols_slope(urban, cluster=True)
 
     bexar = [r.copy() for r in tx if r["GEOID"].startswith("48029")]
     bexar_summary = summarize_scope(bexar, "Bexar County (San Antonio area)",
-                                    "bexar:q4-q1", cuts=tx_cuts)
+                                    cuts=tx_cuts)
     q4 = [r for r in bexar if r["svi_q"] == 4 and number(r.get(SOURCE_COLUMN)) is not None]
     q1 = [r for r in bexar if r["svi_q"] == 1 and number(r.get(SOURCE_COLUMN)) is not None]
     low = sorted(q4, key=lambda r: (number(r[SOURCE_COLUMN]), r["GEOID"]))[:12]
@@ -200,7 +200,7 @@ def main() -> int:
             "outcome": "provided Overture building OSM source share; unweighted tract mean; source attribution is not an accuracy or completeness measure",
             "svi": "provided `svi_overall` where `svi_covered` is true; quartiles computed within scope by empirical 25/50/75% quantiles, ties assigned upward with searchsorted(side=right)",
             "q4_minus_q1": "mean Q4 OSM share minus mean Q1 OSM share",
-            "bootstrap": "independent tract-with-replacement resampling within Q1 and Q4; percentile 95% interval",
+            "bootstrap": "5,000 independent tract-with-replacement resamples within Q1 and Q4; percentile 95% interval; fixed seed 20261024",
             "urban": "provided pct_urban >= 0.5; retains South-Central Texas region-wide SVI cutpoints",
             "bexar": "county FIPS 48029 among official South-Central Texas sample IDs; uses the same South-Central Texas SVI quartile cutpoints for comparability",
         },
