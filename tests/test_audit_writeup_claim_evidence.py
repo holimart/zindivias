@@ -222,10 +222,10 @@ class NegativeControlTests(unittest.TestCase):
     """Tampered copies must be rejected, so the gates are not vacuous."""
 
     def test_derived_token_off_by_one_fails_the_verifier(self) -> None:
-        claim = copy.deepcopy(CLAIMS["methodology-044"])
-        intact = audit.verify_claim(copy.deepcopy(CLAIMS["methodology-044"]), POOL)
+        claim = copy.deepcopy(CLAIMS["methodology-035"])
+        intact = audit.verify_claim(copy.deepcopy(CLAIMS["methodology-035"]), POOL)
         self.assertEqual(len(intact["derived_tokens_verified"]),
-                         len(CLAIMS["methodology-044"]["derived_tokens"]))
+                         len(CLAIMS["methodology-035"]["derived_tokens"]))
         claim["derived_tokens"][0]["value"] = claim["derived_tokens"][0]["value"] + 1.0
         tampered = audit.verify_claim(claim, POOL)
         self.assertEqual(len(tampered["derived_tokens_verified"]),

@@ -120,17 +120,17 @@ def check(record: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
                 or record["identity"]["operator_confirmation_recorded"],
                 "a username may only appear with recorded operator confirmation")
         if record["identity"]["zindi_username_or_team"] is None:
-            require(config["identity"]["pending_placeholder"] in text,
-                    "pending placeholder must be stated for the unconfirmed identity")
-            require("PENDING" in text, "pending marker missing from the writeup")
+            require(config["identity"]["pending_placeholder"] not in text
+                    and "PENDING_OPERATOR_CONFIRMATION" not in text,
+                    "internal identity placeholder must stay out of the judge-facing writeup")
         require(not record["identity"].get("operator_confirmation_recorded"),
                 "identity confirmation may only be recorded by the operator")
         require(bool(record.get("blocking_prerequisites")),
                 "a staged packet must list its blocking prerequisites")
         search = record["organiser_page"]["form_url_search"]
         require(bool(search.get("attempted_on")) and bool(search.get("pages_attempted"))
-                and search.get("outcome") in text,
-                "a missing form URL must be documented with the retrieval attempt")
+                and bool(search.get("outcome")),
+                "a missing form URL must retain its retrieval attempt in the packet record")
     for phrase in ("we submitted the form", "submitted our writeup through the form"):
         require(phrase not in text.lower(), f"writeup claims a form submission: {phrase!r}")
 
@@ -350,10 +350,11 @@ def check(record: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
         require(record["claim_evidence_audit"].get(key) == audit.get(key),
                 f"claim audit figure disagrees with the audit report: {key}")
     if (audit["fraction_quantitative_claims_traceable"] != 1.0
-            or audit["numeric_tokens_total"] != audit["numeric_tokens_covered"]):
+            or audit["numeric_tokens_total"] != audit["numeric_tokens_covered"]
+            or not audit_report.get("acceptance", {}).get("all_passed", False)):
         require("full claim audit does not pass" in text.lower()
                 and str(len(audit_report.get("unresolved", []))) in text,
-                "incomplete claim audit is not disclosed in the writeup")
+                "incomplete claim/reproduction audit is not disclosed in the writeup")
 
     # -- provided-data-only tie ----------------------------------------------------------------------
     provenance = load_json(ROOT / config["external_sources"]["provided_data_evidence"])

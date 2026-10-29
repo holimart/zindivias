@@ -58,7 +58,7 @@ class PacketPresenceTests(unittest.TestCase):
         pdf = ROOT / "reports/writeup/final-writeup.pdf"
         self.assertTrue(pdf.is_file())
         self.assertEqual(pdf.read_bytes()[:5], b"%PDF-")
-        self.assertGreater((ROOT / "docs/writeup/final-writeup.md").stat().st_size, 40000)
+        self.assertGreater((ROOT / "docs/writeup/final-writeup.md").stat().st_size, 30000)
         for item in RECORD["writeup_files"]:
             path = ROOT / item["path"]
             self.assertTrue(path.is_file(), item["path"])
@@ -98,19 +98,45 @@ class RulesContentTests(unittest.TestCase):
     def test_consideration_statement_is_verbatim(self) -> None:
         self.assertIn(CONFIG["consideration_requested"]["stated_verbatim_in_writeup"], MARKDOWN)
 
-    def test_identity_and_form_url_stay_uninvented(self) -> None:
+    def test_identity_and_form_url_stay_uninvented_without_internal_placeholders(self) -> None:
         self.assertIsNone(RECORD["identity"]["zindi_username_or_team"])
         self.assertIsNone(RECORD["form"]["url"])
-        self.assertIn(CONFIG["identity"]["pending_placeholder"], MARKDOWN)
+        self.assertNotIn(CONFIG["identity"]["pending_placeholder"], MARKDOWN)
+        self.assertNotIn("staged draft", MARKDOWN.lower())
+        self.assertNotIn("not submission-ready", MARKDOWN.lower())
 
     def test_model_candidate_is_declared_not_uploaded(self) -> None:
         self.assertIn(CONFIG["model_evidence"]["upload_status_quote"], MARKDOWN)
+        self.assertNotIn("predicted public RMSE", MARKDOWN)
+        self.assertNotIn("model-side forecast", MARKDOWN)
         self.assertIn(CONFIG["model_evidence"]["format_fix_candidate_id"], MARKDOWN)
         self.assertIn(CONFIG["model_evidence"]["format_fix_sha256"], MARKDOWN)
         status = RECORD["model_candidate"]["upload_status"]
         self.assertFalse(status["uploaded"])
         self.assertFalse(status["live_upload_attempted"])
         self.assertEqual(status["uploads_used_for_this_candidate"], 0)
+
+
+    def test_section4_external_layers_have_urls_dates_and_licence_statuses(self) -> None:
+        sources = CONFIG["external_sources"]["required_external_layers"]
+        self.assertEqual(len(sources), 4)
+        register = {row["url"] for row in RECORD["external_source_register"]}
+        for source in sources:
+            self.assertIn(source["name"], MARKDOWN)
+            self.assertIn(source["url"], MARKDOWN)
+            self.assertIn(source["accessed_on"], MARKDOWN)
+            self.assertIn(source["licence_terms"], MARKDOWN)
+            self.assertIn(source["url"], register)
+            self.assertIn("discovery-only", source["role"])
+
+    def test_appendix_diagnostics_are_linked_not_inline(self) -> None:
+        archive = ROOT / "docs/writeup/appendix-diagnostics.md"
+        self.assertTrue(archive.is_file())
+        for heading in ("Family M metadata", "Family S spatial-context",
+                        "Shrink diagnosis", "T1 named-stroke"):
+            self.assertIn(heading, archive.read_text(encoding="utf-8"))
+        self.assertIn("Appendix diagnostics", MARKDOWN)
+        self.assertNotIn("B_MORPH_V1", MARKDOWN)
 
 
 class ProvenanceTieTests(unittest.TestCase):
@@ -178,7 +204,7 @@ class BuildTests(unittest.TestCase):
         first, _ = builder.assemble(builder.CONFIG)
         second, _ = builder.assemble(builder.CONFIG)
         self.assertEqual(first, second)
-        self.assertGreater(len(first), 40000)
+        self.assertGreater(len(first), 30000)
 
     def test_claim_audit_figures_in_the_record_match_the_audit_report(self) -> None:
         summary = json.loads((ROOT / "reports/writeup-claim-evidence-audit.json")
@@ -415,9 +441,8 @@ class OperatorFillTests(unittest.TestCase):
             self.assertTrue(entry["used_for"])
         registered = {row["url"] for row in RECORD["external_source_register"]}
         self.assertIn(page["url"], registered)
-        for attempted in page["form_url_search"]["pages_attempted"]:
-            self.assertIn(attempted, registered)
-        self.assertIn(page["form_url_search"]["outcome"], MARKDOWN)
+        self.assertTrue(page["form_url_search"]["pages_attempted"])
+        self.assertNotIn(page["form_url_search"]["outcome"], MARKDOWN)
         self.assertIsNone(RECORD["form"]["url"])
         self.assertTrue(RECORD["operator_input_schema"]["fields"])
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Claim-to-evidence audit for the Bias Bounty Best Discovery / Documentation writeup.
 
-Every quantitative statement in the three writeup documents must carry an exact
+Every quantitative statement in the registered writeup sources must carry an exact
 evidence pointer into a committed artifact and a reproducible command, and every
 number it states must be present in the named evidence. The audit measures the
 fraction of quantitative claims that are traceable, executes each claim's verify
@@ -1108,7 +1108,7 @@ def render_markdown(report: dict[str, Any]) -> str:
     lines.append("")
     lines.append("## Method")
     lines.append("")
-    lines.append("Each of the three writeup documents is split into quantitative claim blocks "
+    lines.append("Each registered writeup source document is split into quantitative claim blocks "
                  "(a block is a paragraph or a table containing at least one number outside a "
                  "fenced command). Every number in a block is a token; a token is *covered* when "
                  "the same value appears in an evidence artifact named by that claim, allowing "
@@ -1186,7 +1186,7 @@ def render_markdown(report: dict[str, Any]) -> str:
     lines.append("## Unresolved claims")
     lines.append("")
     if not report["unresolved"]:
-        lines.append("None for claim evidence: every quantitative claim in the three writeup "
+        lines.append("None for claim evidence: every quantitative claim in the registered writeup "
                      "documents carries a verified evidence pointer and a passing verify "
                      "command. Overall audit acceptance remains separate; see the verdict "
                      "for any reproduce-product differences.")

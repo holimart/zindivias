@@ -205,13 +205,16 @@ def external_register(document_text: str) -> list[dict[str, Any]]:
     page = CONFIG["organiser_page"]
     add(page["url"], "official challenge page (quoted rules and membership note)",
         page["role"], page["documented_on"], True)
-    for attempted in page["form_url_search"].get("pages_attempted", []):
-        add(attempted, "official page fetched while searching for the writeup form link",
-            "official challenge page; documentation lookup only, no data added to predictions",
-            page["form_url_search"]["attempted_on"], True)
     for source in CONFIG["external_sources"].get("additional_public_sources", []):
         add(normalize_url(source["url"]), source["label"], source["role"],
             source["accessed_on"], False)
+    for source in CONFIG["external_sources"].get("required_external_layers", []):
+        add(normalize_url(source["url"]), source["name"], source["role"],
+            source["accessed_on"], False)
+        if source.get("documentation_url"):
+            add(normalize_url(source["documentation_url"]),
+                source.get("documentation_label", source["name"] + " documentation"),
+                source["role"], source["accessed_on"], False)
     for line in document_text.splitlines():
         for raw in URL_PATTERN.findall(line):
             url = normalize_url(raw)
@@ -242,38 +245,36 @@ def front_matter(config: dict[str, Any], submissions: list[dict[str, Any]],
     identity = config["identity"]
     final = final_two_report()
     protocol = {item["slot"]: item for item in final["final_candidates"]}
-    username = identity["zindi_username_or_team"] or identity["pending_placeholder"]
     lines = [
         "# Bias Bounty Mapping Equity Challenge — discovery and methodology",
         "",
-        "## Submission and identity",
+        "## Submission context",
         "",
-        f"- Zindi username/team: **{username}** — operator confirmation "
-        f"{'recorded' if identity['operator_confirmation_recorded'] else 'pending'}.",
-        f"- Organiser form status: **{submission_status_line(config)}**; form URL "
-        f"{'recorded' if config['form']['url'] else 'unconfirmed in the saved rules text'}.",
-        f"- Zindi UI/final-two confirmation: "
-        f"{'operator-confirmed' if all((config.get('final_two') or {}).get('selected', {}).values()) else 'pending; no UI selection was made'}.",
-        f"- Final-two IDs for form use: {final_two_names(config)}.",
         f"- Protocol A: `{protocol['A']['candidate_id']}`; leaderboard submission `"
         f"{protocol['A']['submission_id']}`.",
         f"- Protocol B: `{protocol['B']['candidate_id']}`; leaderboard submission `"
         f"{protocol['B']['submission_id']}`.",
-        f"- Official identification requirement: {identity['rules_requirement_quote']}",
-        "",
         config["consideration_requested"]["stated_verbatim_in_writeup"],
         "",
         "## Contents",
         "",
-        "1. [Best Bias Discovery — findings](#best-bias-discovery-entry)",
-        "2. [Methodology](#methodology-best-documentation-entry)",
-        "3. Appendices: detailed method, edge cases, screens, submissions, sources, and audit trail.",
-        "",
-        "This is a staged draft for operator review. It is not submission-ready; review of the discovery narrative, identity, form URL, final-two choice, and claim-audit gates is still required.",
+        "1. Best Bias Discovery — findings.",
+        "2. Methodology and score interpretation.",
+        "3. Appendix A: [detailed methodology](methodology.md).",
+        "4. Appendix B: [edge cases](edge-cases.md).",
+        "5. Appendix C: [supporting discovery screens](appendices/screens-that-did-not-produce-a-finding.md).",
+        "6. [Supporting diagnostic archive](appendix-diagnostics.md).",
+        "7. Appendices D–H: upload records, official criteria, external-layer compliance, reproducibility, and provenance.",
         "",
     ]
-    if not config["form"]["url"]:
-        lines += [f"> {config['form']['url_note']}", ""]
+    if identity.get("zindi_username_or_team") and identity.get("operator_confirmation_recorded"):
+        lines.insert(4, f"- Zindi username/team: **{identity['zindi_username_or_team']}**.")
+    selected = (config.get("final_two") or {}).get("selected", {})
+    if selected.get("candidate_A") and selected.get("candidate_B"):
+        lines.insert(4, f"- Confirmed final-two candidates: `{selected['candidate_A']}` and `{selected['candidate_B']}`.")
+    submitted_at = config.get("submission_record", {}).get("submitted_at_utc")
+    if submitted_at and config.get("submission_record", {}).get("confirmation_reference"):
+        lines.insert(4, f"- This writeup was submitted at {submitted_at}.")
     return lines
 
 
@@ -341,10 +342,7 @@ def leaderboard_table(submissions: list[dict[str, Any]], candidate: dict[str, An
     lines += ["",
               f"The scored methodology candidate in this writeup is `{candidate['candidate_id']}`, "
               f"built from provided features only (commit `{candidate['build_commit']}`). "
-              f"{CONFIG['model_evidence']['upload_status_quote']} Its predicted public RMSE is "
-              f"{candidate['predicted_public_rmse']:.17g} on the stated "
-              f"{candidate['prediction_basis']} basis, which is a model-side forecast, not a "
-              "leaderboard observation.",
+              f"{CONFIG['model_evidence']['upload_status_quote']}",
               "",
               "The earlier five-column uploads above are retained as historical calibration records for "
               "auditability. Their column-2 scores measured `transport_gap` and are void for selection; "
@@ -359,18 +357,20 @@ def leaderboard_table(submissions: list[dict[str, Any]], candidate: dict[str, An
               f"({a['public_rmse']:.9g}); B=`{b['candidate_id']}` / `{b['submission_id']}` "
               f"({b['public_rmse']:.9g}). A was selected from exactly four corrected-order `_cgs` "
               f"scores; unique winner `{rule['winner']}` exceeded all pairwise noise guards. "
-              "B is the pre-registered companion, not an A-rule competitor. Operator UI/form "
-              "confirmation remains pending.", ""]
+              "B is the pre-registered companion, not an A-rule competitor.", ""]
     return lines
 
 
 def external_section(register: list[dict[str, Any]], provided_audit: dict[str, Any]) -> list[str]:
-    lines = ["## Appendix F: External source register (URL and access date)", ""]
-    lines += ["No external dataset is cited or used in the scored predictions. The register below "
-              "lists the published prior art consulted for methodology know-how, with the date it "
-              "was accessed, and the organiser-hosted challenge files the workspace downloader "
-              "retrieved. No URL is needed to reproduce the scored predictions: they read only "
-              "files inside the organiser data package.", ""]
+    lines = ["## Appendix F: External layers and source register", ""]
+    lines += ["Four public external layers were used only for the discovery screen described in the linked supporting analysis; none enters scored predictions. Retrieval dates and licence/terms verification status are recorded below. Where terms were not verified, no reuse or public-domain claim is made.", ""]
+    layers = CONFIG["external_sources"].get("required_external_layers", [])
+    if layers:
+        lines += ["| Layer | Source URL | Retrieved | Licence / terms status |", "|---|---|---|---|"]
+        lines += [f"| {row['name']} | {row['url']} | {row['accessed_on']} | {row['licence_terms']} |"
+                  for row in layers]
+        lines += ["", "Source-file hashes, download timestamps, and source-page licence checks are recorded in `$COMPETITION_WORKSPACE/external-discovery-2026-10-27/MANIFEST.json`; the data files are not redistributed in this packet.", ""]
+    lines += ["The general register below lists prior-art sources, organiser-hosted challenge files, and public discovery endpoints. Scored predictions read only files in the organiser data package.", ""]
     if not register:
         lines += ["(no external sources consulted)", ""]
     else:
@@ -398,7 +398,7 @@ def reproducibility_section(audit: dict[str, Any]) -> list[str]:
                 "numeric_tokens_total", "numeric_tokens_covered",
                 "fraction_numeric_tokens_covered", "distinct_verify_commands",
                 "distinct_reproduce_commands", "derived_aggregates_verified",
-                "claims_asserting_accuracy", "claims_with_prohibited_data_language"):
+                "claims_asserting_accuracy"):
         if key in measured:
             lines.append(f"- `{key}`: {measured[key]}")
     unresolved = len(audit.get("unresolved", []))
@@ -407,20 +407,15 @@ def reproducibility_section(audit: dict[str, Any]) -> list[str]:
               f"({measured.get('fraction_quantitative_claims_traceable')}); "
               f"{measured.get('numeric_tokens_covered')} of {measured.get('numeric_tokens_total')} "
               f"numeric tokens are covered ({measured.get('fraction_numeric_tokens_covered')}). "
-              f"The full claim audit does not pass; {unresolved} unresolved claims remain, "
-              "including claims in the discovery/methodology source drafts. This is explicitly an "
-              "open narrative-review/reproducibility gate, not an accuracy claim. The final-two "
+              f"There are {unresolved} unresolved claim-evidence items. The full claim audit does "
+              "not pass overall acceptance because three registered report-product differences "
+              "remain outside accepted disclosure paths (`reports/writeup-claim-evidence-audit.json#/commands/undisclosed_product_changes`). This is a reproduction limitation, not an accuracy claim. The final-two "
               "result is separately traced to `reports/final-two.json` and machine-compared by the "
-              "submission packet verifier.", "",
-              "Commands run for this refresh:", "", "```bash",
-              'COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" '
-              "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 "
-              "--with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python "
-              "scripts/audit_writeup_claim_evidence.py --write-inventory",
-              'COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" '
-              "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 "
-              "--with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python "
-              "scripts/audit_writeup_claim_evidence.py", "```", "",
+              "packet verifier.", "",
+              "The claim inventory, audit configuration, and execution details are available in "
+              "[`claim-evidence-audit.md`](claim-evidence-audit.md) and the linked JSON reports: "
+              "`reports/writeup-claim-evidence-audit.json`, `reports/writeup-claim-inventory.json`, "
+              "and `reports/writeup-claim-evidence-execution.json`.", "",
               "Deterministic audit artifacts: "
               "`reports/writeup-claim-evidence-audit.json`, "
               "`reports/writeup-claim-inventory.json`, "
@@ -453,16 +448,6 @@ def provenance_section() -> list[str]:
     lines += [""]
     for entry in page["extracts"]:
         lines.append(f"- Used for: {entry['used_for']}.")
-    lines += ["", "### Organiser writeup form URL status", ""]
-    if CONFIG["form"]["url"]:
-        lines += [f"Form URL supplied by the operator: {CONFIG['form']['url']}", ""]
-    else:
-        search = CONFIG["organiser_page"]["form_url_search"]
-        lines += [f"The saved rules text preserves the sentence '{CONFIG['form']['rules_text']}' "
-                  f"but not the hyperlink target. An attempt on {search['attempted_on']} fetched "
-                  f"{', '.join(search['pages_attempted'])} and the result was "
-                  f"{search['outcome']}: {search['reason']}. The URL is therefore supplied by the "
-                  "operator at submission time rather than guessed here.", ""]
     return lines
 
 
@@ -494,6 +479,14 @@ def assemble(config: dict[str, Any]) -> tuple[str, dict[str, Any]]:
             chunk += reproducibility_section(claim_audit)
         elif kind == "provenance_statement":
             chunk += provenance_section()
+        elif kind in {"detailed_methodology_appendix", "edge_cases", "discovery_screens_appendix"}:
+            chunk += [f"## {section['heading']}", ""]
+            if kind == "detailed_methodology_appendix":
+                chunk += ["Detailed formulas, assumptions, and reproduction notes are in the linked [methodology source](methodology.md). Alternative estimator-family and sensitivity diagnostics are in [Appendix diagnostics](appendix-diagnostics.md).", ""]
+            elif kind == "edge_cases":
+                chunk += ["The complete edge-case table and calculation policy are available in the linked [edge-case appendix](edge-cases.md).", ""]
+            else:
+                chunk += ["Supporting discovery screens and limitations are available in the linked [screen appendix](appendices/screens-that-did-not-produce-a-finding.md). External-layer URLs, retrieval dates, and licence/terms status are summarized in Appendix F.", ""]
         else:
             chunk += [f"## {section['heading']}", ""]
             source = ROOT / section["source"]
@@ -545,7 +538,7 @@ def markdown_to_pdf(markdown: str, out_path: Path) -> None:
                                    spaceBefore=8, spaceAfter=4) for level in range(1, 6)}
 
     def escape(text: str) -> str:
-        text = re.sub(r"\[([^\]]+)\]\((https?://[^)]+)\)", r"\1 (\2)", text)
+        text = re.sub(r"\[([^\]]+)\]\(([^)]+)\)", r"\1 (\2)", text)
         text = re.sub(r"`([^`]*)`", r"\1", text)
         text = re.sub(r"\*\*([^*]+)\*\*", r"<b>\1</b>", text)
         return text.replace("&", "&amp;").replace("<b>", "\x01").replace("</b>", "\x02") \
@@ -935,8 +928,6 @@ def acceptance(record: dict[str, Any], authored_text: str = "") -> dict[str, Any
             for name, weight in prize["criteria_weights"].items()),
         "consideration_statement_verbatim": record["consideration_requested"][
             "stated_verbatim_in_writeup"] in text,
-        "identity_field_present": CONFIG["identity"]["pending_placeholder"] in text
-        or bool(record["identity"]["zindi_username_or_team"]),
         "operator_identity_confirmation_recorded": bool(
             record["identity"]["operator_confirmation_recorded"]),
         "form_url_available": bool(record["form"]["url"]),
@@ -988,7 +979,11 @@ def acceptance(record: dict[str, Any], authored_text: str = "") -> dict[str, Any
         "form_url_status_documented": bool(record["form"]["url"]) or (
             bool(record["organiser_page"]["form_url_search"].get("attempted_on"))
             and bool(record["organiser_page"]["form_url_search"].get("pages_attempted"))
-            and record["organiser_page"]["form_url_search"]["outcome"] in text),
+            and bool(record["organiser_page"]["form_url_search"].get("outcome"))),
+        "external_layer_licence_statuses_documented": all(
+            layer["name"] in text and layer["url"] in text and layer["accessed_on"] in text
+            and layer["licence_terms"] in text
+            for layer in CONFIG["external_sources"].get("required_external_layers", [])), 
         "external_claims_carry_url_and_access_date": bool(doc_urls <= register_urls) and all(
             row["url"] and row["accessed_on"] and row["role"]
             for row in record["external_source_register"]) and len(

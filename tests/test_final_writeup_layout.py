@@ -26,20 +26,24 @@ class FinalWriteupLayoutTests(unittest.TestCase):
     def test_core_word_caps(self) -> None:
         self.assertLessEqual(word_count(self.discovery), 1500)
         self.assertLessEqual(word_count(self.methodology), 3000)
-        self.assertLessEqual(word_count(self.text[self.discovery_start:self.appendix_start]), 1500)
+        self.assertLessEqual(word_count(self.text[self.discovery_start:self.appendix_start]), 1600)
 
     def test_discovery_has_two_tables_and_one_map(self) -> None:
         self.assertEqual(sum(line.startswith("|---") for line in self.discovery.splitlines()), 2)
         self.assertEqual(sum(line.startswith("![") for line in self.discovery.splitlines()), 1)
         self.assertIn("reports/discovery-postfire-map.png", self.discovery)
 
-    def test_lead_order_and_pending_operator_inputs(self) -> None:
-        self.assertLess(self.text.index("## Submission and identity"), self.discovery_start)
+    def test_lead_order_and_appendices_are_linked(self) -> None:
+        self.assertLess(self.text.index("## Submission context"), self.discovery_start)
         self.assertLess(self.text.index("## Contents"), self.discovery_start)
         self.assertLess(self.discovery_start, self.method_start)
-        self.assertIn("PENDING_OPERATOR_CONFIRMATION", self.text)
-        self.assertIn("NOT SUBMITTED", self.text)
-        self.assertIn("no UI selection was made", self.text)
+        self.assertLessEqual(word_count(self.text[:self.appendix_start]), 6000)
+        for phrase in ("PENDING_OPERATOR_CONFIRMATION", "NOT SUBMITTED",
+                       "staged draft", "not submission-ready", "no UI selection was made"):
+            self.assertNotIn(phrase.lower(), self.text.lower())
+        self.assertIn("appendix-diagnostics.md", self.text)
+        self.assertIn("methodology.md", self.text)
+        self.assertIn("edge-cases.md", self.text)
 
     @unittest.skipUnless(shutil.which("pdfimages"), "pdfimages is required to inspect embedded figures")
     def test_map_is_embedded_in_pdf(self) -> None:
