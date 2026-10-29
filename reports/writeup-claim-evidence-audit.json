@@ -1,6 +1,6 @@
 {
  "preregistration": {
-  "config_sha256": "09a865cc8400d68e8a0a872651e12bd1cc835e7574592d0e8995c0af69ba0dba",
+  "config_sha256": "9c1d09ad685bcd5261c03cf082e9ebaa7b20359675eb0a824c869a1dfeefaed1",
   "row": "bias-writeup-claim-evidence-audit",
   "intent": "documentation screen: every quantitative statement in the Best Bias Discovery / Best Documentation writeup must carry an exact evidence pointer and a reproducible command; not a model-promotion or accuracy assessment",
   "docs": [
@@ -10,7 +10,7 @@
    },
    {
     "path": "docs/writeup/methodology-summary.md",
-    "sha256": "2d440bd8c626e132cbd2ef650366b873f462b9113d7b6a2f999d4c01c6174606"
+    "sha256": "67a08834174db5a6f06b9cdf83592f9672301091f7c6ba739fa1afaa34bc3447"
    },
    {
     "path": "docs/writeup/methodology.md",
@@ -75,6 +75,7 @@
    "config/v2-prior-envelope-preregistered.json",
    "config/v2-strata-descriptive-preregistered.json",
    "docs/competition.md",
+   "docs/final-two-protocol.md",
    "docs/data-inventory.md",
    "docs/decisions/building-component.md",
    "docs/decisions/establishments-half.md",
@@ -121,6 +122,7 @@
    "reports/gap-invariant-audit.json",
    "reports/lb-score-algebra.json",
    "reports/lb-scorecard-snapshot.json",
+   "reports/submissions.jsonl",
    "reports/lb-subset-moments.json",
    "reports/leaderboard/2026-10-25T051219+0000.json",
    "reports/leaderboard/index.json",
@@ -284,8 +286,8 @@
    },
    {
     "path": "docs/writeup/methodology-summary.md",
-    "sha256": "2d440bd8c626e132cbd2ef650366b873f462b9113d7b6a2f999d4c01c6174606",
-    "lines": 15
+    "sha256": "67a08834174db5a6f06b9cdf83592f9672301091f7c6ba739fa1afaa34bc3447",
+    "lines": 19
    },
    {
     "path": "docs/writeup/methodology.md",
@@ -307,51 +309,51 @@
   "note": "the writeup drafts and their reports already existed; before this audit no consolidated claim inventory linked each quantitative statement to an evidence pointer and a reproducible command"
  },
  "summary": {
-  "claims_total": 92,
+  "claims_total": 93,
   "claims_by_doc": {
    "docs/writeup/bias-discovery.md": 9,
-   "docs/writeup/methodology-summary.md": 1,
+   "docs/writeup/methodology-summary.md": 2,
    "docs/writeup/methodology.md": 60,
    "docs/writeup/edge-cases.md": 7,
    "docs/writeup/appendices/screens-that-did-not-produce-a-finding.md": 15
   },
   "claims_by_kind": {
-   "paragraph": 69,
+   "paragraph": 70,
    "table": 23
   },
   "claims_by_provenance_class": {
    "measured_provided_data": 49,
    "scope_statement": 3,
+   "historical_disclosure": 5,
    "input_inventory": 4,
    "model_specification": 3,
-   "historical_disclosure": 4,
    "measured_model_only": 21,
    "measured_provided_proxy": 6,
    "policy_statement": 1,
    "reproduction_statement": 1
   },
-  "claims_fully_traceable": 92,
+  "claims_fully_traceable": 93,
   "fraction_quantitative_claims_traceable": 1.0,
-  "numeric_tokens_total": 1080,
-  "numeric_tokens_covered": 1080,
+  "numeric_tokens_total": 1084,
+  "numeric_tokens_covered": 1084,
   "fraction_numeric_tokens_covered": 1.0,
-  "claims_asserting_accuracy": 2,
-  "claims_with_prohibited_data_language": 1,
+  "claims_asserting_accuracy": 3,
+  "claims_with_prohibited_data_language": 2,
   "claims_with_prohibited_disclosure_language": 18,
   "derived_aggregates_verified": 30,
   "claims_by_class": {
    "measured_provided_data": 49,
    "scope_statement": 3,
+   "historical_disclosure": 5,
    "input_inventory": 4,
    "model_specification": 3,
-   "historical_disclosure": 4,
    "measured_model_only": 21,
    "measured_provided_proxy": 6,
    "policy_statement": 1,
    "reproduction_statement": 1
   },
-  "distinct_verify_commands": 92,
-  "distinct_reproduce_commands": 21
+  "distinct_verify_commands": 93,
+  "distinct_reproduce_commands": 22
  },
  "claims": [
   {
@@ -1135,7 +1137,7 @@
    "line_start": 5,
    "line_end": 5,
    "kind": "paragraph",
-   "text": "The organisers provide no training labels. The four official sample files define 9,379 scored GEOIDs (`reports/sample-contract-audit.json#/authoritative_unique_geoids`). The submitted `V2_model` estimate uses challenge-provided features only; sample score placeholders, public scores, hidden targets, and removed reference layers do not enter prediction construction. Its final format-corrected A artifact is `V2_model_cgs`; B is the pre-registered 50% within-region-shrink companion `B_from_A_cgs`. Operator confirmation remains pending (`reports/final-two.json#/final_candidates`, `#/corrected_cgs_selection`). Neither candidate is claimed to match the hidden score.",
+   "text": "The organisers provide no labels. Four official samples define 9,379 scored GEOIDs (`reports/sample-contract-audit.json#/authoritative_unique_geoids`). `V2_model` uses challenge features only; placeholders, public scores, hidden targets and removed references do not enter predictions. A is `V2_model_cgs`; B is the pre-registered 50% within-region-shrink companion `B_from_A_cgs`. Operator confirmation is pending (`reports/final-two.json#/final_candidates`, `#/corrected_cgs_selection`); neither candidate claims hidden-score accuracy.",
    "provenance_class": "scope_statement",
    "evidence": [
     {
@@ -1184,7 +1186,7 @@
    "tokens_exempt": [],
    "derived_tokens": [],
    "hedge_context": [
-    "The organisers provide no training labels. The four official sample files define 9,379 scored GEOIDs (`reports/sample-contract-audit.json#/authoritative_unique_geoids`). The submitted `V2_model` estimate uses challenge-provided features only; sample score placeholders, public scores, hidden targets, and removed reference layers do not enter prediction construction. Its final format-corrected A artifact is `V2_model_cgs`; B is the pre-registered 50% within-region-shrink companion `B_from_A_cgs`. Operator confirmation remains pending (`reports/final-two.json#/final_candidates`, `#/corrected_cgs_selection`). Neither candidate is claimed to match the hidden score."
+    "The organisers provide no labels. Four official samples define 9,379 scored GEOIDs (`reports/sample-contract-audit.json#/authoritative_unique_geoids`). `V2_model` uses challenge features only; placeholders, public scores, hidden targets and removed references do not enter predictions. A is `V2_model_cgs`; B is the pre-registered 50% within-region-shrink companion `B_from_A_cgs`. Operator confirmation is pending (`reports/final-two.json#/final_candidates`, `#/corrected_cgs_selection`); neither candidate claims hidden-score accuracy."
    ],
    "notes": "",
    "verification": {
@@ -1205,6 +1207,74 @@
     "prohibited_disclosure": [
      "labels"
     ],
+    "prohibited_violations": [],
+    "prohibited_ok": true,
+    "hedge_ok": true,
+    "reproduce_products_verified": true
+   }
+  },
+  {
+   "claim_id": "methodology-summary-002",
+   "doc": "docs/writeup/methodology-summary.md",
+   "section": "Public-score transparency (descriptive only)",
+   "line_start": 19,
+   "line_end": 19,
+   "kind": "paragraph",
+   "text": "Public-split RMSEs: all-zero C0 (`uRRw9KpB`) `0.1072`; corrected-order `V2_model_cgs` (`hvLtPVmr`) `0.1110`; its pre-registered 50% within-region-mean shrink, `B_from_A_cgs` (`eAaWXWxM`), `0.0975`. This is consistent with regional means doing more work; V2's within-region variation is not shown to carry target signal. Public results are not private-split evidence or a private-score forecast. No candidate values changed: the frozen protocol bars leaderboard-derived algebra or retuning. Sources: `reports/final-two.json`; shared `data/ledger/submissions.jsonl` (mirror `reports/submissions.jsonl`); `reports/lb-scorecard-snapshot.json`; `docs/final-two-protocol.md`.",
+   "provenance_class": "historical_disclosure",
+   "evidence": [
+    {
+     "path": "reports/final-two.json",
+     "sha256": "c31358286078bd1d0b7ff87deb791a63cd0df51b45b53da13de27c678ea22361",
+     "primary": true,
+     "pointer": "/corrected_cgs_selection/scores"
+    },
+    {
+     "path": "reports/submissions.jsonl",
+     "sha256": "948eceb0b79a2d73bb4cc34df85b5119e9e0a9c707faf02a7d2d6dbaeb93808e",
+     "primary": false,
+     "pointer": "document"
+    },
+    {
+     "path": "docs/final-two-protocol.md",
+     "sha256": "8b9d68bf798ec86aedda29ca7309d94503e02918142740f66673377db2f0268e",
+     "primary": false,
+     "pointer": "document"
+    },
+    {
+     "path": "reports/lb-scorecard-snapshot.json",
+     "sha256": "82e9515d5d4462fb057f3c2780dc1895f8c625caab4dc4c86ea6f7a9a5906d56",
+     "primary": false,
+     "pointer": "/scorecards"
+    }
+   ],
+   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-summary-002",
+   "reproduce_command": "python scripts/verify_writeup_claim.py --claim methodology-summary-002",
+   "reproduce_products": [],
+   "tokens_exempt": [],
+   "derived_tokens": [],
+   "hedge_context": [
+    "Public-split RMSEs: all-zero C0 (`uRRw9KpB`) `0.1072`; corrected-order `V2_model_cgs` (`hvLtPVmr`) `0.1110`; its pre-registered 50% within-region-mean shrink, `B_from_A_cgs` (`eAaWXWxM`), `0.0975`. This is consistent with regional means doing more work; V2's within-region variation is not shown to carry target signal. Public results are not private-split evidence or a private-score forecast. No candidate values changed: the frozen protocol bars leaderboard-derived algebra or retuning. Sources: `reports/final-two.json`; shared `data/ledger/submissions.jsonl` (mirror `reports/submissions.jsonl`); `reports/lb-scorecard-snapshot.json`; `docs/final-two-protocol.md`."
+   ],
+   "notes": "corrected-order model/shrink public scores and frozen values come from the final-two protocol report; C0's actual public score is cross-checked in the scorecard snapshot and shared-ledger mirror",
+   "verification": {
+    "claim_id": "methodology-summary-002",
+    "passed": true,
+    "anchor_verbatim": true,
+    "evidence_hashes_verified": true,
+    "tokens_total": 4,
+    "tokens_covered": 4,
+    "tokens_uncovered": [],
+    "derived_tokens_verified": [],
+    "primary_pointer_hit": true,
+    "pointer": "/corrected_cgs_selection/scores",
+    "pointer_reason": "",
+    "accuracy_assertion": true,
+    "accuracy_ok": true,
+    "prohibited_usage": [
+     "submissions.jsonl"
+    ],
+    "prohibited_disclosure": [],
     "prohibited_violations": [],
     "prohibited_ok": true,
     "hedge_ok": true,
@@ -7908,6 +7978,10 @@
     "exit_code": 0
    },
    {
+    "command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-summary-002",
+    "exit_code": 0
+   },
+   {
     "command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-001",
     "exit_code": 0
    },
@@ -8441,6 +8515,12 @@
       "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
      }
     ]
+   },
+   {
+    "command": "python scripts/verify_writeup_claim.py --claim methodology-summary-002",
+    "exit_code": 0,
+    "undisclosed_product_changes": [],
+    "products": []
    }
   ],
   "undisclosed_product_changes": [
@@ -8600,7 +8680,7 @@
    "working_tree_clean_before": false,
    "working_tree_clean_after": false,
    "present": true,
-   "sha256": "5d96fd36878c3590b882cd3b175e8f59390036ea14210463d25d79009a27cb90"
+   "sha256": "59d8d052d417c15a905b1d60b7781c6b3fed96f017cf1bab70d3699d03179259"
   }
  },
  "unresolved": [],

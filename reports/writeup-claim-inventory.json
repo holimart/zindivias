@@ -586,7 +586,7 @@
    "line_start": 5,
    "line_end": 5,
    "kind": "paragraph",
-   "text": "The organisers provide no training labels. The four official sample files define 9,379 scored GEOIDs (`reports/sample-contract-audit.json#/authoritative_unique_geoids`). The submitted `V2_model` estimate uses challenge-provided features only; sample score placeholders, public scores, hidden targets, and removed reference layers do not enter prediction construction. Its final format-corrected A artifact is `V2_model_cgs`; B is the pre-registered 50% within-region-shrink companion `B_from_A_cgs`. Operator confirmation remains pending (`reports/final-two.json#/final_candidates`, `#/corrected_cgs_selection`). Neither candidate is claimed to match the hidden score.",
+   "text": "The organisers provide no labels. Four official samples define 9,379 scored GEOIDs (`reports/sample-contract-audit.json#/authoritative_unique_geoids`). `V2_model` uses challenge features only; placeholders, public scores, hidden targets and removed references do not enter predictions. A is `V2_model_cgs`; B is the pre-registered 50% within-region-shrink companion `B_from_A_cgs`. Operator confirmation is pending (`reports/final-two.json#/final_candidates`, `#/corrected_cgs_selection`); neither candidate claims hidden-score accuracy.",
    "provenance_class": "scope_statement",
    "evidence": [
     {
@@ -635,9 +635,54 @@
    "tokens_exempt": [],
    "derived_tokens": [],
    "hedge_context": [
-    "The organisers provide no training labels. The four official sample files define 9,379 scored GEOIDs (`reports/sample-contract-audit.json#/authoritative_unique_geoids`). The submitted `V2_model` estimate uses challenge-provided features only; sample score placeholders, public scores, hidden targets, and removed reference layers do not enter prediction construction. Its final format-corrected A artifact is `V2_model_cgs`; B is the pre-registered 50% within-region-shrink companion `B_from_A_cgs`. Operator confirmation remains pending (`reports/final-two.json#/final_candidates`, `#/corrected_cgs_selection`). Neither candidate is claimed to match the hidden score."
+    "The organisers provide no labels. Four official samples define 9,379 scored GEOIDs (`reports/sample-contract-audit.json#/authoritative_unique_geoids`). `V2_model` uses challenge features only; placeholders, public scores, hidden targets and removed references do not enter predictions. A is `V2_model_cgs`; B is the pre-registered 50% within-region-shrink companion `B_from_A_cgs`. Operator confirmation is pending (`reports/final-two.json#/final_candidates`, `#/corrected_cgs_selection`); neither candidate claims hidden-score accuracy."
    ],
    "notes": ""
+  },
+  {
+   "claim_id": "methodology-summary-002",
+   "doc": "docs/writeup/methodology-summary.md",
+   "section": "Public-score transparency (descriptive only)",
+   "line_start": 19,
+   "line_end": 19,
+   "kind": "paragraph",
+   "text": "Public-split RMSEs: all-zero C0 (`uRRw9KpB`) `0.1072`; corrected-order `V2_model_cgs` (`hvLtPVmr`) `0.1110`; its pre-registered 50% within-region-mean shrink, `B_from_A_cgs` (`eAaWXWxM`), `0.0975`. This is consistent with regional means doing more work; V2's within-region variation is not shown to carry target signal. Public results are not private-split evidence or a private-score forecast. No candidate values changed: the frozen protocol bars leaderboard-derived algebra or retuning. Sources: `reports/final-two.json`; shared `data/ledger/submissions.jsonl` (mirror `reports/submissions.jsonl`); `reports/lb-scorecard-snapshot.json`; `docs/final-two-protocol.md`.",
+   "provenance_class": "historical_disclosure",
+   "evidence": [
+    {
+     "path": "reports/final-two.json",
+     "sha256": "c31358286078bd1d0b7ff87deb791a63cd0df51b45b53da13de27c678ea22361",
+     "primary": true,
+     "pointer": "/corrected_cgs_selection/scores"
+    },
+    {
+     "path": "reports/submissions.jsonl",
+     "sha256": "948eceb0b79a2d73bb4cc34df85b5119e9e0a9c707faf02a7d2d6dbaeb93808e",
+     "primary": false,
+     "pointer": "document"
+    },
+    {
+     "path": "docs/final-two-protocol.md",
+     "sha256": "8b9d68bf798ec86aedda29ca7309d94503e02918142740f66673377db2f0268e",
+     "primary": false,
+     "pointer": "document"
+    },
+    {
+     "path": "reports/lb-scorecard-snapshot.json",
+     "sha256": "82e9515d5d4462fb057f3c2780dc1895f8c625caab4dc4c86ea6f7a9a5906d56",
+     "primary": false,
+     "pointer": "/scorecards"
+    }
+   ],
+   "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-summary-002",
+   "reproduce_command": "python scripts/verify_writeup_claim.py --claim methodology-summary-002",
+   "reproduce_products": [],
+   "tokens_exempt": [],
+   "derived_tokens": [],
+   "hedge_context": [
+    "Public-split RMSEs: all-zero C0 (`uRRw9KpB`) `0.1072`; corrected-order `V2_model_cgs` (`hvLtPVmr`) `0.1110`; its pre-registered 50% within-region-mean shrink, `B_from_A_cgs` (`eAaWXWxM`), `0.0975`. This is consistent with regional means doing more work; V2's within-region variation is not shown to carry target signal. Public results are not private-split evidence or a private-score forecast. No candidate values changed: the frozen protocol bars leaderboard-derived algebra or retuning. Sources: `reports/final-two.json`; shared `data/ledger/submissions.jsonl` (mirror `reports/submissions.jsonl`); `reports/lb-scorecard-snapshot.json`; `docs/final-two-protocol.md`."
+   ],
+   "notes": "corrected-order model/shrink public scores and frozen values come from the final-two protocol report; C0's actual public score is cross-checked in the scorecard snapshot and shared-ledger mirror"
   },
   {
    "claim_id": "methodology-001",

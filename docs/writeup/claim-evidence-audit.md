@@ -4,9 +4,9 @@ Row: `bias-writeup-claim-evidence-audit`. Documentation screen: every quantitati
 
 ## Verdict
 
-- **92 of 92 quantitative claims fully traceable** (100.0%).
-- **1080 of 1080 numeric tokens (100.0%) are present in the evidence named by the claim that states them.**
-- 92 per-claim verify commands and 21 reproduce commands; 21/21 recorded reproduce-command exits are 0; 0 command(s) lack an execution record in this no-`--execute-reproduce` audit pass; all recorded reproduce-command product hashes match the current files. 4 executed reproduce command(s) generated product differences not covered by the registered disclosure rules; see the audit JSON's tier_b_reproduce entries.
+- **93 of 93 quantitative claims fully traceable** (100.0%).
+- **1084 of 1084 numeric tokens (100.0%) are present in the evidence named by the claim that states them.**
+- 93 per-claim verify commands and 22 reproduce commands; 22/22 recorded reproduce-command exits are 0; 0 command(s) lack an execution record in this no-`--execute-reproduce` audit pass; all recorded reproduce-command product hashes match the current files. 4 executed reproduce command(s) generated product differences not covered by the registered disclosure rules; see the audit JSON's tier_b_reproduce entries.
 - Accuracy language outside the allowed classes: none. Prohibited reference/label/leaderboard sources used as scored-model evidence: none.
 - All acceptance gates: **FAIL**.
 
@@ -19,7 +19,7 @@ Each of the three writeup documents is split into quantitative claim blocks (a b
 | Document | Claims | Fully traceable | Numeric tokens | Covered |
 |---|---:|---:|---:|---:|
 | `docs/writeup/bias-discovery.md` | 9 | 9 | 90 | 90 |
-| `docs/writeup/methodology-summary.md` | 1 | 1 | 2 | 2 |
+| `docs/writeup/methodology-summary.md` | 2 | 2 | 6 | 6 |
 | `docs/writeup/methodology.md` | 60 | 60 | 726 | 726 |
 | `docs/writeup/edge-cases.md` | 7 | 7 | 131 | 131 |
 | `docs/writeup/appendices/screens-that-did-not-produce-a-finding.md` | 15 | 15 | 131 | 131 |
@@ -39,7 +39,8 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 | `bias-discovery-007` The preregistered DINS mechanism test is **negative**: 0/6 focal tract… | `bias-discovery.md` | What this does and does not show | 40-40 | `measured_provided_data` | `reports/discovery-dins-mechanism.json` | `/spearman/statistic` | 13/13 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
 | `bias-discovery-008` Across Maricopa, Northern California, Eastern Oklahoma, and South-Cent… | `bias-discovery.md` | Evidence | 54-54 | `measured_provided_data` | `reports/source-provenance.json` | `/` | 2/2 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
 | `bias-discovery-009` In the official sample, 805 of 858 tracts marked `tribal_any` (93.82%,… | `bias-discovery.md` | Evidence | 72-72 | `measured_provided_data` | `reports/discovery-strata-confound.json` | `/stratum_composition/non_tribal/by_region/south-central-tx/tracts` | 8/8 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
-| `methodology-summary-001` The organisers provide no training labels. The four official sample fi… | `methodology-summary.md` | Scope and safeguards | 5-5 | `scope_statement` | `reports/final-two.json` | `/scope/official_scored_tracts` | 2/2 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-summary-001` The organisers provide no labels. Four official samples define 9,379 s… | `methodology-summary.md` | Scope and safeguards | 5-5 | `scope_statement` | `reports/final-two.json` | `/scope/official_scored_tracts` | 2/2 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
+| `methodology-summary-002` Public-split RMSEs: all-zero C0 (`uRRw9KpB`) `0.1072`; corrected-order… | `methodology-summary.md` | Public-score transparency (descriptive | 19-19 | `historical_disclosure` | `reports/final-two.json` | `/corrected_cgs_selection/scores` | 4/4 | exit 0 | `python scripts/verify_writeup_claim.py --claim methodology-s…` |
 | `methodology-001` **Coverage: 100% of the documentation items listed below.** Completion… | `methodology.md` | Rubric checklist and reading guide | 7-7 | `scope_statement` | `reports/candidates.json` | `/` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
 | `methodology-002` The official scoring domain is the union of four published per-region … | `methodology.md` | Data sources, scope, and provenance | 21-21 | `input_inventory` | `docs/competition.md` | `document` | 3/3 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
 | `methodology-003` \| Region \| Official sample \| ACS geometry parquet bytes / rows \| Overt… | `methodology.md` | Data sources, scope, and provenance | 34-39 | `input_inventory` | `docs/data-inventory.md` | `document` | 44/44 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with num…` |
@@ -141,6 +142,7 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 | `docs/competition.md` | `381e8389194f278adc808ec023a688d727cab94bb539335049191261d2fa1d28` | 1 |
 | `docs/data-inventory.md` | `88fe309bd2a577d544081fd95ddc7980e77a4e4751d175eab7d5752e7f4ce950` | 32 |
 | `docs/decisions/building-component.md` | `cc63abcf8a1128ee35e2a3a8b5cc4938cb333f3b30caea81a239374fc9855974` | 2 |
+| `docs/final-two-protocol.md` | `8b9d68bf798ec86aedda29ca7309d94503e02918142740f66673377db2f0268e` | 1 |
 | `reports/bias60-family-s-summary.json` | `ea1bdb11e7c358eb5ffc4b75a0a1a3c19d7f2b7bb84dce6453fb400643f68581` | 2 |
 | `reports/building-morphology-candidate.json` | `e7f6f50d0b00fd2675f47878d524d78544f021f8bfa9bd2766722fff621cccdd` | 1 |
 | `reports/building-source-prior.json` | `4066d3a86223dca5cdd2cf63e6660afbc6577915172a48f265c4f70da08f51d4` | 1 |
@@ -163,12 +165,12 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 | `reports/estimator-v1-audit.json` | `1d72712e63f9b8f9682cd82a3cebc888be8bf0301cfc82cda05a2012a417ef5a` | 3 |
 | `reports/estimator-v2-audit.json` | `131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0` | 11 |
 | `reports/facility-catchment-candidate.json` | `53cdbfa4450223d84db7647dc4fb16d058d6bd239740e9153f51000e884e6794` | 1 |
-| `reports/final-two.json` | `c31358286078bd1d0b7ff87deb791a63cd0df51b45b53da13de27c678ea22361` | 1 |
+| `reports/final-two.json` | `c31358286078bd1d0b7ff87deb791a63cd0df51b45b53da13de27c678ea22361` | 2 |
 | `reports/gap-estimator-audit.json` | `a872e2dd62a5333037bc8e663278134c5b0a08493c7ec41768962e33859187f9` | 2 |
 | `reports/ideas-harness.json` | `1203d2acf10fa9682852abba3382d55f53c42b6fa7c03071c44cbe915d3f7a85` | 2 |
 | `reports/ideas-orthogonality.json` | `07f34f9296a0c7e453eb5ae215d671beac556cf8731b9f1037eb2874ac5fe3e4` | 2 |
 | `reports/lb-score-algebra.json` | `ae2066c228e13dcc2f0e174ed6ccb8491d5ac343286f914dd75d3213ebeeeeff` | 3 |
-| `reports/lb-scorecard-snapshot.json` | `82e9515d5d4462fb057f3c2780dc1895f8c625caab4dc4c86ea6f7a9a5906d56` | 3 |
+| `reports/lb-scorecard-snapshot.json` | `82e9515d5d4462fb057f3c2780dc1895f8c625caab4dc4c86ea6f7a9a5906d56` | 4 |
 | `reports/leaderboard/2026-10-25T051219+0000.json` | `7f699892f4f38d8ce55deec8ae4ddbc03e33098bb4f053305ea67fd6d7b5686c` | 3 |
 | `reports/leaderboard/index.json` | `1f35df77f881e0978a7d5653cc8e6b75b4026c614473cb88186a0619e61dd932` | 3 |
 | `reports/place-dedup.json` | `de03f53c37fbb9a909b2f45172ede1a58bc059371e22837738df56a54bcd3cba` | 3 |
@@ -186,6 +188,7 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 | `reports/scorecards/ySXi73rd.json` | `0927d4b704da35c06cb7dce6884210be90e91b9c510aa4408d2c3a8d87c19584` | 3 |
 | `reports/shrink-diagnosis.json` | `d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65` | 6 |
 | `reports/source-provenance.json` | `e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565` | 1 |
+| `reports/submissions.jsonl` | `948eceb0b79a2d73bb4cc34df85b5119e9e0a9c707faf02a7d2d6dbaeb93808e` | 1 |
 | `reports/t1-class-drop-handcheck.json` | `272a07078ae739ef234e0dac3c28067d7aed01ad49afc3b7320b24709243db01` | 1 |
 | `reports/t1-outside-share-threshold.json` | `dd10e054ba5923cbe7f10422ce51aaf61274ea6d8d2024a5e03573bd38e1e0f9` | 1 |
 | `reports/t1-stroke-residual-screen.json` | `d717571b5a5dcc6e7bddf84398082ca44118b4b39b22c905d92cd7bee250e3b9` | 15 |
@@ -361,6 +364,8 @@ Per-claim verify commands (executed by the audit; each must exit 0):
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-summary-001
 # exit 0
+/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-summary-002
+# exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-001
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-002
@@ -437,6 +442,8 @@ COMPETITION_WORKSPACE="$COMPETITION_WORKSPACE" /home/martin/hddProjects/langywra
 MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace "$COMPETITION_WORKSPACE" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png
 # exit 0
 MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace "$COMPETITION_WORKSPACE" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png && /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/audit_discovery_postfire_county_bootstrap.py --workspace "$COMPETITION_WORKSPACE" --out reports/discovery-postfire-county-bootstrap.json && MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_dins_mechanism.py --workspace "$COMPETITION_WORKSPACE" --dins-file "$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png
+# exit 0
+python scripts/verify_writeup_claim.py --claim methodology-summary-002
 ```
 
 ## Unresolved claims

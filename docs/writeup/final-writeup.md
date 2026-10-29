@@ -111,17 +111,21 @@ Rebuild with `python scripts/discovery_strata_confound.py --workspace "$COMPETIT
 
 ### Scope and safeguards
 
-The organisers provide no training labels. The four official sample files define 9,379 scored GEOIDs (`reports/sample-contract-audit.json#/authoritative_unique_geoids`). The submitted `V2_model` estimate uses challenge-provided features only; sample score placeholders, public scores, hidden targets, and removed reference layers do not enter prediction construction. Its final format-corrected A artifact is `V2_model_cgs`; B is the pre-registered 50% within-region-shrink companion `B_from_A_cgs`. Operator confirmation remains pending (`reports/final-two.json#/final_candidates`, `#/corrected_cgs_selection`). Neither candidate is claimed to match the hidden score.
+The organisers provide no labels. Four official samples define 9,379 scored GEOIDs (`reports/sample-contract-audit.json#/authoritative_unique_geoids`). `V2_model` uses challenge features only; placeholders, public scores, hidden targets and removed references do not enter predictions. A is `V2_model_cgs`; B is the pre-registered 50% within-region-shrink companion `B_from_A_cgs`. Operator confirmation is pending (`reports/final-two.json#/final_candidates`, `#/corrected_cgs_selection`); neither candidate claims hidden-score accuracy.
 
 ### Components and definedness
 
-The composite averages only defined transport, building, and POI components; undefined terms are omitted, not replaced with zero. Transport uses the frozen named-road gap and provided route denominator. Building and POI terms use the frozen provided-Overture specifications and documented priors. ACS housing units are not a building-count floor or denominator. Equal component weights are transparent, not fitted accuracy-optimal weights. Appendix A retains exact formulas, input hashes, preregistrations, sensitivity tests, and approval gates; Appendix B records zero/missingness edge cases.
+The composite averages defined transport/building/POI terms; undefined terms are omitted, not zero-filled. Transport uses the frozen named-road gap and provided route denominator; building/POI use fixed provided-Overture specifications and priors. ACS housing units are not a building denominator. Equal weights are transparent, not accuracy-fitted. Appendix A records formulas, hashes, preregistrations, sensitivities, and approval gates; Appendix B covers zero/missingness cases.
 
 ### Provenance and reproduction
 
-Scored predictions read only the approved organiser data package. The public CAL FIRE Camp Fire DINS extract is used only in the discovery mechanism check, joined to provided NorCal tract geometry and never to a scored candidate (`reports/discovery-dins-mechanism.json#/external_source`, `#/scored_candidates`). The catalogue records CC BY, version unspecified, and the retrieval date; the external register and workspace manifest preserve URL, query, licence, limitations, and raw hash. No Microsoft footprint or other removed reference layer was accessed.
+Scored predictions use approved organiser data only. Public CAL FIRE Camp Fire DINS is discovery-only, joined to provided NorCal geometry and never used in scored candidates (`reports/discovery-dins-mechanism.json#/external_source`, `#/scored_candidates`). Its catalogue states CC BY, version unspecified, and retrieval date; the manifest preserves URL, query, licence, limits, and hash. No removed reference layer was accessed.
 
-Regenerate components with the pinned repository workflow and each discovery report with its command in the relevant section. Scripts, fixed parameters, hashes, and outputs are recorded in Appendix A and the reports. This is a reproducibility record, not validation against labels: there is no labelled holdout, and public leaderboard scores do not establish hidden-target accuracy.
+Rebuild components with the pinned workflow and discovery reports using their documented commands. Appendix A and the reports record scripts, fixed parameters, hashes, and outputs. These checks do not validate against labels: no labelled holdout exists, and public leaderboard scores do not establish hidden-target accuracy.
+
+### Public-score transparency (descriptive only)
+
+Public-split RMSEs: all-zero C0 (`uRRw9KpB`) `0.1072`; corrected-order `V2_model_cgs` (`hvLtPVmr`) `0.1110`; its pre-registered 50% within-region-mean shrink, `B_from_A_cgs` (`eAaWXWxM`), `0.0975`. This is consistent with regional means doing more work; V2's within-region variation is not shown to carry target signal. Public results are not private-split evidence or a private-score forecast. No candidate values changed: the frozen protocol bars leaderboard-derived algebra or retuning. Sources: `reports/final-two.json`; shared `data/ledger/submissions.jsonl` (mirror `reports/submissions.jsonl`); `reports/lb-scorecard-snapshot.json`; `docs/final-two-protocol.md`.
 
 ## Appendix A: Detailed methodology and estimator diagnostics
 
@@ -1048,19 +1052,19 @@ Provided-data-only check for the scored predictions (`reports/v2-input-provenanc
 
 A machine-checked claim-to-evidence audit backs every number in this writeup.
 
-- `claims_total`: 92
-- `claims_fully_traceable`: 92
+- `claims_total`: 93
+- `claims_fully_traceable`: 93
 - `fraction_quantitative_claims_traceable`: 1.0
-- `numeric_tokens_total`: 1080
-- `numeric_tokens_covered`: 1080
+- `numeric_tokens_total`: 1084
+- `numeric_tokens_covered`: 1084
 - `fraction_numeric_tokens_covered`: 1.0
-- `distinct_verify_commands`: 92
-- `distinct_reproduce_commands`: 21
+- `distinct_verify_commands`: 93
+- `distinct_reproduce_commands`: 22
 - `derived_aggregates_verified`: 30
-- `claims_asserting_accuracy`: 2
-- `claims_with_prohibited_data_language`: 1
+- `claims_asserting_accuracy`: 3
+- `claims_with_prohibited_data_language`: 2
 
-Current audit status: 92 of 92 quantitative claims are fully traceable (1.0); 1080 of 1080 numeric tokens are covered (1.0). The full claim audit does not pass; 0 unresolved claims remain, including claims in the discovery/methodology source drafts. This is explicitly an open narrative-review/reproducibility gate, not an accuracy claim. The final-two result is separately traced to `reports/final-two.json` and machine-compared by the submission packet verifier.
+Current audit status: 93 of 93 quantitative claims are fully traceable (1.0); 1084 of 1084 numeric tokens are covered (1.0). The full claim audit does not pass; 0 unresolved claims remain, including claims in the discovery/methodology source drafts. This is explicitly an open narrative-review/reproducibility gate, not an accuracy claim. The final-two result is separately traced to `reports/final-two.json` and machine-compared by the submission packet verifier.
 
 Commands run for this refresh:
 

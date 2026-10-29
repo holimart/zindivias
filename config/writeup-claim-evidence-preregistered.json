@@ -30,6 +30,7 @@
     "config/v2-prior-envelope-preregistered.json",
     "config/v2-strata-descriptive-preregistered.json",
     "docs/competition.md",
+    "docs/final-two-protocol.md",
     "docs/data-inventory.md",
     "docs/decisions/building-component.md",
     "docs/decisions/establishments-half.md",
@@ -76,6 +77,7 @@
     "reports/gap-invariant-audit.json",
     "reports/lb-score-algebra.json",
     "reports/lb-scorecard-snapshot.json",
+    "reports/submissions.jsonl",
     "reports/lb-subset-moments.json",
     "reports/leaderboard/2026-10-25T051219+0000.json",
     "reports/leaderboard/index.json",
@@ -1015,6 +1017,19 @@
       "provenance_class": "scope_statement"
     },
     {
+      "doc": "docs/writeup/methodology-summary.md",
+      "section": "Public-score transparency (descriptive only)",
+      "evidence": [
+        "reports/final-two.json",
+        "reports/submissions.jsonl",
+        "reports/lb-scorecard-snapshot.json",
+        "docs/final-two-protocol.md"
+      ],
+      "reproduce": "python scripts/verify_writeup_claim.py --claim methodology-summary-002",
+      "products": [],
+      "provenance_class": "historical_disclosure"
+    },
+    {
       "doc": "docs/writeup/appendices/screens-that-did-not-produce-a-finding.md",
       "section": "Section 5 — T1 named-stroke class-drop diagnostic and implementation limit",
       "evidence": [
@@ -1591,6 +1606,16 @@
         "reports/discovery-strata-confound.json"
       ],
       "notes": "tribal stratum counts and regional shares are from the report stratum_composition and regional_counts_and_prevalence records"
+    },
+    "methodology-summary-002": {
+      "evidence": [
+        "reports/final-two.json",
+        "reports/submissions.jsonl",
+        "reports/lb-scorecard-snapshot.json",
+        "docs/final-two-protocol.md"
+      ],
+      "primary_pointer": "/corrected_cgs_selection/scores",
+      "notes": "corrected-order model/shrink public scores and frozen values come from the final-two protocol report; C0's actual public score is cross-checked in the scorecard snapshot and shared-ledger mirror"
     }
   },
   "reproduce_disclosed_difference_paths": [
