@@ -1,0 +1,4151 @@
+{
+  "analysis": "public CAL FIRE DINS Camp Fire incident comparison against provided USFS WRC minus Overture building-count differences; discovery only",
+  "external_source": {
+    "dataset_url": "https://data.ca.gov/dataset/cal-fire-damage-inspection-dins-data",
+    "layer_url": "https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/POSTFIRE_MASTER_DATA_SHARE/FeatureServer/0",
+    "downloaded_utc": "2026-10-29T07:12:08Z",
+    "license": {
+      "catalogue_license_id": "cc-by",
+      "catalogue_license_title": "Creative Commons Attribution",
+      "catalogue_license_url": "http://www.opendefinition.org/licenses/cc-by",
+      "is_open": true,
+      "recorded_terms": "Dataset catalogue metadata: Creative Commons Attribution (license id `cc-by`); version not specified. Catalogue license URL: http://www.opendefinition.org/licenses/cc-by. No separate licenseInfo is supplied by the ArcGIS layer.",
+      "version_caveat": "Catalogue says Creative Commons Attribution but does not identify a CC version; retain attribution and do not imply a more specific version."
+    },
+    "manifest_path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/external-discovery-2026-10-29/MANIFEST.json",
+    "manifest_sha256": "7e574a0878676dd179370f6af53cde05370d0a79ed0fd9ef9eb41d58a0715952",
+    "raw_path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/external-discovery-2026-10-29/camp-fire-dins.geojson",
+    "raw_sha256": "e7b875c3381d2aac8952c4aaf16555948193c07cf2960596e8a1abf1c59396ab",
+    "incident_number": "CABTU 016737",
+    "incident_name": "Camp"
+  },
+  "dins_source": {
+    "total_camp_fire_records": 23624,
+    "all_source_damage_counts": {
+      "Affected (>0-10%)": 626,
+      "Destroyed (>50%)": 18804,
+      "Major (25-50%)": 27,
+      "Minor (10-25%)": 101,
+      "No Damage": 4066
+    },
+    "matched_damage_counts": {
+      "Affected (>0-10%)": 626,
+      "Destroyed (>50%)": 18804,
+      "Major (25-50%)": 27,
+      "Minor (10-25%)": 101,
+      "No Damage": 4066
+    },
+    "published_limitations": "Catalogue description says the database documents structures within the California State Responsibility Area inside or within 300 feet of a fire perimeter; inspection access and fire damage can prevent identification, so not all impacted structures may be identified and a small margin of error is expected.",
+    "address_fields_requested": false
+  },
+  "spatial_join": {
+    "source_features": 23624,
+    "matched_to_official_sample_tracts": 23624,
+    "outside_official_sample_tracts": 0,
+    "points_intersecting_multiple_tracts_tie_broken_by_lexicographic_geoid": 0,
+    "tract_join_method": "point covered by provided tract polygon; if a point lies on/within multiple boundaries, assign to lexicographically smallest GEOID"
+  },
+  "comparison": {
+    "provided_count_difference_definition": "usfs_BuildingCount_sum minus Overture overture_buildings; not an organiser target",
+    "destroyed_definition": "Destroyed (>50%)",
+    "major_definition": "Major (25-50%)",
+    "ratio_definition": "(provided USFS building count - Overture building count) / DINS destroyed records; null when destroyed count is zero",
+    "relative_error_definition": "abs((provided USFS building count - Overture building count) - DINS destroyed records) / DINS destroyed records; null when destroyed count is zero",
+    "spearman_definition": "Spearman rank correlation with average ranks between DINS destroyed-record count and provided USFS minus Overture difference across all official NorCal tracts whose provided MTBS last-burn year equals 2018; zero DINS is retained"
+  },
+  "decision": {
+    "verdict": "negative",
+    "focal_relative_error_passes": 0,
+    "focal_required_passes": 4,
+    "focal_total": 6,
+    "spearman_all_2018_tracts": 0.4626067538080804,
+    "n_all_2018_tracts": 28,
+    "spearman_gate": 0.6,
+    "relative_error_gate": 0.3,
+    "verdict_summary": "The registered mechanism rule did not pass; the DINS counts do not meet both focal error and all-2018 cohort Spearman thresholds."
+  },
+  "spearman": {
+    "statistic": 0.4626067538080804,
+    "n": 28,
+    "x": "Camp Fire DINS destroyed records per official NorCal tract",
+    "y": "provided USFS building count minus Overture buildings",
+    "cohort": "all official NorCal tracts with last provided MTBS burn year 2018",
+    "average_rank_ties": true
+  },
+  "focal_butte_tracts": [
+    {
+      "GEOID": "06007001800",
+      "county_fips": "007",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 100.00000000000004,
+      "overture_buildings": 1087,
+      "provided_usfs_building_count": 1753.4217144878567,
+      "usfs_minus_overture": 666.4217144878567,
+      "dins_destroyed": 3314,
+      "dins_major": 3,
+      "dins_all_records": 3742,
+      "difference_over_destroyed": 0.2010928528931372,
+      "relative_error": 0.7989071471068628,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06007002100",
+      "county_fips": "007",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 100.1048772244015,
+      "overture_buildings": 1058,
+      "provided_usfs_building_count": 1646.3367367003593,
+      "usfs_minus_overture": 588.3367367003593,
+      "dins_destroyed": 2337,
+      "dins_major": 4,
+      "dins_all_records": 2869,
+      "difference_over_destroyed": 0.25174871061204934,
+      "relative_error": 0.7482512893879506,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06007002000",
+      "county_fips": "007",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 100.03091468259105,
+      "overture_buildings": 1135,
+      "provided_usfs_building_count": 1714.4834485678002,
+      "usfs_minus_overture": 579.4834485678002,
+      "dins_destroyed": 2870,
+      "dins_major": 4,
+      "dins_all_records": 3224,
+      "difference_over_destroyed": 0.20191060925707324,
+      "relative_error": 0.7980893907429267,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06007001900",
+      "county_fips": "007",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 100.34906093532197,
+      "overture_buildings": 818,
+      "provided_usfs_building_count": 1208.1931527456836,
+      "usfs_minus_overture": 390.1931527456836,
+      "dins_destroyed": 1887,
+      "dins_major": 3,
+      "dins_all_records": 2169,
+      "difference_over_destroyed": 0.20677962519644072,
+      "relative_error": 0.7932203748035593,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06007002300",
+      "county_fips": "007",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 64.37728044846199,
+      "overture_buildings": 1721,
+      "provided_usfs_building_count": 2389.9375788554316,
+      "usfs_minus_overture": 668.9375788554316,
+      "dins_destroyed": 2386,
+      "dins_major": 2,
+      "dins_all_records": 3086,
+      "difference_over_destroyed": 0.2803594211464508,
+      "relative_error": 0.7196405788535492,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06007002200",
+      "county_fips": "007",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 153.75399315989537,
+      "overture_buildings": 2266,
+      "provided_usfs_building_count": 3032.0893966698204,
+      "usfs_minus_overture": 766.0893966698204,
+      "dins_destroyed": 2472,
+      "dins_major": 6,
+      "dins_all_records": 3156,
+      "difference_over_destroyed": 0.30990671386319596,
+      "relative_error": 0.690093286136804,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    }
+  ],
+  "all_last_burn_2018_tracts": [
+    {
+      "GEOID": "06007000901",
+      "county_fips": "007",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 99.0358476898049,
+      "overture_buildings": 1338,
+      "provided_usfs_building_count": 1226.1804732307792,
+      "usfs_minus_overture": -111.81952676922083,
+      "dins_destroyed": 29,
+      "dins_major": 0,
+      "dins_all_records": 260,
+      "difference_over_destroyed": -3.855845750662787,
+      "relative_error": 4.8558457506627875,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06007001500",
+      "county_fips": "007",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 0.22662578618792528,
+      "overture_buildings": 4584,
+      "provided_usfs_building_count": 4249.171473598108,
+      "usfs_minus_overture": -334.8285264018923,
+      "dins_destroyed": 0,
+      "dins_major": 0,
+      "dins_all_records": 5,
+      "difference_over_destroyed": null,
+      "relative_error": null,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06007001602",
+      "county_fips": "007",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 70.54235892128446,
+      "overture_buildings": 2524,
+      "provided_usfs_building_count": 2185.634703391086,
+      "usfs_minus_overture": -338.3652966089139,
+      "dins_destroyed": 361,
+      "dins_major": 0,
+      "dins_all_records": 627,
+      "difference_over_destroyed": -0.9372999906064098,
+      "relative_error": 1.9372999906064097,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06007001702",
+      "county_fips": "007",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 52.65456434256892,
+      "overture_buildings": 1782,
+      "provided_usfs_building_count": 1450.4517977659125,
+      "usfs_minus_overture": -331.5482022340875,
+      "dins_destroyed": 1391,
+      "dins_major": 1,
+      "dins_all_records": 1656,
+      "difference_over_destroyed": -0.23835240994542597,
+      "relative_error": 1.238352409945426,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06007001703",
+      "county_fips": "007",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 64.12800116693855,
+      "overture_buildings": 706,
+      "provided_usfs_building_count": 612.7206573188305,
+      "usfs_minus_overture": -93.27934268116951,
+      "dins_destroyed": 788,
+      "dins_major": 1,
+      "dins_all_records": 1207,
+      "difference_over_destroyed": -0.1183748003568141,
+      "relative_error": 1.1183748003568141,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06007001800",
+      "county_fips": "007",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 100.00000000000004,
+      "overture_buildings": 1087,
+      "provided_usfs_building_count": 1753.4217144878567,
+      "usfs_minus_overture": 666.4217144878567,
+      "dins_destroyed": 3314,
+      "dins_major": 3,
+      "dins_all_records": 3742,
+      "difference_over_destroyed": 0.2010928528931372,
+      "relative_error": 0.7989071471068628,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06007001900",
+      "county_fips": "007",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 100.34906093532197,
+      "overture_buildings": 818,
+      "provided_usfs_building_count": 1208.1931527456836,
+      "usfs_minus_overture": 390.1931527456836,
+      "dins_destroyed": 1887,
+      "dins_major": 3,
+      "dins_all_records": 2169,
+      "difference_over_destroyed": 0.20677962519644072,
+      "relative_error": 0.7932203748035593,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06007002000",
+      "county_fips": "007",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 100.03091468259105,
+      "overture_buildings": 1135,
+      "provided_usfs_building_count": 1714.4834485678002,
+      "usfs_minus_overture": 579.4834485678002,
+      "dins_destroyed": 2870,
+      "dins_major": 4,
+      "dins_all_records": 3224,
+      "difference_over_destroyed": 0.20191060925707324,
+      "relative_error": 0.7980893907429267,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06007002100",
+      "county_fips": "007",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 100.1048772244015,
+      "overture_buildings": 1058,
+      "provided_usfs_building_count": 1646.3367367003593,
+      "usfs_minus_overture": 588.3367367003593,
+      "dins_destroyed": 2337,
+      "dins_major": 4,
+      "dins_all_records": 2869,
+      "difference_over_destroyed": 0.25174871061204934,
+      "relative_error": 0.7482512893879506,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06007002200",
+      "county_fips": "007",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 153.75399315989537,
+      "overture_buildings": 2266,
+      "provided_usfs_building_count": 3032.0893966698204,
+      "usfs_minus_overture": 766.0893966698204,
+      "dins_destroyed": 2472,
+      "dins_major": 6,
+      "dins_all_records": 3156,
+      "difference_over_destroyed": 0.30990671386319596,
+      "relative_error": 0.690093286136804,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06007002300",
+      "county_fips": "007",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 64.37728044846199,
+      "overture_buildings": 1721,
+      "provided_usfs_building_count": 2389.9375788554316,
+      "usfs_minus_overture": 668.9375788554316,
+      "dins_destroyed": 2386,
+      "dins_major": 2,
+      "dins_all_records": 3086,
+      "difference_over_destroyed": 0.2803594211464508,
+      "relative_error": 0.7196405788535492,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06011000400",
+      "county_fips": "011",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 43.367043016059,
+      "overture_buildings": 2754,
+      "provided_usfs_building_count": 2837.3861823678017,
+      "usfs_minus_overture": 83.38618236780167,
+      "dins_destroyed": 0,
+      "dins_major": 0,
+      "dins_all_records": 0,
+      "difference_over_destroyed": null,
+      "relative_error": null,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06033000300",
+      "county_fips": "033",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 53.80505573898265,
+      "overture_buildings": 2940,
+      "provided_usfs_building_count": 3052.5807324233465,
+      "usfs_minus_overture": 112.58073242334649,
+      "dins_destroyed": 0,
+      "dins_major": 0,
+      "dins_all_records": 0,
+      "difference_over_destroyed": null,
+      "relative_error": null,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06033000501",
+      "county_fips": "033",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 153.80971169309845,
+      "overture_buildings": 2091,
+      "provided_usfs_building_count": 2508.336451897644,
+      "usfs_minus_overture": 417.3364518976441,
+      "dins_destroyed": 0,
+      "dins_major": 0,
+      "dins_all_records": 0,
+      "difference_over_destroyed": null,
+      "relative_error": null,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06033000602",
+      "county_fips": "033",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 79.87920878328582,
+      "overture_buildings": 2010,
+      "provided_usfs_building_count": 2367.605611172181,
+      "usfs_minus_overture": 357.60561117218094,
+      "dins_destroyed": 0,
+      "dins_major": 0,
+      "dins_all_records": 0,
+      "difference_over_destroyed": null,
+      "relative_error": null,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06033000702",
+      "county_fips": "033",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 80.6229870024807,
+      "overture_buildings": 2407,
+      "provided_usfs_building_count": 2511.6108924968867,
+      "usfs_minus_overture": 104.61089249688666,
+      "dins_destroyed": 0,
+      "dins_major": 0,
+      "dins_all_records": 0,
+      "difference_over_destroyed": null,
+      "relative_error": null,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06033001000",
+      "county_fips": "033",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 7.620351378936361,
+      "overture_buildings": 4607,
+      "provided_usfs_building_count": 4771.313685319384,
+      "usfs_minus_overture": 164.3136853193837,
+      "dins_destroyed": 0,
+      "dins_major": 0,
+      "dins_all_records": 0,
+      "difference_over_destroyed": null,
+      "relative_error": null,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06045011700",
+      "county_fips": "045",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 20.535665905045988,
+      "overture_buildings": 2659,
+      "provided_usfs_building_count": 2370.4444925608154,
+      "usfs_minus_overture": -288.55550743918457,
+      "dins_destroyed": 0,
+      "dins_major": 0,
+      "dins_all_records": 0,
+      "difference_over_destroyed": null,
+      "relative_error": null,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06045011800",
+      "county_fips": "045",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 5.06042580222787,
+      "overture_buildings": 2563,
+      "provided_usfs_building_count": 2255.692532696761,
+      "usfs_minus_overture": -307.3074673032388,
+      "dins_destroyed": 0,
+      "dins_major": 0,
+      "dins_all_records": 0,
+      "difference_over_destroyed": null,
+      "relative_error": null,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06061022013",
+      "county_fips": "061",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 15.940181618206086,
+      "overture_buildings": 2194,
+      "provided_usfs_building_count": 2137.7745851688087,
+      "usfs_minus_overture": -56.2254148311913,
+      "dins_destroyed": 0,
+      "dins_major": 0,
+      "dins_all_records": 0,
+      "difference_over_destroyed": null,
+      "relative_error": null,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06089010602",
+      "county_fips": "089",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 26.145435970678808,
+      "overture_buildings": 2537,
+      "provided_usfs_building_count": 2415.2282536009584,
+      "usfs_minus_overture": -121.7717463990416,
+      "dins_destroyed": 0,
+      "dins_major": 0,
+      "dins_all_records": 0,
+      "difference_over_destroyed": null,
+      "relative_error": null,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06089010603",
+      "county_fips": "089",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 91.76674620414911,
+      "overture_buildings": 519,
+      "provided_usfs_building_count": 751.2090312025975,
+      "usfs_minus_overture": 232.20903120259754,
+      "dins_destroyed": 0,
+      "dins_major": 0,
+      "dins_all_records": 0,
+      "difference_over_destroyed": null,
+      "relative_error": null,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06089010702",
+      "county_fips": "089",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 55.14129348001921,
+      "overture_buildings": 1948,
+      "provided_usfs_building_count": 1683.9291096569505,
+      "usfs_minus_overture": -264.07089034304954,
+      "dins_destroyed": 0,
+      "dins_major": 0,
+      "dins_all_records": 0,
+      "difference_over_destroyed": null,
+      "relative_error": null,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06089011001",
+      "county_fips": "089",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 5.469324152668447,
+      "overture_buildings": 1164,
+      "provided_usfs_building_count": 1040.3480583613855,
+      "usfs_minus_overture": -123.65194163861452,
+      "dins_destroyed": 0,
+      "dins_major": 0,
+      "dins_all_records": 0,
+      "difference_over_destroyed": null,
+      "relative_error": null,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06089011600",
+      "county_fips": "089",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 3.18032020878585,
+      "overture_buildings": 2756,
+      "provided_usfs_building_count": 2264.289016707684,
+      "usfs_minus_overture": -491.7109832923161,
+      "dins_destroyed": 0,
+      "dins_major": 0,
+      "dins_all_records": 0,
+      "difference_over_destroyed": null,
+      "relative_error": null,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06089012302",
+      "county_fips": "089",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 23.54157835706193,
+      "overture_buildings": 3945,
+      "provided_usfs_building_count": 3727.0920194115024,
+      "usfs_minus_overture": -217.9079805884976,
+      "dins_destroyed": 0,
+      "dins_major": 0,
+      "dins_all_records": 0,
+      "difference_over_destroyed": null,
+      "relative_error": null,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06089012606",
+      "county_fips": "089",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 28.002977184563157,
+      "overture_buildings": 2877,
+      "provided_usfs_building_count": 2876.08212399669,
+      "usfs_minus_overture": -0.9178760033100843,
+      "dins_destroyed": 0,
+      "dins_major": 0,
+      "dins_all_records": 0,
+      "difference_over_destroyed": null,
+      "relative_error": null,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    },
+    {
+      "GEOID": "06101050800",
+      "county_fips": "101",
+      "last_mtbs_burn_year": 2018,
+      "mtbs_burned_pct_land": 1.4299931536205415,
+      "overture_buildings": 2398,
+      "provided_usfs_building_count": 2312.096251577139,
+      "usfs_minus_overture": -85.9037484228611,
+      "dins_destroyed": 0,
+      "dins_major": 0,
+      "dins_all_records": 0,
+      "difference_over_destroyed": null,
+      "relative_error": null,
+      "usfs_edition": "WRC v2 (RDS-2020-0016-2 / RDS-2020-0060-2 / RDS-2024-0030)"
+    }
+  ],
+  "opposite_direction": {
+    "official_sample_tracts": 591,
+    "cohort": "all 591 official NorCal sample tracts, with no last-burn-year restriction",
+    "tracts_with_overture_and_zero_camp_fire_dins": 576,
+    "overture_buildings_in_those_tracts": 1139778,
+    "tracts": [
+      {
+        "GEOID": "06007000102",
+        "overture_buildings": 1736,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007000103",
+        "overture_buildings": 2423,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007000104",
+        "overture_buildings": 1802,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007000201",
+        "overture_buildings": 1688,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007000202",
+        "overture_buildings": 1295,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007000300",
+        "overture_buildings": 1286,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007000401",
+        "overture_buildings": 1470,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007000403",
+        "overture_buildings": 1153,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007000404",
+        "overture_buildings": 1854,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007000501",
+        "overture_buildings": 1779,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007000502",
+        "overture_buildings": 858,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007000601",
+        "overture_buildings": 1441,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007000603",
+        "overture_buildings": 877,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007000604",
+        "overture_buildings": 667,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007000700",
+        "overture_buildings": 2086,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007000800",
+        "overture_buildings": 2258,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007000903",
+        "overture_buildings": 1982,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007000904",
+        "overture_buildings": 2135,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007001000",
+        "overture_buildings": 1777,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007001100",
+        "overture_buildings": 1654,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007001200",
+        "overture_buildings": 1481,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007001300",
+        "overture_buildings": 1759,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007001400",
+        "overture_buildings": 5420,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007002402",
+        "overture_buildings": 3011,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2020
+      },
+      {
+        "GEOID": "06007002601",
+        "overture_buildings": 2021,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2017
+      },
+      {
+        "GEOID": "06007002602",
+        "overture_buildings": 2456,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2020
+      },
+      {
+        "GEOID": "06007002700",
+        "overture_buildings": 2598,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007002800",
+        "overture_buildings": 1816,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007002900",
+        "overture_buildings": 1539,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007003001",
+        "overture_buildings": 1410,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007003002",
+        "overture_buildings": 1817,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007003100",
+        "overture_buildings": 2566,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007003200",
+        "overture_buildings": 3252,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 1992
+      },
+      {
+        "GEOID": "06007003300",
+        "overture_buildings": 4931,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2017
+      },
+      {
+        "GEOID": "06007003400",
+        "overture_buildings": 2090,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007003501",
+        "overture_buildings": 1837,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007003502",
+        "overture_buildings": 2550,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007003600",
+        "overture_buildings": 2823,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06007003700",
+        "overture_buildings": 2808,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2017
+      },
+      {
+        "GEOID": "06011000100",
+        "overture_buildings": 3594,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2019
+      },
+      {
+        "GEOID": "06011000200",
+        "overture_buildings": 2966,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06011000301",
+        "overture_buildings": 1875,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06011000302",
+        "overture_buildings": 1351,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2020
+      },
+      {
+        "GEOID": "06011000400",
+        "overture_buildings": 2754,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2018
+      },
+      {
+        "GEOID": "06011000500",
+        "overture_buildings": 1646,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06015000202",
+        "overture_buildings": 2764,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2023
+      },
+      {
+        "GEOID": "06017030601",
+        "overture_buildings": 3833,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06017030603",
+        "overture_buildings": 2903,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06017030604",
+        "overture_buildings": 717,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2022
+      },
+      {
+        "GEOID": "06017030605",
+        "overture_buildings": 1284,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06017030606",
+        "overture_buildings": 3355,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06017030701",
+        "overture_buildings": 2372,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06017030706",
+        "overture_buildings": 2469,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06017030709",
+        "overture_buildings": 2142,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06017030710",
+        "overture_buildings": 2368,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06017030801",
+        "overture_buildings": 2613,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06017030901",
+        "overture_buildings": 2560,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06017030902",
+        "overture_buildings": 3339,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06017031000",
+        "overture_buildings": 3051,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06017031100",
+        "overture_buildings": 2630,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06017031700",
+        "overture_buildings": 1285,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06021010101",
+        "overture_buildings": 1804,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06021010102",
+        "overture_buildings": 2298,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06021010200",
+        "overture_buildings": 4236,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06021010300",
+        "overture_buildings": 2755,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2020
+      },
+      {
+        "GEOID": "06021010401",
+        "overture_buildings": 1060,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06021010402",
+        "overture_buildings": 2805,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06021010501",
+        "overture_buildings": 1953,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06021010502",
+        "overture_buildings": 1841,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06023001200",
+        "overture_buildings": 2094,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2023
+      },
+      {
+        "GEOID": "06023010102",
+        "overture_buildings": 2991,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2023
+      },
+      {
+        "GEOID": "06023010902",
+        "overture_buildings": 3995,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2015
+      },
+      {
+        "GEOID": "06023011600",
+        "overture_buildings": 4403,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2015
+      },
+      {
+        "GEOID": "06023940000",
+        "overture_buildings": 1329,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2023
+      },
+      {
+        "GEOID": "06033000100",
+        "overture_buildings": 3227,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2020
+      },
+      {
+        "GEOID": "06033000300",
+        "overture_buildings": 2940,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2018
+      },
+      {
+        "GEOID": "06033000401",
+        "overture_buildings": 1693,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06033000402",
+        "overture_buildings": 2013,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06033000501",
+        "overture_buildings": 2091,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2018
+      },
+      {
+        "GEOID": "06033000502",
+        "overture_buildings": 1521,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06033000601",
+        "overture_buildings": 1673,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2017
+      },
+      {
+        "GEOID": "06033000602",
+        "overture_buildings": 2010,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2018
+      },
+      {
+        "GEOID": "06033000702",
+        "overture_buildings": 2407,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2018
+      },
+      {
+        "GEOID": "06033000703",
+        "overture_buildings": 1518,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2017
+      },
+      {
+        "GEOID": "06033000704",
+        "overture_buildings": 1269,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2017
+      },
+      {
+        "GEOID": "06033000801",
+        "overture_buildings": 1389,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06033000802",
+        "overture_buildings": 2232,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06033000901",
+        "overture_buildings": 1536,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06033000902",
+        "overture_buildings": 3084,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06033001000",
+        "overture_buildings": 4607,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2018
+      },
+      {
+        "GEOID": "06033001101",
+        "overture_buildings": 1402,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2015
+      },
+      {
+        "GEOID": "06033001102",
+        "overture_buildings": 920,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2015
+      },
+      {
+        "GEOID": "06033001200",
+        "overture_buildings": 3112,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2020
+      },
+      {
+        "GEOID": "06033001301",
+        "overture_buildings": 1764,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2015
+      },
+      {
+        "GEOID": "06033001302",
+        "overture_buildings": 3423,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2020
+      },
+      {
+        "GEOID": "06035040100",
+        "overture_buildings": 3072,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06035040200",
+        "overture_buildings": 2873,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06035040302",
+        "overture_buildings": 3190,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06035040303",
+        "overture_buildings": 1780,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06035040304",
+        "overture_buildings": 931,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06035040305",
+        "overture_buildings": 1802,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06035040400",
+        "overture_buildings": 1540,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2003
+      },
+      {
+        "GEOID": "06035040500",
+        "overture_buildings": 2639,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06035040600",
+        "overture_buildings": 2722,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06045010100",
+        "overture_buildings": 3885,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2020
+      },
+      {
+        "GEOID": "06045010200",
+        "overture_buildings": 5649,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2014
+      },
+      {
+        "GEOID": "06045010601",
+        "overture_buildings": 2891,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2017
+      },
+      {
+        "GEOID": "06045010602",
+        "overture_buildings": 2832,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06045010801",
+        "overture_buildings": 4830,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2017
+      },
+      {
+        "GEOID": "06045010802",
+        "overture_buildings": 2377,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2020
+      },
+      {
+        "GEOID": "06045011700",
+        "overture_buildings": 2659,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2018
+      },
+      {
+        "GEOID": "06045011800",
+        "overture_buildings": 2563,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2018
+      },
+      {
+        "GEOID": "06049000100",
+        "overture_buildings": 2766,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06049000200",
+        "overture_buildings": 2319,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2020
+      },
+      {
+        "GEOID": "06049000300",
+        "overture_buildings": 3725,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2022
+      },
+      {
+        "GEOID": "06055201800",
+        "overture_buildings": 2195,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2020
+      },
+      {
+        "GEOID": "06057000102",
+        "overture_buildings": 3322,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06057000104",
+        "overture_buildings": 2174,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06057000105",
+        "overture_buildings": 2280,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06057000106",
+        "overture_buildings": 1197,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06057000107",
+        "overture_buildings": 3640,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06057000200",
+        "overture_buildings": 2960,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 1988
+      },
+      {
+        "GEOID": "06057000300",
+        "overture_buildings": 2074,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 1988
+      },
+      {
+        "GEOID": "06057000401",
+        "overture_buildings": 3397,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 1988
+      },
+      {
+        "GEOID": "06057000403",
+        "overture_buildings": 1670,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 1988
+      },
+      {
+        "GEOID": "06057000404",
+        "overture_buildings": 4201,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 1988
+      },
+      {
+        "GEOID": "06057000502",
+        "overture_buildings": 2518,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06057000503",
+        "overture_buildings": 716,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06057000504",
+        "overture_buildings": 2376,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06057000601",
+        "overture_buildings": 410,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06057000602",
+        "overture_buildings": 2257,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06057000701",
+        "overture_buildings": 5086,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06057000702",
+        "overture_buildings": 2901,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06057000801",
+        "overture_buildings": 3324,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 1988
+      },
+      {
+        "GEOID": "06057000802",
+        "overture_buildings": 3852,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06057000900",
+        "overture_buildings": 4553,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2009
+      },
+      {
+        "GEOID": "06061020200",
+        "overture_buildings": 3231,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2022
+      },
+      {
+        "GEOID": "06061020300",
+        "overture_buildings": 1723,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061020401",
+        "overture_buildings": 1129,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061020402",
+        "overture_buildings": 1576,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061020501",
+        "overture_buildings": 2457,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061020502",
+        "overture_buildings": 2761,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061020601",
+        "overture_buildings": 3624,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061020604",
+        "overture_buildings": 2900,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061020605",
+        "overture_buildings": 2792,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061020606",
+        "overture_buildings": 1543,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061020607",
+        "overture_buildings": 3225,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061020608",
+        "overture_buildings": 2666,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061020710",
+        "overture_buildings": 1810,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061020711",
+        "overture_buildings": 1081,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061020712",
+        "overture_buildings": 1191,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061020713",
+        "overture_buildings": 867,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061020714",
+        "overture_buildings": 1544,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061020715",
+        "overture_buildings": 1096,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061020717",
+        "overture_buildings": 1956,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061020805",
+        "overture_buildings": 1344,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061020806",
+        "overture_buildings": 1444,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061020901",
+        "overture_buildings": 1264,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061020908",
+        "overture_buildings": 3258,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021003",
+        "overture_buildings": 2630,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021034",
+        "overture_buildings": 1449,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021037",
+        "overture_buildings": 618,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021038",
+        "overture_buildings": 2427,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021039",
+        "overture_buildings": 1168,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021040",
+        "overture_buildings": 2037,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021043",
+        "overture_buildings": 1565,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021044",
+        "overture_buildings": 1812,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021045",
+        "overture_buildings": 1394,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021046",
+        "overture_buildings": 1443,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021047",
+        "overture_buildings": 1401,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021048",
+        "overture_buildings": 1123,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021103",
+        "overture_buildings": 2289,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021106",
+        "overture_buildings": 869,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021108",
+        "overture_buildings": 1183,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021109",
+        "overture_buildings": 1982,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021122",
+        "overture_buildings": 1434,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021123",
+        "overture_buildings": 3195,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021128",
+        "overture_buildings": 982,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021129",
+        "overture_buildings": 876,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021130",
+        "overture_buildings": 347,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021131",
+        "overture_buildings": 1335,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021203",
+        "overture_buildings": 3836,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021204",
+        "overture_buildings": 2279,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021304",
+        "overture_buildings": 5994,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2008
+      },
+      {
+        "GEOID": "06061021323",
+        "overture_buildings": 3051,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021324",
+        "overture_buildings": 2406,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021325",
+        "overture_buildings": 3311,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2007
+      },
+      {
+        "GEOID": "06061021326",
+        "overture_buildings": 1249,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021327",
+        "overture_buildings": 4357,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021328",
+        "overture_buildings": 5507,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2007
+      },
+      {
+        "GEOID": "06061021401",
+        "overture_buildings": 1508,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021403",
+        "overture_buildings": 2106,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021501",
+        "overture_buildings": 3505,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021502",
+        "overture_buildings": 1863,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021603",
+        "overture_buildings": 1439,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021604",
+        "overture_buildings": 3041,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021801",
+        "overture_buildings": 2416,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021802",
+        "overture_buildings": 3222,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021901",
+        "overture_buildings": 1778,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061021902",
+        "overture_buildings": 2487,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061022002",
+        "overture_buildings": 3578,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06061022013",
+        "overture_buildings": 2194,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2018
+      },
+      {
+        "GEOID": "06061022014",
+        "overture_buildings": 2997,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2008
+      },
+      {
+        "GEOID": "06061022400",
+        "overture_buildings": 1370,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061022500",
+        "overture_buildings": 2336,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061022600",
+        "overture_buildings": 1099,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061022800",
+        "overture_buildings": 1391,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061022900",
+        "overture_buildings": 1377,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061023000",
+        "overture_buildings": 1144,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061023100",
+        "overture_buildings": 2957,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 1985
+      },
+      {
+        "GEOID": "06061023200",
+        "overture_buildings": 1901,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061023300",
+        "overture_buildings": 2114,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061023400",
+        "overture_buildings": 2137,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061023501",
+        "overture_buildings": 544,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 1992
+      },
+      {
+        "GEOID": "06061023502",
+        "overture_buildings": 3066,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 1992
+      },
+      {
+        "GEOID": "06061023600",
+        "overture_buildings": 2789,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 1992
+      },
+      {
+        "GEOID": "06061023700",
+        "overture_buildings": 2235,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 1992
+      },
+      {
+        "GEOID": "06061023800",
+        "overture_buildings": 2142,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06061023900",
+        "overture_buildings": 1260,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06063000100",
+        "overture_buildings": 3238,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06063000201",
+        "overture_buildings": 2882,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2020
+      },
+      {
+        "GEOID": "06063000202",
+        "overture_buildings": 1454,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06063000300",
+        "overture_buildings": 3749,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06063000400",
+        "overture_buildings": 2170,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06063000501",
+        "overture_buildings": 1800,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06063000502",
+        "overture_buildings": 3570,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06067000100",
+        "overture_buildings": 1725,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067000200",
+        "overture_buildings": 2275,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067000300",
+        "overture_buildings": 1892,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067000400",
+        "overture_buildings": 1475,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067000501",
+        "overture_buildings": 485,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067000502",
+        "overture_buildings": 488,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067000600",
+        "overture_buildings": 333,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067000700",
+        "overture_buildings": 139,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067000800",
+        "overture_buildings": 111,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067001102",
+        "overture_buildings": 246,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067001103",
+        "overture_buildings": 306,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067001201",
+        "overture_buildings": 366,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067001202",
+        "overture_buildings": 247,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067001300",
+        "overture_buildings": 807,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067001400",
+        "overture_buildings": 774,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067001500",
+        "overture_buildings": 2430,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067001601",
+        "overture_buildings": 1807,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067001602",
+        "overture_buildings": 1641,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067001702",
+        "overture_buildings": 1820,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067001800",
+        "overture_buildings": 2275,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067001900",
+        "overture_buildings": 1145,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067002000",
+        "overture_buildings": 1083,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067002100",
+        "overture_buildings": 884,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067002200",
+        "overture_buildings": 2117,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067002300",
+        "overture_buildings": 2768,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067002400",
+        "overture_buildings": 3137,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067002500",
+        "overture_buildings": 1268,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067002600",
+        "overture_buildings": 1291,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067002700",
+        "overture_buildings": 1369,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067005301",
+        "overture_buildings": 958,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067005402",
+        "overture_buildings": 604,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067005403",
+        "overture_buildings": 714,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067005404",
+        "overture_buildings": 2078,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067005502",
+        "overture_buildings": 1514,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067005505",
+        "overture_buildings": 1221,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067005506",
+        "overture_buildings": 635,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067005508",
+        "overture_buildings": 518,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067005509",
+        "overture_buildings": 186,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067005510",
+        "overture_buildings": 576,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067005601",
+        "overture_buildings": 1580,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067005605",
+        "overture_buildings": 1053,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067005606",
+        "overture_buildings": 1739,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067005701",
+        "overture_buildings": 1485,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067005702",
+        "overture_buildings": 2236,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067005801",
+        "overture_buildings": 2085,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067005803",
+        "overture_buildings": 1699,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067005901",
+        "overture_buildings": 2306,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067005903",
+        "overture_buildings": 476,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067005904",
+        "overture_buildings": 1805,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067006002",
+        "overture_buildings": 1536,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067006003",
+        "overture_buildings": 1129,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067006004",
+        "overture_buildings": 1032,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067006101",
+        "overture_buildings": 1595,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067006102",
+        "overture_buildings": 848,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067006202",
+        "overture_buildings": 1261,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067006203",
+        "overture_buildings": 599,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067006204",
+        "overture_buildings": 988,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067006300",
+        "overture_buildings": 2133,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067006400",
+        "overture_buildings": 2340,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067006501",
+        "overture_buildings": 1326,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067006502",
+        "overture_buildings": 939,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067006600",
+        "overture_buildings": 2385,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067006703",
+        "overture_buildings": 1357,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067006704",
+        "overture_buildings": 804,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067006705",
+        "overture_buildings": 1192,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067006706",
+        "overture_buildings": 1196,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067006801",
+        "overture_buildings": 560,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067006802",
+        "overture_buildings": 533,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067006803",
+        "overture_buildings": 823,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067006901",
+        "overture_buildings": 1058,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067006902",
+        "overture_buildings": 1399,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007001",
+        "overture_buildings": 1475,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007007",
+        "overture_buildings": 1495,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007010",
+        "overture_buildings": 662,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007011",
+        "overture_buildings": 1132,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007012",
+        "overture_buildings": 1075,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007013",
+        "overture_buildings": 811,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007016",
+        "overture_buildings": 1545,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007017",
+        "overture_buildings": 1062,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007019",
+        "overture_buildings": 1199,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007020",
+        "overture_buildings": 1571,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007021",
+        "overture_buildings": 1794,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007022",
+        "overture_buildings": 483,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007023",
+        "overture_buildings": 1330,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007024",
+        "overture_buildings": 613,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007025",
+        "overture_buildings": 950,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007026",
+        "overture_buildings": 2160,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007027",
+        "overture_buildings": 410,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007028",
+        "overture_buildings": 1425,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007101",
+        "overture_buildings": 966,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007103",
+        "overture_buildings": 809,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007105",
+        "overture_buildings": 2158,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007106",
+        "overture_buildings": 2196,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007107",
+        "overture_buildings": 1324,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007108",
+        "overture_buildings": 1923,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007109",
+        "overture_buildings": 1448,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007110",
+        "overture_buildings": 1222,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007111",
+        "overture_buildings": 1263,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007202",
+        "overture_buildings": 2928,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007204",
+        "overture_buildings": 2136,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007206",
+        "overture_buildings": 2502,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007207",
+        "overture_buildings": 2251,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007208",
+        "overture_buildings": 2320,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007209",
+        "overture_buildings": 1575,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007301",
+        "overture_buildings": 1810,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007402",
+        "overture_buildings": 2258,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007403",
+        "overture_buildings": 1651,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007413",
+        "overture_buildings": 1811,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007414",
+        "overture_buildings": 1208,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007415",
+        "overture_buildings": 1078,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007416",
+        "overture_buildings": 1322,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007417",
+        "overture_buildings": 1378,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007422",
+        "overture_buildings": 672,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007423",
+        "overture_buildings": 626,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007424",
+        "overture_buildings": 1008,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007426",
+        "overture_buildings": 528,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007427",
+        "overture_buildings": 1859,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007428",
+        "overture_buildings": 1222,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007429",
+        "overture_buildings": 990,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007430",
+        "overture_buildings": 2162,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007431",
+        "overture_buildings": 1189,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007432",
+        "overture_buildings": 1438,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007434",
+        "overture_buildings": 1851,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007435",
+        "overture_buildings": 1065,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007436",
+        "overture_buildings": 732,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007437",
+        "overture_buildings": 2122,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007438",
+        "overture_buildings": 653,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007439",
+        "overture_buildings": 1360,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007501",
+        "overture_buildings": 1688,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007503",
+        "overture_buildings": 1304,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007504",
+        "overture_buildings": 1071,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007602",
+        "overture_buildings": 1599,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007603",
+        "overture_buildings": 942,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007604",
+        "overture_buildings": 922,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007701",
+        "overture_buildings": 1929,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007702",
+        "overture_buildings": 1611,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007801",
+        "overture_buildings": 2064,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007802",
+        "overture_buildings": 1796,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007903",
+        "overture_buildings": 1810,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007904",
+        "overture_buildings": 2028,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007905",
+        "overture_buildings": 1674,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067007906",
+        "overture_buildings": 1342,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008005",
+        "overture_buildings": 1923,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008006",
+        "overture_buildings": 2398,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008007",
+        "overture_buildings": 1012,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008008",
+        "overture_buildings": 1908,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008009",
+        "overture_buildings": 1936,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008010",
+        "overture_buildings": 2163,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008111",
+        "overture_buildings": 2422,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008113",
+        "overture_buildings": 1126,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008117",
+        "overture_buildings": 800,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008119",
+        "overture_buildings": 1986,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008120",
+        "overture_buildings": 1475,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008122",
+        "overture_buildings": 1463,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008124",
+        "overture_buildings": 1839,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008125",
+        "overture_buildings": 2062,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008127",
+        "overture_buildings": 1739,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008128",
+        "overture_buildings": 1012,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008129",
+        "overture_buildings": 1193,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008130",
+        "overture_buildings": 1424,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008131",
+        "overture_buildings": 1827,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008132",
+        "overture_buildings": 1627,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008133",
+        "overture_buildings": 604,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008134",
+        "overture_buildings": 1386,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008135",
+        "overture_buildings": 878,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008136",
+        "overture_buildings": 596,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008137",
+        "overture_buildings": 742,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008138",
+        "overture_buildings": 1151,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008139",
+        "overture_buildings": 687,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008140",
+        "overture_buildings": 1141,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008141",
+        "overture_buildings": 1653,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008142",
+        "overture_buildings": 1093,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008143",
+        "overture_buildings": 1616,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008144",
+        "overture_buildings": 1156,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008145",
+        "overture_buildings": 2904,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008203",
+        "overture_buildings": 2397,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008204",
+        "overture_buildings": 1861,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008206",
+        "overture_buildings": 2192,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008207",
+        "overture_buildings": 1686,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008208",
+        "overture_buildings": 1933,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008209",
+        "overture_buildings": 1558,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008210",
+        "overture_buildings": 2607,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008211",
+        "overture_buildings": 1909,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008402",
+        "overture_buildings": 2097,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008403",
+        "overture_buildings": 1813,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008404",
+        "overture_buildings": 1716,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008501",
+        "overture_buildings": 2292,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008504",
+        "overture_buildings": 2086,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008505",
+        "overture_buildings": 811,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008506",
+        "overture_buildings": 367,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008507",
+        "overture_buildings": 1291,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008508",
+        "overture_buildings": 4247,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008509",
+        "overture_buildings": 1532,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008510",
+        "overture_buildings": 1873,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008512",
+        "overture_buildings": 1890,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008702",
+        "overture_buildings": 1352,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008703",
+        "overture_buildings": 2195,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008909",
+        "overture_buildings": 700,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008912",
+        "overture_buildings": 1118,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067008913",
+        "overture_buildings": 1376,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06067988300",
+        "overture_buildings": 296,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089010100",
+        "overture_buildings": 806,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089010200",
+        "overture_buildings": 1330,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089010300",
+        "overture_buildings": 1864,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089010400",
+        "overture_buildings": 3123,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089010500",
+        "overture_buildings": 2386,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089010601",
+        "overture_buildings": 1159,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089010602",
+        "overture_buildings": 2537,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2018
+      },
+      {
+        "GEOID": "06089010603",
+        "overture_buildings": 519,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2018
+      },
+      {
+        "GEOID": "06089010702",
+        "overture_buildings": 1948,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2018
+      },
+      {
+        "GEOID": "06089010703",
+        "overture_buildings": 949,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089010704",
+        "overture_buildings": 2048,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089010803",
+        "overture_buildings": 1884,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089010804",
+        "overture_buildings": 1065,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089010805",
+        "overture_buildings": 2559,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089010806",
+        "overture_buildings": 1945,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089010807",
+        "overture_buildings": 2430,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089010900",
+        "overture_buildings": 1798,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089011001",
+        "overture_buildings": 1164,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2018
+      },
+      {
+        "GEOID": "06089011002",
+        "overture_buildings": 3413,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 1999
+      },
+      {
+        "GEOID": "06089011100",
+        "overture_buildings": 2024,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089011209",
+        "overture_buildings": 1848,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089011300",
+        "overture_buildings": 2168,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089011401",
+        "overture_buildings": 1726,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089011402",
+        "overture_buildings": 1409,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089011403",
+        "overture_buildings": 1717,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089011501",
+        "overture_buildings": 2120,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089011502",
+        "overture_buildings": 2363,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 1999
+      },
+      {
+        "GEOID": "06089011600",
+        "overture_buildings": 2756,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2018
+      },
+      {
+        "GEOID": "06089011701",
+        "overture_buildings": 1256,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089011702",
+        "overture_buildings": 1890,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089011703",
+        "overture_buildings": 1922,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089011801",
+        "overture_buildings": 2124,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 1999
+      },
+      {
+        "GEOID": "06089011802",
+        "overture_buildings": 2072,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06089011803",
+        "overture_buildings": 2136,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06089011900",
+        "overture_buildings": 3871,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 1999
+      },
+      {
+        "GEOID": "06089012000",
+        "overture_buildings": 1992,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089012101",
+        "overture_buildings": 2186,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089012102",
+        "overture_buildings": 1079,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089012200",
+        "overture_buildings": 3325,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089012301",
+        "overture_buildings": 1791,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 1999
+      },
+      {
+        "GEOID": "06089012302",
+        "overture_buildings": 3945,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2018
+      },
+      {
+        "GEOID": "06089012303",
+        "overture_buildings": 2794,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06089012400",
+        "overture_buildings": 2918,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06089012500",
+        "overture_buildings": 1499,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06089012603",
+        "overture_buildings": 2954,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06089012604",
+        "overture_buildings": 2041,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2008
+      },
+      {
+        "GEOID": "06089012605",
+        "overture_buildings": 1979,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2008
+      },
+      {
+        "GEOID": "06089012606",
+        "overture_buildings": 2877,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2018
+      },
+      {
+        "GEOID": "06089012701",
+        "overture_buildings": 2744,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2014
+      },
+      {
+        "GEOID": "06089012702",
+        "overture_buildings": 3701,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06091010000",
+        "overture_buildings": 3398,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2020
+      },
+      {
+        "GEOID": "06093000300",
+        "overture_buildings": 5290,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06093000701",
+        "overture_buildings": 3965,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2022
+      },
+      {
+        "GEOID": "06093000800",
+        "overture_buildings": 4442,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2023
+      },
+      {
+        "GEOID": "06093000901",
+        "overture_buildings": 2647,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2022
+      },
+      {
+        "GEOID": "06093000902",
+        "overture_buildings": 4224,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2022
+      },
+      {
+        "GEOID": "06093001001",
+        "overture_buildings": 1026,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06093001002",
+        "overture_buildings": 1445,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06093001003",
+        "overture_buildings": 2647,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06093001100",
+        "overture_buildings": 1702,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06093001200",
+        "overture_buildings": 1823,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06093001300",
+        "overture_buildings": 2593,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2023
+      },
+      {
+        "GEOID": "06097154100",
+        "overture_buildings": 6736,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2019
+      },
+      {
+        "GEOID": "06101050101",
+        "overture_buildings": 1999,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06101050102",
+        "overture_buildings": 1349,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06101050201",
+        "overture_buildings": 1012,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06101050202",
+        "overture_buildings": 1428,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06101050301",
+        "overture_buildings": 898,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06101050302",
+        "overture_buildings": 1753,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06101050401",
+        "overture_buildings": 1468,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06101050402",
+        "overture_buildings": 1542,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06101050403",
+        "overture_buildings": 1266,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06101050501",
+        "overture_buildings": 2070,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06101050503",
+        "overture_buildings": 2432,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06101050504",
+        "overture_buildings": 2833,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06101050601",
+        "overture_buildings": 2813,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06101050603",
+        "overture_buildings": 2393,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06101050604",
+        "overture_buildings": 1369,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06101050701",
+        "overture_buildings": 2140,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06101050702",
+        "overture_buildings": 2831,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06101050800",
+        "overture_buildings": 2398,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2018
+      },
+      {
+        "GEOID": "06101050900",
+        "overture_buildings": 1275,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06101051000",
+        "overture_buildings": 2036,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06101051100",
+        "overture_buildings": 2809,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06103000100",
+        "overture_buildings": 4349,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06103000201",
+        "overture_buildings": 1812,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 1999
+      },
+      {
+        "GEOID": "06103000202",
+        "overture_buildings": 3639,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06103000300",
+        "overture_buildings": 5001,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06103000400",
+        "overture_buildings": 4266,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 1999
+      },
+      {
+        "GEOID": "06103000500",
+        "overture_buildings": 2805,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06103000600",
+        "overture_buildings": 2783,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06103000701",
+        "overture_buildings": 1590,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06103000702",
+        "overture_buildings": 1295,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 1999
+      },
+      {
+        "GEOID": "06103000800",
+        "overture_buildings": 3209,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06103000900",
+        "overture_buildings": 2733,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 1990
+      },
+      {
+        "GEOID": "06103001000",
+        "overture_buildings": 5033,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06103001101",
+        "overture_buildings": 2314,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06103001102",
+        "overture_buildings": 2127,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06105000101",
+        "overture_buildings": 2918,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06105000102",
+        "overture_buildings": 3266,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2023
+      },
+      {
+        "GEOID": "06105000200",
+        "overture_buildings": 2254,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2022
+      },
+      {
+        "GEOID": "06105000500",
+        "overture_buildings": 4949,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2021
+      },
+      {
+        "GEOID": "06113010102",
+        "overture_buildings": 921,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113010103",
+        "overture_buildings": 1798,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113010104",
+        "overture_buildings": 1580,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113010105",
+        "overture_buildings": 413,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113010201",
+        "overture_buildings": 1655,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113010203",
+        "overture_buildings": 2241,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113010204",
+        "overture_buildings": 1890,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113010313",
+        "overture_buildings": 1726,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113010315",
+        "overture_buildings": 702,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113010401",
+        "overture_buildings": 2467,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113010505",
+        "overture_buildings": 2550,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113010800",
+        "overture_buildings": 1914,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113010901",
+        "overture_buildings": 1576,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113010902",
+        "overture_buildings": 1738,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113011001",
+        "overture_buildings": 1768,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113011002",
+        "overture_buildings": 1377,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113011101",
+        "overture_buildings": 1333,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113011102",
+        "overture_buildings": 1348,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113011103",
+        "overture_buildings": 1050,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113011203",
+        "overture_buildings": 1071,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113011204",
+        "overture_buildings": 2496,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113011207",
+        "overture_buildings": 2502,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113011208",
+        "overture_buildings": 3919,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113011209",
+        "overture_buildings": 1020,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113011210",
+        "overture_buildings": 928,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113011211",
+        "overture_buildings": 497,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06113011400",
+        "overture_buildings": 3677,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2006
+      },
+      {
+        "GEOID": "06113011500",
+        "overture_buildings": 4504,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2020
+      },
+      {
+        "GEOID": "06115040100",
+        "overture_buildings": 1803,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06115040201",
+        "overture_buildings": 1347,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06115040202",
+        "overture_buildings": 1201,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06115040301",
+        "overture_buildings": 985,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06115040302",
+        "overture_buildings": 600,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06115040304",
+        "overture_buildings": 2113,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06115040305",
+        "overture_buildings": 1320,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06115040400",
+        "overture_buildings": 2194,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06115040500",
+        "overture_buildings": 1463,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06115040600",
+        "overture_buildings": 2247,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06115040701",
+        "overture_buildings": 3766,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06115040702",
+        "overture_buildings": 2688,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06115040800",
+        "overture_buildings": 2397,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": null
+      },
+      {
+        "GEOID": "06115040901",
+        "overture_buildings": 2317,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 1998
+      },
+      {
+        "GEOID": "06115040902",
+        "overture_buildings": 860,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 1998
+      },
+      {
+        "GEOID": "06115041001",
+        "overture_buildings": 3378,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2017
+      },
+      {
+        "GEOID": "06115041002",
+        "overture_buildings": 3534,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2017
+      },
+      {
+        "GEOID": "06115041101",
+        "overture_buildings": 2813,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2020
+      },
+      {
+        "GEOID": "06115041102",
+        "overture_buildings": 1504,
+        "dins_all_records": 0,
+        "last_mtbs_burn_year": 2020
+      }
+    ],
+    "interpretation_limit": "zero Camp Fire DINS records may reflect fire-incident mismatch, SRA/perimeter scope, inspection omissions, or later rebuilding; these data do not distinguish these explanations"
+  },
+  "scatter": {
+    "path": "reports/discovery-dins-mechanism.png",
+    "sha256": "2b2948bd8f330f7c958b5c8deb48306b2b0809a1101947ca620c989e6dae6f8f"
+  },
+  "inputs": {
+    "official_sample": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/northern-ca-sample-submission.csv",
+      "rows": 591,
+      "read_values": [
+        "GEOID"
+      ],
+      "score_values_used": false
+    },
+    "strata": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+      "sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243",
+      "read_columns": [
+        "GEOID",
+        "COUNTYFP",
+        "usfs_BuildingCount_sum",
+        "mtbs_wildfire_last_year",
+        "mtbs_wildfire_burned_pct_land",
+        "usfs_edition"
+      ]
+    },
+    "overture": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/northern-ca-overture-tract-summary.parquet",
+      "sha256": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c",
+      "read_columns": [
+        "GEOID",
+        "overture_buildings"
+      ]
+    },
+    "tract_geometry": {
+      "uri": "s3://us-west-2.opendata.source.coop/humane-intelligence/bias-bounty-mapping-equity-challenge/reference/northern-ca/northern-ca-census-acs-housing.parquet",
+      "bytes": 3037540,
+      "read_columns": [
+        "GEOID",
+        "geometry"
+      ],
+      "rows": 591
+    },
+    "dins_geojson": {
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/external-discovery-2026-10-29/camp-fire-dins.geojson",
+      "sha256": "e7b875c3381d2aac8952c4aaf16555948193c07cf2960596e8a1abf1c59396ab",
+      "manifest_sha256": "7e574a0878676dd179370f6af53cde05370d0a79ed0fd9ef9eb41d58a0715952",
+      "properties_read": [
+        "OBJECTID",
+        "DAMAGE",
+        "COUNTY",
+        "INCIDENTNAME",
+        "INCIDENTNUM"
+      ],
+      "geometry_read": true
+    }
+  },
+  "scored_candidates": {
+    "csvs_changed": false,
+    "csv_sha256": {
+      "reports/candidates/C0_all_zero.csv": "0edf8140123e2135489e5728fd71bce6f1e28a97f447ca411ba45fdbc02bc214",
+      "reports/candidates/C1_region_constants.csv": "dc2e368194b31408cb5c313fa8ce3f3fa59a1b5965bc2df8e4217bbc9e0c82e0",
+      "reports/candidates/C2_component_estimator_v0.csv": "5728fbbaa2e062fbd14199190a260132c95b2b858da539d7a9580cb2abc62514",
+      "reports/candidates/C3_denominator_x125.csv": "e5ee50f5c2cca149550f3408638d2b77431f6ed62cf104dfe8c07d8c8416f9e4",
+      "reports/candidates/P4_c1_shrink_alpha.csv": "8b329802d882ea4bdff2bfd8c465c160d6ffd9269cfbe28dce8be9e702b07d37",
+      "reports/candidates/P5_region_shrink_residual.csv": "9d5ad1d05bedfe5da23a39d9a4f6902217c2711da8fa0b408d992f196bb93b4b",
+      "reports/candidates/P6_global_constant.csv": "68851dd2fee88f229bee08466d342f14313fa75e84bf42867baf28995445f6b3",
+      "reports/candidates/R-AZ_region_indicator.csv": "ff493d94f17fa9977be69113b4c4cca7cd0d207e3d65a8b7f68b9c4ca7f0373d",
+      "reports/candidates/R-CA_region_indicator.csv": "3e3d171e2c676a3cc7bc462acc67a46f1ca084903e26b3ccb0f5b6faba227189",
+      "reports/candidates/R-OK_region_indicator.csv": "49a1b8527caca4054d1b05c1a0bc3383af8b510aa973392f60d6b0552e0c0713",
+      "reports/candidates/R-TX_region_indicator.csv": "b7046ce5e169e8a8fe81e8f7cbb2993a9cd6749f074ac137390d9158be701b35",
+      "reports/candidates/V2_model.csv": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12",
+      "reports/candidates/A1_physical_equal.csv": "6af088b83ff3481d420e11b14d903fc510c2b4be2cea285c762ca12d500862de",
+      "reports/candidates/A2_spectral.csv": "f88573996566a1975726845a49f42fb2cd3781d5f0e83d55944fc65647692997",
+      "reports/candidates/A3_dawid_skene.csv": "6d588f2f7a45a58b128860a049ac19995b21902f7f98d3b2ab39d1d9fbb073b3",
+      "reports/candidates/S_crossmethod_reliability_shrink_v1.csv": "26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a",
+      "reports/candidates/S2_h1b_assumption_bound_v1.csv": "44ba76abcd9e1fb0aa7194e3c0fadf567debce40e29ed4bdf93ef02ae9514577",
+      "reports/candidates/S2b_c2_expected_facility_mask_v1.csv": "5761e2c17f25f66bbc9e1d769a04b76545e4cc660a8ca9481c30b89739b7ae6f",
+      "reports/candidates/B_from_A.csv": "efd51badc5c9142263481086180fb5b89c720b8279237ae0edcdb0066d1ae303",
+      "reports/candidates/V2_model_cgs.csv": "5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7",
+      "reports/candidates/A1_physical_equal_cgs.csv": "2da0051af221ddf26a8a73740746811dbd956854a1fc12846c99864d3abae8a1",
+      "reports/candidates/A2_spectral_cgs.csv": "584e086bb5df950f6079317afcdc7c5a0182b5263d170be2a10987d1ac4c6213",
+      "reports/candidates/A3_dawid_skene_cgs.csv": "432ade8f1e46c6804cb34fb790612bb1befc9fe03b67a545e753be46b549237c",
+      "reports/candidates/B_from_A_cgs.csv": "38e17cf1ec99f4f3fc5d358d13ccd0edfabe947d81fd6b6e5ef61e6cea006607"
+    },
+    "candidate_values_or_scores_read": false,
+    "external_dins_joined_to_scored_candidate": false
+  },
+  "analysis_script": {
+    "path": "scripts/discovery_dins_mechanism.py",
+    "sha256": "5f685d755ea2e894bca27ab6a3e7281d01362b992cc414ac9dbbbf284ad1c9b5"
+  },
+  "environment": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "pyarrow": "26.0.0",
+    "shapely": "2.2.0"
+  }
+}

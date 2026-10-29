@@ -105,7 +105,27 @@
     "accessed_on_source": "git_commit_date_of_literature_file",
     "role": "prior art and methodology know-how; not a dataset and never joined to scored predictions",
     "scored_predictions_use_only_provided_data": true,
-    "provided_data_evidence": "reports/v2-input-provenance.json"
+    "provided_data_evidence": "reports/v2-input-provenance.json",
+    "additional_public_sources": [
+      {
+        "url": "https://data.ca.gov/dataset/cal-fire-damage-inspection-dins-data",
+        "label": "CAL FIRE Damage Inspection (DINS) Data catalogue; public Best Bias Discovery source, CC BY version unspecified",
+        "accessed_on": "2026-10-29",
+        "role": "public external source used only for the Best Bias Discovery mechanism check; not joined to scored predictions"
+      },
+      {
+        "url": "https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/POSTFIRE_MASTER_DATA_SHARE/FeatureServer/0",
+        "label": "CAL FIRE DINS public point-feature service; filtered to Camp incident and non-address fields",
+        "accessed_on": "2026-10-29",
+        "role": "public external discovery data endpoint; not used in scored candidate construction"
+      },
+      {
+        "url": "https://data.ca.gov/api/3/action/package_show?id=cal-fire-damage-inspection-dins-data",
+        "label": "California State Geoportal metadata record and CC BY catalogue terms",
+        "accessed_on": "2026-10-29",
+        "role": "public source metadata used to record DINS attribution licence and dataset limitations"
+      }
+    ]
   },
   "model_evidence": {
     "frozen_candidate_id": "V2_model",

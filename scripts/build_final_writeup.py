@@ -209,6 +209,9 @@ def external_register(document_text: str) -> list[dict[str, Any]]:
         add(attempted, "official page fetched while searching for the writeup form link",
             "official challenge page; documentation lookup only, no data added to predictions",
             page["form_url_search"]["attempted_on"], True)
+    for source in CONFIG["external_sources"].get("additional_public_sources", []):
+        add(normalize_url(source["url"]), source["label"], source["role"],
+            source["accessed_on"], False)
     for line in document_text.splitlines():
         for raw in URL_PATTERN.findall(line):
             url = normalize_url(raw)

@@ -25,6 +25,8 @@ The comparison is exactly `Overture overture_buildings / provided strata usfs_Bu
 | `06007002300` | 0.720 | 64.4 | 2018 | 1,851 |
 | `06007002200` | 0.747 | 153.8 | 2018 | 1,799 |
 
+The stronger stale-reference interpretation was directly tested using public Camp Fire DINS evidence; it did not meet the registered mechanism criteria. The bounded DINS follow-up and its claim pointers are at the end of this discovery section.
+
 Two additional supplied examples are `06089010603` (ratio 0.691; MTBS last burn 2018) and `06033000704` (0.798; last burn 2017). The provided cumulative burned-area percentage can exceed 100 after repeated burns; values above 100 are kept in the named examples but excluded from the mutually exclusive 0–100% burn-class comparison.
 
 | Provided NorCal burn class | Tracts | Ratio <0.8 | Share below 0.8 |
@@ -70,7 +72,7 @@ MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig \
   --map reports/discovery-postfire-map.png
 ```
 
-A repeated run produced byte-identical JSON and PNG in the recorded environment. No external public data was used, so no DINS manifest or external-source licence/retrieval record is applicable. All statements about emergency-planning consequences are hypothetical, and the pattern is descriptive rather than causal.
+A repeated run produced byte-identical JSON and PNG in the recorded environment for this provided-data analysis; it uses no external data. The separate public DINS mechanism test above is documented in `reports/discovery-dins-mechanism.md` and its workspace manifest, and does not alter this base analysis or any scored candidate. All statements about emergency-planning consequences are hypothetical, and the pattern is descriptive rather than causal.
 
 ## Section 2 — Scorecard strata are strongly region-composition confounded
 
@@ -224,7 +226,7 @@ MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig \
   --figure reports/source-provenance.png
 ```
 
-A repeated cache-based run produced byte-identical JSON and PNG. The report records source-object URIs, object/selected-column byte sizes, local input/cache hashes, and per-region source counts. This source-provenance analysis used no additional public source; external datasets used in the separate follow-on screen are documented in Section 4.
+A repeated cache-based run produced byte-identical JSON and PNG. The report records source-object URIs, object/selected-column byte sizes, local input/cache hashes, and per-region source counts. This source-provenance analysis used no additional public source; the separate Camp Fire DINS mechanism check is documented above with its own URL, access date, licence metadata and raw-data manifest.
 
 ## Section 4 — External public context layers: one weak broadband lead, no robust incremental pattern
 
@@ -307,3 +309,7 @@ After all 12 feature caches exist, reproduce the nested selection and outer eval
 ```
 
 Every new numeric T1 statement in this section has a direct report pointer in the evidence table and a corresponding command above. No removed reference data, sample score placeholders, labels, leaderboard feedback, or candidate outputs were used.
+
+## External follow-up — Camp Fire DINS mechanism check
+
+**Negative, not confirmed.** The public CAL FIRE DINS catalogue states Creative Commons Attribution (version not specified; https://data.ca.gov/dataset/cal-fire-damage-inspection-dins-data), retrieved 2026-10-29. In the six focal Butte tracts, DINS recorded 1,887–3,314 destroyed points per tract versus a provided USFS-minus-Overture difference of 390.2–766.1; the per-tract relative errors range from 0.690 to 0.799, so 0/6 pass the preregistered 0.30 limit. Across all 28 NorCal tracts whose last provided MTBS burn year is 2018, Spearman is 0.463, below the 0.60 decision threshold. Thus the measured test does not support rewriting the discovery as “the reference still counts structures DINS recorded destroyed.” The source warns DINS inspections may omit structures and are limited to its stated fire-perimeter/SRA scope; no record does not establish that a structure was absent or rebuilt. In the reverse direction, across all 591 official NorCal tracts, 576 have positive Overture counts but no Camp Fire DINS record; these tracts sum to 1,139,778 Overture buildings. This is not evidence that those buildings were rebuilt because the extract is Camp-Fire-specific and DINS is incomplete. Full tract rows, damage classes, opposite-direction accounting, scatter, source metadata and reproducibility are in `reports/discovery-dins-mechanism.md`; exact claim pointers are `reports/discovery-dins-mechanism.json#/focal_butte_tracts`, `#/decision`, `#/spearman`, `#/opposite_direction`, and `#/external_source`. This uses the incident-filtered DINS point layer only for the discovery prize, joins to provided tract geometry, and never changes or joins to scored candidate predictions.

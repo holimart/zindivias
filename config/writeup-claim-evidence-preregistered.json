@@ -55,6 +55,7 @@
     "reports/density-context-candidate.json",
     "reports/discovery-ok-tribal-ems.json",
     "reports/discovery-postfire.json",
+    "reports/discovery-dins-mechanism.json",
     "reports/discovery-rural-svi-minority.json",
     "reports/discovery-strata-confound.json",
     "reports/edge-cases.json",
@@ -189,7 +190,8 @@
     "policy_statement": "handling rule chosen by the team, quantifier only",
     "reproduction_statement": "statement about how an artifact is reproduced",
     "limitation_statement": "statement of what an analysis does not show",
-    "hypothetical_impact": "explicitly hypothetical consequence"
+    "hypothetical_impact": "explicitly hypothetical consequence",
+    "measured_external_discovery_data": "derived from a cited public dataset used only for the Best Bias Discovery prize; not scored labels or model evidence"
   },
   "accuracy_claim_patterns": [
     "rmse",
@@ -820,6 +822,15 @@
     },
     {
       "doc": "docs/writeup/bias-discovery.md",
+      "section": "External follow-up — Camp Fire DINS mechanism check",
+      "occurrence": 1,
+      "evidence": ["reports/discovery-dins-mechanism.json"],
+      "reproduce": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_dins_mechanism.py --workspace \"$COMPETITION_WORKSPACE\" --dins-file \"$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson\" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png",
+      "products": ["reports/discovery-dins-mechanism.json", "reports/discovery-dins-mechanism.md", "reports/discovery-dins-mechanism.png"],
+      "provenance_class": "measured_external_discovery_data"
+    },
+    {
+      "doc": "docs/writeup/bias-discovery.md",
       "section": "*",
       "occurrence": "any",
       "evidence": [
@@ -1408,6 +1419,11 @@
         "reports/discovery-postfire-county-bootstrap.json"
       ],
       "notes": "county-cluster robustness recheck of the published tract-level difference; the cluster interval, positive-draw fraction, valid-replicate fraction and county counts come from the county-bootstrap report, the point estimate and the tract-level interval from the frozen discovery report"
+    },
+    "bias-discovery-040": {
+      "evidence": ["reports/discovery-dins-mechanism.json"],
+      "primary_pointer": "/",
+      "notes": "all focal and all-2018 DINS comparison figures are explicitly linked to report root; the writeup itself names the narrower JSON pointers for each output"
     }
   },
   "reproduce_disclosed_difference_paths": [
