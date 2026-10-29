@@ -801,7 +801,7 @@ def build_bundle(config: dict[str, Any], record: dict[str, Any], markdown_path: 
 
 
 def operator_inputs_template(config: dict[str, Any]) -> dict[str, Any]:
-    """All-null skeleton carrying exactly the whitelisted operator-owned paths."""
+    """Keep operator-owned fields blank and attach the registered, non-actioning paste packet."""
     template: dict[str, Any] = {}
     for path in ALLOWED_OPERATOR_PATHS:
         node = template
@@ -811,6 +811,7 @@ def operator_inputs_template(config: dict[str, Any]) -> dict[str, Any]:
         node[parts[-1]] = (False if path == "identity.operator_confirmation_recorded"
                            else "not recorded" if path == "submission_record.operator_review"
                            else None)
+    template["prepared_packet"] = config["prepared_operator_packet"]
     return template
 
 
@@ -866,8 +867,12 @@ def template_matches_whitelist(record: dict[str, Any]) -> bool:
             else:
                 flattened.add(path)
 
-    walk(template)
+    operator_fields = {key: value for key, value in template.items()
+                       if key != "prepared_packet"}
+    walk(operator_fields)
     if flattened != set(ALLOWED_OPERATOR_PATHS):
+        return False
+    if template.get("prepared_packet") != CONFIG.get("prepared_operator_packet"):
         return False
     if set(record["operator_input_schema"]["fields"]) != flattened:
         return False

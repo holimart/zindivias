@@ -353,17 +353,36 @@ class OperatorFillTests(unittest.TestCase):
         self.assertTrue(path.is_file())
         template = json.loads(path.read_text(encoding="utf-8"))
         self.assertEqual(template, RECORD["operator_inputs_template"])
-        self.assertEqual(set(verify.flatten(template)),
+        operator_fields = {key: value for key, value in template.items()
+                           if key != "prepared_packet"}
+        self.assertEqual(set(verify.flatten(operator_fields)),
                          set(CONFIG["operator_input_schema"]["fields"]))
+        self.assertEqual(template["prepared_packet"], CONFIG["prepared_operator_packet"])
         self.assertEqual(template["identity"]["zindi_username_or_team"], None)
         self.assertIs(template["identity"]["operator_confirmation_recorded"], False)
         self.assertEqual(template["submission_record"]["operator_review"], "not recorded")
         self.assertEqual(builder.template_matches_whitelist(RECORD), True)
+        final = json.loads((ROOT / "reports/final-two.json").read_text())
+        slots = {item["slot"]: item for item in final["final_candidates"]}
+        for slot, packet_key in (("A", "submission_A"), ("B", "submission_B")):
+            prepared = template["prepared_packet"][packet_key]
+            self.assertEqual(prepared["candidate_id"], slots[slot]["candidate_id"])
+            self.assertEqual(prepared["submission_id"], slots[slot]["submission_id"])
+            self.assertEqual(prepared["artifact_sha256"], slots[slot]["sha256"])
+        packet_text = (ROOT / template["prepared_packet"]["markdown_path"]).read_text()
+        self.assertIn(template["prepared_packet"]["form_url"], packet_text)
+        self.assertIn(template["prepared_packet"]["writeup_pdf_sha256"], packet_text)
+        self.assertIn("not submitted", packet_text.lower())
+        self.assertIn("not selected", packet_text.lower())
         filled = copy.deepcopy(template)
         filled["identity"]["zindi_username_or_team"] = "sneaked-in"
         record = copy.deepcopy(RECORD)
         record["operator_inputs_template"] = filled
         self.assertEqual(builder.template_matches_whitelist(record), False)
+        tampered = copy.deepcopy(RECORD)
+        tampered["operator_inputs_template"]["prepared_packet"]["submission_A"]["submission_id"] = "wrong"
+        failures = "".join(verify.check(tampered, CONFIG)["failures"])
+        self.assertIn("prepared operator answer for final-two slot A differs", failures)
 
     def test_preflight_reports_missing_and_ignored_operator_keys(self) -> None:
         import io

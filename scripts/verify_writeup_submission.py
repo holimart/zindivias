@@ -182,8 +182,12 @@ def check(record: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
         template = json.loads(template_path.read_text(encoding="utf-8"))
         require(template == record["operator_inputs_template"],
                 "committed operator input template differs from the record")
-        require(set(flatten(template)) == set(config["operator_input_schema"]["fields"]),
+        operator_fields = {key: value for key, value in template.items()
+                           if key != "prepared_packet"}
+        require(set(flatten(operator_fields)) == set(config["operator_input_schema"]["fields"]),
                 "operator input template paths must equal the declared schema")
+        require(template.get("prepared_packet") == config.get("prepared_operator_packet"),
+                "prepared operator packet differs from the registered packet content")
         require(template["identity"]["zindi_username_or_team"] is None
                 and template["identity"]["operator_confirmation_recorded"] is False
                 and template["form"]["url"] is None
@@ -210,6 +214,32 @@ def check(record: dict[str, Any], config: dict[str, Any]) -> dict[str, Any]:
 
     # -- final-two protocol result must match the current committed report ----------------------
     final_two_source = load_json(ROOT / config["numeric_provenance"]["final_two"])
+    prepared_packet = (record.get("operator_inputs_template") or {}).get("prepared_packet", {})
+    final_candidate_by_slot = {item["slot"]: item for item in final_two_source["final_candidates"]}
+    for slot, key in (("A", "submission_A"), ("B", "submission_B")):
+        source = final_candidate_by_slot[slot]
+        prepared = prepared_packet.get(key, {})
+        require(prepared.get("candidate_id") == source["candidate_id"]
+                and prepared.get("submission_id") == source["submission_id"]
+                and prepared.get("artifact_sha256") == source["sha256"],
+                f"prepared operator answer for final-two slot {slot} differs from reports/final-two.json")
+    require(prepared_packet.get("writeup_pdf_path") == config["assembly"]["output_pdf"]
+            and prepared_packet.get("writeup_pdf_sha256") == sha256_file(pdf_path),
+            "prepared operator packet PDF path/hash differs from the canonical writeup artifact")
+    packet_path = ROOT / prepared_packet.get("markdown_path", "missing-packet.md")
+    require(packet_path.is_file(), "operator packet markdown missing")
+    if packet_path.is_file():
+        packet_text = packet_path.read_text(encoding="utf-8")
+        for value in (prepared_packet.get("form_url", ""),
+                      prepared_packet.get("submission_A", {}).get("submission_id", ""),
+                      prepared_packet.get("submission_B", {}).get("submission_id", ""),
+                      prepared_packet.get("writeup_pdf_sha256", ""),
+                      prepared_packet.get("finding_1_abstract", "")):
+            require(bool(value) and value in packet_text,
+                    f"operator packet markdown omits prepared value: {value[:40]}")
+        require("not submitted" in packet_text.lower()
+                and "not selected" in packet_text.lower(),
+                "operator packet must explicitly say no form submission or UI selection was made")
     expected_protocol = [
         {key: item[key] for key in ("slot", "candidate_id", "artifact", "sha256",
                                      "submission_id", "public_rmse", "selection_status")}
