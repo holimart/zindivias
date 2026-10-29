@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "status": "column_order_cgs_three_of_four_scored_pending_10_29_A3_B",
+  "status": "corrected_order_cgs_cohort_complete_final_A_B_uploaded",
   "prepared_utc": "2026-10-26",
   "protocol": {
     "path": "docs/final-two-protocol.md",
-    "sha256": "574b497d54d998015fa4f0e7ae2b3fd7af8dcfa99e7c39f0c9f31adb8cabaf40",
+    "sha256": "355a41e21a79bef8d194e5ec9cdd3557682fb8b49a8bb0da8959f63389dd0638",
     "policy": "model candidates only; no information probes; no LB-derived coefficients"
   },
   "scope": {
@@ -1025,12 +1025,16 @@
       },
       "upload_authorized": true,
       "upload_not_before_utc": "2026-10-29T00:00:00Z",
-      "upload_performed": false,
-      "submission_id": null,
-      "public_rmse": null,
+      "upload_performed": true,
+      "submission_id": "B8de77WD",
+      "public_rmse": 0.15224784,
       "eligibility": "authorized for scheduled 2026-10-29 upload; pending A rule for B",
       "upload_authorization_addendum": "config/bias-cgs-upload-authorization-2026-10-28.json",
-      "upload_authorization_addendum_sha256": "1b972be9d18ef008da0975bdf1b78ce70c4e924a6e884d8b8e1fdaa1e20fdac8"
+      "upload_authorization_addendum_sha256": "1b972be9d18ef008da0975bdf1b78ce70c4e924a6e884d8b8e1fdaa1e20fdac8",
+      "upload_status": "successful",
+      "score_source": "zindi_api_status",
+      "score_selection_eligible": true,
+      "score_selection_status": "eligible_correct_order_cgs"
     },
     {
       "candidate_id": "B_from_A_cgs",
@@ -1059,42 +1063,47 @@
       },
       "upload_authorized": true,
       "upload_not_before_utc": "2026-10-29T00:00:00Z",
-      "upload_performed": false,
-      "submission_id": null,
-      "public_rmse": null,
+      "upload_performed": true,
+      "submission_id": "eAaWXWxM",
+      "public_rmse": 0.097535343,
       "eligibility": "authorized for scheduled 2026-10-29 upload; pending A rule for B",
       "upload_authorization_addendum": "config/bias-cgs-upload-authorization-2026-10-28.json",
-      "upload_authorization_addendum_sha256": "1b972be9d18ef008da0975bdf1b78ce70c4e924a6e884d8b8e1fdaa1e20fdac8"
+      "upload_authorization_addendum_sha256": "1b972be9d18ef008da0975bdf1b78ce70c4e924a6e884d8b8e1fdaa1e20fdac8",
+      "upload_status": "successful",
+      "score_source": "zindi_api_status",
+      "score_selection_eligible": false,
+      "score_selection_status": "excluded_from_A_cohort_protocol_defined_B_companion"
     }
   ],
   "final_candidates": [
     {
       "slot": "A",
-      "candidate_id": null,
-      "artifact": null,
-      "sha256": null,
-      "submission_id": null,
-      "public_rmse": null,
-      "selection_status": "awaiting_column_order_corrected_scores"
+      "candidate_id": "V2_model_cgs",
+      "artifact": "reports/candidates/V2_model_cgs.csv",
+      "sha256": "5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7",
+      "submission_id": "hvLtPVmr",
+      "public_rmse": 0.11102814,
+      "selection_status": "selected_by_frozen_A_rule_correct_order_cgs",
+      "rationale": "Lowest successful public RMSE in the four-candidate corrected-order cohort, with every pairwise difference exceeding the frozen noise guard."
     },
     {
       "slot": "B",
-      "candidate_id": null,
-      "artifact": null,
-      "sha256": null,
-      "submission_id": null,
-      "public_rmse": null,
-      "selection_status": "awaiting_column_order_corrected_A"
+      "candidate_id": "B_from_A_cgs",
+      "artifact": "reports/candidates/B_from_A_cgs.csv",
+      "sha256": "38e17cf1ec99f4f3fc5d358d13ccd0edfabe947d81fd6b6e5ef61e6cea006607",
+      "submission_id": "eAaWXWxM",
+      "public_rmse": 0.097535343,
+      "selection_status": "successful_pre_registered_50pct_shrink_companion",
+      "rationale": "Pre-registered deterministic 50% shrink of V2_model_cgs toward its own model-predicted within-region mean; no score-based value changes."
     }
   ],
   "pending_fields": [
-    "final A/B slots and operator UI private-selection confirmation",
     "methodology-form submission confirmation",
     "operator UI selection of A and B by 2026-10-31T20:00Z",
     "methodology-form submission confirmation"
   ],
   "operator_acknowledgement": "Steward 2026-10-26 14:15Z explicitly authorized calibration-purpose model evaluations and the C0-prior forecasts for A1/A2/A3; V2 retains its existing forecast. Local label holdout is unavailable by competition design; candidate artifact invariants/reproducibility are the local gate.",
-  "registration_note": "Four frozen model cards are registered and authorized for calibration evaluation under the 2026-10-26 steward directive. The C0 value for A1/A2/A3 is a no-change forecast prior, not a local held-out score or accuracy claim. Only two uploads per UTC day; scheduled order is A1/A2 (Oct 26), A3/V2 (Oct 27), B after A selection (Oct 28). The final A/B slots remain null until successful scores and the protocol rule determine them.",
+  "registration_note": "The four corrected-order _cgs model scores are successful. The frozen A rule selected V2_model_cgs outside every pairwise noise guard, and B_from_A_cgs was successfully uploaded as its pre-registered 50% regional-mean shrink companion. Operator UI selection of A and B and methodology-form submission remain pending.",
   "interim_public_ranking": {
     "scored_subset": [
       "V2_model",
@@ -1332,7 +1341,9 @@
     "corrected_format_scored_candidate_ids": [
       "V2_model_cgs",
       "A1_physical_equal_cgs",
-      "A2_spectral_cgs"
+      "A2_spectral_cgs",
+      "A3_dawid_skene_cgs",
+      "B_from_A_cgs"
     ],
     "historical_scores_used_for_selection": false
   },
@@ -1351,8 +1362,8 @@
     ],
     "2026-10-29_authorized_sequence": [
       "A3_dawid_skene_cgs",
-      "apply the frozen A rule to the four _cgs scores only",
-      "upload B_from_A_cgs if V2 wins; otherwise rebuild, preregister, and upload B from the winner"
+      "apply frozen A rule to the four successful _cgs scores only",
+      "upload B_from_A_cgs because V2_model_cgs wins"
     ],
     "note": "Steward revision supersedes previous upload timing only. No non-_cgs score may be used for the A rule; no frozen value may change; no other candidate is authorized.",
     "2026-10-28_live_results": [
@@ -1386,7 +1397,30 @@
         "score_source": "zindi_api_status",
         "score_selection_eligible": true
       }
-    ]
+    ],
+    "2026-10-29_live_results": [
+      {
+        "candidate_id": "A3_dawid_skene_cgs",
+        "artifact": "reports/candidates/A3_dawid_skene_cgs.csv",
+        "sha256": "432ade8f1e46c6804cb34fb790612bb1befc9fe03b67a545e753be46b549237c",
+        "submission_id": "B8de77WD",
+        "status": "successful",
+        "public_rmse": 0.15224784,
+        "score_source": "zindi_api_status",
+        "score_selection_eligible": true
+      },
+      {
+        "candidate_id": "B_from_A_cgs",
+        "artifact": "reports/candidates/B_from_A_cgs.csv",
+        "sha256": "38e17cf1ec99f4f3fc5d358d13ccd0edfabe947d81fd6b6e5ef61e6cea006607",
+        "submission_id": "eAaWXWxM",
+        "status": "successful",
+        "public_rmse": 0.097535343,
+        "score_source": "zindi_api_status",
+        "score_selection_eligible": true
+      }
+    ],
+    "resume_not_before_utc": "2026-10-29T00:05:00Z"
   },
   "column_order_rescore_preregistration": {
     "config": "config/bias-column-order-rescore-preregistered.json",
@@ -1469,8 +1503,8 @@
     "scope": "specific steward schedule; frozen scores/values unchanged"
   },
   "corrected_cgs_partial_results": {
-    "as_of_utc": "2026-10-28T07:17:53+00:00",
-    "scored_count": 3,
+    "as_of_utc": "2026-10-29T00:12:18.199Z",
+    "scored_count": 4,
     "cohort_size": 4,
     "candidate_results": [
       {
@@ -1502,10 +1536,98 @@
         "public_rmse": 0.262578881,
         "score_source": "zindi_api_status",
         "score_selection_eligible": true
+      },
+      {
+        "candidate_id": "A3_dawid_skene_cgs",
+        "artifact": "reports/candidates/A3_dawid_skene_cgs.csv",
+        "sha256": "432ade8f1e46c6804cb34fb790612bb1befc9fe03b67a545e753be46b549237c",
+        "submission_id": "B8de77WD",
+        "status": "successful",
+        "public_rmse": 0.15224784,
+        "score_source": "zindi_api_status",
+        "score_selection_eligible": true
       }
     ],
-    "a_rule_applied": false,
-    "pending_candidate_id": "A3_dawid_skene_cgs",
-    "note": "Scores are from correctly ordered _cgs submissions only; no historical score or model value change."
+    "a_rule_applied": true,
+    "pending_candidate_id": null,
+    "selected_A": "V2_model_cgs",
+    "note": "All four successful scores are corrected-order _cgs only; the B score is excluded from A selection; no historical score or model value change."
+  },
+  "corrected_cgs_selection": {
+    "rule": "Frozen final-two A rule, applied only to successful corrected-order _cgs cohort scores; lower public RMSE wins outside the pairwise noise guard tau=SE1+SE2, with SE=RMSE/sqrt(2*2814). Historical misordered scores and B score excluded.",
+    "applied_utc": "2026-10-29T00:10:29.255Z",
+    "scores": [
+      {
+        "candidate_id": "V2_model_cgs",
+        "artifact": "reports/candidates/V2_model_cgs.csv",
+        "sha256": "5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7",
+        "submission_id": "hvLtPVmr",
+        "status": "successful",
+        "public_rmse": 0.11102814,
+        "score_source": "zindi_api_status",
+        "score_selection_eligible": true
+      },
+      {
+        "candidate_id": "A1_physical_equal_cgs",
+        "artifact": "reports/candidates/A1_physical_equal_cgs.csv",
+        "sha256": "2da0051af221ddf26a8a73740746811dbd956854a1fc12846c99864d3abae8a1",
+        "submission_id": "4R4vkHSd",
+        "status": "successful",
+        "public_rmse": 0.309628459,
+        "score_source": "zindi_api_status",
+        "score_selection_eligible": true
+      },
+      {
+        "candidate_id": "A2_spectral_cgs",
+        "artifact": "reports/candidates/A2_spectral_cgs.csv",
+        "sha256": "584e086bb5df950f6079317afcdc7c5a0182b5263d170be2a10987d1ac4c6213",
+        "submission_id": "s7mXS43p",
+        "status": "successful",
+        "public_rmse": 0.262578881,
+        "score_source": "zindi_api_status",
+        "score_selection_eligible": true
+      },
+      {
+        "candidate_id": "A3_dawid_skene_cgs",
+        "artifact": "reports/candidates/A3_dawid_skene_cgs.csv",
+        "sha256": "432ade8f1e46c6804cb34fb790612bb1befc9fe03b67a545e753be46b549237c",
+        "submission_id": "B8de77WD",
+        "status": "successful",
+        "public_rmse": 0.15224784,
+        "score_source": "zindi_api_status",
+        "score_selection_eligible": true
+      }
+    ],
+    "planning_standard_errors": {
+      "V2_model_cgs": 0.00147998059111654,
+      "A1_physical_equal_cgs": 0.0041272789923106285,
+      "A2_spectral_cgs": 0.0035001185061471767,
+      "A3_dawid_skene_cgs": 0.002029430090780737
+    },
+    "comparisons_to_winner": [
+      {
+        "candidate_id": "A1_physical_equal_cgs",
+        "absolute_rmse_difference": 0.19860031900000003,
+        "pairwise_guard": 0.005607259583427168,
+        "difference_exceeds_guard": true
+      },
+      {
+        "candidate_id": "A2_spectral_cgs",
+        "absolute_rmse_difference": 0.151550741,
+        "pairwise_guard": 0.004980099097263716,
+        "difference_exceeds_guard": true
+      },
+      {
+        "candidate_id": "A3_dawid_skene_cgs",
+        "absolute_rmse_difference": 0.0412197,
+        "pairwise_guard": 0.003509410681897277,
+        "difference_exceeds_guard": true
+      }
+    ],
+    "winner": "V2_model_cgs",
+    "winner_submission_id": "hvLtPVmr",
+    "unique_outside_guard": true,
+    "tie_break_used": false,
+    "model_values_changed": false
   }
 }
