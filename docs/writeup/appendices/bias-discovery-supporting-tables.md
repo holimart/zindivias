@@ -29,3 +29,21 @@ The focal tract values are from `reports/discovery-postfire.json#/focal_butte_20
 | `06007001900` | 0.677 | 390.2 | 1,887 | 3 | 0.793 |
 | `06007002300` | 0.720 | 668.9 | 2,386 | 2 | 0.720 |
 | `06007002200` | 0.747 | 766.1 | 2,472 | 6 | 0.690 |
+
+### Out-of-region border transfer
+
+This supporting transfer test uses Overture Maps Foundation buildings release 2026-09-23.1, the same release used by the lane cache. Dataset URL: `https://overturemaps-us-west-2.s3.us-west-2.amazonaws.com/release/2026-09-23.1/theme=buildings/type=building/`; retrieved 2026-10-29T20:36:09Z; Overture buildings ODbL 1.0 (Google Open Buildings CC BY 4.0/ODbL per Overture attribution). Downloaded by the STAC-pruned `overturemaps` CLI; the workspace manifest records exact bounding boxes, row counts and file hashes. The five counties are outside the four scored regions. Footprints are assigned to TIGER/Line 2024 county tracts by bbox centre; Census TIGER/Line is public domain. Source classes use `scripts/estimate_gaps.py::classify_building_sources`. Shares are footprint-weighted; tract median OSM is unweighted; “tracts <5%” is a strict tract OSM-share threshold. Google-only means the single source name contains `google`.
+
+| County | Role | Footprints | OSM-touched | Microsoft-only | Google-only | Esri-touched | Tract-median OSM | Tracts <5% OSM / all |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| **El Paso TX** | Border, unscored | 392,897 | 0.093 | 0.475 | **0.330** | 0.000 | 0.043 | 101 / 188 |
+| **Imperial CA** | Border, unscored | 80,116 | 0.200 | 0.437 | **0.292** | 0.000 | 0.073 | 17 / 40 |
+| **Doña Ana NM** | Border, unscored | 118,361 | 0.179 | 0.419 | **0.108** | 0.261 | 0.053 | 29 / 61 |
+| Ector TX (Odessa) | Non-border, Hispanic-majority control | 78,050 | 0.067 | 0.456 | **0.000** | 0.477 | 0.036 | 18 / 33 |
+| Bernalillo NM (Albuquerque) | Non-border control | 282,316 | 0.809 | 0.191 | **0.000** | 0.000 | 0.942 | 2 / 176 |
+
+The lane `other` class is a mixed-provenance bin, not one provider: the border `other` count (254,346) is within 526 of Google Open Buildings memberships (254,872), while non-border South-Central Texas `other` (977,049) is within 526 of USGS lidar memberships (976,523). The Bexar provided-cache `other` share is 0.336. These count reconciliations support, but do not prove, the provider attribution; do not read `other` as Google statewide. Original source counts are in `reports/discovery-border-metros.json`; Bexar cache inputs and hash are recorded in `reports/discovery-border-transfer.json`.
+
+Named impact context: Hidalgo tracts `48215021906`, `48215023525`, and `48215024404` have zero OSM-touched buildings and 1,727, 1,765, and 2,212 footprints; Cameron tract `48061012002` has 3,084 footprints and 0.03% OSM. Annual WBGT>30°C averages 53.5 days across 218 covered border tracts vs 7.3 across 3,654 covered non-border tracts; dispatch outcomes were not measured.
+
+The source manifest at `$COMPETITION_WORKSPACE/external-discovery-2026-10-29-fable/MANIFEST.json` records the Overture public URL, CLI retrieval UTC, ODbL/attribution terms, bbox row counts and SHA-256 hashes. Reproduce the analysis with `uv run --python 3.12 --no-project --isolated --with-requirements requirements.txt python scripts/discovery/transfer_outside_regions.py --workspace "$COMPETITION_WORKSPACE" --out reports/discovery-border-transfer.json` (report SHA-256 `64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795`). TIGER/Line 2024 source URLs, public-domain terms and archive SHA-256 values are listed in the report. The supporting test is `python -m unittest discover -s tests -p 'test_discovery_transfer_outside_regions.py' -v`. This discovery used public source provenance only; no candidate predictions, score values, or removed reference layers.

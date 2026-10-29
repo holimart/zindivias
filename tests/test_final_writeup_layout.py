@@ -1,12 +1,13 @@
+import importlib.util
 import json
 import re
 import shutil
 import subprocess
+import sys
 import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-MARKDOWN = ROOT / "docs/writeup/final-writeup.md"
 PDF = ROOT / "docs/writeup/final-writeup.pdf"
 
 
@@ -17,7 +18,15 @@ def word_count(text: str) -> int:
 class FinalWriteupLayoutTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        cls.text = MARKDOWN.read_text(encoding="utf-8")
+        # Assemble current sources in memory; do not rebuild the staged packet while review edits remain open.
+        name = "_final_writeup_layout_builder"
+        spec = importlib.util.spec_from_file_location(name, ROOT / "scripts/build_final_writeup.py")
+        if spec is None or spec.loader is None:
+            raise RuntimeError("cannot load final writeup builder")
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[name] = module
+        spec.loader.exec_module(module)
+        cls.text, _ = module.assemble(module.CONFIG)
         cls.discovery_start = cls.text.index("## Best Bias Discovery entry")
         cls.method_start = cls.text.index("## Methodology (Best Documentation entry)")
         cls.appendix_start = cls.text.index("## Appendix A: Detailed methodology")
@@ -29,8 +38,10 @@ class FinalWriteupLayoutTests(unittest.TestCase):
         self.assertLessEqual(word_count(self.methodology), 3000)
         self.assertLessEqual(word_count(self.text[self.discovery_start:self.appendix_start]), 1600)
 
-    def test_discovery_has_one_table_and_one_map(self) -> None:
-        self.assertEqual(sum(line.startswith("|---") for line in self.discovery.splitlines()), 1)
+    def test_discovery_has_two_tables_and_one_map(self) -> None:
+        self.assertEqual(sum(line.startswith("|---") for line in self.discovery.splitlines()), 2)
+        self.assertIn("Does it transfer?", self.discovery)
+        self.assertIn("Google-only", self.discovery)
         self.assertEqual(sum(line.startswith("![") for line in self.discovery.splitlines()), 1)
         self.assertIn("reports/discovery-postfire-map.png", self.discovery)
 

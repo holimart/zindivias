@@ -1,0 +1,246 @@
+{
+  "analysis": "Out-of-scored-region transfer of Google-only building source mix; descriptive discovery only",
+  "analysis_script": {
+    "path": "scripts/discovery/transfer_outside_regions.py",
+    "sha256": "97bd875fe75d22e903cb584871e35e48e9fa66428d239b6604912b515e166286"
+  },
+  "data_and_restrictions": {
+    "candidate_artifacts_or_predictions_read": false,
+    "public_scores_used": false,
+    "removed_reference_layers_read": false,
+    "sample_score_values_used": false,
+    "external_data_added_to_scored_predictions": false,
+    "footprint_source_tags_are_provenance_not_correctness_or_community_activity": true
+  },
+  "source": {
+    "dataset": "Overture Maps Foundation, buildings theme, type=building",
+    "release": "2026-09-23.1",
+    "url": "s3://overturemaps-us-west-2/release/2026-09-23.1/theme=buildings/type=building/ (https://overturemaps-us-west-2.s3.us-west-2.amazonaws.com/release/2026-09-23.1/theme=buildings/type=building/)",
+    "retrieved_utc": "2026-10-29T20:36:09Z",
+    "licence": "ODbL 1.0 for the buildings theme (per https://docs.overturemaps.org/attribution/; OSM and Microsoft ML footprints ODbL, Google Open Buildings CC BY 4.0/ODbL)",
+    "download_tool": "overturemaps-py CLI (PyPI 'overturemaps', installed via uv at run time; STAC-pruned bbox download): overturemaps download --bbox <bbox> -f geoparquet -t building -r 2026-09-23.1",
+    "manifest": "external-discovery-2026-10-29-fable/MANIFEST.json",
+    "manifest_sha256": "b0ed7fe92a8afe53a87aa22ce252d6b8053ebae4278c7a702deac06ccb571d76",
+    "files": [
+      {
+        "path": "overture-2026-09-23.1-buildings-cli/bbox-48141.parquet",
+        "sha256": "63a995de7b93547bb1c939f9066fe97a9746890e4cec360264af63548544c871",
+        "rows": 1035215
+      },
+      {
+        "path": "overture-2026-09-23.1-buildings-cli/bbox-06025.parquet",
+        "sha256": "260038810ee2f9dc9764d8952b658b8ef0b93e3c99e251a10b2bd3bcb129f2a0",
+        "rows": 308937
+      },
+      {
+        "path": "overture-2026-09-23.1-buildings-cli/bbox-35013.parquet",
+        "sha256": "1307fc81d966929dec6873744d6e69d732c0880bd7fa016d42696861aafe2466",
+        "rows": 275721
+      },
+      {
+        "path": "overture-2026-09-23.1-buildings-cli/bbox-48135.parquet",
+        "sha256": "6184bd8f1fd74fcdc5edf7964b8dc0737f9c8611bfca7f9b92cf629c07e9383b",
+        "rows": 78136
+      },
+      {
+        "path": "overture-2026-09-23.1-buildings-cli/bbox-35001.parquet",
+        "sha256": "192c69bcd42c0ab35a0b41513373cd92cc65171e66e4dbb0eb52271eb6a4ecf9",
+        "rows": 293456
+      }
+    ]
+  },
+  "tract_assignment": {
+    "dataset": "U.S. Census TIGER/Line 2024 tracts",
+    "assignment": "Overture bbox centre within the county tract polygon (Shapely STRtree)",
+    "licence": "U.S. federal public domain (17 U.S.C. §105)",
+    "state_archives": {
+      "48": {
+        "archive": "tl_2024_48_tract.zip",
+        "url": "https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_48_tract.zip",
+        "retrieved_utc": "2026-10-25T12:06:31Z",
+        "sha256": "aca646a9adcf777ce2e9a8f9fc86c51f8270a14ca5f68f84a2749c3b6e4e69a1",
+        "licence": "U.S. Census TIGER/Line public domain (17 U.S.C. §105)"
+      },
+      "06": {
+        "archive": "tl_2024_06_tract.zip",
+        "url": "https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_06_tract.zip",
+        "retrieved_utc": "2026-10-25T12:06:26Z",
+        "sha256": "8ad60e582b4d61be94ac072a4dd80d763255c0c987c616c7e6f9ffc7ee0bd318",
+        "licence": "U.S. Census TIGER/Line public domain (17 U.S.C. §105)"
+      },
+      "35": {
+        "archive": "tl_2024_35_tract.zip",
+        "url": "https://www2.census.gov/geo/tiger/TIGER2024/TRACT/tl_2024_35_tract.zip",
+        "retrieved_utc": "2026-10-25T12:06:28Z",
+        "sha256": "cc3433398355893969d01cf9fb3985056d3431ebbd6073fa51d72f695785f4ab",
+        "licence": "U.S. Census TIGER/Line public domain (17 U.S.C. §105)"
+      }
+    }
+  },
+  "classification": {
+    "function": "scripts/estimate_gaps.py::classify_building_sources",
+    "osm_touched": "any source named osm or openstreetmap*",
+    "microsoft_only": "source class microsoft_only from the lane classifier",
+    "google_only": "one source name and it contains google",
+    "esri_touched": "any source named esri*",
+    "tract_low_osm_rule": "tract OSM-touched share <0.05; strict inequality",
+    "shares": "footprint-weighted within county; tract median is unweighted across tracts"
+  },
+  "results": [
+    {
+      "footprints_in_county": 392897,
+      "tracts_with_footprints": 188,
+      "osm_touched_share": 0.09262732980908482,
+      "microsoft_only_share": 0.4748878204720321,
+      "google_only_share": 0.3302697653583509,
+      "esri_touched_share": 0.0,
+      "other_or_mixed_share": 0.43248484971888307,
+      "tract_median_osm_share": 0.04272486066677339,
+      "tracts_osm_below_5pct": 101,
+      "tracts_osm_below_5pct_denominator": 188,
+      "county_fips": "48141",
+      "county": "El Paso TX",
+      "role": "border metro, outside scored regions",
+      "footprints_in_bbox": 1035215,
+      "unassigned_outside_county": 642318,
+      "bbox_file": "overture-2026-09-23.1-buildings-cli/bbox-48141.parquet",
+      "bbox_file_sha256": "63a995de7b93547bb1c939f9066fe97a9746890e4cec360264af63548544c871",
+      "dataset_membership_counts": {
+        "google open buildings": 169922,
+        "microsoft ml buildings": 252493,
+        "openstreetmap": 36393
+      },
+      "tract_geometry": "external-discovery-2026-10-27/_tract-geometry-extract/48/tl_2024_48_tract.shp"
+    },
+    {
+      "footprints_in_county": 80116,
+      "tracts_with_footprints": 40,
+      "osm_touched_share": 0.20047181586699286,
+      "microsoft_only_share": 0.4374157471666084,
+      "google_only_share": 0.2915023216336312,
+      "esri_touched_share": 0.0,
+      "other_or_mixed_share": 0.3621124369663987,
+      "tract_median_osm_share": 0.07318334958723924,
+      "tracts_osm_below_5pct": 17,
+      "tracts_osm_below_5pct_denominator": 40,
+      "county_fips": "06025",
+      "county": "Imperial CA",
+      "role": "border metro, outside scored regions",
+      "footprints_in_bbox": 308937,
+      "unassigned_outside_county": 228821,
+      "bbox_file": "overture-2026-09-23.1-buildings-cli/bbox-06025.parquet",
+      "bbox_file_sha256": "260038810ee2f9dc9764d8952b658b8ef0b93e3c99e251a10b2bd3bcb129f2a0",
+      "dataset_membership_counts": {
+        "google open buildings": 29011,
+        "microsoft ml buildings": 50412,
+        "openstreetmap": 16061
+      },
+      "tract_geometry": "external-discovery-2026-10-27/_tract-geometry-extract/06/tl_2024_06_tract.shp"
+    },
+    {
+      "footprints_in_county": 118361,
+      "tracts_with_footprints": 61,
+      "osm_touched_share": 0.17884269311682058,
+      "microsoft_only_share": 0.4193273122058786,
+      "google_only_share": 0.10773819078919576,
+      "esri_touched_share": 0.2610234790175818,
+      "other_or_mixed_share": 0.140806515659719,
+      "tract_median_osm_share": 0.052941176470588235,
+      "tracts_osm_below_5pct": 29,
+      "tracts_osm_below_5pct_denominator": 61,
+      "county_fips": "35013",
+      "county": "Doña Ana NM",
+      "role": "border metro, outside scored regions",
+      "footprints_in_bbox": 275721,
+      "unassigned_outside_county": 157360,
+      "bbox_file": "overture-2026-09-23.1-buildings-cli/bbox-35013.parquet",
+      "bbox_file_sha256": "1307fc81d966929dec6873744d6e69d732c0880bd7fa016d42696861aafe2466",
+      "dataset_membership_counts": {
+        "esri community maps": 30895,
+        "google open buildings": 16666,
+        "microsoft ml buildings": 86679,
+        "openstreetmap": 21168
+      },
+      "tract_geometry": "external-discovery-2026-10-27/_tract-geometry-extract/35/tl_2024_35_tract.shp"
+    },
+    {
+      "footprints_in_county": 78050,
+      "tracts_with_footprints": 33,
+      "osm_touched_share": 0.06711082639333761,
+      "microsoft_only_share": 0.45616912235746315,
+      "google_only_share": 0.0,
+      "esri_touched_share": 0.47672005124919925,
+      "other_or_mixed_share": 0.0,
+      "tract_median_osm_share": 0.035856573705179286,
+      "tracts_osm_below_5pct": 18,
+      "tracts_osm_below_5pct_denominator": 33,
+      "county_fips": "48135",
+      "county": "Ector TX",
+      "role": "non-border, Hispanic-majority control",
+      "footprints_in_bbox": 78136,
+      "unassigned_outside_county": 86,
+      "bbox_file": "overture-2026-09-23.1-buildings-cli/bbox-48135.parquet",
+      "bbox_file_sha256": "6184bd8f1fd74fcdc5edf7964b8dc0737f9c8611bfca7f9b92cf629c07e9383b",
+      "dataset_membership_counts": {
+        "esri community maps": 37208,
+        "microsoft ml buildings": 65220,
+        "openstreetmap": 5238
+      },
+      "tract_geometry": "external-discovery-2026-10-27/_tract-geometry-extract/48/tl_2024_48_tract.shp"
+    },
+    {
+      "footprints_in_county": 282316,
+      "tracts_with_footprints": 176,
+      "osm_touched_share": 0.8085762053868715,
+      "microsoft_only_share": 0.19139545757236573,
+      "google_only_share": 0.0,
+      "esri_touched_share": 2.833704076283314e-05,
+      "other_or_mixed_share": 0.0,
+      "tract_median_osm_share": 0.941712856800971,
+      "tracts_osm_below_5pct": 2,
+      "tracts_osm_below_5pct_denominator": 176,
+      "county_fips": "35001",
+      "county": "Bernalillo NM",
+      "role": "non-border control",
+      "footprints_in_bbox": 293456,
+      "unassigned_outside_county": 11140,
+      "bbox_file": "overture-2026-09-23.1-buildings-cli/bbox-35001.parquet",
+      "bbox_file_sha256": "192c69bcd42c0ab35a0b41513373cd92cc65171e66e4dbb0eb52271eb6a4ecf9",
+      "dataset_membership_counts": {
+        "esri community maps": 8,
+        "microsoft ml buildings": 220868,
+        "openstreetmap": 228274
+      },
+      "tract_geometry": "external-discovery-2026-10-27/_tract-geometry-extract/35/tl_2024_35_tract.shp"
+    }
+  ],
+  "other_source_context": {
+    "interpretation": "The classifier's other/mixed bucket is not a single provider; the existing source-count reconciliation associates border other with Google Open Buildings and non-border Texas other with USGS lidar.",
+    "border_other_footprints": 254346,
+    "border_google_open_buildings_memberships": 254872,
+    "nonborder_other_footprints": 977049,
+    "nonborder_usgs_lidar_memberships": 976523,
+    "bexar_cache": {
+      "county_fips": "48029",
+      "tracts_with_buildings": 375,
+      "building_count": 703400,
+      "footprint_weighted_other_source_share": 0.3356895081034973,
+      "feature_cache_path": "gap-estimator/features/south-central-tx-overture-tract-summary.parquet",
+      "feature_cache_sha256": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746"
+    },
+    "supporting_report": {
+      "path": "reports/discovery-border-metros.json",
+      "sha256": "27779986d787594abdadf741c983db13dedf25fb476cc4ff2ae096a1a4260244"
+    },
+    "near_equal_count_differences": {
+      "border_other_minus_google": -526,
+      "nonborder_other_minus_usgs": 526
+    }
+  },
+  "runtime": {
+    "python": "3.12.3",
+    "numpy": "2.5.4",
+    "pyarrow": "26.0.0",
+    "shapely": "2.2.0"
+  }
+}

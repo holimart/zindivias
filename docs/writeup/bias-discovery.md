@@ -23,23 +23,37 @@ Rural, higher-vulnerability residents may rely on building context for heat, dro
 
 **Limits and reproduction.** OSM attribution is provenance, not accuracy, completeness, age, or local mapping activity; provider memberships may overlap. Only provided Overture source fields and strata were used; no removed reference layers, scores, or candidate outputs (`reports/source-provenance.json`, cited SHA). Rebuild with `uv run --python 3.12 --no-project --isolated --with-requirements requirements.txt python scripts/discovery_source_provenance.py --workspace "$COMPETITION_WORKSPACE" --out reports/source-provenance.json --figure reports/source-provenance.png`.
 
-## Finding 2 — Rio Grande border metros: Google-sourced footprints mask a community-source gap
+## Finding 2 — Rio Grande border metros: machine-only buildings with a Google third-provider spill-over
 
 ### Impact and novelty
 
-Ten South Texas counties include 1.77 million residents and colonias; prioritise partner-led checks, with dispatch impact unmeasured.
+Lead: border metros have machine-only footprints with Google Open Buildings as a cross-border third provider—not merely low OSM. Non-border Ector has lower OSM than El Paso (6.7% vs 9.3%), 47.7% Esri and no Google-only; source, not accuracy, is measured.
+
+Ten border counties, 1.77M residents; impacts unmeasured.
 
 ### Evidence and mechanism
 
-Across 460 border tracts, mean OSM-touched share was 9.18%, versus 61.48% in 5,541 others (68.66% in 4,600 urban others); Microsoft-only share averaged 67.48%. “Other” tags cover 254,346/886,361 footprints (28.70%); 290 tracts (1,183,693 people) are below 5% OSM. Difference: −52.30 pp (county-cluster 95% CI [−61.24, −36.99]); adjusted association −0.446 (SE 0.070; n=5,958, 185 counties), descriptive—not causal.
+Across 460 border tracts, OSM mean is 9.18% vs 61.48% elsewhere (68.66% urban); difference −52.30 pp (95% county-cluster CI −61.24 to −36.99), adjusted β=−0.446 (SE 0.070; n=5,958, 185 counties), descriptive; full counts in Appendix J.
 
-Border “Other” (254,346) nearly matches Google Open Buildings (254,872); non-border “Other” (977,049) nearly matches USGS lidar (976,523), a ±526 reconciliation supporting—but not proving—spill-over. County details are in [Appendix J](#appendix-j-supporting-discovery-tables). Webb/Starr/Maverick Overture/USFS medians (1.56/1.75/1.71) are context, not a Microsoft target proxy.
+`Other` means Google Open Buildings in the border reconciliation and USGS lidar elsewhere (Bexar cache share 0.336), as suggested by ±526 count matches; this is not proof (Appendix J).
 
-Small-county CIs unstable; attribution is regional only.
+### Does it transfer?
 
-Hidalgo `48215021906`, `48215023525`, and `48215024404` have zero OSM share and 1,727, 1,765, and 2,212 footprints; Cameron `48061012002` has 3,084 and 0.03% OSM. Heat averages 53.5 vs 7.3 WBGT>30°C days/year (218 vs 3,654 covered tracts). Prioritise local verification; dispatch effects are unmeasured.
+Google-only is 10.8–33.0% in all three unscored border counties and zero in both controls. El Paso OSM/Google (9.3%/33.0%) matches the scored Rio Grande OSM range (4.2–12.0%); Doña Ana fades to 10.8% Google/26.1% Esri. Five counties; no interval.
 
-The body-based comparison with overlapping road, colonias, and provider findings—and the distinct building-source scope here—is in the [related-entry omissions ledger](related-entries.md). Reports/hashes: `reports/discovery-border-metros.json` (`27779986d787594abdadf741c983db13dedf25fb476cc4ff2ae096a1a4260244`) and `reports/source-provenance.json` (`e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565`). Rebuild with `uv run --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/discovery/border_metros.py --workspace "$COMPETITION_WORKSPACE" --out reports/discovery-border-metros.json`; SVI is defined in Appendix F.
+| County | OSM | Google-only | Esri |
+|---|---:|---:|---:|
+| **El Paso TX** | 0.093 | **0.330** | 0.000 |
+| **Imperial CA** | 0.200 | **0.292** | 0.000 |
+| **Doña Ana NM** | 0.179 | **0.108** | 0.261 |
+| Ector TX (control) | 0.067 | **0.000** | 0.477 |
+| Bernalillo NM (control) | 0.809 | **0.000** | 0.000 |
+
+Full results and reproduction: [Appendix J](#appendix-j-supporting-discovery-tables).
+
+#35031/#35474's Oklahoma Esri county-sharing mechanism coexists: Esri is 47.7% in Ector and 26.1% in Doña Ana.
+
+Manifest: `$COMPETITION_WORKSPACE/external-discovery-2026-10-29-fable/MANIFEST.json`; rerun report `reports/discovery-border-transfer.json` (SHA-256 `64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795`); command in Appendix J. No scores or removed references.
 
 ## Finding 3 — Paradise/Magalia building-count discrepancy
 
