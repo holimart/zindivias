@@ -256,6 +256,8 @@ def front_matter(config: dict[str, Any], submissions: list[dict[str, Any]],
         f"{protocol['A']['submission_id']}`.",
         f"- Protocol B: `{protocol['B']['candidate_id']}`; leaderboard submission `"
         f"{protocol['B']['submission_id']}`.",
+        "- Public RMSE (not private-split evidence): V2 0.1110; B 0.0975.",
+        "- Predictions use provided features only; no labels, hidden targets, placeholders, or removed references.",
         config["consideration_requested"]["stated_verbatim_in_writeup"],
         "",
         "## Contents",

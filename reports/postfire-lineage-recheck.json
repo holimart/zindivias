@@ -1,0 +1,161 @@
+{
+  "analysis": "provided-data source-mix and USFS ratio recheck for Camp Fire writeup",
+  "focal_paradise_magalia": [
+    {
+      "GEOID": "06007001800",
+      "microsoft_only_share": 0.7267709291628335,
+      "osm_only_share": 0.06807727690892364,
+      "overture_buildings": 1087,
+      "overture_to_usfs_ratio": 0.6199307280265395
+    },
+    {
+      "GEOID": "06007001900",
+      "microsoft_only_share": 0.43031784841075793,
+      "osm_only_share": 0.08924205378973105,
+      "overture_buildings": 818,
+      "overture_to_usfs_ratio": 0.6770440621526874
+    },
+    {
+      "GEOID": "06007002000",
+      "microsoft_only_share": 0.9903083700440528,
+      "osm_only_share": 0.000881057268722467,
+      "overture_buildings": 1135,
+      "overture_to_usfs_ratio": 0.6620069741403023
+    },
+    {
+      "GEOID": "06007002100",
+      "microsoft_only_share": 0.834593572778828,
+      "osm_only_share": 0.07939508506616257,
+      "overture_buildings": 1058,
+      "overture_to_usfs_ratio": 0.6426388820797848
+    },
+    {
+      "GEOID": "06007002200",
+      "microsoft_only_share": 0.7890556045895851,
+      "osm_only_share": 0.07811120917917035,
+      "overture_buildings": 2266,
+      "overture_to_usfs_ratio": 0.7473394427251302
+    },
+    {
+      "GEOID": "06007002300",
+      "microsoft_only_share": 0.9825682742591516,
+      "osm_only_share": 0.006972690296339338,
+      "overture_buildings": 1721,
+      "overture_to_usfs_ratio": 0.72010248938142
+    }
+  ],
+  "focal_share_ranges": {
+    "microsoft_only_max": 0.9903083700440528,
+    "microsoft_only_min": 0.43031784841075793,
+    "osm_only_max": 0.08924205378973105,
+    "osm_only_min": 0.000881057268722467
+  },
+  "inputs": {
+    "eastern-ok": {
+      "feature_cache": "gap-estimator/features/eastern-ok-overture-tract-summary.parquet",
+      "feature_cache_sha256": "e5a06316c316f61bf25b80b48e89c1e7f0b1461a0b8cec5831aae24e0cf83fa6",
+      "official_geoid_sha256": "eec4a24e0721655322012b2709bb9ab50426342f43861cdd1cb415308f2944f0",
+      "official_sample": "samples/eastern-ok-sample-submission.csv",
+      "strata": "defined-flags-inputs/eastern-ok-strata-tract-table.parquet",
+      "strata_sha256": "e82862b9d9db436410ad47df466e133df94df6328f6a138d5bd871b491ba0d54"
+    },
+    "maricopa-az": {
+      "feature_cache": "gap-estimator/features/maricopa-az-overture-tract-summary.parquet",
+      "feature_cache_sha256": "e6e4064ea3827b8262cf2c3fe96beaeecd40592a7ce9bf0976a37cfbca1bbc22",
+      "official_geoid_sha256": "2054c66c98a27e2166122e6bbb1c16997d029a9faa178bc3c1e901b053082c60",
+      "official_sample": "samples/maricopa-az-sample-submission.csv",
+      "strata": "defined-flags-inputs/maricopa-az-strata-tract-table.parquet",
+      "strata_sha256": "f19ec2f5afd400827b2420a81916bdec95b08772badd85fdb250149c334a5fcd"
+    },
+    "northern-ca": {
+      "feature_cache": "gap-estimator/features/northern-ca-overture-tract-summary.parquet",
+      "feature_cache_sha256": "37ccc687c45ce2ce19e75d378c1e68bebf678f19c45cb4fe95582d250506a87c",
+      "official_geoid_sha256": "324f2cb00cf3ae6eb8d69ad682df5888d731c21440f0af64af66ec88c415106f",
+      "official_sample": "samples/northern-ca-sample-submission.csv",
+      "strata": "defined-flags-inputs/northern-ca-strata-tract-table.parquet",
+      "strata_sha256": "7fc19dce5ca76ee94eb2006d9bd51bed71d5bfbcdf3ef756605e0998df940243"
+    },
+    "south-central-tx": {
+      "feature_cache": "gap-estimator/features/south-central-tx-overture-tract-summary.parquet",
+      "feature_cache_sha256": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746",
+      "official_geoid_sha256": "6d24c49d84ba6fd6747c8db48cfced063b90c961641c8558b1c1ef705bbd2f92",
+      "official_sample": "samples/south-central-tx-sample-submission.csv",
+      "strata": "defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+      "strata_sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354"
+    }
+  },
+  "pooled_ols": {
+    "coefficient": -0.016244668244542772,
+    "controls": [
+      "pct_urban",
+      "log1p(pop_total / ALAND_km2)",
+      "region fixed effects"
+    ],
+    "county_clusters": 298,
+    "n": 9337,
+    "outcome": "log(Overture buildings / provided USFS WRC building count)",
+    "predictor": "provided Overture OSM-only source share",
+    "standard_error": "county-clustered sandwich with finite-sample correction",
+    "standard_error_value": 0.04093391395464211
+  },
+  "prohibited_sources_used": false,
+  "scope": "official sample GEOIDs; provided Overture feature caches and provided strata only",
+  "unburned_northern_ca_ratio_below_0_8": {
+    "all_urban": true,
+    "definition": "provided MTBS burned percentage equals 0; USFS WRC count >=50; Overture count >0; Overture/USFS ratio <0.8",
+    "n": 7,
+    "ratio_max": 0.775471093216533,
+    "ratio_min": 0.7111146607979636,
+    "tracts": [
+      {
+        "GEOID": "06061021130",
+        "county_fips": "061",
+        "county_name": "Placer",
+        "overture_to_usfs_ratio": 0.7398678259271952,
+        "pct_urban": 1.0
+      },
+      {
+        "GEOID": "06067000800",
+        "county_fips": "067",
+        "county_name": "Sacramento",
+        "overture_to_usfs_ratio": 0.7393009799537791,
+        "pct_urban": 1.0
+      },
+      {
+        "GEOID": "06067005508",
+        "county_fips": "067",
+        "county_name": "Sacramento",
+        "overture_to_usfs_ratio": 0.775471093216533,
+        "pct_urban": 1.0
+      },
+      {
+        "GEOID": "06067007010",
+        "county_fips": "067",
+        "county_name": "Sacramento",
+        "overture_to_usfs_ratio": 0.7697219301450363,
+        "pct_urban": 1.0
+      },
+      {
+        "GEOID": "06067007423",
+        "county_fips": "067",
+        "county_name": "Sacramento",
+        "overture_to_usfs_ratio": 0.7583419362713764,
+        "pct_urban": 1.0
+      },
+      {
+        "GEOID": "06067008135",
+        "county_fips": "067",
+        "county_name": "Sacramento",
+        "overture_to_usfs_ratio": 0.7130940390864317,
+        "pct_urban": 1.0
+      },
+      {
+        "GEOID": "06067008139",
+        "county_fips": "067",
+        "county_name": "Sacramento",
+        "overture_to_usfs_ratio": 0.7111146607979636,
+        "pct_urban": 1.0
+      }
+    ]
+  }
+}

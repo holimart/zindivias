@@ -18,11 +18,3 @@ uv run python scripts/build_bias_column_order_cgs.py --workspace "$COMPETITION_W
 ```
 
 Verified in a scratch clone; both hashes matched.
-
-## Scope and safeguards
-
-No labels, targets, placeholders, or removed references enter predictions; see Appendices A/B.
-
-## Public-score transparency (descriptive only)
-
-Public RMSE: V2 0.1110/B 0.0975 (`reports/final-two.json`); not private evidence.
