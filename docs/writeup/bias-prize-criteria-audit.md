@@ -2,10 +2,10 @@
 
 Row: `backlog:.langywrap/backlogs/competitions.jsonl:bias-discovery-prize-criteria-audit`. Lane: `comp-zindi-bias-bounty`. documentation screen of the Best Bias Discovery narrative; not a submission, not a model promotion, not a leaderboard probe.
 
-Audited document: `docs/writeup/bias-discovery.md` (SHA-256 `b91d96f8a30d819490317cb3d3b555bdad510a0877bea535eaa5d7f4229f748e`).
-Preregistration: `config/discovery-prize-criteria-preregistered.json` (SHA-256 `28eaad515d5dade388e82299a9c2b3231844b58f127e77fa95cdbef93a94b643`).
+Audited document: `docs/writeup/bias-discovery.md` (SHA-256 `012af88696320b0ae9cf4e028386af9d6a701e1acf3a47da62b18f9388bbf2b2`).
+Preregistration: `config/discovery-prize-criteria-preregistered.json` (SHA-256 `5ea75fbed0c42fc296ad31174fcb3682a0144882f06d86de4df7876b3150a0a9`).
 
-This is a documentation screen. It makes no submission, changes no scored candidate, reads no leaderboard feedback, and asserts nothing about the organisers' hidden target. Every score quoted from the proxy models remains a model-side estimate, not an organiser score.
+This is a documentation screen. It makes no submission, changes no scored candidate, reads no leaderboard feedback, and asserts nothing about the organisers' hidden target. The DINS comparison does not establish rebuilding, absence, or a hidden-target result.
 
 ## Organiser criteria and weights
 
@@ -20,34 +20,33 @@ Organiser wording: "Entries for Best Bias Discovery are judged from the writeup 
 
 ## Criterion matrix
 
-Verdicts are `pass` or `needs revision`. A section is accepted when all four criteria pass, or when it is explicitly marked draft and still passes evidence and reproducibility.
+Verdicts are `pass` or `needs revision`. Each retained finding is supported only when all four criteria pass; the overall packet still requires operator review and a complete claim audit.
 
 | Section | Declared status | Resolution | Impact | Novelty | Evidence | Reproducibility |
 |---|---|---|---|---|---|---|
-| Post-fire building-count disagreement may look like under-mapping | supported | supported | pass | pass | pass | pass |
-| Scorecard strata are strongly region-composition confounded | supported | supported | pass | pass | pass | pass |
-| Secondary exploratory lead — rural × SVI minority-domain screen in South-Central Texas | draft | draft | pass | pass | pass | pass |
-| Overture source mix differs across tract strata | supported | supported | pass | pass | pass | pass |
+| Finding 1 — Post-fire building-count disagreement in the Paradise–Magalia area | supported | supported | pass | pass | pass | pass |
+| Finding 2 — Rural Overture buildings are less often OSM-sourced | supported | supported | pass | pass | pass | pass |
+| Finding 3 — The tribal/non-tribal pooled comparison is region-confounded | supported | supported | pass | pass | pass | pass |
 
 ## Measured acceptance
 
-- sections configured / covered: 4 / 4; unresolved: 0
-- criteria evaluated / passed: 16 / 16
-- evidence pointers verified: 27 of 27
-- quantitative claims traceable: 29 of 29 (claim audit fraction 1.0)
+- sections configured / covered: 3 / 3; unresolved: 0
+- criteria evaluated / passed: 12 / 12
+- evidence pointers verified: 15 of 15
+- quantitative claims traceable: 8 of 8 (claim audit fraction 0.945055)
 - unlisted external URLs in the discovery document: 0
 - hidden-target claim patterns: 0; unqualified operational patterns: 0
 - prohibited-token hits needing disclosure: prose 0, scripts 0
-- sampled claim verify commands executed with exit 0: 4 of 4
+- sampled claim verify commands executed with exit 0: 3 of 3
 
 ## Section detail
 
-### Post-fire building-count disagreement may look like under-mapping
+### Finding 1 — Post-fire building-count disagreement in the Paradise–Magalia area
 
-Declared `supported`, resolved `supported`, lines 1-73, 9568 characters. Claims: `bias-discovery-001`, `bias-discovery-002`, `bias-discovery-003`, `bias-discovery-004`, `bias-discovery-005`, `bias-discovery-006`, `bias-discovery-007`, `bias-discovery-008`, `bias-discovery-009`.
+Declared `supported`, resolved `supported`, lines 1-43, 4799 characters. Claims: `bias-discovery-001`, `bias-discovery-002`, `bias-discovery-003`, `bias-discovery-004`, `bias-discovery-005`, `bias-discovery-006`.
 
-- **impact**: `pass` (headings: Impact)
-- **novelty**: `pass` (headings: Novelty)
+- **impact**: `pass` (headings: Impact and novelty)
+- **novelty**: `pass` (headings: Impact and novelty)
 - **evidence**: `pass` (headings: Evidence)
 - **reproducibility**: `pass` (headings: Reproducibility)
 
@@ -57,22 +56,41 @@ Declared `supported`, resolved `supported`, lines 1-73, 9568 characters. Claims:
   |---|---|---|---|
   | `reports/discovery-postfire.json` | `/focal_butte_2018_burn_geoids` | `cbf100bc833bf09c` | True |
   | `reports/discovery-postfire.json` | `/northern_ca_burn_class_table` | `cbf100bc833bf09c` | True |
-  | `reports/discovery-postfire.json` | `/high_burn_vs_unburned_below_0_8` | `cbf100bc833bf09c` | True |
-  | `reports/discovery-postfire.json` | `/no_labels_or_removed_references_used` | `cbf100bc833bf09c` | True |
-  | `reports/discovery-postfire-map.png` | `-` | `916589e0d3dc765a` | True |
-  | `reports/discovery-postfire-county-bootstrap.json` | `/robustness` | `942c39504dbcf3b2` | True |
   | `reports/discovery-postfire-county-bootstrap.json` | `/county_cluster_bootstrap/cluster_95_percentile_interval` | `942c39504dbcf3b2` | True |
-  | `reports/discovery-postfire-county-bootstrap.json` | `/county_cluster_bootstrap/tract_preservation_checks` | `942c39504dbcf3b2` | True |
-  | `reports/discovery-postfire-county-bootstrap.json` | `/derived_input_content_equivalence` | `942c39504dbcf3b2` | True |
+  | `reports/discovery-dins-mechanism.json` | `/external_source` | `8af173a124f59ef7` | True |
+  | `reports/discovery-dins-mechanism.json` | `/decision` | `8af173a124f59ef7` | True |
+  | `reports/discovery-dins-mechanism.json` | `/spearman` | `8af173a124f59ef7` | True |
+  | `reports/discovery-dins-mechanism.json` | `/focal_butte_tracts` | `8af173a124f59ef7` | True |
+  | `reports/discovery-dins-mechanism.json` | `/opposite_direction` | `8af173a124f59ef7` | True |
+  | `reports/discovery-postfire-map.png` | `-` | `916589e0d3dc765a` | True |
 
-  Reproduction: `python scripts/discovery_postfire_stale_reference.py`; script(s): `scripts/discovery_postfire_stale_reference.py`, `scripts/audit_discovery_postfire_county_bootstrap.py`
+  Reproduction: `python scripts/discovery_dins_mechanism.py`; script(s): `scripts/discovery_postfire_stale_reference.py`, `scripts/audit_discovery_postfire_county_bootstrap.py`, `scripts/discovery_dins_mechanism.py`
 
-### Scorecard strata are strongly region-composition confounded
+### Finding 2 — Rural Overture buildings are less often OSM-sourced
 
-Declared `supported`, resolved `supported`, lines 75-114, 5017 characters. Claims: `bias-discovery-010`, `bias-discovery-011`, `bias-discovery-012`, `bias-discovery-013`, `bias-discovery-014`, `bias-discovery-015`, `bias-discovery-016`.
+Declared `supported`, resolved `supported`, lines 44-61, 1643 characters. Claims: `bias-discovery-007`.
 
-- **impact**: `pass` (headings: Impact)
-- **novelty**: `pass` (headings: Novelty)
+- **impact**: `pass` (headings: Impact and novelty)
+- **novelty**: `pass` (headings: Impact and novelty)
+- **evidence**: `pass` (headings: Evidence)
+- **reproducibility**: `pass` (headings: Reproducibility)
+
+  Evidence pointers:
+
+  | Path | JSON pointer | SHA-256 (16) | Resolved |
+  |---|---|---|---|
+  | `reports/source-provenance.json` | `/statistics` | `e80171d07d555e8e` | True |
+  | `reports/source-provenance.json` | `/uncertainty_and_limitations` | `e80171d07d555e8e` | True |
+  | `reports/source-provenance.json` | `/source_definitions` | `e80171d07d555e8e` | True |
+
+  Reproduction: `python scripts/discovery_source_provenance.py`; script(s): `scripts/discovery_source_provenance.py`
+
+### Finding 3 — The tribal/non-tribal pooled comparison is region-confounded
+
+Declared `supported`, resolved `supported`, lines 62-78, 1502 characters. Claims: `bias-discovery-008`.
+
+- **impact**: `pass` (headings: Impact and novelty)
+- **novelty**: `pass` (headings: Impact and novelty)
 - **evidence**: `pass` (headings: Evidence)
 - **reproducibility**: `pass` (headings: Reproducibility)
 
@@ -82,66 +100,16 @@ Declared `supported`, resolved `supported`, lines 75-114, 5017 characters. Claim
   |---|---|---|---|
   | `reports/discovery-strata-confound.json` | `/stratum_composition` | `ce0f1307793d1c65` | True |
   | `reports/discovery-strata-confound.json` | `/regional_counts_and_prevalence` | `ce0f1307793d1c65` | True |
-  | `reports/discovery-strata-confound.json` | `/unique_official_geoid_count` | `ce0f1307793d1c65` | True |
   | `reports/discovery-strata-confound.json` | `/missing` | `ce0f1307793d1c65` | True |
-  | `reports/transport-route-ref-audit.json` | `/regions` | `bf904336963f553c` | True |
-  | `reports/transport-route-ref-audit.json` | `/limitations` | `bf904336963f553c` | True |
 
   Reproduction: `python scripts/discovery_strata_confound.py`; script(s): `scripts/discovery_strata_confound.py`
-
-### Secondary exploratory lead — rural × SVI minority-domain screen in South-Central Texas
-
-Declared `draft`, resolved `draft`, lines 116-173, 5400 characters. Claims: `bias-discovery-017`, `bias-discovery-018`, `bias-discovery-019`, `bias-discovery-020`, `bias-discovery-021`, `bias-discovery-022`. Marked in the document: 'Draft for operator review'
-
-- **impact**: `pass` (headings: Why this may matter; what it does not show)
-- **novelty**: `pass` (headings: Proposed pattern outside the published scorecard grid)
-- **evidence**: `pass` (headings: Quantified proxy evidence)
-- **reproducibility**: `pass` (headings: Reproduction)
-
-  Evidence pointers:
-
-  | Path | JSON pointer | SHA-256 (16) | Resolved |
-  |---|---|---|---|
-  | `reports/discovery-rural-svi-minority.json` | `/group_definition` | `da1a581ddb25347c` | True |
-  | `reports/discovery-rural-svi-minority.json` | `/composite_results` | `da1a581ddb25347c` | True |
-  | `reports/discovery-rural-svi-minority.json` | `/C2_component_results_defined_only` | `da1a581ddb25347c` | True |
-  | `reports/discovery-rural-svi-minority.json` | `/named_high_group_tracts_sorted_by_C2_estimate` | `da1a581ddb25347c` | True |
-  | `reports/discovery-rural-svi-minority.json` | `/fixed_scorecard_novelty` | `da1a581ddb25347c` | True |
-  | `reports/discovery-rural-svi-minority.json` | `/causal_and_accuracy_limitations` | `da1a581ddb25347c` | True |
-
-  Reproduction: `python scripts/discovery_rural_svi_minority.py`; script(s): `scripts/discovery_rural_svi_minority.py`
-
-  Recommendations:
-  - Keep the section marked draft until the operator reviews the discovery narrative: the group means are proxy model scores, the transport component interval includes zero, and the impact paragraph is hypothetical. Either promote it with a stakeholder-checked cutpoint or remove the operational sentence and keep it as a follow-up screen.
-
-### Overture source mix differs across tract strata
-
-Declared `supported`, resolved `supported`, lines 175-226, 6897 characters. Claims: `bias-discovery-023`, `bias-discovery-024`, `bias-discovery-025`, `bias-discovery-026`, `bias-discovery-027`, `bias-discovery-028`, `bias-discovery-029`. Marked in the document: 'descriptive discovery lead, not a measured map-completeness or hidden-score finding'
-
-- **impact**: `pass` (headings: Interpretation and limits)
-- **novelty**: `pass` (headings: Method and source definitions, Interpretation and limits)
-- **evidence**: `pass` (headings: Findings)
-- **reproducibility**: `pass` (headings: Reproduction)
-
-  Evidence pointers:
-
-  | Path | JSON pointer | SHA-256 (16) | Resolved |
-  |---|---|---|---|
-  | `reports/source-provenance.json` | `/statistics` | `e80171d07d555e8e` | True |
-  | `reports/source-provenance.json` | `/source_definitions` | `e80171d07d555e8e` | True |
-  | `reports/source-provenance.json` | `/regions` | `e80171d07d555e8e` | True |
-  | `reports/source-provenance.json` | `/data_and_restrictions` | `e80171d07d555e8e` | True |
-  | `reports/source-provenance.json` | `/uncertainty_and_limitations` | `e80171d07d555e8e` | True |
-  | `reports/source-provenance.png` | `-` | `2d45a9d06baa5e0a` | True |
-
-  Reproduction: `python scripts/discovery_source_provenance.py`; script(s): `scripts/discovery_source_provenance.py`
 
 ## Non-claims
 
 - No proxy model score is presented as the organiser's hidden target anywhere in the discovery document (pattern scan: zero hits).
 - No section asserts an unqualified operational outcome; every impact paragraph carries an explicit hedge.
-- No public dataset beyond the challenge package is introduced (zero URLs in the discovery document), so no licence or retrieval record is applicable.
-- The draft section stays marked draft and is not eligible for the discovery prize until the operator reviews it.
+- One public CAL FIRE DINS source is registered for the mechanism check only; its open licence, URL, retrieval date, filter, and limitations are documented, and it never enters scored predictions.
+- The three findings pass the four narrative criteria. This packet remains a draft for operator review because the broader claim audit is incomplete and submission inputs are pending.
 
 ## Reproduction
 

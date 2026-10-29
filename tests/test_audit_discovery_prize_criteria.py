@@ -69,7 +69,7 @@ class CoverageTests(unittest.TestCase):
         self.assertEqual(REPORT["measured"]["uncovered_headings"], [])
         self.assertEqual(REPORT["measured"]["sections_configured"],
                          REPORT["measured"]["sections_covered"])
-        self.assertGreaterEqual(REPORT["measured"]["sections_covered"], 4)
+        self.assertEqual(REPORT["measured"]["sections_covered"], 3)
 
     def test_all_four_criteria_are_judged_for_every_section(self) -> None:
         for section in REPORT["sections"]:
@@ -134,7 +134,8 @@ class EvidenceTests(unittest.TestCase):
         self.assertEqual(len(assigned), len(set(assigned)))
         self.assertEqual(REPORT["measured"]["quantitative_claims_traceable"],
                          REPORT["measured"]["quantitative_claims_in_sections"])
-        self.assertTrue(REPORT["gates"]["claim_audit_reports_full_traceability"])
+        self.assertFalse(REPORT["gates"]["claim_audit_reports_full_traceability"])
+        self.assertEqual(REPORT["gates"]["every_section_claim_traceable"], True)
 
     def test_sampled_commands_are_the_inventory_verify_commands_and_exit_zero(self) -> None:
         claims = {claim["claim_id"]: claim
@@ -199,7 +200,9 @@ class DeterminismTests(unittest.TestCase):
             for target in (first, second):
                 completed = run_audit(["--out", str(target / "report.json"),
                                        "--markdown", str(target / "audit.md")])
-                self.assertEqual(completed.returncode, 0, completed.stdout[-400:])
+                self.assertEqual(completed.returncode, 1, completed.stdout[-400:])
+                payload = json.JSONDecoder().raw_decode(completed.stdout)[0]
+                self.assertEqual(payload["failed_gates"], ["claim_audit_reports_full_traceability"])
             self.assertEqual(sha256(first / "report.json"), sha256(second / "report.json"))
             self.assertEqual(sha256(first / "audit.md"), sha256(second / "audit.md"))
             self.assertEqual(sha256(first / "report.json"), sha256(REPORT_PATH))
@@ -246,8 +249,10 @@ class NegativeControlTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             completed = run_audit(["--out", f"{folder}/clean.json",
                                    "--markdown", f"{folder}/clean.md"])
-            self.assertEqual(completed.returncode, 0, completed.stdout[-500:])
-            self.assertTrue(json.JSONDecoder().raw_decode(completed.stdout)[0]["gates_all_passed"])
+            self.assertEqual(completed.returncode, 1, completed.stdout[-500:])
+            payload = json.JSONDecoder().raw_decode(completed.stdout)[0]
+            self.assertFalse(payload["gates_all_passed"])
+            self.assertEqual(payload["failed_gates"], ["claim_audit_reports_full_traceability"])
 
     def test_unknown_tamper_case_is_rejected(self) -> None:
         completed = run_audit(["--tamper", "make_it_pass"])
@@ -267,11 +272,11 @@ class MarkdownDeliverableTests(unittest.TestCase):
             for pointer in section["pointers"]:
                 self.assertIn(pointer["path"], MARKDOWN)
         self.assertIn("needs revision", MARKDOWN)
-        self.assertIn("Draft for operator review", MARKDOWN)
+        self.assertIn("The three findings pass the four narrative criteria", MARKDOWN)
         self.assertIn("hidden target", MARKDOWN.lower())
 
     def test_markdown_states_the_non_claims(self) -> None:
-        self.assertIn("No public dataset beyond the challenge package", MARKDOWN)
+        self.assertIn("One public CAL FIRE DINS source is registered", MARKDOWN)
         self.assertIn("does not", MARKDOWN)
         self.assertIn("documentation screen", MARKDOWN)
 

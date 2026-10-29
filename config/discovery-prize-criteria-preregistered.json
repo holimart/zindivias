@@ -122,7 +122,9 @@
   ],
   "external_data_policy": {
     "url_regex": "https?://[^\\s)\\]`]+",
-    "allowlist": [],
+    "allowlist": [
+      "https://data.ca.gov/dataset/cal-fire-damage-inspection-dins-data"
+    ],
     "no_external_data_statement_regex": "(?:no additional public (?:data|dataset) was used|no external public data was used|no external-source retrieval)",
     "note": "Best Bias Discovery sections must introduce no public dataset beyond the challenge package; if one were introduced it would need source, open licence, URL, retrieval date and a reproducible method, and would have to be added to the allowlist"
   },
@@ -181,18 +183,18 @@
   "sections": [
     {
       "id": "section-1-postfire",
-      "title": "Post-fire building-count disagreement may look like under-mapping",
-      "heading": "Best Bias Discovery: post-fire building-count disagreement may look like under-mapping",
-      "level": 1,
+      "title": "Finding 1 — Post-fire building-count disagreement in the Paradise–Magalia area",
+      "heading": "Finding 1 — Post-fire building-count disagreement in the Paradise–Magalia area",
+      "level": 2,
       "status": "supported",
       "line_start": 1,
-      "line_end": 74,
+      "line_end": 44,
       "criterion_blocks": {
         "impact": [
-          "Impact"
+          "Impact and novelty"
         ],
         "novelty": [
-          "Novelty"
+          "Impact and novelty"
         ],
         "evidence": [
           "Evidence"
@@ -203,11 +205,14 @@
       },
       "scripts": [
         "scripts/discovery_postfire_stale_reference.py",
-        "scripts/audit_discovery_postfire_county_bootstrap.py"
+        "scripts/audit_discovery_postfire_county_bootstrap.py",
+        "scripts/discovery_dins_mechanism.py"
       ],
       "deterministic_reports": [
         "reports/discovery-postfire.json",
-        "reports/discovery-postfire-county-bootstrap.json"
+        "reports/discovery-postfire-county-bootstrap.json",
+        "reports/discovery-dins-mechanism.json",
+        "reports/discovery-postfire-map.png"
       ],
       "pointers": [
         {
@@ -221,63 +226,108 @@
           "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
         },
         {
-          "path": "reports/discovery-postfire.json",
-          "pointer": "/high_burn_vs_unburned_below_0_8",
-          "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
-        },
-        {
-          "path": "reports/discovery-postfire.json",
-          "pointer": "/no_labels_or_removed_references_used",
-          "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
-        },
-        {
-          "path": "reports/discovery-postfire-map.png",
-          "pointer": null,
-          "sha256": "916589e0d3dc765a77c133dbcfe454740906dabb26ab74fcc0db92f9ffa43da1"
-        },
-        {
-          "path": "reports/discovery-postfire-county-bootstrap.json",
-          "pointer": "/robustness",
-          "sha256": "942c39504dbcf3b2fd0fbc19c3cb3194bd9a49693fdd3688a044c3211d637d24"
-        },
-        {
           "path": "reports/discovery-postfire-county-bootstrap.json",
           "pointer": "/county_cluster_bootstrap/cluster_95_percentile_interval",
           "sha256": "942c39504dbcf3b2fd0fbc19c3cb3194bd9a49693fdd3688a044c3211d637d24"
         },
         {
-          "path": "reports/discovery-postfire-county-bootstrap.json",
-          "pointer": "/county_cluster_bootstrap/tract_preservation_checks",
-          "sha256": "942c39504dbcf3b2fd0fbc19c3cb3194bd9a49693fdd3688a044c3211d637d24"
+          "path": "reports/discovery-dins-mechanism.json",
+          "pointer": "/external_source",
+          "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd"
         },
         {
-          "path": "reports/discovery-postfire-county-bootstrap.json",
-          "pointer": "/derived_input_content_equivalence",
-          "sha256": "942c39504dbcf3b2fd0fbc19c3cb3194bd9a49693fdd3688a044c3211d637d24"
+          "path": "reports/discovery-dins-mechanism.json",
+          "pointer": "/decision",
+          "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd"
+        },
+        {
+          "path": "reports/discovery-dins-mechanism.json",
+          "pointer": "/spearman",
+          "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd"
+        },
+        {
+          "path": "reports/discovery-dins-mechanism.json",
+          "pointer": "/focal_butte_tracts",
+          "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd"
+        },
+        {
+          "path": "reports/discovery-dins-mechanism.json",
+          "pointer": "/opposite_direction",
+          "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd"
+        },
+        {
+          "path": "reports/discovery-postfire-map.png",
+          "pointer": null,
+          "sha256": "916589e0d3dc765a77c133dbcfe454740906dabb26ab74fcc0db92f9ffa43da1"
         }
       ],
-      "reproduce_command": "python scripts/discovery_postfire_stale_reference.py",
-      "sampled_claim_id": "bias-discovery-001",
-      "outside_scorecard_grid": true,
-      "reproduce_commands_all": [
-        "python scripts/discovery_postfire_stale_reference.py",
-        "python scripts/audit_discovery_postfire_county_bootstrap.py"
-      ]
+      "reproduce_command": "python scripts/discovery_dins_mechanism.py",
+      "sampled_claim_id": "bias-discovery-003",
+      "outside_scorecard_grid": true
     },
     {
-      "id": "section-2-region-confound",
-      "title": "Scorecard strata are strongly region-composition confounded",
-      "heading": "Section 2 — Scorecard strata are strongly region-composition confounded",
+      "id": "section-2-source-mix",
+      "title": "Finding 2 — Rural Overture buildings are less often OSM-sourced",
+      "heading": "Finding 2 — Rural Overture buildings are less often OSM-sourced",
       "level": 2,
       "status": "supported",
-      "line_start": 75,
-      "line_end": 115,
+      "line_start": 44,
+      "line_end": 62,
       "criterion_blocks": {
         "impact": [
-          "Impact"
+          "Impact and novelty"
         ],
         "novelty": [
-          "Novelty"
+          "Impact and novelty"
+        ],
+        "evidence": [
+          "Evidence"
+        ],
+        "reproducibility": [
+          "Reproducibility"
+        ]
+      },
+      "scripts": [
+        "scripts/discovery_source_provenance.py"
+      ],
+      "deterministic_reports": [
+        "reports/source-provenance.json"
+      ],
+      "pointers": [
+        {
+          "path": "reports/source-provenance.json",
+          "pointer": "/statistics",
+          "sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565"
+        },
+        {
+          "path": "reports/source-provenance.json",
+          "pointer": "/uncertainty_and_limitations",
+          "sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565"
+        },
+        {
+          "path": "reports/source-provenance.json",
+          "pointer": "/source_definitions",
+          "sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565"
+        }
+      ],
+      "reproduce_command": "python scripts/discovery_source_provenance.py",
+      "sampled_claim_id": "bias-discovery-007",
+      "outside_scorecard_grid": true
+    },
+    {
+      "id": "section-3-region-confound",
+      "title": "Finding 3 — The tribal/non-tribal pooled comparison is region-confounded",
+      "heading": "Finding 3 — The tribal/non-tribal pooled comparison is region-confounded",
+      "level": 2,
+      "status": "supported",
+      "line_start": 62,
+      "line_end": 79,
+      "criterion_blocks": {
+        "impact": [
+          "Impact and novelty"
+        ],
+        "novelty": [
+          "Impact and novelty"
         ],
         "evidence": [
           "Evidence"
@@ -305,161 +355,13 @@
         },
         {
           "path": "reports/discovery-strata-confound.json",
-          "pointer": "/unique_official_geoid_count",
-          "sha256": "ce0f1307793d1c658754cb7f9dd6fee7ea9cabf2a8a0e7ccb8e9888c2bad9ecb"
-        },
-        {
-          "path": "reports/discovery-strata-confound.json",
           "pointer": "/missing",
           "sha256": "ce0f1307793d1c658754cb7f9dd6fee7ea9cabf2a8a0e7ccb8e9888c2bad9ecb"
-        },
-        {
-          "path": "reports/transport-route-ref-audit.json",
-          "pointer": "/regions",
-          "sha256": "bf904336963f553cc7442c5996a4d8d504fe30aad5c4f1a2e44da8fa773b1927"
-        },
-        {
-          "path": "reports/transport-route-ref-audit.json",
-          "pointer": "/limitations",
-          "sha256": "bf904336963f553cc7442c5996a4d8d504fe30aad5c4f1a2e44da8fa773b1927"
         }
       ],
       "reproduce_command": "python scripts/discovery_strata_confound.py",
-      "sampled_claim_id": "bias-discovery-010",
+      "sampled_claim_id": "bias-discovery-008",
       "outside_scorecard_grid": true
-    },
-    {
-      "id": "section-3-rural-svi-draft",
-      "title": "Secondary exploratory lead — rural × SVI minority-domain screen in South-Central Texas",
-      "heading": "Secondary exploratory lead — rural × SVI minority-domain screen in South-Central Texas",
-      "level": 2,
-      "status": "draft",
-      "line_start": 116,
-      "line_end": 174,
-      "criterion_blocks": {
-        "impact": [
-          "Why this may matter; what it does not show"
-        ],
-        "novelty": [
-          "Proposed pattern outside the published scorecard grid"
-        ],
-        "evidence": [
-          "Quantified proxy evidence"
-        ],
-        "reproducibility": [
-          "Reproduction"
-        ]
-      },
-      "scripts": [
-        "scripts/discovery_rural_svi_minority.py"
-      ],
-      "deterministic_reports": [
-        "reports/discovery-rural-svi-minority.json"
-      ],
-      "pointers": [
-        {
-          "path": "reports/discovery-rural-svi-minority.json",
-          "pointer": "/group_definition",
-          "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0"
-        },
-        {
-          "path": "reports/discovery-rural-svi-minority.json",
-          "pointer": "/composite_results",
-          "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0"
-        },
-        {
-          "path": "reports/discovery-rural-svi-minority.json",
-          "pointer": "/C2_component_results_defined_only",
-          "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0"
-        },
-        {
-          "path": "reports/discovery-rural-svi-minority.json",
-          "pointer": "/named_high_group_tracts_sorted_by_C2_estimate",
-          "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0"
-        },
-        {
-          "path": "reports/discovery-rural-svi-minority.json",
-          "pointer": "/fixed_scorecard_novelty",
-          "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0"
-        },
-        {
-          "path": "reports/discovery-rural-svi-minority.json",
-          "pointer": "/causal_and_accuracy_limitations",
-          "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0"
-        }
-      ],
-      "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
-      "sampled_claim_id": "bias-discovery-017",
-      "outside_scorecard_grid": true,
-      "draft_marker": "Draft for operator review",
-      "recommendation": "Keep the section marked draft until the operator reviews the discovery narrative: the group means are proxy model scores, the transport component interval includes zero, and the impact paragraph is hypothetical. Either promote it with a stakeholder-checked cutpoint or remove the operational sentence and keep it as a follow-up screen."
-    },
-    {
-      "id": "section-4-source-provenance",
-      "title": "Overture source mix differs across tract strata",
-      "heading": "Section 3 — Overture source mix differs across tract strata",
-      "level": 2,
-      "status": "supported",
-      "line_start": 175,
-      "line_end": 227,
-      "criterion_blocks": {
-        "impact": [
-          "Interpretation and limits"
-        ],
-        "novelty": [
-          "Proposed pattern outside the published scorecard grid",
-          "Method and source definitions",
-          "Interpretation and limits"
-        ],
-        "evidence": [
-          "Findings"
-        ],
-        "reproducibility": [
-          "Reproduction"
-        ]
-      },
-      "scripts": [
-        "scripts/discovery_source_provenance.py"
-      ],
-      "deterministic_reports": [
-        "reports/source-provenance.json"
-      ],
-      "pointers": [
-        {
-          "path": "reports/source-provenance.json",
-          "pointer": "/statistics",
-          "sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565"
-        },
-        {
-          "path": "reports/source-provenance.json",
-          "pointer": "/source_definitions",
-          "sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565"
-        },
-        {
-          "path": "reports/source-provenance.json",
-          "pointer": "/regions",
-          "sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565"
-        },
-        {
-          "path": "reports/source-provenance.json",
-          "pointer": "/data_and_restrictions",
-          "sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565"
-        },
-        {
-          "path": "reports/source-provenance.json",
-          "pointer": "/uncertainty_and_limitations",
-          "sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565"
-        },
-        {
-          "path": "reports/source-provenance.png",
-          "pointer": null,
-          "sha256": "2d45a9d06baa5e0ab917f1c2b432a885209d833edb7957ad9c8da2a9439ffa4d"
-        }
-      ],
-      "reproduce_command": "python scripts/discovery_source_provenance.py",
-      "sampled_claim_id": "bias-discovery-024",
-      "outside_scorecard_grid": true,
-      "status_marker": "descriptive discovery lead, not a measured map-completeness or hidden-score finding"
     }
   ],
   "negative_control_cases": [

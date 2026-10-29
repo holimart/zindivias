@@ -241,72 +241,35 @@ def front_matter(config: dict[str, Any], submissions: list[dict[str, Any]],
                  candidate: dict[str, Any]) -> list[str]:
     identity = config["identity"]
     final = final_two_report()
-    protocol_candidates = {item["slot"]: item for item in final["final_candidates"]}
-    rule = final["corrected_cgs_selection"]
-    scope = final["scope"]
+    protocol = {item["slot"]: item for item in final["final_candidates"]}
     username = identity["zindi_username_or_team"] or identity["pending_placeholder"]
     lines = [
-        "# Bias Bounty Mapping Equity Challenge — final methodology and discovery writeup",
+        "# Bias Bounty Mapping Equity Challenge — discovery and methodology",
         "",
-        f"- Competition: `{config['competition']}` (Zindi)",
-        f"- Lane: `{config['lane']}`",
-        f"- Writeup revision: git `{git('rev-parse', 'HEAD')}` "
-        f"(tree clean: {git('status', '--porcelain') == ''})",
-        f"- Zindi username or team name: **{username}**",
-        f"- Operator confirmation of that identity recorded: "
-        f"{'yes' if identity['operator_confirmation_recorded'] else 'NO — pending operator'}",
-        f"- Form submission status: **{submission_status_line(config)}**",
-        f"- Protocol final-two candidates (operator confirmation pending): "
-        f"{final_two_names(config)}",
-        "- Zindi UI selection: **NOT CONFIRMED by the operator; no UI selection was made**.",
-        f"- Official requirement: {identity['rules_requirement_quote']}",
-        f"- Packaged for the organiser writeup form; form URL status: "
-        f"{'recorded' if config['form']['url'] else 'NOT AVAILABLE in the saved rules text'}",
+        "## Submission and identity",
         "",
-        "Scored scope: "
-        f"{scope['official_scored_tracts']} official tracts across four regions "
-        f"({scope['public_tracts_rounded']} public / {scope['private_tracts_rounded']} private "
-        f"expected), uploaded on the platform template of {scope['platform_template_rows']} rows "
-        f"including {scope['template_only_rows']} template-only rows.",
+        f"- Zindi username/team: **{username}** — operator confirmation "
+        f"{'recorded' if identity['operator_confirmation_recorded'] else 'pending'}.",
+        f"- Organiser form status: **{submission_status_line(config)}**; form URL "
+        f"{'recorded' if config['form']['url'] else 'unconfirmed in the saved rules text'}.",
+        f"- Zindi UI/final-two confirmation: "
+        f"{'operator-confirmed' if all((config.get('final_two') or {}).get('selected', {}).values()) else 'pending; no UI selection was made'}.",
+        f"- Final-two IDs for form use: {final_two_names(config)}.",
+        f"- Protocol A: `{protocol['A']['candidate_id']}`; leaderboard submission `"
+        f"{protocol['A']['submission_id']}`.",
+        f"- Protocol B: `{protocol['B']['candidate_id']}`; leaderboard submission `"
+        f"{protocol['B']['submission_id']}`.",
+        f"- Official identification requirement: {identity['rules_requirement_quote']}",
         "",
-        f"Current model candidate presented in this writeup: `{candidate['candidate_id']}` at "
-        f"`{candidate['artifact']}` (SHA-256 `{candidate['sha256']}`), {candidate['rows']} rows. "
-        f"{config['model_evidence']['upload_status_quote']}",
+        config["consideration_requested"]["stated_verbatim_in_writeup"],
         "",
-        f"Correctly ordered format-only platform artifact: `{config['model_evidence']['format_fix_candidate_id']}` "
-        f"at `{config['model_evidence']['format_fix_artifact']}` (SHA-256 "
-        f"`{config['model_evidence']['format_fix_sha256']}`). Its `coverage_gap_score` values are "
-        "copied byte-for-byte from the frozen model candidate above; no prediction was changed.",
+        "## Contents",
         "",
-        f"Protocol result: A is `{protocol_candidates['A']['candidate_id']}` "
-        f"(submission `{protocol_candidates['A']['submission_id']}`, public RMSE "
-        f"{protocol_candidates['A']['public_rmse']:.9g}, SHA-256 "
-        f"`{protocol_candidates['A']['sha256']}`); B is "
-        f"`{protocol_candidates['B']['candidate_id']}` (submission "
-        f"`{protocol_candidates['B']['submission_id']}`, public RMSE "
-        f"{protocol_candidates['B']['public_rmse']:.9g}, SHA-256 "
-        f"`{protocol_candidates['B']['sha256']}`). The frozen A rule used only the four "
-        f"successful corrected-order `_cgs` cohort scores; `{rule['winner']}` won outside "
-        "each pairwise noise guard. B is the pre-registered fixed companion and its score "
-        "was not used to select A. The operator must review the discovery narrative and "
-        "confirm the final-two/UI choice before any form submission.",
+        "1. [Best Bias Discovery — findings](#best-bias-discovery-entry)",
+        "2. [Methodology](#methodology-best-documentation-entry)",
+        "3. Appendices: detailed method, edge cases, screens, submissions, sources, and audit trail.",
         "",
-        "## Column-order correction and historical score eligibility",
-        "",
-        "The per-region sample files use `GEOID,transport_gap,building_gap,poi_gap,coverage_gap_score`, "
-        "while the Data-page `SampleSubmission.csv` starts `GEOID,coverage_gap_score`. Zindi scores "
-        "the second CSV column by position, so every earlier five-column public score measured "
-        "`transport_gap`, not `coverage_gap_score`. Those historical scores and submission records "
-        "are retained for auditability but are void for candidate selection and are not used to tune "
-        "or change predictions. Each registered `_cgs.csv` copies the frozen `coverage_gap_score` "
-        "text unchanged into the Data-page two-column order. No corrected-format upload occurs before "
-        "2026-10-29 00:00 UTC.",
-        "",
-        "Final A/B IDs, hashes and public scores below are sourced from `reports/final-two.json` "
-        "and are checked against the submission records. The broader claim-to-evidence audit has "
-        "unresolved items, disclosed in the reproducibility appendix; this draft is not yet approved "
-        "for submission. No historical platform score is evidence about the intended composite target.",
-
+        "This is a staged draft for operator review. It is not submission-ready; review of the discovery narrative, identity, form URL, final-two choice, and claim-audit gates is still required.",
         "",
     ]
     if not config["form"]["url"]:
@@ -338,7 +301,7 @@ def final_two_names(config: dict[str, Any]) -> str:
 
 
 def consideration(config: dict[str, Any]) -> list[str]:
-    lines = ["## Prize consideration requested", ""]
+    lines = ["## Appendix E: Prize consideration and official criteria", ""]
     request = config["consideration_requested"]
     lines += [request["stated_verbatim_in_writeup"], ""]
     for prize in config["prizes"]:
@@ -356,7 +319,7 @@ def consideration(config: dict[str, Any]) -> list[str]:
 
 
 def leaderboard_table(submissions: list[dict[str, Any]], candidate: dict[str, Any]) -> list[str]:
-    lines = ["## Leaderboard submission records and score eligibility", "",
+    lines = ["## Appendix D: Leaderboard submission records and score eligibility", "",
              "Historical five-column uploads placed `transport_gap` second, so their returned public values are "
              "preserved as records but void for A/B selection. The `_cgs` rows use `GEOID,coverage_gap_score`; "
              "the four cohort scores were used only by the frozen A rule, which selected the final A shown "
@@ -402,7 +365,7 @@ def leaderboard_table(submissions: list[dict[str, Any]], candidate: dict[str, An
 
 
 def external_section(register: list[dict[str, Any]], provided_audit: dict[str, Any]) -> list[str]:
-    lines = ["## External source register (URL and access date)", ""]
+    lines = ["## Appendix F: External source register (URL and access date)", ""]
     lines += ["No external dataset is cited or used in the scored predictions. The register below "
               "lists the published prior art consulted for methodology know-how, with the date it "
               "was accessed, and the organiser-hosted challenge files the workspace downloader "
@@ -429,7 +392,7 @@ def external_section(register: list[dict[str, Any]], provided_audit: dict[str, A
 
 def reproducibility_section(audit: dict[str, Any]) -> list[str]:
     measured = audit.get("summary", {})
-    lines = ["## Reproducibility appendix", "",
+    lines = ["## Appendix G: Reproducibility audit", "",
              "A machine-checked claim-to-evidence audit backs every number in this writeup.", ""]
     for key in ("claims_total", "claims_fully_traceable", "fraction_quantitative_claims_traceable",
                 "numeric_tokens_total", "numeric_tokens_covered",
@@ -467,7 +430,7 @@ def reproducibility_section(audit: dict[str, Any]) -> list[str]:
 
 def provenance_section() -> list[str]:
     prohibited = CONFIG["prohibited_content"]
-    lines = ["## Data provenance and prohibited-source statement", "",
+    lines = ["## Appendix H: Data provenance and prohibited-source statement", "",
              "- Scored predictions are built only from the organiser-provided Overture roads, "
              "buildings and POI extracts, the provided census/ACS table, the provided strata "
              "table and the platform submission template, plus fixed documented priors.",
@@ -562,8 +525,8 @@ def markdown_to_pdf(markdown: str, out_path: Path) -> None:
     from reportlab.lib.units import mm
     from reportlab import rl_config
     from reportlab.pdfgen import canvas as rl_canvas
-    from reportlab.platypus import KeepTogether, Paragraph, SimpleDocTemplate, Spacer, Table, \
-        TableStyle
+    from reportlab.platypus import Image as ReportLabImage, KeepTogether, Paragraph, \
+        SimpleDocTemplate, Spacer, Table, TableStyle
 
     # byte-reproducible PDF: fixed document identity, no wall-clock in the file
     rl_config.invariant = 1
@@ -615,6 +578,18 @@ def markdown_to_pdf(markdown: str, out_path: Path) -> None:
             index += 1
             story.append(KeepTogether([Paragraph(escape("  ".join(block)[:1400] or " "), code),
                                        Spacer(1, 4)]))
+            continue
+        image = re.match(r"^!\[([^\]]*)\]\(([^)]+)\)$", stripped)
+        if image:
+            image_path = (ROOT / "docs/writeup" / image.group(2)).resolve()
+            if not image_path.is_file():
+                raise FileNotFoundError(f"writeup image missing: {image_path}")
+            graphic = ReportLabImage(str(image_path))
+            scale = min(doc.width / graphic.drawWidth, 125 * mm / graphic.drawHeight, 1.0)
+            graphic.drawWidth *= scale
+            graphic.drawHeight *= scale
+            story.append(KeepTogether([graphic, Spacer(1, 5)]))
+            index += 1
             continue
         heading = re.match(r"^(#{1,5})\s+(.*)$", stripped)
         if heading:

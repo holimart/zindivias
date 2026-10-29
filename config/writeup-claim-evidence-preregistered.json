@@ -4,8 +4,10 @@
   "intent": "documentation screen: every quantitative statement in the Best Bias Discovery / Best Documentation writeup must carry an exact evidence pointer and a reproducible command; not a model-promotion or accuracy assessment",
   "docs": [
     "docs/writeup/bias-discovery.md",
+    "docs/writeup/methodology-summary.md",
     "docs/writeup/methodology.md",
-    "docs/writeup/edge-cases.md"
+    "docs/writeup/edge-cases.md",
+    "docs/writeup/appendices/screens-that-did-not-produce-a-finding.md"
   ],
   "workspace_rules": "RULES.md",
   "evidence_allowlist": [
@@ -156,7 +158,15 @@
     "scripts/submit_zindi.py",
     "scripts/verify_writeup_claim.py",
     "src/bias60/ideas/m.py",
-    "reports/discovery-postfire-county-bootstrap.json"
+    "reports/discovery-postfire-county-bootstrap.json",
+    "reports/discovery-external-layers.json",
+    "reports/t1-stroke-residual-screen.json",
+    "reports/discovery-postfire-map.png",
+    "reports/final-two.json",
+    "reports/sample-contract-audit.json",
+    "scripts/analyze_discovery_external_layers.py",
+    "scripts/screen_t1-stroke-residual.py",
+    "scripts/discovery_dins_mechanism.py"
   ],
   "reproduce_command_aliases": {
     "SEE_DISCOVERY_RURAL_SVI": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
@@ -824,9 +834,15 @@
       "doc": "docs/writeup/bias-discovery.md",
       "section": "External follow-up — Camp Fire DINS mechanism check",
       "occurrence": 1,
-      "evidence": ["reports/discovery-dins-mechanism.json"],
+      "evidence": [
+        "reports/discovery-dins-mechanism.json"
+      ],
       "reproduce": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_dins_mechanism.py --workspace \"$COMPETITION_WORKSPACE\" --dins-file \"$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson\" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png",
-      "products": ["reports/discovery-dins-mechanism.json", "reports/discovery-dins-mechanism.md", "reports/discovery-dins-mechanism.png"],
+      "products": [
+        "reports/discovery-dins-mechanism.json",
+        "reports/discovery-dins-mechanism.md",
+        "reports/discovery-dins-mechanism.png"
+      ],
       "provenance_class": "measured_external_discovery_data"
     },
     {
@@ -835,10 +851,13 @@
       "occurrence": "any",
       "evidence": [
         "reports/discovery-postfire.json",
+        "reports/discovery-postfire-county-bootstrap.json",
+        "reports/discovery-dins-mechanism.json",
         "reports/discovery-strata-confound.json",
         "reports/discovery-rural-svi-minority.json",
         "reports/source-provenance.json",
-        "docs/data-inventory.md"
+        "docs/data-inventory.md",
+        "docs/decisions/building-component.md"
       ],
       "reproduce": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
       "products": [
@@ -907,6 +926,42 @@
         "reports/scorecards/ggVY44Ui.json"
       ],
       "provenance_class": "historical_disclosure"
+    },
+    {
+      "doc": "docs/writeup/methodology-summary.md",
+      "section": "*",
+      "occurrence": "any",
+      "evidence": [
+        "reports/sample-contract-audit.json",
+        "reports/final-two.json",
+        "reports/v2-input-provenance.json",
+        "reports/discovery-dins-mechanism.json",
+        "docs/data-inventory.md"
+      ],
+      "reproduce": "python scripts/build_estimator_v2_candidates.py",
+      "products": [
+        "reports/final-two.json",
+        "reports/v2-input-provenance.json"
+      ],
+      "provenance_class": "scope_statement"
+    },
+    {
+      "doc": "docs/writeup/appendices/screens-that-did-not-produce-a-finding.md",
+      "section": "*",
+      "occurrence": "any",
+      "evidence": [
+        "reports/discovery-rural-svi-minority.json",
+        "reports/discovery-external-layers.json",
+        "reports/t1-stroke-residual-screen.json",
+        "docs/data-inventory.md"
+      ],
+      "reproduce": "python scripts/discovery_rural_svi_minority.py",
+      "products": [
+        "reports/discovery-rural-svi-minority.json",
+        "reports/discovery-external-layers.json",
+        "reports/t1-stroke-residual-screen.json"
+      ],
+      "provenance_class": "measured_provided_data"
     }
   ],
   "verify_command_template": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim {claim_id}",
@@ -1415,15 +1470,64 @@
     },
     "bias-discovery-007": {
       "evidence": [
-        "reports/discovery-postfire.json",
-        "reports/discovery-postfire-county-bootstrap.json"
+        "reports/source-provenance.json"
       ],
-      "notes": "county-cluster robustness recheck of the published tract-level difference; the cluster interval, positive-draw fraction, valid-replicate fraction and county counts come from the county-bootstrap report, the point estimate and the tract-level interval from the frozen discovery report"
+      "notes": "rural versus urban OSM-touched source-share differences and intervals are reported in the source-provenance regional statistics"
     },
     "bias-discovery-040": {
-      "evidence": ["reports/discovery-dins-mechanism.json"],
+      "evidence": [
+        "reports/discovery-dins-mechanism.json"
+      ],
       "primary_pointer": "/",
       "notes": "all focal and all-2018 DINS comparison figures are explicitly linked to report root; the writeup itself names the narrower JSON pointers for each output"
+    },
+    "bias-discovery-001": {
+      "derived_tokens": [
+        {
+          "value": 38.0,
+          "decimals": 1,
+          "operation": "percentage",
+          "evidence": "reports/discovery-dins-mechanism.json",
+          "pointer_a": "/focal_butte_tracts/0/usfs_minus_overture",
+          "pointer_b": "/focal_butte_tracts/0/provided_usfs_building_count",
+          "tolerance": 0.05
+        },
+        {
+          "value": 25.3,
+          "decimals": 1,
+          "operation": "percentage",
+          "evidence": "reports/discovery-dins-mechanism.json",
+          "pointer_a": "/focal_butte_tracts/5/usfs_minus_overture",
+          "pointer_b": "/focal_butte_tracts/5/provided_usfs_building_count",
+          "tolerance": 0.05
+        }
+      ]
+    },
+    "bias-discovery-002": {
+      "evidence": [
+        "reports/discovery-dins-mechanism.json",
+        "reports/discovery-postfire.json"
+      ],
+      "tokens_exempt": [
+        {
+          "value": 2026,
+          "decimals": 0,
+          "class": "retrieval_date",
+          "reason": "year component of the documented public DINS retrieval date, not a measured quantity"
+        }
+      ]
+    },
+    "bias-discovery-003": {
+      "evidence": [
+        "reports/discovery-postfire.json",
+        "reports/discovery-dins-mechanism.json"
+      ]
+    },
+    "bias-discovery-008": {
+      "evidence": [
+        "reports/discovery-strata-confound.json"
+      ],
+      "notes": "tribal stratum counts and regional shares are from the report stratum_composition and regional_counts_and_prevalence records"
     }
   },
   "reproduce_disclosed_difference_paths": [

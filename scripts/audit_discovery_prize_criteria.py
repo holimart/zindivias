@@ -350,9 +350,10 @@ def run_audit(config: dict[str, Any], tamper: str | None, execute: bool) -> dict
 
     if tamper == "drop_impact_hedge":
         lines = text.splitlines()
-        start = next(index for index, line in enumerate(lines) if line.strip() == "## Impact")
+        start = next(index for index, line in enumerate(lines)
+                     if line.strip() == "### Impact and novelty")
         stop = next(index for index in range(start + 1, len(lines))
-                    if lines[index].startswith("## "))
+                    if lines[index].startswith("### ") or lines[index].startswith("## "))
         kept = [line for line in lines[start + 1:stop]
                 if not any(hedge in line.lower() for hedge in config["hedge_phrases"])]
         lines[start + 1:stop] = kept
@@ -626,8 +627,8 @@ def render_markdown(report: dict[str, Any], config: dict[str, Any]) -> str:
         "",
         "This is a documentation screen. It makes no submission, changes no scored candidate, "
         "reads no leaderboard feedback, and asserts nothing about the organisers' hidden target. "
-        "Every score quoted from the proxy models remains a model-side estimate, not an organiser "
-        "score.",
+        "The DINS comparison does not establish rebuilding, absence, or a hidden-target result.",
+
         "",
         "## Organiser criteria and weights",
         "",
@@ -640,9 +641,9 @@ def render_markdown(report: dict[str, Any], config: dict[str, Any]) -> str:
     lines += ["", "Organiser wording: "
               f"\"{criteria[0]['organiser_quote']}\" (source: {config['rules_quote_source']}).",
               "", "## Criterion matrix", ""]
-    lines += ["Verdicts are `pass` or `needs revision`. A section is accepted when all four "
-              "criteria pass, or when it is explicitly marked draft and still passes evidence and "
-              "reproducibility.", ""]
+    lines += ["Verdicts are `pass` or `needs revision`. Each retained finding is supported only "
+              "when all four criteria pass; the overall packet still requires operator review and a "
+              "complete claim audit.", ""]
     lines += ["| Section | Declared status | Resolution | Impact | Novelty | Evidence | "
               "Reproducibility |", "|---|---|---|---|---|---|---|"]
     for section in report["sections"]:
@@ -722,10 +723,11 @@ def render_markdown(report: dict[str, Any], config: dict[str, Any]) -> str:
         "discovery document (pattern scan: zero hits).",
         "- No section asserts an unqualified operational outcome; every impact paragraph carries "
         "an explicit hedge.",
-        "- No public dataset beyond the challenge package is introduced (zero URLs in the "
-        "discovery document), so no licence or retrieval record is applicable.",
-        "- The draft section stays marked draft and is not eligible for the discovery prize until "
-        "the operator reviews it.",
+        "- One public CAL FIRE DINS source is registered for the mechanism check only; its open "
+        "licence, URL, retrieval date, filter, and limitations are documented, and it never enters "
+        "scored predictions.",
+        "- The three findings pass the four narrative criteria. This packet remains a draft for "
+        "operator review because the broader claim audit is incomplete and submission inputs are pending.",
         "",
         "## Reproduction",
         "",
