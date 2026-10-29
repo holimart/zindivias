@@ -11,9 +11,9 @@
 | Zindi username/team | `[OPERATOR: enter your confirmed Zindi username or team name]` |
 | Associated submissions | A — `V2_model_cgs` / `hvLtPVmr`; B — `B_from_A_cgs` / `eAaWXWxM` |
 | Prizes | **Both:** Best Bias Discovery **and** Best Documentation |
-| Methodology writeup | `reports/writeup/final-writeup.pdf` — SHA-256 `c7fe40c4b0dfc25102c9c031a6eea1faf08a386b4ce2790b12be6ea8d2ea9ecb` |
+| Methodology writeup | `reports/writeup/final-writeup.pdf` — SHA-256 `e78870366d054fb990fddb258e2301ab5481d8b9adcbbdad33dd22ffa0dcfe0f` |
 
-**Finding #1 abstract:** In six focal Camp Fire-area Butte County tracts, provided Overture-to-USFS building-count ratios ranged from 0.620 to 0.747. The tract-level difference suggests a post-fire mapping discrepancy, but the county-cluster 95% interval includes zero, so its magnitude remains exploratory. A preregistered CAL FIRE DINS check did not support the proposed damage/rebuilding mechanism: 0/6 focal tracts met relative error <=0.30, and Spearman was 0.4626068 across 28 tracts, below 0.60. DINS is inspection-limited; missing records do not establish absence or rebuilding. This motivates localized mapping QA, not a causal claim or observed service failure.
+**Finding #1 abstract:** Across Maricopa, Northern California, Eastern Oklahoma, and South-Central Texas, rural tracts have 16.83–38.68 percentage-point lower OSM-touched building shares, with all four tract-bootstrap intervals below zero. The source tags describe provenance, not correctness, completeness, or age; this suggests a local address/attribute verification priority, not an observed service failure or a causal rurality effect.
 
 **Draft final-two confirmation (use only after operator approval):** “Final two are A: V2_model_cgs (`hvLtPVmr`) and B: B_from_A_cgs (`eAaWXWxM`).”
 

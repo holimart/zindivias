@@ -123,7 +123,8 @@
   "external_data_policy": {
     "url_regex": "https?://[^\\s)\\]`]+",
     "allowlist": [
-      "https://data.ca.gov/dataset/cal-fire-damage-inspection-dins-data"
+      "https://data.ca.gov/dataset/cal-fire-damage-inspection-dins-data",
+      "https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/POSTFIRE_MASTER_DATA_SHARE/FeatureServer/0"
     ],
     "no_external_data_statement_regex": "(?:no additional public (?:data|dataset) was used|no external public data was used|no external-source retrieval)",
     "note": "Best Bias Discovery sections must introduce no public dataset beyond the challenge package; if one were introduced it would need source, open licence, URL, retrieval date and a reproducible method, and would have to be added to the allowlist"
@@ -182,13 +183,13 @@
   },
   "sections": [
     {
-      "id": "section-1-postfire",
-      "title": "Finding 1 — Camp Fire-area building-count mismatch; DINS mechanism check negative",
-      "heading": "Finding 1 — Camp Fire-area building-count mismatch; DINS mechanism check negative",
+      "id": "section-2-paradise-magalia",
+      "title": "Finding 2 — Paradise/Magalia building-count discrepancy",
+      "heading": "Finding 2 — Paradise/Magalia building-count discrepancy",
       "level": 2,
       "status": "supported",
-      "line_start": 1,
-      "line_end": 46,
+      "line_start": 19,
+      "line_end": 63,
       "criterion_blocks": {
         "impact": [
           "Impact and novelty"
@@ -262,17 +263,17 @@
         }
       ],
       "reproduce_command": "python scripts/discovery_dins_mechanism.py",
-      "sampled_claim_id": "bias-discovery-003",
+      "sampled_claim_id": "bias-discovery-004",
       "outside_scorecard_grid": true
     },
     {
-      "id": "section-2-source-mix",
-      "title": "Finding 2 — Rural Overture buildings are less often OSM-sourced",
-      "heading": "Finding 2 — Rural Overture buildings are less often OSM-sourced",
+      "id": "section-1-source-mix",
+      "title": "Finding 1 — Rural Overture buildings are less often OSM-sourced",
+      "heading": "Finding 1 — Rural Overture buildings are less often OSM-sourced",
       "level": 2,
       "status": "supported",
-      "line_start": 46,
-      "line_end": 64,
+      "line_start": 1,
+      "line_end": 18,
       "criterion_blocks": {
         "impact": [
           "Impact and novelty"
@@ -311,7 +312,7 @@
         }
       ],
       "reproduce_command": "python scripts/discovery_source_provenance.py",
-      "sampled_claim_id": "bias-discovery-008",
+      "sampled_claim_id": "bias-discovery-001",
       "outside_scorecard_grid": true
     },
     {

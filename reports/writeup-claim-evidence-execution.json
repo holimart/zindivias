@@ -205,248 +205,6 @@
    ]
   },
   {
-   "command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_shrink_diagnosis_h2.py --workspace \"$COMPETITION_WORKSPACE\" && python scripts/register_shrink_diagnosis_candidate.py",
-   "exit_code": 0,
-   "self_referential_deselect": [],
-   "undisclosed_product_changes": [
-    "reports/shrink-diagnosis.json:/H2/implementation/h1_report_sha256_before_h2",
-    "reports/shrink-diagnosis.json:/candidate_registration/registry_sha256",
-    "reports/shrink-diagnosis.json:/provenance/methodology_rules_doc_sha256"
-   ],
-   "products": [
-    {
-     "path": "reports/candidates.json",
-     "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815"
-    },
-    {
-     "path": "reports/candidates/S_crossmethod_reliability_shrink_v1.csv",
-     "sha256": "26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a"
-    },
-    {
-     "path": "reports/shrink-diagnosis.json",
-     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65"
-    }
-   ]
-  },
-  {
-   "command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/screen_t1_outside_share_threshold.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/t1-outside-share-threshold.json",
-   "exit_code": 0,
-   "self_referential_deselect": [],
-   "undisclosed_product_changes": [],
-   "products": [
-    {
-     "path": "reports/t1-outside-share-threshold.json",
-     "sha256": "dd10e054ba5923cbe7f10422ce51aaf61274ea6d8d2024a5e03573bd38e1e0f9"
-    }
-   ]
-  },
-  {
-   "command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/snapshot_lb_and_scorecards.py",
-   "exit_code": 0,
-   "self_referential_deselect": [],
-   "undisclosed_product_changes": [],
-   "products": [
-    {
-     "path": "reports/lb-scorecard-snapshot.json",
-     "sha256": "82e9515d5d4462fb057f3c2780dc1895f8c625caab4dc4c86ea6f7a9a5906d56"
-    },
-    {
-     "path": "reports/leaderboard/2026-10-25T051219+0000.json",
-     "sha256": "7f699892f4f38d8ce55deec8ae4ddbc03e33098bb4f053305ea67fd6d7b5686c"
-    },
-    {
-     "path": "reports/leaderboard/index.json",
-     "sha256": "1f35df77f881e0978a7d5653cc8e6b75b4026c614473cb88186a0619e61dd932"
-    },
-    {
-     "path": "reports/scorecards/BvyKrR6v.json",
-     "sha256": "eedd62442b80c58528254b4731673343512c6bf29db5226241c0dadd5cce2c4f"
-    },
-    {
-     "path": "reports/scorecards/TM83xxU6.json",
-     "sha256": "efb267a63c7a312d04b59d53a667332a3ecb77dc229082f38d711b1aa01bbdaf"
-    },
-    {
-     "path": "reports/scorecards/ggVY44Ui.json",
-     "sha256": "577614b75698c877e3cff892f97ea22647d1381dd6687f130e2a44ff5d377020"
-    },
-    {
-     "path": "reports/scorecards/index.json",
-     "sha256": "5355a2acf86675e1a07958e2e2ef3569109f911f91c69b850fb6142a6e53ba70"
-    },
-    {
-     "path": "reports/scorecards/rTARuUaG.json",
-     "sha256": "e977b4440c47f3b06afe45548145eabb1675852dd2d4d8b3052afb1759141550"
-    },
-    {
-     "path": "reports/scorecards/uRRw9KpB.json",
-     "sha256": "bfa4c458866ba17b588696fd9a4453cfae872f9935aebcaf8314ba3bf876ba7d"
-    },
-    {
-     "path": "reports/scorecards/ySXi73rd.json",
-     "sha256": "0927d4b704da35c06cb7dce6884210be90e91b9c510aa4408d2c3a8d87c19584"
-    }
-   ]
-  },
-  {
-   "command": "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json",
-   "exit_code": 0,
-   "self_referential_deselect": [],
-   "undisclosed_product_changes": [
-    "reports/bias60-family-s-summary.json:/family_s_flagged_vif_columns[length]",
-    "reports/bias60-family-s-summary.json:/harness_report_sha256",
-    "reports/bias60-family-s-summary.json:/orthogonality_report_sha256",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_d3_b_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_d3_b_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_dst3_b_gap/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_dst3_b_gap/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_g3_b_gap/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_g3_b_gap/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_g4_b_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_g4_b_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_m5_b_covariate_multi_property_share/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_mx4_b_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_mx4_b_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_sca3_b_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_sca3_b_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_tm1_b_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_tm1_b_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_tm1_b_gap/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_tm1_b_gap/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|C|covariate:lag_dst4_c_gap/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|C|covariate:lag_dst4_c_gap/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|C|covariate:lag_dst5_c_gap/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|C|covariate:lag_dst5_c_gap/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|C|covariate:lag_sca2_c_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|C|covariate:lag_sca2_c_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|C|covariate:lag_sca5_c_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|C|covariate:lag_sca5_c_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_d1_est_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_d1_est_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_d4_est_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_d4_est_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_d5_est_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_d5_est_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_dst1_est_gap/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_dst1_est_gap/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_dst2_est_gap/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_g5_est_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_g5_est_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_m2_est_covariate_all_wikidata_link_share/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_m2_est_covariate_all_wikidata_link_share/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_m3_est_covariate_address_mismatch_share/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_m3_est_covariate_address_mismatch_share/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_m4_est_covariate_chain_brand_share/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_m4_est_covariate_chain_brand_share/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_m4_est_covariate_chain_count_per_housing_unit/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_m4_est_covariate_chain_count_per_housing_unit/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_mx2_est_covariate_microsoft_only_place_share/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_mx2_est_covariate_microsoft_only_place_share/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_mx3_est_covariate_foursquare_only_place_share/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_mx3_est_covariate_foursquare_only_place_share/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_p1_est_gap/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_p1_est_gap/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_sca4_est_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_sca4_est_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_x3_est_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_x3_est_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_d2_f_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_d2_f_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_g5_f_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_g5_f_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_m2_f_covariate_facility_wikidata_link_share/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_m2_f_covariate_facility_wikidata_link_share/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_m2_f_covariate_facility_wikidata_link_share/orthogonality/vif_flagged",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_m3_f_covariate_facility_incoming_address_mismatch_share/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_m3_f_covariate_facility_incoming_address_mismatch_share/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx2_f_covariate_facility_microsoft_only_place_share/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx2_f_covariate_facility_microsoft_only_place_share/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx4_f_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx4_f_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_alltheplaces/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_foursquare/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_foursquare/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_meta/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_meta/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_microsoft/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_microsoft/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_other/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_other/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_p2_f_gap/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_p2_f_gap/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_p3_f_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_p3_f_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_sc2_f_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_sc2_f_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_sc3_f_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_sc3_f_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_sc3_f_gap/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_sc3_f_gap/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_sca1_f_gap/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_sca1_f_gap/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_x1_f_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_x1_f_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_x5_f_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_x5_f_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_g1_r_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_g1_r_gap/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_g2_r_gap/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_g2_r_gap/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_m1_r_covariate_low_version_tertiary_share/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_m1_r_covariate_low_version_tertiary_share/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_m1_r_covariate_named_mean_version/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_m1_r_covariate_named_mean_version/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_m1_r_covariate_tertiary_mean_version/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_m1_r_covariate_tertiary_mean_version/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_m5_r_covariate_multi_property_share/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_mx1_r_covariate_tomtom_named_length_share/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_mx1_r_covariate_tomtom_named_length_share/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_mx1_r_covariate_tomtom_tertiary_length_share/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_mx1_r_covariate_tomtom_tertiary_length_share/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_p4_r_gap/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sc1_r_gap/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sc1_r_gap/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sc4_r_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sc4_r_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sc5_r_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sc5_r_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sc5_r_gap/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sc5_r_gap/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sca3_r_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sca3_r_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sca3_r_covariate/orthogonality/vif_flagged",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_x4_r_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_x5_r_covariate/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_x5_r_covariate/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S2/channels/S2|all|covariate:county_eb_buildings/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S2/channels/S2|all|covariate:county_eb_buildings/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S2/channels/S2|all|covariate:county_eb_poi_all/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S2/channels/S2|all|covariate:county_eb_poi_all/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S3/channels/S3|F|covariate:boundary_leak_ems/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S3/channels/S3|F|covariate:boundary_leak_ems/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S3/channels/S3|F|covariate:boundary_leak_fire/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S3/channels/S3|F|covariate:boundary_leak_fire/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S3/channels/S3|F|covariate:boundary_leak_schools/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S3/channels/S3|F|covariate:boundary_leak_schools/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S4/channels/S4|B|covariate:peer_gap_delta/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S4/channels/S4|B|covariate:peer_gap_delta/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S4/channels/S4|Est|covariate:peer_gap_delta/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S4/channels/S4|Est|covariate:peer_gap_delta/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S4/channels/S4|F|covariate:peer_gap_delta/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S4/channels/S4|F|covariate:peer_gap_delta/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S4/channels/S4|R|covariate:peer_gap_delta/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S4/channels/S4|R|covariate:peer_gap_delta/orthogonality/vif",
-    "reports/bias60-family-s-summary.json:/outputs/S5/channels/S5|C|covariate:local_geary_gap/orthogonality/correlations_to_every_idea_column[length]",
-    "reports/bias60-family-s-summary.json:/outputs/S5/channels/S5|C|covariate:local_geary_gap/orthogonality/vif"
-   ],
-   "products": [
-    {
-     "path": "reports/bias60-family-s-summary.json",
-     "sha256": "ea1bdb11e7c358eb5ffc4b75a0a1a3c19d7f2b7bb84dce6453fb400643f68581"
-    }
-   ]
-  },
-  {
    "command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
    "exit_code": 0,
    "self_referential_deselect": [],
@@ -497,6 +255,31 @@
    ]
   },
   {
+   "command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_source_provenance.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/source-provenance.json --figure reports/source-provenance.png",
+   "exit_code": 0,
+   "self_referential_deselect": [],
+   "undisclosed_product_changes": [
+    "reports/source-provenance.json:/regions/eastern-ok/feature_cache/bytes",
+    "reports/source-provenance.json:/regions/eastern-ok/feature_cache/sha256",
+    "reports/source-provenance.json:/regions/maricopa-az/feature_cache/bytes",
+    "reports/source-provenance.json:/regions/maricopa-az/feature_cache/sha256",
+    "reports/source-provenance.json:/regions/northern-ca/feature_cache/bytes",
+    "reports/source-provenance.json:/regions/northern-ca/feature_cache/sha256",
+    "reports/source-provenance.json:/regions/south-central-tx/feature_cache/bytes",
+    "reports/source-provenance.json:/regions/south-central-tx/feature_cache/sha256"
+   ],
+   "products": [
+    {
+     "path": "reports/source-provenance.json",
+     "sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565"
+    },
+    {
+     "path": "reports/source-provenance.png",
+     "sha256": "2d45a9d06baa5e0ab917f1c2b432a885209d833edb7957ad9c8da2a9439ffa4d"
+    }
+   ]
+  },
+  {
    "command": "python scripts/verify_writeup_claim.py --claim methodology-summary-002",
    "exit_code": 0,
    "self_referential_deselect": [],
@@ -508,5 +291,5 @@
  "working_tree_clean_after": false,
  "present": true,
  "executed_in_this_pass": 1,
- "commands_total": 22
+ "commands_total": 19
 }

@@ -18,15 +18,35 @@ We request consideration for both Best Bias Discovery ($1,000) and Best Document
 
 ## Best Bias Discovery entry
 
-### Finding 1 — Camp Fire-area building-count mismatch; DINS mechanism check negative
+### Finding 1 — Rural Overture buildings are less often OSM-sourced
 
 #### Impact and novelty
 
-In six focal Camp Fire-area Butte County tracts, the provided USFS Wildfire Risk to Communities building count—a Microsoft-footprint derivative—is above the provided Overture count: the Overture/USFS ratios range from 0.620 to 0.747 (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `docs/decisions/building-component.md`). This is a geographic and temporal association, not evidence that fire damage caused a stale-reference discrepancy: the external DINS mechanism check below is negative. If a recovery or dispatch team treats the larger count as current, it could misdirect field-verification effort; that is a plausible decision risk, not an observed dispatch failure. This temporal mismatch is not a restatement of any marginal rural, SVI, tribal, or hazard-exposure scorecard cell.
+In Maricopa, Northern California, Eastern Oklahoma, and South-Central Texas, a footprint that contains only geometry and lacks a reliable address, name, or use cannot by itself geocode an emergency dispatch. Lower community-sourced representation could therefore justify prioritising local address/attribute verification; that is a plausible audit risk, not an observed service failure. This is not a restatement of a marginal rurality/SVI scorecard cell.
 
 #### Evidence
 
-All six GEOIDs have a provided MTBS last-wildfire year of 2018. The table compares challenge summaries with incident-filtered public CAL FIRE Camp Fire DINS inspection points. The California catalogue records CC BY (version unspecified); retrieved 2026-10-29 from [the source page](https://data.ca.gov/dataset/cal-fire-damage-inspection-dins-data). Only incident, damage class, county, object ID, and point geometry were requested; raw data and manifest remain outside git.
+Across Maricopa, Northern California, Eastern Oklahoma, and South-Central Texas, rural tracts have 16.83–38.68 percentage points lower OSM-touched building shares; all four tract-bootstrap intervals are below zero (`reports/source-provenance.json#/statistics`). SVI-quartile contrasts were smaller and less consistent (`#/uncertainty_and_limitations`).
+
+#### What this does and does not show
+
+The source tags describe provenance, not correctness, completeness, or age. Rurality is not an independently estimated cause; SVI gradients vary and may be confounded. The report uses supplied Overture `sources`/`bbox` and provided tract geometry only, with no public external data or candidate changes (`reports/source-provenance.json#/source_definitions`, `#/data_and_restrictions`, `#/uncertainty_and_limitations`).
+
+#### Reproducibility
+
+Rebuild with `python scripts/discovery_source_provenance.py --workspace "$COMPETITION_WORKSPACE" --out reports/source-provenance.json --figure reports/source-provenance.png`; estimates, intervals, source definitions, and hashes are in the report.
+
+### Finding 2 — Paradise/Magalia building-count discrepancy
+
+#### Impact and novelty
+
+Paradise and Magalia are Butte County communities affected by the 2018 Camp Fire (CAL FIRE's public DINS catalogue and incident layer; retrieved 2026-10-29: [catalogue](https://data.ca.gov/dataset/cal-fire-damage-inspection-dins-data), [layer](https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/POSTFIRE_MASTER_DATA_SHARE/FeatureServer/0)). In six focal Butte County tracts, the provided USFS Wildfire Risk to Communities building counts exceed the provided Overture counts (Overture/USFS ratios 0.620–0.747); this observed discrepancy is the finding, while its connection to fire damage is not established (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`).
+
+This is a geographic and temporal association, not evidence that fire damage caused a stale-reference discrepancy. If a recovery or dispatch team treats the larger count as current, it could misdirect field-verification effort; that is a plausible decision risk, not an observed dispatch failure. This temporal mismatch is not a restatement of any marginal rural, SVI, tribal, or hazard-exposure scorecard cell.
+
+#### Evidence
+
+All six GEOIDs have a provided MTBS last-wildfire year of 2018. The table compares challenge summaries with incident-filtered public CAL FIRE Camp Fire DINS inspection points. The CAL FIRE feature-service layer was retrieved 2026-10-29; its catalogue records CC BY (version unspecified), and the layer does not provide a more specific licence statement. Only incident, damage class, county, object ID, and point geometry were requested; raw data and manifest remain outside git.
 
 | GEOID | Overture / USFS | USFS − Overture | DINS destroyed | DINS major | Relative error |
 |---|---:|---:|---:|---:|---:|
@@ -55,31 +75,11 @@ These provided-data class counts and proportions are at `reports/discovery-postf
 
 The tract-bootstrap difference is +9.55 percentage points (95% CI [+0.55, +20.89]; 50,000 replicates; valid-replicate fraction 1.0). The county-cluster bootstrap 95% interval [-1.65, +16.67] includes zero, so the magnitude remains exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`).
 
-#### What this does and does not show
-
-The preregistered DINS mechanism test is **negative**: 0/6 focal tracts met the relative-error threshold of ≤0.30 (the rule required at least 4/6), and Spearman was 0.4626068 across all 28 last-burn-2018 tracts, below the 0.60 threshold (`reports/discovery-dins-mechanism.json#/decision`, `#/spearman`). DINS therefore does not substantiate the hypothesised fire-damage/rebuilding mechanism. Across 591 NorCal tracts, 576 have positive Overture counts but no Camp Fire DINS record, totaling 1,139,778 buildings; because this is an inspection-limited, incident-specific source, a missing record cannot establish absence or rebuilding (`reports/discovery-dins-mechanism.json#/opposite_direction`). Focal MTBS percentages are cumulative (64.4–153.8%), and the count field's exact vintage is unverified. DINS is discovery-only; no removed reference was accessed. No external public data was used outside this DINS check; source-mix and strata checks use provided data only.
+**DINS mechanism reproduction check — negative.** The DINS reproduction check did **not** confirm the proposed fire-damage/rebuilding mechanism: 0/6 focal tracts met the relative-error threshold (tolerance) of ≤0.30 (the rule required at least 4/6), and Spearman was 0.4626068 across all 28 last-burn-2018 tracts, below the 0.60 threshold (`reports/discovery-dins-mechanism.json#/decision`, `#/spearman`). DINS therefore does not substantiate the hypothesised mechanism. Across 591 NorCal tracts, 576 have positive Overture counts but no Camp Fire DINS record, totaling 1,139,778 buildings; because this is an inspection-limited, incident-specific source, a missing record cannot establish absence or rebuilding (`reports/discovery-dins-mechanism.json#/opposite_direction`). Focal MTBS percentages are cumulative (64.4–153.8%), and the count field's exact vintage is unverified. DINS is discovery-only; no removed reference was accessed. No external public data was used outside this DINS check; source-mix and strata checks use provided data only.
 
 #### Reproducibility
 
 Rebuild the map/report with `python scripts/discovery_postfire_stale_reference.py --workspace "$COMPETITION_WORKSPACE" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png`; rebuild the county interval with `python scripts/audit_discovery_postfire_county_bootstrap.py --workspace "$COMPETITION_WORKSPACE" --out reports/discovery-postfire-county-bootstrap.json`. Reproduce DINS with `python scripts/discovery_dins_mechanism.py --dins-file "$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png`. Inputs, filters, hashes, tract values, and the opposite-direction check are recorded in the report/manifest.
-
-### Finding 2 — Rural Overture buildings are less often OSM-sourced
-
-#### Impact and novelty
-
-In Maricopa, Northern California, Eastern Oklahoma, and South-Central Texas, a footprint that contains only geometry and lacks a reliable address, name, or use cannot by itself geocode an emergency dispatch. Lower community-sourced representation could therefore justify prioritising local address/attribute verification; that is a plausible audit risk, not an observed service failure. This is not a restatement of a marginal rurality/SVI scorecard cell.
-
-#### Evidence
-
-Across Maricopa, Northern California, Eastern Oklahoma, and South-Central Texas, rural tracts have 16.83–38.68 percentage points lower OSM-touched building shares; all four tract-bootstrap intervals are below zero (`reports/source-provenance.json#/statistics`). SVI-quartile contrasts were smaller and less consistent (`#/uncertainty_and_limitations`).
-
-#### What this does and does not show
-
-The source tags describe provenance, not correctness, completeness, or age. Rurality is not an independently estimated cause; SVI gradients vary and may be confounded. The report uses supplied Overture `sources`/`bbox` and provided tract geometry only, with no public external data or candidate changes (`reports/source-provenance.json#/source_definitions`, `#/data_and_restrictions`, `#/uncertainty_and_limitations`).
-
-#### Reproducibility
-
-Rebuild with `python scripts/discovery_source_provenance.py --workspace "$COMPETITION_WORKSPACE" --out reports/source-provenance.json --figure reports/source-provenance.png`; estimates, intervals, source definitions, and hashes are in the report.
 
 ### Finding 3 — The tribal/non-tribal pooled comparison is region-confounded
 
@@ -233,15 +233,15 @@ A machine-checked claim-to-evidence audit backs every number in this writeup.
 - `claims_total`: 72
 - `claims_fully_traceable`: 72
 - `fraction_quantitative_claims_traceable`: 1.0
-- `numeric_tokens_total`: 859
-- `numeric_tokens_covered`: 859
+- `numeric_tokens_total`: 862
+- `numeric_tokens_covered`: 862
 - `fraction_numeric_tokens_covered`: 1.0
 - `distinct_verify_commands`: 72
-- `distinct_reproduce_commands`: 18
+- `distinct_reproduce_commands`: 19
 - `derived_aggregates_verified`: 27
 - `claims_asserting_accuracy`: 1
 
-Current audit status: 72 of 72 quantitative claims are fully traceable (1.0); 859 of 859 numeric tokens are covered (1.0). There are 0 unresolved claim-evidence items. The full claim audit does not pass overall acceptance because three registered report-product differences remain outside accepted disclosure paths (`reports/writeup-claim-evidence-audit.json#/commands/undisclosed_product_changes`). This is a reproduction limitation, not an accuracy claim. The final-two result is separately traced to `reports/final-two.json` and machine-compared by the packet verifier.
+Current audit status: 72 of 72 quantitative claims are fully traceable (1.0); 862 of 862 numeric tokens are covered (1.0). There are 0 unresolved claim-evidence items. The full claim audit does not pass overall acceptance because three registered report-product differences remain outside accepted disclosure paths (`reports/writeup-claim-evidence-audit.json#/commands/undisclosed_product_changes`). This is a reproduction limitation, not an accuracy claim. The final-two result is separately traced to `reports/final-two.json` and machine-compared by the packet verifier.
 
 The claim inventory, audit configuration, and execution details are available in [`claim-evidence-audit.md`](claim-evidence-audit.md) and the linked JSON reports: `reports/writeup-claim-evidence-audit.json`, `reports/writeup-claim-inventory.json`, and `reports/writeup-claim-evidence-execution.json`.
 

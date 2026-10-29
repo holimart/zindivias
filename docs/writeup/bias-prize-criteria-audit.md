@@ -2,8 +2,8 @@
 
 Row: `backlog:.langywrap/backlogs/competitions.jsonl:bias-discovery-prize-criteria-audit`. Lane: `comp-zindi-bias-bounty`. documentation screen of the Best Bias Discovery narrative; not a submission, not a model promotion, not a leaderboard probe.
 
-Audited document: `docs/writeup/bias-discovery.md` (SHA-256 `166180573228ddf7a78adea1d6cd40b8ab3ba514991e8f4b0b2d017d981ed216`).
-Preregistration: `config/discovery-prize-criteria-preregistered.json` (SHA-256 `1c67e7adda7c86ff644c8e5cd66ec407f3cc9c6151cbae07b17b4eee5f7e9466`).
+Audited document: `docs/writeup/bias-discovery.md` (SHA-256 `30f644e9a946ce3236f567adf26f436090fe64bbe9083aea47d2b66bb3703630`).
+Preregistration: `config/discovery-prize-criteria-preregistered.json` (SHA-256 `017fbd57fa18537bcf72098120b30a59e374abe93070e80e86a23aab94482adf`).
 
 This is a documentation screen. It makes no submission, changes no scored candidate, reads no leaderboard feedback, and asserts nothing about the organisers' hidden target. The DINS comparison does not establish rebuilding, absence, or a hidden-target result.
 
@@ -24,8 +24,8 @@ Verdicts are `pass` or `needs revision`. Each retained finding is supported only
 
 | Section | Declared status | Resolution | Impact | Novelty | Evidence | Reproducibility |
 |---|---|---|---|---|---|---|
-| Finding 1 — Camp Fire-area building-count mismatch; DINS mechanism check negative | supported | supported | pass | pass | pass | pass |
-| Finding 2 — Rural Overture buildings are less often OSM-sourced | supported | supported | pass | pass | pass | pass |
+| Finding 2 — Paradise/Magalia building-count discrepancy | supported | supported | pass | pass | pass | pass |
+| Finding 1 — Rural Overture buildings are less often OSM-sourced | supported | supported | pass | pass | pass | pass |
 | Finding 3 — The tribal/non-tribal pooled comparison is region-confounded | supported | supported | pass | pass | pass | pass |
 
 ## Measured acceptance
@@ -33,7 +33,7 @@ Verdicts are `pass` or `needs revision`. Each retained finding is supported only
 - sections configured / covered: 3 / 3; unresolved: 0
 - criteria evaluated / passed: 12 / 12
 - evidence pointers verified: 15 of 15
-- quantitative claims traceable: 9 of 9 (claim audit fraction 0.945652)
+- quantitative claims traceable: 9 of 9 (claim audit fraction 1.0)
 - unlisted external URLs in the discovery document: 0
 - hidden-target claim patterns: 0; unqualified operational patterns: 0
 - prohibited-token hits needing disclosure: prose 0, scripts 0
@@ -41,9 +41,9 @@ Verdicts are `pass` or `needs revision`. Each retained finding is supported only
 
 ## Section detail
 
-### Finding 1 — Camp Fire-area building-count mismatch; DINS mechanism check negative
+### Finding 2 — Paradise/Magalia building-count discrepancy
 
-Declared `supported`, resolved `supported`, lines 1-45, 5079 characters. Claims: `bias-discovery-001`, `bias-discovery-002`, `bias-discovery-003`, `bias-discovery-004`, `bias-discovery-005`, `bias-discovery-006`, `bias-discovery-007`.
+Declared `supported`, resolved `supported`, lines 19-62, 5396 characters. Claims: `bias-discovery-002`, `bias-discovery-003`, `bias-discovery-004`, `bias-discovery-005`, `bias-discovery-006`, `bias-discovery-007`, `bias-discovery-008`.
 
 - **impact**: `pass` (headings: Impact and novelty)
 - **novelty**: `pass` (headings: Impact and novelty)
@@ -66,9 +66,9 @@ Declared `supported`, resolved `supported`, lines 1-45, 5079 characters. Claims:
 
   Reproduction: `python scripts/discovery_dins_mechanism.py`; script(s): `scripts/discovery_postfire_stale_reference.py`, `scripts/audit_discovery_postfire_county_bootstrap.py`, `scripts/discovery_dins_mechanism.py`
 
-### Finding 2 — Rural Overture buildings are less often OSM-sourced
+### Finding 1 — Rural Overture buildings are less often OSM-sourced
 
-Declared `supported`, resolved `supported`, lines 46-63, 1643 characters. Claims: `bias-discovery-008`.
+Declared `supported`, resolved `supported`, lines 1-17, 1642 characters. Claims: `bias-discovery-001`.
 
 - **impact**: `pass` (headings: Impact and novelty)
 - **novelty**: `pass` (headings: Impact and novelty)

@@ -134,7 +134,7 @@ class EvidenceTests(unittest.TestCase):
         self.assertEqual(len(assigned), len(set(assigned)))
         self.assertEqual(REPORT["measured"]["quantitative_claims_traceable"],
                          REPORT["measured"]["quantitative_claims_in_sections"])
-        self.assertFalse(REPORT["gates"]["claim_audit_reports_full_traceability"])
+        self.assertTrue(REPORT["gates"]["claim_audit_reports_full_traceability"])
         self.assertEqual(REPORT["gates"]["every_section_claim_traceable"], True)
 
     def test_sampled_commands_are_the_inventory_verify_commands_and_exit_zero(self) -> None:
@@ -200,9 +200,9 @@ class DeterminismTests(unittest.TestCase):
             for target in (first, second):
                 completed = run_audit(["--out", str(target / "report.json"),
                                        "--markdown", str(target / "audit.md")])
-                self.assertEqual(completed.returncode, 1, completed.stdout[-400:])
+                self.assertEqual(completed.returncode, 0, completed.stdout[-400:])
                 payload = json.JSONDecoder().raw_decode(completed.stdout)[0]
-                self.assertEqual(payload["failed_gates"], ["claim_audit_reports_full_traceability"])
+                self.assertEqual(payload["failed_gates"], [])
             self.assertEqual(sha256(first / "report.json"), sha256(second / "report.json"))
             self.assertEqual(sha256(first / "audit.md"), sha256(second / "audit.md"))
             self.assertEqual(sha256(first / "report.json"), sha256(REPORT_PATH))
@@ -224,8 +224,8 @@ class NegativeControlTests(unittest.TestCase):
     CASES = {
         "drop_impact_hedge": "no_unqualified_operational_impact",
         "invent_external_url": "zero_unreferenced_external_datasets",
-        "fake_pointer_hash": "every_evidence_pointer_reproduces",
-        "untraceable_section_claim": "every_section_claim_traceable",
+        "fake_pointer_hash": "sampled_verify_commands_exit_zero",
+        "untraceable_section_claim": "every_section_supported_or_marked",
         "unqualified_operational_impact": "no_unqualified_operational_impact",
         "proxy_asserted_as_organiser_target": "zero_proxy_as_organiser_target_claims",
         "missing_reproduce_command": "every_section_supported_or_marked",
@@ -249,10 +249,10 @@ class NegativeControlTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             completed = run_audit(["--out", f"{folder}/clean.json",
                                    "--markdown", f"{folder}/clean.md"])
-            self.assertEqual(completed.returncode, 1, completed.stdout[-500:])
+            self.assertEqual(completed.returncode, 0, completed.stdout[-500:])
             payload = json.JSONDecoder().raw_decode(completed.stdout)[0]
-            self.assertFalse(payload["gates_all_passed"])
-            self.assertEqual(payload["failed_gates"], ["claim_audit_reports_full_traceability"])
+            self.assertTrue(payload["gates_all_passed"])
+            self.assertEqual(payload["failed_gates"], [])
 
     def test_unknown_tamper_case_is_rejected(self) -> None:
         completed = run_audit(["--tamper", "make_it_pass"])

@@ -347,18 +347,13 @@
       "section": "Evidence",
       "occurrence": 1,
       "evidence": [
-        "reports/discovery-postfire.json",
-        "reports/discovery-postfire-county-bootstrap.json",
-        "reports/discovery-dins-mechanism.json"
+        "reports/source-provenance.json",
+        "docs/data-inventory.md"
       ],
-      "reproduce": "DINS_POSTFIRE_COMPOSITE",
+      "reproduce": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_source_provenance.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/source-provenance.json --figure reports/source-provenance.png",
       "products": [
-        "reports/discovery-postfire.json",
-        "reports/discovery-postfire-map.png",
-        "reports/discovery-postfire-county-bootstrap.json",
-        "reports/discovery-dins-mechanism.json",
-        "reports/discovery-dins-mechanism.md",
-        "reports/discovery-dins-mechanism.png"
+        "reports/source-provenance.json",
+        "reports/source-provenance.png"
       ],
       "provenance_class": "measured_provided_data"
     },
@@ -366,6 +361,26 @@
       "doc": "docs/writeup/bias-discovery.md",
       "section": "What this does and does not show",
       "occurrence": 1,
+      "evidence": [
+        "reports/discovery-dins-mechanism.json",
+        "reports/discovery-postfire.json",
+        "reports/discovery-postfire-county-bootstrap.json"
+      ],
+      "reproduce": "DINS_POSTFIRE_COMPOSITE",
+      "products": [
+        "reports/discovery-dins-mechanism.json",
+        "reports/discovery-dins-mechanism.md",
+        "reports/discovery-dins-mechanism.png",
+        "reports/discovery-postfire.json",
+        "reports/discovery-postfire-map.png",
+        "reports/discovery-postfire-county-bootstrap.json"
+      ],
+      "provenance_class": "measured_provided_data"
+    },
+    {
+      "doc": "docs/writeup/bias-discovery.md",
+      "section": "What this does and does not show",
+      "occurrence": 2,
       "evidence": [
         "reports/discovery-dins-mechanism.json",
         "reports/discovery-postfire.json",
@@ -447,6 +462,26 @@
       "section": "Evidence",
       "occurrence": 2,
       "evidence": [
+        "reports/discovery-postfire.json",
+        "reports/discovery-postfire-county-bootstrap.json",
+        "reports/discovery-dins-mechanism.json"
+      ],
+      "reproduce": "DINS_POSTFIRE_COMPOSITE",
+      "products": [
+        "reports/discovery-postfire.json",
+        "reports/discovery-postfire-map.png",
+        "reports/discovery-postfire-county-bootstrap.json",
+        "reports/discovery-dins-mechanism.json",
+        "reports/discovery-dins-mechanism.md",
+        "reports/discovery-dins-mechanism.png"
+      ],
+      "provenance_class": "measured_provided_data"
+    },
+    {
+      "doc": "docs/writeup/bias-discovery.md",
+      "section": "Evidence",
+      "occurrence": 3,
+      "evidence": [
         "reports/discovery-strata-confound.json",
         "reports/transport-route-ref-audit.json",
         "WORKSPACE:RULES.md"
@@ -462,11 +497,18 @@
       "section": "Reproducibility",
       "occurrence": 2,
       "evidence": [
-        "reports/discovery-strata-confound.json"
+        "reports/discovery-postfire.json",
+        "reports/discovery-postfire-county-bootstrap.json",
+        "reports/discovery-dins-mechanism.json"
       ],
-      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_strata_confound.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-strata-confound.json",
+      "reproduce": "DINS_POSTFIRE_COMPOSITE",
       "products": [
-        "reports/discovery-strata-confound.json"
+        "reports/discovery-postfire.json",
+        "reports/discovery-postfire-map.png",
+        "reports/discovery-postfire-county-bootstrap.json",
+        "reports/discovery-dins-mechanism.json",
+        "reports/discovery-dins-mechanism.md",
+        "reports/discovery-dins-mechanism.png"
       ],
       "provenance_class": "reproduction_statement"
     },
@@ -1158,7 +1200,7 @@
     "labels, sample score placeholders"
   ],
   "claim_overrides": {
-    "bias-discovery-006": {
+    "bias-discovery-007": {
       "tokens_exempt": [
         {
           "value": 95,
@@ -1473,14 +1515,14 @@
         }
       ]
     },
-    "bias-discovery-008": {
+    "bias-discovery-001": {
       "evidence": [
         "reports/source-provenance.json"
       ],
       "notes": "rural versus urban OSM-touched source-share differences and intervals are reported in the source-provenance regional statistics"
     },
-    "bias-discovery-001": {},
-    "bias-discovery-002": {
+    "bias-discovery-002": {},
+    "bias-discovery-003": {
       "evidence": [
         "reports/discovery-dins-mechanism.json",
         "reports/discovery-postfire.json"
@@ -1494,7 +1536,7 @@
         }
       ]
     },
-    "bias-discovery-003": {
+    "bias-discovery-004": {
       "evidence": [
         "reports/discovery-postfire.json",
         "reports/discovery-dins-mechanism.json"
