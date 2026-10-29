@@ -8,13 +8,18 @@ We request consideration for both Best Bias Discovery ($1,000) and Best Document
 
 ## Contents
 
-1. Best Bias Discovery — findings.
-2. Methodology and score interpretation.
-3. Appendix A: [detailed methodology](methodology.md).
-4. Appendix B: [edge cases](edge-cases.md).
-5. Appendix C: [supporting discovery screens](appendices/screens-that-did-not-produce-a-finding.md).
-6. [Supporting diagnostic archive](appendix-diagnostics.md).
-7. Appendices D–J: upload records, external-source compliance, reproducibility, provenance, named high-SVI OSM examples, and supporting discovery tables.
+1. Related entries on the challenge board.
+2. Best Bias Discovery — findings.
+3. Methodology and score interpretation.
+4. Appendix A: [detailed methodology](methodology.md).
+5. Appendix B: [edge cases](edge-cases.md).
+6. Appendix C: [supporting discovery screens](appendices/screens-that-did-not-produce-a-finding.md).
+7. [Supporting diagnostic archive](appendix-diagnostics.md).
+8. Appendices D–J: upload records, external-source compliance, reproducibility, provenance, named high-SVI OSM examples, and supporting discovery tables.
+
+## Related entries on the challenge board
+
+Title-based overlaps on the challenge board include rural/source entries #34839 (Sep 16), #35011 (Sep 25), #35264 (Oct 8), #35031 (Sep 26), and #35000 (Sep 25); Rio Grande/colonias entries #34744 (Sep 13), #35071 (Sep 28), #34972 (Sep 23), and #35333 (Oct 14); Paradise/wildfire/provider entries #34910 (Sep 20), #35520 and #35527 (Oct 23), #35479 (Oct 22), #35081 (Sep 28), #35157 (Oct 2), #35345 (Oct 15), #35249 (Oct 8), and #35493 (Oct 22); and San Antonio entries #34839 (Sep 16), #34744, #35071, and #34972. The corresponding analyses add the measured rural OSM-attribution contrast, qualified Google/building-source reconciliation, negative Paradise mechanism check, and named within-city OSM/SVI gradient; the gradient is documented separately from the four current lead findings. Title overlap does not establish same evidence or conclusions. See [the related-entries note](related-entries.md) for titles and differentiation. Before submission, review procedural threads #35334 (Oct 14), #34678 (Sep 4), #34695 (Sep 7), #35079 (Sep 28), #35250 (Oct 8), #35221 (Oct 6), #35241 and #35240 (Oct 7); thread titles and dates are in the note. Thread bodies were not reviewed here.
 
 ## Best Bias Discovery entry
 
