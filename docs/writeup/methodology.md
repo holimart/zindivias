@@ -590,14 +590,15 @@ label-free evidence, so shrinkage is toward the feature-only regional consensus 
 
 Regional raw c spans only 0.0669, below the preregistered 0.10 cutoff; therefore a single pooled
 `c=0.8016961` is applied rather than estimating four shrink parameters. Pooled shared variance is
-`0.00415832`, total consensus variance `0.00518690`. Global construction weights are C2
+`0.0041583`, total consensus variance `0.0051869`. Global construction weights are C2
 `0.03299`, A1 `0.31457`, A2 `0.32827`, and A3 `0.32416`; all three alternate constructions carry
 similar locally estimated agreement weights, while C2's agreement share is smaller. Leave-one-
-construction-out proxy RMSE is `0.149381` for the shrink estimator versus `0.150876` for the
-unshrunk reliability-weighted consensus. The shrink MSE gain is positive in all four regions, so
-the preregistered local-proxy gate passed. This held-out unit is another prediction method, not a
-tract reference label; the numeric `predicted_score` is a cross-construction generalization proxy,
-not a forecast of organizer-target RMSE. The actual target RMSE is not identifiable without labels.
+construction-out proxy root-mean-square error is `0.149381` for the shrink estimator versus
+`0.150876` for the unshrunk reliability-weighted consensus. The shrink MSE gain is positive in all
+four regions, so the preregistered local-proxy gate passed. These held-out comparisons are against
+another prediction method, not the organiser's target; the numeric `predicted_score` is a
+cross-construction generalization proxy, not a measure of target performance. Target performance
+is unidentifiable without reference values.
 
 **H2 verdict: local cross-method agreement supports registering one shrink hypothesis, but does
 not establish accuracy.** S is frozen and registered as

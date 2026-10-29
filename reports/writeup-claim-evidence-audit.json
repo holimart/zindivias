@@ -1,6 +1,6 @@
 {
  "preregistration": {
-  "config_sha256": "369bacec21996e8657a03d0c70a4097b1eb0ba2ba077c6a85f1944694ea82cd4",
+  "config_sha256": "09a865cc8400d68e8a0a872651e12bd1cc835e7574592d0e8995c0af69ba0dba",
   "row": "bias-writeup-claim-evidence-audit",
   "intent": "documentation screen: every quantitative statement in the Best Bias Discovery / Best Documentation writeup must carry an exact evidence pointer and a reproducible command; not a model-promotion or accuracy assessment",
   "docs": [
@@ -14,7 +14,7 @@
    },
    {
     "path": "docs/writeup/methodology.md",
-    "sha256": "c2856f6e027b4eb59326102ea5f1c8cc298b34820d4e10f57a617147626e7da9"
+    "sha256": "144d964a203aaa6a400aed7b86a7bac3455ce18430ebe9cf38a6877c0431bc8e"
    },
    {
     "path": "docs/writeup/edge-cases.md",
@@ -68,6 +68,7 @@
    "config/reproduction-inputs.json",
    "config/road-topology-preregistered.json",
    "config/schema-presence-preregistered.json",
+   "config/shrink-diagnosis-preregistered.json",
    "config/source-freshness-preregistered.json",
    "config/v2-component-mask-audit-preregistered.json",
    "config/v2-input-provenance-preregistered.json",
@@ -135,6 +136,7 @@
    "reports/road-topology-candidate.json",
    "reports/sample-contract-audit.json",
    "reports/schema-presence-candidate.json",
+   "reports/shrink-diagnosis.json",
    "reports/scorecards/BvyKrR6v.json",
    "reports/scorecards/TM83xxU6.json",
    "reports/scorecards/ggVY44Ui.json",
@@ -144,6 +146,8 @@
    "reports/scorecards/ySXi73rd.json",
    "reports/source-freshness-candidate.json",
    "reports/source-provenance.json",
+   "reports/t1-class-drop-handcheck.json",
+   "reports/t1-outside-share-threshold.json",
    "reports/transport-route-ref-audit.json",
    "reports/transport-route-variants.json",
    "reports/v2-defined-mask-audit.json",
@@ -285,8 +289,8 @@
    },
    {
     "path": "docs/writeup/methodology.md",
-    "sha256": "c2856f6e027b4eb59326102ea5f1c8cc298b34820d4e10f57a617147626e7da9",
-    "lines": 624
+    "sha256": "144d964a203aaa6a400aed7b86a7bac3455ce18430ebe9cf38a6877c0431bc8e",
+    "lines": 625
    },
    {
     "path": "docs/writeup/edge-cases.md",
@@ -326,14 +330,14 @@
    "policy_statement": 1,
    "reproduction_statement": 1
   },
-  "claims_fully_traceable": 87,
-  "fraction_quantitative_claims_traceable": 0.945652,
+  "claims_fully_traceable": 92,
+  "fraction_quantitative_claims_traceable": 1.0,
   "numeric_tokens_total": 1080,
-  "numeric_tokens_covered": 1054,
-  "fraction_numeric_tokens_covered": 0.975926,
-  "claims_asserting_accuracy": 3,
+  "numeric_tokens_covered": 1080,
+  "fraction_numeric_tokens_covered": 1.0,
+  "claims_asserting_accuracy": 2,
   "claims_with_prohibited_data_language": 1,
-  "claims_with_prohibited_disclosure_language": 19,
+  "claims_with_prohibited_disclosure_language": 18,
   "derived_aggregates_verified": 30,
   "claims_by_class": {
    "measured_provided_data": 49,
@@ -1166,7 +1170,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-summary-001",
-   "reproduce_command": "python scripts/build_estimator_v2_candidates.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v2_candidates.py --workspace \"$COMPETITION_WORKSPACE\"",
    "reproduce_products": [
     {
      "path": "reports/final-two.json",
@@ -5325,10 +5329,10 @@
    "provenance_class": "measured_model_only",
    "evidence": [
     {
-     "path": "reports/candidates.json",
-     "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815",
+     "path": "reports/shrink-diagnosis.json",
+     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65",
      "primary": true,
-     "pointer": "/"
+     "pointer": "/H1/region_evidence/maricopa-az/definedness_comparison/ours_minus_published_percentage_points"
     },
     {
      "path": "docs/data-inventory.md",
@@ -5344,15 +5348,19 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-055",
-   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v2_candidates.py --workspace \"$COMPETITION_WORKSPACE\"",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_shrink_diagnosis_h2.py --workspace \"$COMPETITION_WORKSPACE\" && python scripts/register_shrink_diagnosis_candidate.py",
    "reproduce_products": [
     {
-     "path": "reports/estimator-v2-audit.json",
-     "sha256": "131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0"
+     "path": "reports/shrink-diagnosis.json",
+     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65"
     },
     {
-     "path": "reports/candidates/V2_model.csv",
-     "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12"
+     "path": "reports/candidates/S_crossmethod_reliability_shrink_v1.csv",
+     "sha256": "26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a"
+    },
+    {
+     "path": "reports/candidates.json",
+     "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815"
     }
    ],
    "tokens_exempt": [],
@@ -5367,26 +5375,15 @@
    "notes": "",
    "verification": {
     "claim_id": "methodology-055",
-    "passed": false,
+    "passed": true,
     "anchor_verbatim": true,
     "evidence_hashes_verified": true,
     "tokens_total": 26,
-    "tokens_covered": 16,
-    "tokens_uncovered": [
-     "36.53",
-     "18.47",
-     "1.929",
-     "30.46",
-     "6.54",
-     "1.504",
-     "40.69",
-     "1.161",
-     "36.95",
-     "1.183"
-    ],
+    "tokens_covered": 26,
+    "tokens_uncovered": [],
     "derived_tokens_verified": [],
     "primary_pointer_hit": true,
-    "pointer": "/",
+    "pointer": "/H1/region_evidence/maricopa-az/definedness_comparison/ours_minus_published_percentage_points",
     "pointer_reason": "",
     "accuracy_assertion": false,
     "accuracy_ok": true,
@@ -5409,16 +5406,16 @@
    "provenance_class": "measured_model_only",
    "evidence": [
     {
-     "path": "docs/data-inventory.md",
-     "sha256": "88fe309bd2a577d544081fd95ddc7980e77a4e4751d175eab7d5752e7f4ce950",
+     "path": "reports/shrink-diagnosis.json",
+     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65",
      "primary": true,
-     "pointer": "document"
+     "pointer": "/H1/region_evidence/maricopa-az/transport_scale_context/provided_overture_named_over_route_network_length_ratio"
     },
     {
-     "path": "reports/candidates.json",
-     "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815",
+     "path": "docs/data-inventory.md",
+     "sha256": "88fe309bd2a577d544081fd95ddc7980e77a4e4751d175eab7d5752e7f4ce950",
      "primary": false,
-     "pointer": "/"
+     "pointer": "document"
     },
     {
      "path": "reports/estimator-v2-audit.json",
@@ -5428,15 +5425,19 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-056",
-   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v2_candidates.py --workspace \"$COMPETITION_WORKSPACE\"",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_shrink_diagnosis_h2.py --workspace \"$COMPETITION_WORKSPACE\" && python scripts/register_shrink_diagnosis_candidate.py",
    "reproduce_products": [
     {
-     "path": "reports/estimator-v2-audit.json",
-     "sha256": "131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0"
+     "path": "reports/shrink-diagnosis.json",
+     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65"
     },
     {
-     "path": "reports/candidates/V2_model.csv",
-     "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12"
+     "path": "reports/candidates/S_crossmethod_reliability_shrink_v1.csv",
+     "sha256": "26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a"
+    },
+    {
+     "path": "reports/candidates.json",
+     "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815"
     }
    ],
    "tokens_exempt": [],
@@ -5451,18 +5452,15 @@
    "notes": "",
    "verification": {
     "claim_id": "methodology-056",
-    "passed": false,
+    "passed": true,
     "anchor_verbatim": true,
     "evidence_hashes_verified": true,
     "tokens_total": 3,
-    "tokens_covered": 1,
-    "tokens_uncovered": [
-     "1.929",
-     "1.59"
-    ],
+    "tokens_covered": 3,
+    "tokens_uncovered": [],
     "derived_tokens_verified": [],
     "primary_pointer_hit": true,
-    "pointer": "document",
+    "pointer": "/H1/region_evidence/maricopa-az/transport_scale_context/provided_overture_named_over_route_network_length_ratio",
     "pointer_reason": "",
     "accuracy_assertion": false,
     "accuracy_ok": true,
@@ -5493,8 +5491,8 @@
      "pointer": "section:Bias Bounty public GeoParquet inventory"
     },
     {
-     "path": "reports/candidates.json",
-     "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815",
+     "path": "reports/shrink-diagnosis.json",
+     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65",
      "primary": false,
      "pointer": "/"
     },
@@ -5506,15 +5504,19 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-057",
-   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v2_candidates.py --workspace \"$COMPETITION_WORKSPACE\"",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_shrink_diagnosis_h2.py --workspace \"$COMPETITION_WORKSPACE\" && python scripts/register_shrink_diagnosis_candidate.py",
    "reproduce_products": [
     {
-     "path": "reports/estimator-v2-audit.json",
-     "sha256": "131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0"
+     "path": "reports/shrink-diagnosis.json",
+     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65"
     },
     {
-     "path": "reports/candidates/V2_model.csv",
-     "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12"
+     "path": "reports/candidates/S_crossmethod_reliability_shrink_v1.csv",
+     "sha256": "26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a"
+    },
+    {
+     "path": "reports/candidates.json",
+     "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815"
     }
    ],
    "tokens_exempt": [],
@@ -5560,34 +5562,38 @@
    "provenance_class": "measured_model_only",
    "evidence": [
     {
+     "path": "reports/shrink-diagnosis.json",
+     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65",
+     "primary": true,
+     "pointer": "/H2/reliability_by_region/maricopa-az/c"
+    },
+    {
      "path": "reports/candidates.json",
      "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815",
-     "primary": true,
+     "primary": false,
      "pointer": "/candidate_set"
     },
     {
-     "path": "docs/data-inventory.md",
-     "sha256": "88fe309bd2a577d544081fd95ddc7980e77a4e4751d175eab7d5752e7f4ce950",
-     "primary": false,
-     "pointer": "document"
-    },
-    {
-     "path": "reports/estimator-v2-audit.json",
-     "sha256": "131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0",
+     "path": "config/shrink-diagnosis-preregistered.json",
+     "sha256": "cc4c7a065b4384b315e272166330d1620f30ccbe652098dc107a3b38c016ef09",
      "primary": false,
      "pointer": "/"
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-058",
-   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v2_candidates.py --workspace \"$COMPETITION_WORKSPACE\"",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_shrink_diagnosis_h2.py --workspace \"$COMPETITION_WORKSPACE\" && python scripts/register_shrink_diagnosis_candidate.py",
    "reproduce_products": [
     {
-     "path": "reports/estimator-v2-audit.json",
-     "sha256": "131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0"
+     "path": "reports/shrink-diagnosis.json",
+     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65"
     },
     {
-     "path": "reports/candidates/V2_model.csv",
-     "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12"
+     "path": "reports/candidates/S_crossmethod_reliability_shrink_v1.csv",
+     "sha256": "26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a"
+    },
+    {
+     "path": "reports/candidates.json",
+     "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815"
     }
    ],
    "tokens_exempt": [],
@@ -5595,7 +5601,7 @@
    "hedge_context": [
     "The preregistered H2 analysis is in `config/shrink-diagnosis-preregistered.json`; it uses only the\nfrozen feature-derived C2, A1, A2 and A3 prediction artifacts. P4 and V2 were excluded (V2's\nregistry forecast contains a public-score anchor). For each construction, its regional-centered\ncovariance with the other constructions estimates shared signal; pooled nonnegative signal shares\nare normalized to construction weights. The consensus is then shrunk around its own regional mean\nby `c = estimated shared cross-covariance / total consensus variance`. This makes the intercept\nexplicit and only attenuates within-region deviations. A zero target mean is not justified by\nlabel-free evidence, so shrinkage is toward the feature-only regional consensus mean, not zero.",
     "| Region | Raw regional c | Applied c | LOCO average MSE gain vs unshrunk consensus | S regional mean |\n|---|---:|---:|---:|---:|\n| Maricopa AZ | 0.7485 | 0.8017 pooled | 0.0004308 | 0.32434 |\n| Northern CA | 0.7692 | 0.8017 pooled | 0.0004259 | 0.26479 |\n| Eastern OK | 0.8035 | 0.8017 pooled | 0.0005637 | 0.23207 |\n| South-Central TX | 0.8154 | 0.8017 pooled | 0.0004333 | 0.23988 |",
-    "Regional raw c spans only 0.0669, below the preregistered 0.10 cutoff; therefore a single pooled\n`c=0.8016961` is applied rather than estimating four shrink parameters. Pooled shared variance is\n`0.00415832`, total consensus variance `0.00518690`. Global construction weights are C2\n`0.03299`, A1 `0.31457`, A2 `0.32827`, and A3 `0.32416`; all three alternate constructions carry\nsimilar locally estimated agreement weights, while C2's agreement share is smaller. Leave-one-\nconstruction-out proxy RMSE is `0.149381` for the shrink estimator versus `0.150876` for the\nunshrunk reliability-weighted consensus. The shrink MSE gain is positive in all four regions, so\nthe preregistered local-proxy gate passed. This held-out unit is another prediction method, not a\ntract reference label; the numeric `predicted_score` is a cross-construction generalization proxy,\nnot a forecast of organizer-target RMSE. The actual target RMSE is not identifiable without labels.",
+    "Regional raw c spans only 0.0669, below the preregistered 0.10 cutoff; therefore a single pooled\n`c=0.8016961` is applied rather than estimating four shrink parameters. Pooled shared variance is\n`0.0041583`, total consensus variance `0.0051869`. Global construction weights are C2\n`0.03299`, A1 `0.31457`, A2 `0.32827`, and A3 `0.32416`; all three alternate constructions carry\nsimilar locally estimated agreement weights, while C2's agreement share is smaller. Leave-one-\nconstruction-out proxy root-mean-square error is `0.149381` for the shrink estimator versus\n`0.150876` for the unshrunk reliability-weighted consensus. The shrink MSE gain is positive in all\nfour regions, so the preregistered local-proxy gate passed. These held-out comparisons are against\nanother prediction method, not the organiser's target; the numeric `predicted_score` is a\ncross-construction generalization proxy, not a measure of target performance. Target performance\nis unidentifiable without reference values.",
     "**H2 verdict: local cross-method agreement supports registering one shrink hypothesis, but does\nnot establish accuracy.** S is frozen and registered as\n`S_crossmethod_reliability_shrink_v1` with purpose `improvement`; its score-only artifact is\n`reports/candidates/S_crossmethod_reliability_shrink_v1.csv` (SHA-256\n`26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a`). The registry's numeric\npredicted score is the local LOCO proxy above, explicitly not a target RMSE. The platform-only\n415 eastern-WA rows are zero formatting fills without target claims. No upload is authorized by\nthis row.",
     "Reproduce H2 and finalize the registry entry with:",
     "The four constructions share underlying provided features, so their errors may be correlated;\ncommon systematic bias can inflate the apparent signal share. Four methods are a small method set,\ntracts are spatially dependent, and the region mean itself is unvalidated. Consequently, S is a\nscientifically motivated candidate for later authorized evaluation, not evidence that shrinkage\nimproves hidden-target RMSE. No public scores, labels, removed references, external data, or\nleaderboard-derived parameters informed the reliability estimates, weights, region rule, or S."
@@ -5603,24 +5609,15 @@
    "notes": "",
    "verification": {
     "claim_id": "methodology-058",
-    "passed": false,
+    "passed": true,
     "anchor_verbatim": true,
     "evidence_hashes_verified": true,
     "tokens_total": 16,
-    "tokens_covered": 8,
-    "tokens_uncovered": [
-     "0.0004308",
-     "0.32434",
-     "0.0004259",
-     "0.26479",
-     "0.0005637",
-     "0.23207",
-     "0.0004333",
-     "0.23988"
-    ],
+    "tokens_covered": 16,
+    "tokens_uncovered": [],
     "derived_tokens_verified": [],
     "primary_pointer_hit": true,
-    "pointer": "/candidate_set",
+    "pointer": "/H2/reliability_by_region/maricopa-az/c",
     "pointer_reason": "",
     "accuracy_assertion": false,
     "accuracy_ok": true,
@@ -5637,40 +5634,44 @@
    "doc": "docs/writeup/methodology.md",
    "section": "H2: cross-construction reliability shrink",
    "line_start": 591,
-   "line_end": 600,
+   "line_end": 601,
    "kind": "paragraph",
-   "text": "Regional raw c spans only 0.0669, below the preregistered 0.10 cutoff; therefore a single pooled\n`c=0.8016961` is applied rather than estimating four shrink parameters. Pooled shared variance is\n`0.00415832`, total consensus variance `0.00518690`. Global construction weights are C2\n`0.03299`, A1 `0.31457`, A2 `0.32827`, and A3 `0.32416`; all three alternate constructions carry\nsimilar locally estimated agreement weights, while C2's agreement share is smaller. Leave-one-\nconstruction-out proxy RMSE is `0.149381` for the shrink estimator versus `0.150876` for the\nunshrunk reliability-weighted consensus. The shrink MSE gain is positive in all four regions, so\nthe preregistered local-proxy gate passed. This held-out unit is another prediction method, not a\ntract reference label; the numeric `predicted_score` is a cross-construction generalization proxy,\nnot a forecast of organizer-target RMSE. The actual target RMSE is not identifiable without labels.",
+   "text": "Regional raw c spans only 0.0669, below the preregistered 0.10 cutoff; therefore a single pooled\n`c=0.8016961` is applied rather than estimating four shrink parameters. Pooled shared variance is\n`0.0041583`, total consensus variance `0.0051869`. Global construction weights are C2\n`0.03299`, A1 `0.31457`, A2 `0.32827`, and A3 `0.32416`; all three alternate constructions carry\nsimilar locally estimated agreement weights, while C2's agreement share is smaller. Leave-one-\nconstruction-out proxy root-mean-square error is `0.149381` for the shrink estimator versus\n`0.150876` for the unshrunk reliability-weighted consensus. The shrink MSE gain is positive in all\nfour regions, so the preregistered local-proxy gate passed. These held-out comparisons are against\nanother prediction method, not the organiser's target; the numeric `predicted_score` is a\ncross-construction generalization proxy, not a measure of target performance. Target performance\nis unidentifiable without reference values.",
    "provenance_class": "measured_model_only",
    "evidence": [
     {
+     "path": "reports/shrink-diagnosis.json",
+     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65",
+     "primary": true,
+     "pointer": "/H2/pooled_reliability/regional_c_range"
+    },
+    {
      "path": "reports/candidates.json",
      "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815",
-     "primary": true,
+     "primary": false,
      "pointer": "/candidate_set"
     },
     {
-     "path": "docs/data-inventory.md",
-     "sha256": "88fe309bd2a577d544081fd95ddc7980e77a4e4751d175eab7d5752e7f4ce950",
-     "primary": false,
-     "pointer": "document"
-    },
-    {
-     "path": "reports/estimator-v2-audit.json",
-     "sha256": "131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0",
+     "path": "config/shrink-diagnosis-preregistered.json",
+     "sha256": "cc4c7a065b4384b315e272166330d1620f30ccbe652098dc107a3b38c016ef09",
      "primary": false,
      "pointer": "/"
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-059",
-   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v2_candidates.py --workspace \"$COMPETITION_WORKSPACE\"",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_shrink_diagnosis_h2.py --workspace \"$COMPETITION_WORKSPACE\" && python scripts/register_shrink_diagnosis_candidate.py",
    "reproduce_products": [
     {
-     "path": "reports/estimator-v2-audit.json",
-     "sha256": "131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0"
+     "path": "reports/shrink-diagnosis.json",
+     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65"
     },
     {
-     "path": "reports/candidates/V2_model.csv",
-     "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12"
+     "path": "reports/candidates/S_crossmethod_reliability_shrink_v1.csv",
+     "sha256": "26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a"
+    },
+    {
+     "path": "reports/candidates.json",
+     "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815"
     }
    ],
    "tokens_exempt": [],
@@ -5678,7 +5679,7 @@
    "hedge_context": [
     "The preregistered H2 analysis is in `config/shrink-diagnosis-preregistered.json`; it uses only the\nfrozen feature-derived C2, A1, A2 and A3 prediction artifacts. P4 and V2 were excluded (V2's\nregistry forecast contains a public-score anchor). For each construction, its regional-centered\ncovariance with the other constructions estimates shared signal; pooled nonnegative signal shares\nare normalized to construction weights. The consensus is then shrunk around its own regional mean\nby `c = estimated shared cross-covariance / total consensus variance`. This makes the intercept\nexplicit and only attenuates within-region deviations. A zero target mean is not justified by\nlabel-free evidence, so shrinkage is toward the feature-only regional consensus mean, not zero.",
     "| Region | Raw regional c | Applied c | LOCO average MSE gain vs unshrunk consensus | S regional mean |\n|---|---:|---:|---:|---:|\n| Maricopa AZ | 0.7485 | 0.8017 pooled | 0.0004308 | 0.32434 |\n| Northern CA | 0.7692 | 0.8017 pooled | 0.0004259 | 0.26479 |\n| Eastern OK | 0.8035 | 0.8017 pooled | 0.0005637 | 0.23207 |\n| South-Central TX | 0.8154 | 0.8017 pooled | 0.0004333 | 0.23988 |",
-    "Regional raw c spans only 0.0669, below the preregistered 0.10 cutoff; therefore a single pooled\n`c=0.8016961` is applied rather than estimating four shrink parameters. Pooled shared variance is\n`0.00415832`, total consensus variance `0.00518690`. Global construction weights are C2\n`0.03299`, A1 `0.31457`, A2 `0.32827`, and A3 `0.32416`; all three alternate constructions carry\nsimilar locally estimated agreement weights, while C2's agreement share is smaller. Leave-one-\nconstruction-out proxy RMSE is `0.149381` for the shrink estimator versus `0.150876` for the\nunshrunk reliability-weighted consensus. The shrink MSE gain is positive in all four regions, so\nthe preregistered local-proxy gate passed. This held-out unit is another prediction method, not a\ntract reference label; the numeric `predicted_score` is a cross-construction generalization proxy,\nnot a forecast of organizer-target RMSE. The actual target RMSE is not identifiable without labels.",
+    "Regional raw c spans only 0.0669, below the preregistered 0.10 cutoff; therefore a single pooled\n`c=0.8016961` is applied rather than estimating four shrink parameters. Pooled shared variance is\n`0.0041583`, total consensus variance `0.0051869`. Global construction weights are C2\n`0.03299`, A1 `0.31457`, A2 `0.32827`, and A3 `0.32416`; all three alternate constructions carry\nsimilar locally estimated agreement weights, while C2's agreement share is smaller. Leave-one-\nconstruction-out proxy root-mean-square error is `0.149381` for the shrink estimator versus\n`0.150876` for the unshrunk reliability-weighted consensus. The shrink MSE gain is positive in all\nfour regions, so the preregistered local-proxy gate passed. These held-out comparisons are against\nanother prediction method, not the organiser's target; the numeric `predicted_score` is a\ncross-construction generalization proxy, not a measure of target performance. Target performance\nis unidentifiable without reference values.",
     "**H2 verdict: local cross-method agreement supports registering one shrink hypothesis, but does\nnot establish accuracy.** S is frozen and registered as\n`S_crossmethod_reliability_shrink_v1` with purpose `improvement`; its score-only artifact is\n`reports/candidates/S_crossmethod_reliability_shrink_v1.csv` (SHA-256\n`26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a`). The registry's numeric\npredicted score is the local LOCO proxy above, explicitly not a target RMSE. The platform-only\n415 eastern-WA rows are zero formatting fills without target claims. No upload is authorized by\nthis row.",
     "Reproduce H2 and finalize the registry entry with:",
     "The four constructions share underlying provided features, so their errors may be correlated;\ncommon systematic bias can inflate the apparent signal share. Four methods are a small method set,\ntracts are spatially dependent, and the region mean itself is unvalidated. Consequently, S is a\nscientifically motivated candidate for later authorized evaluation, not evidence that shrinkage\nimproves hidden-target RMSE. No public scores, labels, removed references, external data, or\nleaderboard-derived parameters informed the reliability estimates, weights, region rule, or S."
@@ -5686,26 +5687,20 @@
    "notes": "",
    "verification": {
     "claim_id": "methodology-059",
-    "passed": false,
+    "passed": true,
     "anchor_verbatim": true,
     "evidence_hashes_verified": true,
     "tokens_total": 10,
-    "tokens_covered": 7,
-    "tokens_uncovered": [
-     "0.0669",
-     "0.00415832",
-     "0.00518690"
-    ],
+    "tokens_covered": 10,
+    "tokens_uncovered": [],
     "derived_tokens_verified": [],
     "primary_pointer_hit": true,
-    "pointer": "/candidate_set",
+    "pointer": "/H2/pooled_reliability/regional_c_range",
     "pointer_reason": "",
-    "accuracy_assertion": true,
-    "accuracy_ok": false,
+    "accuracy_assertion": false,
+    "accuracy_ok": true,
     "prohibited_usage": [],
-    "prohibited_disclosure": [
-     "labels"
-    ],
+    "prohibited_disclosure": [],
     "prohibited_violations": [],
     "prohibited_ok": true,
     "hedge_ok": true,
@@ -5716,41 +5711,45 @@
    "claim_id": "methodology-060",
    "doc": "docs/writeup/methodology.md",
    "section": "H2: cross-construction reliability shrink",
-   "line_start": 602,
-   "line_end": 609,
+   "line_start": 603,
+   "line_end": 610,
    "kind": "paragraph",
    "text": "**H2 verdict: local cross-method agreement supports registering one shrink hypothesis, but does\nnot establish accuracy.** S is frozen and registered as\n`S_crossmethod_reliability_shrink_v1` with purpose `improvement`; its score-only artifact is\n`reports/candidates/S_crossmethod_reliability_shrink_v1.csv` (SHA-256\n`26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a`). The registry's numeric\npredicted score is the local LOCO proxy above, explicitly not a target RMSE. The platform-only\n415 eastern-WA rows are zero formatting fills without target claims. No upload is authorized by\nthis row.",
    "provenance_class": "measured_model_only",
    "evidence": [
     {
-     "path": "docs/data-inventory.md",
-     "sha256": "88fe309bd2a577d544081fd95ddc7980e77a4e4751d175eab7d5752e7f4ce950",
-     "primary": true,
-     "pointer": "section:Bias Bounty public GeoParquet inventory"
-    },
-    {
      "path": "reports/candidates.json",
      "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815",
+     "primary": true,
+     "pointer": "/"
+    },
+    {
+     "path": "reports/shrink-diagnosis.json",
+     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65",
      "primary": false,
      "pointer": "/"
     },
     {
-     "path": "reports/estimator-v2-audit.json",
-     "sha256": "131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0",
+     "path": "config/shrink-diagnosis-preregistered.json",
+     "sha256": "cc4c7a065b4384b315e272166330d1620f30ccbe652098dc107a3b38c016ef09",
      "primary": false,
      "pointer": "/"
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-060",
-   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v2_candidates.py --workspace \"$COMPETITION_WORKSPACE\"",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_shrink_diagnosis_h2.py --workspace \"$COMPETITION_WORKSPACE\" && python scripts/register_shrink_diagnosis_candidate.py",
    "reproduce_products": [
     {
-     "path": "reports/estimator-v2-audit.json",
-     "sha256": "131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0"
+     "path": "reports/shrink-diagnosis.json",
+     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65"
     },
     {
-     "path": "reports/candidates/V2_model.csv",
-     "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12"
+     "path": "reports/candidates/S_crossmethod_reliability_shrink_v1.csv",
+     "sha256": "26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a"
+    },
+    {
+     "path": "reports/candidates.json",
+     "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815"
     }
    ],
    "tokens_exempt": [],
@@ -5758,7 +5757,7 @@
    "hedge_context": [
     "The preregistered H2 analysis is in `config/shrink-diagnosis-preregistered.json`; it uses only the\nfrozen feature-derived C2, A1, A2 and A3 prediction artifacts. P4 and V2 were excluded (V2's\nregistry forecast contains a public-score anchor). For each construction, its regional-centered\ncovariance with the other constructions estimates shared signal; pooled nonnegative signal shares\nare normalized to construction weights. The consensus is then shrunk around its own regional mean\nby `c = estimated shared cross-covariance / total consensus variance`. This makes the intercept\nexplicit and only attenuates within-region deviations. A zero target mean is not justified by\nlabel-free evidence, so shrinkage is toward the feature-only regional consensus mean, not zero.",
     "| Region | Raw regional c | Applied c | LOCO average MSE gain vs unshrunk consensus | S regional mean |\n|---|---:|---:|---:|---:|\n| Maricopa AZ | 0.7485 | 0.8017 pooled | 0.0004308 | 0.32434 |\n| Northern CA | 0.7692 | 0.8017 pooled | 0.0004259 | 0.26479 |\n| Eastern OK | 0.8035 | 0.8017 pooled | 0.0005637 | 0.23207 |\n| South-Central TX | 0.8154 | 0.8017 pooled | 0.0004333 | 0.23988 |",
-    "Regional raw c spans only 0.0669, below the preregistered 0.10 cutoff; therefore a single pooled\n`c=0.8016961` is applied rather than estimating four shrink parameters. Pooled shared variance is\n`0.00415832`, total consensus variance `0.00518690`. Global construction weights are C2\n`0.03299`, A1 `0.31457`, A2 `0.32827`, and A3 `0.32416`; all three alternate constructions carry\nsimilar locally estimated agreement weights, while C2's agreement share is smaller. Leave-one-\nconstruction-out proxy RMSE is `0.149381` for the shrink estimator versus `0.150876` for the\nunshrunk reliability-weighted consensus. The shrink MSE gain is positive in all four regions, so\nthe preregistered local-proxy gate passed. This held-out unit is another prediction method, not a\ntract reference label; the numeric `predicted_score` is a cross-construction generalization proxy,\nnot a forecast of organizer-target RMSE. The actual target RMSE is not identifiable without labels.",
+    "Regional raw c spans only 0.0669, below the preregistered 0.10 cutoff; therefore a single pooled\n`c=0.8016961` is applied rather than estimating four shrink parameters. Pooled shared variance is\n`0.0041583`, total consensus variance `0.0051869`. Global construction weights are C2\n`0.03299`, A1 `0.31457`, A2 `0.32827`, and A3 `0.32416`; all three alternate constructions carry\nsimilar locally estimated agreement weights, while C2's agreement share is smaller. Leave-one-\nconstruction-out proxy root-mean-square error is `0.149381` for the shrink estimator versus\n`0.150876` for the unshrunk reliability-weighted consensus. The shrink MSE gain is positive in all\nfour regions, so the preregistered local-proxy gate passed. These held-out comparisons are against\nanother prediction method, not the organiser's target; the numeric `predicted_score` is a\ncross-construction generalization proxy, not a measure of target performance. Target performance\nis unidentifiable without reference values.",
     "**H2 verdict: local cross-method agreement supports registering one shrink hypothesis, but does\nnot establish accuracy.** S is frozen and registered as\n`S_crossmethod_reliability_shrink_v1` with purpose `improvement`; its score-only artifact is\n`reports/candidates/S_crossmethod_reliability_shrink_v1.csv` (SHA-256\n`26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a`). The registry's numeric\npredicted score is the local LOCO proxy above, explicitly not a target RMSE. The platform-only\n415 eastern-WA rows are zero formatting fills without target claims. No upload is authorized by\nthis row.",
     "Reproduce H2 and finalize the registry entry with:",
     "The four constructions share underlying provided features, so their errors may be correlated;\ncommon systematic bias can inflate the apparent signal share. Four methods are a small method set,\ntracts are spatially dependent, and the region mean itself is unvalidated. Consequently, S is a\nscientifically motivated candidate for later authorized evaluation, not evidence that shrinkage\nimproves hidden-target RMSE. No public scores, labels, removed references, external data, or\nleaderboard-derived parameters informed the reliability estimates, weights, region rule, or S."
@@ -5774,7 +5773,7 @@
     "tokens_uncovered": [],
     "derived_tokens_verified": [],
     "primary_pointer_hit": true,
-    "pointer": "section:Bias Bounty public GeoParquet inventory",
+    "pointer": "/",
     "pointer_reason": "",
     "accuracy_assertion": false,
     "accuracy_ok": true,
@@ -6375,7 +6374,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-001",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -6455,7 +6454,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-002",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -6541,7 +6540,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-003",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -6627,7 +6626,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-004",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -6713,7 +6712,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-005",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -6799,7 +6798,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-006",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -6878,7 +6877,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-007",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -6965,7 +6964,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-008",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -7050,7 +7049,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-009",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -7135,7 +7134,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-010",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -7220,7 +7219,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-011",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -7305,7 +7304,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-012",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -7375,38 +7374,30 @@
      "pointer": "/scope/T1_defined_ids"
     },
     {
+     "path": "reports/t1-outside-share-threshold.json",
+     "sha256": "dd10e054ba5923cbe7f10422ce51aaf61274ea6d8d2024a5e03573bd38e1e0f9",
+     "primary": false,
+     "pointer": "/outer_evaluation/paired_outer_county_delta_r2/support/eastern-ok/threshold_defined_ids"
+    },
+    {
      "path": "docs/data-inventory.md",
      "sha256": "88fe309bd2a577d544081fd95ddc7980e77a4e4751d175eab7d5752e7f4ce950",
      "primary": false,
      "pointer": "document"
     },
     {
-     "path": "reports/discovery-external-layers.json",
-     "sha256": "6d5c68655af215fcea7f1eb01e05d5065e48ec2f2c8a7786317d8d2ad9a24998",
-     "primary": false,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-rural-svi-minority.json",
-     "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0",
+     "path": "reports/t1-class-drop-handcheck.json",
+     "sha256": "272a07078ae739ef234e0dac3c28067d7aed01ad49afc3b7320b24709243db01",
      "primary": false,
      "pointer": "/"
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-013",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/screen_t1_outside_share_threshold.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/t1-outside-share-threshold.json",
    "reproduce_products": [
     {
-     "path": "reports/discovery-rural-svi-minority.json",
-     "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0"
-    },
-    {
-     "path": "reports/discovery-external-layers.json",
-     "sha256": "6d5c68655af215fcea7f1eb01e05d5065e48ec2f2c8a7786317d8d2ad9a24998"
-    },
-    {
-     "path": "reports/t1-stroke-residual-screen.json",
-     "sha256": "d717571b5a5dcc6e7bddf84398082ca44118b4b39b22c905d92cd7bee250e3b9"
+     "path": "reports/t1-outside-share-threshold.json",
+     "sha256": "dd10e054ba5923cbe7f10422ce51aaf61274ea6d8d2024a5e03573bd38e1e0f9"
     }
    ],
    "tokens_exempt": [],
@@ -7419,16 +7410,12 @@
    "notes": "",
    "verification": {
     "claim_id": "screens-that-did-not-produce-a-finding-013",
-    "passed": false,
+    "passed": true,
     "anchor_verbatim": true,
     "evidence_hashes_verified": true,
     "tokens_total": 20,
-    "tokens_covered": 17,
-    "tokens_uncovered": [
-     "0.0023880",
-     "0.0154058",
-     "0.2697082"
-    ],
+    "tokens_covered": 20,
+    "tokens_uncovered": [],
     "derived_tokens_verified": [],
     "primary_pointer_hit": true,
     "pointer": "/scope/T1_defined_ids",
@@ -7479,7 +7466,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-014",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -7562,7 +7549,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-015",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -7894,11 +7881,11 @@
    },
    {
     "command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-055",
-    "exit_code": 1
+    "exit_code": 0
    },
    {
     "command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-056",
-    "exit_code": 1
+    "exit_code": 0
    },
    {
     "command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-057",
@@ -7906,11 +7893,11 @@
    },
    {
     "command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-058",
-    "exit_code": 1
+    "exit_code": 0
    },
    {
     "command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-059",
-    "exit_code": 1
+    "exit_code": 0
    },
    {
     "command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-060",
@@ -7970,7 +7957,7 @@
    },
    {
     "command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-013",
-    "exit_code": 1
+    "exit_code": 0
    },
    {
     "command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-014",
@@ -8057,11 +8044,14 @@
    {
     "command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v2_candidates.py --workspace \"$COMPETITION_WORKSPACE\"",
     "exit_code": 0,
-    "undisclosed_product_changes": [],
+    "undisclosed_product_changes": [
+     "reports/candidates.json (registry product must reproduce byte-identically)",
+     "reports/estimator-v2-audit.json:/manifest_sha256_after_write"
+    ],
     "products": [
      {
       "path": "reports/candidates.json",
-      "sha256": "5374d6811fc1c6ea28ef680e3d29038c981d16265d4731df6dadd286a0bf34e1"
+      "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815"
      },
      {
       "path": "reports/candidates/V2_model.csv",
@@ -8070,6 +8060,14 @@
      {
       "path": "reports/estimator-v2-audit.json",
       "sha256": "131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0"
+     },
+     {
+      "path": "reports/final-two.json",
+      "sha256": "c31358286078bd1d0b7ff87deb791a63cd0df51b45b53da13de27c678ea22361"
+     },
+     {
+      "path": "reports/v2-input-provenance.json",
+      "sha256": "b52c3b1bcfee452e8d04c2af28a8c9abd1a0fb609b50c1ed9a9d56b9ec7f5d6a"
      }
     ]
    },
@@ -8112,8 +8110,16 @@
     "undisclosed_product_changes": [],
     "products": [
      {
+      "path": "reports/discovery-external-layers.json",
+      "sha256": "6d5c68655af215fcea7f1eb01e05d5065e48ec2f2c8a7786317d8d2ad9a24998"
+     },
+     {
       "path": "reports/discovery-rural-svi-minority.json",
       "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0"
+     },
+     {
+      "path": "reports/t1-stroke-residual-screen.json",
+      "sha256": "d717571b5a5dcc6e7bddf84398082ca44118b4b39b22c905d92cd7bee250e3b9"
      }
     ]
    },
@@ -8147,6 +8153,40 @@
      {
       "path": "reports/transport-route-ref-audit.json",
       "sha256": "bf904336963f553cc7442c5996a4d8d504fe30aad5c4f1a2e44da8fa773b1927"
+     }
+    ]
+   },
+   {
+    "command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_shrink_diagnosis_h2.py --workspace \"$COMPETITION_WORKSPACE\" && python scripts/register_shrink_diagnosis_candidate.py",
+    "exit_code": 0,
+    "undisclosed_product_changes": [
+     "reports/shrink-diagnosis.json:/H2/implementation/h1_report_sha256_before_h2",
+     "reports/shrink-diagnosis.json:/candidate_registration/registry_sha256",
+     "reports/shrink-diagnosis.json:/provenance/methodology_rules_doc_sha256"
+    ],
+    "products": [
+     {
+      "path": "reports/candidates.json",
+      "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815"
+     },
+     {
+      "path": "reports/candidates/S_crossmethod_reliability_shrink_v1.csv",
+      "sha256": "26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a"
+     },
+     {
+      "path": "reports/shrink-diagnosis.json",
+      "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65"
+     }
+    ]
+   },
+   {
+    "command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/screen_t1_outside_share_threshold.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/t1-outside-share-threshold.json",
+    "exit_code": 0,
+    "undisclosed_product_changes": [],
+    "products": [
+     {
+      "path": "reports/t1-outside-share-threshold.json",
+      "sha256": "dd10e054ba5923cbe7f10422ce51aaf61274ea6d8d2024a5e03573bd38e1e0f9"
      }
     ]
    },
@@ -8199,9 +8239,160 @@
    },
    {
     "command": "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json",
-    "exit_code": null,
-    "undisclosed_product_changes": [],
-    "products": []
+    "exit_code": 0,
+    "undisclosed_product_changes": [
+     "reports/bias60-family-s-summary.json:/family_s_flagged_vif_columns[length]",
+     "reports/bias60-family-s-summary.json:/harness_report_sha256",
+     "reports/bias60-family-s-summary.json:/orthogonality_report_sha256",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_d3_b_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_d3_b_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_dst3_b_gap/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_dst3_b_gap/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_g3_b_gap/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_g3_b_gap/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_g4_b_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_g4_b_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_m5_b_covariate_multi_property_share/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_mx4_b_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_mx4_b_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_sca3_b_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_sca3_b_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_tm1_b_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_tm1_b_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_tm1_b_gap/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_tm1_b_gap/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|C|covariate:lag_dst4_c_gap/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|C|covariate:lag_dst4_c_gap/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|C|covariate:lag_dst5_c_gap/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|C|covariate:lag_dst5_c_gap/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|C|covariate:lag_sca2_c_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|C|covariate:lag_sca2_c_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|C|covariate:lag_sca5_c_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|C|covariate:lag_sca5_c_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_d1_est_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_d1_est_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_d4_est_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_d4_est_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_d5_est_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_d5_est_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_dst1_est_gap/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_dst1_est_gap/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_dst2_est_gap/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_g5_est_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_g5_est_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_m2_est_covariate_all_wikidata_link_share/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_m2_est_covariate_all_wikidata_link_share/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_m3_est_covariate_address_mismatch_share/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_m3_est_covariate_address_mismatch_share/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_m4_est_covariate_chain_brand_share/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_m4_est_covariate_chain_brand_share/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_m4_est_covariate_chain_count_per_housing_unit/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_m4_est_covariate_chain_count_per_housing_unit/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_mx2_est_covariate_microsoft_only_place_share/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_mx2_est_covariate_microsoft_only_place_share/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_mx3_est_covariate_foursquare_only_place_share/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_mx3_est_covariate_foursquare_only_place_share/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_p1_est_gap/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_p1_est_gap/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_sca4_est_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_sca4_est_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_x3_est_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_x3_est_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_d2_f_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_d2_f_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_g5_f_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_g5_f_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_m2_f_covariate_facility_wikidata_link_share/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_m2_f_covariate_facility_wikidata_link_share/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_m2_f_covariate_facility_wikidata_link_share/orthogonality/vif_flagged",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_m3_f_covariate_facility_incoming_address_mismatch_share/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_m3_f_covariate_facility_incoming_address_mismatch_share/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx2_f_covariate_facility_microsoft_only_place_share/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx2_f_covariate_facility_microsoft_only_place_share/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx4_f_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx4_f_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_alltheplaces/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_foursquare/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_foursquare/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_meta/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_meta/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_microsoft/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_microsoft/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_other/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_other/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_p2_f_gap/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_p2_f_gap/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_p3_f_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_p3_f_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_sc2_f_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_sc2_f_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_sc3_f_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_sc3_f_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_sc3_f_gap/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_sc3_f_gap/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_sca1_f_gap/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_sca1_f_gap/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_x1_f_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_x1_f_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_x5_f_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_x5_f_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_g1_r_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_g1_r_gap/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_g2_r_gap/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_g2_r_gap/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_m1_r_covariate_low_version_tertiary_share/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_m1_r_covariate_low_version_tertiary_share/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_m1_r_covariate_named_mean_version/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_m1_r_covariate_named_mean_version/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_m1_r_covariate_tertiary_mean_version/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_m1_r_covariate_tertiary_mean_version/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_m5_r_covariate_multi_property_share/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_mx1_r_covariate_tomtom_named_length_share/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_mx1_r_covariate_tomtom_named_length_share/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_mx1_r_covariate_tomtom_tertiary_length_share/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_mx1_r_covariate_tomtom_tertiary_length_share/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_p4_r_gap/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sc1_r_gap/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sc1_r_gap/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sc4_r_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sc4_r_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sc5_r_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sc5_r_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sc5_r_gap/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sc5_r_gap/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sca3_r_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sca3_r_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sca3_r_covariate/orthogonality/vif_flagged",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_x4_r_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_x5_r_covariate/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_x5_r_covariate/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S2/channels/S2|all|covariate:county_eb_buildings/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S2/channels/S2|all|covariate:county_eb_buildings/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S2/channels/S2|all|covariate:county_eb_poi_all/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S2/channels/S2|all|covariate:county_eb_poi_all/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S3/channels/S3|F|covariate:boundary_leak_ems/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S3/channels/S3|F|covariate:boundary_leak_ems/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S3/channels/S3|F|covariate:boundary_leak_fire/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S3/channels/S3|F|covariate:boundary_leak_fire/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S3/channels/S3|F|covariate:boundary_leak_schools/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S3/channels/S3|F|covariate:boundary_leak_schools/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S4/channels/S4|B|covariate:peer_gap_delta/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S4/channels/S4|B|covariate:peer_gap_delta/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S4/channels/S4|Est|covariate:peer_gap_delta/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S4/channels/S4|Est|covariate:peer_gap_delta/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S4/channels/S4|F|covariate:peer_gap_delta/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S4/channels/S4|F|covariate:peer_gap_delta/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S4/channels/S4|R|covariate:peer_gap_delta/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S4/channels/S4|R|covariate:peer_gap_delta/orthogonality/vif",
+     "reports/bias60-family-s-summary.json:/outputs/S5/channels/S5|C|covariate:local_geary_gap/orthogonality/correlations_to_every_idea_column[length]",
+     "reports/bias60-family-s-summary.json:/outputs/S5/channels/S5|C|covariate:local_geary_gap/orthogonality/vif"
+    ],
+    "products": [
+     {
+      "path": "reports/bias60-family-s-summary.json",
+      "sha256": "ea1bdb11e7c358eb5ffc4b75a0a1a3c19d7f2b7bb84dce6453fb400643f68581"
+     }
+    ]
    },
    {
     "command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png",
@@ -8220,187 +8411,213 @@
    },
    {
     "command": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png && /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/audit_discovery_postfire_county_bootstrap.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire-county-bootstrap.json && MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_dins_mechanism.py --workspace \"$COMPETITION_WORKSPACE\" --dins-file \"$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson\" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png",
-    "exit_code": null,
-    "undisclosed_product_changes": [],
-    "products": []
-   },
-   {
-    "command": "python scripts/build_estimator_v2_candidates.py",
-    "exit_code": null,
-    "undisclosed_product_changes": [],
-    "products": []
-   },
-   {
-    "command": "python scripts/discovery_rural_svi_minority.py",
-    "exit_code": null,
-    "undisclosed_product_changes": [],
-    "products": []
+    "exit_code": 0,
+    "undisclosed_product_changes": [
+     "reports/discovery-postfire-county-bootstrap.json:/summary/report_sha256"
+    ],
+    "products": [
+     {
+      "path": "reports/discovery-dins-mechanism.json",
+      "sha256": "8af173a124f59ef7fc6a114907eb65340cc9f87bde7093db0eb7441fc7d3ccfd"
+     },
+     {
+      "path": "reports/discovery-dins-mechanism.md",
+      "sha256": "f66d97f7bb82d77cc11928a01699f976455fe349063316624883a464a90b245d"
+     },
+     {
+      "path": "reports/discovery-dins-mechanism.png",
+      "sha256": "2b2948bd8f330f7c958b5c8deb48306b2b0809a1101947ca620c989e6dae6f8f"
+     },
+     {
+      "path": "reports/discovery-postfire-county-bootstrap.json",
+      "sha256": "f55774557f0461875cc5c4a56063ef7cf9f7056f11828ea368c85e6eb5b96348"
+     },
+     {
+      "path": "reports/discovery-postfire-map.png",
+      "sha256": "916589e0d3dc765a77c133dbcfe454740906dabb26ab74fcc0db92f9ffa43da1"
+     },
+     {
+      "path": "reports/discovery-postfire.json",
+      "sha256": "cbf100bc833bf09c02bad9f3c11a53d0da0736a7a249018c1ecc8dce55f3d49a"
+     }
+    ]
    }
   ],
-  "undisclosed_product_changes": [],
+  "undisclosed_product_changes": [
+   "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v2_candidates.py --workspace \"$COMPETITION_WORKSPACE\" :: reports/candidates.json (registry product must reproduce byte-identically)",
+   "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v2_candidates.py --workspace \"$COMPETITION_WORKSPACE\" :: reports/estimator-v2-audit.json:/manifest_sha256_after_write",
+   "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_shrink_diagnosis_h2.py --workspace \"$COMPETITION_WORKSPACE\" && python scripts/register_shrink_diagnosis_candidate.py :: reports/shrink-diagnosis.json:/H2/implementation/h1_report_sha256_before_h2",
+   "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_shrink_diagnosis_h2.py --workspace \"$COMPETITION_WORKSPACE\" && python scripts/register_shrink_diagnosis_candidate.py :: reports/shrink-diagnosis.json:/candidate_registration/registry_sha256",
+   "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_shrink_diagnosis_h2.py --workspace \"$COMPETITION_WORKSPACE\" && python scripts/register_shrink_diagnosis_candidate.py :: reports/shrink-diagnosis.json:/provenance/methodology_rules_doc_sha256",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/family_s_flagged_vif_columns[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/harness_report_sha256",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/orthogonality_report_sha256",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_d3_b_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_d3_b_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_dst3_b_gap/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_dst3_b_gap/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_g3_b_gap/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_g3_b_gap/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_g4_b_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_g4_b_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_m5_b_covariate_multi_property_share/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_mx4_b_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_mx4_b_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_sca3_b_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_sca3_b_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_tm1_b_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_tm1_b_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_tm1_b_gap/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|B|covariate:lag_tm1_b_gap/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|C|covariate:lag_dst4_c_gap/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|C|covariate:lag_dst4_c_gap/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|C|covariate:lag_dst5_c_gap/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|C|covariate:lag_dst5_c_gap/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|C|covariate:lag_sca2_c_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|C|covariate:lag_sca2_c_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|C|covariate:lag_sca5_c_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|C|covariate:lag_sca5_c_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_d1_est_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_d1_est_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_d4_est_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_d4_est_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_d5_est_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_d5_est_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_dst1_est_gap/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_dst1_est_gap/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_dst2_est_gap/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_g5_est_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_g5_est_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_m2_est_covariate_all_wikidata_link_share/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_m2_est_covariate_all_wikidata_link_share/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_m3_est_covariate_address_mismatch_share/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_m3_est_covariate_address_mismatch_share/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_m4_est_covariate_chain_brand_share/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_m4_est_covariate_chain_brand_share/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_m4_est_covariate_chain_count_per_housing_unit/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_m4_est_covariate_chain_count_per_housing_unit/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_mx2_est_covariate_microsoft_only_place_share/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_mx2_est_covariate_microsoft_only_place_share/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_mx3_est_covariate_foursquare_only_place_share/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_mx3_est_covariate_foursquare_only_place_share/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_p1_est_gap/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_p1_est_gap/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_sca4_est_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_sca4_est_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_x3_est_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|Est|covariate:lag_x3_est_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_d2_f_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_d2_f_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_g5_f_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_g5_f_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_m2_f_covariate_facility_wikidata_link_share/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_m2_f_covariate_facility_wikidata_link_share/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_m2_f_covariate_facility_wikidata_link_share/orthogonality/vif_flagged",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_m3_f_covariate_facility_incoming_address_mismatch_share/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_m3_f_covariate_facility_incoming_address_mismatch_share/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx2_f_covariate_facility_microsoft_only_place_share/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx2_f_covariate_facility_microsoft_only_place_share/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx4_f_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx4_f_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_alltheplaces/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_foursquare/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_foursquare/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_meta/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_meta/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_microsoft/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_microsoft/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_other/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_mx5_f_covariate_school_category_mismatch_share_other/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_p2_f_gap/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_p2_f_gap/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_p3_f_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_p3_f_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_sc2_f_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_sc2_f_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_sc3_f_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_sc3_f_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_sc3_f_gap/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_sc3_f_gap/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_sca1_f_gap/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_sca1_f_gap/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_x1_f_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_x1_f_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_x5_f_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|F|covariate:lag_x5_f_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_g1_r_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_g1_r_gap/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_g2_r_gap/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_g2_r_gap/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_m1_r_covariate_low_version_tertiary_share/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_m1_r_covariate_low_version_tertiary_share/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_m1_r_covariate_named_mean_version/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_m1_r_covariate_named_mean_version/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_m1_r_covariate_tertiary_mean_version/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_m1_r_covariate_tertiary_mean_version/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_m5_r_covariate_multi_property_share/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_mx1_r_covariate_tomtom_named_length_share/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_mx1_r_covariate_tomtom_named_length_share/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_mx1_r_covariate_tomtom_tertiary_length_share/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_mx1_r_covariate_tomtom_tertiary_length_share/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_p4_r_gap/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sc1_r_gap/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sc1_r_gap/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sc4_r_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sc4_r_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sc5_r_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sc5_r_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sc5_r_gap/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sc5_r_gap/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sca3_r_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sca3_r_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_sca3_r_covariate/orthogonality/vif_flagged",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_x4_r_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_x5_r_covariate/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S1/channels/S1|R|covariate:lag_x5_r_covariate/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S2/channels/S2|all|covariate:county_eb_buildings/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S2/channels/S2|all|covariate:county_eb_buildings/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S2/channels/S2|all|covariate:county_eb_poi_all/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S2/channels/S2|all|covariate:county_eb_poi_all/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S3/channels/S3|F|covariate:boundary_leak_ems/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S3/channels/S3|F|covariate:boundary_leak_ems/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S3/channels/S3|F|covariate:boundary_leak_fire/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S3/channels/S3|F|covariate:boundary_leak_fire/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S3/channels/S3|F|covariate:boundary_leak_schools/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S3/channels/S3|F|covariate:boundary_leak_schools/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S4/channels/S4|B|covariate:peer_gap_delta/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S4/channels/S4|B|covariate:peer_gap_delta/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S4/channels/S4|Est|covariate:peer_gap_delta/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S4/channels/S4|Est|covariate:peer_gap_delta/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S4/channels/S4|F|covariate:peer_gap_delta/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S4/channels/S4|F|covariate:peer_gap_delta/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S4/channels/S4|R|covariate:peer_gap_delta/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S4/channels/S4|R|covariate:peer_gap_delta/orthogonality/vif",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S5/channels/S5|C|covariate:local_geary_gap/orthogonality/correlations_to_every_idea_column[length]",
+   "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json :: reports/bias60-family-s-summary.json:/outputs/S5/channels/S5|C|covariate:local_geary_gap/orthogonality/vif",
+   "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png && /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/audit_discovery_postfire_county_bootstrap.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire-county-bootstrap.json && MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_dins_mechanism.py --workspace \"$COMPETITION_WORKSPACE\" --dins-file \"$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson\" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png :: reports/discovery-postfire-county-bootstrap.json:/summary/report_sha256"
+  ],
   "execution_log": {
    "working_tree_clean_before": false,
    "working_tree_clean_after": false,
    "present": true,
-   "sha256": "cb257ab7421d9daf50e042fe5ea14839dd09725cc0fd6036d36a633fd6381789"
+   "sha256": "5d96fd36878c3590b882cd3b175e8f59390036ea14210463d25d79009a27cb90"
   }
  },
- "unresolved": [
-  {
-   "claim_id": "methodology-055",
-   "passed": false,
-   "anchor_verbatim": true,
-   "evidence_hashes_verified": true,
-   "tokens_total": 26,
-   "tokens_covered": 16,
-   "tokens_uncovered": [
-    "36.53",
-    "18.47",
-    "1.929",
-    "30.46",
-    "6.54",
-    "1.504",
-    "40.69",
-    "1.161",
-    "36.95",
-    "1.183"
-   ],
-   "derived_tokens_verified": [],
-   "primary_pointer_hit": true,
-   "pointer": "/",
-   "pointer_reason": "",
-   "accuracy_assertion": false,
-   "accuracy_ok": true,
-   "prohibited_usage": [],
-   "prohibited_disclosure": [],
-   "prohibited_violations": [],
-   "prohibited_ok": true,
-   "hedge_ok": true,
-   "reproduce_products_verified": true
-  },
-  {
-   "claim_id": "methodology-056",
-   "passed": false,
-   "anchor_verbatim": true,
-   "evidence_hashes_verified": true,
-   "tokens_total": 3,
-   "tokens_covered": 1,
-   "tokens_uncovered": [
-    "1.929",
-    "1.59"
-   ],
-   "derived_tokens_verified": [],
-   "primary_pointer_hit": true,
-   "pointer": "document",
-   "pointer_reason": "",
-   "accuracy_assertion": false,
-   "accuracy_ok": true,
-   "prohibited_usage": [],
-   "prohibited_disclosure": [
-    "tiger"
-   ],
-   "prohibited_violations": [],
-   "prohibited_ok": true,
-   "hedge_ok": true,
-   "reproduce_products_verified": true
-  },
-  {
-   "claim_id": "methodology-058",
-   "passed": false,
-   "anchor_verbatim": true,
-   "evidence_hashes_verified": true,
-   "tokens_total": 16,
-   "tokens_covered": 8,
-   "tokens_uncovered": [
-    "0.0004308",
-    "0.32434",
-    "0.0004259",
-    "0.26479",
-    "0.0005637",
-    "0.23207",
-    "0.0004333",
-    "0.23988"
-   ],
-   "derived_tokens_verified": [],
-   "primary_pointer_hit": true,
-   "pointer": "/candidate_set",
-   "pointer_reason": "",
-   "accuracy_assertion": false,
-   "accuracy_ok": true,
-   "prohibited_usage": [],
-   "prohibited_disclosure": [],
-   "prohibited_violations": [],
-   "prohibited_ok": true,
-   "hedge_ok": true,
-   "reproduce_products_verified": true
-  },
-  {
-   "claim_id": "methodology-059",
-   "passed": false,
-   "anchor_verbatim": true,
-   "evidence_hashes_verified": true,
-   "tokens_total": 10,
-   "tokens_covered": 7,
-   "tokens_uncovered": [
-    "0.0669",
-    "0.00415832",
-    "0.00518690"
-   ],
-   "derived_tokens_verified": [],
-   "primary_pointer_hit": true,
-   "pointer": "/candidate_set",
-   "pointer_reason": "",
-   "accuracy_assertion": true,
-   "accuracy_ok": false,
-   "prohibited_usage": [],
-   "prohibited_disclosure": [
-    "labels"
-   ],
-   "prohibited_violations": [],
-   "prohibited_ok": true,
-   "hedge_ok": true,
-   "reproduce_products_verified": true
-  },
-  {
-   "claim_id": "screens-that-did-not-produce-a-finding-013",
-   "passed": false,
-   "anchor_verbatim": true,
-   "evidence_hashes_verified": true,
-   "tokens_total": 20,
-   "tokens_covered": 17,
-   "tokens_uncovered": [
-    "0.0023880",
-    "0.0154058",
-    "0.2697082"
-   ],
-   "derived_tokens_verified": [],
-   "primary_pointer_hit": true,
-   "pointer": "/scope/T1_defined_ids",
-   "pointer_reason": "",
-   "accuracy_assertion": false,
-   "accuracy_ok": true,
-   "prohibited_usage": [],
-   "prohibited_disclosure": [],
-   "prohibited_violations": [],
-   "prohibited_ok": true,
-   "hedge_ok": true,
-   "reproduce_products_verified": true
-  }
- ],
+ "unresolved": [],
  "acceptance": {
   "inventory_matches_docs_and_config": true,
   "all_claim_anchors_verbatim": true,
   "every_quantitative_claim_has_evidence_pointer": true,
-  "every_quantitative_claim_has_reproducible_command": false,
-  "all_numeric_tokens_covered": false,
+  "every_quantitative_claim_has_reproducible_command": true,
+  "all_numeric_tokens_covered": true,
   "all_evidence_hashes_verified": true,
   "all_primary_pointers_hit": true,
-  "all_verify_commands_exit_zero": false,
+  "all_verify_commands_exit_zero": true,
   "workspace_evidence_is_documentation_only": true,
-  "all_reproduce_products_hash_verified": false,
+  "all_reproduce_products_hash_verified": true,
   "all_reproduce_products_reproduced_or_disclosed": false,
-  "all_reproduce_commands_exit_zero": false,
-  "no_unsupported_accuracy_claim": false,
+  "all_reproduce_commands_exit_zero": true,
+  "no_unsupported_accuracy_claim": true,
   "no_prohibited_source_used_as_model_evidence": true,
   "hedged_language_present_where_required": true,
   "writeup_carries_no_prohibited_open": true,

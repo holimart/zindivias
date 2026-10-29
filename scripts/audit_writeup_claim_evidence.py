@@ -1077,13 +1077,21 @@ def render_markdown(report: dict[str, Any]) -> str:
     lines.append(f"- **{summary['numeric_tokens_covered']} of "
                  f"{summary['numeric_tokens_total']} numeric tokens ({token_percent}) "
                  f"are present in the evidence named by the claim that states them.**")
+    reproduce_rows = report.get("commands", {}).get("tier_b_reproduce", [])
     reproduce_summary = (
-        "all recorded reproduce-command products hash-verify."
+        "all recorded reproduce-command product hashes match the current files."
         if acceptance["all_reproduce_products_hash_verified"] else
-        "a historical reproduce-command product hash no longer matches its current file; "
+        "a recorded reproduce-command product hash no longer matches its current file; "
         "details are recorded in the audit JSON's tier_b_reproduce entries."
     )
-    reproduce_rows = report.get("commands", {}).get("tier_b_reproduce", [])
+    divergent_reproduces = [row for row in reproduce_rows
+                            if row.get("undisclosed_product_changes")]
+    if not acceptance["all_reproduce_products_reproduced_or_disclosed"]:
+        reproduce_summary += (
+            f" {len(divergent_reproduces)} executed reproduce command(s) generated "
+            "product differences not covered by the registered disclosure rules; see "
+            "the audit JSON's tier_b_reproduce entries."
+        )
     recorded_reproduces = [row for row in reproduce_rows if row.get("exit_code") is not None]
     passed_reproduces = sum(row.get("exit_code") == 0 for row in recorded_reproduces)
     unrecorded_reproduces = len(reproduce_rows) - len(recorded_reproduces)
@@ -1165,9 +1173,9 @@ def render_markdown(report: dict[str, Any]) -> str:
         lines.append(f"# exit {entry['exit_code']}\n{entry['command']}")
     lines.append("```")
     lines.append("")
-    lines.append("Reproduce commands (executed once with the authorised workspace and recorded "
-                 "in the committed execution log; products are hash-verified by every audit "
-                 "run):")
+    lines.append("Reproduce commands (executed with the authorised workspace and recorded "
+                 "in the execution log; product hashes and regenerated-product differences "
+                 "are checked on every audit run):")
     lines.append("")
     lines.append("```sh")
     for entry in report["commands"]["tier_b_reproduce"]:
@@ -1178,9 +1186,10 @@ def render_markdown(report: dict[str, Any]) -> str:
     lines.append("## Unresolved claims")
     lines.append("")
     if not report["unresolved"]:
-        lines.append("None. Every quantitative claim in the three writeup documents carries a "
-                     "verified evidence pointer, a passing verify command and a hash-verified "
-                     "reproduction path.")
+        lines.append("None for claim evidence: every quantitative claim in the three writeup "
+                     "documents carries a verified evidence pointer and a passing verify "
+                     "command. Overall audit acceptance remains separate; see the verdict "
+                     "for any reproduce-product differences.")
     else:
         for result in report["unresolved"]:
             lines.append(f"- `{result['claim_id']}`: uncovered tokens "

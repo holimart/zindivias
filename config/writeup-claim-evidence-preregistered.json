@@ -23,6 +23,7 @@
     "config/reproduction-inputs.json",
     "config/road-topology-preregistered.json",
     "config/schema-presence-preregistered.json",
+    "config/shrink-diagnosis-preregistered.json",
     "config/source-freshness-preregistered.json",
     "config/v2-component-mask-audit-preregistered.json",
     "config/v2-input-provenance-preregistered.json",
@@ -90,6 +91,7 @@
     "reports/road-topology-candidate.json",
     "reports/sample-contract-audit.json",
     "reports/schema-presence-candidate.json",
+    "reports/shrink-diagnosis.json",
     "reports/scorecards/BvyKrR6v.json",
     "reports/scorecards/TM83xxU6.json",
     "reports/scorecards/ggVY44Ui.json",
@@ -99,6 +101,8 @@
     "reports/scorecards/ySXi73rd.json",
     "reports/source-freshness-candidate.json",
     "reports/source-provenance.json",
+    "reports/t1-class-drop-handcheck.json",
+    "reports/t1-outside-share-threshold.json",
     "reports/transport-route-ref-audit.json",
     "reports/transport-route-variants.json",
     "reports/v2-defined-mask-audit.json",
@@ -900,6 +904,38 @@
     },
     {
       "doc": "docs/writeup/methodology.md",
+      "section": "Shrink diagnosis — H1 rule-anchored phase (partial)",
+      "evidence": [
+        "reports/shrink-diagnosis.json",
+        "reports/estimator-v2-audit.json",
+        "docs/data-inventory.md"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_shrink_diagnosis_h2.py --workspace \"$COMPETITION_WORKSPACE\" && python scripts/register_shrink_diagnosis_candidate.py",
+      "products": [
+        "reports/shrink-diagnosis.json",
+        "reports/candidates/S_crossmethod_reliability_shrink_v1.csv",
+        "reports/candidates.json"
+      ],
+      "provenance_class": "measured_model_only"
+    },
+    {
+      "doc": "docs/writeup/methodology.md",
+      "section": "H2: cross-construction reliability shrink",
+      "evidence": [
+        "reports/shrink-diagnosis.json",
+        "config/shrink-diagnosis-preregistered.json",
+        "reports/candidates.json"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_shrink_diagnosis_h2.py --workspace \"$COMPETITION_WORKSPACE\" && python scripts/register_shrink_diagnosis_candidate.py",
+      "products": [
+        "reports/shrink-diagnosis.json",
+        "reports/candidates/S_crossmethod_reliability_shrink_v1.csv",
+        "reports/candidates.json"
+      ],
+      "provenance_class": "measured_model_only"
+    },
+    {
+      "doc": "docs/writeup/methodology.md",
       "section": "*",
       "occurrence": "any",
       "evidence": [
@@ -971,12 +1007,27 @@
         "reports/discovery-dins-mechanism.json",
         "docs/data-inventory.md"
       ],
-      "reproduce": "python scripts/build_estimator_v2_candidates.py",
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v2_candidates.py --workspace \"$COMPETITION_WORKSPACE\"",
       "products": [
         "reports/final-two.json",
         "reports/v2-input-provenance.json"
       ],
       "provenance_class": "scope_statement"
+    },
+    {
+      "doc": "docs/writeup/appendices/screens-that-did-not-produce-a-finding.md",
+      "section": "Section 5 — T1 named-stroke class-drop diagnostic and implementation limit",
+      "evidence": [
+        "reports/t1-class-drop-handcheck.json",
+        "reports/t1-stroke-residual-screen.json",
+        "reports/t1-outside-share-threshold.json",
+        "docs/data-inventory.md"
+      ],
+      "reproduce": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/screen_t1_outside_share_threshold.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/t1-outside-share-threshold.json",
+      "products": [
+        "reports/t1-outside-share-threshold.json"
+      ],
+      "provenance_class": "measured_provided_data"
     },
     {
       "doc": "docs/writeup/appendices/screens-that-did-not-produce-a-finding.md",
@@ -988,7 +1039,7 @@
         "reports/t1-stroke-residual-screen.json",
         "docs/data-inventory.md"
       ],
-      "reproduce": "python scripts/discovery_rural_svi_minority.py",
+      "reproduce": "SEE_DISCOVERY_RURAL_SVI",
       "products": [
         "reports/discovery-rural-svi-minority.json",
         "reports/discovery-external-layers.json",

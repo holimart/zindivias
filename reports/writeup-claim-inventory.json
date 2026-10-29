@@ -621,7 +621,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-summary-001",
-   "reproduce_command": "python scripts/build_estimator_v2_candidates.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v2_candidates.py --workspace \"$COMPETITION_WORKSPACE\"",
    "reproduce_products": [
     {
      "path": "reports/final-two.json",
@@ -3574,10 +3574,10 @@
    "provenance_class": "measured_model_only",
    "evidence": [
     {
-     "path": "reports/candidates.json",
-     "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815",
+     "path": "reports/shrink-diagnosis.json",
+     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65",
      "primary": true,
-     "pointer": "/"
+     "pointer": "/H1/region_evidence/maricopa-az/definedness_comparison/ours_minus_published_percentage_points"
     },
     {
      "path": "docs/data-inventory.md",
@@ -3593,15 +3593,19 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-055",
-   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v2_candidates.py --workspace \"$COMPETITION_WORKSPACE\"",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_shrink_diagnosis_h2.py --workspace \"$COMPETITION_WORKSPACE\" && python scripts/register_shrink_diagnosis_candidate.py",
    "reproduce_products": [
     {
-     "path": "reports/estimator-v2-audit.json",
-     "sha256": "131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0"
+     "path": "reports/shrink-diagnosis.json",
+     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65"
     },
     {
-     "path": "reports/candidates/V2_model.csv",
-     "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12"
+     "path": "reports/candidates/S_crossmethod_reliability_shrink_v1.csv",
+     "sha256": "26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a"
+    },
+    {
+     "path": "reports/candidates.json",
+     "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815"
     }
    ],
    "tokens_exempt": [],
@@ -3626,16 +3630,16 @@
    "provenance_class": "measured_model_only",
    "evidence": [
     {
-     "path": "docs/data-inventory.md",
-     "sha256": "88fe309bd2a577d544081fd95ddc7980e77a4e4751d175eab7d5752e7f4ce950",
+     "path": "reports/shrink-diagnosis.json",
+     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65",
      "primary": true,
-     "pointer": "document"
+     "pointer": "/H1/region_evidence/maricopa-az/transport_scale_context/provided_overture_named_over_route_network_length_ratio"
     },
     {
-     "path": "reports/candidates.json",
-     "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815",
+     "path": "docs/data-inventory.md",
+     "sha256": "88fe309bd2a577d544081fd95ddc7980e77a4e4751d175eab7d5752e7f4ce950",
      "primary": false,
-     "pointer": "/"
+     "pointer": "document"
     },
     {
      "path": "reports/estimator-v2-audit.json",
@@ -3645,15 +3649,19 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-056",
-   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v2_candidates.py --workspace \"$COMPETITION_WORKSPACE\"",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_shrink_diagnosis_h2.py --workspace \"$COMPETITION_WORKSPACE\" && python scripts/register_shrink_diagnosis_candidate.py",
    "reproduce_products": [
     {
-     "path": "reports/estimator-v2-audit.json",
-     "sha256": "131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0"
+     "path": "reports/shrink-diagnosis.json",
+     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65"
     },
     {
-     "path": "reports/candidates/V2_model.csv",
-     "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12"
+     "path": "reports/candidates/S_crossmethod_reliability_shrink_v1.csv",
+     "sha256": "26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a"
+    },
+    {
+     "path": "reports/candidates.json",
+     "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815"
     }
    ],
    "tokens_exempt": [],
@@ -3684,8 +3692,8 @@
      "pointer": "section:Bias Bounty public GeoParquet inventory"
     },
     {
-     "path": "reports/candidates.json",
-     "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815",
+     "path": "reports/shrink-diagnosis.json",
+     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65",
      "primary": false,
      "pointer": "/"
     },
@@ -3697,15 +3705,19 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-057",
-   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v2_candidates.py --workspace \"$COMPETITION_WORKSPACE\"",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_shrink_diagnosis_h2.py --workspace \"$COMPETITION_WORKSPACE\" && python scripts/register_shrink_diagnosis_candidate.py",
    "reproduce_products": [
     {
-     "path": "reports/estimator-v2-audit.json",
-     "sha256": "131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0"
+     "path": "reports/shrink-diagnosis.json",
+     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65"
     },
     {
-     "path": "reports/candidates/V2_model.csv",
-     "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12"
+     "path": "reports/candidates/S_crossmethod_reliability_shrink_v1.csv",
+     "sha256": "26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a"
+    },
+    {
+     "path": "reports/candidates.json",
+     "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815"
     }
    ],
    "tokens_exempt": [],
@@ -3730,34 +3742,38 @@
    "provenance_class": "measured_model_only",
    "evidence": [
     {
+     "path": "reports/shrink-diagnosis.json",
+     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65",
+     "primary": true,
+     "pointer": "/H2/reliability_by_region/maricopa-az/c"
+    },
+    {
      "path": "reports/candidates.json",
      "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815",
-     "primary": true,
+     "primary": false,
      "pointer": "/candidate_set"
     },
     {
-     "path": "docs/data-inventory.md",
-     "sha256": "88fe309bd2a577d544081fd95ddc7980e77a4e4751d175eab7d5752e7f4ce950",
-     "primary": false,
-     "pointer": "document"
-    },
-    {
-     "path": "reports/estimator-v2-audit.json",
-     "sha256": "131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0",
+     "path": "config/shrink-diagnosis-preregistered.json",
+     "sha256": "cc4c7a065b4384b315e272166330d1620f30ccbe652098dc107a3b38c016ef09",
      "primary": false,
      "pointer": "/"
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-058",
-   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v2_candidates.py --workspace \"$COMPETITION_WORKSPACE\"",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_shrink_diagnosis_h2.py --workspace \"$COMPETITION_WORKSPACE\" && python scripts/register_shrink_diagnosis_candidate.py",
    "reproduce_products": [
     {
-     "path": "reports/estimator-v2-audit.json",
-     "sha256": "131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0"
+     "path": "reports/shrink-diagnosis.json",
+     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65"
     },
     {
-     "path": "reports/candidates/V2_model.csv",
-     "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12"
+     "path": "reports/candidates/S_crossmethod_reliability_shrink_v1.csv",
+     "sha256": "26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a"
+    },
+    {
+     "path": "reports/candidates.json",
+     "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815"
     }
    ],
    "tokens_exempt": [],
@@ -3765,7 +3781,7 @@
    "hedge_context": [
     "The preregistered H2 analysis is in `config/shrink-diagnosis-preregistered.json`; it uses only the\nfrozen feature-derived C2, A1, A2 and A3 prediction artifacts. P4 and V2 were excluded (V2's\nregistry forecast contains a public-score anchor). For each construction, its regional-centered\ncovariance with the other constructions estimates shared signal; pooled nonnegative signal shares\nare normalized to construction weights. The consensus is then shrunk around its own regional mean\nby `c = estimated shared cross-covariance / total consensus variance`. This makes the intercept\nexplicit and only attenuates within-region deviations. A zero target mean is not justified by\nlabel-free evidence, so shrinkage is toward the feature-only regional consensus mean, not zero.",
     "| Region | Raw regional c | Applied c | LOCO average MSE gain vs unshrunk consensus | S regional mean |\n|---|---:|---:|---:|---:|\n| Maricopa AZ | 0.7485 | 0.8017 pooled | 0.0004308 | 0.32434 |\n| Northern CA | 0.7692 | 0.8017 pooled | 0.0004259 | 0.26479 |\n| Eastern OK | 0.8035 | 0.8017 pooled | 0.0005637 | 0.23207 |\n| South-Central TX | 0.8154 | 0.8017 pooled | 0.0004333 | 0.23988 |",
-    "Regional raw c spans only 0.0669, below the preregistered 0.10 cutoff; therefore a single pooled\n`c=0.8016961` is applied rather than estimating four shrink parameters. Pooled shared variance is\n`0.00415832`, total consensus variance `0.00518690`. Global construction weights are C2\n`0.03299`, A1 `0.31457`, A2 `0.32827`, and A3 `0.32416`; all three alternate constructions carry\nsimilar locally estimated agreement weights, while C2's agreement share is smaller. Leave-one-\nconstruction-out proxy RMSE is `0.149381` for the shrink estimator versus `0.150876` for the\nunshrunk reliability-weighted consensus. The shrink MSE gain is positive in all four regions, so\nthe preregistered local-proxy gate passed. This held-out unit is another prediction method, not a\ntract reference label; the numeric `predicted_score` is a cross-construction generalization proxy,\nnot a forecast of organizer-target RMSE. The actual target RMSE is not identifiable without labels.",
+    "Regional raw c spans only 0.0669, below the preregistered 0.10 cutoff; therefore a single pooled\n`c=0.8016961` is applied rather than estimating four shrink parameters. Pooled shared variance is\n`0.0041583`, total consensus variance `0.0051869`. Global construction weights are C2\n`0.03299`, A1 `0.31457`, A2 `0.32827`, and A3 `0.32416`; all three alternate constructions carry\nsimilar locally estimated agreement weights, while C2's agreement share is smaller. Leave-one-\nconstruction-out proxy root-mean-square error is `0.149381` for the shrink estimator versus\n`0.150876` for the unshrunk reliability-weighted consensus. The shrink MSE gain is positive in all\nfour regions, so the preregistered local-proxy gate passed. These held-out comparisons are against\nanother prediction method, not the organiser's target; the numeric `predicted_score` is a\ncross-construction generalization proxy, not a measure of target performance. Target performance\nis unidentifiable without reference values.",
     "**H2 verdict: local cross-method agreement supports registering one shrink hypothesis, but does\nnot establish accuracy.** S is frozen and registered as\n`S_crossmethod_reliability_shrink_v1` with purpose `improvement`; its score-only artifact is\n`reports/candidates/S_crossmethod_reliability_shrink_v1.csv` (SHA-256\n`26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a`). The registry's numeric\npredicted score is the local LOCO proxy above, explicitly not a target RMSE. The platform-only\n415 eastern-WA rows are zero formatting fills without target claims. No upload is authorized by\nthis row.",
     "Reproduce H2 and finalize the registry entry with:",
     "The four constructions share underlying provided features, so their errors may be correlated;\ncommon systematic bias can inflate the apparent signal share. Four methods are a small method set,\ntracts are spatially dependent, and the region mean itself is unvalidated. Consequently, S is a\nscientifically motivated candidate for later authorized evaluation, not evidence that shrinkage\nimproves hidden-target RMSE. No public scores, labels, removed references, external data, or\nleaderboard-derived parameters informed the reliability estimates, weights, region rule, or S."
@@ -3777,40 +3793,44 @@
    "doc": "docs/writeup/methodology.md",
    "section": "H2: cross-construction reliability shrink",
    "line_start": 591,
-   "line_end": 600,
+   "line_end": 601,
    "kind": "paragraph",
-   "text": "Regional raw c spans only 0.0669, below the preregistered 0.10 cutoff; therefore a single pooled\n`c=0.8016961` is applied rather than estimating four shrink parameters. Pooled shared variance is\n`0.00415832`, total consensus variance `0.00518690`. Global construction weights are C2\n`0.03299`, A1 `0.31457`, A2 `0.32827`, and A3 `0.32416`; all three alternate constructions carry\nsimilar locally estimated agreement weights, while C2's agreement share is smaller. Leave-one-\nconstruction-out proxy RMSE is `0.149381` for the shrink estimator versus `0.150876` for the\nunshrunk reliability-weighted consensus. The shrink MSE gain is positive in all four regions, so\nthe preregistered local-proxy gate passed. This held-out unit is another prediction method, not a\ntract reference label; the numeric `predicted_score` is a cross-construction generalization proxy,\nnot a forecast of organizer-target RMSE. The actual target RMSE is not identifiable without labels.",
+   "text": "Regional raw c spans only 0.0669, below the preregistered 0.10 cutoff; therefore a single pooled\n`c=0.8016961` is applied rather than estimating four shrink parameters. Pooled shared variance is\n`0.0041583`, total consensus variance `0.0051869`. Global construction weights are C2\n`0.03299`, A1 `0.31457`, A2 `0.32827`, and A3 `0.32416`; all three alternate constructions carry\nsimilar locally estimated agreement weights, while C2's agreement share is smaller. Leave-one-\nconstruction-out proxy root-mean-square error is `0.149381` for the shrink estimator versus\n`0.150876` for the unshrunk reliability-weighted consensus. The shrink MSE gain is positive in all\nfour regions, so the preregistered local-proxy gate passed. These held-out comparisons are against\nanother prediction method, not the organiser's target; the numeric `predicted_score` is a\ncross-construction generalization proxy, not a measure of target performance. Target performance\nis unidentifiable without reference values.",
    "provenance_class": "measured_model_only",
    "evidence": [
     {
+     "path": "reports/shrink-diagnosis.json",
+     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65",
+     "primary": true,
+     "pointer": "/H2/pooled_reliability/regional_c_range"
+    },
+    {
      "path": "reports/candidates.json",
      "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815",
-     "primary": true,
+     "primary": false,
      "pointer": "/candidate_set"
     },
     {
-     "path": "docs/data-inventory.md",
-     "sha256": "88fe309bd2a577d544081fd95ddc7980e77a4e4751d175eab7d5752e7f4ce950",
-     "primary": false,
-     "pointer": "document"
-    },
-    {
-     "path": "reports/estimator-v2-audit.json",
-     "sha256": "131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0",
+     "path": "config/shrink-diagnosis-preregistered.json",
+     "sha256": "cc4c7a065b4384b315e272166330d1620f30ccbe652098dc107a3b38c016ef09",
      "primary": false,
      "pointer": "/"
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-059",
-   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v2_candidates.py --workspace \"$COMPETITION_WORKSPACE\"",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_shrink_diagnosis_h2.py --workspace \"$COMPETITION_WORKSPACE\" && python scripts/register_shrink_diagnosis_candidate.py",
    "reproduce_products": [
     {
-     "path": "reports/estimator-v2-audit.json",
-     "sha256": "131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0"
+     "path": "reports/shrink-diagnosis.json",
+     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65"
     },
     {
-     "path": "reports/candidates/V2_model.csv",
-     "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12"
+     "path": "reports/candidates/S_crossmethod_reliability_shrink_v1.csv",
+     "sha256": "26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a"
+    },
+    {
+     "path": "reports/candidates.json",
+     "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815"
     }
    ],
    "tokens_exempt": [],
@@ -3818,7 +3838,7 @@
    "hedge_context": [
     "The preregistered H2 analysis is in `config/shrink-diagnosis-preregistered.json`; it uses only the\nfrozen feature-derived C2, A1, A2 and A3 prediction artifacts. P4 and V2 were excluded (V2's\nregistry forecast contains a public-score anchor). For each construction, its regional-centered\ncovariance with the other constructions estimates shared signal; pooled nonnegative signal shares\nare normalized to construction weights. The consensus is then shrunk around its own regional mean\nby `c = estimated shared cross-covariance / total consensus variance`. This makes the intercept\nexplicit and only attenuates within-region deviations. A zero target mean is not justified by\nlabel-free evidence, so shrinkage is toward the feature-only regional consensus mean, not zero.",
     "| Region | Raw regional c | Applied c | LOCO average MSE gain vs unshrunk consensus | S regional mean |\n|---|---:|---:|---:|---:|\n| Maricopa AZ | 0.7485 | 0.8017 pooled | 0.0004308 | 0.32434 |\n| Northern CA | 0.7692 | 0.8017 pooled | 0.0004259 | 0.26479 |\n| Eastern OK | 0.8035 | 0.8017 pooled | 0.0005637 | 0.23207 |\n| South-Central TX | 0.8154 | 0.8017 pooled | 0.0004333 | 0.23988 |",
-    "Regional raw c spans only 0.0669, below the preregistered 0.10 cutoff; therefore a single pooled\n`c=0.8016961` is applied rather than estimating four shrink parameters. Pooled shared variance is\n`0.00415832`, total consensus variance `0.00518690`. Global construction weights are C2\n`0.03299`, A1 `0.31457`, A2 `0.32827`, and A3 `0.32416`; all three alternate constructions carry\nsimilar locally estimated agreement weights, while C2's agreement share is smaller. Leave-one-\nconstruction-out proxy RMSE is `0.149381` for the shrink estimator versus `0.150876` for the\nunshrunk reliability-weighted consensus. The shrink MSE gain is positive in all four regions, so\nthe preregistered local-proxy gate passed. This held-out unit is another prediction method, not a\ntract reference label; the numeric `predicted_score` is a cross-construction generalization proxy,\nnot a forecast of organizer-target RMSE. The actual target RMSE is not identifiable without labels.",
+    "Regional raw c spans only 0.0669, below the preregistered 0.10 cutoff; therefore a single pooled\n`c=0.8016961` is applied rather than estimating four shrink parameters. Pooled shared variance is\n`0.0041583`, total consensus variance `0.0051869`. Global construction weights are C2\n`0.03299`, A1 `0.31457`, A2 `0.32827`, and A3 `0.32416`; all three alternate constructions carry\nsimilar locally estimated agreement weights, while C2's agreement share is smaller. Leave-one-\nconstruction-out proxy root-mean-square error is `0.149381` for the shrink estimator versus\n`0.150876` for the unshrunk reliability-weighted consensus. The shrink MSE gain is positive in all\nfour regions, so the preregistered local-proxy gate passed. These held-out comparisons are against\nanother prediction method, not the organiser's target; the numeric `predicted_score` is a\ncross-construction generalization proxy, not a measure of target performance. Target performance\nis unidentifiable without reference values.",
     "**H2 verdict: local cross-method agreement supports registering one shrink hypothesis, but does\nnot establish accuracy.** S is frozen and registered as\n`S_crossmethod_reliability_shrink_v1` with purpose `improvement`; its score-only artifact is\n`reports/candidates/S_crossmethod_reliability_shrink_v1.csv` (SHA-256\n`26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a`). The registry's numeric\npredicted score is the local LOCO proxy above, explicitly not a target RMSE. The platform-only\n415 eastern-WA rows are zero formatting fills without target claims. No upload is authorized by\nthis row.",
     "Reproduce H2 and finalize the registry entry with:",
     "The four constructions share underlying provided features, so their errors may be correlated;\ncommon systematic bias can inflate the apparent signal share. Four methods are a small method set,\ntracts are spatially dependent, and the region mean itself is unvalidated. Consequently, S is a\nscientifically motivated candidate for later authorized evaluation, not evidence that shrinkage\nimproves hidden-target RMSE. No public scores, labels, removed references, external data, or\nleaderboard-derived parameters informed the reliability estimates, weights, region rule, or S."
@@ -3829,41 +3849,45 @@
    "claim_id": "methodology-060",
    "doc": "docs/writeup/methodology.md",
    "section": "H2: cross-construction reliability shrink",
-   "line_start": 602,
-   "line_end": 609,
+   "line_start": 603,
+   "line_end": 610,
    "kind": "paragraph",
    "text": "**H2 verdict: local cross-method agreement supports registering one shrink hypothesis, but does\nnot establish accuracy.** S is frozen and registered as\n`S_crossmethod_reliability_shrink_v1` with purpose `improvement`; its score-only artifact is\n`reports/candidates/S_crossmethod_reliability_shrink_v1.csv` (SHA-256\n`26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a`). The registry's numeric\npredicted score is the local LOCO proxy above, explicitly not a target RMSE. The platform-only\n415 eastern-WA rows are zero formatting fills without target claims. No upload is authorized by\nthis row.",
    "provenance_class": "measured_model_only",
    "evidence": [
     {
-     "path": "docs/data-inventory.md",
-     "sha256": "88fe309bd2a577d544081fd95ddc7980e77a4e4751d175eab7d5752e7f4ce950",
-     "primary": true,
-     "pointer": "section:Bias Bounty public GeoParquet inventory"
-    },
-    {
      "path": "reports/candidates.json",
      "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815",
+     "primary": true,
+     "pointer": "/"
+    },
+    {
+     "path": "reports/shrink-diagnosis.json",
+     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65",
      "primary": false,
      "pointer": "/"
     },
     {
-     "path": "reports/estimator-v2-audit.json",
-     "sha256": "131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0",
+     "path": "config/shrink-diagnosis-preregistered.json",
+     "sha256": "cc4c7a065b4384b315e272166330d1620f30ccbe652098dc107a3b38c016ef09",
      "primary": false,
      "pointer": "/"
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim methodology-060",
-   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/build_estimator_v2_candidates.py --workspace \"$COMPETITION_WORKSPACE\"",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_shrink_diagnosis_h2.py --workspace \"$COMPETITION_WORKSPACE\" && python scripts/register_shrink_diagnosis_candidate.py",
    "reproduce_products": [
     {
-     "path": "reports/estimator-v2-audit.json",
-     "sha256": "131376c0474244b5c1c1cad27d0dd1ce1f5513a01c599a6bc53f79c9ae8bc4d0"
+     "path": "reports/shrink-diagnosis.json",
+     "sha256": "d4c823ba5156c0c452f53d3d3032746fe61b4820938f25faad68d8b6b6738e65"
     },
     {
-     "path": "reports/candidates/V2_model.csv",
-     "sha256": "3193ee78a64004f007829f1f9c12d4aa8d4f7c15136771e8da9108fdcea06f12"
+     "path": "reports/candidates/S_crossmethod_reliability_shrink_v1.csv",
+     "sha256": "26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a"
+    },
+    {
+     "path": "reports/candidates.json",
+     "sha256": "799d0857fd25b12ead43e091d53799af0a325dfe510553410dd3cd580f5fa815"
     }
    ],
    "tokens_exempt": [],
@@ -3871,7 +3895,7 @@
    "hedge_context": [
     "The preregistered H2 analysis is in `config/shrink-diagnosis-preregistered.json`; it uses only the\nfrozen feature-derived C2, A1, A2 and A3 prediction artifacts. P4 and V2 were excluded (V2's\nregistry forecast contains a public-score anchor). For each construction, its regional-centered\ncovariance with the other constructions estimates shared signal; pooled nonnegative signal shares\nare normalized to construction weights. The consensus is then shrunk around its own regional mean\nby `c = estimated shared cross-covariance / total consensus variance`. This makes the intercept\nexplicit and only attenuates within-region deviations. A zero target mean is not justified by\nlabel-free evidence, so shrinkage is toward the feature-only regional consensus mean, not zero.",
     "| Region | Raw regional c | Applied c | LOCO average MSE gain vs unshrunk consensus | S regional mean |\n|---|---:|---:|---:|---:|\n| Maricopa AZ | 0.7485 | 0.8017 pooled | 0.0004308 | 0.32434 |\n| Northern CA | 0.7692 | 0.8017 pooled | 0.0004259 | 0.26479 |\n| Eastern OK | 0.8035 | 0.8017 pooled | 0.0005637 | 0.23207 |\n| South-Central TX | 0.8154 | 0.8017 pooled | 0.0004333 | 0.23988 |",
-    "Regional raw c spans only 0.0669, below the preregistered 0.10 cutoff; therefore a single pooled\n`c=0.8016961` is applied rather than estimating four shrink parameters. Pooled shared variance is\n`0.00415832`, total consensus variance `0.00518690`. Global construction weights are C2\n`0.03299`, A1 `0.31457`, A2 `0.32827`, and A3 `0.32416`; all three alternate constructions carry\nsimilar locally estimated agreement weights, while C2's agreement share is smaller. Leave-one-\nconstruction-out proxy RMSE is `0.149381` for the shrink estimator versus `0.150876` for the\nunshrunk reliability-weighted consensus. The shrink MSE gain is positive in all four regions, so\nthe preregistered local-proxy gate passed. This held-out unit is another prediction method, not a\ntract reference label; the numeric `predicted_score` is a cross-construction generalization proxy,\nnot a forecast of organizer-target RMSE. The actual target RMSE is not identifiable without labels.",
+    "Regional raw c spans only 0.0669, below the preregistered 0.10 cutoff; therefore a single pooled\n`c=0.8016961` is applied rather than estimating four shrink parameters. Pooled shared variance is\n`0.0041583`, total consensus variance `0.0051869`. Global construction weights are C2\n`0.03299`, A1 `0.31457`, A2 `0.32827`, and A3 `0.32416`; all three alternate constructions carry\nsimilar locally estimated agreement weights, while C2's agreement share is smaller. Leave-one-\nconstruction-out proxy root-mean-square error is `0.149381` for the shrink estimator versus\n`0.150876` for the unshrunk reliability-weighted consensus. The shrink MSE gain is positive in all\nfour regions, so the preregistered local-proxy gate passed. These held-out comparisons are against\nanother prediction method, not the organiser's target; the numeric `predicted_score` is a\ncross-construction generalization proxy, not a measure of target performance. Target performance\nis unidentifiable without reference values.",
     "**H2 verdict: local cross-method agreement supports registering one shrink hypothesis, but does\nnot establish accuracy.** S is frozen and registered as\n`S_crossmethod_reliability_shrink_v1` with purpose `improvement`; its score-only artifact is\n`reports/candidates/S_crossmethod_reliability_shrink_v1.csv` (SHA-256\n`26be20c569f72f94eb21711a41656eea909a92f3fb4495c1ec3b30f7a26a367a`). The registry's numeric\npredicted score is the local LOCO proxy above, explicitly not a target RMSE. The platform-only\n415 eastern-WA rows are zero formatting fills without target claims. No upload is authorized by\nthis row.",
     "Reproduce H2 and finalize the registry entry with:",
     "The four constructions share underlying provided features, so their errors may be correlated;\ncommon systematic bias can inflate the apparent signal share. Four methods are a small method set,\ntracts are spatially dependent, and the region mean itself is unvalidated. Consequently, S is a\nscientifically motivated candidate for later authorized evaluation, not evidence that shrinkage\nimproves hidden-target RMSE. No public scores, labels, removed references, external data, or\nleaderboard-derived parameters informed the reliability estimates, weights, region rule, or S."
@@ -4305,7 +4329,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-001",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -4364,7 +4388,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-002",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -4429,7 +4453,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-003",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -4494,7 +4518,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-004",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -4559,7 +4583,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-005",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -4624,7 +4648,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-006",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -4682,7 +4706,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-007",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -4746,7 +4770,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-008",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -4810,7 +4834,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-009",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -4874,7 +4898,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-010",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -4938,7 +4962,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-011",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -5002,7 +5026,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-012",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -5047,38 +5071,30 @@
      "pointer": "/scope/T1_defined_ids"
     },
     {
+     "path": "reports/t1-outside-share-threshold.json",
+     "sha256": "dd10e054ba5923cbe7f10422ce51aaf61274ea6d8d2024a5e03573bd38e1e0f9",
+     "primary": false,
+     "pointer": "/outer_evaluation/paired_outer_county_delta_r2/support/eastern-ok/threshold_defined_ids"
+    },
+    {
      "path": "docs/data-inventory.md",
      "sha256": "88fe309bd2a577d544081fd95ddc7980e77a4e4751d175eab7d5752e7f4ce950",
      "primary": false,
      "pointer": "document"
     },
     {
-     "path": "reports/discovery-external-layers.json",
-     "sha256": "6d5c68655af215fcea7f1eb01e05d5065e48ec2f2c8a7786317d8d2ad9a24998",
-     "primary": false,
-     "pointer": "/"
-    },
-    {
-     "path": "reports/discovery-rural-svi-minority.json",
-     "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0",
+     "path": "reports/t1-class-drop-handcheck.json",
+     "sha256": "272a07078ae739ef234e0dac3c28067d7aed01ad49afc3b7320b24709243db01",
      "primary": false,
      "pointer": "/"
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-013",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/screen_t1_outside_share_threshold.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/t1-outside-share-threshold.json",
    "reproduce_products": [
     {
-     "path": "reports/discovery-rural-svi-minority.json",
-     "sha256": "da1a581ddb25347cc6a0ffd2bb06cb8a1811082d08973bbfefc04e0c5c08cbe0"
-    },
-    {
-     "path": "reports/discovery-external-layers.json",
-     "sha256": "6d5c68655af215fcea7f1eb01e05d5065e48ec2f2c8a7786317d8d2ad9a24998"
-    },
-    {
-     "path": "reports/t1-stroke-residual-screen.json",
-     "sha256": "d717571b5a5dcc6e7bddf84398082ca44118b4b39b22c905d92cd7bee250e3b9"
+     "path": "reports/t1-outside-share-threshold.json",
+     "sha256": "dd10e054ba5923cbe7f10422ce51aaf61274ea6d8d2024a5e03573bd38e1e0f9"
     }
    ],
    "tokens_exempt": [],
@@ -5126,7 +5142,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-014",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",
@@ -5188,7 +5204,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim screens-that-did-not-produce-a-finding-015",
-   "reproduce_command": "python scripts/discovery_rural_svi_minority.py",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-rural-svi-minority.json",

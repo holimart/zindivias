@@ -205,15 +205,16 @@ class InventoryTests(unittest.TestCase):
                      "no_prohibited_source_used_as_model_evidence"):
             self.assertTrue(acceptance[gate], gate)
         self.assertFalse(acceptance["all_passed"])
-        self.assertLess(report["summary"]["claims_fully_traceable"],
-                        report["summary"]["claims_total"])
-        self.assertFalse(acceptance["all_numeric_tokens_covered"])
-        self.assertFalse(acceptance["all_reproduce_products_hash_verified"])
-        self.assertFalse(acceptance["all_reproduce_commands_exit_zero"])
-        self.assertFalse(acceptance["all_passed"])
-        # The generated Markdown must state why the no-reproduction audit does not pass every gate.
+        self.assertEqual(report["summary"]["claims_fully_traceable"],
+                         report["summary"]["claims_total"])
+        self.assertTrue(acceptance["all_numeric_tokens_covered"])
+        self.assertTrue(acceptance["all_reproduce_products_hash_verified"])
+        self.assertTrue(acceptance["all_reproduce_commands_exit_zero"])
+        self.assertFalse(acceptance["all_reproduce_products_reproduced_or_disclosed"])
+        # Evidence is complete; the remaining failure is accurately disclosed product drift.
         markdown = (ROOT / "docs/writeup/claim-evidence-audit.md").read_text()
-        self.assertIn("lack an execution record", markdown)
+        self.assertIn("product differences not covered by the registered disclosure rules", markdown)
+        self.assertIn("None for claim evidence", markdown)
 
 
 

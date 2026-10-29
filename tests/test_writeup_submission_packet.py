@@ -76,8 +76,7 @@ class PacketPresenceTests(unittest.TestCase):
 
     def test_operator_and_disclosed_claim_audit_gates_are_open(self) -> None:
         open_gates = {key for key, value in RECORD["acceptance"].items() if value is not True}
-        self.assertEqual(open_gates, OPERATOR_GATES | {
-            "claim_audit_covers_writeup_numbers", "all_passed"})
+        self.assertEqual(open_gates, OPERATOR_GATES | {"all_passed"})
         self.assertIn("full claim audit does not pass", MARKDOWN.lower())
 
 
@@ -189,10 +188,10 @@ class BuildTests(unittest.TestCase):
                     "fraction_quantitative_claims_traceable", "numeric_tokens_total",
                     "numeric_tokens_covered"):
             self.assertEqual(recorded[key], summary[key])
-        self.assertLess(summary["fraction_quantitative_claims_traceable"], 1.0)
-        self.assertLess(summary["numeric_tokens_covered"], summary["numeric_tokens_total"])
-        self.assertGreater(len(json.loads((ROOT / "reports/writeup-claim-evidence-audit.json")
-                                          .read_text())["unresolved"]), 0)
+        self.assertEqual(summary["fraction_quantitative_claims_traceable"], 1.0)
+        self.assertEqual(summary["numeric_tokens_covered"], summary["numeric_tokens_total"])
+        self.assertEqual(json.loads((ROOT / "reports/writeup-claim-evidence-audit.json")
+                                    .read_text())["unresolved"], [])
 
 
 class NegativeControlTests(unittest.TestCase):
