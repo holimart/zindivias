@@ -23,11 +23,11 @@ Rural, higher-vulnerability residents may rely on building context for heat, dro
 
 **Limits and reproduction.** OSM attribution is provenance, not accuracy, completeness, age, or local mapping activity; provider memberships may overlap. Only provided Overture source fields and strata were used; no removed reference layers, scores, or candidate outputs (`reports/source-provenance.json`, cited SHA). Rebuild with `uv run --python 3.12 --no-project --isolated --with-requirements requirements.txt python scripts/discovery_source_provenance.py --workspace "$COMPETITION_WORKSPACE" --out reports/source-provenance.json --figure reports/source-provenance.png`.
 
-## Finding 2 — Rio Grande border metros: machine-only buildings with a Google third-provider spill-over
+## Finding 2 — Rio Grande border metros: Overture's machine-only source mix
 
 ### Impact and novelty
 
-Lead: border metros have machine-only footprints with Google Open Buildings as a cross-border third provider—not merely low OSM. Non-border Ector has lower OSM than El Paso (6.7% vs 9.3%), 47.7% Esri and no Google-only; source, not accuracy, is measured.
+Lead: border metros have machine-only footprints with an Overture third provider, beyond low OSM. Ector has lower OSM than El Paso (6.7% vs 9.3%), 47.7% Esri, and zero border-provider share; source, not accuracy, is measured.
 
 Ten border counties, 1.77M residents; impacts unmeasured.
 
@@ -35,13 +35,13 @@ Ten border counties, 1.77M residents; impacts unmeasured.
 
 Across 460 border tracts, OSM mean is 9.18% vs 61.48% elsewhere (68.66% urban); difference −52.30 pp (95% county-cluster CI −61.24 to −36.99), adjusted β=−0.446 (SE 0.070; n=5,958, 185 counties), descriptive; full counts in Appendix J.
 
-`Other` means Google Open Buildings in the border reconciliation and USGS lidar elsewhere (Bexar cache share 0.336), as suggested by ±526 count matches; this is not proof (Appendix J).
+`Other` is an Overture `sources` label, not removed Google Open Buildings or USGS reference data. The border label matches the first provider; non-border Texas, the second (Bexar cache share 0.336; ±526 count matches). This provider-label inference is not proof (Appendix J).
 
 ### Does it transfer?
 
-Google-only is 10.8–33.0% in all three unscored border counties and zero in both controls. El Paso OSM/Google (9.3%/33.0%) matches the scored Rio Grande OSM range (4.2–12.0%); Doña Ana fades to 10.8% Google/26.1% Esri. Five counties; no interval.
+“Google-only” denotes an Overture provider tag, not a removed reference layer: 10.8–33.0% in three unscored border counties and zero in both controls. El Paso OSM/provider (9.3%/33.0%) matches the scored Rio Grande OSM range (4.2–12.0%); Doña Ana has 10.8% provider and 26.1% Esri. No interval.
 
-| County | OSM | Google-only | Esri |
+| County | OSM | Third-provider tag | Esri |
 |---|---:|---:|---:|
 | **El Paso TX** | 0.093 | **0.330** | 0.000 |
 | **Imperial CA** | 0.200 | **0.292** | 0.000 |
@@ -61,7 +61,7 @@ Manifest: `$COMPETITION_WORKSPACE/external-discovery-2026-10-29-fable/MANIFEST.j
 
 In six Paradise/Magalia Butte County tracts, provided Wildfire Risk to Communities counts exceed Overture (ratios 0.620–0.747); the geographic/vintage discrepancy does not establish fire damage as its cause. Treating larger counts as current could misdirect field checks. Provided MTBS last-burn year is 2018; public CAL FIRE DINS is a discovery-only mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified). Tract-level rows are in [Appendix J](#appendix-j-supporting-discovery-tables).
 
-Focal GEOIDs and DINS rows appear in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); county-cluster CI [−1.65, +16.67] includes zero, so magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:
+Focal GEOIDs and DINS rows appear in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:
 
 ![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)
 

@@ -60,6 +60,9 @@
     "reports/density-context-candidate.json",
     "reports/discovery-ok-tribal-ems.json",
     "reports/discovery-postfire.json",
+    "reports/discovery-border-metros.json",
+    "reports/discovery-border-transfer.json",
+    "reports/postfire-lineage-recheck.json",
     "reports/discovery-dins-mechanism.json",
     "reports/discovery-rural-svi-minority.json",
     "reports/discovery-strata-confound.json",
@@ -105,11 +108,17 @@
     "reports/source-freshness-candidate.json",
     "reports/source-provenance.json",
     "reports/san-antonio-svi-gradient.json",
+    "docs/writeup/related-entries.md",
+    "scripts/discovery/transfer_outside_regions.py",
+    "scripts/discovery/border_metros.py",
+    "scripts/audit_postfire_lineage.py",
+
     "reports/t1-class-drop-handcheck.json",
     "reports/t1-outside-share-threshold.json",
     "reports/transport-route-ref-audit.json",
     "reports/transport-route-variants.json",
     "reports/v2-defined-mask-audit.json",
+    "reports/v2-component-contribution-audit.json",
     "reports/v2-input-provenance.json",
     "reports/v2-prior-envelope.json",
     "reports/v2-strata-descriptive-audit.json",
@@ -178,6 +187,9 @@
     "scripts/discovery_dins_mechanism.py"
   ],
   "reproduce_command_aliases": {
+    "BORDER_METROS_COMPOSITE": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/border_metros.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-metros.json && /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/transfer_outside_regions.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-transfer.json",
+    "BORDER_TRANSFER_COMPOSITE": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/transfer_outside_regions.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-transfer.json",
+    "POSTFIRE_LINEAGE_COMPOSITE": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png && /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/audit_discovery_postfire_county_bootstrap.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire-county-bootstrap.json && MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_dins_mechanism.py --workspace \"$COMPETITION_WORKSPACE\" --dins-file \"$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson\" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png && /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_postfire_lineage.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/postfire-lineage-recheck.json",
     "SEE_DISCOVERY_RURAL_SVI": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/discovery_rural_svi_minority.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-rural-svi-minority.json",
     "SEE_EDGE_CASES": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/audit_edge_cases.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/edge-cases.json",
     "SUMMARIZE_BIAS60_FAMILY_S": "COMPETITION_WORKSPACE=\"$COMPETITION_WORKSPACE\" /home/martin/hddProjects/langywrap/uv run --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/summarize_bias60_family_s.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/bias60-family-s-summary.json",
@@ -318,6 +330,42 @@
     "all_passed": true
   },
   "sections": [
+    {
+      "doc": "docs/writeup/bias-discovery.md",
+      "section": "Impact and novelty",
+      "occurrence": 1,
+      "evidence": ["reports/discovery-border-metros.json", "reports/discovery-border-transfer.json"],
+      "reproduce": "BORDER_METROS_COMPOSITE",
+      "products": ["reports/discovery-border-metros.json", "reports/discovery-border-transfer.json"],
+      "provenance_class": "measured_external_discovery_data"
+    },
+    {
+      "doc": "docs/writeup/bias-discovery.md",
+      "section": "Evidence and mechanism",
+      "occurrence": 1,
+      "evidence": ["reports/discovery-border-metros.json", "reports/discovery-border-transfer.json"],
+      "reproduce": "BORDER_METROS_COMPOSITE",
+      "products": ["reports/discovery-border-metros.json", "reports/discovery-border-transfer.json"],
+      "provenance_class": "measured_external_discovery_data"
+    },
+    {
+      "doc": "docs/writeup/bias-discovery.md",
+      "section": "Does it transfer?",
+      "occurrence": 1,
+      "evidence": ["reports/discovery-border-transfer.json", "reports/source-provenance.json"],
+      "reproduce": "BORDER_TRANSFER_COMPOSITE",
+      "products": ["reports/discovery-border-transfer.json"],
+      "provenance_class": "measured_external_discovery_data"
+    },
+    {
+      "doc": "docs/writeup/bias-discovery.md",
+      "section": "Impact and evidence",
+      "occurrence": 1,
+      "evidence": ["reports/discovery-postfire.json", "reports/discovery-postfire-county-bootstrap.json", "reports/discovery-dins-mechanism.json", "reports/postfire-lineage-recheck.json"],
+      "reproduce": "POSTFIRE_LINEAGE_COMPOSITE",
+      "products": ["reports/discovery-postfire.json", "reports/discovery-postfire-map.png", "reports/discovery-postfire-county-bootstrap.json", "reports/discovery-dins-mechanism.json", "reports/discovery-dins-mechanism.md", "reports/discovery-dins-mechanism.png", "reports/postfire-lineage-recheck.json"],
+      "provenance_class": "measured_external_discovery_data"
+    },
     {
       "doc": "docs/writeup/bias-discovery.md",
       "section": "Impact",
@@ -1347,6 +1395,16 @@
         }
       ]
     },
+    "methodology-015": {
+      "derived_tokens": [{
+        "value": 132,
+        "decimals": 0,
+        "operation": "sum",
+        "evidence": "reports/edge-cases.json",
+        "path": "/regions",
+        "key": "zero_overture_named_roads"
+      }]
+    },
     "methodology-017": {
       "derived_tokens": [
         {
@@ -1385,31 +1443,42 @@
     },
     "methodology-019": {
       "evidence": [
-        "reports/transport-route-variants.json",
+        "reports/road-topology-candidate.json",
         "reports/transport-route-ref-audit.json"
       ]
     },
     "methodology-020": {
       "evidence": [
-        "reports/transport-route-variants.json",
+        "reports/road-topology-candidate.json",
         "reports/transport-route-ref-audit.json"
       ]
     },
     "methodology-021": {
-      "evidence": [
-        "reports/poi-category-audit.json",
-        "docs/data-inventory.md",
-        "reports/v2-input-provenance.json"
-      ],
+      "evidence": ["reports/road-topology-candidate.json"],
       "derived_tokens": [
-        {
-          "value": 132133741,
-          "decimals": 0,
-          "operation": "sum",
-          "evidence": "reports/poi-category-audit.json",
-          "path": "/regions",
-          "key": "selected_column_compressed_bytes_total"
-        }
+        {"value":3143887,"decimals":0,"operation":"sum","evidence":"reports/road-topology-candidate.json","path":"/input_metadata_by_region","key":"segments_seen"},
+        {"value":8491546,"decimals":0,"operation":"sum","evidence":"reports/road-topology-candidate.json","path":"/input_metadata_by_region","key":"connector_occurrences"},
+        {"value":1087,"decimals":0,"operation":"sum","evidence":"reports/road-topology-candidate.json","path":"/input_metadata_by_region","key":"segments_skipped_invalid_or_non_linestring_geometry"},
+        {"value":1591,"decimals":0,"operation":"sum","evidence":"reports/road-topology-candidate.json","path":"/input_metadata_by_region","key":"connector_points_outside_official_sample"},
+        {"value":245818,"decimals":0,"operation":"sum","evidence":"reports/road-topology-candidate.json","path":"/input_metadata_by_region","key":"cross_tract_adjacencies"}
+      ]
+    },
+    "methodology-025": {
+      "evidence": ["reports/poi-category-audit.json", "reports/sample-contract-audit.json"],
+      "derived_tokens": [
+        {"value":9379,"decimals":0,"operation":"sum","evidence":"reports/poi-category-audit.json","path":"/regions","key":"official_tracts"},
+        {"value":132133741,"decimals":0,"operation":"sum","evidence":"reports/poi-category-audit.json","path":"/regions","key":"selected_column_compressed_bytes_total"}
+      ]
+    },
+    "methodology-028": {
+      "evidence": ["reports/poi-category-audit.json"],
+      "derived_tokens": [
+        {"value":12.37,"decimals":2,"operation":"difference","evidence":"reports/poi-category-audit.json","pointer_a":"/regions/maricopa-az/tract_zero_sensitivity/core_v0/fire/zero_share","pointer_b":"/regions/maricopa-az/tract_zero_sensitivity/fire_all_fire_or_rescue_categories/fire/zero_share","scale":100.0,"absolute":true,"tolerance":0.005},
+        {"value":6.97,"decimals":2,"operation":"difference","evidence":"reports/poi-category-audit.json","pointer_a":"/regions/maricopa-az/tract_zero_sensitivity/core_v0/schools/zero_share","pointer_b":"/regions/maricopa-az/tract_zero_sensitivity/schools_all_school_or_education_categories/schools/zero_share","scale":100.0,"absolute":true,"tolerance":0.005},
+        {"value":8.12,"decimals":2,"operation":"difference","evidence":"reports/poi-category-audit.json","pointer_a":"/regions/northern-ca/tract_zero_sensitivity/core_v0/fire/zero_share","pointer_b":"/regions/northern-ca/tract_zero_sensitivity/fire_all_fire_or_rescue_categories/fire/zero_share","scale":100.0,"absolute":true,"tolerance":0.005},
+        {"value":12.67,"decimals":2,"operation":"difference","evidence":"reports/poi-category-audit.json","pointer_a":"/regions/eastern-ok/tract_zero_sensitivity/core_v0/fire/zero_share","pointer_b":"/regions/eastern-ok/tract_zero_sensitivity/fire_all_fire_or_rescue_categories/fire/zero_share","scale":100.0,"absolute":true,"tolerance":0.005},
+        {"value":5.29,"decimals":2,"operation":"difference","evidence":"reports/poi-category-audit.json","pointer_a":"/regions/eastern-ok/tract_zero_sensitivity/core_v0/schools/zero_share","pointer_b":"/regions/eastern-ok/tract_zero_sensitivity/schools_all_school_or_education_categories/schools/zero_share","scale":100.0,"absolute":true,"tolerance":0.005},
+        {"value":11.58,"decimals":2,"operation":"difference","evidence":"reports/poi-category-audit.json","pointer_a":"/regions/south-central-tx/tract_zero_sensitivity/core_v0/fire/zero_share","pointer_b":"/regions/south-central-tx/tract_zero_sensitivity/fire_all_fire_or_rescue_categories/fire/zero_share","scale":100.0,"absolute":true,"tolerance":0.005}
       ]
     },
     "methodology-024": {
@@ -1497,6 +1566,19 @@
       ]
     },
     "methodology-035": {
+      "evidence": [
+        "reports/poi-confidence-candidate.json",
+        "reports/poi-facility-miss-audit.json",
+        "reports/v2-component-contribution-audit.json"
+      ]
+    },
+    "methodology-040": {
+      "evidence": ["reports/confidence-by-stratum.json"]
+    },
+    "methodology-044": {
+      "evidence": ["scripts/estimate_gaps.py", "reports/discovery-rural-svi-minority.json"]
+    },
+    "methodology-039": {
       "derived_tokens": [
         {
           "value": 9.95,
@@ -1544,9 +1626,35 @@
     },
     "bias-discovery-002": {},
     "bias-discovery-003": {
+      "evidence": ["reports/discovery-border-metros.json", "reports/discovery-border-transfer.json"],
+      "provenance_class": "measured_external_discovery_data"
+    },
+    "bias-discovery-004": {
+      "evidence": ["reports/discovery-border-metros.json"],
+      "provenance_class": "measured_external_discovery_data"
+    },
+    "bias-discovery-005": {
+      "evidence": ["reports/discovery-border-metros.json"],
+      "provenance_class": "measured_external_discovery_data",
+      "tokens_exempt": [{"value":95,"decimals":0,"class":"methodological_constant","reason":"nominal confidence level of the reported county-cluster interval"}]
+    },
+    "bias-discovery-006": {
+      "evidence": ["reports/discovery-border-transfer.json", "reports/discovery-border-metros.json"],
+      "provenance_class": "measured_external_discovery_data"
+    },
+    "bias-discovery-007": {
+      "evidence": ["reports/discovery-border-transfer.json", "reports/discovery-border-metros.json", "reports/source-provenance.json"],
+      "provenance_class": "measured_external_discovery_data"
+    },
+    "bias-discovery-008": {
+      "evidence": ["reports/discovery-border-transfer.json"],
+      "provenance_class": "measured_external_discovery_data"
+    },
+    "bias-discovery-009": {
       "evidence": [
-        "reports/discovery-dins-mechanism.json",
-        "reports/discovery-postfire.json"
+        "reports/discovery-postfire.json",
+        "reports/postfire-lineage-recheck.json",
+        "reports/discovery-dins-mechanism.json"
       ],
       "tokens_exempt": [
         {
@@ -1557,17 +1665,20 @@
         }
       ]
     },
-    "bias-discovery-004": {
-      "evidence": [
-        "reports/discovery-postfire.json",
-        "reports/discovery-dins-mechanism.json"
-      ]
+    "bias-discovery-010": {
+      "evidence": ["reports/discovery-postfire.json", "reports/discovery-postfire-county-bootstrap.json", "reports/discovery-dins-mechanism.json"]
     },
-    "bias-discovery-009": {
-      "evidence": [
-        "reports/discovery-strata-confound.json"
-      ],
-      "notes": "tribal stratum counts and regional shares are from the report stratum_composition and regional_counts_and_prevalence records"
+    "bias-discovery-011": {
+      "evidence": ["reports/discovery-dins-mechanism.json", "reports/discovery-postfire.json", "reports/discovery-postfire-county-bootstrap.json"]
+    },
+    "bias-discovery-012": {
+      "evidence": ["reports/postfire-lineage-recheck.json", "reports/discovery-postfire.json"]
+    },
+    "bias-discovery-013": {
+      "evidence": ["docs/writeup/related-entries.md"]
+    },
+    "bias-discovery-014": {
+      "evidence": ["reports/discovery-strata-confound.json"]
     },
     "methodology-summary-002": {
       "evidence": [
@@ -1595,6 +1706,7 @@
   ],
   "reproduce_disclosed_difference_exact_paths": [
     "/reproducibility/git_commit",
+    "/summary/report_sha256",
     "/code_commit_at_run",
     "/transport_road_taxonomy_context/route_ref_audit_present"
   ],

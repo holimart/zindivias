@@ -135,27 +135,24 @@ class SectionRuleTests(unittest.TestCase):
 
 
 class DinsMechanismQualificationTests(unittest.TestCase):
-    def test_dins_claims_are_traceable_and_negative_gate_is_explicit(self) -> None:
+    def test_dins_negative_mechanism_check_is_explicit_and_traceable(self) -> None:
         discovery_claims = [claim for claim in CLAIMS.values()
                             if claim["doc"] == "docs/writeup/bias-discovery.md"]
-        dins_table = next(claim for claim in discovery_claims
-                          if claim["kind"] == "table" and "DINS destroyed" in claim["text"])
-        dins_metadata = next(claim for claim in discovery_claims
-                             if "inspection points" in claim["text"])
         negative_claim = next(claim for claim in discovery_claims
-                              if "relative-error threshold" in claim["text"])
-        for claim in (dins_metadata, dins_table, negative_claim):
-            self.assertTrue(audit.verify_claim(copy.deepcopy(claim), POOL)["passed"],
-                            claim["claim_id"])
-        negative = negative_claim["text"]
-        for required in ("negative", "0/6", "≤0.30", "4/6", "0.4626068", "28", "0.60",
-                         "reports/discovery-dins-mechanism.json#/decision",
-                         "reports/discovery-dins-mechanism.json#/opposite_direction"):
-            self.assertIn(required, negative)
-        impact = next(claim for claim in discovery_claims
-                      if "provided USFS Wildfire Risk" in claim["text"])
-        self.assertFalse(any(entry["evidence"] == "reports/discovery-dins-mechanism.json"
-                             for entry in impact["derived_tokens"]))
+                              if "Negative mechanism check" in claim["text"])
+        self.assertTrue(audit.verify_claim(copy.deepcopy(negative_claim), POOL)["passed"],
+                        negative_claim["claim_id"])
+        self.assertEqual(negative_claim["provenance_class"], "measured_external_discovery_data")
+        for required in ("0/6", "≤0.30", "≥4/6", "0.463", "28", "0.60"):
+            self.assertIn(required, negative_claim["text"])
+        self.assertIn("reports/discovery-dins-mechanism.json",
+                      [entry["path"] for entry in negative_claim["evidence"]])
+        self.assertIn("scripts/discovery_dins_mechanism.py",
+                      negative_claim["reproduce_command"])
+        headline = next(claim for claim in discovery_claims
+                        if claim["claim_id"] == "bias-discovery-009")
+        self.assertFalse(any(entry.get("evidence") == "reports/discovery-dins-mechanism.json"
+                             for entry in headline["derived_tokens"]))
 
 
 class InventoryTests(unittest.TestCase):
@@ -222,10 +219,10 @@ class NegativeControlTests(unittest.TestCase):
     """Tampered copies must be rejected, so the gates are not vacuous."""
 
     def test_derived_token_off_by_one_fails_the_verifier(self) -> None:
-        claim = copy.deepcopy(CLAIMS["methodology-035"])
-        intact = audit.verify_claim(copy.deepcopy(CLAIMS["methodology-035"]), POOL)
+        claim = copy.deepcopy(CLAIMS["methodology-039"])
+        intact = audit.verify_claim(copy.deepcopy(CLAIMS["methodology-039"]), POOL)
         self.assertEqual(len(intact["derived_tokens_verified"]),
-                         len(CLAIMS["methodology-035"]["derived_tokens"]))
+                         len(CLAIMS["methodology-039"]["derived_tokens"]))
         claim["derived_tokens"][0]["value"] = claim["derived_tokens"][0]["value"] + 1.0
         tampered = audit.verify_claim(claim, POOL)
         self.assertEqual(len(tampered["derived_tokens_verified"]),
