@@ -11,9 +11,9 @@
 | Zindi username/team | `[OPERATOR: enter your confirmed Zindi username or team name]` |
 | Associated submissions | A — `V2_model_cgs` / `hvLtPVmr`; B — `B_from_A_cgs` / `eAaWXWxM` |
 | Prizes | **Both:** Best Bias Discovery **and** Best Documentation |
-| Methodology writeup | `reports/writeup/final-writeup.pdf` — SHA-256 `e78870366d054fb990fddb258e2301ab5481d8b9adcbbdad33dd22ffa0dcfe0f` |
+| Methodology writeup | `reports/writeup/final-writeup.pdf` — SHA-256 `05c02b94c560ba95d3f12f941b1eaaaad679615d6cfbe935a8d14bb6ce1e3e09` |
 
-**Finding #1 abstract:** Across Maricopa, Northern California, Eastern Oklahoma, and South-Central Texas, rural tracts have 16.83–38.68 percentage-point lower OSM-touched building shares, with all four tract-bootstrap intervals below zero. The source tags describe provenance, not correctness, completeness, or age; this suggests a local address/attribute verification priority, not an observed service failure or a causal rurality effect.
+**Finding #1 abstract:** Across 460 South Texas border tracts, mean OSM-touched building share is 9.18% versus 61.48% elsewhere; 290 tracts containing 1,183,693 residents have under 5% OSM share. Source-count reconciliation associates 254,346 border other-source footprints with Google Open Buildings spill-over, while the challenge compares Overture counts with Microsoft. This is descriptive evidence, not a measured dispatch failure or a score estimate.
 
 **Draft final-two confirmation (use only after operator approval):** “Final two are A: V2_model_cgs (`hvLtPVmr`) and B: B_from_A_cgs (`eAaWXWxM`).”
 

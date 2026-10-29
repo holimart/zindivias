@@ -18,37 +18,64 @@ We request consideration for both Best Bias Discovery ($1,000) and Best Document
 
 ## Best Bias Discovery entry
 
-### Finding 1 — Rural Overture buildings are less often OSM-sourced
+### Finding 1 — Rio Grande border metros: Google-sourced footprints mask a community-source gap
 
 #### Impact and novelty
 
-In Maricopa, Northern California, Eastern Oklahoma, and South-Central Texas, a footprint that contains only geometry and lacks a reliable address, name, or use cannot by itself geocode an emergency dispatch. Lower community-sourced representation could therefore justify prioritising local address/attribute verification; that is a plausible audit risk, not an observed service failure. This is not a restatement of a marginal rurality/SVI scorecard cell.
+These ten South Texas counties include 1.77 million residents and colonia-serving communities. Prioritise partner-led verification; dispatch outcomes and OSM completeness were not measured.
+
+#### Evidence and mechanism
+
+Across 460 border tracts, mean OSM-touched share is 9.18%, versus 61.48% in 5,541 others (68.66% in 4,600 urban others); mean tract-level Microsoft-only share is 67.48%. “Other” accounts for 254,346/886,361 footprints (28.70%); 290 tracts (1,183,693 people) are under 5% OSM. Difference: −52.30 points (county-cluster 95% CI [−61.24, −36.99]). With urbanity, log-density, overall SVI, and CDC SVI `EP_HISP` controls: −0.446 (SE 0.070; n=5,958, 185 counties), descriptive, not causal.
+
+Border “other” footprints (254,346) nearly match regional Google Open Buildings (254,872); non-border “other” (977,049) nearly matches USGS lidar (976,523), a ±526 reconciliation supporting—but not proving—Google spill-over. Webb/Starr/Maverick median provided Overture/USFS ratios are 1.56/1.75/1.71, not a Microsoft component or score proxy.
+
+| Border county | Tracts | Population | Mean OSM share (95% tract CI) | Other-source share* | Median Overture / provided USFS count† |
+|---|---:|---:|---:|---:|---:|
+| Hidalgo | 212 | 870,781 | 6.10% (4.25–8.19%) | 20.42% | 1.04 |
+| Cameron | 121 | 421,017 | 13.27% (9.86–16.95%) | 28.97% | 1.39 |
+| Webb | 69 | 267,114 | 6.16% (4.77–7.73%) | 40.80% | 1.56 |
+| Starr | 17 | 65,920 | 1.91% (1.12–2.91%) | 47.99% | 1.75 |
+| Maverick | 13 | 57,887 | 33.03% (21.53–44.33%) | 61.25% | 1.71 |
+| Val Verde | 14 | 47,586 | 17.29% (6.78–33.24%) | 13.85% | 1.08 |
+| Zapata | 6 | 13,889 | 27.63% (17.23–37.78%) | 32.26% | 1.42 |
+| Jim Hogg | 2 | 4,838 | 3.35% (3.28–3.43%) | 0.00% | 0.98 |
+| Duval | 3 | 9,831 | 3.71% (0.50–5.34%) | 0.00% | 1.02 |
+| Dimmit | 3 | 8,615 | 3.51% (1.34–7.12%) | 3.78% | 0.63 |
+
+*Weighted; Google attribution is regional. †Provided-field tract medians, not the Microsoft target; small-county intervals are unstable.
+
+Hidalgo `48215021906`, `48215023525`, and `48215024404` have zero OSM share and 1,727, 1,765, and 2,212 footprints; Cameron `48061012002` has 3,084 and 0.03% OSM. Heat averages 53.5 vs 7.3 WBGT>30°C days/year (218 vs 3,654 covered tracts). Prioritise local verification; dispatch effects are unmeasured.
+
+Board 34744 (“Colonias: the coverage gap the scorecard cannot see”) withdrew reconstructed-gap claims and now concerns road dispatchability; 35071 (“The Texas Colonias Infrastructure Vacuum”) covers rural/tribal-SVI composition; 34972 (“Maps nobody has touched since 2011”) stale road edits; 35333 (“Phantom roads”) TxDOT-checked old unnamed roads. Ours quantifies Google building spill-over against the Microsoft comparator.
+
+Report/input hashes: `reports/discovery-border-metros.json` (`27779986d787594abdadf741c983db13dedf25fb476cc4ff2ae096a1a4260244`); source report `reports/source-provenance.json` (`e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565`). SVI terms are in Appendix F. Rebuild: `uv run --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/discovery/border_metros.py --workspace "$COMPETITION_WORKSPACE" --out reports/discovery-border-metros.json`.
+
+### Finding 2 — Rural Overture buildings are less often OSM-sourced
+
+#### Impact and novelty
+
+Rural tracts may have fewer OSM-touched buildings across all four regions, supporting local attribute verification. This is a plausible audit risk—not measured service failure or a marginal rurality/SVI scorecard restatement.
 
 #### Evidence
 
-Across Maricopa, Northern California, Eastern Oklahoma, and South-Central Texas, rural tracts have 16.83–38.68 percentage points lower OSM-touched building shares; all four tract-bootstrap intervals are below zero (`reports/source-provenance.json#/statistics`). SVI-quartile contrasts were smaller and less consistent (`#/uncertainty_and_limitations`).
+Rural OSM-touched shares are 16.83–38.68 points lower across Maricopa, Northern California, Eastern Oklahoma, and South-Central Texas; all tract-bootstrap intervals exclude zero. SVI-quartile contrasts are smaller and less consistent (`reports/source-provenance.json#/statistics`, `#/uncertainty_and_limitations`).
 
 #### What this does and does not show
 
-The source tags describe provenance, not correctness, completeness, or age. Rurality is not an independently estimated cause; SVI gradients vary and may be confounded. The report uses supplied Overture `sources`/`bbox` and provided tract geometry only, with no public external data or candidate changes (`reports/source-provenance.json#/source_definitions`, `#/data_and_restrictions`, `#/uncertainty_and_limitations`).
+Source tags indicate provenance, not accuracy, completeness, or age; rurality is not causal and SVI may confound. The analysis uses provided Overture sources/geometry only, with no external data or candidate changes (`reports/source-provenance.json#/data_and_restrictions`).
 
 #### Reproducibility
 
-Rebuild with `python scripts/discovery_source_provenance.py --workspace "$COMPETITION_WORKSPACE" --out reports/source-provenance.json --figure reports/source-provenance.png`; estimates, intervals, source definitions, and hashes are in the report.
+Rebuild: `python scripts/discovery_source_provenance.py --workspace "$COMPETITION_WORKSPACE" --out reports/source-provenance.json --figure reports/source-provenance.png`.
 
-### Finding 2 — Paradise/Magalia building-count discrepancy
+### Finding 3 — Paradise/Magalia building-count discrepancy
 
-#### Impact and novelty
+#### Impact and evidence
 
-Paradise and Magalia are Butte County communities affected by the 2018 Camp Fire (CAL FIRE's public DINS catalogue and incident layer; retrieved 2026-10-29: [catalogue](https://data.ca.gov/dataset/cal-fire-damage-inspection-dins-data), [layer](https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/POSTFIRE_MASTER_DATA_SHARE/FeatureServer/0)). In six focal Butte County tracts, the provided USFS Wildfire Risk to Communities building counts exceed the provided Overture counts (Overture/USFS ratios 0.620–0.747); this observed discrepancy is the finding, while its connection to fire damage is not established (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`).
+In six Paradise/Magalia-area Butte County tracts affected by the 2018 Camp Fire, the provided Wildfire Risk to Communities counts exceed Overture counts (Overture/reference ratios 0.620–0.747). This geographic and temporal discrepancy is observed; fire damage is not established as its cause. Treating the larger count as current could misdirect field verification, a plausible risk rather than an observed dispatch failure. The six tracts have provided MTBS last-burn year 2018; public CAL FIRE DINS points are used only as a mechanism check (catalogue and incident layer retrieved 2026-10-29; catalogue CC BY, version unspecified).
 
-This is a geographic and temporal association, not evidence that fire damage caused a stale-reference discrepancy. If a recovery or dispatch team treats the larger count as current, it could misdirect field-verification effort; that is a plausible decision risk, not an observed dispatch failure. This temporal mismatch is not a restatement of any marginal rural, SVI, tribal, or hazard-exposure scorecard cell.
-
-#### Evidence
-
-All six GEOIDs have a provided MTBS last-wildfire year of 2018. The table compares challenge summaries with incident-filtered public CAL FIRE Camp Fire DINS inspection points. The CAL FIRE feature-service layer was retrieved 2026-10-29; its catalogue records CC BY (version unspecified), and the layer does not provide a more specific licence statement. Only incident, damage class, county, object ID, and point geometry were requested; raw data and manifest remain outside git.
-
-| GEOID | Overture / USFS | USFS − Overture | DINS destroyed | DINS major | Relative error |
+| GEOID | Overture / reference | Reference − Overture | DINS destroyed | DINS major | Relative error |
 |---|---:|---:|---:|---:|---:|
 | `06007001800` | 0.620 | 666.4 | 3,314 | 3 | 0.799 |
 | `06007002100` | 0.643 | 588.3 | 2,337 | 4 | 0.748 |
@@ -57,47 +84,31 @@ All six GEOIDs have a provided MTBS last-wildfire year of 2018. The table compar
 | `06007002300` | 0.720 | 668.9 | 2,386 | 2 | 0.720 |
 | `06007002200` | 0.747 | 766.1 | 2,472 | 6 | 0.690 |
 
-Ratio is Overture / `usfs_BuildingCount_sum`; relative error is `abs((USFS − Overture) − DINS destroyed) / DINS destroyed`. Values are in `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids` and `reports/discovery-dins-mechanism.json#/focal_butte_tracts`; the workspace manifest pins the raw file.
-
-Burn classes follow the report's 0–100% bins; tracts reported above 100% are omitted rather than clipped (`reports/discovery-postfire.json#/burn_definition`).
-
-| Provided NorCal burn class | Tracts | Overture / USFS < 0.8 | Share below 0.8 |
-|---|---:|---:|---:|
-| 0% (unburned) | 449 | 7 | 1.6% |
-| >0–5% | 28 | 0 | 0.0% |
-| >5–20% | 32 | 0 | 0.0% |
-| >20–<50% | 32 | 0 | 0.0% |
-| 50–100% | 36 | 4 | 11.1% |
-
-These provided-data class counts and proportions are at `reports/discovery-postfire.json#/northern_ca_burn_class_table`. The one map shows the burn geography and the six focal tracts:
+Inputs, definitions, and values are in `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids` and `reports/discovery-dins-mechanism.json#/focal_butte_tracts`. The tract-bootstrap difference is +9.55 points (95% CI [+0.55, +20.89]); the county-cluster interval [−1.65, +16.67] includes zero, so magnitude remains exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks the six tracts:
 
 ![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)
 
-The tract-bootstrap difference is +9.55 percentage points (95% CI [+0.55, +20.89]; 50,000 replicates; valid-replicate fraction 1.0). The county-cluster bootstrap 95% interval [-1.65, +16.67] includes zero, so the magnitude remains exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`).
+**Negative mechanism check.** DINS does not support the proposed fire-damage/rebuilding mechanism: 0/6 tracts met the ≤0.30 relative-error rule (which required at least 4/6), and Spearman was 0.4626068 across 28 last-burn-2018 tracts, below 0.60. Among 591 NorCal tracts, 576 with positive Overture counts have no Camp Fire DINS record (1,139,778 buildings); missing inspection records cannot establish absence or rebuilding. MTBS percentages are cumulative (64.4–153.8%); the count-field vintage is unverified. Details are in `reports/discovery-dins-mechanism.json`; this Camp Fire check uses DINS only, while Finding 1's SVI control is documented in Appendix F.
 
-**DINS mechanism reproduction check — negative.** The DINS reproduction check did **not** confirm the proposed fire-damage/rebuilding mechanism: 0/6 focal tracts met the relative-error threshold (tolerance) of ≤0.30 (the rule required at least 4/6), and Spearman was 0.4626068 across all 28 last-burn-2018 tracts, below the 0.60 threshold (`reports/discovery-dins-mechanism.json#/decision`, `#/spearman`). DINS therefore does not substantiate the hypothesised mechanism. Across 591 NorCal tracts, 576 have positive Overture counts but no Camp Fire DINS record, totaling 1,139,778 buildings; because this is an inspection-limited, incident-specific source, a missing record cannot establish absence or rebuilding (`reports/discovery-dins-mechanism.json#/opposite_direction`). Focal MTBS percentages are cumulative (64.4–153.8%), and the count field's exact vintage is unverified. DINS is discovery-only; no removed reference was accessed. No external public data was used outside this DINS check; source-mix and strata checks use provided data only.
+Reproduction: `scripts/discovery_postfire_stale_reference.py`, `scripts/audit_discovery_postfire_county_bootstrap.py`, and `scripts/discovery_dins_mechanism.py`; input paths, filters and hashes are recorded in the reports and workspace manifest.
 
-#### Reproducibility
-
-Rebuild the map/report with `python scripts/discovery_postfire_stale_reference.py --workspace "$COMPETITION_WORKSPACE" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png`; rebuild the county interval with `python scripts/audit_discovery_postfire_county_bootstrap.py --workspace "$COMPETITION_WORKSPACE" --out reports/discovery-postfire-county-bootstrap.json`. Reproduce DINS with `python scripts/discovery_dins_mechanism.py --dins-file "$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png`. Inputs, filters, hashes, tract values, and the opposite-direction check are recorded in the report/manifest.
-
-### Finding 3 — The tribal/non-tribal pooled comparison is region-confounded
+### Finding 4 — The tribal/non-tribal pooled comparison is region-confounded
 
 #### Impact and novelty
 
-In Eastern Oklahoma and South-Central Texas, a pooled tribal/non-tribal scorecard contrast can misdirect a mapping audit if treated as a general tribal pattern when the groups have different regional mixes. This is a plausible audit risk, not an observed tribal disparity or causal effect. It is not a restatement of a marginal tribal scorecard cell.
+A pooled tribal/non-tribal contrast in Eastern Oklahoma and South-Central Texas can reflect different regional mixes, not a general tribal pattern. This is a composition caveat, not a disparity or causal finding.
 
 #### Evidence
 
-In the official sample, 805 of 858 tracts marked `tribal_any` (93.82%, approximately 94%) are in Eastern Oklahoma, while 6,002 of 8,521 non-tribal tracts (70.44%, approximately 70%) are in South-Central Texas (`reports/discovery-strata-confound.json#/stratum_composition`). The breakdown is reproducible from `reports/discovery-strata-confound.json#/regional_counts_and_prevalence`.
+Of 858 `tribal_any` tracts, 805 (93.82%) are in Eastern Oklahoma; 6,002 of 8,521 non-tribal tracts (70.44%) are in South-Central Texas (`reports/discovery-strata-confound.json#/stratum_composition`).
 
 #### What this does and does not show
 
-These counts establish sample composition, not an equity disparity, causal effect, or difference in hidden target scores. The `tribal_any` field is a provided overlap indicator, not a legal-status classification. The comparison should be region-stratified before operational conclusions (`reports/discovery-strata-confound.json#/regional_counts_and_prevalence`, `#/missing`).
+These are composition counts, not equity or target-score evidence. `tribal_any` is an overlap indicator, not legal status; comparisons should be region-stratified (`reports/discovery-strata-confound.json#/regional_counts_and_prevalence`, `#/missing`).
 
 #### Reproducibility
 
-Rebuild with `python scripts/discovery_strata_confound.py --workspace "$COMPETITION_WORKSPACE" --out reports/discovery-strata-confound.json`; it joins official GEOIDs to provided strata and checks cohort accounting.
+Rebuild: `python scripts/discovery_strata_confound.py --workspace "$COMPETITION_WORKSPACE" --out reports/discovery-strata-confound.json`.
 
 ## Methodology (Best Documentation entry)
 
@@ -184,7 +195,7 @@ Four public external layers were used only for the discovery screen described in
 
 | Layer | Source URL | Retrieved | Licence / terms status |
 |---|---|---|---|
-| CDC/ATSDR SVI 2022 | https://svi.cdc.gov/Documents/Data/2022/csv/states/SVI_2022_US.csv | 2026-10-27 | Not stated on fetched ATSDR page; public-domain status unverified. |
+| CDC/ATSDR SVI 2022 | https://svi.cdc.gov/Documents/Data/2022/csv/states/SVI_2022_US.csv | 2026-10-27 | Dataset-specific terms were not stated on the fetched ATSDR page. Treated as a U.S. federal government work under 17 U.S.C. Section 105, subject to third-party exceptions; this is a statutory assessment, not a quoted dataset-specific licence. |
 | USDA ERS RUCA 2020 | https://www.ers.usda.gov/media/5443/2020-rural-urban-commuting-area-codes-census-tracts.csv | 2026-10-27 | No terms/copyright statement found on fetched ERS page; unverified; ERS requests citation. |
 | Census Planning Database 2026 | https://www2.census.gov/adrm/PDB/2026/pdb2026tr.csv | 2026-10-27 | Not verified; Census terms/copyright pages were not read. |
 | Census TIGER/Line 2020 AIANNH polygons | https://www2.census.gov/geo/tiger/TIGER2020/AIANNH/tl_2020_us_aiannh.zip | 2026-10-27 | Not verified; Census terms/copyright pages were not read. |
@@ -197,6 +208,7 @@ The general register below lists prior-art sources, organiser-hosted challenge f
 |---|---|---|---|
 | https://api.zindi.world/v1/competitions/bias-bounty-mapping-equity-challenge/files/SampleSubmission.csv | organiser-hosted challenge file used by the workspace downloader | 2026-10-23 | official challenge data endpoint provided by the organisers; not an external dataset |
 | https://zindi.africa/competitions/bias-bounty-mapping-equity-challenge | official challenge page (quoted rules and membership note) | 2026-10-25 | official challenge page; quoted text only, no data added to scored predictions |
+| https://api.zindi.world/v1/discussions/35250 | Organiser Challenge Update on supporting comparison evidence and target-reconstruction limits (discussion 35250) | 2026-10-29 | official rule clarification permitting discovery-only comparison evidence when not used to reconstruct, approximate, or calibrate targets |
 | https://arxiv.org/abs/1502.04585 | Citation: Avrim Blum and Moritz Hardt, “The Ladder: A Reliable Leaderboard for Machine Learning Competitions,” arXiv:150 | 2026-10-24 | prior art and methodology know-how; not a dataset and never joined to scored predictions |
 | https://arxiv.org/abs/1707.01825 | Citation: Jacob Whitehill, “Climbing the Kaggle Leaderboard by Exploiting the Log-Loss Oracle,” arXiv:1707.01825. arXiv | 2026-10-24 | prior art and methodology know-how; not a dataset and never joined to scored predictions |
 | https://data.ca.gov/api/3/action/package_show?id=cal-fire-damage-inspection-dins-data | California State Geoportal metadata record and CC BY catalogue terms | 2026-10-29 | public source metadata used to record DINS attribution licence and dataset limitations |
@@ -216,7 +228,8 @@ The general register below lists prior-art sources, organiser-hosted challenge f
 | https://doi.org/10.3390/ijgi7080289 | Citation: Maria Antonia Brovelli and Giacomo Zamboni (2018), ISPRS International Journal of Geo-Information 7(8), articl | 2026-10-24 | prior art and methodology know-how; not a dataset and never joined to scored predictions |
 | https://github.com/microsoft/USBuildingFootprints | Citation/documentation: microsoft/USBuildingFootprints README. URL check: resolved; GitHub README fetched (repository is | 2026-10-24 | prior art and methodology know-how; not a dataset and never joined to scored predictions |
 | https://services1.arcgis.com/jUJYIo9tSA7EHvfZ/arcgis/rest/services/POSTFIRE_MASTER_DATA_SHARE/FeatureServer/0 | CAL FIRE DINS public point-feature service; filtered to Camp incident and non-address fields | 2026-10-29 | public external discovery data endpoint; not used in scored candidate construction |
-| https://svi.cdc.gov/Documents/Data/2022/csv/states/SVI_2022_US.csv | CDC/ATSDR SVI 2022 | 2026-10-27 | discovery-only external context; never used in scored predictions |
+| https://svi.cdc.gov/Documents/Data/2022/csv/states/SVI_2022_US.csv | CDC/ATSDR SVI 2022 | 2026-10-27 | discovery-only external context; used for EP_HISP control in the border-metro descriptive regression; never used in scored predictions |
+| https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title17-section105&num=0&edition=prelim | 17 U.S.C. Section 105, statutory U.S. federal-work public-domain basis (subject to third-party exceptions) | 2026-10-27 | discovery-only external context; used for EP_HISP control in the border-metro descriptive regression; never used in scored predictions |
 | https://www.census.gov/library/reference/code-lists/mt-feature-class-codes.html | Citation/documentation: U.S. Census Bureau, MAF/TIGER Feature Class Code Definitions. URL check: official Census page re | 2026-10-24 | prior art and methodology know-how; not a dataset and never joined to scored predictions |
 | https://www.census.gov/programs-surveys/cbp/technical-documentation/methodology.html | Citation/documentation: U.S. Census Bureau, County Business Patterns Methodology. URL check: official Census page resolv | 2026-10-24 | prior art and methodology know-how; not a dataset and never joined to scored predictions |
 | https://www.ers.usda.gov/media/5443/2020-rural-urban-commuting-area-codes-census-tracts.csv | USDA ERS RUCA 2020 | 2026-10-27 | discovery-only external context; never used in scored predictions |
@@ -250,7 +263,9 @@ Deterministic audit artifacts: `reports/writeup-claim-evidence-audit.json`, `rep
 ## Appendix H: Data provenance and prohibited-source statement
 
 - Scored predictions are built only from the organiser-provided Overture roads, buildings and POI extracts, the provided census/ACS table, the provided strata table and the platform submission template, plus fixed documented priors.
-- The organisers removed the reference layers (TIGER, MS Buildings, USGS, CBP). None of those layers, nor an equivalent copy, is used to build the scored predictions or to support any claim.
+- The organisers removed the reference layers (TIGER, MS Buildings, USGS, CBP). None of those layers, nor an equivalent copy, is used to build scored predictions or to reconstruct, derive, approximate, or calibrate target values.
+- The organiser's 2026-10-08 Challenge Update (Zindi discussion #35250) permits removed reference layers as supporting comparison evidence in Best Bias Discovery, provided they are not used for target reconstruction or calibration. The Camp Fire comparison uses the provided USFS Wildfire Risk to Communities count and incident-filtered CAL FIRE DINS inspection points; the border finding uses a provided USFS building-count stratum. These are descriptive discovery comparisons only, not model inputs or target reconstruction. DINS provenance is recorded in Appendix F.
+- Overture source tags named Google Open Buildings and USGS lidar are source labels in the provided source-provenance report; no external Google or USGS footprint/reference layer was accessed or used to build predictions or reconstruct the target.
 - No sample score placeholder, no label, and no leaderboard-probe outcome is used as model evidence. The retired leaderboard-fitted constants and probe values of the retired probe set are listed in `reports/probe-retirement-2026-10-24.json` and appear nowhere in the model chain, in this writeup, or in any claim evidence, by name or by value.
 - Equity and hazard strata columns are used only for the descriptive discovery screen, never as model inputs; the descriptive reports state that they are not accuracy measurements.
 - All code and tooling used is open source, as the rules require.

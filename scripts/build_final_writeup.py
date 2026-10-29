@@ -431,7 +431,18 @@ def provenance_section() -> list[str]:
              "table and the platform submission template, plus fixed documented priors.",
              "- The organisers removed the reference layers "
              f"({', '.join(prohibited['removed_reference_layers'])}). None of those layers, nor an "
-             "equivalent copy, is used to build the scored predictions or to support any claim.",
+             "equivalent copy, is used to build scored predictions or to reconstruct, derive, "
+             "approximate, or calibrate target values.",
+             "- The organiser's 2026-10-08 Challenge Update (Zindi discussion #35250) permits "
+             "removed reference layers as supporting comparison evidence in Best Bias Discovery, "
+             "provided they are not used for target reconstruction or calibration. The Camp Fire "
+             "comparison uses the provided USFS Wildfire Risk to Communities count and incident-filtered "
+             "CAL FIRE DINS inspection points; the border finding uses a provided USFS building-count "
+             "stratum. These are descriptive discovery comparisons only, not model inputs or target "
+             "reconstruction. DINS provenance is recorded in Appendix F.",
+             "- Overture source tags named Google Open Buildings and USGS lidar are source labels in the "
+             "provided source-provenance report; no external Google or USGS footprint/reference layer "
+             "was accessed or used to build predictions or reconstruct the target.",
              "- No sample score placeholder, no label, and no leaderboard-probe outcome is used as "
              "model evidence. The retired leaderboard-fitted constants and probe values of the "
              "retired probe set are listed in `reports/probe-retirement-2026-10-24.json` and "

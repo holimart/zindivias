@@ -1,0 +1,480 @@
+{
+  "analysis": "Rio Grande border-metro building source mix; descriptive discovery only",
+  "analysis_script": {
+    "path": "scripts/discovery/border_metros.py",
+    "sha256": "1a426b1ce70a6fb7c3f4bcf92636cacf7c163e9c5334fd07979d412243bd80bd"
+  },
+  "data_and_restrictions": {
+    "candidate_artifacts_or_predictions_read": false,
+    "external_data_added_to_scored_predictions": false,
+    "public_scores_used": false,
+    "removed_reference_layers_read": false,
+    "sample_score_values_used": false,
+    "source_tags_are_provenance_not_correctness_or_community_activity": true,
+    "svi_external_data_used_only_for_hispanic_control": true,
+    "svi_source": {
+      "file_sha256": "58df3dca3d4194879ffbd4b5e753eae48676ef691da1fa669f5fc40c3f79bc6a",
+      "licence_terms": "Dataset-specific terms were not stated on the fetched ATSDR page; treated as a U.S. federal government work under 17 U.S.C. Section 105, subject to third-party exceptions. The statutory basis is an assessment, not a quoted dataset-specific licence.",
+      "manifest": "external-discovery-2026-10-27/MANIFEST.json",
+      "manifest_sha256": "0fb9d13e616ed9ac47a0675db95075d011b5dc84f69c53ae66cccb48f164496f",
+      "name": "CDC/ATSDR SVI 2022",
+      "retrieved": "2026-10-27",
+      "statutory_basis_url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title17-section105&num=0&edition=prelim",
+      "url": "https://svi.cdc.gov/Documents/Data/2022/csv/states/SVI_2022_US.csv"
+    }
+  },
+  "definitions": {
+    "density": "provided pop_total divided by provided ALAND in km^2; log1p for regression",
+    "group_means": "unweighted means of tract-level source shares; source footprint count/share is weighted by overture_buildings",
+    "microsoft_only_share": "per-tract overture_building_ms_only_source_share",
+    "osm_share": "per-tract overture_building_osm_source_share; any OSM-touched source",
+    "other_source_share": "per-tract overture_building_other_source_share; source-level count reconciliation associates this border concentration with Google Open Buildings",
+    "population": "sum of provided pop_total for included tracts",
+    "ratio_caveat": "provided Overture/USFS building-count ratio is contextual only; not a Microsoft component, hidden score, score proxy, or model feature",
+    "uhe": "unweighted mean of provided uhe_wbgtmax30_days_per_yr over covered tracts with nonmissing value"
+  },
+  "inputs": {
+    "cdc_svi_csv": {
+      "bytes": 61102059,
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/external-discovery-2026-10-27/cdc-svi-2022/SVI_2022_US.csv",
+      "sha256": "58df3dca3d4194879ffbd4b5e753eae48676ef691da1fa669f5fc40c3f79bc6a"
+    },
+    "cdc_svi_manifest": {
+      "bytes": 7049,
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/external-discovery-2026-10-27/MANIFEST.json",
+      "sha256": "0fb9d13e616ed9ac47a0675db95075d011b5dc84f69c53ae66cccb48f164496f"
+    },
+    "feature_cache": {
+      "bytes": 921462,
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/gap-estimator/features/south-central-tx-overture-tract-summary.parquet",
+      "sha256": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746"
+    },
+    "official_sample": {
+      "bytes": 168144,
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/samples/south-central-tx-sample-submission.csv",
+      "sha256": "afa59c0eb30c40be25ce82098f144447591b79cb9692e669b2f2fe7b7b1ee58e"
+    },
+    "source_provenance_report": {
+      "bytes": 204379,
+      "path": "/home/martin/hddProjects/competitions-repos/zindi-bias-bounty/reports/source-provenance.json",
+      "sha256": "e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565"
+    },
+    "strata_table": {
+      "bytes": 2800838,
+      "path": "/home/martin/hddProjects/competitionsall-workspace/zindi-bias-bounty/defined-flags-inputs/south-central-tx-strata-tract-table.parquet",
+      "sha256": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354"
+    }
+  },
+  "method": {
+    "county_bootstrap_clusters": "GEOID first five characters",
+    "county_bootstrap_replicates": 1000,
+    "county_bootstrap_seed": 0,
+    "county_table_bootstrap_replicates": 3000,
+    "county_table_bootstrap_seed": 1,
+    "ols_covariance": "county-clustered sandwich SE with finite-sample correction",
+    "ols_density": "log1p(pop_total / (ALAND / 1,000,000))",
+    "tract_bootstrap_replicates": 5000,
+    "tract_bootstrap_seed": 0
+  },
+  "results": {
+    "adjusted_border_association_plus_svi_hispanic": {
+      "border_coefficient": -0.4460331080954893,
+      "controls": [
+        "pct_urban",
+        "log_density",
+        "svi_overall",
+        "ep_hisp"
+      ],
+      "counties": 185,
+      "county_clustered_se": 0.0700226673201979,
+      "interpretation": "descriptive conditional association, not causal",
+      "n": 5958,
+      "normal_95_ci": [
+        -0.5832775360430772,
+        -0.3087886801479014
+      ],
+      "outcome": "tract OSM source share"
+    },
+    "adjusted_border_association_urban_density": {
+      "border_coefficient": -0.5335982556052016,
+      "controls": [
+        "pct_urban",
+        "log_density"
+      ],
+      "counties": 185,
+      "county_clustered_se": 0.05165729530758811,
+      "interpretation": "descriptive conditional association, not causal",
+      "n": 5989,
+      "normal_95_ci": [
+        -0.6348465544080742,
+        -0.4323499568023289
+      ],
+      "outcome": "tract OSM source share"
+    },
+    "border_counties": {
+      "building_count": 886361,
+      "microsoft_only_share_mean_unweighted_tracts": 0.6747893193749539,
+      "osm_below_5pct_tracts": 290,
+      "osm_share_mean_unweighted_tracts": 0.09179691393573912,
+      "other_source_footprints_rounded": 254346,
+      "other_source_weighted_share": 0.28695531504657806,
+      "population": 1767478,
+      "population_in_osm_below_5pct": 1183693,
+      "tracts": 460,
+      "uhe_tracts": 218,
+      "uhe_wbgt30_mean_days": 53.526713437668626
+    },
+    "border_county_table": [
+      {
+        "building_count": 377793,
+        "county": "Hidalgo",
+        "county_fips": "48215",
+        "median_overture_to_provided_usfs_building_count_ratio_context_only": 1.040085291037641,
+        "microsoft_only_share_mean_unweighted_tracts": 0.7956888994588603,
+        "osm_below_5pct_tracts": 166,
+        "osm_share_bootstrap_ci_95": [
+          0.04253812180353017,
+          0.08189105555045383
+        ],
+        "osm_share_mean_unweighted_tracts": 0.06101725246341687,
+        "other_source_footprints_rounded": 77136,
+        "other_source_weighted_share": 0.20417530234811126,
+        "population": 870781,
+        "population_in_osm_below_5pct": 705516,
+        "tracts": 212,
+        "uhe_tracts": 93,
+        "uhe_wbgt30_mean_days": 70.16223908918407
+      },
+      {
+        "building_count": 207433,
+        "county": "Cameron",
+        "county_fips": "48061",
+        "median_overture_to_provided_usfs_building_count_ratio_context_only": 1.3883687113104122,
+        "microsoft_only_share_mean_unweighted_tracts": 0.6098810464361736,
+        "osm_below_5pct_tracts": 63,
+        "osm_share_bootstrap_ci_95": [
+          0.09864005851407448,
+          0.16952423621902174
+        ],
+        "osm_share_mean_unweighted_tracts": 0.13273307110905216,
+        "other_source_footprints_rounded": 60087,
+        "other_source_weighted_share": 0.2896694354321636,
+        "population": 421017,
+        "population_in_osm_below_5pct": 230183,
+        "tracts": 121,
+        "uhe_tracts": 52,
+        "uhe_wbgt30_mean_days": 46.901583710407245
+      },
+      {
+        "building_count": 136001,
+        "county": "Webb",
+        "county_fips": "48479",
+        "median_overture_to_provided_usfs_building_count_ratio_context_only": 1.5636703555608729,
+        "microsoft_only_share_mean_unweighted_tracts": 0.5288297785613733,
+        "osm_below_5pct_tracts": 35,
+        "osm_share_bootstrap_ci_95": [
+          0.047712202696456936,
+          0.07729691632681383
+        ],
+        "osm_share_mean_unweighted_tracts": 0.06158219943153452,
+        "other_source_footprints_rounded": 55494,
+        "other_source_weighted_share": 0.4080411173447254,
+        "population": 267114,
+        "population_in_osm_below_5pct": 146698,
+        "tracts": 69,
+        "uhe_tracts": 60,
+        "uhe_wbgt30_mean_days": 37.79411764705885
+      },
+      {
+        "building_count": 55141,
+        "county": "Starr",
+        "county_fips": "48427",
+        "median_overture_to_provided_usfs_building_count_ratio_context_only": 1.7543432393009373,
+        "microsoft_only_share_mean_unweighted_tracts": 0.5108504969307082,
+        "osm_below_5pct_tracts": 16,
+        "osm_share_bootstrap_ci_95": [
+          0.011153115418127215,
+          0.02911681937032077
+        ],
+        "osm_share_mean_unweighted_tracts": 0.019104336711769608,
+        "other_source_footprints_rounded": 26462,
+        "other_source_weighted_share": 0.4798969913494496,
+        "population": 65920,
+        "population_in_osm_below_5pct": 63300,
+        "tracts": 17,
+        "uhe_tracts": 0,
+        "uhe_wbgt30_mean_days": null
+      },
+      {
+        "building_count": 42065,
+        "county": "Maverick",
+        "county_fips": "48323",
+        "median_overture_to_provided_usfs_building_count_ratio_context_only": 1.71458528483228,
+        "microsoft_only_share_mean_unweighted_tracts": 0.11518483796452486,
+        "osm_below_5pct_tracts": 1,
+        "osm_share_bootstrap_ci_95": [
+          0.21528574545776477,
+          0.44328956557503785
+        ],
+        "osm_share_mean_unweighted_tracts": 0.33034832663196106,
+        "other_source_footprints_rounded": 25763,
+        "other_source_weighted_share": 0.6124569119220254,
+        "population": 57887,
+        "population_in_osm_below_5pct": 5399,
+        "tracts": 13,
+        "uhe_tracts": 11,
+        "uhe_wbgt30_mean_days": 36.147058823529406
+      },
+      {
+        "building_count": 29515,
+        "county": "Val Verde",
+        "county_fips": "48465",
+        "median_overture_to_provided_usfs_building_count_ratio_context_only": 1.084641306524444,
+        "microsoft_only_share_mean_unweighted_tracts": 0.7518710133375418,
+        "osm_below_5pct_tracts": 4,
+        "osm_share_bootstrap_ci_95": [
+          0.06781050968059482,
+          0.33241093793392057
+        ],
+        "osm_share_mean_unweighted_tracts": 0.17286714337169443,
+        "other_source_footprints_rounded": 4088,
+        "other_source_weighted_share": 0.13850584448585465,
+        "population": 47586,
+        "population_in_osm_below_5pct": 16003,
+        "tracts": 14,
+        "uhe_tracts": 2,
+        "uhe_wbgt30_mean_days": 19.794117647058822
+      },
+      {
+        "building_count": 15721,
+        "county": "Zapata",
+        "county_fips": "48505",
+        "median_overture_to_provided_usfs_building_count_ratio_context_only": 1.4180055443191062,
+        "microsoft_only_share_mean_unweighted_tracts": 0.5202101965586745,
+        "osm_below_5pct_tracts": 0,
+        "osm_share_bootstrap_ci_95": [
+          0.1723321442937328,
+          0.3778067517877787
+        ],
+        "osm_share_mean_unweighted_tracts": 0.27633802575296373,
+        "other_source_footprints_rounded": 5072,
+        "other_source_weighted_share": 0.3226257871636664,
+        "population": 13889,
+        "population_in_osm_below_5pct": 0,
+        "tracts": 6,
+        "uhe_tracts": 0,
+        "uhe_wbgt30_mean_days": null
+      },
+      {
+        "building_count": 4480,
+        "county": "Jim Hogg",
+        "county_fips": "48247",
+        "median_overture_to_provided_usfs_building_count_ratio_context_only": 0.98271150367916,
+        "microsoft_only_share_mean_unweighted_tracts": 0.9664679499795882,
+        "osm_below_5pct_tracts": 2,
+        "osm_share_bootstrap_ci_95": [
+          0.03280285807080221,
+          0.034261241970021415
+        ],
+        "osm_share_mean_unweighted_tracts": 0.03353205002041181,
+        "other_source_footprints_rounded": 0,
+        "other_source_weighted_share": 0.0,
+        "population": 4838,
+        "population_in_osm_below_5pct": 4838,
+        "tracts": 2,
+        "uhe_tracts": 0,
+        "uhe_wbgt30_mean_days": null
+      },
+      {
+        "building_count": 11765,
+        "county": "Duval",
+        "county_fips": "48131",
+        "median_overture_to_provided_usfs_building_count_ratio_context_only": 1.0160120093148666,
+        "microsoft_only_share_mean_unweighted_tracts": 0.9629414692435662,
+        "osm_below_5pct_tracts": 1,
+        "osm_share_bootstrap_ci_95": [
+          0.0049921177088807145,
+          0.05340739158299509
+        ],
+        "osm_share_mean_unweighted_tracts": 0.03705853075643369,
+        "other_source_footprints_rounded": 0,
+        "other_source_weighted_share": 0.0,
+        "population": 9831,
+        "population_in_osm_below_5pct": 4664,
+        "tracts": 3,
+        "uhe_tracts": 0,
+        "uhe_wbgt30_mean_days": null
+      },
+      {
+        "building_count": 6447,
+        "county": "Dimmit",
+        "county_fips": "48127",
+        "median_overture_to_provided_usfs_building_count_ratio_context_only": 0.6265058266379335,
+        "microsoft_only_share_mean_unweighted_tracts": 0.9270339575200971,
+        "osm_below_5pct_tracts": 2,
+        "osm_share_bootstrap_ci_95": [
+          0.013376383763837638,
+          0.0711864406779661
+        ],
+        "osm_share_mean_unweighted_tracts": 0.03511323295907159,
+        "other_source_footprints_rounded": 244,
+        "other_source_weighted_share": 0.03784706064836358,
+        "population": 8615,
+        "population_in_osm_below_5pct": 7092,
+        "tracts": 3,
+        "uhe_tracts": 0,
+        "uhe_wbgt30_mean_days": null
+      }
+    ],
+    "county_cluster_osm_share_difference_border_minus_rest": {
+      "ci_95": [
+        -0.6124170984061794,
+        -0.3698503786433963
+      ],
+      "cluster_count": 185,
+      "difference": -0.5229921267595319,
+      "replicates": 1000,
+      "seed": 0,
+      "valid_replicates": 1000
+    },
+    "named_low_osm_tracts_ge_1500_buildings": [
+      {
+        "GEOID": "48215021906",
+        "county": "Hidalgo",
+        "microsoft_only_share": 1.0,
+        "osm_share": 0.0,
+        "other_source_share": 0.0,
+        "overture_buildings": 1727,
+        "population": 5598,
+        "svi_overall": 0.7281
+      },
+      {
+        "GEOID": "48215023525",
+        "county": "Hidalgo",
+        "microsoft_only_share": 1.0,
+        "osm_share": 0.0,
+        "other_source_share": 0.0,
+        "overture_buildings": 1765,
+        "population": 4390,
+        "svi_overall": 0.8658
+      },
+      {
+        "GEOID": "48215024404",
+        "county": "Hidalgo",
+        "microsoft_only_share": 1.0,
+        "osm_share": 0.0,
+        "other_source_share": 0.0,
+        "overture_buildings": 2212,
+        "population": 4148,
+        "svi_overall": 0.8452
+      },
+      {
+        "GEOID": "48061012002",
+        "county": "Cameron",
+        "microsoft_only_share": 0.9088845654993515,
+        "osm_share": 0.00032425421530479895,
+        "other_source_share": 0.0907911802853437,
+        "overture_buildings": 3084,
+        "population": 5401,
+        "svi_overall": 0.7649
+      }
+    ],
+    "raw_osm_share_difference_border_minus_rest": {
+      "ci_95": [
+        -0.5408703051052045,
+        -0.5038586216835729
+      ],
+      "difference": -0.5229921267595319,
+      "replicates": 5000,
+      "seed": 0
+    },
+    "rest_of_texas_region": {
+      "building_count": 10577439,
+      "microsoft_only_share_mean_unweighted_tracts": 0.35241910672197707,
+      "osm_below_5pct_tracts": 661,
+      "osm_share_mean_unweighted_tracts": 0.614789040695271,
+      "other_source_footprints_rounded": 977049,
+      "other_source_weighted_share": 0.09237103612698688,
+      "population": 23991091,
+      "population_in_osm_below_5pct": 2640446,
+      "tracts": 5541,
+      "uhe_tracts": 3654,
+      "uhe_wbgt30_mean_days": 7.25152129817444
+    },
+    "rest_urban_only": {
+      "building_count": 7486830,
+      "microsoft_only_share_mean_unweighted_tracts": 0.2789076718411462,
+      "osm_below_5pct_tracts": 346,
+      "osm_share_mean_unweighted_tracts": 0.6866483238151808,
+      "other_source_footprints_rounded": 892934,
+      "other_source_weighted_share": 0.11926730004554664,
+      "population": 20541945,
+      "population_in_osm_below_5pct": 1563827,
+      "tracts": 4600,
+      "uhe_tracts": 3638,
+      "uhe_wbgt30_mean_days": 7.254268667334992
+    },
+    "source_count_reconciliation": {
+      "all_tx_google_open_buildings_source_memberships": 254872,
+      "all_tx_usgs_lidar_source_memberships": 976523,
+      "border_minus_google_count": -526,
+      "border_other_source_footprints": 254346,
+      "interpretation": "near one-for-one source-count reconciliation supports (but does not by itself prove) a Google Open Buildings spill-over attribution; per-tract source share is the provided Overture source classification",
+      "nonborder_minus_usgs_lidar_count": 526,
+      "nonborder_other_source_footprints": 977049
+    }
+  },
+  "runtime": {
+    "numpy": "2.5.4",
+    "pyarrow": "26.0.0",
+    "python": "3.12.3"
+  },
+  "scope": {
+    "border_counties": [
+      {
+        "county": "Hidalgo",
+        "fips": "48215"
+      },
+      {
+        "county": "Cameron",
+        "fips": "48061"
+      },
+      {
+        "county": "Webb",
+        "fips": "48479"
+      },
+      {
+        "county": "Starr",
+        "fips": "48427"
+      },
+      {
+        "county": "Maverick",
+        "fips": "48323"
+      },
+      {
+        "county": "Val Verde",
+        "fips": "48465"
+      },
+      {
+        "county": "Zapata",
+        "fips": "48505"
+      },
+      {
+        "county": "Jim Hogg",
+        "fips": "48247"
+      },
+      {
+        "county": "Duval",
+        "fips": "48131"
+      },
+      {
+        "county": "Dimmit",
+        "fips": "48127"
+      }
+    ],
+    "official_sample_rows": 6003,
+    "region": "south-central-tx",
+    "scored_tracts_with_positive_overture_building_count": 6001
+  },
+  "source_script_adaptation": "Steward Fable deep-look s6.py, narrowed to source mix, group contrasts, county summaries, heat context, and the named examples"
+}
