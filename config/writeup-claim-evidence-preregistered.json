@@ -62,6 +62,7 @@
     "reports/discovery-postfire.json",
     "reports/discovery-border-metros.json",
     "reports/discovery-border-transfer.json",
+    "reports/who-is-affected-cdc-places.json",
     "reports/postfire-lineage-recheck.json",
     "reports/discovery-dins-mechanism.json",
     "reports/discovery-rural-svi-minority.json",
@@ -110,6 +111,7 @@
     "reports/san-antonio-svi-gradient.json",
     "docs/writeup/related-entries.md",
     "scripts/discovery/transfer_outside_regions.py",
+    "scripts/audit_who_is_affected_cdc_places.py",
     "scripts/discovery/border_metros.py",
     "scripts/audit_postfire_lineage.py",
 
@@ -187,6 +189,7 @@
     "scripts/discovery_dins_mechanism.py"
   ],
   "reproduce_command_aliases": {
+    "CDC_PLACES_CONTEXT": "uv run --python 3.12 --no-project --isolated --with-requirements requirements.txt --with-requirements requirements-cdc-analysis.txt python scripts/audit_who_is_affected_cdc_places.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/who-is-affected-cdc-places.json",
     "BORDER_METROS_COMPOSITE": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/border_metros.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-metros.json && /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/transfer_outside_regions.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-transfer.json",
     "BORDER_TRANSFER_COMPOSITE": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/transfer_outside_regions.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-transfer.json",
     "POSTFIRE_LINEAGE_COMPOSITE": "MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_postfire_stale_reference.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire.json --map reports/discovery-postfire-map.png && /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 python scripts/audit_discovery_postfire_county_bootstrap.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-postfire-county-bootstrap.json && MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with shapely==2.2.0 --with matplotlib==3.10.8 python scripts/discovery_dins_mechanism.py --workspace \"$COMPETITION_WORKSPACE\" --dins-file \"$COMPETITION_WORKSPACE/external-discovery-2026-10-29/camp-fire-dins.geojson\" --out reports/discovery-dins-mechanism.json --markdown reports/discovery-dins-mechanism.md --scatter reports/discovery-dins-mechanism.png && /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_postfire_lineage.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/postfire-lineage-recheck.json",

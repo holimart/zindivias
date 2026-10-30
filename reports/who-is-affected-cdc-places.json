@@ -1,0 +1,302 @@
+{
+  "analysis": "CDC PLACES 2025 health prevalence as border-population context",
+  "cdc_manifest": {
+    "dataset": "CDC PLACES: Local Data for Better Health, Census Tract Data, 2025 release (Socrata id cwsq-ngmh)",
+    "file": "places2025_tract_tx_crude_selected.csv",
+    "filter": {
+      "datavaluetypeid": "CrdPrv (crude prevalence)",
+      "measureid": [
+        "ACCESS2",
+        "DISABILITY",
+        "DIABETES",
+        "GHLTH",
+        "MOBILITY",
+        "INDEPLIVE",
+        "DEPRESSION"
+      ],
+      "stateabbr": "TX"
+    },
+    "join_key": "locationid = 11-digit 2020 census tract GEOID",
+    "landing_url": "https://data.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh",
+    "licence": "Public Domain (Socrata metadata: license.name='Public Domain', licenseId='PUBLIC_DOMAIN'; US federal work)",
+    "metadata_api": "https://data.cdc.gov/api/views/cwsq-ngmh.json",
+    "publisher": "Centers for Disease Control and Prevention, Division of Population Health",
+    "purpose": "Best Bias Discovery 'who is affected' context only; never used in scored predictions",
+    "query_url": "https://data.cdc.gov/resource/cwsq-ngmh.csv?stateabbr=TX&datavaluetypeid=CrdPrv&$select=locationid,countyfips,measureid,data_value,low_confidence_limit,high_confidence_limit,totalpopulation,totalpop18plus&$where=measureid%20in(%27ACCESS2%27,%27DISABILITY%27,%27DIABETES%27,%27GHLTH%27,%27MOBILITY%27,%27INDEPLIVE%27,%27DEPRESSION%27)&$limit=100000",
+    "retrieved_utc": "2026-10-29T20:14:43Z",
+    "rows": 47908,
+    "sha256": "0c1acbe86e0d9a506a75a5cfae78131e58a55be630549bf081a070d4aa203352"
+  },
+  "contrasts": {
+    "OSM share <5% vs >=5%, all Texas scored tracts": {
+      "adults_group0": 16485288,
+      "adults_group1": 2833209,
+      "counties": 185,
+      "measures": {
+        "ACCESS2": {
+          "county_cluster_ci95_pp": [
+            -0.2632311596398386,
+            11.246524752284328
+          ],
+          "difference_pp": 5.064788809977038,
+          "group0_weighted_prevalence_pct": 18.58065429005547,
+          "group1_weighted_prevalence_pct": 23.64544310003251,
+          "label": "uninsured adults aged 18\u201364"
+        },
+        "DEPRESSION": {
+          "county_cluster_ci95_pp": [
+            -1.1123400828406953,
+            0.3577342293875464
+          ],
+          "difference_pp": -0.3686109274027096,
+          "group0_weighted_prevalence_pct": 21.492275718810614,
+          "group1_weighted_prevalence_pct": 21.123664791407904,
+          "label": "depression"
+        },
+        "DIABETES": {
+          "county_cluster_ci95_pp": [
+            1.385791572463331,
+            4.194333478576545
+          ],
+          "difference_pp": 2.7398484824036213,
+          "group0_weighted_prevalence_pct": 12.26681166868301,
+          "group1_weighted_prevalence_pct": 15.006660151086631,
+          "label": "diagnosed diabetes"
+        },
+        "DISABILITY": {
+          "county_cluster_ci95_pp": [
+            1.1195123526400375,
+            6.614092480561403
+          ],
+          "difference_pp": 4.025919846786852,
+          "group0_weighted_prevalence_pct": 30.383228931153642,
+          "group1_weighted_prevalence_pct": 34.409148777940494,
+          "label": "any disability"
+        },
+        "GHLTH": {
+          "county_cluster_ci95_pp": [
+            0.7403406002423644,
+            8.136762682893572
+          ],
+          "difference_pp": 4.338084853459598,
+          "group0_weighted_prevalence_pct": 21.47749948924156,
+          "group1_weighted_prevalence_pct": 25.815584342701158,
+          "label": "fair/poor self-rated health"
+        },
+        "MOBILITY": {
+          "county_cluster_ci95_pp": [
+            1.3106141715602224,
+            4.882265462615734
+          ],
+          "difference_pp": 3.043221689767144,
+          "group0_weighted_prevalence_pct": 13.684462819211895,
+          "group1_weighted_prevalence_pct": 16.72768450897904,
+          "label": "mobility disability"
+        }
+      },
+      "tracts_group0": 5019,
+      "tracts_group1": 951
+    },
+    "OSM share <5% vs >=5%, urban tracts only": {
+      "adults_group0": 14657809,
+      "adults_group1": 1887878,
+      "counties": 109,
+      "measures": {
+        "ACCESS2": {
+          "county_cluster_ci95_pp": [
+            0.1752955490217663,
+            13.737074043810345
+          ],
+          "difference_pp": 7.1150510170988674,
+          "group0_weighted_prevalence_pct": 18.82362505201153,
+          "group1_weighted_prevalence_pct": 25.938676069110397,
+          "label": "uninsured adults aged 18\u201364"
+        },
+        "DEPRESSION": {
+          "county_cluster_ci95_pp": [
+            -1.7150420241516364,
+            -0.15444764294434085
+          ],
+          "difference_pp": -0.8886563177536857,
+          "group0_weighted_prevalence_pct": 21.32061272595379,
+          "group1_weighted_prevalence_pct": 20.431956408200104,
+          "label": "depression"
+        },
+        "DIABETES": {
+          "county_cluster_ci95_pp": [
+            0.9482714050068914,
+            4.821460618326445
+          ],
+          "difference_pp": 2.9087934811658247,
+          "group0_weighted_prevalence_pct": 12.11941363815015,
+          "group1_weighted_prevalence_pct": 15.028207119315974,
+          "label": "diagnosed diabetes"
+        },
+        "DISABILITY": {
+          "county_cluster_ci95_pp": [
+            -0.18388335804802267,
+            7.489787709254945
+          ],
+          "difference_pp": 3.9470288791224597,
+          "group0_weighted_prevalence_pct": 30.020767292028435,
+          "group1_weighted_prevalence_pct": 33.967796171150894,
+          "label": "any disability"
+        },
+        "GHLTH": {
+          "county_cluster_ci95_pp": [
+            -0.019351267938711884,
+            9.426553320654078
+          ],
+          "difference_pp": 4.915126817715816,
+          "group0_weighted_prevalence_pct": 21.327136347594653,
+          "group1_weighted_prevalence_pct": 26.24226316531047,
+          "label": "fair/poor self-rated health"
+        },
+        "MOBILITY": {
+          "county_cluster_ci95_pp": [
+            0.5874699952427446,
+            5.228828059600013
+          ],
+          "difference_pp": 2.915063933324344,
+          "group0_weighted_prevalence_pct": 13.40036645995319,
+          "group1_weighted_prevalence_pct": 16.315430393277534,
+          "label": "mobility disability"
+        }
+      },
+      "tracts_group0": 4390,
+      "tracts_group1": 595
+    },
+    "ten border counties vs rest of South-Central Texas": {
+      "adults_group0": 18073687,
+      "adults_group1": 1244810,
+      "counties": 185,
+      "measures": {
+        "ACCESS2": {
+          "county_cluster_ci95_pp": [
+            16.553084313955384,
+            22.051535742937137
+          ],
+          "difference_pp": 18.790386460747836,
+          "group0_weighted_prevalence_pct": 18.112664687620185,
+          "group1_weighted_prevalence_pct": 36.90305114836802,
+          "label": "uninsured adults aged 18\u201364"
+        },
+        "DEPRESSION": {
+          "county_cluster_ci95_pp": [
+            -2.943646538383622,
+            -0.7996697391419815
+          ],
+          "difference_pp": -1.669112851166247,
+          "group0_weighted_prevalence_pct": 21.545767280356245,
+          "group1_weighted_prevalence_pct": 19.876654429189998,
+          "label": "depression"
+        },
+        "DIABETES": {
+          "county_cluster_ci95_pp": [
+            4.639199301042726,
+            7.985129918215443
+          ],
+          "difference_pp": 5.659980917093971,
+          "group0_weighted_prevalence_pct": 12.303924417856745,
+          "group1_weighted_prevalence_pct": 17.963905334950717,
+          "label": "diagnosed diabetes"
+        },
+        "DISABILITY": {
+          "county_cluster_ci95_pp": [
+            7.050035479325434,
+            11.882463682647998
+          ],
+          "difference_pp": 8.877268497196251,
+          "group0_weighted_prevalence_pct": 30.40164442927445,
+          "group1_weighted_prevalence_pct": 39.2789129264707,
+          "label": "any disability"
+        },
+        "GHLTH": {
+          "county_cluster_ci95_pp": [
+            10.53857855772418,
+            15.850886640783076
+          ],
+          "difference_pp": 12.245086745487061,
+          "group0_weighted_prevalence_pct": 21.32468711558411,
+          "group1_weighted_prevalence_pct": 33.56977386107117,
+          "label": "fair/poor self-rated health"
+        },
+        "MOBILITY": {
+          "county_cluster_ci95_pp": [
+            5.121348173445073,
+            8.900593619777746
+          ],
+          "difference_pp": 6.035042404876297,
+          "group0_weighted_prevalence_pct": 13.741900100405633,
+          "group1_weighted_prevalence_pct": 19.77694250528193,
+          "label": "mobility disability"
+        }
+      },
+      "tracts_group0": 5515,
+      "tracts_group1": 455
+    }
+  },
+  "input_sha256": {
+    "cdc_manifest": "345c712c8d2533d33955e9cce5064613a02778a0d697fb9dae064f1c2f002c91",
+    "cdc_places_csv": "0c1acbe86e0d9a506a75a5cfae78131e58a55be630549bf081a070d4aa203352",
+    "overture_feature_cache": "51e36d01eec7b2e5a4f9b4986a5aabd70acd7ad10084fef040bc05ad88842746",
+    "provided_strata": "55589565024414f244ccbcadcc45a90860a3840ec9d8a4bdfa8a126c2128a354"
+  },
+  "inputs": {
+    "analysis_tracts": 5970,
+    "border_county_fips": [
+      "48061",
+      "48127",
+      "48131",
+      "48215",
+      "48247",
+      "48323",
+      "48427",
+      "48465",
+      "48479",
+      "48505"
+    ],
+    "county_clusters": 185,
+    "pl_places_joined_tracts": 5970,
+    "tx_scored_tracts_with_buildings": 6001
+  },
+  "method": {
+    "bootstrap": "1000 county-cluster resamples with replacement; seed=0; percentile 95% interval",
+    "border_comparison": "the ten named Texas-Mexico border counties vs the rest of the South-Central Texas scored region",
+    "join_key": "2020 tract GEOID (CDC locationid)",
+    "limitations": [
+      "descriptive population context, not causal",
+      "within-county low-OSM comparison is not evidence that low-OSM tracts are sicker",
+      "health outcomes and dispatch/evacuation effects were not measured"
+    ],
+    "low_osm_threshold": "provided Overture building OSM-source share < 0.05",
+    "weight": "CDC totalpop18plus; population-weighted crude prevalence"
+  },
+  "scope": "Best Bias Discovery only; not evidence about low-OSM tracts and not used in scored predictions",
+  "within_county_low_osm_vs_other_pp": {
+    "ACCESS2": {
+      "difference_pp": -0.5230916873973448,
+      "label": "uninsured adults aged 18\u201364"
+    },
+    "DEPRESSION": {
+      "difference_pp": -0.12370826336325458,
+      "label": "depression"
+    },
+    "DIABETES": {
+      "difference_pp": 0.274512405533583,
+      "label": "diagnosed diabetes"
+    },
+    "DISABILITY": {
+      "difference_pp": -0.1154859100111427,
+      "label": "any disability"
+    },
+    "GHLTH": {
+      "difference_pp": -0.24263089988588957,
+      "label": "fair/poor self-rated health"
+    },
+    "MOBILITY": {
+      "difference_pp": 0.2333072925788806,
+      "label": "mobility disability"
+    }
+  }
+}
