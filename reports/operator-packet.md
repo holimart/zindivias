@@ -11,7 +11,7 @@
 | Zindi username/team | `[OPERATOR: enter your confirmed Zindi username or team name]` |
 | Associated submissions | A — `V2_model_cgs` / `hvLtPVmr`; B — `B_from_A_cgs` / `eAaWXWxM` |
 | Prizes | **Both:** Best Bias Discovery **and** Best Documentation |
-| Methodology writeup | `docs/writeup/final-writeup.pdf` — SHA-256 `e3d936bf1ff42a08279d80414925b04daf8843ee505645e6d304ef7f17175167` |
+| Methodology writeup | `docs/writeup/final-writeup.pdf` — SHA-256 `6148ab93eb8d0adea6e87aa16530e7e4849a6bf0a4ed40872414502cdad77457` |
 
 **Finding #1 abstract:** Across all four regions, rural tracts have lower mean OSM-attributed shares of Overture buildings than urban tracts. This is a provided-data source pattern, not an organizer-score comparison or evidence of missing or incorrect buildings.
 

@@ -309,6 +309,11 @@ def build_pdf(markdown_path: Path = DEFAULT_MARKDOWN,
                         Paragraph("Discovery and methodology writeup", cover_subtitle),
                         Spacer(1, 12 * mm),
                         Paragraph("Martin Holeček (Zindi: holi)", cover_author),
+                        Spacer(1, 3 * mm),
+                        Paragraph('Repository (code, reports, appendices): '
+                                  '<link href="https://github.com/holimart/zindivias" color="#1a4f8a">'
+                                  'https://github.com/holimart/zindivias</link> (CC-BY-SA 4.0)',
+                                  cover_text),
                         Spacer(1, 5 * mm),
                         Paragraph("Protocol A: V2_model_cgs — Zindi submission hvLtPVmr", cover_text),
                         Paragraph("Protocol B: B_from_A_cgs — Zindi submission eAaWXWxM", cover_text),

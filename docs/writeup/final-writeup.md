@@ -262,6 +262,7 @@ The general register below lists prior-art sources, organiser-hosted challenge f
 
 | URL | Reference | Accessed | Role |
 |---|---|---|---|
+| https://api.zindi.world/v1/competitions/bias-bounty-mapping-equity-challenge/files/SampleSubmission.csv | organiser-hosted challenge file used by the workspace downloader | 2026-10-23 | official challenge data endpoint provided by the organisers; not an external dataset |
 | https://api.zindi.world/v1/discussions/35250 | Organiser Challenge Update on supporting comparison evidence and target-reconstruction limits (discussion 35250) | 2026-10-29 | official rule clarification permitting discovery-only comparison evidence when not used to reconstruct, approximate, or calibrate targets |
 | https://api.zindi.world/v1/discussions/35334 | Zindi discussion 35334 (2026-10-14): methodology form requires PDF, maximum 10 MB | 2026-10-29 | organiser form upload-format instruction; this project exports a PDF under the stated size cap |
 | https://zindi.africa/competitions/bias-bounty-mapping-equity-challenge | official challenge page (quoted rules and membership note) | 2026-10-25 | official challenge page; quoted text only, no data added to scored predictions |
