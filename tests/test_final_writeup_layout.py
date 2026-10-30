@@ -53,7 +53,13 @@ class FinalWriteupLayoutTests(unittest.TestCase):
             extracted = subprocess.run([pdftotext, "-layout", str(PDF), "-"], check=True,
                                        capture_output=True, text=True).stdout
             self.assertIn("Martin Holeček (Zindi: holi) — 2026-10-30", extracted)
+            self.assertGreaterEqual(extracted.count("Martin Holeček (Zindi: holi)"), 2)
             self.assertIn("reports/*.json", extracted)
+            pdfinfo = shutil.which("pdfinfo")
+            if pdfinfo:
+                info = subprocess.run([pdfinfo, str(PDF)], check=True,
+                                      capture_output=True, text=True).stdout
+                self.assertRegex(info, r"(?m)^Author:\s+Martin Holeček \(Zindi: holi\)$")
 
     def test_discovery_has_two_tables_and_one_map(self) -> None:
         self.assertEqual(sum(line.startswith("|---") for line in self.discovery.splitlines()), 2)

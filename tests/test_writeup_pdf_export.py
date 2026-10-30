@@ -44,7 +44,7 @@ class WriteupPdfExportTests(unittest.TestCase):
             if inspector:
                 text = subprocess.run([inspector, "-layout", str(first), "-"],
                                       check=True, capture_output=True, text=True).stdout
-                for required in ("Contents", "Finding 1", "TEAM NAME", "V2_model_cgs",
+                for required in ("Contents", "Finding 1", "Martin Holeček (Zindi: holi)", "V2_model_cgs",
                                  "hvLtPVmr", "B_from_A_cgs", "eAaWXWxM", "Page 1",
                                  f"Page {first_stats['page_count']}"):
                     self.assertIn(required, text)

@@ -141,7 +141,7 @@ def build_pdf(markdown_path: Path = DEFAULT_MARKDOWN,
             super().__init__(filename, pagesize=A4, leftMargin=left, rightMargin=right,
                              topMargin=top, bottomMargin=bottom,
                              title="Bias Bounty Mapping Equity Challenge — methodology writeup",
-                             author="[TEAM NAME — OPERATOR TO CONFIRM]",
+                             author="Martin Holeček (Zindi: holi)",
                              subject="Submission IDs hvLtPVmr and eAaWXWxM",
                              creator="scripts/build_writeup_pdf.py")
             self._heading_no = 0
@@ -206,6 +206,8 @@ def build_pdf(markdown_path: Path = DEFAULT_MARKDOWN,
                                     alignment=TA_CENTER, textColor=colors.HexColor("#334155"))
     cover_text = ParagraphStyle("CoverText", parent=body, fontSize=10, leading=14,
                                 alignment=TA_CENTER, textColor=colors.HexColor("#334155"))
+    cover_author = ParagraphStyle("CoverAuthor", parent=cover_text,
+                                  fontName="WriteupUnicode")
     toc_title = ParagraphStyle("TOCTitle", parent=cover_title, fontSize=19, leading=23,
                                alignment=TA_LEFT, spaceAfter=12)
     toc_styles = [ParagraphStyle("TOCLevel0", fontName="Helvetica", fontSize=9.0,
@@ -222,7 +224,7 @@ def build_pdf(markdown_path: Path = DEFAULT_MARKDOWN,
                         Paragraph("Bias Bounty Mapping Equity Challenge", cover_title),
                         Paragraph("Discovery and methodology writeup", cover_subtitle),
                         Spacer(1, 12 * mm),
-                        Paragraph("Team: [TEAM NAME — OPERATOR TO CONFIRM]", cover_text),
+                        Paragraph("Martin Holeček (Zindi: holi)", cover_author),
                         Spacer(1, 5 * mm),
                         Paragraph("Protocol A: V2_model_cgs — Zindi submission hvLtPVmr", cover_text),
                         Paragraph("Protocol B: B_from_A_cgs — Zindi submission eAaWXWxM", cover_text),
