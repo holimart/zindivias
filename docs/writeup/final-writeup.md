@@ -1,5 +1,15 @@
 # Bias Bounty Mapping Equity Challenge — discovery and methodology
 
+## Executive summary
+
+- **Rural source attribution:** rural tracts have 16.8–38.7 pp lower OSM-attributed building shares than urban tracts across all four regions (`reports/source-provenance.json`).
+- **Rio Grande border metros:** mean OSM share is 0.092 vs 0.615; adjusted border coefficient β=−0.446, with a 28.7% `other` provider-tag share—the putative Google Open Buildings spill-over, not a removed reference comparison (`reports/discovery-border-metros.json#/results`).
+- **Paradise/Magalia:** Overture/WRC ratios are 0.620–0.747 in six tracts within the Microsoft-derived WRC lineage; the CAL FIRE DINS mechanism was not confirmed (0/6 focal passes; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/decision`).
+- **Tribal comparison:** the pooled result is region-confounded; 805 of 858 tribal tracts are in Eastern Oklahoma (`reports/discovery-strata-confound.json#/stratum_composition`).
+- **Out-of-region transfer:** Google-tagged shares were 0.330 in El Paso, 0.292 in Imperial, and 0.108 in Doña Ana, versus 0.000 in both controls (`reports/discovery-border-transfer.json#/results`).
+- **Who is affected:** CDC PLACES 2025 describes uninsured adults in border counties as population context, not evidence about low-OSM tracts (`$COMPETITION_WORKSPACE/external-discovery-2026-10-29-fable/cdc-places-2025-tx/MANIFEST.json`).
+- **Scored methods:** `V2_model_cgs` and its pre-registered `B_from_A_cgs` companion use provided features only (`reports/final-two.json#/final_candidates`).
+
 ## Submission context
 
 - Protocol A: `V2_model_cgs`; leaderboard submission `hvLtPVmr`.
@@ -10,22 +20,14 @@ We request consideration for both Best Bias Discovery ($1,000) and Best Document
 
 ## Contents
 
-1. Related entries on the challenge board.
-2. Best Bias Discovery — findings.
+1. Best Bias Discovery — findings.
+2. [Related entries on the challenge board](#related-entries-on-the-challenge-board) (after the findings).
 3. Methodology and score interpretation.
 4. Appendix A: [detailed methodology](methodology.md).
 5. Appendix B: [edge cases](edge-cases.md).
 6. Appendix C: [supporting discovery screens](appendices/screens-that-did-not-produce-a-finding.md).
 7. [Supporting diagnostic archive](appendix-diagnostics.md).
 8. Appendices D–J: upload records, external-source compliance, reproducibility, provenance, named high-SVI OSM examples, and supporting discovery tables.
-
-## Related entries on the challenge board
-
-The author of #34744 (13 Sep) withdrew the colonia-gap claim on 7 Oct because it relied on removed reference layers; its replacement concerns “dispatchable roads” but gives no county, interval, or mechanism, while #35071 (28 Sep) uses a reconstructed target for its “colonias vacuum” and acknowledges tract labels do not verify colonia boundaries. #34972 (23 Sep) and #35333 (14 Oct) describe rural road-vintage/phantom-road findings affecting roughly 33,000–400,000 people, not metropolitan building coverage, while #35011 (25 Sep) frames Hidalgo as a high-CVI tract set without a headline interval or Google-source analysis; our border-metro result instead covers 460 tracts and 1.77 million residents (89% urban) and reports an OSM-share association net of Hispanic share and urbanity (β=−0.446, SE=0.070, county-clustered). #35031 (26 Sep) and #35474 (21 Oct) identify county data-sharing as a mechanism in Oklahoma but do not report Google Open Buildings or an out-of-region test; we add Google as a third provider in the border-building source mix and find Google-only footprints in all three out-of-region border counties (El Paso 33.0%, Imperial 29.2%, Doña Ana 10.8%) and in neither non-border control (Ector or Bernalillo, 0.0%). #35264 (8 Oct) reports a pooled OSM-by-SVI gradient with leaderboard-calibrated gap magnitudes and regional-composition sensitivity, while #35030 (26 Sep) reports tribal-fire-station gaps in a sample where 805 of 858 tribal tracts are in Eastern Oklahoma; our San Antonio SVI contrast is within one city (Q4−Q1 −19.6 pp [−31.4, −7.9]) and our tribal comparison is explicitly region-confounded, not a general tribal effect. #34995 (25 Sep) reuses the reconstructed-gap approach withdrawn in #34744 for its mobile-home result, #34962 (23 Sep) owns the address-layer finding (we make no address claim), and #35520/#35527 (23 Oct) provide stronger DINS-matched wildfire evidence; we cite that work and limit Finding 3 to the provider-lineage result (OSM-only 0.1–8.9%) and its negative mechanism check. For who is affected, the public-domain CDC PLACES 2025 tract join (retrieved 29 Oct) describes the border population rather than low-OSM tracts: the ten border counties' uninsured prevalence for adults aged 18–64 is 36.9% versus 18.1% elsewhere in the region (county-clustered 95% CI for the difference +16.6 to +22.1 pp).
-
-| What ours adds |
-|---|
-| Border **metros + buildings**; Google as a third provider and cross-border spill-over; an adjusted place association net of Hispanic share; a San Antonio within-city gradient; an out-of-region transfer test; and a CDC PLACES health join about the border population. |
 
 ## Best Bias Discovery entry
 
@@ -121,6 +123,14 @@ These are composition counts, not equity or target-score evidence. `tribal_any` 
 #### Reproducibility
 
 Rebuild: `python scripts/discovery_strata_confound.py --workspace "$COMPETITION_WORKSPACE" --out reports/discovery-strata-confound.json`.
+
+## Related entries on the challenge board
+
+The author of #34744 (13 Sep) withdrew the colonia-gap claim on 7 Oct because it relied on removed reference layers; its replacement concerns “dispatchable roads” but gives no county, interval, or mechanism, while #35071 (28 Sep) uses a reconstructed target for its “colonias vacuum” and acknowledges tract labels do not verify colonia boundaries. #34972 (23 Sep) and #35333 (14 Oct) describe rural road-vintage/phantom-road findings affecting roughly 33,000–400,000 people, not metropolitan building coverage, while #35011 (25 Sep) frames Hidalgo as a high-CVI tract set without a headline interval or Google-source analysis; our border-metro result instead covers 460 tracts and 1.77 million residents (89% urban) and reports an OSM-share association net of Hispanic share and urbanity (β=−0.446, SE=0.070, county-clustered). #35031 (26 Sep) and #35474 (21 Oct) identify county data-sharing as a mechanism in Oklahoma but do not report Google Open Buildings or an out-of-region test; we add Google as a third provider in the border-building source mix and find Google-only footprints in all three out-of-region border counties (El Paso 33.0%, Imperial 29.2%, Doña Ana 10.8%) and in neither non-border control (Ector or Bernalillo, 0.0%). #35264 (8 Oct) reports a pooled OSM-by-SVI gradient with leaderboard-calibrated gap magnitudes and regional-composition sensitivity, while #35030 (26 Sep) reports tribal-fire-station gaps in a sample where 805 of 858 tribal tracts are in Eastern Oklahoma; our San Antonio SVI contrast is within one city (Q4−Q1 −19.6 pp [−31.4, −7.9]) and our tribal comparison is explicitly region-confounded, not a general tribal effect. #34995 (25 Sep) reuses the reconstructed-gap approach withdrawn in #34744 for its mobile-home result, #34962 (23 Sep) owns the address-layer finding (we make no address claim), and #35520/#35527 (23 Oct) provide stronger DINS-matched wildfire evidence; we cite that work and limit Finding 3 to the provider-lineage result (OSM-only 0.1–8.9%) and its negative mechanism check. For who is affected, the public-domain CDC PLACES 2025 tract join (retrieved 29 Oct) describes the border population rather than low-OSM tracts: the ten border counties' uninsured prevalence for adults aged 18–64 is 36.9% versus 18.1% elsewhere in the region (county-clustered 95% CI for the difference +16.6 to +22.1 pp).
+
+| What ours adds |
+|---|
+| Border **metros + buildings**; Google as a third provider and cross-border spill-over; an adjusted place association net of Hispanic share; a San Antonio within-city gradient; an out-of-region transfer test; and a CDC PLACES health join about the border population. |
 
 ## Methodology (Best Documentation entry)
 

@@ -28,15 +28,18 @@ class FinalWriteupLayoutTests(unittest.TestCase):
         spec.loader.exec_module(module)
         cls.text, _ = module.assemble(module.CONFIG)
         cls.discovery_start = cls.text.index("## Best Bias Discovery entry")
+        cls.related_start = cls.text.index("## Related entries on the challenge board")
         cls.method_start = cls.text.index("## Methodology (Best Documentation entry)")
         cls.appendix_start = cls.text.index("## Appendix A: Detailed methodology")
-        cls.discovery = cls.text[cls.discovery_start:cls.method_start]
+        cls.discovery = cls.text[cls.discovery_start:cls.related_start]
+        cls.related = cls.text[cls.related_start:cls.method_start]
         cls.methodology = cls.text[cls.method_start:cls.appendix_start]
 
     def test_core_word_caps(self) -> None:
         self.assertLessEqual(word_count(self.discovery), 1500)
+        self.assertLessEqual(word_count(self.related), 500)
         self.assertLessEqual(word_count(self.methodology), 3000)
-        self.assertLessEqual(word_count(self.text[self.discovery_start:self.appendix_start]), 1600)
+        self.assertLessEqual(word_count(self.text[self.discovery_start:self.appendix_start]), 2100)
 
     def test_discovery_has_two_tables_and_one_map(self) -> None:
         self.assertEqual(sum(line.startswith("|---") for line in self.discovery.splitlines()), 2)
@@ -46,9 +49,32 @@ class FinalWriteupLayoutTests(unittest.TestCase):
         self.assertIn("reports/discovery-postfire-map.png", self.discovery)
 
     def test_lead_order_and_appendices_are_linked(self) -> None:
-        self.assertLess(self.text.index("## Submission context"), self.discovery_start)
+        summary_start = self.text.index("## Executive summary")
+        submission_start = self.text.index("## Submission context")
+        self.assertLess(self.text.index("# Bias Bounty Mapping Equity Challenge"), summary_start)
+        self.assertLess(summary_start, submission_start)
+        summary = self.text[summary_start:submission_start]
+        self.assertEqual(sum(line.startswith("- **") for line in summary.splitlines()), 7)
+        for marker in ("16.8–38.7 pp", "0.092 vs 0.615", "0.620–0.747",
+                       "805 of 858", "0.330 in El Paso", "CDC PLACES 2025",
+                       "V2_model_cgs", "provided features only",
+                       "reports/source-provenance.json",
+                       "reports/discovery-border-metros.json#/results",
+                       "reports/discovery-postfire.json#/focal_butte_2018_burn_geoids",
+                       "reports/discovery-dins-mechanism.json#/decision",
+                       "reports/discovery-strata-confound.json#/stratum_composition",
+                       "reports/discovery-border-transfer.json#/results",
+                       "external-discovery-2026-10-29-fable/cdc-places-2025-tx/MANIFEST.json",
+                       "reports/final-two.json#/final_candidates"):
+            self.assertIn(marker, summary)
+        contents = self.text[self.text.index("## Contents"):self.discovery_start]
+        self.assertIn("[Related entries on the challenge board](#related-entries-on-the-challenge-board)",
+                      contents)
+        self.assertLess(submission_start, self.text.index("## Contents"))
         self.assertLess(self.text.index("## Contents"), self.discovery_start)
-        self.assertLess(self.discovery_start, self.method_start)
+        self.assertLess(self.discovery_start, self.related_start)
+        self.assertLess(self.text.index("### Finding 4"), self.related_start)
+        self.assertLess(self.related_start, self.method_start)
         self.assertIn("### Finding 1 — Rural tracts have lower OSM-attributed shares", self.discovery)
         self.assertIn("### Finding 2 — Rio Grande border metros", self.discovery)
         self.assertLessEqual(word_count(self.text[:self.appendix_start]), 6000)
