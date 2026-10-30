@@ -1,6 +1,14 @@
 # Bias Bounty Mapping Equity Challenge
 
-Author: Martin Holeček (Zindi: holi). Writeup PDF: [docs/writeup/final-writeup.pdf](docs/writeup/final-writeup.pdf). Reproduce from challenge data by setting `COMPETITION_WORKSPACE` to the authorized workspace and running `scripts/reproduce.sh`.
+Author: Martin Holeček (Zindi: holi). Writeup PDF: [docs/writeup/final-writeup.pdf](docs/writeup/final-writeup.pdf) (source: [docs/writeup/final-writeup.md](docs/writeup/final-writeup.md)). Licence: CC-BY-SA 4.0 ([LICENSE](LICENSE)). Reproduce from challenge data by setting `COMPETITION_WORKSPACE` to the authorized workspace and running `scripts/reproduce.sh`.
+
+How to reproduce the writeup and its numbers (from the repository root, CPython 3.12, public `uv`):
+
+1. `COMPETITION_WORKSPACE=/path/to/workspace scripts/reproduce.sh` rebuilds the scored candidates and checks their SHA-256 values.
+2. Each finding's rebuild command is printed under the finding; the report it writes is cited by path (`reports/*.json`).
+3. `uv run --python 3.12 --no-project --isolated --with-requirements requirements-writeup-pdf.txt python scripts/build_final_writeup.py` reassembles `docs/writeup/final-writeup.md` and the PDF.
+4. `... python scripts/verify_writeup_submission.py` must print `ok:true`; `... python scripts/audit_writeup_claim_evidence.py` traces every number in the writeup to a report file.
+5. `python -m pytest -q tests/test_final_writeup_layout.py tests/test_audit_writeup_claim_evidence.py` checks layout and claim traceability.
 
 Local-only competition worktree for the `competitionsall` orchestrator.
 

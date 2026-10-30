@@ -22,6 +22,7 @@ MIN_PAGES = 5
 MAX_PAGES = 80
 URL_RE = re.compile(r"https?://[^\s<>\"'`]+")
 MD_LINK_RE = re.compile(r"\[([^\]]+)\]\((https?://[^)]+)\)")
+LOCAL_LINK_RE = re.compile(r"(?<!!)\[([^\]]+)\]\(((?:#|[A-Za-z0-9_./-]+\.md)[^)\s]*)\)")
 IMAGE_RE = re.compile(r"^!\[([^\]]*)\]\(([^)]+)\)$")
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.*)$")
 TRAILING_PUNCTUATION = ".,;:!?)]}"
@@ -65,6 +66,15 @@ def inline_markup(text: str) -> str:
                     f'{html.escape(label)}</u></link>')
 
     text = MD_LINK_RE.sub(md_link, text)
+
+    def local_link(match: re.Match[str]) -> str:
+        # In-document anchors render as their label; relative repository files keep the path.
+        label, target = match.groups()
+        if target.startswith("#") or label.strip("`") == target:
+            return label
+        return f"{label} ({target})"
+
+    text = LOCAL_LINK_RE.sub(local_link, text)
     text = re.sub(r"`([^`]+)`", lambda m: hold(f"<font name=\"Courier\">{html.escape(m.group(1))}</font>"), text)
 
     def raw_link(match: re.Match[str]) -> str:

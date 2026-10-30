@@ -250,16 +250,19 @@ def front_matter(config: dict[str, Any], submissions: list[dict[str, Any]],
     protocol = {item["slot"]: item for item in final["final_candidates"]}
     lines = [
         "# Bias Bounty Mapping Equity Challenge — discovery and methodology",
+        "Martin Holeček (Zindi: holi) — 2026-10-30",
         "",
         "## Executive summary",
         "",
+        "How to read this document: four findings follow, each opening with what was found and who it affects, then the evidence, then limits and a rebuild command. Throughout, *OSM share* means the share of a tract's Overture building footprints whose source list includes OpenStreetMap (tables also call it OSM-attributed or OSM-touched share); it records where footprints came from, not whether buildings are correct or complete. *pp* is percentage points; brackets hold 95% confidence intervals. Every number traces to a file in the public repository (Appendix G).",
+        "",
         "- **Rural source attribution:** rural tracts have 16.8–38.7 pp lower OSM-attributed building shares than urban tracts across all four regions (`reports/source-provenance.json`).",
-        "- **Rio Grande border metros:** mean OSM share is 0.092 vs 0.615; adjusted border coefficient β=−0.446, with a 28.7% `other` provider-tag share—the putative Google Open Buildings spill-over, not a removed reference comparison (`reports/discovery-border-metros.json#/results`).",
-        "- **Paradise/Magalia:** Overture/WRC ratios are 0.620–0.747 in six tracts within the Microsoft-derived WRC lineage; the CAL FIRE DINS mechanism was not confirmed (0/6 focal passes; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/decision`).",
-        "- **Tribal comparison:** the pooled result is region-confounded; 805 of 858 tribal tracts are in Eastern Oklahoma (`reports/discovery-strata-confound.json#/stratum_composition`).",
-        "- **Out-of-region transfer:** Google-tagged shares were 0.330 in El Paso, 0.292 in Imperial, and 0.108 in Doña Ana, versus 0.000 in both controls (`reports/discovery-border-transfer.json#/results`).",
-        "- **Who is affected:** CDC PLACES 2025 estimates uninsured prevalence for adults aged 18–64 at 36.9% in the ten Texas border counties vs 18.1% elsewhere in the scored region (county-cluster 95% CI for the difference +16.6 to +22.1 pp); population context, not evidence about low-OSM tracts (`reports/who-is-affected-cdc-places.json`; `$COMPETITION_WORKSPACE/external-discovery-2026-10-29-fable/cdc-places-2025-tx/MANIFEST.json`).",
-        "- **Scored methods:** `V2_model_cgs` and its pre-registered `B_from_A_cgs` companion use provided features only (`reports/final-two.json#/final_candidates`).",
+        "- **Rio Grande border metros:** mean OSM share is 0.092 vs 0.615 (border tracts vs the rest of South-Central Texas); the gap survives adjustment for Hispanic share and urbanity (β=−0.446), and 28.7% of border footprints carry a third `other` provider tag—the putative Google Open Buildings spill-over, a provider label, not a removed reference comparison (`reports/discovery-border-metros.json#/results`).",
+        "- **Paradise/Magalia:** in six burned tracts the Overture count is 0.620–0.747 of the provided WRC reference count, both within the Microsoft-derived WRC lineage; a fire-damage explanation was tested against CAL FIRE DINS inspections and not confirmed (0/6 focal passes; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/decision`).",
+        "- **Tribal comparison:** the pooled result is region-confounded; 805 of 858 tribal tracts are in Eastern Oklahoma, so it largely compares regions, not tribal status (`reports/discovery-strata-confound.json#/stratum_composition`).",
+        "- **Out-of-region transfer:** the border pattern recurs in three unscored border counties; Google-tagged shares were 0.330 in El Paso, 0.292 in Imperial, and 0.108 in Doña Ana, versus 0.000 in both non-border controls (`reports/discovery-border-transfer.json#/results`).",
+        "- **Who is affected:** CDC PLACES 2025 estimates uninsured prevalence for adults aged 18–64 at 36.9% (about one adult in three) in the ten Texas border counties vs 18.1% elsewhere in the scored region (county-cluster 95% CI for the difference +16.6 to +22.1 pp); population context, not evidence about low-OSM tracts (`reports/who-is-affected-cdc-places.json`; `$COMPETITION_WORKSPACE/external-discovery-2026-10-29-fable/cdc-places-2025-tx/MANIFEST.json`).",
+        "- **Scored methods:** `V2_model_cgs` (a fixed-formula estimate from provided features) and its pre-registered `B_from_A_cgs` companion (the same estimate shrunk halfway toward its regional mean) use provided features only (`reports/final-two.json#/final_candidates`).",
         "",
         "## Submission context",
         "",
@@ -269,28 +272,30 @@ def front_matter(config: dict[str, Any], submissions: list[dict[str, Any]],
         f"{protocol['B']['submission_id']}`.",
         "- Public RMSE (not private-split evidence): V2 0.1110; B 0.0975.",
         "- Predictions use provided features only; no labels, hidden targets, placeholders, or removed references.",
+        "- All files cited by path (`reports/*.json`, `scripts/*`, `docs/writeup/appendices/*`) are in the submission repository: https://github.com/holimart/zindivias (CC-BY-SA 4.0); the organisers may also request it directly.",
         config["consideration_requested"]["stated_verbatim_in_writeup"],
         "",
         "## Contents",
         "",
-        "1. Best Bias Discovery — findings.",
+        "1. Best Bias Discovery — four findings.",
         "2. [Related entries on the challenge board](#related-entries-on-the-challenge-board) (after the findings).",
-        "3. Methodology and score interpretation.",
+        "3. Methodology and score interpretation (Best Documentation entry).",
         "4. Appendix A: [detailed methodology](methodology.md).",
         "5. Appendix B: [edge cases](edge-cases.md).",
         "6. Appendix C: [supporting discovery screens](appendices/screens-that-did-not-produce-a-finding.md).",
         "7. [Supporting diagnostic archive](appendix-diagnostics.md).",
-        "8. Appendices D–J: upload records, external-source compliance, reproducibility, provenance, named high-SVI OSM examples, and supporting discovery tables.",
+        "8. Appendices D–K: upload records, prize criteria, external-source compliance, reproducibility audit, provenance statement, named high-SVI OSM examples, supporting discovery tables, and the San Antonio SVI gradient.",
         "",
     ]
+    first_bullet = lines.index("## Executive summary") + 4
     if identity.get("zindi_username_or_team") and identity.get("operator_confirmation_recorded"):
-        lines.insert(4, f"- Zindi username/team: **{identity['zindi_username_or_team']}**.")
+        lines.insert(first_bullet, f"- Zindi username/team: **{identity['zindi_username_or_team']}**.")
     selected = (config.get("final_two") or {}).get("selected", {})
     if selected.get("candidate_A") and selected.get("candidate_B"):
-        lines.insert(4, f"- Confirmed final-two candidates: `{selected['candidate_A']}` and `{selected['candidate_B']}`.")
+        lines.insert(first_bullet, f"- Confirmed final-two candidates: `{selected['candidate_A']}` and `{selected['candidate_B']}`.")
     submitted_at = config.get("submission_record", {}).get("submitted_at_utc")
     if submitted_at and config.get("submission_record", {}).get("confirmation_reference"):
-        lines.insert(4, f"- This writeup was submitted at {submitted_at}.")
+        lines.insert(first_bullet, f"- This writeup was submitted at {submitted_at}.")
     return lines
 
 

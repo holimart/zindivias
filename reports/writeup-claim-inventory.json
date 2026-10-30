@@ -4,8 +4,8 @@
    "claim_id": "bias-discovery-001",
    "doc": "docs/writeup/bias-discovery.md",
    "section": "Evidence",
-   "line_start": 9,
-   "line_end": 14,
+   "line_start": 13,
+   "line_end": 18,
    "kind": "table",
    "text": "| Region | Rural mean | Urban mean | Rural − urban (percentage points) | 95% tract-bootstrap CI (pp) | n tracts (rural, urban) |\n|---|---:|---:|---:|---:|---:|\n| Eastern Oklahoma | 9.87% | 26.70% | −16.83 | [−19.24, −14.71] | 1,191 (411, 780) |\n| Maricopa, Arizona | 49.20% | 87.38% | −38.17 | [−43.15, −33.28] | 1,582 (163, 1,419) |\n| Northern California | 24.70% | 61.57% | −36.87 | [−41.94, −32.01] | 591 (147, 444) |\n| South-Central Texas | 25.15% | 63.83% | −38.68 | [−40.74, −36.56] | 5,989 (991, 4,998) |",
    "provenance_class": "measured_provided_data",
@@ -32,8 +32,9 @@
    "tokens_exempt": [],
    "derived_tokens": [],
    "hedge_context": [
+    "Read the “Rural − urban” column: negative in every region, with every interval excluding zero.",
     "| Region | Rural mean | Urban mean | Rural − urban (percentage points) | 95% tract-bootstrap CI (pp) | n tracts (rural, urban) |\n|---|---:|---:|---:|---:|---:|\n| Eastern Oklahoma | 9.87% | 26.70% | −16.83 | [−19.24, −14.71] | 1,191 (411, 780) |\n| Maricopa, Arizona | 49.20% | 87.38% | −38.17 | [−43.15, −33.28] | 1,582 (163, 1,419) |\n| Northern California | 24.70% | 61.57% | −36.87 | [−41.94, −32.01] | 591 (147, 444) |\n| South-Central Texas | 25.15% | 63.83% | −38.68 | [−40.74, −36.56] | 5,989 (991, 4,998) |",
-    "Values are copied from `reports/source-provenance.json` (SHA-256 `e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565`). Rural/urban use `pct_urban < 0.5`/`>= 0.5`; missing is excluded. Means are unweighted across tracts; intervals use 2,000 tract-bootstrap resamples. All CIs are below zero; no spatial adjustment.",
+    "Values are copied from `reports/source-provenance.json` (SHA-256 `e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565`). A tract is rural when the provided `pct_urban < 0.5` and urban when `>= 0.5`; tracts with missing `pct_urban` are excluded. Means are unweighted across tracts; intervals use 2,000 tract-bootstrap resamples. All CIs are below zero; no spatial adjustment was applied.",
     "Of 858 `tribal_any` tracts, 805 (93.82%) are in Eastern Oklahoma; 6,002 of 8,521 non-tribal tracts (70.44%) are in South-Central Texas (`reports/discovery-strata-confound.json#/stratum_composition`)."
    ],
    "notes": "rural versus urban OSM-touched source-share differences and intervals are reported in the source-provenance regional statistics"
@@ -42,10 +43,10 @@
    "claim_id": "bias-discovery-002",
    "doc": "docs/writeup/bias-discovery.md",
    "section": "Evidence",
-   "line_start": 16,
-   "line_end": 16,
+   "line_start": 20,
+   "line_end": 20,
    "kind": "paragraph",
-   "text": "Values are copied from `reports/source-provenance.json` (SHA-256 `e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565`). Rural/urban use `pct_urban < 0.5`/`>= 0.5`; missing is excluded. Means are unweighted across tracts; intervals use 2,000 tract-bootstrap resamples. All CIs are below zero; no spatial adjustment.",
+   "text": "Values are copied from `reports/source-provenance.json` (SHA-256 `e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565`). A tract is rural when the provided `pct_urban < 0.5` and urban when `>= 0.5`; tracts with missing `pct_urban` are excluded. Means are unweighted across tracts; intervals use 2,000 tract-bootstrap resamples. All CIs are below zero; no spatial adjustment was applied.",
    "provenance_class": "measured_provided_data",
    "evidence": [
     {
@@ -76,8 +77,9 @@
    "tokens_exempt": [],
    "derived_tokens": [],
    "hedge_context": [
+    "Read the “Rural − urban” column: negative in every region, with every interval excluding zero.",
     "| Region | Rural mean | Urban mean | Rural − urban (percentage points) | 95% tract-bootstrap CI (pp) | n tracts (rural, urban) |\n|---|---:|---:|---:|---:|---:|\n| Eastern Oklahoma | 9.87% | 26.70% | −16.83 | [−19.24, −14.71] | 1,191 (411, 780) |\n| Maricopa, Arizona | 49.20% | 87.38% | −38.17 | [−43.15, −33.28] | 1,582 (163, 1,419) |\n| Northern California | 24.70% | 61.57% | −36.87 | [−41.94, −32.01] | 591 (147, 444) |\n| South-Central Texas | 25.15% | 63.83% | −38.68 | [−40.74, −36.56] | 5,989 (991, 4,998) |",
-    "Values are copied from `reports/source-provenance.json` (SHA-256 `e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565`). Rural/urban use `pct_urban < 0.5`/`>= 0.5`; missing is excluded. Means are unweighted across tracts; intervals use 2,000 tract-bootstrap resamples. All CIs are below zero; no spatial adjustment.",
+    "Values are copied from `reports/source-provenance.json` (SHA-256 `e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565`). A tract is rural when the provided `pct_urban < 0.5` and urban when `>= 0.5`; tracts with missing `pct_urban` are excluded. Means are unweighted across tracts; intervals use 2,000 tract-bootstrap resamples. All CIs are below zero; no spatial adjustment was applied.",
     "Of 858 `tribal_any` tracts, 805 (93.82%) are in Eastern Oklahoma; 6,002 of 8,521 non-tribal tracts (70.44%) are in South-Central Texas (`reports/discovery-strata-confound.json#/stratum_composition`)."
    ],
    "notes": ""
@@ -86,10 +88,10 @@
    "claim_id": "bias-discovery-003",
    "doc": "docs/writeup/bias-discovery.md",
    "section": "Impact and novelty",
-   "line_start": 30,
-   "line_end": 30,
+   "line_start": 36,
+   "line_end": 36,
    "kind": "paragraph",
-   "text": "Lead: border metros have machine-only footprints with an Overture third provider, beyond low OSM. Ector has lower OSM than El Paso (6.7% vs 9.3%), 47.7% Esri, and zero border-provider share; source, not accuracy, is measured.",
+   "text": "Low OSM share alone is not the finding: the non-border control Ector has an even lower OSM share than El Paso (6.7% vs 9.3%) and 47.7% Esri, but zero share of the border provider tag. We measure source, not accuracy.",
    "provenance_class": "measured_external_discovery_data",
    "evidence": [
     {
@@ -124,8 +126,10 @@
    "tokens_exempt": [],
    "derived_tokens": [],
    "hedge_context": [
-    "Lead: border metros have machine-only footprints with an Overture third provider, beyond low OSM. Ector has lower OSM than El Paso (6.7% vs 9.3%), 47.7% Esri, and zero border-provider share; source, not accuracy, is measured.",
-    "CDC PLACES 2025 estimates uninsured prevalence among adults aged 18–64 at 36.9% (about one adult in three) in these ten border counties versus 18.1% elsewhere in the South-Central Texas scored region (difference +18.8 pp, county-cluster 95% CI +16.6 to +22.1 pp; 455 joined border tracts). This describes the border population where the place effect occurs; it is not evidence that low-OSM tracts are sicker. Health outcomes and dispatch/evacuation impacts were not measured (`reports/who-is-affected-cdc-places.json#/contrasts/ten border counties vs rest of South-Central Texas`).",
+    "What we found: in the Rio Grande border metros, Overture's building footprints are overwhelmingly machine-sourced, and a third provider tag (read as Google Open Buildings) appears there but not in the non-border controls. Who it affects: the mostly urban residents of ten Texas border counties, where about one adult in three is uninsured; dispatch and evacuation outcomes were not measured.",
+    "Low OSM share alone is not the finding: the non-border control Ector has an even lower OSM share than El Paso (6.7% vs 9.3%) and 47.7% Esri, but zero share of the border provider tag. We measure source, not accuracy.",
+    "CDC PLACES 2025 estimates that 36.9% of adults aged 18–64 in these ten border counties are uninsured (about one adult in three), versus 18.1% elsewhere in the South-Central Texas scored region (difference +18.8 pp; county-cluster 95% CI +16.6 to +22.1 pp; 455 joined border tracts). This describes the border population where the place effect occurs; it is not evidence that low-OSM tracts are sicker. Health outcomes and dispatch/evacuation impacts were not measured (`reports/who-is-affected-cdc-places.json#/contrasts/ten border counties vs rest of South-Central Texas`).",
+    "What we found: the pooled tribal/non-tribal comparison mostly compares Eastern Oklahoma with Texas, because almost all tribal-flagged tracts are in Oklahoma. Who it affects: anyone reading the scorecard's tribal row as a general tribal disparity; compare within regions instead.",
     "Regional composition can explain the pooled tribal/non-tribal contrast; this is not evidence of a general tribal disparity or causation."
    ],
    "notes": ""
@@ -134,10 +138,10 @@
    "claim_id": "bias-discovery-004",
    "doc": "docs/writeup/bias-discovery.md",
    "section": "Impact and novelty",
-   "line_start": 32,
-   "line_end": 32,
+   "line_start": 38,
+   "line_end": 38,
    "kind": "paragraph",
-   "text": "CDC PLACES 2025 estimates uninsured prevalence among adults aged 18–64 at 36.9% (about one adult in three) in these ten border counties versus 18.1% elsewhere in the South-Central Texas scored region (difference +18.8 pp, county-cluster 95% CI +16.6 to +22.1 pp; 455 joined border tracts). This describes the border population where the place effect occurs; it is not evidence that low-OSM tracts are sicker. Health outcomes and dispatch/evacuation impacts were not measured (`reports/who-is-affected-cdc-places.json#/contrasts/ten border counties vs rest of South-Central Texas`).",
+   "text": "CDC PLACES 2025 estimates that 36.9% of adults aged 18–64 in these ten border counties are uninsured (about one adult in three), versus 18.1% elsewhere in the South-Central Texas scored region (difference +18.8 pp; county-cluster 95% CI +16.6 to +22.1 pp; 455 joined border tracts). This describes the border population where the place effect occurs; it is not evidence that low-OSM tracts are sicker. Health outcomes and dispatch/evacuation impacts were not measured (`reports/who-is-affected-cdc-places.json#/contrasts/ten border counties vs rest of South-Central Texas`).",
    "provenance_class": "measured_external_discovery_data",
    "evidence": [
     {
@@ -172,8 +176,10 @@
    "tokens_exempt": [],
    "derived_tokens": [],
    "hedge_context": [
-    "Lead: border metros have machine-only footprints with an Overture third provider, beyond low OSM. Ector has lower OSM than El Paso (6.7% vs 9.3%), 47.7% Esri, and zero border-provider share; source, not accuracy, is measured.",
-    "CDC PLACES 2025 estimates uninsured prevalence among adults aged 18–64 at 36.9% (about one adult in three) in these ten border counties versus 18.1% elsewhere in the South-Central Texas scored region (difference +18.8 pp, county-cluster 95% CI +16.6 to +22.1 pp; 455 joined border tracts). This describes the border population where the place effect occurs; it is not evidence that low-OSM tracts are sicker. Health outcomes and dispatch/evacuation impacts were not measured (`reports/who-is-affected-cdc-places.json#/contrasts/ten border counties vs rest of South-Central Texas`).",
+    "What we found: in the Rio Grande border metros, Overture's building footprints are overwhelmingly machine-sourced, and a third provider tag (read as Google Open Buildings) appears there but not in the non-border controls. Who it affects: the mostly urban residents of ten Texas border counties, where about one adult in three is uninsured; dispatch and evacuation outcomes were not measured.",
+    "Low OSM share alone is not the finding: the non-border control Ector has an even lower OSM share than El Paso (6.7% vs 9.3%) and 47.7% Esri, but zero share of the border provider tag. We measure source, not accuracy.",
+    "CDC PLACES 2025 estimates that 36.9% of adults aged 18–64 in these ten border counties are uninsured (about one adult in three), versus 18.1% elsewhere in the South-Central Texas scored region (difference +18.8 pp; county-cluster 95% CI +16.6 to +22.1 pp; 455 joined border tracts). This describes the border population where the place effect occurs; it is not evidence that low-OSM tracts are sicker. Health outcomes and dispatch/evacuation impacts were not measured (`reports/who-is-affected-cdc-places.json#/contrasts/ten border counties vs rest of South-Central Texas`).",
+    "What we found: the pooled tribal/non-tribal comparison mostly compares Eastern Oklahoma with Texas, because almost all tribal-flagged tracts are in Oklahoma. Who it affects: anyone reading the scorecard's tribal row as a general tribal disparity; compare within regions instead.",
     "Regional composition can explain the pooled tribal/non-tribal contrast; this is not evidence of a general tribal disparity or causation."
    ],
    "notes": ""
@@ -182,10 +188,10 @@
    "claim_id": "bias-discovery-005",
    "doc": "docs/writeup/bias-discovery.md",
    "section": "Evidence and mechanism",
-   "line_start": 36,
-   "line_end": 36,
+   "line_start": 42,
+   "line_end": 42,
    "kind": "paragraph",
-   "text": "Across 460 border tracts, OSM mean is 9.18% vs 61.48% elsewhere (68.66% urban); difference −52.30 pp (95% county-cluster CI −61.24 to −36.99), adjusted β=−0.446 (SE 0.070; n=5,958, 185 counties), descriptive; full counts in Appendix J.",
+   "text": "Across the 460 border tracts the mean OSM share is 9.18%, against 61.48% elsewhere in the region (68.66% among urban tracts elsewhere); difference −52.30 pp (95% county-cluster CI −61.24 to −36.99). Adjusted for Hispanic share and urbanity, the border coefficient is β=−0.446 (SE 0.070; n=5,958, 185 counties); descriptive, not causal. County counts are in Appendix J.",
    "provenance_class": "measured_external_discovery_data",
    "evidence": [
     {
@@ -217,8 +223,8 @@
    ],
    "derived_tokens": [],
    "hedge_context": [
-    "Across 460 border tracts, OSM mean is 9.18% vs 61.48% elsewhere (68.66% urban); difference −52.30 pp (95% county-cluster CI −61.24 to −36.99), adjusted β=−0.446 (SE 0.070; n=5,958, 185 counties), descriptive; full counts in Appendix J.",
-    "`Other` is an Overture `sources` label, not removed Google Open Buildings or USGS reference data. The border label matches the first provider; non-border Texas, the second (Bexar cache share 0.336; ±526 count matches). This provider-label inference is not proof (Appendix J)."
+    "Across the 460 border tracts the mean OSM share is 9.18%, against 61.48% elsewhere in the region (68.66% among urban tracts elsewhere); difference −52.30 pp (95% county-cluster CI −61.24 to −36.99). Adjusted for Hispanic share and urbanity, the border coefficient is β=−0.446 (SE 0.070; n=5,958, 185 counties); descriptive, not causal. County counts are in Appendix J.",
+    "`Other` is an Overture `sources` label, not removed Google Open Buildings or USGS reference data. By count matching, the border `other` count matches the first provider and the non-border Texas `other` count the second (both within ±526; Bexar cache share 0.336). This inference is supporting evidence, not proof (Appendix J). The Hispanic-share control comes from the CDC/ATSDR SVI layer in Appendix F."
    ],
    "notes": ""
   },
@@ -226,10 +232,10 @@
    "claim_id": "bias-discovery-006",
    "doc": "docs/writeup/bias-discovery.md",
    "section": "Evidence and mechanism",
-   "line_start": 38,
-   "line_end": 38,
+   "line_start": 44,
+   "line_end": 44,
    "kind": "paragraph",
-   "text": "`Other` is an Overture `sources` label, not removed Google Open Buildings or USGS reference data. The border label matches the first provider; non-border Texas, the second (Bexar cache share 0.336; ±526 count matches). This provider-label inference is not proof (Appendix J).",
+   "text": "`Other` is an Overture `sources` label, not removed Google Open Buildings or USGS reference data. By count matching, the border `other` count matches the first provider and the non-border Texas `other` count the second (both within ±526; Bexar cache share 0.336). This inference is supporting evidence, not proof (Appendix J). The Hispanic-share control comes from the CDC/ATSDR SVI layer in Appendix F.",
    "provenance_class": "measured_external_discovery_data",
    "evidence": [
     {
@@ -260,8 +266,8 @@
    "tokens_exempt": [],
    "derived_tokens": [],
    "hedge_context": [
-    "Across 460 border tracts, OSM mean is 9.18% vs 61.48% elsewhere (68.66% urban); difference −52.30 pp (95% county-cluster CI −61.24 to −36.99), adjusted β=−0.446 (SE 0.070; n=5,958, 185 counties), descriptive; full counts in Appendix J.",
-    "`Other` is an Overture `sources` label, not removed Google Open Buildings or USGS reference data. The border label matches the first provider; non-border Texas, the second (Bexar cache share 0.336; ±526 count matches). This provider-label inference is not proof (Appendix J)."
+    "Across the 460 border tracts the mean OSM share is 9.18%, against 61.48% elsewhere in the region (68.66% among urban tracts elsewhere); difference −52.30 pp (95% county-cluster CI −61.24 to −36.99). Adjusted for Hispanic share and urbanity, the border coefficient is β=−0.446 (SE 0.070; n=5,958, 185 counties); descriptive, not causal. County counts are in Appendix J.",
+    "`Other` is an Overture `sources` label, not removed Google Open Buildings or USGS reference data. By count matching, the border `other` count matches the first provider and the non-border Texas `other` count the second (both within ±526; Bexar cache share 0.336). This inference is supporting evidence, not proof (Appendix J). The Hispanic-share control comes from the CDC/ATSDR SVI layer in Appendix F."
    ],
    "notes": ""
   },
@@ -269,10 +275,10 @@
    "claim_id": "bias-discovery-007",
    "doc": "docs/writeup/bias-discovery.md",
    "section": "Does it transfer?",
-   "line_start": 42,
-   "line_end": 42,
+   "line_start": 48,
+   "line_end": 48,
    "kind": "paragraph",
-   "text": "“Google-only” denotes an Overture provider tag, not a removed reference layer: 10.8–33.0% in three unscored border counties and zero in both controls. El Paso OSM/provider (9.3%/33.0%) matches the scored Rio Grande OSM range (4.2–12.0%); Doña Ana has 10.8% provider and 26.1% Esri. No interval.",
+   "text": "We repeated the source-mix count in five counties outside the scored regions. “Google-only” denotes an Overture provider tag, not a removed reference layer: 10.8–33.0% of footprints in the three unscored border counties, zero in both non-border controls. El Paso's OSM and provider-tag shares (9.3%/33.0%) match the scored Rio Grande OSM range (4.2–12.0%); Doña Ana has 10.8% provider tag and 26.1% Esri. No interval is reported.",
    "provenance_class": "measured_external_discovery_data",
    "evidence": [
     {
@@ -305,10 +311,10 @@
    "tokens_exempt": [],
    "derived_tokens": [],
    "hedge_context": [
-    "“Google-only” denotes an Overture provider tag, not a removed reference layer: 10.8–33.0% in three unscored border counties and zero in both controls. El Paso OSM/provider (9.3%/33.0%) matches the scored Rio Grande OSM range (4.2–12.0%); Doña Ana has 10.8% provider and 26.1% Esri. No interval.",
+    "We repeated the source-mix count in five counties outside the scored regions. “Google-only” denotes an Overture provider tag, not a removed reference layer: 10.8–33.0% of footprints in the three unscored border counties, zero in both non-border controls. El Paso's OSM and provider-tag shares (9.3%/33.0%) match the scored Rio Grande OSM range (4.2–12.0%); Doña Ana has 10.8% provider tag and 26.1% Esri. No interval is reported.",
+    "Footprint shares by source; the bold third-provider column is positive in the border counties and zero in both controls.",
     "| County | OSM | Third-provider tag | Esri |\n|---|---:|---:|---:|\n| **El Paso TX** | 0.093 | **0.330** | 0.000 |\n| **Imperial CA** | 0.200 | **0.292** | 0.000 |\n| **Doña Ana NM** | 0.179 | **0.108** | 0.261 |\n| Ector TX (control) | 0.067 | **0.000** | 0.477 |\n| Bernalillo NM (control) | 0.809 | **0.000** | 0.000 |",
-    "Full results and reproduction: [Appendix J](#appendix-j-supporting-discovery-tables).",
-    "Manifest: `$COMPETITION_WORKSPACE/external-discovery-2026-10-29-fable/MANIFEST.json`; rerun report `reports/discovery-border-transfer.json` (SHA-256 `64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795`); command in Appendix J. No scores or removed references."
+    "Full results and the rebuild command: [Appendix J](#appendix-j-supporting-discovery-tables). Manifest: `$COMPETITION_WORKSPACE/external-discovery-2026-10-29-fable/MANIFEST.json`; rerun report `reports/discovery-border-transfer.json` (SHA-256 `64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795`). No scores or removed references."
    ],
    "notes": ""
   },
@@ -316,8 +322,8 @@
    "claim_id": "bias-discovery-008",
    "doc": "docs/writeup/bias-discovery.md",
    "section": "Does it transfer?",
-   "line_start": 44,
-   "line_end": 50,
+   "line_start": 52,
+   "line_end": 58,
    "kind": "table",
    "text": "| County | OSM | Third-provider tag | Esri |\n|---|---:|---:|---:|\n| **El Paso TX** | 0.093 | **0.330** | 0.000 |\n| **Imperial CA** | 0.200 | **0.292** | 0.000 |\n| **Doña Ana NM** | 0.179 | **0.108** | 0.261 |\n| Ector TX (control) | 0.067 | **0.000** | 0.477 |\n| Bernalillo NM (control) | 0.809 | **0.000** | 0.000 |",
    "provenance_class": "measured_external_discovery_data",
@@ -340,10 +346,10 @@
    "tokens_exempt": [],
    "derived_tokens": [],
    "hedge_context": [
-    "“Google-only” denotes an Overture provider tag, not a removed reference layer: 10.8–33.0% in three unscored border counties and zero in both controls. El Paso OSM/provider (9.3%/33.0%) matches the scored Rio Grande OSM range (4.2–12.0%); Doña Ana has 10.8% provider and 26.1% Esri. No interval.",
+    "We repeated the source-mix count in five counties outside the scored regions. “Google-only” denotes an Overture provider tag, not a removed reference layer: 10.8–33.0% of footprints in the three unscored border counties, zero in both non-border controls. El Paso's OSM and provider-tag shares (9.3%/33.0%) match the scored Rio Grande OSM range (4.2–12.0%); Doña Ana has 10.8% provider tag and 26.1% Esri. No interval is reported.",
+    "Footprint shares by source; the bold third-provider column is positive in the border counties and zero in both controls.",
     "| County | OSM | Third-provider tag | Esri |\n|---|---:|---:|---:|\n| **El Paso TX** | 0.093 | **0.330** | 0.000 |\n| **Imperial CA** | 0.200 | **0.292** | 0.000 |\n| **Doña Ana NM** | 0.179 | **0.108** | 0.261 |\n| Ector TX (control) | 0.067 | **0.000** | 0.477 |\n| Bernalillo NM (control) | 0.809 | **0.000** | 0.000 |",
-    "Full results and reproduction: [Appendix J](#appendix-j-supporting-discovery-tables).",
-    "Manifest: `$COMPETITION_WORKSPACE/external-discovery-2026-10-29-fable/MANIFEST.json`; rerun report `reports/discovery-border-transfer.json` (SHA-256 `64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795`); command in Appendix J. No scores or removed references."
+    "Full results and the rebuild command: [Appendix J](#appendix-j-supporting-discovery-tables). Manifest: `$COMPETITION_WORKSPACE/external-discovery-2026-10-29-fable/MANIFEST.json`; rerun report `reports/discovery-border-transfer.json` (SHA-256 `64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795`). No scores or removed references."
    ],
    "notes": ""
   },
@@ -351,10 +357,10 @@
    "claim_id": "bias-discovery-009",
    "doc": "docs/writeup/bias-discovery.md",
    "section": "Impact and evidence",
-   "line_start": 62,
-   "line_end": 62,
+   "line_start": 70,
+   "line_end": 70,
    "kind": "paragraph",
-   "text": "In six Paradise/Magalia Butte County tracts, provided Wildfire Risk to Communities counts exceed Overture (ratios 0.620–0.747); the geographic/vintage discrepancy does not establish fire damage as its cause. Treating larger counts as current could misdirect field checks. Provided MTBS last-burn year is 2018; public CAL FIRE DINS is a discovery-only mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified). Tract-level rows are in [Appendix J](#appendix-j-supporting-discovery-tables).",
+   "text": "In six Paradise/Magalia tracts (Butte County), the provided Wildfire Risk to Communities (WRC) building count exceeds the Overture count: Overture/WRC ratios are 0.620–0.747. This geographic and vintage discrepancy does not establish fire damage as its cause. The provided MTBS last-burn year is 2018. The public CAL FIRE Damage Inspection (DINS) dataset is used only as a discovery-stage mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified).",
    "provenance_class": "measured_external_discovery_data",
    "evidence": [
     {
@@ -418,11 +424,13 @@
    ],
    "derived_tokens": [],
    "hedge_context": [
-    "In six Paradise/Magalia Butte County tracts, provided Wildfire Risk to Communities counts exceed Overture (ratios 0.620–0.747); the geographic/vintage discrepancy does not establish fire damage as its cause. Treating larger counts as current could misdirect field checks. Provided MTBS last-burn year is 2018; public CAL FIRE DINS is a discovery-only mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified). Tract-level rows are in [Appendix J](#appendix-j-supporting-discovery-tables).",
-    "Focal GEOIDs and DINS rows appear in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
+    "What we found: in six burned Paradise/Magalia tracts the provided reference building count is well above Overture's, and both counts share a Microsoft-derived lineage, so the gap looks like a vintage difference within one provider, not missing OpenStreetMap mapping. Who it affects: planners who treat the larger count as current could misdirect field checks; we could not confirm Camp Fire damage as the cause.",
+    "In six Paradise/Magalia tracts (Butte County), the provided Wildfire Risk to Communities (WRC) building count exceeds the Overture count: Overture/WRC ratios are 0.620–0.747. This geographic and vintage discrepancy does not establish fire damage as its cause. The provided MTBS last-burn year is 2018. The public CAL FIRE Damage Inspection (DINS) dataset is used only as a discovery-stage mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified).",
+    "Tract-level rows (focal GEOIDs, ratios and DINS counts) are in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so the magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
     "![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)",
-    "**Negative mechanism check.** DINS supports neither the proposed fire-damage nor rebuilding mechanism: 0/6 tracts met the ≤0.30 relative-error rule (required ≥4/6); Spearman was 0.463 across 28 2018-burn tracts, below 0.60. Among 591 NorCal tracts, 576 positive-count tracts have no DINS record (1,139,778 buildings); missing records do not establish absence or rebuilding. MTBS percentages are cumulative (64.4–153.8%); reference-count vintage is unverified. The border finding's SVI control is documented in Appendix F.",
-    "Focal shares show Microsoft-only 0.430–0.990 versus OSM-only 0.001–0.089; Overture/WRC ratios 0.620–0.747 against the provided Microsoft-derived USFS WRC count support a within-provider vintage gap, not OSM conflation (`reports/postfire-lineage-recheck.json#/focal_share_ranges`; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`). Pooled OLS gives β(OSM-only)=−0.016 (county-clustered SE 0.041; n=9,337; controls: urbanity, log density, region FE); seven unburned NorCal tracts have ratio <0.8, all urban—six Sacramento, one Placer (0.711–0.775)—so not all Sacramento (`reports/postfire-lineage-recheck.json#/pooled_ols`, `#/unburned_northern_ca_ratio_below_0_8`).",
+    "Map: fill is the provided MTBS burned percentage; the six focal tracts are marked.",
+    "**Negative mechanism check.** The DINS damage inspections support neither the fire-damage nor the rebuilding explanation: 0/6 focal tracts met the ≤0.30 relative-error rule (pass mark ≥4/6), and the Spearman correlation was 0.463 across 28 2018-burn tracts, below the 0.60 threshold. Among 591 NorCal tracts, 576 tracts with positive counts have no DINS record (1,139,778 buildings); a missing record does not establish absence or rebuilding. MTBS burned percentages are cumulative (64.4–153.8%); the reference count's vintage is unverified.",
+    "Why a vintage gap inside one provider: focal Microsoft-only shares are 0.430–0.990 versus OSM-only 0.001–0.089, and the Overture/WRC ratios of 0.620–0.747 are measured against a WRC count that is itself Microsoft-derived, so the gap is not OSM conflation (`reports/postfire-lineage-recheck.json#/focal_share_ranges`; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`). Pooled OLS finds no OSM-only effect: β(OSM-only)=−0.016 (county-clustered SE 0.041; n=9,337; controls: urbanity, log density, region FE). Seven unburned NorCal tracts also have ratio <0.8, all urban (six Sacramento, one Placer; 0.711–0.775), so low ratios are not confined to burned tracts or to Sacramento (`reports/postfire-lineage-recheck.json#/pooled_ols`, `#/unburned_northern_ca_ratio_below_0_8`).",
     "Entries #35520 and #35527 (23 Oct) provide stronger DINS-matched wildfire evidence; we acknowledge that work and limit Finding 3 here to the separate provider-lineage result and negative mechanism check ([related-entry omissions ledger](related-entries.md)).",
     "Reproduce with `scripts/discovery_postfire_stale_reference.py`, `scripts/audit_discovery_postfire_county_bootstrap.py`, and `scripts/discovery_dins_mechanism.py`; inputs, filters and hashes are recorded in reports/manifests."
    ],
@@ -432,10 +440,10 @@
    "claim_id": "bias-discovery-010",
    "doc": "docs/writeup/bias-discovery.md",
    "section": "Impact and evidence",
-   "line_start": 64,
-   "line_end": 64,
+   "line_start": 72,
+   "line_end": 72,
    "kind": "paragraph",
-   "text": "Focal GEOIDs and DINS rows appear in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
+   "text": "Tract-level rows (focal GEOIDs, ratios and DINS counts) are in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so the magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
    "provenance_class": "measured_external_discovery_data",
    "evidence": [
     {
@@ -492,11 +500,13 @@
    "tokens_exempt": [],
    "derived_tokens": [],
    "hedge_context": [
-    "In six Paradise/Magalia Butte County tracts, provided Wildfire Risk to Communities counts exceed Overture (ratios 0.620–0.747); the geographic/vintage discrepancy does not establish fire damage as its cause. Treating larger counts as current could misdirect field checks. Provided MTBS last-burn year is 2018; public CAL FIRE DINS is a discovery-only mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified). Tract-level rows are in [Appendix J](#appendix-j-supporting-discovery-tables).",
-    "Focal GEOIDs and DINS rows appear in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
+    "What we found: in six burned Paradise/Magalia tracts the provided reference building count is well above Overture's, and both counts share a Microsoft-derived lineage, so the gap looks like a vintage difference within one provider, not missing OpenStreetMap mapping. Who it affects: planners who treat the larger count as current could misdirect field checks; we could not confirm Camp Fire damage as the cause.",
+    "In six Paradise/Magalia tracts (Butte County), the provided Wildfire Risk to Communities (WRC) building count exceeds the Overture count: Overture/WRC ratios are 0.620–0.747. This geographic and vintage discrepancy does not establish fire damage as its cause. The provided MTBS last-burn year is 2018. The public CAL FIRE Damage Inspection (DINS) dataset is used only as a discovery-stage mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified).",
+    "Tract-level rows (focal GEOIDs, ratios and DINS counts) are in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so the magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
     "![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)",
-    "**Negative mechanism check.** DINS supports neither the proposed fire-damage nor rebuilding mechanism: 0/6 tracts met the ≤0.30 relative-error rule (required ≥4/6); Spearman was 0.463 across 28 2018-burn tracts, below 0.60. Among 591 NorCal tracts, 576 positive-count tracts have no DINS record (1,139,778 buildings); missing records do not establish absence or rebuilding. MTBS percentages are cumulative (64.4–153.8%); reference-count vintage is unverified. The border finding's SVI control is documented in Appendix F.",
-    "Focal shares show Microsoft-only 0.430–0.990 versus OSM-only 0.001–0.089; Overture/WRC ratios 0.620–0.747 against the provided Microsoft-derived USFS WRC count support a within-provider vintage gap, not OSM conflation (`reports/postfire-lineage-recheck.json#/focal_share_ranges`; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`). Pooled OLS gives β(OSM-only)=−0.016 (county-clustered SE 0.041; n=9,337; controls: urbanity, log density, region FE); seven unburned NorCal tracts have ratio <0.8, all urban—six Sacramento, one Placer (0.711–0.775)—so not all Sacramento (`reports/postfire-lineage-recheck.json#/pooled_ols`, `#/unburned_northern_ca_ratio_below_0_8`).",
+    "Map: fill is the provided MTBS burned percentage; the six focal tracts are marked.",
+    "**Negative mechanism check.** The DINS damage inspections support neither the fire-damage nor the rebuilding explanation: 0/6 focal tracts met the ≤0.30 relative-error rule (pass mark ≥4/6), and the Spearman correlation was 0.463 across 28 2018-burn tracts, below the 0.60 threshold. Among 591 NorCal tracts, 576 tracts with positive counts have no DINS record (1,139,778 buildings); a missing record does not establish absence or rebuilding. MTBS burned percentages are cumulative (64.4–153.8%); the reference count's vintage is unverified.",
+    "Why a vintage gap inside one provider: focal Microsoft-only shares are 0.430–0.990 versus OSM-only 0.001–0.089, and the Overture/WRC ratios of 0.620–0.747 are measured against a WRC count that is itself Microsoft-derived, so the gap is not OSM conflation (`reports/postfire-lineage-recheck.json#/focal_share_ranges`; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`). Pooled OLS finds no OSM-only effect: β(OSM-only)=−0.016 (county-clustered SE 0.041; n=9,337; controls: urbanity, log density, region FE). Seven unburned NorCal tracts also have ratio <0.8, all urban (six Sacramento, one Placer; 0.711–0.775), so low ratios are not confined to burned tracts or to Sacramento (`reports/postfire-lineage-recheck.json#/pooled_ols`, `#/unburned_northern_ca_ratio_below_0_8`).",
     "Entries #35520 and #35527 (23 Oct) provide stronger DINS-matched wildfire evidence; we acknowledge that work and limit Finding 3 here to the separate provider-lineage result and negative mechanism check ([related-entry omissions ledger](related-entries.md)).",
     "Reproduce with `scripts/discovery_postfire_stale_reference.py`, `scripts/audit_discovery_postfire_county_bootstrap.py`, and `scripts/discovery_dins_mechanism.py`; inputs, filters and hashes are recorded in reports/manifests."
    ],
@@ -506,10 +516,10 @@
    "claim_id": "bias-discovery-011",
    "doc": "docs/writeup/bias-discovery.md",
    "section": "Impact and evidence",
-   "line_start": 68,
-   "line_end": 68,
+   "line_start": 78,
+   "line_end": 78,
    "kind": "paragraph",
-   "text": "**Negative mechanism check.** DINS supports neither the proposed fire-damage nor rebuilding mechanism: 0/6 tracts met the ≤0.30 relative-error rule (required ≥4/6); Spearman was 0.463 across 28 2018-burn tracts, below 0.60. Among 591 NorCal tracts, 576 positive-count tracts have no DINS record (1,139,778 buildings); missing records do not establish absence or rebuilding. MTBS percentages are cumulative (64.4–153.8%); reference-count vintage is unverified. The border finding's SVI control is documented in Appendix F.",
+   "text": "**Negative mechanism check.** The DINS damage inspections support neither the fire-damage nor the rebuilding explanation: 0/6 focal tracts met the ≤0.30 relative-error rule (pass mark ≥4/6), and the Spearman correlation was 0.463 across 28 2018-burn tracts, below the 0.60 threshold. Among 591 NorCal tracts, 576 tracts with positive counts have no DINS record (1,139,778 buildings); a missing record does not establish absence or rebuilding. MTBS burned percentages are cumulative (64.4–153.8%); the reference count's vintage is unverified.",
    "provenance_class": "measured_external_discovery_data",
    "evidence": [
     {
@@ -566,11 +576,13 @@
    "tokens_exempt": [],
    "derived_tokens": [],
    "hedge_context": [
-    "In six Paradise/Magalia Butte County tracts, provided Wildfire Risk to Communities counts exceed Overture (ratios 0.620–0.747); the geographic/vintage discrepancy does not establish fire damage as its cause. Treating larger counts as current could misdirect field checks. Provided MTBS last-burn year is 2018; public CAL FIRE DINS is a discovery-only mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified). Tract-level rows are in [Appendix J](#appendix-j-supporting-discovery-tables).",
-    "Focal GEOIDs and DINS rows appear in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
+    "What we found: in six burned Paradise/Magalia tracts the provided reference building count is well above Overture's, and both counts share a Microsoft-derived lineage, so the gap looks like a vintage difference within one provider, not missing OpenStreetMap mapping. Who it affects: planners who treat the larger count as current could misdirect field checks; we could not confirm Camp Fire damage as the cause.",
+    "In six Paradise/Magalia tracts (Butte County), the provided Wildfire Risk to Communities (WRC) building count exceeds the Overture count: Overture/WRC ratios are 0.620–0.747. This geographic and vintage discrepancy does not establish fire damage as its cause. The provided MTBS last-burn year is 2018. The public CAL FIRE Damage Inspection (DINS) dataset is used only as a discovery-stage mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified).",
+    "Tract-level rows (focal GEOIDs, ratios and DINS counts) are in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so the magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
     "![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)",
-    "**Negative mechanism check.** DINS supports neither the proposed fire-damage nor rebuilding mechanism: 0/6 tracts met the ≤0.30 relative-error rule (required ≥4/6); Spearman was 0.463 across 28 2018-burn tracts, below 0.60. Among 591 NorCal tracts, 576 positive-count tracts have no DINS record (1,139,778 buildings); missing records do not establish absence or rebuilding. MTBS percentages are cumulative (64.4–153.8%); reference-count vintage is unverified. The border finding's SVI control is documented in Appendix F.",
-    "Focal shares show Microsoft-only 0.430–0.990 versus OSM-only 0.001–0.089; Overture/WRC ratios 0.620–0.747 against the provided Microsoft-derived USFS WRC count support a within-provider vintage gap, not OSM conflation (`reports/postfire-lineage-recheck.json#/focal_share_ranges`; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`). Pooled OLS gives β(OSM-only)=−0.016 (county-clustered SE 0.041; n=9,337; controls: urbanity, log density, region FE); seven unburned NorCal tracts have ratio <0.8, all urban—six Sacramento, one Placer (0.711–0.775)—so not all Sacramento (`reports/postfire-lineage-recheck.json#/pooled_ols`, `#/unburned_northern_ca_ratio_below_0_8`).",
+    "Map: fill is the provided MTBS burned percentage; the six focal tracts are marked.",
+    "**Negative mechanism check.** The DINS damage inspections support neither the fire-damage nor the rebuilding explanation: 0/6 focal tracts met the ≤0.30 relative-error rule (pass mark ≥4/6), and the Spearman correlation was 0.463 across 28 2018-burn tracts, below the 0.60 threshold. Among 591 NorCal tracts, 576 tracts with positive counts have no DINS record (1,139,778 buildings); a missing record does not establish absence or rebuilding. MTBS burned percentages are cumulative (64.4–153.8%); the reference count's vintage is unverified.",
+    "Why a vintage gap inside one provider: focal Microsoft-only shares are 0.430–0.990 versus OSM-only 0.001–0.089, and the Overture/WRC ratios of 0.620–0.747 are measured against a WRC count that is itself Microsoft-derived, so the gap is not OSM conflation (`reports/postfire-lineage-recheck.json#/focal_share_ranges`; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`). Pooled OLS finds no OSM-only effect: β(OSM-only)=−0.016 (county-clustered SE 0.041; n=9,337; controls: urbanity, log density, region FE). Seven unburned NorCal tracts also have ratio <0.8, all urban (six Sacramento, one Placer; 0.711–0.775), so low ratios are not confined to burned tracts or to Sacramento (`reports/postfire-lineage-recheck.json#/pooled_ols`, `#/unburned_northern_ca_ratio_below_0_8`).",
     "Entries #35520 and #35527 (23 Oct) provide stronger DINS-matched wildfire evidence; we acknowledge that work and limit Finding 3 here to the separate provider-lineage result and negative mechanism check ([related-entry omissions ledger](related-entries.md)).",
     "Reproduce with `scripts/discovery_postfire_stale_reference.py`, `scripts/audit_discovery_postfire_county_bootstrap.py`, and `scripts/discovery_dins_mechanism.py`; inputs, filters and hashes are recorded in reports/manifests."
    ],
@@ -580,10 +592,10 @@
    "claim_id": "bias-discovery-012",
    "doc": "docs/writeup/bias-discovery.md",
    "section": "Impact and evidence",
-   "line_start": 70,
-   "line_end": 70,
+   "line_start": 80,
+   "line_end": 80,
    "kind": "paragraph",
-   "text": "Focal shares show Microsoft-only 0.430–0.990 versus OSM-only 0.001–0.089; Overture/WRC ratios 0.620–0.747 against the provided Microsoft-derived USFS WRC count support a within-provider vintage gap, not OSM conflation (`reports/postfire-lineage-recheck.json#/focal_share_ranges`; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`). Pooled OLS gives β(OSM-only)=−0.016 (county-clustered SE 0.041; n=9,337; controls: urbanity, log density, region FE); seven unburned NorCal tracts have ratio <0.8, all urban—six Sacramento, one Placer (0.711–0.775)—so not all Sacramento (`reports/postfire-lineage-recheck.json#/pooled_ols`, `#/unburned_northern_ca_ratio_below_0_8`).",
+   "text": "Why a vintage gap inside one provider: focal Microsoft-only shares are 0.430–0.990 versus OSM-only 0.001–0.089, and the Overture/WRC ratios of 0.620–0.747 are measured against a WRC count that is itself Microsoft-derived, so the gap is not OSM conflation (`reports/postfire-lineage-recheck.json#/focal_share_ranges`; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`). Pooled OLS finds no OSM-only effect: β(OSM-only)=−0.016 (county-clustered SE 0.041; n=9,337; controls: urbanity, log density, region FE). Seven unburned NorCal tracts also have ratio <0.8, all urban (six Sacramento, one Placer; 0.711–0.775), so low ratios are not confined to burned tracts or to Sacramento (`reports/postfire-lineage-recheck.json#/pooled_ols`, `#/unburned_northern_ca_ratio_below_0_8`).",
    "provenance_class": "measured_external_discovery_data",
    "evidence": [
     {
@@ -634,11 +646,13 @@
    "tokens_exempt": [],
    "derived_tokens": [],
    "hedge_context": [
-    "In six Paradise/Magalia Butte County tracts, provided Wildfire Risk to Communities counts exceed Overture (ratios 0.620–0.747); the geographic/vintage discrepancy does not establish fire damage as its cause. Treating larger counts as current could misdirect field checks. Provided MTBS last-burn year is 2018; public CAL FIRE DINS is a discovery-only mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified). Tract-level rows are in [Appendix J](#appendix-j-supporting-discovery-tables).",
-    "Focal GEOIDs and DINS rows appear in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
+    "What we found: in six burned Paradise/Magalia tracts the provided reference building count is well above Overture's, and both counts share a Microsoft-derived lineage, so the gap looks like a vintage difference within one provider, not missing OpenStreetMap mapping. Who it affects: planners who treat the larger count as current could misdirect field checks; we could not confirm Camp Fire damage as the cause.",
+    "In six Paradise/Magalia tracts (Butte County), the provided Wildfire Risk to Communities (WRC) building count exceeds the Overture count: Overture/WRC ratios are 0.620–0.747. This geographic and vintage discrepancy does not establish fire damage as its cause. The provided MTBS last-burn year is 2018. The public CAL FIRE Damage Inspection (DINS) dataset is used only as a discovery-stage mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified).",
+    "Tract-level rows (focal GEOIDs, ratios and DINS counts) are in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so the magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
     "![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)",
-    "**Negative mechanism check.** DINS supports neither the proposed fire-damage nor rebuilding mechanism: 0/6 tracts met the ≤0.30 relative-error rule (required ≥4/6); Spearman was 0.463 across 28 2018-burn tracts, below 0.60. Among 591 NorCal tracts, 576 positive-count tracts have no DINS record (1,139,778 buildings); missing records do not establish absence or rebuilding. MTBS percentages are cumulative (64.4–153.8%); reference-count vintage is unverified. The border finding's SVI control is documented in Appendix F.",
-    "Focal shares show Microsoft-only 0.430–0.990 versus OSM-only 0.001–0.089; Overture/WRC ratios 0.620–0.747 against the provided Microsoft-derived USFS WRC count support a within-provider vintage gap, not OSM conflation (`reports/postfire-lineage-recheck.json#/focal_share_ranges`; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`). Pooled OLS gives β(OSM-only)=−0.016 (county-clustered SE 0.041; n=9,337; controls: urbanity, log density, region FE); seven unburned NorCal tracts have ratio <0.8, all urban—six Sacramento, one Placer (0.711–0.775)—so not all Sacramento (`reports/postfire-lineage-recheck.json#/pooled_ols`, `#/unburned_northern_ca_ratio_below_0_8`).",
+    "Map: fill is the provided MTBS burned percentage; the six focal tracts are marked.",
+    "**Negative mechanism check.** The DINS damage inspections support neither the fire-damage nor the rebuilding explanation: 0/6 focal tracts met the ≤0.30 relative-error rule (pass mark ≥4/6), and the Spearman correlation was 0.463 across 28 2018-burn tracts, below the 0.60 threshold. Among 591 NorCal tracts, 576 tracts with positive counts have no DINS record (1,139,778 buildings); a missing record does not establish absence or rebuilding. MTBS burned percentages are cumulative (64.4–153.8%); the reference count's vintage is unverified.",
+    "Why a vintage gap inside one provider: focal Microsoft-only shares are 0.430–0.990 versus OSM-only 0.001–0.089, and the Overture/WRC ratios of 0.620–0.747 are measured against a WRC count that is itself Microsoft-derived, so the gap is not OSM conflation (`reports/postfire-lineage-recheck.json#/focal_share_ranges`; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`). Pooled OLS finds no OSM-only effect: β(OSM-only)=−0.016 (county-clustered SE 0.041; n=9,337; controls: urbanity, log density, region FE). Seven unburned NorCal tracts also have ratio <0.8, all urban (six Sacramento, one Placer; 0.711–0.775), so low ratios are not confined to burned tracts or to Sacramento (`reports/postfire-lineage-recheck.json#/pooled_ols`, `#/unburned_northern_ca_ratio_below_0_8`).",
     "Entries #35520 and #35527 (23 Oct) provide stronger DINS-matched wildfire evidence; we acknowledge that work and limit Finding 3 here to the separate provider-lineage result and negative mechanism check ([related-entry omissions ledger](related-entries.md)).",
     "Reproduce with `scripts/discovery_postfire_stale_reference.py`, `scripts/audit_discovery_postfire_county_bootstrap.py`, and `scripts/discovery_dins_mechanism.py`; inputs, filters and hashes are recorded in reports/manifests."
    ],
@@ -648,8 +662,8 @@
    "claim_id": "bias-discovery-013",
    "doc": "docs/writeup/bias-discovery.md",
    "section": "Impact and evidence",
-   "line_start": 72,
-   "line_end": 72,
+   "line_start": 82,
+   "line_end": 82,
    "kind": "paragraph",
    "text": "Entries #35520 and #35527 (23 Oct) provide stronger DINS-matched wildfire evidence; we acknowledge that work and limit Finding 3 here to the separate provider-lineage result and negative mechanism check ([related-entry omissions ledger](related-entries.md)).",
    "provenance_class": "measured_external_discovery_data",
@@ -696,11 +710,13 @@
    "tokens_exempt": [],
    "derived_tokens": [],
    "hedge_context": [
-    "In six Paradise/Magalia Butte County tracts, provided Wildfire Risk to Communities counts exceed Overture (ratios 0.620–0.747); the geographic/vintage discrepancy does not establish fire damage as its cause. Treating larger counts as current could misdirect field checks. Provided MTBS last-burn year is 2018; public CAL FIRE DINS is a discovery-only mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified). Tract-level rows are in [Appendix J](#appendix-j-supporting-discovery-tables).",
-    "Focal GEOIDs and DINS rows appear in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
+    "What we found: in six burned Paradise/Magalia tracts the provided reference building count is well above Overture's, and both counts share a Microsoft-derived lineage, so the gap looks like a vintage difference within one provider, not missing OpenStreetMap mapping. Who it affects: planners who treat the larger count as current could misdirect field checks; we could not confirm Camp Fire damage as the cause.",
+    "In six Paradise/Magalia tracts (Butte County), the provided Wildfire Risk to Communities (WRC) building count exceeds the Overture count: Overture/WRC ratios are 0.620–0.747. This geographic and vintage discrepancy does not establish fire damage as its cause. The provided MTBS last-burn year is 2018. The public CAL FIRE Damage Inspection (DINS) dataset is used only as a discovery-stage mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified).",
+    "Tract-level rows (focal GEOIDs, ratios and DINS counts) are in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so the magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
     "![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)",
-    "**Negative mechanism check.** DINS supports neither the proposed fire-damage nor rebuilding mechanism: 0/6 tracts met the ≤0.30 relative-error rule (required ≥4/6); Spearman was 0.463 across 28 2018-burn tracts, below 0.60. Among 591 NorCal tracts, 576 positive-count tracts have no DINS record (1,139,778 buildings); missing records do not establish absence or rebuilding. MTBS percentages are cumulative (64.4–153.8%); reference-count vintage is unverified. The border finding's SVI control is documented in Appendix F.",
-    "Focal shares show Microsoft-only 0.430–0.990 versus OSM-only 0.001–0.089; Overture/WRC ratios 0.620–0.747 against the provided Microsoft-derived USFS WRC count support a within-provider vintage gap, not OSM conflation (`reports/postfire-lineage-recheck.json#/focal_share_ranges`; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`). Pooled OLS gives β(OSM-only)=−0.016 (county-clustered SE 0.041; n=9,337; controls: urbanity, log density, region FE); seven unburned NorCal tracts have ratio <0.8, all urban—six Sacramento, one Placer (0.711–0.775)—so not all Sacramento (`reports/postfire-lineage-recheck.json#/pooled_ols`, `#/unburned_northern_ca_ratio_below_0_8`).",
+    "Map: fill is the provided MTBS burned percentage; the six focal tracts are marked.",
+    "**Negative mechanism check.** The DINS damage inspections support neither the fire-damage nor the rebuilding explanation: 0/6 focal tracts met the ≤0.30 relative-error rule (pass mark ≥4/6), and the Spearman correlation was 0.463 across 28 2018-burn tracts, below the 0.60 threshold. Among 591 NorCal tracts, 576 tracts with positive counts have no DINS record (1,139,778 buildings); a missing record does not establish absence or rebuilding. MTBS burned percentages are cumulative (64.4–153.8%); the reference count's vintage is unverified.",
+    "Why a vintage gap inside one provider: focal Microsoft-only shares are 0.430–0.990 versus OSM-only 0.001–0.089, and the Overture/WRC ratios of 0.620–0.747 are measured against a WRC count that is itself Microsoft-derived, so the gap is not OSM conflation (`reports/postfire-lineage-recheck.json#/focal_share_ranges`; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`). Pooled OLS finds no OSM-only effect: β(OSM-only)=−0.016 (county-clustered SE 0.041; n=9,337; controls: urbanity, log density, region FE). Seven unburned NorCal tracts also have ratio <0.8, all urban (six Sacramento, one Placer; 0.711–0.775), so low ratios are not confined to burned tracts or to Sacramento (`reports/postfire-lineage-recheck.json#/pooled_ols`, `#/unburned_northern_ca_ratio_below_0_8`).",
     "Entries #35520 and #35527 (23 Oct) provide stronger DINS-matched wildfire evidence; we acknowledge that work and limit Finding 3 here to the separate provider-lineage result and negative mechanism check ([related-entry omissions ledger](related-entries.md)).",
     "Reproduce with `scripts/discovery_postfire_stale_reference.py`, `scripts/audit_discovery_postfire_county_bootstrap.py`, and `scripts/discovery_dins_mechanism.py`; inputs, filters and hashes are recorded in reports/manifests."
    ],
@@ -710,8 +726,8 @@
    "claim_id": "bias-discovery-014",
    "doc": "docs/writeup/bias-discovery.md",
    "section": "Evidence",
-   "line_start": 84,
-   "line_end": 84,
+   "line_start": 96,
+   "line_end": 96,
    "kind": "paragraph",
    "text": "Of 858 `tribal_any` tracts, 805 (93.82%) are in Eastern Oklahoma; 6,002 of 8,521 non-tribal tracts (70.44%) are in South-Central Texas (`reports/discovery-strata-confound.json#/stratum_composition`).",
    "provenance_class": "measured_provided_data",
@@ -754,8 +770,9 @@
    "tokens_exempt": [],
    "derived_tokens": [],
    "hedge_context": [
+    "Read the “Rural − urban” column: negative in every region, with every interval excluding zero.",
     "| Region | Rural mean | Urban mean | Rural − urban (percentage points) | 95% tract-bootstrap CI (pp) | n tracts (rural, urban) |\n|---|---:|---:|---:|---:|---:|\n| Eastern Oklahoma | 9.87% | 26.70% | −16.83 | [−19.24, −14.71] | 1,191 (411, 780) |\n| Maricopa, Arizona | 49.20% | 87.38% | −38.17 | [−43.15, −33.28] | 1,582 (163, 1,419) |\n| Northern California | 24.70% | 61.57% | −36.87 | [−41.94, −32.01] | 591 (147, 444) |\n| South-Central Texas | 25.15% | 63.83% | −38.68 | [−40.74, −36.56] | 5,989 (991, 4,998) |",
-    "Values are copied from `reports/source-provenance.json` (SHA-256 `e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565`). Rural/urban use `pct_urban < 0.5`/`>= 0.5`; missing is excluded. Means are unweighted across tracts; intervals use 2,000 tract-bootstrap resamples. All CIs are below zero; no spatial adjustment.",
+    "Values are copied from `reports/source-provenance.json` (SHA-256 `e80171d07d555e8e77e533b35b8ae4ca71aee481e64f618d8a6dc63df0512565`). A tract is rural when the provided `pct_urban < 0.5` and urban when `>= 0.5`; tracts with missing `pct_urban` are excluded. Means are unweighted across tracts; intervals use 2,000 tract-bootstrap resamples. All CIs are below zero; no spatial adjustment was applied.",
     "Of 858 `tribal_any` tracts, 805 (93.82%) are in Eastern Oklahoma; 6,002 of 8,521 non-tribal tracts (70.44%) are in South-Central Texas (`reports/discovery-strata-confound.json#/stratum_composition`)."
    ],
    "notes": ""
@@ -764,8 +781,8 @@
    "claim_id": "methodology-summary-001",
    "doc": "docs/writeup/methodology-summary.md",
    "section": "What the submitted score is",
-   "line_start": 3,
-   "line_end": 3,
+   "line_start": 5,
+   "line_end": 5,
    "kind": "paragraph",
    "text": "Final-two: `V2_model_cgs` (`hvLtPVmr`; SHA-256 `5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7`) and `B_from_A_cgs` (`eAaWXWxM`; SHA-256 `38e17cf1ec99f4f3fc5d358d13ccd0edfabe947d81fd6b6e5ef61e6cea006607`). Each is a 9,794-row `GEOID,coverage_gap_score` file copied byte-for-byte from its frozen source. 9,379 GEOIDs are official; the other 415 eastern-WA template rows use registered zero fill, not target estimates.",
    "provenance_class": "scope_statement",
@@ -816,6 +833,7 @@
    "tokens_exempt": [],
    "derived_tokens": [],
    "hedge_context": [
+    "Two scored files were submitted, in this order. Protocol A (`V2_model_cgs`) is a fixed-formula estimate of each tract's coverage gap built only from the provided Overture and census features: it averages up to three component gaps (roads, buildings, points of interest), each clipped to the unit interval. Protocol B (`B_from_A_cgs`) takes A's score and pulls it halfway toward the mean of A over the tract's region. No labels, leaderboard scores, placeholders, or removed reference layers enter either file; the public scores are reported for transparency only.",
     "Final-two: `V2_model_cgs` (`hvLtPVmr`; SHA-256 `5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7`) and `B_from_A_cgs` (`eAaWXWxM`; SHA-256 `38e17cf1ec99f4f3fc5d358d13ccd0edfabe947d81fd6b6e5ef61e6cea006607`). Each is a 9,794-row `GEOID,coverage_gap_score` file copied byte-for-byte from its frozen source. 9,379 GEOIDs are official; the other 415 eastern-WA template rows use registered zero fill, not target estimates.",
     "V2 components:",
     "- **Transport:** `T_i=clip(1−named_road_km_5070_i/route_km_i,0,1)`, defined iff `route_km_i>0`; uses provided Overture named-road and eligible route lengths.",
@@ -4321,6 +4339,7 @@
    "derived_tokens": [],
    "hedge_context": [
     "This descriptive check uses only official sample GEOIDs, provided Overture building OSM-source share, and provided `svi_overall`, `svi_covered`, `pct_urban`, and population. Quartiles are computed within each region; the Bexar and urban-Texas subsets retain South-Central Texas cutpoints. Table values are equal-weight tract means. Q4−Q1 intervals are 5,000 independent tract-bootstrap resamples (seed 20261024). The measure is source attribution, not building accuracy or completeness.",
+    "Read the table left to right: within Texas, OSM share falls from the least vulnerable quartile (Q1) to the most vulnerable (Q4); the Q4−Q1 column gives the drop with its interval.",
     "| Scope | Q1 | Q2 | Q3 | Q4 | Q4−Q1, pp (95% CI) | n (Q1/Q4) |\n|---|---:|---:|---:|---:|---:|---:|\n| Eastern Oklahoma | 26.8% | 18.6% | 18.2% | 19.1% | −7.7 [−11.7, −3.8] | 295/296 |\n| Arizona | 84.8% | 86.5% | 80.8% | 81.9% | −2.9 [−6.4, +0.6] | 391/391 |\n| Northern California | 55.6% | 55.6% | 50.6% | 47.8% | −7.8 [−15.3, +0.1] | 148/148 |\n| South-Central Texas | 69.0% | 57.0% | 53.1% | 50.3% | −18.8 [−21.4, −16.0] | 1,490/1,490 |\n| Texas, urban (`pct_urban >= 0.5`) | 73.5% | 67.0% | 62.1% | 53.0% | −20.5 [−23.2, −17.8] | 1,327/1,362 |\n| Bexar County, Texas | 56.1% | 65.9% | 48.6% | 36.5% | −19.6 [−31.4, −7.9] | 55/139 |",
     "Bexar County's 372 tracts show a higher-vulnerability tail: Q4 has 139 tracts and 653,292 residents; 33 Q4 tracts (142,547 residents) have <5% OSM-attributed share, versus 9 of 55 Q1 tracts. The 12 lowest-share Q4 GEOIDs, with shares from 0.30% to 1.70%, are `48029140600`, `48029160400`, `48029121506`, `48029160600`, `48029170700`, `48029140500`, `48029130300`, `48029151302`, `48029160502`, `48029171000`, `48029171301`, and `48029150700`. The Bexar SVI slope is −0.360 (HC1 SE 0.072); one county cannot support county-clustered uncertainty. The unadjusted Texas slope is −0.247 (county-clustered SE 0.103; 185 counties).",
     "The Texas contrast is comparable in magnitude to the rural OSM-share contrast in Oklahoma, while Arizona's SVI interval crosses zero. This is a San Antonio-area pattern, not a cross-region rule. Source attribution does not establish map completeness, errors, causation, or effects on service delivery. No dispatch, evacuation, or relief outcomes were observed; use named tracts only as partner-led review priorities.",
@@ -4332,8 +4351,8 @@
    "claim_id": "san-antonio-svi-gradient-002",
    "doc": "docs/writeup/appendices/san-antonio-svi-gradient.md",
    "section": "Evidence and method",
-   "line_start": 5,
-   "line_end": 12,
+   "line_start": 7,
+   "line_end": 14,
    "kind": "table",
    "text": "| Scope | Q1 | Q2 | Q3 | Q4 | Q4−Q1, pp (95% CI) | n (Q1/Q4) |\n|---|---:|---:|---:|---:|---:|---:|\n| Eastern Oklahoma | 26.8% | 18.6% | 18.2% | 19.1% | −7.7 [−11.7, −3.8] | 295/296 |\n| Arizona | 84.8% | 86.5% | 80.8% | 81.9% | −2.9 [−6.4, +0.6] | 391/391 |\n| Northern California | 55.6% | 55.6% | 50.6% | 47.8% | −7.8 [−15.3, +0.1] | 148/148 |\n| South-Central Texas | 69.0% | 57.0% | 53.1% | 50.3% | −18.8 [−21.4, −16.0] | 1,490/1,490 |\n| Texas, urban (`pct_urban >= 0.5`) | 73.5% | 67.0% | 62.1% | 53.0% | −20.5 [−23.2, −17.8] | 1,327/1,362 |\n| Bexar County, Texas | 56.1% | 65.9% | 48.6% | 36.5% | −19.6 [−31.4, −7.9] | 55/139 |",
    "provenance_class": "measured_provided_data",
@@ -4357,6 +4376,7 @@
    "derived_tokens": [],
    "hedge_context": [
     "This descriptive check uses only official sample GEOIDs, provided Overture building OSM-source share, and provided `svi_overall`, `svi_covered`, `pct_urban`, and population. Quartiles are computed within each region; the Bexar and urban-Texas subsets retain South-Central Texas cutpoints. Table values are equal-weight tract means. Q4−Q1 intervals are 5,000 independent tract-bootstrap resamples (seed 20261024). The measure is source attribution, not building accuracy or completeness.",
+    "Read the table left to right: within Texas, OSM share falls from the least vulnerable quartile (Q1) to the most vulnerable (Q4); the Q4−Q1 column gives the drop with its interval.",
     "| Scope | Q1 | Q2 | Q3 | Q4 | Q4−Q1, pp (95% CI) | n (Q1/Q4) |\n|---|---:|---:|---:|---:|---:|---:|\n| Eastern Oklahoma | 26.8% | 18.6% | 18.2% | 19.1% | −7.7 [−11.7, −3.8] | 295/296 |\n| Arizona | 84.8% | 86.5% | 80.8% | 81.9% | −2.9 [−6.4, +0.6] | 391/391 |\n| Northern California | 55.6% | 55.6% | 50.6% | 47.8% | −7.8 [−15.3, +0.1] | 148/148 |\n| South-Central Texas | 69.0% | 57.0% | 53.1% | 50.3% | −18.8 [−21.4, −16.0] | 1,490/1,490 |\n| Texas, urban (`pct_urban >= 0.5`) | 73.5% | 67.0% | 62.1% | 53.0% | −20.5 [−23.2, −17.8] | 1,327/1,362 |\n| Bexar County, Texas | 56.1% | 65.9% | 48.6% | 36.5% | −19.6 [−31.4, −7.9] | 55/139 |",
     "Bexar County's 372 tracts show a higher-vulnerability tail: Q4 has 139 tracts and 653,292 residents; 33 Q4 tracts (142,547 residents) have <5% OSM-attributed share, versus 9 of 55 Q1 tracts. The 12 lowest-share Q4 GEOIDs, with shares from 0.30% to 1.70%, are `48029140600`, `48029160400`, `48029121506`, `48029160600`, `48029170700`, `48029140500`, `48029130300`, `48029151302`, `48029160502`, `48029171000`, `48029171301`, and `48029150700`. The Bexar SVI slope is −0.360 (HC1 SE 0.072); one county cannot support county-clustered uncertainty. The unadjusted Texas slope is −0.247 (county-clustered SE 0.103; 185 counties).",
     "The Texas contrast is comparable in magnitude to the rural OSM-share contrast in Oklahoma, while Arizona's SVI interval crosses zero. This is a San Antonio-area pattern, not a cross-region rule. Source attribution does not establish map completeness, errors, causation, or effects on service delivery. No dispatch, evacuation, or relief outcomes were observed; use named tracts only as partner-led review priorities.",
@@ -4368,8 +4388,8 @@
    "claim_id": "san-antonio-svi-gradient-003",
    "doc": "docs/writeup/appendices/san-antonio-svi-gradient.md",
    "section": "Evidence and method",
-   "line_start": 14,
-   "line_end": 14,
+   "line_start": 16,
+   "line_end": 16,
    "kind": "paragraph",
    "text": "Bexar County's 372 tracts show a higher-vulnerability tail: Q4 has 139 tracts and 653,292 residents; 33 Q4 tracts (142,547 residents) have <5% OSM-attributed share, versus 9 of 55 Q1 tracts. The 12 lowest-share Q4 GEOIDs, with shares from 0.30% to 1.70%, are `48029140600`, `48029160400`, `48029121506`, `48029160600`, `48029170700`, `48029140500`, `48029130300`, `48029151302`, `48029160502`, `48029171000`, `48029171301`, and `48029150700`. The Bexar SVI slope is −0.360 (HC1 SE 0.072); one county cannot support county-clustered uncertainty. The unadjusted Texas slope is −0.247 (county-clustered SE 0.103; 185 counties).",
    "provenance_class": "measured_provided_data",
@@ -4393,6 +4413,7 @@
    "derived_tokens": [],
    "hedge_context": [
     "This descriptive check uses only official sample GEOIDs, provided Overture building OSM-source share, and provided `svi_overall`, `svi_covered`, `pct_urban`, and population. Quartiles are computed within each region; the Bexar and urban-Texas subsets retain South-Central Texas cutpoints. Table values are equal-weight tract means. Q4−Q1 intervals are 5,000 independent tract-bootstrap resamples (seed 20261024). The measure is source attribution, not building accuracy or completeness.",
+    "Read the table left to right: within Texas, OSM share falls from the least vulnerable quartile (Q1) to the most vulnerable (Q4); the Q4−Q1 column gives the drop with its interval.",
     "| Scope | Q1 | Q2 | Q3 | Q4 | Q4−Q1, pp (95% CI) | n (Q1/Q4) |\n|---|---:|---:|---:|---:|---:|---:|\n| Eastern Oklahoma | 26.8% | 18.6% | 18.2% | 19.1% | −7.7 [−11.7, −3.8] | 295/296 |\n| Arizona | 84.8% | 86.5% | 80.8% | 81.9% | −2.9 [−6.4, +0.6] | 391/391 |\n| Northern California | 55.6% | 55.6% | 50.6% | 47.8% | −7.8 [−15.3, +0.1] | 148/148 |\n| South-Central Texas | 69.0% | 57.0% | 53.1% | 50.3% | −18.8 [−21.4, −16.0] | 1,490/1,490 |\n| Texas, urban (`pct_urban >= 0.5`) | 73.5% | 67.0% | 62.1% | 53.0% | −20.5 [−23.2, −17.8] | 1,327/1,362 |\n| Bexar County, Texas | 56.1% | 65.9% | 48.6% | 36.5% | −19.6 [−31.4, −7.9] | 55/139 |",
     "Bexar County's 372 tracts show a higher-vulnerability tail: Q4 has 139 tracts and 653,292 residents; 33 Q4 tracts (142,547 residents) have <5% OSM-attributed share, versus 9 of 55 Q1 tracts. The 12 lowest-share Q4 GEOIDs, with shares from 0.30% to 1.70%, are `48029140600`, `48029160400`, `48029121506`, `48029160600`, `48029170700`, `48029140500`, `48029130300`, `48029151302`, `48029160502`, `48029171000`, `48029171301`, and `48029150700`. The Bexar SVI slope is −0.360 (HC1 SE 0.072); one county cannot support county-clustered uncertainty. The unadjusted Texas slope is −0.247 (county-clustered SE 0.103; 185 counties).",
     "The Texas contrast is comparable in magnitude to the rural OSM-share contrast in Oklahoma, while Arizona's SVI interval crosses zero. This is a San Antonio-area pattern, not a cross-region rule. Source attribution does not establish map completeness, errors, causation, or effects on service delivery. No dispatch, evacuation, or relief outcomes were observed; use named tracts only as partner-led review priorities.",

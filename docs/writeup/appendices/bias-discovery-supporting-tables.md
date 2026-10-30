@@ -1,6 +1,6 @@
 ### Rio Grande border-county detail
 
-Values are from `reports/discovery-border-metros.json`; Google attribution is regional, and provided-field Overture/USFS ratios are context, not Microsoft-target proxies.
+Values are from `reports/discovery-border-metros.json`; Google attribution is regional, and provided-field Overture/USFS ratios are context, not Microsoft-target proxies. Look at the mean OSM share column: it stays low in the large counties (Hidalgo, Webb, Starr) while the other-source share is high.
 
 | Border county | Tracts | Population | Mean OSM share (95% tract CI) | Other-source share* | Median Overture / provided USFS count† |
 |---|---:|---:|---:|---:|---:|
@@ -19,7 +19,7 @@ Values are from `reports/discovery-border-metros.json`; Google attribution is re
 
 ### Paradise/Magalia tract detail
 
-The focal tract values are from `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; DINS counts and relative errors are from `reports/discovery-dins-mechanism.json#/focal_butte_tracts`.
+The focal tract values are from `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; DINS counts and relative errors are from `reports/discovery-dins-mechanism.json#/focal_butte_tracts`. Look at the last column: every relative error is far above the 0.30 pass threshold, which is why the fire-damage mechanism was not confirmed.
 
 | GEOID | Overture / reference | Reference − Overture | DINS destroyed | DINS major | Relative error |
 |---|---:|---:|---:|---:|---:|

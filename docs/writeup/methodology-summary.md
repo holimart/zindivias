@@ -1,5 +1,7 @@
 ## What the submitted score is
 
+Two scored files were submitted, in this order. Protocol A (`V2_model_cgs`) is a fixed-formula estimate of each tract's coverage gap built only from the provided Overture and census features: it averages up to three component gaps (roads, buildings, points of interest), each clipped to the unit interval. Protocol B (`B_from_A_cgs`) takes A's score and pulls it halfway toward the mean of A over the tract's region. No labels, leaderboard scores, placeholders, or removed reference layers enter either file; the public scores are reported for transparency only.
+
 Final-two: `V2_model_cgs` (`hvLtPVmr`; SHA-256 `5d0607d5531793008d8d5c86b1625f26e5bb8e9504a2b4a4a84f0224a0f5cef7`) and `B_from_A_cgs` (`eAaWXWxM`; SHA-256 `38e17cf1ec99f4f3fc5d358d13ccd0edfabe947d81fd6b6e5ef61e6cea006607`). Each is a 9,794-row `GEOID,coverage_gap_score` file copied byte-for-byte from its frozen source. 9,379 GEOIDs are official; the other 415 eastern-WA template rows use registered zero fill, not target estimates.
 
 V2 components:

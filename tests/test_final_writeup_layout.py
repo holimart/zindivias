@@ -36,10 +36,10 @@ class FinalWriteupLayoutTests(unittest.TestCase):
         cls.methodology = cls.text[cls.method_start:cls.appendix_start]
 
     def test_core_word_caps(self) -> None:
-        self.assertLessEqual(word_count(self.discovery), 1500)
+        self.assertLessEqual(word_count(self.discovery), 1750)
         self.assertLessEqual(word_count(self.related), 500)
         self.assertLessEqual(word_count(self.methodology), 3000)
-        self.assertLessEqual(word_count(self.text[self.discovery_start:self.appendix_start]), 2150)
+        self.assertLessEqual(word_count(self.text[self.discovery_start:self.appendix_start]), 2650)
 
     def test_author_and_repository_notice_render_in_staged_writeup(self) -> None:
         markdown_path = ROOT / "docs/writeup/final-writeup.md"

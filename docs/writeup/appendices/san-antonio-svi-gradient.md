@@ -2,6 +2,8 @@
 
 This descriptive check uses only official sample GEOIDs, provided Overture building OSM-source share, and provided `svi_overall`, `svi_covered`, `pct_urban`, and population. Quartiles are computed within each region; the Bexar and urban-Texas subsets retain South-Central Texas cutpoints. Table values are equal-weight tract means. Q4−Q1 intervals are 5,000 independent tract-bootstrap resamples (seed 20261024). The measure is source attribution, not building accuracy or completeness.
 
+Read the table left to right: within Texas, OSM share falls from the least vulnerable quartile (Q1) to the most vulnerable (Q4); the Q4−Q1 column gives the drop with its interval.
+
 | Scope | Q1 | Q2 | Q3 | Q4 | Q4−Q1, pp (95% CI) | n (Q1/Q4) |
 |---|---:|---:|---:|---:|---:|---:|
 | Eastern Oklahoma | 26.8% | 18.6% | 18.2% | 19.1% | −7.7 [−11.7, −3.8] | 295/296 |

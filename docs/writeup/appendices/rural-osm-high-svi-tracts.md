@@ -2,6 +2,8 @@ Selection and OSM-attributed shares below are copied from the 40 `named_lowest_o
 
 County names are the Census PDB 2026 `County_name` field joined by `GEO_ID` (file SHA-256 `2faf8d075dfdf9841dc265c40b97f181a5716d604672eb130444138e363f65d5`). Place names are TIGER/Line 2024 `NAMELSAD` values from the Census place polygon with the greatest area overlap with each TIGER tract polygon, after projecting both to EPSG:5070; ties are alphabetical. An em dash means no place polygon overlaps. These geographic labels only annotate the preselected report records. The four state place-file URLs, retrieval dates, and manifest are listed in Appendix F and `$COMPETITION_WORKSPACE/external-discovery-2026-10-29/census-tiger-2024-places/MANIFEST.json`.
 
+The table lists, per region, the ten most vulnerable (SVI Q4) tracts with the lowest OSM-attributed share; it is a review list for mappers, not a ranking of map errors.
+
 | Region | GEOID | County | Census place | OSM-attributed share |
 |---|---|---|---|---:|
 | Eastern Oklahoma | `40109108803` | Oklahoma County | Oklahoma City city | 0.063% |

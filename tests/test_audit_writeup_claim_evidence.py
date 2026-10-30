@@ -212,7 +212,7 @@ class InventoryTests(unittest.TestCase):
         markdown = (ROOT / "docs/writeup/claim-evidence-audit.md").read_text()
         self.assertIn("product differences not covered by the registered disclosure rules", markdown)
         self.assertIn("None for claim evidence", markdown)
-        self.assertIn("18/19", markdown)
+        self.assertIn("19/20", markdown)
 
 
 
