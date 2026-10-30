@@ -1,4 +1,5 @@
 # Bias Bounty Mapping Equity Challenge — discovery and methodology
+Martin Holeček (Zindi: holi) — 2026-10-30
 
 ## Executive summary
 
@@ -16,6 +17,7 @@
 - Protocol B: `B_from_A_cgs`; leaderboard submission `eAaWXWxM`.
 - Public RMSE (not private-split evidence): V2 0.1110; B 0.0975.
 - Predictions use provided features only; no labels, hidden targets, placeholders, or removed references.
+- All files cited by path (`reports/*.json`, `scripts/*`, `docs/writeup/appendices/*`) are in the submission repository: https://github.com/holimart/zindivias (CC-BY-SA 4.0); the organisers may also request it directly.
 We request consideration for both Best Bias Discovery ($1,000) and Best Documentation ($500).
 
 ## Contents

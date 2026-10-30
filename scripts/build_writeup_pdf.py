@@ -98,6 +98,8 @@ def build_pdf(markdown_path: Path = DEFAULT_MARKDOWN,
     from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
     from reportlab.lib.units import mm
     from reportlab.pdfgen import canvas as rl_canvas
+    from reportlab.pdfbase import pdfmetrics
+    from reportlab.pdfbase.ttfonts import TTFont
     from reportlab.platypus import (BaseDocTemplate, Frame, Image, KeepTogether,
                                     PageBreak, PageTemplate, Paragraph, Spacer, Table,
                                     TableStyle)
@@ -111,6 +113,11 @@ def build_pdf(markdown_path: Path = DEFAULT_MARKDOWN,
     if reportlab.Version != EXPECTED_REPORTLAB or found_versions != expected_versions:
         raise RuntimeError(f"locked PDF toolchain mismatch: expected {expected_versions}, "
                            f"found {found_versions}")
+    unicode_font_path = Path("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf")
+    if not unicode_font_path.is_file():
+        raise RuntimeError(f"Unicode fallback font is unavailable: {unicode_font_path}")
+    if "WriteupUnicode" not in pdfmetrics.getRegisteredFontNames():
+        pdfmetrics.registerFont(TTFont("WriteupUnicode", str(unicode_font_path)))
     if not markdown_path.is_file():
         raise FileNotFoundError(markdown_path)
     source = markdown_path.read_text(encoding="utf-8")
@@ -176,6 +183,8 @@ def build_pdf(markdown_path: Path = DEFAULT_MARKDOWN,
     body = ParagraphStyle("WriteupBody", parent=styles["BodyText"], fontName="Helvetica",
                           fontSize=8.7, leading=11.2, alignment=TA_LEFT, spaceAfter=4,
                           wordWrap="CJK", splitLongWords=1)
+    unicode_body = ParagraphStyle("WriteupUnicodeBody", parent=body,
+                                  fontName="WriteupUnicode")
     compact = ParagraphStyle("WriteupCompact", parent=body, fontSize=7.0, leading=8.3,
                              spaceAfter=0, wordWrap="CJK", splitLongWords=1)
     code = ParagraphStyle("WriteupCode", parent=body, fontName="Courier", fontSize=6.8,
@@ -318,7 +327,12 @@ def build_pdf(markdown_path: Path = DEFAULT_MARKDOWN,
             story.append(Paragraph(f"{marker} {inline_markup(bullet.group(3))}", style))
             index += 1
             continue
-        story.append(Paragraph(inline_markup(stripped), body))
+        try:
+            stripped.encode("cp1252")
+            paragraph_style = body
+        except UnicodeEncodeError:
+            paragraph_style = unicode_body
+        story.append(Paragraph(inline_markup(stripped), paragraph_style))
         index += 1
 
     doc = WriteupDocTemplate(str(output_path))

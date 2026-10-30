@@ -1,5 +1,7 @@
 # Bias Bounty Mapping Equity Challenge
 
+Author: Martin Holeček (Zindi: holi). Writeup PDF: [docs/writeup/final-writeup.pdf](docs/writeup/final-writeup.pdf). Reproduce from challenge data by setting `COMPETITION_WORKSPACE` to the authorized workspace and running `scripts/reproduce.sh`.
+
 Local-only competition worktree for the `competitionsall` orchestrator.
 
 - Competition: https://zindi.africa/competitions/bias-bounty-mapping-equity-challenge

@@ -41,6 +41,20 @@ class FinalWriteupLayoutTests(unittest.TestCase):
         self.assertLessEqual(word_count(self.methodology), 3000)
         self.assertLessEqual(word_count(self.text[self.discovery_start:self.appendix_start]), 2150)
 
+    def test_author_and_repository_notice_render_in_staged_writeup(self) -> None:
+        markdown_path = ROOT / "docs/writeup/final-writeup.md"
+        markdown = markdown_path.read_text(encoding="utf-8")
+        lines = markdown.splitlines()
+        self.assertEqual(lines[0], "# Bias Bounty Mapping Equity Challenge — discovery and methodology")
+        self.assertEqual(lines[1], "Martin Holeček (Zindi: holi) — 2026-10-30")
+        self.assertIn("submission repository: https://github.com/holimart/zindivias (CC-BY-SA 4.0)", markdown)
+        pdftotext = shutil.which("pdftotext")
+        if pdftotext:
+            extracted = subprocess.run([pdftotext, "-layout", str(PDF), "-"], check=True,
+                                       capture_output=True, text=True).stdout
+            self.assertIn("Martin Holeček (Zindi: holi) — 2026-10-30", extracted)
+            self.assertIn("reports/*.json", extracted)
+
     def test_discovery_has_two_tables_and_one_map(self) -> None:
         self.assertEqual(sum(line.startswith("|---") for line in self.discovery.splitlines()), 2)
         self.assertIn("Does it transfer?", self.discovery)
