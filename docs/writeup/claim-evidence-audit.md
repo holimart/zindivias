@@ -5,8 +5,8 @@ Row: `bias-writeup-claim-evidence-audit`. Documentation screen: every quantitati
 ## Verdict
 
 - **83 of 83 quantitative claims fully traceable** (100.0%).
-- **961 of 961 numeric tokens (100.0%) are present in the evidence named by the claim that states them.**
-- 83 per-claim verify commands and 20 reproduce commands; 18/19 recorded reproduce-command exits are 0; 1 command(s) lack an execution record in this no-`--execute-reproduce` audit pass; all recorded reproduce-command product hashes match the current files. 2 executed reproduce command(s) generated product differences not covered by the registered disclosure rules; see the audit JSON's tier_b_reproduce entries.
+- **967 of 967 numeric tokens (100.0%) are present in the evidence named by the claim that states them.**
+- 83 per-claim verify commands and 21 reproduce commands; 19/20 recorded reproduce-command exits are 0; 1 command(s) lack an execution record in this no-`--execute-reproduce` audit pass; all recorded reproduce-command product hashes match the current files. 2 executed reproduce command(s) generated product differences not covered by the registered disclosure rules; see the audit JSON's tier_b_reproduce entries.
 - Accuracy language outside the allowed classes: none. Prohibited reference/label/leaderboard sources used as scored-model evidence: none.
 - All acceptance gates: **FAIL**.
 
@@ -18,7 +18,7 @@ Each registered writeup source document is split into quantitative claim blocks 
 
 | Document | Claims | Fully traceable | Numeric tokens | Covered |
 |---|---:|---:|---:|---:|
-| `docs/writeup/bias-discovery.md` | 14 | 14 | 117 | 117 |
+| `docs/writeup/bias-discovery.md` | 14 | 14 | 123 | 123 |
 | `docs/writeup/methodology-summary.md` | 1 | 1 | 3 | 3 |
 | `docs/writeup/methodology.md` | 46 | 46 | 535 | 535 |
 | `docs/writeup/edge-cases.md` | 7 | 7 | 131 | 131 |
@@ -34,7 +34,7 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 | `bias-discovery-001` \| Region \| Rural mean \| Urban mean \| Rural − urban (percentage points)… | `bias-discovery.md` | Evidence | 9-14 | `measured_provided_data` | `reports/source-provenance.json` | `/regions/eastern-ok/spearman_correlations/building_osm_share/pct_urban/n` | 33/33 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
 | `bias-discovery-002` Values are copied from `reports/source-provenance.json` (SHA-256 `e801… | `bias-discovery.md` | Evidence | 16-16 | `measured_provided_data` | `reports/source-provenance.json` | `/statistics/stratum_means` | 1/1 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
 | `bias-discovery-003` Lead: border metros have machine-only footprints with an Overture thir… | `bias-discovery.md` | Impact and novelty | 30-30 | `measured_external_discovery_data` | `reports/discovery-border-transfer.json` | `/` | 3/3 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with-req…` |
-| `bias-discovery-004` Ten border counties, 1.77M residents; impacts unmeasured. | `bias-discovery.md` | Impact and novelty | 32-32 | `measured_external_discovery_data` | `reports/discovery-border-metros.json` | `/` | 1/1 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with-req…` |
+| `bias-discovery-004` CDC PLACES 2025 estimates uninsured prevalence among adults aged 18–64… | `bias-discovery.md` | Impact and novelty | 32-32 | `measured_external_discovery_data` | `reports/who-is-affected-cdc-places.json` | `/contrasts/ten border counties vs rest of South-Central Texas` | 7/7 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with-req…` |
 | `bias-discovery-005` Across 460 border tracts, OSM mean is 9.18% vs 61.48% elsewhere (68.66… | `bias-discovery.md` | Evidence and mechanism | 36-36 | `measured_external_discovery_data` | `reports/discovery-border-metros.json` | `/results/adjusted_border_association_plus_svi_hispanic/border_coefficient` | 12/12 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with-req…` |
 | `bias-discovery-006` `Other` is an Overture `sources` label, not removed Google Open Buildi… | `bias-discovery.md` | Evidence and mechanism | 38-38 | `measured_external_discovery_data` | `reports/discovery-border-transfer.json` | `/other_source_context/bexar_cache/footprint_weighted_other_source_share` | 2/2 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with-req…` |
 | `bias-discovery-007` “Google-only” denotes an Overture provider tag, not a removed referenc… | `bias-discovery.md` | Does it transfer? | 42-42 | `measured_external_discovery_data` | `reports/source-provenance.json` | `/` | 8/8 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with-req…` |
@@ -156,6 +156,7 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 | `reports/v2-component-contribution-audit.json` | `dd1fb9696932cec9006f0ea487516418b49004317005f7368ea89cbcb6db597d` | 1 |
 | `reports/v2-defined-mask-audit.json` | `fea33ef7daeeeac2fd187803481e050085698afd6f44ed182e9c5af5028054d2` | 8 |
 | `reports/v2-input-provenance.json` | `b52c3b1bcfee452e8d04c2af28a8c9abd1a0fb609b50c1ed9a9d56b9ec7f5d6a` | 5 |
+| `reports/who-is-affected-cdc-places.json` | `6b007fbed27f613b54c29ae1ac28e759c52c68bd5e8f9fabb68c115ad58e3ef7` | 1 |
 | `scripts/audit_place_duplicates.py` | `03717aa54a75a6e55bbe6b85f65dd66f4cd1cae88632b12c5006087247da1e90` | 1 |
 | `scripts/discovery_confidence_by_stratum.py` | `35a30e0a87ad016d3e936be4437084cffc91f708ef5c6692886c38805026d9a1` | 1 |
 | `scripts/estimate_gaps.py` | `4f59982e0349af048ba11efbd5dbc629076eef8d3c8dc08d5747da5833bfc4fe` | 5 |
@@ -368,6 +369,8 @@ Reproduce commands (executed with the authorised workspace and recorded in the e
 /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/audit_san_antonio_svi_gradient.py --workspace "$COMPETITION_WORKSPACE" --out reports/san-antonio-svi-gradient.json
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/border_metros.py --workspace "$COMPETITION_WORKSPACE" --out reports/discovery-border-metros.json && /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/transfer_outside_regions.py --workspace "$COMPETITION_WORKSPACE" --out reports/discovery-border-transfer.json
+# exit 0
+/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/border_metros.py --workspace "$COMPETITION_WORKSPACE" --out reports/discovery-border-metros.json && /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/transfer_outside_regions.py --workspace "$COMPETITION_WORKSPACE" --out reports/discovery-border-transfer.json && /home/martin/hddProjects/langywrap/uv run --python 3.12 --no-project --isolated --with-requirements requirements.txt --with-requirements requirements-cdc-analysis.txt python scripts/audit_who_is_affected_cdc_places.py --workspace "$COMPETITION_WORKSPACE" --out reports/who-is-affected-cdc-places.json
 # exit 0
 /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/transfer_outside_regions.py --workspace "$COMPETITION_WORKSPACE" --out reports/discovery-border-transfer.json
 # exit 0

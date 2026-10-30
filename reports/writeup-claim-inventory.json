@@ -106,7 +106,7 @@
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-003",
-   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/border_metros.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-metros.json && /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/transfer_outside_regions.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-transfer.json",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/border_metros.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-metros.json && /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/transfer_outside_regions.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-transfer.json && /home/martin/hddProjects/langywrap/uv run --python 3.12 --no-project --isolated --with-requirements requirements.txt --with-requirements requirements-cdc-analysis.txt python scripts/audit_who_is_affected_cdc_places.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/who-is-affected-cdc-places.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-border-metros.json",
@@ -115,13 +115,17 @@
     {
      "path": "reports/discovery-border-transfer.json",
      "sha256": "64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795"
+    },
+    {
+     "path": "reports/who-is-affected-cdc-places.json",
+     "sha256": "6b007fbed27f613b54c29ae1ac28e759c52c68bd5e8f9fabb68c115ad58e3ef7"
     }
    ],
    "tokens_exempt": [],
    "derived_tokens": [],
    "hedge_context": [
     "Lead: border metros have machine-only footprints with an Overture third provider, beyond low OSM. Ector has lower OSM than El Paso (6.7% vs 9.3%), 47.7% Esri, and zero border-provider share; source, not accuracy, is measured.",
-    "Ten border counties, 1.77M residents; impacts unmeasured.",
+    "CDC PLACES 2025 estimates uninsured prevalence among adults aged 18–64 at 36.9% (about one adult in three) in these ten border counties versus 18.1% elsewhere in the South-Central Texas scored region (difference +18.8 pp, county-cluster 95% CI +16.6 to +22.1 pp; 455 joined border tracts). This describes the border population where the place effect occurs; it is not evidence that low-OSM tracts are sicker. Health outcomes and dispatch/evacuation impacts were not measured (`reports/who-is-affected-cdc-places.json#/contrasts/ten border counties vs rest of South-Central Texas`).",
     "Regional composition can explain the pooled tribal/non-tribal contrast; this is not evidence of a general tribal disparity or causation."
    ],
    "notes": ""
@@ -133,18 +137,24 @@
    "line_start": 32,
    "line_end": 32,
    "kind": "paragraph",
-   "text": "Ten border counties, 1.77M residents; impacts unmeasured.",
+   "text": "CDC PLACES 2025 estimates uninsured prevalence among adults aged 18–64 at 36.9% (about one adult in three) in these ten border counties versus 18.1% elsewhere in the South-Central Texas scored region (difference +18.8 pp, county-cluster 95% CI +16.6 to +22.1 pp; 455 joined border tracts). This describes the border population where the place effect occurs; it is not evidence that low-OSM tracts are sicker. Health outcomes and dispatch/evacuation impacts were not measured (`reports/who-is-affected-cdc-places.json#/contrasts/ten border counties vs rest of South-Central Texas`).",
    "provenance_class": "measured_external_discovery_data",
    "evidence": [
     {
+     "path": "reports/who-is-affected-cdc-places.json",
+     "sha256": "6b007fbed27f613b54c29ae1ac28e759c52c68bd5e8f9fabb68c115ad58e3ef7",
+     "primary": true,
+     "pointer": "/contrasts/ten border counties vs rest of South-Central Texas"
+    },
+    {
      "path": "reports/discovery-border-metros.json",
      "sha256": "27779986d787594abdadf741c983db13dedf25fb476cc4ff2ae096a1a4260244",
-     "primary": true,
+     "primary": false,
      "pointer": "/"
     }
    ],
    "verify_command": "/home/martin/hddProjects/langywrap/uv run --quiet python scripts/verify_writeup_claim.py --claim bias-discovery-004",
-   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/border_metros.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-metros.json && /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/transfer_outside_regions.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-transfer.json",
+   "reproduce_command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/border_metros.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-metros.json && /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/transfer_outside_regions.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-transfer.json && /home/martin/hddProjects/langywrap/uv run --python 3.12 --no-project --isolated --with-requirements requirements.txt --with-requirements requirements-cdc-analysis.txt python scripts/audit_who_is_affected_cdc_places.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/who-is-affected-cdc-places.json",
    "reproduce_products": [
     {
      "path": "reports/discovery-border-metros.json",
@@ -153,13 +163,17 @@
     {
      "path": "reports/discovery-border-transfer.json",
      "sha256": "64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795"
+    },
+    {
+     "path": "reports/who-is-affected-cdc-places.json",
+     "sha256": "6b007fbed27f613b54c29ae1ac28e759c52c68bd5e8f9fabb68c115ad58e3ef7"
     }
    ],
    "tokens_exempt": [],
    "derived_tokens": [],
    "hedge_context": [
     "Lead: border metros have machine-only footprints with an Overture third provider, beyond low OSM. Ector has lower OSM than El Paso (6.7% vs 9.3%), 47.7% Esri, and zero border-provider share; source, not accuracy, is measured.",
-    "Ten border counties, 1.77M residents; impacts unmeasured.",
+    "CDC PLACES 2025 estimates uninsured prevalence among adults aged 18–64 at 36.9% (about one adult in three) in these ten border counties versus 18.1% elsewhere in the South-Central Texas scored region (difference +18.8 pp, county-cluster 95% CI +16.6 to +22.1 pp; 455 joined border tracts). This describes the border population where the place effect occurs; it is not evidence that low-OSM tracts are sicker. Health outcomes and dispatch/evacuation impacts were not measured (`reports/who-is-affected-cdc-places.json#/contrasts/ten border counties vs rest of South-Central Texas`).",
     "Regional composition can explain the pooled tribal/non-tribal contrast; this is not evidence of a general tribal disparity or causation."
    ],
    "notes": ""

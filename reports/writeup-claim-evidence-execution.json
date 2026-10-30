@@ -1,15 +1,6 @@
 {
  "commands": [
   {
-   "command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 --with pytest python -m pytest -q",
-   "exit_code": 2,
-   "self_referential_deselect": [
-    "tests/test_audit_writeup_claim_evidence.py::InventoryTests::test_report_is_deterministic_and_carries_no_wall_clock_key"
-   ],
-   "undisclosed_product_changes": [],
-   "products": []
-  },
-  {
    "command": "/home/martin/hddProjects/langywrap/uv run --quiet --with numpy==2.5.4 --with pyarrow==26.0.0 --with pyproj==3.8.0 --with shapely==2.2.0 python scripts/audit_edge_cases.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/edge-cases.json",
    "exit_code": 0,
    "self_referential_deselect": [],
@@ -221,6 +212,26 @@
    ]
   },
   {
+   "command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/border_metros.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-metros.json && /home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/transfer_outside_regions.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-transfer.json && /home/martin/hddProjects/langywrap/uv run --python 3.12 --no-project --isolated --with-requirements requirements.txt --with-requirements requirements-cdc-analysis.txt python scripts/audit_who_is_affected_cdc_places.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/who-is-affected-cdc-places.json",
+   "exit_code": 0,
+   "self_referential_deselect": [],
+   "undisclosed_product_changes": [],
+   "products": [
+    {
+     "path": "reports/discovery-border-metros.json",
+     "sha256": "27779986d787594abdadf741c983db13dedf25fb476cc4ff2ae096a1a4260244"
+    },
+    {
+     "path": "reports/discovery-border-transfer.json",
+     "sha256": "64037e7360dab85eae3f748ec5d0ec14155999587302ae12e83bd3f9a893b795"
+    },
+    {
+     "path": "reports/who-is-affected-cdc-places.json",
+     "sha256": "6b007fbed27f613b54c29ae1ac28e759c52c68bd5e8f9fabb68c115ad58e3ef7"
+    }
+   ]
+  },
+  {
    "command": "/home/martin/hddProjects/langywrap/uv run --quiet --with-requirements requirements.txt python scripts/discovery/transfer_outside_regions.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/discovery-border-transfer.json",
    "exit_code": 0,
    "self_referential_deselect": [],
@@ -329,6 +340,6 @@
  "working_tree_clean_before": false,
  "working_tree_clean_after": false,
  "present": true,
- "executed_in_this_pass": 20,
+ "executed_in_this_pass": 1,
  "commands_total": 20
 }

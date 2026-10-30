@@ -29,7 +29,7 @@ Rural, higher-vulnerability residents may rely on building context for heat, dro
 
 Lead: border metros have machine-only footprints with an Overture third provider, beyond low OSM. Ector has lower OSM than El Paso (6.7% vs 9.3%), 47.7% Esri, and zero border-provider share; source, not accuracy, is measured.
 
-Ten border counties, 1.77M residents; impacts unmeasured.
+CDC PLACES 2025 estimates uninsured prevalence among adults aged 18–64 at 36.9% (about one adult in three) in these ten border counties versus 18.1% elsewhere in the South-Central Texas scored region (difference +18.8 pp, county-cluster 95% CI +16.6 to +22.1 pp; 455 joined border tracts). This describes the border population where the place effect occurs; it is not evidence that low-OSM tracts are sicker. Health outcomes and dispatch/evacuation impacts were not measured (`reports/who-is-affected-cdc-places.json#/contrasts/ten border counties vs rest of South-Central Texas`).
 
 ### Evidence and mechanism
 

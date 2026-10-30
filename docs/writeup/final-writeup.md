@@ -7,7 +7,7 @@
 - **Paradise/Magalia:** Overture/WRC ratios are 0.620–0.747 in six tracts within the Microsoft-derived WRC lineage; the CAL FIRE DINS mechanism was not confirmed (0/6 focal passes; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/decision`).
 - **Tribal comparison:** the pooled result is region-confounded; 805 of 858 tribal tracts are in Eastern Oklahoma (`reports/discovery-strata-confound.json#/stratum_composition`).
 - **Out-of-region transfer:** Google-tagged shares were 0.330 in El Paso, 0.292 in Imperial, and 0.108 in Doña Ana, versus 0.000 in both controls (`reports/discovery-border-transfer.json#/results`).
-- **Who is affected:** in CDC PLACES 2025, uninsured prevalence among adults aged 18–64 is 36.9% in ten Texas border counties vs 18.1% elsewhere in the scored region (county-cluster 95% CI for the difference +16.6 to +22.1 pp); population context, not evidence about low-OSM tracts (`reports/who-is-affected-cdc-places.json`).
+- **Who is affected:** CDC PLACES 2025 estimates uninsured prevalence for adults aged 18–64 at 36.9% in the ten Texas border counties vs 18.1% elsewhere in the scored region (county-cluster 95% CI for the difference +16.6 to +22.1 pp); population context, not evidence about low-OSM tracts (`reports/who-is-affected-cdc-places.json`; `$COMPETITION_WORKSPACE/external-discovery-2026-10-29-fable/cdc-places-2025-tx/MANIFEST.json`).
 - **Scored methods:** `V2_model_cgs` and its pre-registered `B_from_A_cgs` companion use provided features only (`reports/final-two.json#/final_candidates`).
 
 ## Submission context
@@ -62,7 +62,7 @@ Rural, higher-vulnerability residents may rely on building context for heat, dro
 
 Lead: border metros have machine-only footprints with an Overture third provider, beyond low OSM. Ector has lower OSM than El Paso (6.7% vs 9.3%), 47.7% Esri, and zero border-provider share; source, not accuracy, is measured.
 
-CDC PLACES 2025 estimates uninsured prevalence among adults aged 18–64 at 36.9% (about one adult in three) in these ten border counties versus 18.1% elsewhere in the South-Central Texas scored region (difference +18.8 pp, county-cluster 95% CI +16.6 to +22.1 pp; 455 joined border tracts, about 1.24M adults). This describes the border population where the place effect occurs; it is not evidence that low-OSM tracts are sicker. Health outcomes and dispatch/evacuation impacts were not measured (`reports/who-is-affected-cdc-places.json#/contrasts/ten border counties vs rest of South-Central Texas`).
+CDC PLACES 2025 estimates uninsured prevalence among adults aged 18–64 at 36.9% (about one adult in three) in these ten border counties versus 18.1% elsewhere in the South-Central Texas scored region (difference +18.8 pp, county-cluster 95% CI +16.6 to +22.1 pp; 455 joined border tracts). This describes the border population where the place effect occurs; it is not evidence that low-OSM tracts are sicker. Health outcomes and dispatch/evacuation impacts were not measured (`reports/who-is-affected-cdc-places.json#/contrasts/ten border counties vs rest of South-Central Texas`).
 
 #### Evidence and mechanism
 
@@ -221,14 +221,14 @@ Five public external layers were used only for the discovery screen described in
 | Layer | Source URL | Retrieved | Licence / terms status |
 |---|---|---|---|
 | CDC/ATSDR SVI 2022 | https://svi.cdc.gov/Documents/Data/2022/csv/states/SVI_2022_US.csv | 2026-10-27 | Dataset-specific terms were not stated on the fetched ATSDR page. Treated as a U.S. federal government work under 17 U.S.C. Section 105, subject to third-party exceptions; this is a statutory assessment, not a quoted dataset-specific licence. |
-| CDC PLACES 2025, Texas census tracts (Socrata cwsq-ngmh) | https://data.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh | 2026-10-29 | Public Domain per Socrata metadata (`license.name=Public Domain`, `licenseId=PUBLIC_DOMAIN`); 2025 tract prevalence used only as border-population context in Best Bias Discovery, not as scored-model input. File SHA-256 and query/filter are in `$COMPETITION_WORKSPACE/external-discovery-2026-10-29-fable/cdc-places-2025-tx/MANIFEST.json`; results and input hashes are in `reports/who-is-affected-cdc-places.json`. |
 | USDA ERS RUCA 2020 | https://www.ers.usda.gov/media/5443/2020-rural-urban-commuting-area-codes-census-tracts.csv | 2026-10-27 | No terms/copyright statement found on fetched ERS page; unverified; ERS requests citation. |
 | Census Planning Database 2026 | https://www2.census.gov/adrm/PDB/2026/pdb2026tr.csv | 2026-10-27 | Not verified; Census terms/copyright pages were not read. |
 | Census TIGER/Line 2020 AIANNH polygons | https://www2.census.gov/geo/tiger/TIGER2020/AIANNH/tl_2020_us_aiannh.zip | 2026-10-27 | Not verified; Census terms/copyright pages were not read. |
-
-Reproduce the CDC PLACES join and county-cluster intervals from committed code and the manifested public input: `uv run --python 3.12 --no-project --isolated --with-requirements requirements.txt --with-requirements requirements-cdc-analysis.txt python scripts/audit_who_is_affected_cdc_places.py --workspace "$COMPETITION_WORKSPACE" --out reports/who-is-affected-cdc-places.json`. The report includes the provided-feature and strata hashes, CDC input hash, 1,000-replicate seed, all outcomes, the weak low-OSM comparison, and limitations.
+| CDC PLACES 2025, Texas census tracts | https://data.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh | 2026-10-29 | Public Domain per Socrata metadata (license.name='Public Domain', licenseId='PUBLIC_DOMAIN'; U.S. federal work). Retrieved CSV SHA-256 and query/filter are recorded in $COMPETITION_WORKSPACE/external-discovery-2026-10-29-fable/cdc-places-2025-tx/MANIFEST.json; report SHA-256 and input hashes are in reports/who-is-affected-cdc-places.json. |
 
 Source-file hashes, download timestamps, and source-page licence checks are recorded in `$COMPETITION_WORKSPACE/external-discovery-2026-10-27/MANIFEST.json`; the data files are not redistributed in this packet.
+
+Reproduce the CDC PLACES join and county-cluster intervals using `uv run --python 3.12 --no-project --isolated --with-requirements requirements.txt --with-requirements requirements-cdc-analysis.txt python scripts/audit_who_is_affected_cdc_places.py --workspace "$COMPETITION_WORKSPACE" --out reports/who-is-affected-cdc-places.json`. Input hashes, query/filter, outcomes, and limitations are recorded in the report and CDC workspace manifest.
 
 The general register below lists prior-art sources, organiser-hosted challenge files, and public discovery endpoints. Scored predictions read only files in the organiser data package.
 
@@ -242,6 +242,7 @@ The general register below lists prior-art sources, organiser-hosted challenge f
 | https://arxiv.org/abs/1707.01825 | Citation: Jacob Whitehill, “Climbing the Kaggle Leaderboard by Exploiting the Log-Loss Oracle,” arXiv:1707.01825. arXiv | 2026-10-24 | prior art and methodology know-how; not a dataset and never joined to scored predictions |
 | https://data.ca.gov/api/3/action/package_show?id=cal-fire-damage-inspection-dins-data | California State Geoportal metadata record and CC BY catalogue terms | 2026-10-29 | public source metadata used to record DINS attribution licence and dataset limitations |
 | https://data.ca.gov/dataset/cal-fire-damage-inspection-dins-data | CAL FIRE Damage Inspection (DINS) Data catalogue; public Best Bias Discovery source, CC BY version unspecified | 2026-10-29 | public external source used only for the Best Bias Discovery mechanism check; not joined to scored predictions |
+| https://data.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh | CDC PLACES 2025, Texas census tracts | 2026-10-29 | discovery-only population-health context for ten Texas border counties; not evidence about low-OSM tracts and never used in scored predictions |
 | https://docs.overturemaps.org/schema/ | Citation/documentation: Schema overview, Transportation Segment, and Places Place. URL check: all three official pages r | 2026-10-24 | prior art and methodology know-how; not a dataset and never joined to scored predictions |
 | https://docs.overturemaps.org/schema/reference/places/place/ | Citation/documentation: Schema overview, Transportation Segment, and Places Place. URL check: all three official pages r | 2026-10-24 | prior art and methodology know-how; not a dataset and never joined to scored predictions |
 | https://docs.overturemaps.org/schema/reference/transportation/segment/ | Citation/documentation: Schema overview, Transportation Segment, and Places Place. URL check: all three official pages r | 2026-10-24 | prior art and methodology know-how; not a dataset and never joined to scored predictions |
@@ -285,15 +286,15 @@ A machine-checked claim-to-evidence audit backs every number in this writeup.
 - `claims_total`: 83
 - `claims_fully_traceable`: 83
 - `fraction_quantitative_claims_traceable`: 1.0
-- `numeric_tokens_total`: 961
-- `numeric_tokens_covered`: 961
+- `numeric_tokens_total`: 967
+- `numeric_tokens_covered`: 967
 - `fraction_numeric_tokens_covered`: 1.0
 - `distinct_verify_commands`: 83
-- `distinct_reproduce_commands`: 20
+- `distinct_reproduce_commands`: 21
 - `derived_aggregates_verified`: 39
 - `claims_asserting_accuracy`: 0
 
-Current audit status: 83 of 83 quantitative claims are fully traceable (1.0); 961 of 961 numeric tokens are covered (1.0). There are 0 unresolved claim-evidence items. The full claim audit does not pass overall acceptance because three registered report-product differences remain outside accepted disclosure paths (`reports/writeup-claim-evidence-audit.json#/commands/undisclosed_product_changes`). This is a reproduction limitation, not an accuracy claim. The final-two result is separately traced to `reports/final-two.json` and machine-compared by the packet verifier.
+Current audit status: 83 of 83 quantitative claims are fully traceable (1.0); 967 of 967 numeric tokens are covered (1.0). There are 0 unresolved claim-evidence items. The full claim audit does not pass overall reproduction acceptance: 10 report-product differences remain outside accepted disclosure paths and 2 of 21 reproduction commands did not exit successfully (`reports/writeup-claim-evidence-audit.json#/commands`). This is a reproduction limitation, not an accuracy claim. The final-two result is separately traced to `reports/final-two.json` and machine-compared by the packet verifier.
 
 The claim inventory, audit configuration, and execution details are available in [`claim-evidence-audit.md`](claim-evidence-audit.md) and the linked JSON reports: `reports/writeup-claim-evidence-audit.json`, `reports/writeup-claim-inventory.json`, and `reports/writeup-claim-evidence-execution.json`.
 

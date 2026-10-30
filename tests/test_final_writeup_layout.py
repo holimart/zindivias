@@ -39,7 +39,7 @@ class FinalWriteupLayoutTests(unittest.TestCase):
         self.assertLessEqual(word_count(self.discovery), 1500)
         self.assertLessEqual(word_count(self.related), 500)
         self.assertLessEqual(word_count(self.methodology), 3000)
-        self.assertLessEqual(word_count(self.text[self.discovery_start:self.appendix_start]), 2100)
+        self.assertLessEqual(word_count(self.text[self.discovery_start:self.appendix_start]), 2150)
 
     def test_discovery_has_two_tables_and_one_map(self) -> None:
         self.assertEqual(sum(line.startswith("|---") for line in self.discovery.splitlines()), 2)

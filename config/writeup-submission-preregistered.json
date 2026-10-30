@@ -265,6 +265,15 @@
         "licence_terms": "Not verified; Census terms/copyright pages were not read.",
         "role": "discovery-only external context; never used in scored predictions"
       }
+    ],
+    "discovery_only_layers": [
+      {
+        "name": "CDC PLACES 2025, Texas census tracts",
+        "url": "https://data.cdc.gov/500-Cities-Places/PLACES-Local-Data-for-Better-Health-Census-Tract-D/cwsq-ngmh",
+        "accessed_on": "2026-10-29",
+        "licence_terms": "Public Domain per Socrata metadata (license.name='Public Domain', licenseId='PUBLIC_DOMAIN'; U.S. federal work). Retrieved CSV SHA-256 and query/filter are recorded in $COMPETITION_WORKSPACE/external-discovery-2026-10-29-fable/cdc-places-2025-tx/MANIFEST.json; report SHA-256 and input hashes are in reports/who-is-affected-cdc-places.json.",
+        "role": "discovery-only population-health context for ten Texas border counties; not evidence about low-OSM tracts and never used in scored predictions"
+      }
     ]
   },
   "model_evidence": {
@@ -406,7 +415,7 @@
     },
     "prizes_answer": ["Best Bias Discovery", "Best Documentation"],
     "writeup_pdf_path": "docs/writeup/final-writeup.pdf",
-    "writeup_pdf_sha256": "b99be27c5c4869e215d7560b9dc5b7bb193192ad8a20ae6dd10d80f3fe25df69",
+    "writeup_pdf_sha256": "877030a43296f27fe077e19e2ae6b973a51366e0017ba8f7db2a15440bf193af",
     "finding_1_abstract": "Across all four regions, rural tracts have lower mean OSM-attributed shares of Overture buildings than urban tracts. This is a provided-data source pattern, not an organizer-score comparison or evidence of missing or incorrect buildings.",
     "final_two_confirmation_text_draft": "Draft—use only after operator review/approval: Final two are A: V2_model_cgs (submission hvLtPVmr) and B: B_from_A_cgs (submission eAaWXWxM).",
     "ui_selection_instruction": "After review/approval, select exactly hvLtPVmr and eAaWXWxM in the Zindi UI and verify those two IDs are selected. Do not rely on the platform fallback: it would choose the historical P4, whose score is void for selection because of the column-order mismatch.",

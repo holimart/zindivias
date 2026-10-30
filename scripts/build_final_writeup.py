@@ -210,7 +210,8 @@ def external_register(document_text: str) -> list[dict[str, Any]]:
         url = normalize_url(source["url"])
         add(url, source["label"], source["role"], source["accessed_on"],
             url.startswith(OFFICIAL_HOSTS))
-    for source in CONFIG["external_sources"].get("required_external_layers", []):
+    for source in [*CONFIG["external_sources"].get("required_external_layers", []),
+                   *CONFIG["external_sources"].get("discovery_only_layers", [])]:
         add(normalize_url(source["url"]), source["name"], source["role"],
             source["accessed_on"], False)
         if source.get("documentation_url"):
@@ -257,7 +258,7 @@ def front_matter(config: dict[str, Any], submissions: list[dict[str, Any]],
         "- **Paradise/Magalia:** Overture/WRC ratios are 0.620–0.747 in six tracts within the Microsoft-derived WRC lineage; the CAL FIRE DINS mechanism was not confirmed (0/6 focal passes; `reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/decision`).",
         "- **Tribal comparison:** the pooled result is region-confounded; 805 of 858 tribal tracts are in Eastern Oklahoma (`reports/discovery-strata-confound.json#/stratum_composition`).",
         "- **Out-of-region transfer:** Google-tagged shares were 0.330 in El Paso, 0.292 in Imperial, and 0.108 in Doña Ana, versus 0.000 in both controls (`reports/discovery-border-transfer.json#/results`).",
-        "- **Who is affected:** CDC PLACES 2025 describes uninsured adults in border counties as population context, not evidence about low-OSM tracts (`$COMPETITION_WORKSPACE/external-discovery-2026-10-29-fable/cdc-places-2025-tx/MANIFEST.json`).",
+        "- **Who is affected:** CDC PLACES 2025 estimates uninsured prevalence for adults aged 18–64 at 36.9% in the ten Texas border counties vs 18.1% elsewhere in the scored region (county-cluster 95% CI for the difference +16.6 to +22.1 pp); population context, not evidence about low-OSM tracts (`reports/who-is-affected-cdc-places.json`; `$COMPETITION_WORKSPACE/external-discovery-2026-10-29-fable/cdc-places-2025-tx/MANIFEST.json`).",
         "- **Scored methods:** `V2_model_cgs` and its pre-registered `B_from_A_cgs` companion use provided features only (`reports/final-two.json#/final_candidates`).",
         "",
         "## Submission context",
@@ -378,13 +379,16 @@ def leaderboard_table(submissions: list[dict[str, Any]], candidate: dict[str, An
 
 def external_section(register: list[dict[str, Any]], provided_audit: dict[str, Any]) -> list[str]:
     lines = ["## Appendix F: External layers and source register", ""]
-    lines += ["Four public external layers were used only for the discovery screen described in the linked supporting analysis; none enters scored predictions. Retrieval dates and licence/terms verification status are recorded below. Where terms were not verified, no reuse or public-domain claim is made.", ""]
+    lines += ["Five public external layers were used only for the discovery screen described in the linked supporting analysis; none enters scored predictions. Retrieval dates and licence/terms verification status are recorded below. Where terms were not verified, no reuse or public-domain claim is made.", ""]
     layers = CONFIG["external_sources"].get("required_external_layers", [])
-    if layers:
+    discovery_layers = CONFIG["external_sources"].get("discovery_only_layers", [])
+    if layers or discovery_layers:
         lines += ["| Layer | Source URL | Retrieved | Licence / terms status |", "|---|---|---|---|"]
         lines += [f"| {row['name']} | {row['url']} | {row['accessed_on']} | {row['licence_terms']} |"
-                  for row in layers]
+                  for row in [*layers, *discovery_layers]]
         lines += ["", "Source-file hashes, download timestamps, and source-page licence checks are recorded in `$COMPETITION_WORKSPACE/external-discovery-2026-10-27/MANIFEST.json`; the data files are not redistributed in this packet.", ""]
+        if discovery_layers:
+            lines += ["Reproduce the CDC PLACES join and county-cluster intervals using `uv run --python 3.12 --no-project --isolated --with-requirements requirements.txt --with-requirements requirements-cdc-analysis.txt python scripts/audit_who_is_affected_cdc_places.py --workspace \"$COMPETITION_WORKSPACE\" --out reports/who-is-affected-cdc-places.json`. Input hashes, query/filter, outcomes, and limitations are recorded in the report and CDC workspace manifest.", ""]
     lines += ["The general register below lists prior-art sources, organiser-hosted challenge files, and public discovery endpoints. Scored predictions read only files in the organiser data package.", ""]
     if not register:
         lines += ["(no external sources consulted)", ""]
@@ -417,14 +421,21 @@ def reproducibility_section(audit: dict[str, Any]) -> list[str]:
         if key in measured:
             lines.append(f"- `{key}`: {measured[key]}")
     unresolved = len(audit.get("unresolved", []))
+    commands = audit.get("commands", {})
+    undisclosed_products = len(commands.get("undisclosed_product_changes", []))
+    reproduction_commands = commands.get("tier_b_reproduce", [])
+    failed_reproductions = sum(command.get("exit_code") != 0 for command in reproduction_commands)
     lines += ["", f"Current audit status: {measured.get('claims_fully_traceable')} of "
               f"{measured.get('claims_total')} quantitative claims are fully traceable "
               f"({measured.get('fraction_quantitative_claims_traceable')}); "
               f"{measured.get('numeric_tokens_covered')} of {measured.get('numeric_tokens_total')} "
               f"numeric tokens are covered ({measured.get('fraction_numeric_tokens_covered')}). "
               f"There are {unresolved} unresolved claim-evidence items. The full claim audit does "
-              "not pass overall acceptance because three registered report-product differences "
-              "remain outside accepted disclosure paths (`reports/writeup-claim-evidence-audit.json#/commands/undisclosed_product_changes`). This is a reproduction limitation, not an accuracy claim. The final-two "
+              f"not pass overall reproduction acceptance: {undisclosed_products} report-product "
+              f"differences remain outside accepted disclosure paths and {failed_reproductions} of "
+              f"{len(reproduction_commands)} reproduction commands did not exit successfully "
+              "(`reports/writeup-claim-evidence-audit.json#/commands`). This is a reproduction "
+              "limitation, not an accuracy claim. The final-two "
               "result is separately traced to `reports/final-two.json` and machine-compared by the "
               "packet verifier.", "",
               "The claim inventory, audit configuration, and execution details are available in "
