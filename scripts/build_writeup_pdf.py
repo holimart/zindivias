@@ -26,6 +26,80 @@ LOCAL_LINK_RE = re.compile(r"(?<!!)\[([^\]]+)\]\(((?:#|[A-Za-z0-9_./-]+\.md)[^)\
 IMAGE_RE = re.compile(r"^!\[([^\]]*)\]\(([^)]+)\)$")
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.*)$")
 TRAILING_PUNCTUATION = ".,;:!?)]}"
+BRACKET_INTERVAL_RE = re.compile(r"\[[^\]\n]*\]")
+SHA256_CELL_RE = re.compile(r"^`?([0-9a-f]{64})`?$")
+INLINE_CODE_CELL_RE = re.compile(r"^`[^`]+`$")
+SHA256_CHUNK = 16
+TABLE_CELL_WEIGHT_CAP = 48
+TABLE_MIN_COLUMN_POINTS = 24.0
+TABLE_MAX_WORD_POINTS = 72.0
+WIDE_TABLE_COLUMNS = 7
+TABLE_HEADER_KEEP_CHARS = 12
+TABLE_CELL_PADDING_POINTS = 7.0
+
+
+def typeset_interval_minus(text: str) -> str:
+    """Render the leading hyphen-minus of a negative bound inside [a, b] as a true minus sign.
+
+    Typography only: the Markdown parts keep the ASCII spelling because the preregistered
+    county-bootstrap audits and their tests pin that spelling as a required fragment.
+    """
+    return BRACKET_INTERVAL_RE.sub(
+        lambda match: re.sub(r"(?<=[\[ ])-(?=\d)", "−", match.group(0)), text)
+
+
+def table_column_widths(rows: list[list[str]], total_width: float,
+                        font_scale: float = 1.0) -> list[float]:
+    """Give every column room for its longest unbreakable word, then share the rest by content.
+
+    Widths are estimated in points for the 7 pt table font (about 3.9 pt per character of an
+    unbreakable word, 3.4 pt of running text, 4.2 pt of inline code) times ``font_scale``.
+    A SHA-256 column has a hard floor for one 16-character Courier 5.8 pt chunk; the other
+    floors are soft and shrink together when the frame is narrower than their sum.
+    """
+    columns = max(map(len, rows))
+    floors: list[float] = []
+    hard: list[bool] = []
+    desired: list[float] = []
+    for column in range(columns):
+        floor = TABLE_MIN_COLUMN_POINTS
+        wish = TABLE_MIN_COLUMN_POINTS
+        is_hard = False
+        for row_index, row in enumerate(rows):
+            cell = row[column] if column < len(row) else ""
+            if row_index == 0 and len(cell) <= TABLE_HEADER_KEEP_CHARS:
+                # a short header stays on one line
+                floor = max(floor, len(cell) * 3.9 * font_scale + TABLE_CELL_PADDING_POINTS)
+                wish = max(wish, floor)
+                continue
+            if SHA256_CELL_RE.match(cell):
+                need = SHA256_CHUNK * 3.5 + TABLE_CELL_PADDING_POINTS
+                floor, wish, is_hard = max(floor, need), max(wish, need), True
+                continue
+            if INLINE_CODE_CELL_RE.match(cell):
+                # monospace paths break at any character, so they only ask, never insist
+                wish = max(wish, min(len(cell) * 4.2 * font_scale + TABLE_CELL_PADDING_POINTS,
+                                     TABLE_MAX_WORD_POINTS))
+                floor = max(floor, min(len(cell) * 4.2 * font_scale + TABLE_CELL_PADDING_POINTS,
+                                       TABLE_MIN_COLUMN_POINTS * 2))
+                continue
+            longest_word = max((len(word) for word in cell.split()), default=0)
+            floor = max(floor, min(longest_word * 3.9 * font_scale + TABLE_CELL_PADDING_POINTS,
+                                   TABLE_MAX_WORD_POINTS))
+            wish = max(wish, min(len(cell), TABLE_CELL_WEIGHT_CAP) * 3.4 * font_scale
+                       + TABLE_CELL_PADDING_POINTS)
+        floors.append(floor)
+        hard.append(is_hard)
+        desired.append(max(wish, floor))
+    hard_total = sum(floor for floor, fixed in zip(floors, hard) if fixed)
+    soft_total = sum(floor for floor, fixed in zip(floors, hard) if not fixed)
+    if hard_total + soft_total >= total_width:
+        factor = max(total_width - hard_total, 0.0) / (soft_total or 1.0)
+        return [floor if fixed else floor * factor for floor, fixed in zip(floors, hard)]
+    spare = total_width - hard_total - soft_total
+    extra = [wish - floor for wish, floor in zip(desired, floors)]
+    share = sum(extra) or 1.0
+    return [floor + spare * grow / share for floor, grow in zip(floors, extra)]
 
 
 def sha256_file(path: Path) -> str:
@@ -130,7 +204,7 @@ def build_pdf(markdown_path: Path = DEFAULT_MARKDOWN,
         pdfmetrics.registerFont(TTFont("WriteupUnicode", str(unicode_font_path)))
     if not markdown_path.is_file():
         raise FileNotFoundError(markdown_path)
-    source = markdown_path.read_text(encoding="utf-8")
+    source = typeset_interval_minus(markdown_path.read_text(encoding="utf-8"))
     output_path.parent.mkdir(parents=True, exist_ok=True)
     rl_config.invariant = 1
 
@@ -243,11 +317,25 @@ def build_pdf(markdown_path: Path = DEFAULT_MARKDOWN,
                                   cover_text),
                         PageBreak(), Paragraph("Contents", toc_title), toc, PageBreak()]
 
+    dense = ParagraphStyle("WriteupDense", parent=compact, fontSize=6.2, leading=7.4)
+
+    def table_cell(cell: str, style: ParagraphStyle) -> Paragraph:
+        digest = SHA256_CELL_RE.match(cell)
+        if digest:
+            # full hash, broken at fixed 16-hex-character points so the column stays narrow
+            chunks = [digest.group(1)[i:i + SHA256_CHUNK]
+                      for i in range(0, len(digest.group(1)), SHA256_CHUNK)]
+            return Paragraph(f'<font name="Courier" size="5.8">{"<br/>".join(chunks)}</font>',
+                             style)
+        return Paragraph(inline_markup(cell), style)
+
     def make_table(rows: list[list[str]]) -> Table:
-        cell_rows = [[Paragraph(inline_markup(cell), compact) for cell in row] for row in rows]
-        columns = max(map(len, cell_rows))
-        width = (page_width - left - right) / columns
-        table = Table(cell_rows, colWidths=[width] * columns, repeatRows=1, hAlign="LEFT")
+        columns = max(map(len, rows))
+        style = dense if columns >= WIDE_TABLE_COLUMNS else compact
+        cell_rows = [[table_cell(cell, style) for cell in row] for row in rows]
+        widths = table_column_widths(rows, page_width - left - right,
+                                     style.fontSize / compact.fontSize)
+        table = Table(cell_rows, colWidths=widths, repeatRows=1, hAlign="LEFT")
         table.setStyle(TableStyle([
             ("GRID", (0, 0), (-1, -1), 0.25, colors.HexColor("#94a3b8")),
             ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#e2e8f0")),

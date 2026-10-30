@@ -5,7 +5,7 @@ Row: `bias-writeup-claim-evidence-audit`. Documentation screen: every quantitati
 ## Verdict
 
 - **83 of 83 quantitative claims fully traceable** (100.0%).
-- **967 of 967 numeric tokens (100.0%) are present in the evidence named by the claim that states them.**
+- **971 of 971 numeric tokens (100.0%) are present in the evidence named by the claim that states them.**
 - 83 per-claim verify commands and 21 reproduce commands; 19/20 recorded reproduce-command exits are 0; 1 command(s) lack an execution record in this no-`--execute-reproduce` audit pass; all recorded reproduce-command product hashes match the current files. 2 executed reproduce command(s) generated product differences not covered by the registered disclosure rules; see the audit JSON's tier_b_reproduce entries.
 - Accuracy language outside the allowed classes: none. Prohibited reference/label/leaderboard sources used as scored-model evidence: none.
 - All acceptance gates: **FAIL**.
@@ -18,7 +18,7 @@ Each registered writeup source document is split into quantitative claim blocks 
 
 | Document | Claims | Fully traceable | Numeric tokens | Covered |
 |---|---:|---:|---:|---:|
-| `docs/writeup/bias-discovery.md` | 14 | 14 | 123 | 123 |
+| `docs/writeup/bias-discovery.md` | 14 | 14 | 127 | 127 |
 | `docs/writeup/methodology-summary.md` | 1 | 1 | 3 | 3 |
 | `docs/writeup/methodology.md` | 46 | 46 | 535 | 535 |
 | `docs/writeup/edge-cases.md` | 7 | 7 | 131 | 131 |
@@ -40,7 +40,7 @@ Each row is one quantitative claim: where it is stated, the artifact and pointer
 | `bias-discovery-007` We repeated the source-mix count in five counties outside the scored r… | `bias-discovery.md` | Does it transfer? | 48-48 | `measured_external_discovery_data` | `reports/source-provenance.json` | `/` | 8/8 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with-req…` |
 | `bias-discovery-008` \| County \| OSM \| Third-provider tag \| Esri \| \|---\|---:\|---:\|---:\| \| **… | `bias-discovery.md` | Does it transfer? | 52-58 | `measured_external_discovery_data` | `reports/discovery-border-transfer.json` | `/results` | 15/15 | exit 0 | `/home/martin/hddProjects/langywrap/uv run --quiet --with-req…` |
 | `bias-discovery-009` In six Paradise/Magalia tracts (Butte County), the provided Wildfire R… | `bias-discovery.md` | Impact and evidence | 70-70 | `measured_external_discovery_data` | `reports/discovery-postfire.json` | `/focal_butte_2018_burn_geoids` | 4/4 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
-| `bias-discovery-010` Tract-level rows (focal GEOIDs, ratios and DINS counts) are in [Append… | `bias-discovery.md` | Impact and evidence | 72-72 | `measured_external_discovery_data` | `reports/discovery-postfire.json` | `/` | 2/2 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
+| `bias-discovery-010` Tract-level rows (focal GEOIDs, ratios and DINS counts) are in [Append… | `bias-discovery.md` | Impact and evidence | 72-72 | `measured_external_discovery_data` | `reports/discovery-postfire.json` | `/` | 6/6 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
 | `bias-discovery-011` **Negative mechanism check.** The DINS damage inspections support neit… | `bias-discovery.md` | Impact and evidence | 78-78 | `measured_external_discovery_data` | `reports/discovery-dins-mechanism.json` | `/spearman/statistic` | 14/14 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
 | `bias-discovery-012` Why a vintage gap inside one provider: focal Microsoft-only shares are… | `bias-discovery.md` | Impact and evidence | 80-80 | `measured_external_discovery_data` | `reports/postfire-lineage-recheck.json` | `/focal_share_ranges/microsoft_only_min` | 12/12 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |
 | `bias-discovery-013` Entries #35520 and #35527 (23 Oct) provide stronger DINS-matched wildf… | `bias-discovery.md` | Impact and evidence | 82-82 | `measured_external_discovery_data` | `docs/writeup/related-entries.md` | `document` | 4/4 | exit 0 | `MPLCONFIGDIR=/tmp/zindi-bias-bounty-mplconfig /home/martin/h…` |

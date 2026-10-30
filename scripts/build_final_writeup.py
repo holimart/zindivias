@@ -346,7 +346,8 @@ def leaderboard_table(submissions: list[dict[str, Any]], candidate: dict[str, An
              "preserved as records but void for A/B selection. The `_cgs` rows use `GEOID,coverage_gap_score`; "
              "the four cohort scores were used only by the frozen A rule, which selected the final A shown "
              "below; the B companion score was excluded from A selection. No public score is used to alter "
-             "a candidate value.", "",
+             "a candidate value. In the PDF each artifact SHA-256 is printed as four 16-character lines; "
+             "the Markdown source of this appendix carries every hash unbroken.", "",
              "| Platform submission id | Candidate | Artifact | Artifact SHA-256 | Public RMSE "
              "| Split | Score source | Selection eligibility | Uploaded (UTC) |",
              "|---|---|---|---|---:|---|---|---|---|"]

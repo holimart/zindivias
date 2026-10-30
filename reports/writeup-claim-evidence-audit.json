@@ -6,7 +6,7 @@
   "docs": [
    {
     "path": "docs/writeup/bias-discovery.md",
-    "sha256": "f3f630b5bada3ac336555cc8520b56b545818f37d9d36b16e362a2543ae44ebf"
+    "sha256": "380950cc79e3986e360a098ae6987d19607cabe1db30113998d4c71dae177a29"
    },
    {
     "path": "docs/writeup/methodology-summary.md",
@@ -297,7 +297,7 @@
   "writeup_documents": [
    {
     "path": "docs/writeup/bias-discovery.md",
-    "sha256": "f3f630b5bada3ac336555cc8520b56b545818f37d9d36b16e362a2543ae44ebf",
+    "sha256": "380950cc79e3986e360a098ae6987d19607cabe1db30113998d4c71dae177a29",
     "lines": 104
    },
    {
@@ -357,8 +357,8 @@
   },
   "claims_fully_traceable": 83,
   "fraction_quantitative_claims_traceable": 1.0,
-  "numeric_tokens_total": 967,
-  "numeric_tokens_covered": 967,
+  "numeric_tokens_total": 971,
+  "numeric_tokens_covered": 971,
   "fraction_numeric_tokens_covered": 1.0,
   "claims_asserting_accuracy": 0,
   "claims_with_prohibited_data_language": 0,
@@ -979,7 +979,7 @@
    "hedge_context": [
     "What we found: in six burned Paradise/Magalia tracts the provided reference building count is well above Overture's, and both counts share a Microsoft-derived lineage, so the gap looks like a vintage difference within one provider, not missing OpenStreetMap mapping. Who it affects: planners who treat the larger count as current could misdirect field checks; we could not confirm Camp Fire damage as the cause.",
     "In six Paradise/Magalia tracts (Butte County), the provided Wildfire Risk to Communities (WRC) building count exceeds the Overture count: Overture/WRC ratios are 0.620–0.747. This geographic and vintage discrepancy does not establish fire damage as its cause. The provided MTBS last-burn year is 2018. The public CAL FIRE Damage Inspection (DINS) dataset is used only as a discovery-stage mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified).",
-    "Tract-level rows (focal GEOIDs, ratios and DINS counts) are in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so the magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
+    "Tract-level rows (focal GEOIDs, ratios and DINS counts) are in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]), where the difference is the share of high-burn Northern California tracts (50–100% MTBS burned) whose Overture/WRC count ratio is below 0.8 minus the same share among unburned (0% burned) tracts; the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so the magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
     "![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)",
     "Map: fill is the provided MTBS burned percentage; the six focal tracts are marked.",
     "**Negative mechanism check.** The DINS damage inspections support neither the fire-damage nor the rebuilding explanation: 0/6 focal tracts met the ≤0.30 relative-error rule (pass mark ≥4/6), and the Spearman correlation was 0.463 across 28 2018-burn tracts, below the 0.60 threshold. Among 591 NorCal tracts, 576 tracts with positive counts have no DINS record (1,139,778 buildings); a missing record does not establish absence or rebuilding. MTBS burned percentages are cumulative (64.4–153.8%); the reference count's vintage is unverified.",
@@ -1017,7 +1017,7 @@
    "line_start": 72,
    "line_end": 72,
    "kind": "paragraph",
-   "text": "Tract-level rows (focal GEOIDs, ratios and DINS counts) are in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so the magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
+   "text": "Tract-level rows (focal GEOIDs, ratios and DINS counts) are in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]), where the difference is the share of high-burn Northern California tracts (50–100% MTBS burned) whose Overture/WRC count ratio is below 0.8 minus the same share among unburned (0% burned) tracts; the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so the magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
    "provenance_class": "measured_external_discovery_data",
    "evidence": [
     {
@@ -1076,7 +1076,7 @@
    "hedge_context": [
     "What we found: in six burned Paradise/Magalia tracts the provided reference building count is well above Overture's, and both counts share a Microsoft-derived lineage, so the gap looks like a vintage difference within one provider, not missing OpenStreetMap mapping. Who it affects: planners who treat the larger count as current could misdirect field checks; we could not confirm Camp Fire damage as the cause.",
     "In six Paradise/Magalia tracts (Butte County), the provided Wildfire Risk to Communities (WRC) building count exceeds the Overture count: Overture/WRC ratios are 0.620–0.747. This geographic and vintage discrepancy does not establish fire damage as its cause. The provided MTBS last-burn year is 2018. The public CAL FIRE Damage Inspection (DINS) dataset is used only as a discovery-stage mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified).",
-    "Tract-level rows (focal GEOIDs, ratios and DINS counts) are in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so the magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
+    "Tract-level rows (focal GEOIDs, ratios and DINS counts) are in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]), where the difference is the share of high-burn Northern California tracts (50–100% MTBS burned) whose Overture/WRC count ratio is below 0.8 minus the same share among unburned (0% burned) tracts; the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so the magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
     "![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)",
     "Map: fill is the provided MTBS burned percentage; the six focal tracts are marked.",
     "**Negative mechanism check.** The DINS damage inspections support neither the fire-damage nor the rebuilding explanation: 0/6 focal tracts met the ≤0.30 relative-error rule (pass mark ≥4/6), and the Spearman correlation was 0.463 across 28 2018-burn tracts, below the 0.60 threshold. Among 591 NorCal tracts, 576 tracts with positive counts have no DINS record (1,139,778 buildings); a missing record does not establish absence or rebuilding. MTBS burned percentages are cumulative (64.4–153.8%); the reference count's vintage is unverified.",
@@ -1090,8 +1090,8 @@
     "passed": true,
     "anchor_verbatim": true,
     "evidence_hashes_verified": true,
-    "tokens_total": 2,
-    "tokens_covered": 2,
+    "tokens_total": 6,
+    "tokens_covered": 6,
     "tokens_uncovered": [],
     "derived_tokens_verified": [],
     "primary_pointer_hit": true,
@@ -1173,7 +1173,7 @@
    "hedge_context": [
     "What we found: in six burned Paradise/Magalia tracts the provided reference building count is well above Overture's, and both counts share a Microsoft-derived lineage, so the gap looks like a vintage difference within one provider, not missing OpenStreetMap mapping. Who it affects: planners who treat the larger count as current could misdirect field checks; we could not confirm Camp Fire damage as the cause.",
     "In six Paradise/Magalia tracts (Butte County), the provided Wildfire Risk to Communities (WRC) building count exceeds the Overture count: Overture/WRC ratios are 0.620–0.747. This geographic and vintage discrepancy does not establish fire damage as its cause. The provided MTBS last-burn year is 2018. The public CAL FIRE Damage Inspection (DINS) dataset is used only as a discovery-stage mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified).",
-    "Tract-level rows (focal GEOIDs, ratios and DINS counts) are in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so the magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
+    "Tract-level rows (focal GEOIDs, ratios and DINS counts) are in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]), where the difference is the share of high-burn Northern California tracts (50–100% MTBS burned) whose Overture/WRC count ratio is below 0.8 minus the same share among unburned (0% burned) tracts; the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so the magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
     "![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)",
     "Map: fill is the provided MTBS burned percentage; the six focal tracts are marked.",
     "**Negative mechanism check.** The DINS damage inspections support neither the fire-damage nor the rebuilding explanation: 0/6 focal tracts met the ≤0.30 relative-error rule (pass mark ≥4/6), and the Spearman correlation was 0.463 across 28 2018-burn tracts, below the 0.60 threshold. Among 591 NorCal tracts, 576 tracts with positive counts have no DINS record (1,139,778 buildings); a missing record does not establish absence or rebuilding. MTBS burned percentages are cumulative (64.4–153.8%); the reference count's vintage is unverified.",
@@ -1264,7 +1264,7 @@
    "hedge_context": [
     "What we found: in six burned Paradise/Magalia tracts the provided reference building count is well above Overture's, and both counts share a Microsoft-derived lineage, so the gap looks like a vintage difference within one provider, not missing OpenStreetMap mapping. Who it affects: planners who treat the larger count as current could misdirect field checks; we could not confirm Camp Fire damage as the cause.",
     "In six Paradise/Magalia tracts (Butte County), the provided Wildfire Risk to Communities (WRC) building count exceeds the Overture count: Overture/WRC ratios are 0.620–0.747. This geographic and vintage discrepancy does not establish fire damage as its cause. The provided MTBS last-burn year is 2018. The public CAL FIRE Damage Inspection (DINS) dataset is used only as a discovery-stage mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified).",
-    "Tract-level rows (focal GEOIDs, ratios and DINS counts) are in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so the magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
+    "Tract-level rows (focal GEOIDs, ratios and DINS counts) are in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]), where the difference is the share of high-burn Northern California tracts (50–100% MTBS burned) whose Overture/WRC count ratio is below 0.8 minus the same share among unburned (0% burned) tracts; the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so the magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
     "![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)",
     "Map: fill is the provided MTBS burned percentage; the six focal tracts are marked.",
     "**Negative mechanism check.** The DINS damage inspections support neither the fire-damage nor the rebuilding explanation: 0/6 focal tracts met the ≤0.30 relative-error rule (pass mark ≥4/6), and the Spearman correlation was 0.463 across 28 2018-burn tracts, below the 0.60 threshold. Among 591 NorCal tracts, 576 tracts with positive counts have no DINS record (1,139,778 buildings); a missing record does not establish absence or rebuilding. MTBS burned percentages are cumulative (64.4–153.8%); the reference count's vintage is unverified.",
@@ -1349,7 +1349,7 @@
    "hedge_context": [
     "What we found: in six burned Paradise/Magalia tracts the provided reference building count is well above Overture's, and both counts share a Microsoft-derived lineage, so the gap looks like a vintage difference within one provider, not missing OpenStreetMap mapping. Who it affects: planners who treat the larger count as current could misdirect field checks; we could not confirm Camp Fire damage as the cause.",
     "In six Paradise/Magalia tracts (Butte County), the provided Wildfire Risk to Communities (WRC) building count exceeds the Overture count: Overture/WRC ratios are 0.620–0.747. This geographic and vintage discrepancy does not establish fire damage as its cause. The provided MTBS last-burn year is 2018. The public CAL FIRE Damage Inspection (DINS) dataset is used only as a discovery-stage mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified).",
-    "Tract-level rows (focal GEOIDs, ratios and DINS counts) are in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so the magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
+    "Tract-level rows (focal GEOIDs, ratios and DINS counts) are in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]), where the difference is the share of high-burn Northern California tracts (50–100% MTBS burned) whose Overture/WRC count ratio is below 0.8 minus the same share among unburned (0% burned) tracts; the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so the magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:",
     "![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)",
     "Map: fill is the provided MTBS burned percentage; the six focal tracts are marked.",
     "**Negative mechanism check.** The DINS damage inspections support neither the fire-damage nor the rebuilding explanation: 0/6 focal tracts met the ≤0.30 relative-error rule (pass mark ≥4/6), and the Spearman correlation was 0.463 across 28 2018-burn tracts, below the 0.60 threshold. Among 591 NorCal tracts, 576 tracts with positive counts have no DINS record (1,139,778 buildings); a missing record does not establish absence or rebuilding. MTBS burned percentages are cumulative (64.4–153.8%); the reference count's vintage is unverified.",

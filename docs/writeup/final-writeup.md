@@ -106,7 +106,7 @@ What we found: in six burned Paradise/Magalia tracts the provided reference buil
 
 In six Paradise/Magalia tracts (Butte County), the provided Wildfire Risk to Communities (WRC) building count exceeds the Overture count: Overture/WRC ratios are 0.620–0.747. This geographic and vintage discrepancy does not establish fire damage as its cause. The provided MTBS last-burn year is 2018. The public CAL FIRE Damage Inspection (DINS) dataset is used only as a discovery-stage mechanism check (retrieved 2026-10-29; catalogue CC BY, version unspecified).
 
-Tract-level rows (focal GEOIDs, ratios and DINS counts) are in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]); the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so the magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:
+Tract-level rows (focal GEOIDs, ratios and DINS counts) are in [Appendix J](#appendix-j-supporting-discovery-tables) (`reports/discovery-postfire.json#/focal_butte_2018_burn_geoids`; `reports/discovery-dins-mechanism.json#/focal_butte_tracts`). The tract-bootstrap difference is +9.55 pp (95% CI [+0.55, +20.89]), where the difference is the share of high-burn Northern California tracts (50–100% MTBS burned) whose Overture/WRC count ratio is below 0.8 minus the same share among unburned (0% burned) tracts; the county-cluster bootstrap 95% CI [-1.65, +16.67] includes zero, so the magnitude is exploratory (`reports/discovery-postfire-county-bootstrap.json#/county_cluster_bootstrap/cluster_95_percentile_interval`). The map marks these six tracts:
 
 ![NorCal/Butte tract map: fill is provided MTBS burned percentage; the six focal tracts are marked.](../../reports/discovery-postfire-map.png)
 
@@ -197,7 +197,7 @@ Supporting discovery screens and limitations are available in the linked [screen
 
 ## Appendix D: Leaderboard submission records and score eligibility
 
-Historical five-column uploads placed `transport_gap` second, so their returned public values are preserved as records but void for A/B selection. The `_cgs` rows use `GEOID,coverage_gap_score`; the four cohort scores were used only by the frozen A rule, which selected the final A shown below; the B companion score was excluded from A selection. No public score is used to alter a candidate value.
+Historical five-column uploads placed `transport_gap` second, so their returned public values are preserved as records but void for A/B selection. The `_cgs` rows use `GEOID,coverage_gap_score`; the four cohort scores were used only by the frozen A rule, which selected the final A shown below; the B companion score was excluded from A selection. No public score is used to alter a candidate value. In the PDF each artifact SHA-256 is printed as four 16-character lines; the Markdown source of this appendix carries every hash unbroken.
 
 | Platform submission id | Candidate | Artifact | Artifact SHA-256 | Public RMSE | Split | Score source | Selection eligibility | Uploaded (UTC) |
 |---|---|---|---|---:|---|---|---|---|
@@ -262,7 +262,6 @@ The general register below lists prior-art sources, organiser-hosted challenge f
 
 | URL | Reference | Accessed | Role |
 |---|---|---|---|
-| https://api.zindi.world/v1/competitions/bias-bounty-mapping-equity-challenge/files/SampleSubmission.csv | organiser-hosted challenge file used by the workspace downloader | 2026-10-23 | official challenge data endpoint provided by the organisers; not an external dataset |
 | https://api.zindi.world/v1/discussions/35250 | Organiser Challenge Update on supporting comparison evidence and target-reconstruction limits (discussion 35250) | 2026-10-29 | official rule clarification permitting discovery-only comparison evidence when not used to reconstruct, approximate, or calibrate targets |
 | https://api.zindi.world/v1/discussions/35334 | Zindi discussion 35334 (2026-10-14): methodology form requires PDF, maximum 10 MB | 2026-10-29 | organiser form upload-format instruction; this project exports a PDF under the stated size cap |
 | https://zindi.africa/competitions/bias-bounty-mapping-equity-challenge | official challenge page (quoted rules and membership note) | 2026-10-25 | official challenge page; quoted text only, no data added to scored predictions |
@@ -315,15 +314,15 @@ A machine-checked claim-to-evidence audit backs every number in this writeup.
 - `claims_total`: 83
 - `claims_fully_traceable`: 83
 - `fraction_quantitative_claims_traceable`: 1.0
-- `numeric_tokens_total`: 967
-- `numeric_tokens_covered`: 967
+- `numeric_tokens_total`: 971
+- `numeric_tokens_covered`: 971
 - `fraction_numeric_tokens_covered`: 1.0
 - `distinct_verify_commands`: 83
 - `distinct_reproduce_commands`: 21
 - `derived_aggregates_verified`: 39
 - `claims_asserting_accuracy`: 0
 
-Current audit status: 83 of 83 quantitative claims are fully traceable (1.0); 967 of 967 numeric tokens are covered (1.0). There are 0 unresolved claim-evidence items. The full claim audit does not pass overall reproduction acceptance: 10 report-product differences remain outside accepted disclosure paths and 2 of 21 reproduction commands did not exit successfully (`reports/writeup-claim-evidence-audit.json#/commands`). This is a reproduction limitation, not an accuracy claim. The final-two result is separately traced to `reports/final-two.json` and machine-compared by the packet verifier.
+Current audit status: 83 of 83 quantitative claims are fully traceable (1.0); 971 of 971 numeric tokens are covered (1.0). There are 0 unresolved claim-evidence items. The full claim audit does not pass overall reproduction acceptance: 10 report-product differences remain outside accepted disclosure paths and 2 of 21 reproduction commands did not exit successfully (`reports/writeup-claim-evidence-audit.json#/commands`). This is a reproduction limitation, not an accuracy claim. The final-two result is separately traced to `reports/final-two.json` and machine-compared by the packet verifier.
 
 The claim inventory, audit configuration, and execution details are available in [`claim-evidence-audit.md`](claim-evidence-audit.md) and the linked JSON reports: `reports/writeup-claim-evidence-audit.json`, `reports/writeup-claim-inventory.json`, and `reports/writeup-claim-evidence-execution.json`.
 
